@@ -1,210 +1,72 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://future.futureverse.org/404.html</loc>
-  </url>
-  <url>
-    <loc>https://future.futureverse.org/CONDUCT.html</loc>
-  </url>
-  <url>
-    <loc>https://future.futureverse.org/CONTRIBUTING.html</loc>
-  </url>
-  <url>
-    <loc>https://future.futureverse.org/README_ja.html</loc>
-  </url>
-  <url>
-    <loc>https://future.futureverse.org/articles/future-1-overview.html</loc>
-  </url>
-  <url>
-    <loc>https://future.futureverse.org/articles/future-2-output.html</loc>
-  </url>
-  <url>
-    <loc>https://future.futureverse.org/articles/future-3-topologies.html</loc>
-  </url>
-  <url>
-    <loc>https://future.futureverse.org/articles/future-4-issues.html</loc>
-  </url>
-  <url>
-    <loc>https://future.futureverse.org/articles/future-4-non-exportable-objects.html</loc>
-  </url>
-  <url>
-    <loc>https://future.futureverse.org/articles/future-5-startup.html</loc>
-  </url>
-  <url>
-    <loc>https://future.futureverse.org/articles/future-6-future-api-backend-specification.html</loc>
-  </url>
-  <url>
-    <loc>https://future.futureverse.org/articles/future-7-for-package-developers.html</loc>
-  </url>
-  <url>
-    <loc>https://future.futureverse.org/articles/future-8-how-future-is-validated.html</loc>
-  </url>
-  <url>
-    <loc>https://future.futureverse.org/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>https://future.futureverse.org/authors.html</loc>
-  </url>
-  <url>
-    <loc>https://future.futureverse.org/index.html</loc>
-  </url>
-  <url>
-    <loc>https://future.futureverse.org/news/index.html</loc>
-  </url>
-  <url>
-    <loc>https://future.futureverse.org/reference/ClusterFuture-class.html</loc>
-  </url>
-  <url>
-    <loc>https://future.futureverse.org/reference/ConstantFuture-class.html</loc>
-  </url>
-  <url>
-    <loc>https://future.futureverse.org/reference/Future-class.html</loc>
-  </url>
-  <url>
-    <loc>https://future.futureverse.org/reference/FutureCondition.html</loc>
-  </url>
-  <url>
-    <loc>https://future.futureverse.org/reference/FutureGlobals.html</loc>
-  </url>
-  <url>
-    <loc>https://future.futureverse.org/reference/FutureResult.html</loc>
-  </url>
-  <url>
-    <loc>https://future.futureverse.org/reference/MulticoreFuture-class.html</loc>
-  </url>
-  <url>
-    <loc>https://future.futureverse.org/reference/MultiprocessFuture-class.html</loc>
-  </url>
-  <url>
-    <loc>https://future.futureverse.org/reference/UniprocessFuture-class.html</loc>
-  </url>
-  <url>
-    <loc>https://future.futureverse.org/reference/backtrace.html</loc>
-  </url>
-  <url>
-    <loc>https://future.futureverse.org/reference/cluster.html</loc>
-  </url>
-  <url>
-    <loc>https://future.futureverse.org/reference/clusterExportSticky.html</loc>
-  </url>
-  <url>
-    <loc>https://future.futureverse.org/reference/find_references.html</loc>
-  </url>
-  <url>
-    <loc>https://future.futureverse.org/reference/future.html</loc>
-  </url>
-  <url>
-    <loc>https://future.futureverse.org/reference/future.options.html</loc>
-  </url>
-  <url>
-    <loc>https://future.futureverse.org/reference/futureOf.html</loc>
-  </url>
-  <url>
-    <loc>https://future.futureverse.org/reference/futureSessionInfo.html</loc>
-  </url>
-  <url>
-    <loc>https://future.futureverse.org/reference/futures.html</loc>
-  </url>
-  <url>
-    <loc>https://future.futureverse.org/reference/getExpression.html</loc>
-  </url>
-  <url>
-    <loc>https://future.futureverse.org/reference/getGlobalsAndPackages.html</loc>
-  </url>
-  <url>
-    <loc>https://future.futureverse.org/reference/grapes-conditions-grapes.html</loc>
-  </url>
-  <url>
-    <loc>https://future.futureverse.org/reference/grapes-globals-grapes.html</loc>
-  </url>
-  <url>
-    <loc>https://future.futureverse.org/reference/grapes-label-grapes.html</loc>
-  </url>
-  <url>
-    <loc>https://future.futureverse.org/reference/grapes-lazy-grapes.html</loc>
-  </url>
-  <url>
-    <loc>https://future.futureverse.org/reference/grapes-plan-grapes.html</loc>
-  </url>
-  <url>
-    <loc>https://future.futureverse.org/reference/grapes-seed-grapes.html</loc>
-  </url>
-  <url>
-    <loc>https://future.futureverse.org/reference/grapes-stdout-grapes.html</loc>
-  </url>
-  <url>
-    <loc>https://future.futureverse.org/reference/grapes-tweak-grapes.html</loc>
-  </url>
-  <url>
-    <loc>https://future.futureverse.org/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>https://future.futureverse.org/reference/mandelbrot.html</loc>
-  </url>
-  <url>
-    <loc>https://future.futureverse.org/reference/multicore.html</loc>
-  </url>
-  <url>
-    <loc>https://future.futureverse.org/reference/multisession.html</loc>
-  </url>
-  <url>
-    <loc>https://future.futureverse.org/reference/nbrOfWorkers.html</loc>
-  </url>
-  <url>
-    <loc>https://future.futureverse.org/reference/nullcon.html</loc>
-  </url>
-  <url>
-    <loc>https://future.futureverse.org/reference/plan.html</loc>
-  </url>
-  <url>
-    <loc>https://future.futureverse.org/reference/private_length.html</loc>
-  </url>
-  <url>
-    <loc>https://future.futureverse.org/reference/re-exports.html</loc>
-  </url>
-  <url>
-    <loc>https://future.futureverse.org/reference/readImmediateConditions.html</loc>
-  </url>
-  <url>
-    <loc>https://future.futureverse.org/reference/requestCore.html</loc>
-  </url>
-  <url>
-    <loc>https://future.futureverse.org/reference/resetWorkers.html</loc>
-  </url>
-  <url>
-    <loc>https://future.futureverse.org/reference/resolve.html</loc>
-  </url>
-  <url>
-    <loc>https://future.futureverse.org/reference/resolved.html</loc>
-  </url>
-  <url>
-    <loc>https://future.futureverse.org/reference/result.html</loc>
-  </url>
-  <url>
-    <loc>https://future.futureverse.org/reference/run.html</loc>
-  </url>
-  <url>
-    <loc>https://future.futureverse.org/reference/save_rds.html</loc>
-  </url>
-  <url>
-    <loc>https://future.futureverse.org/reference/sequential.html</loc>
-  </url>
-  <url>
-    <loc>https://future.futureverse.org/reference/sessionDetails.html</loc>
-  </url>
-  <url>
-    <loc>https://future.futureverse.org/reference/signalConditions.html</loc>
-  </url>
-  <url>
-    <loc>https://future.futureverse.org/reference/sticky_globals.html</loc>
-  </url>
-  <url>
-    <loc>https://future.futureverse.org/reference/tweak.html</loc>
-  </url>
-  <url>
-    <loc>https://future.futureverse.org/reference/usedCores.html</loc>
-  </url>
-  <url>
-    <loc>https://future.futureverse.org/reference/value.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://future.futureverse.org/404.html</loc></url>
+<url><loc>https://future.futureverse.org/CONDUCT.html</loc></url>
+<url><loc>https://future.futureverse.org/CONTRIBUTING.html</loc></url>
+<url><loc>https://future.futureverse.org/README_ja.html</loc></url>
+<url><loc>https://future.futureverse.org/articles/future-1-overview.html</loc></url>
+<url><loc>https://future.futureverse.org/articles/future-2-output.html</loc></url>
+<url><loc>https://future.futureverse.org/articles/future-3-topologies.html</loc></url>
+<url><loc>https://future.futureverse.org/articles/future-4-issues.html</loc></url>
+<url><loc>https://future.futureverse.org/articles/future-4-non-exportable-objects.html</loc></url>
+<url><loc>https://future.futureverse.org/articles/future-5-startup.html</loc></url>
+<url><loc>https://future.futureverse.org/articles/future-6-future-api-backend-specification.html</loc></url>
+<url><loc>https://future.futureverse.org/articles/future-7-for-package-developers.html</loc></url>
+<url><loc>https://future.futureverse.org/articles/future-8-how-future-is-validated.html</loc></url>
+<url><loc>https://future.futureverse.org/articles/index.html</loc></url>
+<url><loc>https://future.futureverse.org/authors.html</loc></url>
+<url><loc>https://future.futureverse.org/index.html</loc></url>
+<url><loc>https://future.futureverse.org/news/index.html</loc></url>
+<url><loc>https://future.futureverse.org/reference/ClusterFuture-class.html</loc></url>
+<url><loc>https://future.futureverse.org/reference/ConstantFuture-class.html</loc></url>
+<url><loc>https://future.futureverse.org/reference/Future-class.html</loc></url>
+<url><loc>https://future.futureverse.org/reference/FutureCondition.html</loc></url>
+<url><loc>https://future.futureverse.org/reference/FutureGlobals.html</loc></url>
+<url><loc>https://future.futureverse.org/reference/FutureResult.html</loc></url>
+<url><loc>https://future.futureverse.org/reference/MulticoreFuture-class.html</loc></url>
+<url><loc>https://future.futureverse.org/reference/MultiprocessFuture-class.html</loc></url>
+<url><loc>https://future.futureverse.org/reference/UniprocessFuture-class.html</loc></url>
+<url><loc>https://future.futureverse.org/reference/backtrace.html</loc></url>
+<url><loc>https://future.futureverse.org/reference/cluster.html</loc></url>
+<url><loc>https://future.futureverse.org/reference/clusterExportSticky.html</loc></url>
+<url><loc>https://future.futureverse.org/reference/find_references.html</loc></url>
+<url><loc>https://future.futureverse.org/reference/future.html</loc></url>
+<url><loc>https://future.futureverse.org/reference/future.options.html</loc></url>
+<url><loc>https://future.futureverse.org/reference/futureOf.html</loc></url>
+<url><loc>https://future.futureverse.org/reference/futureSessionInfo.html</loc></url>
+<url><loc>https://future.futureverse.org/reference/futures.html</loc></url>
+<url><loc>https://future.futureverse.org/reference/getExpression.html</loc></url>
+<url><loc>https://future.futureverse.org/reference/getGlobalsAndPackages.html</loc></url>
+<url><loc>https://future.futureverse.org/reference/grapes-conditions-grapes.html</loc></url>
+<url><loc>https://future.futureverse.org/reference/grapes-globals-grapes.html</loc></url>
+<url><loc>https://future.futureverse.org/reference/grapes-label-grapes.html</loc></url>
+<url><loc>https://future.futureverse.org/reference/grapes-lazy-grapes.html</loc></url>
+<url><loc>https://future.futureverse.org/reference/grapes-plan-grapes.html</loc></url>
+<url><loc>https://future.futureverse.org/reference/grapes-seed-grapes.html</loc></url>
+<url><loc>https://future.futureverse.org/reference/grapes-stdout-grapes.html</loc></url>
+<url><loc>https://future.futureverse.org/reference/grapes-tweak-grapes.html</loc></url>
+<url><loc>https://future.futureverse.org/reference/index.html</loc></url>
+<url><loc>https://future.futureverse.org/reference/mandelbrot.html</loc></url>
+<url><loc>https://future.futureverse.org/reference/multicore.html</loc></url>
+<url><loc>https://future.futureverse.org/reference/multisession.html</loc></url>
+<url><loc>https://future.futureverse.org/reference/nbrOfWorkers.html</loc></url>
+<url><loc>https://future.futureverse.org/reference/nullcon.html</loc></url>
+<url><loc>https://future.futureverse.org/reference/plan.html</loc></url>
+<url><loc>https://future.futureverse.org/reference/private_length.html</loc></url>
+<url><loc>https://future.futureverse.org/reference/re-exports.html</loc></url>
+<url><loc>https://future.futureverse.org/reference/readImmediateConditions.html</loc></url>
+<url><loc>https://future.futureverse.org/reference/requestCore.html</loc></url>
+<url><loc>https://future.futureverse.org/reference/resetWorkers.html</loc></url>
+<url><loc>https://future.futureverse.org/reference/resolve.html</loc></url>
+<url><loc>https://future.futureverse.org/reference/resolved.html</loc></url>
+<url><loc>https://future.futureverse.org/reference/result.html</loc></url>
+<url><loc>https://future.futureverse.org/reference/run.html</loc></url>
+<url><loc>https://future.futureverse.org/reference/save_rds.html</loc></url>
+<url><loc>https://future.futureverse.org/reference/sequential.html</loc></url>
+<url><loc>https://future.futureverse.org/reference/sessionDetails.html</loc></url>
+<url><loc>https://future.futureverse.org/reference/signalConditions.html</loc></url>
+<url><loc>https://future.futureverse.org/reference/sticky_globals.html</loc></url>
+<url><loc>https://future.futureverse.org/reference/tweak.html</loc></url>
+<url><loc>https://future.futureverse.org/reference/usedCores.html</loc></url>
+<url><loc>https://future.futureverse.org/reference/value.html</loc></url>
 </urlset>
+
