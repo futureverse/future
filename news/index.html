@@ -136,7 +136,7 @@
   </a>
 </li>
 <li>
-  <a href="https://github.com/HenrikBengtsson/future/" class="external-link">
+  <a href="https://github.com/futureverse/future/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
 
   </a>
@@ -156,7 +156,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
       <h1 data-toc-skip>Changelog <small></small></h1>
-      <small>Source: <a href="https://github.com/HenrikBengtsson/future/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
+      <small>Source: <a href="https://github.com/futureverse/future/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
     <div class="section level2">
@@ -583,7 +583,7 @@
 <div class="section level3">
 <h3 id="new-features-1-18-0">New Features<a class="anchor" aria-label="anchor" href="#new-features-1-18-0"></a></h3>
 <ul><li><p><code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> on <code>RichSOCKcluster</code> gives information not only on the name of the host but also on the version of R and the platform of each node (“worker”), e.g. “Socket cluster with 3 nodes where 2 nodes are on host ‘localhost’ (R version 4.0.0 (2020-04-24), platform x86_64-w64-mingw32), 1 node is on host ‘n3’ (R version 3.6.3 (2020-02-29), platform x86_64-pc-linux-gnu)”.</p></li>
-<li><p>Error messages from cluster future failures are now more informative than “Unexpected result (of class ‘NULL’ != ‘FutureResult’)”. For example, if the <strong>future</strong> package is not installed on the worker, then the error message clearly says so. Even, if there is an unexpected result error from a PSOCK cluster future, then the error produced give extra information on node where it failed, e.g. “Unexpected result (of class ‘NULL’ != ‘FutureResult’) retrieved for ClusterFuture future (label = ‘<none>’, expression = ‘…’): This suggests that the communication with <code>ClusterFuture</code> worker (‘RichSOCKnode’ <a href="https://github.com/HenrikBengtsson/future/issues/1" class="external-link">#1</a> on host ‘n3’ (R version 3.6.3 (2020-02-29), platform x86_64-pc-linux-gnu)) is out of sync.”</none></p></li>
+<li><p>Error messages from cluster future failures are now more informative than “Unexpected result (of class ‘NULL’ != ‘FutureResult’)”. For example, if the <strong>future</strong> package is not installed on the worker, then the error message clearly says so. Even, if there is an unexpected result error from a PSOCK cluster future, then the error produced give extra information on node where it failed, e.g. “Unexpected result (of class ‘NULL’ != ‘FutureResult’) retrieved for ClusterFuture future (label = ‘<none>’, expression = ‘…’): This suggests that the communication with <code>ClusterFuture</code> worker (‘RichSOCKnode’ <a href="https://github.com/futureverse/future/issues/1" class="external-link">#1</a> on host ‘n3’ (R version 3.6.3 (2020-02-29), platform x86_64-pc-linux-gnu)) is out of sync.”</none></p></li>
 <li><p>It is now possible to set environment variables on workers before they are launched by <code><a href="../reference/re-exports.html">makeClusterPSOCK()</a></code> by specify them as as <code>"&lt;name&gt;=&lt;value&gt;"</code> as part of the <code>rscript</code> vector argument, e.g. <code>rscript = c("ABC=123", "DEF='hello world'", "Rscript")</code>. This works because elements in <code>rscript</code> that match regular expression <code>[[:alpha:]_][[:alnum:]_]*=.*</code> are no longer shell quoted.</p></li>
 <li><p><code><a href="../reference/re-exports.html">makeClusterPSOCK()</a></code> now returns a cluster that in addition to inheriting from <code>SOCKcluster</code> it will also inherit from <code>RichSOCKcluster</code>.</p></li>
 </ul></div>
@@ -1130,7 +1130,7 @@
 <div class="section level3">
 <h3 id="bug-fixes-1-2-0">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-1-2-0"></a></h3>
 <ul><li><p><code>values()</code> for lists and list environments of futures where one or more of the futures resolved to NULL would give an error.</p></li>
-<li><p><code><a href="../reference/value.html">value()</a></code> for <code>ClusterFuture</code> would give cryptic error message “Error in stop(ex) : bad error message” if the cluster worker had crashed / terminated. Now it will instead give an error message like “Failed to retrieve the value of <code>ClusterFuture</code> from cluster node <a href="https://github.com/HenrikBengtsson/future/issues/1" class="external-link">#1</a> on ‘localhost’. The reason reported was”error reading from connection”.</p></li>
+<li><p><code><a href="../reference/value.html">value()</a></code> for <code>ClusterFuture</code> would give cryptic error message “Error in stop(ex) : bad error message” if the cluster worker had crashed / terminated. Now it will instead give an error message like “Failed to retrieve the value of <code>ClusterFuture</code> from cluster node <a href="https://github.com/futureverse/future/issues/1" class="external-link">#1</a> on ‘localhost’. The reason reported was”error reading from connection”.</p></li>
 <li><p>Argument <code>user</code> to <code>remote()</code> was ignored (since 1.1.0).</p></li>
 </ul></div>
 </div>

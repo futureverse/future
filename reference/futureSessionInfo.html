@@ -136,7 +136,7 @@
   </a>
 </li>
 <li>
-  <a href="https://github.com/HenrikBengtsson/future/" class="external-link">
+  <a href="https://github.com/futureverse/future/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
 
   </a>
@@ -156,7 +156,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Get future-specific session information and validate current backend</h1>
-    <small class="dont-index">Source: <a href="https://github.com/HenrikBengtsson/future/blob/HEAD/R/futureSessionInfo.R" class="external-link"><code>R/futureSessionInfo.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/futureverse/future/blob/HEAD/R/futureSessionInfo.R" class="external-link"><code>R/futureSessionInfo.R</code></a></small>
     <div class="hidden name"><code>futureSessionInfo.Rd</code></div>
     </div>
 
@@ -191,7 +191,7 @@ and validate their information.</p></dd>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="plan.html">plan</a></span><span class="op">(</span><span class="va">multisession</span>, workers <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">futureSessionInfo</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> *** Package versions</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> future 1.34.0, parallelly 1.38.0, parallel 4.4.1, globals 0.16.3, listenv 0.9.1</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> future 1.34.0, parallelly 1.39.0, parallel 4.4.2, globals 0.16.3, listenv 0.9.1</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> *** Allocations</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> availableCores():</span>
@@ -228,22 +228,22 @@ and validate their information.</p></dd>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> *** Basic tests</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Main R session details:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>       pid     r sysname          release</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 1 1195450 4.4.1   Linux 6.8.0-47-generic</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>                                                            version nodename</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 1 #47~22.04.1-Ubuntu SMP PREEMPT_DYNAMIC Wed Oct  2 16:16:55 UTC 2  host001</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   machine   login    user effective_user</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 1  x86_64 user001 user001        user001</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>      pid     r sysname           release</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 1 786381 4.4.2   Linux 5.19.0-50-generic</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>                                                       version nodename machine</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 1 #50-Ubuntu SMP PREEMPT_DYNAMIC Mon Jul 10 18:24:29 UTC 2023  host001  x86_64</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     login    user effective_user</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 1 user001 user001        user001</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Worker R session details:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   worker     pid     r sysname          release</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 1      1 1196204 4.4.1   Linux 6.8.0-47-generic</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 2      2 1196205 4.4.1   Linux 6.8.0-47-generic</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>                                                            version nodename</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 1 #47~22.04.1-Ubuntu SMP PREEMPT_DYNAMIC Wed Oct  2 16:16:55 UTC 2  host001</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 2 #47~22.04.1-Ubuntu SMP PREEMPT_DYNAMIC Wed Oct  2 16:16:55 UTC 2  host001</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   machine   login    user effective_user</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 1  x86_64 user001 user001        user001</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 2  x86_64 user001 user001        user001</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   worker    pid     r sysname           release</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 1      1 787137 4.4.2   Linux 5.19.0-50-generic</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2      2 787136 4.4.2   Linux 5.19.0-50-generic</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>                                                       version nodename machine</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 1 #50-Ubuntu SMP PREEMPT_DYNAMIC Mon Jul 10 18:24:29 UTC 2023  host001  x86_64</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2 #50-Ubuntu SMP PREEMPT_DYNAMIC Mon Jul 10 18:24:29 UTC 2023  host001  x86_64</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     login    user effective_user</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 1 user001 user001        user001</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2 user001 user001        user001</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Number of unique worker PIDs: 2 (as expected)</span>
 <span class="r-in"><span><span class="fu"><a href="plan.html">plan</a></span><span class="op">(</span><span class="va">sequential</span><span class="op">)</span></span></span>
 </code></pre></div>
