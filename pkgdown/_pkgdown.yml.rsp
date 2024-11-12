@@ -22,7 +22,7 @@ home:
   - text: The Futureverse Project
     href: https://www.futureverse.org/
   - text: Futureverse User Forum
-    href: https://github.com/HenrikBengtsson/future/discussions
+    href: https://github.com/futureverse/future/discussions
 
 navbar:
   structure:
