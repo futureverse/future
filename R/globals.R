@@ -195,7 +195,7 @@ getGlobalsAndPackages <- function(expr, envir = parent.frame(), tweak = tweakExp
       names(globals) <- names
 
       ## AD HOC: Drop duplicated 'future.call.arguments' elements, cf.
-      ## https://github.com/HenrikBengtsson/future/issues/417.
+      ## https://github.com/futureverse/future/issues/417.
       ## The reason for duplicates being possible, is that '...' is renamed
       ## to 'future.call.arguments' so the former won't override the latter.
       ## This might have to be fixed in future.apply and furrr. /HB 2020-09-21

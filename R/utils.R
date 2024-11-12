@@ -134,7 +134,7 @@ inherits_from_namespace <- function(env) {
 ## Assign globals to an specific environment and set that environment
 ## for functions.  If they are functions of namespaces/packages
 ## and exclude == "namespace", then the globals are not assigned
-## Reference: https://github.com/HenrikBengtsson/future/issues/515
+## Reference: https://github.com/futureverse/future/issues/515
 assign_globals <- function(envir, globals, exclude = getOption("future.assign_globals.exclude", c("namespace")), debug = getOption("future.debug", FALSE)) {
   stop_if_not(is.environment(envir), is.list(globals))
   if (length(globals) == 0L) return(envir)
@@ -162,9 +162,9 @@ assign_globals <- function(envir, globals, exclude = getOption("future.assign_gl
         ## it's environment needs to be reassigned to the 'envir'
         ## environment.
         ## Related to:
-        ## * https://github.com/HenrikBengtsson/future/issues/475
-        ## * https://github.com/HenrikBengtsson/future/issues/515
-        ## * https://github.com/HenrikBengtsson/future/issues/608
+        ## * https://github.com/futureverse/future/issues/475
+        ## * https://github.com/futureverse/future/issues/515
+        ## * https://github.com/futureverse/future/issues/608
         if (identical(w, emptyenv())) {
           environment(global) <- envir
           if (debug) mdebugf("- reassign environment for %s", sQuote(name))
@@ -381,7 +381,7 @@ nullcon <- local({
 })
 
 
-## https://github.com/HenrikBengtsson/future/issues/130
+## https://github.com/futureverse/future/issues/130
 #' @importFrom utils packageVersion
 resolveMPI <- local({
   cache <- list()
@@ -487,7 +487,7 @@ can_capture_utf8 <- if (.Platform$OS.type == "windows") {
   function() TRUE
 }
 
-## https://github.com/HenrikBengtsson/future/issues/473
+## https://github.com/futureverse/future/issues/473
 adhoc_native_to_utf8 <- function(x) {
   code <- gsub("<U[+]([[:alnum:]]+)>", "\\\\u\\1", x)
   if (identical(code, x)) return(x)

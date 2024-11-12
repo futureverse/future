@@ -14,7 +14,7 @@ print(id)
 stopifnot(id != id0)
 
 ## Assert that forked child processes get a unique session id
-## Issue: https://github.com/HenrikBengtsson/future/issues/187
+## Issue: https://github.com/futureverse/future/issues/187
 if (supportsMulticore()) {
   plan(multicore, workers = 2L)
   fs <- lapply(1:2, FUN = function(i) {

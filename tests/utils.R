@@ -78,7 +78,7 @@ objs <- list(
 truth <- c(a = 3L, b = 3L, c = 3L, d = 1L, e = 1L)
 
 ## Special case: length(x) == 5, but .length(x) == 2
-## BUG FIX: https://github.com/HenrikBengtsson/future/issues/164
+## BUG FIX: https://github.com/futureverse/future/issues/164
 if (requireNamespace("tools")) {
   objs[["f"]] <- structure(list("foo", length = 5L), class = "pdf_doc")
   truth["f"] <- 2L

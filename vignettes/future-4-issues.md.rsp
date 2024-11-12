@@ -15,7 +15,7 @@ In the ideal case, all it takes to start using futures in R is to replace select
 
 However, as show below, there are few cases where you might run into some hurdles, but, as also shown, they are often easy to overcome.  These are often related to global variables.  
 
-_If you identify other cases, please consider [reporting](https://github.com/HenrikBengtsson/future/issues/) them so they can be documented here and possibly even be fixed._
+_If you identify other cases, please consider [reporting](https://github.com/futureverse/future/issues/) them so they can be documented here and possibly even be fixed._
 
 
 ## Issues with globals and packages

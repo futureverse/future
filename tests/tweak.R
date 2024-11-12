@@ -162,7 +162,7 @@ message("*** tweak() - odds and ends ...")
 
 ## BUG: getGlobalsAndPackages(Formula::Formula(~ x)) would produce
 ## "the condition has length > 1" warnings.
-## https://github.com/HenrikBengtsson/future/issues/395
+## https://github.com/futureverse/future/issues/395
 length.Formula <- function(x) c(1L, 1L)
 expr <- structure(y ~ x, class = "Formula")
 stopifnot(length(length(expr)) == 2L)

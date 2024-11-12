@@ -286,7 +286,7 @@ message("Main PID: ", pid2)
 stopifnot(pid2 == pid)
 
 message("*** cluster() - exception when re-creating workers ...")
-## https://github.com/HenrikBengtsson/future/issues/261
+## https://github.com/futureverse/future/issues/261
 
 plan(cluster, workers = "localhost")
 f <- future(1)

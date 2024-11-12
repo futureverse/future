@@ -119,7 +119,7 @@ for (strategy in supportedStrategies()) {
   ## 'a' of h() might overwride 'a' of g() so that g() == 1.
   ## This has to be fixed.
   ##
-  ## See also https://github.com/HenrikBengtsson/future/issues/608
+  ## See also https://github.com/futureverse/future/issues/608
   
   f <- future(g() + h())
   v <- tryCatch(value(f), error = identity)

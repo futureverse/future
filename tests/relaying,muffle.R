@@ -4,7 +4,7 @@ options(future.debug = FALSE)
 
 message("*** withRestart() and muffling ...")
 
-## https://github.com/HenrikBengtsson/future/issues/485
+## https://github.com/futureverse/future/issues/485
 fcn <- function(...) {
   withRestarts({
     cond <- simpleCondition("boom")

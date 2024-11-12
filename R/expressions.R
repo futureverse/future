@@ -23,7 +23,7 @@ makeExpression <- local({
     ## WORKAROUND: Do not reset 'nwarnings' unless changed, because
     ## that will, as documented, trigger any warnings collected
     ## internally to be removed.
-    ## https://github.com/HenrikBengtsson/future/issues/645
+    ## https://github.com/futureverse/future/issues/645
     if (identical(getOption("nwarnings"), ...future.oldOptions$nwarnings)) {
       ...future.oldOptions$nwarnings <- NULL
     }
@@ -37,7 +37,7 @@ makeExpression <- local({
     ## on package load/attach.  For this reason, I'll relax the
     ## resetting of R options to only be done to preexisting R options
     ## for now. These thoughts were triggered by a related data.table
-    ## issue, cf. https://github.com/HenrikBengtsson/future/issues/609
+    ## issue, cf. https://github.com/futureverse/future/issues/609
     ## /HB 2022-04-29
     
     ## (b) Remove any options added

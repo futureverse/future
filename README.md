@@ -1,7 +1,7 @@
 
 
 <div id="badges"><!-- pkgdown markup -->
-<a href="https://CRAN.R-project.org/web/checks/check_results_future.html"><img border="0" src="https://www.r-pkg.org/badges/version/future" alt="CRAN check status"/></a> <a href="https://github.com/HenrikBengtsson/future/actions?query=workflow%3AR-CMD-check"><img border="0" src="https://github.com/HenrikBengtsson/future/actions/workflows/R-CMD-check.yaml/badge.svg?branch=develop" alt="R CMD check status"/></a> <a href="https://github.com/HenrikBengtsson/future/actions?query=workflow%3Arevdepcheck-top"><img border="0" src="https://github.com/HenrikBengtsson/future/actions/workflows/revdepcheck-top.yaml/badge.svg?branch=develop" alt="Top reverse-dependency checks status"/></a> <a href="https://github.com/HenrikBengtsson/future/actions?query=workflow%3Afuture_tests"><img border="0" src="https://github.com/HenrikBengtsson/future/actions/workflows/future_tests.yaml/badge.svg?branch=develop" alt="future.tests checks status"/></a>   <a href="https://app.codecov.io/gh/HenrikBengtsson/future"><img border="0" src="https://codecov.io/gh/HenrikBengtsson/future/branch/develop/graph/badge.svg" alt="Coverage Status"/></a> 
+<a href="https://CRAN.R-project.org/web/checks/check_results_future.html"><img border="0" src="https://www.r-pkg.org/badges/version/future" alt="CRAN check status"/></a> <a href="https://github.com/futureverse/future/actions?query=workflow%3AR-CMD-check"><img border="0" src="https://github.com/futureverse/future/actions/workflows/R-CMD-check.yaml/badge.svg?branch=develop" alt="R CMD check status"/></a> <a href="https://github.com/futureverse/future/actions?query=workflow%3Arevdepcheck-top"><img border="0" src="https://github.com/futureverse/future/actions/workflows/revdepcheck-top.yaml/badge.svg?branch=develop" alt="Top reverse-dependency checks status"/></a> <a href="https://github.com/futureverse/future/actions?query=workflow%3Afuture_tests"><img border="0" src="https://github.com/futureverse/future/actions/workflows/future_tests.yaml/badge.svg?branch=develop" alt="future.tests checks status"/></a>   <a href="https://app.codecov.io/gh/futureverse/future"><img border="0" src="https://codecov.io/gh/futureverse/future/branch/develop/graph/badge.svg" alt="Coverage Status"/></a> 
 </div>
 
 # future: Unified Parallel and Distributed Processing in R for Everyone <img border="0" src="man/figures/logo.png" alt="The 'future' hexlogo" align="right"/>
@@ -647,7 +647,7 @@ install.packages("future")
 
 To install the pre-release version that is available in Git branch `develop` on GitHub, use:
 ```r
-remotes::install_github("HenrikBengtsson/future", ref="develop")
+remotes::install_github("futureverse/future", ref="develop")
 ```
 This will install the package from source.  
 

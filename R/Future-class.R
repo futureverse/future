@@ -638,7 +638,7 @@ resolved.Future <- function(x, run = TRUE, ...) {
 #' Currently it is not possible to specify what type of nested
 #' futures to be used, meaning the above default will always be
 #' used.
-#' See \href{https://github.com/HenrikBengtsson/future/issues/37}{Issue #37}
+#' See \href{https://github.com/futureverse/future/issues/37}{Issue #37}
 #' for plans on adding support for custom nested future types.
 #'
 #' (*) Ideally we would set `mc.cores = 0` but that will unfortunately

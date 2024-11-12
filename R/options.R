@@ -340,7 +340,7 @@ update_package_options <- function(debug = FALSE) {
   update_package_option("future.wait.alpha", mode = "numeric", debug = debug)
 
   ## Prototyping in future 1.22.0:
-  ## https://github.com/HenrikBengtsson/future/issues/515
+  ## https://github.com/futureverse/future/issues/515
   update_package_option("future.assign_globals.exclude", split = ",", debug = debug)
 
   ## Prototyping in future 1.23.0:

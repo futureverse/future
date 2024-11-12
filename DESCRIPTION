@@ -37,8 +37,8 @@ Description: The purpose of this package is to provide a lightweight and
 License: LGPL (>= 2.1)
 LazyLoad: TRUE
 ByteCompile: TRUE
-URL: https://future.futureverse.org, https://github.com/HenrikBengtsson/future
-BugReports: https://github.com/HenrikBengtsson/future/issues
+URL: https://future.futureverse.org, https://github.com/futureverse/future
+BugReports: https://github.com/futureverse/future/issues
 Encoding: UTF-8
 RoxygenNote: 7.3.2
 Roxygen: list(markdown = TRUE)

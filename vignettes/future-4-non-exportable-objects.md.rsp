@@ -71,7 +71,7 @@ _Comment_: The `future.globals.onReference` options is set to `"ignore"` by defa
 ## Packages with non-exportable objects
 
 The below table and sections provide a few examples of non-exportable R objects that you may run into when trying to parallelize your code, or simply from trying reload objects saved in a previous R session.
-_If you identify other cases, please consider [reporting](https://github.com/HenrikBengtsson/future/issues/) them so they can be documented here and possibly even be fixed._
+_If you identify other cases, please consider [reporting](https://github.com/futureverse/future/issues/) them so they can be documented here and possibly even be fixed._
 
   Package         | Examples of non-exportable types or classes
   :---------------|:-------------------------------------------

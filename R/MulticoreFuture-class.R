@@ -206,7 +206,7 @@ result.MulticoreFuture <- function(future, ...) {
     ## SPECIAL: Check for fallback 'fatal error in wrapper code'
     ## try-error from parallel:::mcparallel().  If detected, then
     ## turn into an error with a more informative error message, cf.
-    ## https://github.com/HenrikBengtsson/future/issues/35
+    ## https://github.com/futureverse/future/issues/35
     if (is.null(result) || identical(result, structure("fatal error in wrapper code", class = "try-error"))) {
       label <- future$label
       if (is.null(label)) label <- "<none>"

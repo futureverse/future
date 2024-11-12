@@ -107,7 +107,7 @@ for (mc in 1:2) {
 
     ## Assert that nested the FutureRegistry is not inherited when using
     ## nested strategies, particularly 'multicore'.
-    ## https://github.com/HenrikBengtsson/future/issues/231
+    ## https://github.com/futureverse/future/issues/231
     fs <- lapply(1:2, FUN = function(i) future( value(future(TRUE)) ))
     v <- value(fs)
   } ## for (strategy ...)

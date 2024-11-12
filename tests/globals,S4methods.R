@@ -26,7 +26,7 @@ for (strategy in supportedStrategies()) {
   
   ## FIXME:
   ## Just like S3 methods, S4 methods are not picked up
-  ## https://github.com/HenrikBengtsson/future/issues/615
+  ## https://github.com/futureverse/future/issues/615
   f <- future({ my_fcn(3) }, lazy = TRUE)
   rm(list = "my_fcn")
   v <- tryCatch(value(f), error = identity)
