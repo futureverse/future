@@ -14,20 +14,26 @@ if (isWin32) types <- NULL
 if (supportsMulticore() && !on_solaris) types <- c(types, "FORK")
 
 setupClusterWithoutPkgs <- function(type = "PSOCK", withouts = c("future")) {
+  message("setupClusterWithoutPkgs() ...")
   cl <- parallel::makeCluster(1L, type = type, timeout = 60)
-
+  print(cl)
+  
   ## Emulate a worker that does not have 'future' installed.
   ## by setting a different user library path on the worker.
   libs <- parallel::clusterEvalQ(cl, .libPaths(tempdir()))[[1]]
+  print(libs)
 
   ## Check whether 'future' is still available on the worker or not.
   ## It could be that it is installed in the system library path, which
   ## in case we cannot "hide" the future package from the worker.
   has_pkgs <- parallel::clusterCall(cl, fun = sapply, X = withouts,
                                     FUN = requireNamespace)[[1]]
+  print(has_pkgs)
 
   attr(cl, "libs") <- libs
   attr(cl, "has_pkgs") <- has_pkgs
+
+  message("setupClusterWithoutPkgs() ... done")
 
   cl
 }
