@@ -29,6 +29,11 @@ jobs:
           extra-packages: any::covr, any::xml2
           needs: coverage
 
+      - name: Install itself
+        run: |
+          install.packages(".", repos = NULL, type = "source")
+        shell: Rscript {0}
+
       - name: Test coverage
         run: |
           cov <- covr::package_coverage(
