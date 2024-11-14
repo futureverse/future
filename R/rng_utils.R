@@ -63,7 +63,7 @@ set_random_seed <- function(seed, kind = NULL) {
 next_random_seed <- function(seed = get_random_seed()) {
   sample.int(n = 1L, size = 1L, replace = FALSE)
   seed_next <- get_random_seed()
-  stop_if_not(!any(seed_next != seed))
+  stop_if_not(identical(seed_next, seed))
   invisible(seed_next)
 }
 
@@ -104,7 +104,7 @@ as_lecyer_cmrg_seed <- function(seed) {
     }
 
     oseed <- get_random_seed()
-    
+
     ## Already a L'Ecuyer-CMRG seed?  Then use that as is.
     if (!is.na(seed) && seed) {
       if (is_lecyer_cmrg_seed(oseed)) return(oseed)
@@ -112,7 +112,7 @@ as_lecyer_cmrg_seed <- function(seed) {
 
     ## Generate a random L'Ecuyer-CMRG seed from the current RNG state
     okind <- RNGkind("L'Ecuyer-CMRG")[1]
-    
+
     ## Make sure to not forward the RNG state or the RNG kind
     on.exit(set_random_seed(oseed, kind = okind), add = TRUE)
 
@@ -132,14 +132,14 @@ as_lecyer_cmrg_seed <- function(seed) {
     ## Generate a random L'Ecuyer-CMRG seed from the current RNG state
     oseed <- get_random_seed()
     okind <- RNGkind("L'Ecuyer-CMRG")[1]
-    
+
     ## Make sure to not forward the RNG state or the RNG kind
     on.exit(set_random_seed(oseed, kind = okind), add = TRUE)
-    
+
     ## ... based on 'seed'
     set.seed(seed)
     return(get_random_seed())
   }
-  
+
   stopf("Argument 'seed' must be L'Ecuyer-CMRG RNG seed as returned by parallel::nextRNGStream() or an single integer: %s", capture.output(str(seed)))
 }
