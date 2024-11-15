@@ -85,7 +85,6 @@ supports_omp_threads <- future:::supports_omp_threads
 
 get_random_seed <- future:::get_random_seed
 set_random_seed <- future:::set_random_seed
-next_random_seed <- future:::next_random_seed
 as_lecyer_cmrg_seed <- future:::as_lecyer_cmrg_seed
 is_lecyer_cmrg_seed <- future:::is_lecyer_cmrg_seed
 

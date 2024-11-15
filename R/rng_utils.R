@@ -14,13 +14,6 @@
 #' returns the _old_ seed.  If `seed = NULL`, then the `.Random.seed` is
 #' removed.
 #'
-#' `next_random_seed()` updates `.Random.seed` by drawning an dummy random
-#' number internally, and invisibly returns the _new_ seed.
-#'
-#' `is_valid_random_seed(seed)` returns TRUE if `seed` is a valid random seed
-#' of any RNG kind, otherwise FALSE.
-#' This function does _not_ update `.Random.seed`.
-#'
 #' `is_lecyer_cmrg_seed(seed)` returns TRUE if `seed` is a valid random seed
 #' of kind `L'Ecuyer-CMRG`, otherwise FALSE.
 #' This function does _not_ update `.Random.seed`.
@@ -58,27 +51,6 @@ set_random_seed <- function(seed, kind = NULL) {
   invisible(old_seed)
 }
 
-#' @rdname random_seed_utils
-#' @noRd
-next_random_seed <- function(seed = get_random_seed()) {
-  sample.int(n = 1L, size = 1L, replace = FALSE)
-  seed_next <- get_random_seed()
-  stop_if_not(!any(seed_next != seed))
-  invisible(seed_next)
-}
-
-#' @rdname random_seed_utils
-#' @noRd
-is_valid_random_seed <- function(seed) {
-  oseed <- get_random_seed()
-  on.exit(set_random_seed(oseed))
-  env <- globalenv()
-  env$.Random.seed <- seed
-  res <- tryCatch({
-    sample.int(n = 1L, size = 1L, replace = FALSE)
-  }, simpleWarning = function(w) w)
-  !inherits(res, "simpleWarning")
-}
 
 ## For RNGkind("L'Ecuyer-CMRG") we should have (see help('RNGkind')):
 ##   .Random.seed <- c(rng.kind, n) where length(n) == 6L.
