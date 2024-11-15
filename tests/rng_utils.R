@@ -55,7 +55,9 @@ stopifnot(inherits(res, "error"))
 
 message(" - replicated RNG draws")
 
-seed_org <- next_random_seed()
+## Forward random seed
+sample.int(n = 1L, size = 1L, replace = FALSE)
+seed_org <- get_random_seed()
 set.seed(42)
 
 ## Draw two random number from 1:100 one after the other

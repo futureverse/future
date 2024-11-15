@@ -14,9 +14,6 @@
 #' returns the _old_ seed.  If `seed = NULL`, then the `.Random.seed` is
 #' removed.
 #'
-#' `next_random_seed()` updates `.Random.seed` by drawning an dummy random
-#' number internally, and invisibly returns the _new_ seed.
-#'
 #' `is_valid_random_seed(seed)` returns TRUE if `seed` is a valid random seed
 #' of any RNG kind, otherwise FALSE.
 #' This function does _not_ update `.Random.seed`.
@@ -56,15 +53,6 @@ set_random_seed <- function(seed, kind = NULL) {
     env$.Random.seed <- seed
   }
   invisible(old_seed)
-}
-
-#' @rdname random_seed_utils
-#' @noRd
-next_random_seed <- function(seed = get_random_seed()) {
-  sample.int(n = 1L, size = 1L, replace = FALSE)
-  seed_next <- get_random_seed()
-  stop_if_not(!any(seed_next != seed))
-  invisible(seed_next)
 }
 
 #' @rdname random_seed_utils
