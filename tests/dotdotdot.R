@@ -58,7 +58,7 @@ for (cores in 1:availCores) {
     y
   }
 
-  ## Issue: https://github.com/HenrikBengtsson/globals/issues/72
+  ## Issue: https://github.com/futureverse/globals/issues/72
   sum_fcns$F <- function(x, y) {
     message("Using '...' in a formula")
 
