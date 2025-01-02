@@ -112,21 +112,21 @@ getExpression.UniprocessFuture <- local({
     .(exit)
   })
 
-function(future, immediateConditions = TRUE, exit = NULL, ...) {
-  ## Assert that no arguments but the first is passed by position
-  assert_no_positional_args_but_first()
-
-  ## Preserve RNG state?
-  oseed <- get_random_seed()
-  if (is.null(oseed)) {
-    okind <- RNGkind()[1]
-    exit <- bquote_apply(tmpl_exit_rng_remove)
-  } else {
-    exit <- bquote_apply(tmpl_exit_rng_undo)
+  function(future, immediateConditions = TRUE, exit = NULL, ...) {
+    ## Assert that no arguments but the first is passed by position
+    assert_no_positional_args_but_first()
+  
+    ## Preserve RNG state?
+    oseed <- get_random_seed()
+    if (is.null(oseed)) {
+      okind <- RNGkind()[1]
+      exit <- bquote_apply(tmpl_exit_rng_remove)
+    } else {
+      exit <- bquote_apply(tmpl_exit_rng_undo)
+    }
+  
+    NextMethod(immediateConditions = immediateConditions, exit = exit)
   }
-
-  NextMethod(immediateConditions = immediateConditions, exit = exit)
-}
 })
 
 

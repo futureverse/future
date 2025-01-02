@@ -80,7 +80,11 @@ run.MulticoreFuture <- function(future, ...) {
   FutureRegistry(reg, action = "add", future = future, earlySignal = TRUE)
 
   future.args <- list(expr)
-  job <- do.call(parallel::mcparallel, args = future.args, envir = envir)
+  job <- local({
+    oopts <- options(mc.cores = NULL)
+    on.exit(options(oopts))
+    do.call(parallel::mcparallel, args = future.args, envir = envir)
+  })
 
   future$job <- job
   future$state <- "running"
@@ -333,7 +337,7 @@ getExpression.MulticoreFuture <- local({
     .(expr)
   })
 
-  function(future, expr = future$expr, mc.cores = 1L, immediateConditions = TRUE, conditionClasses = future$conditions, resignalImmediateConditions = getOption("future.multicore.relay.immediate", immediateConditions), ...) {
+  function(future, expr = future$expr, immediateConditions = TRUE, conditionClasses = future$conditions, resignalImmediateConditions = getOption("future.multicore.relay.immediate", immediateConditions), ...) {
     ## Assert that no arguments but the first is passed by position
     assert_no_positional_args_but_first()
   
@@ -367,7 +371,7 @@ getExpression.MulticoreFuture <- local({
       ## Set condition classes to be ignored in case changed
       attr(conditionClasses, "exclude") <- exclude
     } ## if (resignalImmediateConditions && immediateConditions)
-  
-    NextMethod(expr = expr, mc.cores = mc.cores, immediateConditions = immediateConditions, conditionClasses = conditionClasses)
+
+    NextMethod(expr = expr, immediateConditions = immediateConditions, conditionClasses = conditionClasses)
   }
 })
