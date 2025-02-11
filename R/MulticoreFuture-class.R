@@ -39,7 +39,7 @@ run.MulticoreFuture <- function(future, ...) {
   if (future$state != "created") {
     label <- future$label
     if (is.null(label)) label <- "<none>"
-    stop(FutureError(sprintf("A future ('%s') can only be launched once.", label), future = future))
+    stop(FutureError(sprintf("A future ('%s') can only be launched once", label), future = future))
   }
   
   ## Assert that the process that created the future is
@@ -53,12 +53,6 @@ run.MulticoreFuture <- function(future, ...) {
 
   t_start <- Sys.time()
   
-  ## Assign globals
-  envir <- new.env(parent = envir)
-  if (length(future$globals) > 0L) {
-    envir <- assign_globals(envir, globals = future$globals)
-  }
-
   ## Get a free worker
   reg <- sprintf("multicore-%s", session_uuid())
   requestCore(
@@ -303,75 +297,36 @@ result.MulticoreFuture <- function(future, ...) {
 
 #' @export
 getExpression.MulticoreFuture <- local({
-  tmpl_expr_disable_multithreading <- bquote_compile({
-    ## Force single-threaded OpenMP, iff needed
-    old_omp_threads <- RhpcBLASctl::omp_get_max_threads()
-    if (old_omp_threads > 1L) {
-      RhpcBLASctl::omp_set_num_threads(1L)
-      base::on.exit(RhpcBLASctl::omp_set_num_threads(old_omp_threads), add = TRUE)
-      new_omp_threads <- RhpcBLASctl::omp_get_max_threads()
-      if (!is.numeric(new_omp_threads) || is.na(new_omp_threads) || new_omp_threads != 1L) {
-        label <- future$label
-        if (is.null(label)) label <- "<none>"
-        warning(future::FutureWarning(sprintf("Failed to force a single OMP thread on this system. Number of threads used: %s", new_omp_threads), future = future))
-      }
-    }
-
-    ## Tell BLAS to use a single thread(?)
-    ## NOTE: Is multi-threaded BLAS an issue? Have we got any reports on this.
-    ## FIXME: How can we get the current BLAS settings?
-    ## /HB 2020-01-09
-    ## RhpcBLASctl::blas_set_num_threads(1L)
-
-    ## Force single-threaded RcppParallel, iff needed
-    old_rcppparallel_threads <- Sys.getenv("RCPP_PARALLEL_NUM_THREADS", "")
-    if (old_rcppparallel_threads != "1") {
-      Sys.setenv(RCPP_PARALLEL_NUM_THREADS = "1")
-      if (old_rcppparallel_threads == "") {
-        base::on.exit(Sys.unsetenv("RCPP_PARALLEL_NUM_THREADS"), add = TRUE)
-      } else {
-        base::on.exit(Sys.setenv(RCPP_PARALLEL_NUM_THREADS = old_rcppparallel_threads), add = TRUE)
-      }
-    }
-
-    .(expr)
-  })
-
-  function(future, expr = future$expr, immediateConditions = TRUE, conditionClasses = future$conditions, resignalImmediateConditions = getOption("future.multicore.relay.immediate", immediateConditions), ...) {
+  function(future, expr = future$expr, immediateConditions = TRUE, ...) {
     ## Assert that no arguments but the first is passed by position
     assert_no_positional_args_but_first()
   
     debug <- getOption("future.debug", FALSE)
   
     ## Disable multi-threading in futures?
+    threads <- NA_integer_
     multithreading <- getOption("future.fork.multithreading.enable", TRUE)  
     if (isFALSE(multithreading)) {
-      if (!supports_omp_threads(assert = TRUE, debug = debug)) {
+      if (supports_omp_threads(assert = TRUE, debug = debug)) {
+        threads <- 1L
+        if (debug) mdebug("- Updated expression to force single-threaded (OpenMP and RcppParallel) processing")
+      } else {
         warning(FutureWarning("It is not possible to disable OpenMP multi-threading on this systems", future = future))
       }
-
-      expr <- bquote_apply(tmpl_expr_disable_multithreading)
-      if (debug) mdebug("- Updated expression to force single-threaded (OpenMP and RcppParallel) processing")
     }
   
-  
     ## Inject code for resignaling immediateCondition:s?
-    if (resignalImmediateConditions && immediateConditions) {
-      ## Preserve condition classes to be ignored
-      exclude <- attr(conditionClasses, "exclude", exact = TRUE)
-    
-      immediateConditionClasses <- getOption("future.relay.immediate", "immediateCondition")
-      conditionClasses <- unique(c(conditionClasses, immediateConditionClasses))
-  
-      if (length(conditionClasses) > 0L) {
-        ## Communicate via the file system
-        expr <- bquote_apply(tmpl_expr_send_immediateConditions_via_file)
-      } ## if (length(conditionClasses) > 0)
-      
-      ## Set condition classes to be ignored in case changed
-      attr(conditionClasses, "exclude") <- exclude
+    if (immediateConditions) {
+      resignalImmediateConditions <- getOption("future.multicore.relay.immediate", TRUE)
+      if (resignalImmediateConditions) {
+        immediateConditionClasses <- getOption("future.relay.immediate", "immediateCondition")
+        if (length(immediateConditionClasses) > 0L) {
+          ## Communicate via the file system
+          expr <- bquote_apply(tmpl_expr_send_immediateConditions_via_file)
+        }
+      }
     } ## if (resignalImmediateConditions && immediateConditions)
-
-    NextMethod(expr = expr, immediateConditions = immediateConditions, conditionClasses = conditionClasses)
+  
+    NextMethod(expr = expr, immediateConditions = immediateConditions, threads = threads)
   }
 })

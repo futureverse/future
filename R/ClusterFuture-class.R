@@ -60,7 +60,7 @@ as_ClusterFuture <- function(future, workers = NULL, ...) {
     workers <- addCovrLibPath(workers)
   }
   if (!inherits(workers, "cluster")) {
-    stopf("Argument 'workers' is not of class 'cluster': %s", paste(sQuote(class(workers)), collapse = ", "))
+    stopf("Argument 'workers' is not of class 'cluster': %s", commaq(class(workers)))
   }
   stop_if_not(length(workers) > 0)
 
@@ -95,7 +95,7 @@ run.ClusterFuture <- function(future, ...) {
   if (future$state != 'created') {
     label <- future$label
     if (is.null(label)) label <- "<none>"
-    stop(FutureError(sprintf("A future ('%s') can only be launched once.", label), future = future))
+    stop(FutureError(sprintf("A future ('%s') can only be launched once", label), future = future))
   }
   
   ## Assert that the process that created the future is
@@ -174,47 +174,6 @@ run.ClusterFuture <- function(future, ...) {
           stop = Sys.time()
     )
   }
-
-  ## (iii) Export globals
-  globals <- globals(future)
-  if (length(globals) > 0) {
-    t_start <- Sys.time()
-    if (debug) {
-      total_size <- asIEC(objectSize(globals))
-      mdebugf("Exporting %d global objects (%s) to cluster node #%d ...", length(globals), total_size, node_idx)
-    }
-    for (name in names(globals)) {
-      ## For instance sendData.SOCKnode(...) may generate warnings
-      ## on packages not being available after serialization, e.g.
-      ##  In serialize(data, node$con) :
-      ## package:future' may not be available when loading
-      ## Here we'll suppress any such warnings.
-      value <- globals[[name]]
-      if (debug) {
-        size <- asIEC(objectSize(value))
-        mdebugf("Exporting %s (%s) to cluster node #%d ...", sQuote(name), size, node_idx)
-      }
-      suppressWarnings({
-        cluster_call(cl, fun = gassign, name, value, future = future, when = "call gassign() on")
-      })
-      if (debug) mdebugf("Exporting %s (%s) to cluster node #%d ... DONE", sQuote(name), size, node_idx)
-      value <- NULL
-    }
-    if (debug) mdebugf("Exporting %d global objects (%s) to cluster node #%d ... DONE", length(globals), total_size, node_idx)
-    
-    if (inherits(future$.journal, "FutureJournal")) {
-      appendToFutureJournal(future,
-           event = "exportGlobals",
-        category = "overhead",
-          parent = "launch",
-           start = t_start,
-            stop = Sys.time()
-      )
-    }
-  }
-  ## Not needed anymore
-  globals <- NULL
-
 
   ## Add to registry
   FutureRegistry(reg, action = "add", future = future, earlySignal = FALSE)
@@ -606,7 +565,10 @@ requestNode <- function(await, workers, timeout = getOption("future.wait.timeout
 
 #' @export
 getExpression.ClusterFuture <- local({
-  tmpl_expr_conditions <- bquote_compile({
+  tmpl_expr_conditions <- future:::bquote_compile({
+    "# future:::getExpression.ClusterFuture(): inject code for instant"
+    "# relaying of 'immediateCondition' objects back to the parent R  "
+    "# process via the existing PSOCK channel                         "
     ...future.makeSendCondition <- base::local({
       sendCondition <- NULL
 
@@ -656,37 +618,32 @@ getExpression.ClusterFuture <- local({
   })
 
 
-  function(future, expr = future$expr, immediateConditions = TRUE, conditionClasses = future$conditions, resignalImmediateConditions = getOption("future.psock.relay.immediate", immediateConditions), ...) {
+  function(future, expr = future$expr, immediateConditions = TRUE, ...) {
     ## Assert that no arguments but the first is passed by position
     assert_no_positional_args_but_first()
   
     ## Inject code for resignaling immediateCondition:s?
-    if (resignalImmediateConditions && immediateConditions) {
-      ## Preserve condition classes to be ignored
-      exclude <- attr(conditionClasses, "exclude", exact = TRUE)
-    
-      immediateConditionClasses <- getOption("future.relay.immediate", "immediateCondition")
-      conditionClasses <- unique(c(conditionClasses, immediateConditionClasses))
-  
-      if (length(conditionClasses) > 0L) {
-        ## Does the cluster node communicate with a connection?
-        ## (if not, it's via MPI)
-        workers <- future$workers
-        ## AD HOC/FIXME: Here 'future$node' is yet not assigned, so we look at
-        ## the first worker and assume the others are the same. /HB 2019-10-23
-        cl <- workers[1L]
-        node <- cl[[1L]]
-        con <- node$con
-        if (!is.null(con)) {
-          expr <- bquote_apply(tmpl_expr_conditions)
-        } ## if (!is.null(con))
-      } ## if (length(conditionClasses) > 0)
-      
-      ## Set condition classes to be ignored in case changed
-      attr(conditionClasses, "exclude") <- exclude
+    if (immediateConditions) {
+      resignalImmediateConditions <- getOption("future.psock.relay.immediate", TRUE)
+      if (resignalImmediateConditions) {
+        immediateConditionClasses <- getOption("future.relay.immediate", "immediateCondition")
+        if (length(immediateConditionClasses) > 0L) {
+          ## Does the cluster node communicate with a connection?
+          ## (if not, it's via MPI)
+          workers <- future$workers
+          ## AD HOC/FIXME: Here 'future$node' is yet not assigned, so we look at
+          ## the first worker and assume the others are the same. /HB 2019-10-23
+          cl <- workers[1L]
+          node <- cl[[1L]]
+          con <- node$con
+          if (!is.null(con)) {
+            expr <- bquote_apply(tmpl_expr_conditions)
+          } ## if (!is.null(con))
+        }
+      }
     } ## if (resignalImmediateConditions && immediateConditions)
     
-    NextMethod(expr = expr, immediateConditions = immediateConditions, conditionClasses = conditionClasses)
+    NextMethod(expr = expr, immediateConditions = immediateConditions)
   }
 })
 

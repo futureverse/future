@@ -34,9 +34,6 @@ args <- list(x = 42, y = 12)
 v0 <- do.call(function(x, y) a * (x - y), args = args)
 
 for (cores in 1:availCores) {
-  ## Speed up CRAN checks: Skip on CRAN Windows 32-bit
-  if (!fullTest && isWin32) next
-  
   message(sprintf("Testing with %d cores ...", cores))
   options(mc.cores = cores)
   strategies <- supportedStrategies(cores)
@@ -58,7 +55,9 @@ for (cores in 1:availCores) {
           v1 <- value(f)
         }, error = identity)
         stopifnot(!inherits(res1, "FutureError"))
+        utils::str(list(strategy = strategy, globals = globals, lazy = lazy, v0 = v0, res1 = res1))
         if (isTRUE(as.logical(Sys.getenv("R_CHECK_IDEAL")))) {
+          message("R_CHECK_IDEAL=TRUE")
           if (globals) {
             stopifnot(all.equal(v1, v0))
           } else {
@@ -66,7 +65,6 @@ for (cores in 1:availCores) {
           }
         } else {
           if (!inherits(res1, "error")) {
-            utils::str(list(strategy = strategy, globals = globals, lazy = lazy, v0 = v0, v1 = v1))
             stopifnot(all.equal(v1, v0))
           } else {
             stopifnot(!globals)
@@ -84,15 +82,12 @@ for (cores in 1:availCores) {
           v2 <- value(f)
         }, error = identity)
         stopifnot(!inherits(res2, "FutureError"))
+        utils::str(list(strategy = strategy, globals = globals, lazy = lazy, v0 = v0, res2 = res2))
         if (isTRUE(as.logical(Sys.getenv("R_CHECK_IDEAL")))) {
-          if (globals) {
-            stopifnot(all.equal(v2, v0))
-          } else {
-            stopifnot(inherits(res2, "error"))
-          }
+          message("R_CHECK_IDEAL=TRUE")
+          stopifnot(all.equal(v2, v0))
         } else {
           if (!inherits(res2, "error")) {
-            utils::str(list(strategy = strategy, globals = globals, lazy = lazy, v0 = v0, v2 = v2))
             stopifnot(all.equal(v2, v0))
           } else {
             stopifnot(!globals)
@@ -109,15 +104,12 @@ for (cores in 1:availCores) {
           v3 <- value(f)
         }, error = identity)
         stopifnot(!inherits(res3, "FutureError"))
+        utils::str(list(strategy = strategy, globals = globals, lazy = lazy, v0 = v0, res3 = res3))
         if (isTRUE(as.logical(Sys.getenv("R_CHECK_IDEAL")))) {
-          if (globals) {
-            stopifnot(all.equal(v3, v0))
-          } else {
-            stopifnot(inherits(res3, "error"))
-          }
+          message("R_CHECK_IDEAL=TRUE")
+          stopifnot(all.equal(v3, v0))
         } else {
           if (!inherits(res3, "error")) {
-            utils::str(list(strategy = strategy, globals = globals, lazy = lazy, v0 = v0, v3 = v3, res3 = res3))
             stopifnot(all.equal(v3, v0))
           } else {
             stopifnot(!globals)
@@ -141,21 +133,27 @@ for (cores in 1:availCores) {
           utils::str(list(strategy = strategy, globals = globals, lazy = lazy, v4 = v4))
 
           if (isTRUE(as.logical(Sys.getenv("R_CHECK_IDEAL")))) {
+            message("R_CHECK_IDEAL=TRUE")
             if (globals) {
               stopifnot(identical(v4, truth))
             } else {
               stopifnot(inherits(v4, "error"))
             }
           } else if (isTRUE(getOption("future.globals.keepWhere", FALSE))) {
+            message("future.globals.keepWhere=TRUE")
             if (isTRUE(getOption("future.globals.globalsOf.locals", TRUE))) {
+              message("future.globals.globalsOf.locals=TRUE")
               if (globals) {
                 stopifnot(identical(v4, truth))
-              } else if (lazy) {
-                stopifnot(inherits(v4, "error"))
               } else {
-                stopifnot(identical(v4, truth))
+                if (lazy) {
+                  stopifnot(inherits(v4, "error"))
+                } else {
+                  stopifnot(identical(v4, truth))
+                }
               }
             } else {
+              message("future.globals.globalsOf.locals=FALSE")
               if (lazy) {
                 stopifnot(inherits(v4, "error"))
               } else {
@@ -163,24 +161,17 @@ for (cores in 1:availCores) {
               }
             }
           } else {
+            message("future.globals.keepWhere=FALSE")
             if (isTRUE(getOption("future.globals.globalsOf.locals", TRUE))) {
+              message("future.globals.globalsOf.locals=TRUE")
               if (globals) {
                 stopifnot(identical(v4, truth))
-              } else if (lazy) {
-                stopifnot(inherits(v4, "error"))
-              } else if (strategy %in% c("sequential", "multicore")) {
-                stopifnot(inherits(v4, "error"))
               } else {
-                stopifnot(identical(v4, truth))
+                stopifnot(inherits(v4, "error"))
               }
             } else {
-              if (strategy %in% c("sequential", "multicore")) {
-                stopifnot(inherits(v4, "error"))
-              } else if (lazy) {
-                stopifnot(inherits(v4, "error"))
-              } else {
-                stopifnot(identical(v4, truth))
-              }
+              message("future.globals.globalsOf.locals=FALSE")
+              stopifnot(inherits(v4, "error"))
             }
           }
         })

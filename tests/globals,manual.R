@@ -130,7 +130,7 @@ for (strategy in supportedStrategies()) {
   rm(list = names(globals))
   y <- tryCatch(value(f), error = identity)
   if (!inherits(f, c("SequentialFuture", "UniprocessFuture", "MulticoreFuture"))) {
-    stopifnot(inherits(y, "simpleError"))
+    stopifnot(inherits(y, "error"))
   }
 
   
@@ -271,7 +271,8 @@ for (strategy in supportedStrategies()) {
   sub <- function(x, ...) value(future(x[...], globals = "x"))
   y <- tryCatch(sub(x, 2:3), error = identity)
   str(y)
-  stopifnot((strategy %in% c("multisession") && inherits(y, "error")) || identical(y, y_truth))
+  str(strategy)
+  stopifnot(inherits(y, "error"))
 
 
   message("- Packages - manual ...")

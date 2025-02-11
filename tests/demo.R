@@ -1,14 +1,21 @@
 source("incl/start.R")
 
+## Avoid 'Error: C stack usage  7971940 is too close to the limit'
+## on R (< 4.1.0)
+if (getRversion() < "4.1") options(future.debug = FALSE)
+
 message("*** Demos ...")
 
 message("*** Fibonacci demo of the 'future' package ...")
+# Temporarily protect against non-default R_FUTURE_PLAN
+oopts <- options(future.plan = NULL)
 demo("fibonacci", package = "future", ask = FALSE)
+options(oopts)
 message("*** Fibonacci demo of the 'future' package ... DONE")
 
 
 message("*** Mandelbrot demo of the 'future' package ...")
-if (getRversion() >= "3.2.0" && !isWin32) {
+if (getRversion() >= "3.2.0") {
   options(future.demo.mandelbrot.nrow = 2L)
   options(future.demo.mandelbrot.resolution = 50L)
   options(future.demo.mandelbrot.delay = FALSE)

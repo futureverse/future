@@ -166,7 +166,7 @@ resolve.list <- function(x, idxs = NULL, recursive = 0, result = FALSE, stdout =
     } else {
       names <- names(x)
       if (is.null(names)) {
-        stop("Named subsetting not possible. Elements are not named.")
+        stop("Named subsetting not possible. Elements are not named")
       }
 
       idxs <- as.character(idxs)

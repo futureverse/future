@@ -7,9 +7,6 @@ data <- data.frame(x = 1:5, y = 1:5)
 v0 <- subset(data, x < 3)$y
 
 for (strategy in supportedStrategies()) {
-  ## Speed up CRAN checks: Skip on CRAN Windows 32-bit
-  if (!fullTest && isWin32) next
-  
   message(sprintf("- Strategy: %s ...", strategy))
   
   plan(strategy)
@@ -43,6 +40,8 @@ for (strategy in supportedStrategies()) {
   ## Make sure to shut down nested parallel workers
   void %<-% { plan(sequential) }
   print(void)
+
+  options(future.globals.onMissing = NULL)
 
   message(sprintf("- Strategy: %s ... DONE", strategy))
 }

@@ -41,7 +41,7 @@ futureAssignInternal <- function(target, expr, envir = parent.frame(), substitut
       } else if (all(is.na(target$idx))) {
         stop("subscript out of bounds")
       } else {
-        stop("INTERNAL ERROR: Zero length variable name and unknown index.")
+        stop("INTERNAL ERROR: Zero length variable name and unknown index")
       }
     }
   }

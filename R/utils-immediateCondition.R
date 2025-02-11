@@ -150,7 +150,7 @@ save_rds <- function(object, pathname, ...) {
     ex$message <- msg
     stop(ex)
   })
-  stopifnot(file_test("-f", pathname_tmp))
+  stop_if_not(file_test("-f", pathname_tmp))
 
   res <- file.rename(from = pathname_tmp, to = pathname)
 
@@ -170,7 +170,10 @@ save_rds <- function(object, pathname, ...) {
 
 
 
-tmpl_expr_send_immediateConditions_via_file <- bquote_compile({
+tmpl_expr_send_immediateConditions_via_file <- future:::bquote_compile({
+  "# future:::getExpression.MulticoreFuture(): inject code for instant"
+  "# relaying of 'immediateCondition' objects back to the parent R    "
+  "# process via temporary files on the local file system             "
   withCallingHandlers({
     .(expr)
   }, immediateCondition = function(cond) {

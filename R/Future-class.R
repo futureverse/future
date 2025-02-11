@@ -233,8 +233,8 @@ print.Future <- function(x, ...) {
     exclude <- attr(x$conditions, "exclude", exact = TRUE)
     if (length(exclude) == 0) exclude <- "nothing"
     cat(sprintf("Capture condition classes: %s (excluding %s)\n",
-                paste(sQuote(x$conditions), collapse = ", "),
-                paste(sQuote(exclude), collapse = ", ")))
+                commaq(x$conditions),
+                commaq(exclude)))
   } else {
     cat("Capture condition classes: <none>\n")
   }
@@ -259,7 +259,7 @@ print.Future <- function(x, ...) {
   p <- packages(x)
   np <- length(p)
   if (np > 0) {
-    cat(sprintf("Packages: %d packages (%s)\n", np, paste(sQuote(p), collapse = ", ")))
+    cat(sprintf("Packages: %d packages (%s)\n", np, commaq(p)))
   } else {
     cat("Packages: <none>\n")
   }
@@ -311,7 +311,7 @@ print.Future <- function(x, ...) {
   }
   cat(sprintf("Early signaling: %s\n", isTRUE(x$earlySignal)))
   cat(sprintf("Owner process: %s\n", x$owner))
-  cat(sprintf("Class: %s\n", paste(sQuote(class), collapse = ", ")))
+  cat(sprintf("Class: %s\n", commaq(class)))
 } ## print()
 
 
@@ -385,7 +385,7 @@ run.Future <- function(future, ...) {
 
   ## Create temporary future for a specific backend, but don't launch it
   makeFuture <- plan("next")
-  if (debug) mdebug("- Future backend: ", paste(sQuote(class(makeFuture)), collapse = ", "))
+  if (debug) mdebug("- Future backend: ", commaq(class(makeFuture)))
 
   ## AD HOC/WORKAROUND: /HB 2020-12-21
   args <- list(
@@ -418,7 +418,7 @@ run.Future <- function(future, ...) {
     }
   }
 
-  if (debug) mdebug("- Future class: ", paste(sQuote(class(tmpFuture)), collapse = ", "))
+  if (debug) mdebug("- Future class: ", commaq(class(tmpFuture)))
 
   ## AD HOC/SPECIAL:
   ## If 'earlySignal=TRUE' was set explicitly when creating the future,
@@ -657,153 +657,24 @@ getExpression <- function(future, ...) UseMethod("getExpression")
 
 #' @export
 getExpression.Future <- local({
-
-  tmpl_enter <- bquote_compile({
-    base::local({
-      ## covr: skip=4
-      ## If 'future' is not installed on the worker, or a too old version
-      ## of 'future' is used, then give an early error
-      ## If future::FutureResult does not exist, give an error
-      has_future <- base::requireNamespace("future", quietly = TRUE)
-      if (has_future) {
-        ## future (>= 1.20.0)
-        ns <- base::getNamespace("future")
-        version <- ns[[".package"]][["version"]]
-        ## future (< 1.20.0)
-        if (is.null(version)) version <- utils::packageVersion("future")
-      } else {
-        version <- NULL
-      }
-      if (!has_future || version < "1.8.0") {
-        info <- base::c(
-          r_version = base::gsub("R version ", "", base::R.version$version.string),
-          platform = base::sprintf("%s (%s-bit)", base::R.version$platform, 8 * base::.Machine$sizeof.pointer),
-          os = base::paste(base::Sys.info()[base::c("sysname", "release", "version")], collapse = " "),
-          hostname = base::Sys.info()[["nodename"]]
-        )
-        info <- base::sprintf("%s: %s", base::names(info), info)
-        info <- base::paste(info, collapse = "; ")
-        if (!has_future) {
-          msg <- base::sprintf("Package 'future' is not installed on worker (%s)", info)
-        } else {
-          msg <- base::sprintf("Package 'future' on worker (%s) must be of version >= 1.8.0: %s", info, version)
-        }
-        base::stop(msg)
-      }
-    })
+  tmpl_expr_evaluate2 <- bquote_compile({
+    "# future:::getExpression.Future(): evaluate the future via evalFuture()"
+    future:::evalFuture(core = .(core), capture = .(capture), context = .(context), split = .(split), immediateConditionClasses = .(immediateConditionClasses), forwardOptions = .(forwardOptions), local = .(local), cleanup = .(cleanup))
   })
 
-  tmpl_enter_mccores <- bquote_compile({
-    ## covr: skip=3
-    .(enter)
-    ...future.mc.cores.old <- base::getOption("mc.cores")
-    base::options(mc.cores = .(mc.cores))
-  })
-
-  tmpl_exit_mccores <- bquote_compile({
-    ## covr: skip=2
-    base::options(mc.cores = ...future.mc.cores.old)
-    .(exit)
-  })
-
-  tmpl_enter_rng <- bquote_compile({
-    ## covr: skip=2
-    .(enter)
-    ## NOTE: It is not needed to call RNGkind("L'Ecuyer-CMRG") here
-    ## because the type of RNG is defined by .Random.seed, especially
-    ## .Random.seed[1].  See help("RNGkind"). /HB 2017-01-12
-    base::assign(".Random.seed", .(future$seed), envir = base::globalenv(), inherits = FALSE)
-  })
-
-  tmpl_enter_packages <- bquote_compile({
-    ## covr: skip=3
-    .(enter)      
-    ## TROUBLESHOOTING: If the package fails to load, then library()
-    ## suppress that error and generates a generic much less
-    ## informative error message.  Because of this, we load the
-    ## namespace first (to get a better error message) and then
-    ## calls library(), which attaches the package. /HB 2016-06-16
-    ## NOTE: We use local() here such that 'pkg' is not assigned
-    ##       to the future environment. /HB 2016-07-03
-    base::local({
-      for (pkg in .(pkgs)) {
-        base::loadNamespace(pkg)
-        base::library(pkg, character.only = TRUE)
-      }
-    })
-  })
-
-  tmpl_enter_plan <- bquote_compile({
-    ## covr: skip=2
-    .(enter)
-    
-    ## Record the original future strategy set on this worker
-    ...future.strategy.old <- future::plan("list")
-    
-    ## Prevent 'future.plan' / R_FUTURE_PLAN settings from being nested
-    options(future.plan = NULL)
-    Sys.unsetenv("R_FUTURE_PLAN")
-
-    ## Limit nested parallelization
-    ## (a) Identify default number of cores - ignoring plan settings
-    ...future.ncores <- base::local({
-      ans <- NA_integer_
-      
-      base::options(parallelly.availableCores.fallback = 1L)
-      ncores <- parallelly::availableCores(which = "all")
-      ncores <- ncores[ncores != ncores["system"]]
-      ncores <- ncores[base::setdiff(base::names(ncores), base::c("_R_CHECK_LIMIT_CORES_", "Bioconductor"))]
-      if (base::length(ncores) > 0) {
-        if (base::length(ncores) > 1) {
-          ncores <- ncores[base::setdiff(base::names(ncores), "fallback")]
-        }
-        if (base::length(ncores) > 0) {
-          ans <- base::min(ncores, na.rm = TRUE)
-        }
-      }
-      ans
-    })
-
-    ## Use the next-level-down ("popped") future strategy
-    future::plan(.(strategiesR), .cleanup = FALSE, .init = FALSE)
-
-    if (!is.na(...future.ncores)) {
-      ## (b) Identify default number of cores - acknowledging plan settings
-      ...future.ncores <- base::local({
-        nworkers <- future::nbrOfWorkers()
-        base::min(base::c(nworkers, ...future.ncores), na.rm = TRUE)
-      })
-    }
-
-    if (!is.na(...future.ncores)) {
-      ...future.options.ncores <- base::options(mc.cores = ...future.ncores)
-      base::on.exit(base::options(...future.options.ncores), add = TRUE)
-    }
-    
-  })
-
-
-  ## Reset future strategies when done
-  tmpl_exit_plan <- bquote_compile({
-    ## covr: skip=2
-    .(exit)
-    ## Reset option 'future.plan' and env var 'R_FUTURE_PLAN'
-    options(future.plan = .(getOption("future.plan")))
-    if (is.na(.(oenv <- Sys.getenv("R_FUTURE_PLAN", NA_character_))))
-      Sys.unsetenv("R_FUTURE_PLAN")
-    else
-      Sys.setenv(R_FUTURE_PLAN = .(oenv))
-    ## Revert to the original future strategy
-    future::plan(...future.strategy.old, .cleanup = FALSE, .init = FALSE)
-    ## FIXME: If we move .(exit) here, then 'R CMD check' on MS Windows
-    ## complain about leftover RscriptXXXXX temporary files. /2022-07-21
-    ## .(exit)
-  })
-
-  function(future, expr = future$expr, local = future$local, stdout = future$stdout, conditionClasses = future$conditions, split = future$split, mc.cores = NULL, exit = NULL, ...) {
+  function(future, expr = future$expr, immediateConditions = FALSE, threads = NA_integer_, ..., cleanup = TRUE) {
     debug <- getOption("future.debug", FALSE)
     ##  mdebug("getExpression() ...")
-  
+    args <- list(...)
+
+    local <- args$local
+    if (is.null(local)) local <- future$local
+    
+    ## To be cleaned up /HB 2025-01-02
+    persistent <- future$persistent
+    if (isTRUE(persistent)) local <- FALSE
+    
+    split <- future$split
     if (is.null(split)) split <- FALSE
     stop_if_not(is.logical(split), length(split) == 1L, !is.na(split))
    
@@ -813,21 +684,10 @@ getExpression.Future <- local({
                             sQuote(version)))
     }
   
-    enter <- bquote_apply(tmpl_enter)
-    
-    ## Should 'mc.cores' be set?
-    if (!is.null(mc.cores)) {
-  ##    mdebugf("getExpression(): setting mc.cores = %d inside future", mc.cores)
-      ## FIXME: How can we guarantee that '...future.mc.cores.old'
-      ## is not overwritten?  /HB 2016-03-14
-      enter <- bquote_apply(tmpl_enter_mccores)
-      exit <- bquote_apply(tmpl_exit_mccores)
-    }
-    
     ## Packages needed by the future
     pkgs <- packages(future)
     if (length(pkgs) > 0) {
-      if (debug) mdebugf("Packages needed by the future expression (n = %d): %s", length(pkgs), paste(sQuote(pkgs), collapse = ", "))
+      if (debug) mdebugf("Packages needed by the future expression (n = %d): %s", length(pkgs), commaq(pkgs))
     } else {
       if (debug) mdebug("Packages needed by the future expression (n = 0): <none>")
     }
@@ -839,11 +699,11 @@ getExpression.Future <- local({
     ## Pass down the default or the remain set of future strategies?
     strategiesR <- strategies[-1]
     ##  mdebugf("Number of remaining strategies: %d", length(strategiesR))
-
+  
     ## Use default future strategy + identify packages needed by the futures
     if (length(strategiesR) == 0L) {
       if (debug) mdebug("Packages needed by future strategies (n = 0): <none>")
-      strategiesR <- "default"
+      strategiesR <- getOption("future.plan", "sequential")
     } else {
       ## Identify package namespaces needed for strategies
       pkgsS <- lapply(strategiesR, FUN = environment)
@@ -851,37 +711,87 @@ getExpression.Future <- local({
       pkgsS <- unique(unlist(pkgsS, use.names = FALSE))
       ## CLEANUP: Only keep those that are loaded in the current session
       pkgsS <- intersect(pkgsS, loadedNamespaces())
-      if (debug) mdebugf("Packages needed by future strategies (n = %d): %s", length(pkgsS), paste(sQuote(pkgsS), collapse = ", "))
+      if (debug) mdebugf("Packages needed by future strategies (n = %d): %s", length(pkgsS), commaq(pkgsS))
       pkgs <- unique(c(pkgs, pkgsS))
     }
-  
-    ## Make sure to load and attach all package needed  
-    if (length(pkgs) > 0L) {
-      ## Sanity check by verifying packages can be loaded already here
-      ## If there is somethings wrong in 'pkgs', we get the error
-      ## already before launching the future.
-      for (pkg in pkgs) loadNamespace(pkg)
-  
-      enter <- bquote_apply(tmpl_enter_packages)
-    }
-  
-    ## Pass down future strategies
-    enter <- bquote_apply(tmpl_enter_plan)
-    exit <- bquote_apply(tmpl_exit_plan)
 
-    ## Set RNG seed?
-    if (is.numeric(future$seed)) {
-      enter <- bquote_apply(tmpl_enter_rng)
+    ## Create a future core
+    globals <- args$globals
+    if (is.null(globals)) globals <- globals(future)
+    core <- list(
+      expr     = expr,
+      globals  = globals,
+      packages = pkgs,
+      seed     = future$seed
+    )
+
+    ## Does the backend support immediate relaying of conditions?
+    if (immediateConditions) {
+      immediateConditionClasses <- getOption("future.relay.immediate", "immediateCondition")
+    } else {
+      immediateConditionClasses <- character(0L)
+    }
+
+    conditionClasses <- future$conditions
+    if (length(immediateConditionClasses) > 0 && !is.null(conditionClasses)) {
+      exclude <- attr(conditionClasses, "exclude", exact = TRUE)
+      muffleInclude <- attr(conditionClasses, "muffleInclude", exact = TRUE)
+      if (is.null(muffleInclude)) muffleInclude <- "^muffle"
+      conditionClasses <- unique(c(conditionClasses, immediateConditionClasses))
+      attr(conditionClasses, "exclude") <- exclude
+      attr(conditionClasses, "muffleInclude") <- muffleInclude
+    }
+
+    capture <- list(
+      stdout           = future$stdout,
+      conditionClasses = conditionClasses
+    )
+
+    context <- list(
+      threads     = threads,
+      strategiesR = strategiesR
+    )
+
+    forwardOptions <- list(
+      ## Assert globals when future is created (or at run time)?
+      future.globals.onMissing          = getOption("future.globals.onMissing"),
+    
+      ## Pass down other future.* options
+      future.globals.maxSize            = getOption("future.globals.maxSize"),
+      future.globals.method             = getOption("future.globals.method"),
+      future.globals.onReference        = getOption("future.globals.onReference"),
+      future.globals.resolve            = getOption("future.globals.resolve"),
+      future.resolve.recursive          = getOption("future.resolve.recursive"),
+      future.rng.onMisuse               = getOption("future.rng.onMisuse"),
+      future.rng.onMisuse.keepFuture    = getOption("future.rng.onMisuse.keepFuture"),
+      future.stdout.windows.reencode    = getOption("future.stdout.windows.reencode"),
+  
+      future.fork.multithreading.enable = getOption("future.fork.multithreading.enable"),
+  
+      future.globalenv.onMisuse         = getOption("future.globalenv.onMisuse"),
+  
+      future.makeExpression.skip        = getOption("future.makeExpression.skip"),
+      future.makeExpression.skip.local  = getOption("future.makeExpression.skip.local"),
+      
+      ## Other options relevant to making futures behave consistently
+      ## across backends
+      width                             = getOption("width")
+    )
+
+    mc.cores <- args$mc.cores
+    if (!is.null(mc.cores)) {
+      forwardOptions$mc.cores <- mc.cores
     }
   
-    expr <- makeExpression(expr = expr, local = local, stdout = stdout, conditionClasses = conditionClasses, split = split, enter = enter, exit = exit, ..., version = version)
+    expr <- bquote_apply(tmpl_expr_evaluate2)
+    
     if (getOption("future.debug", FALSE)) mprint(expr)
   
-  ##  mdebug("getExpression() ... DONE")
+    ##  mdebug("getExpression() ... DONE")
     
     expr
-  } ## getExpression()
-})
+  }
+}) ## getExpression()
 
 
 globals <- function(future, ...) UseMethod("globals")

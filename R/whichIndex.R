@@ -11,7 +11,7 @@ whichIndex <- function(I, dim, dimnames = NULL) {
       idxs <- I[[kk]]
       if (is.numeric(idxs)) {
         if (any(idxs < 1 | idxs > dim[kk])) {
-          stop("Index out of range.")
+          stop("Index out of range")
         }
       } else {
         idxs <- as.character(idxs)
@@ -29,7 +29,7 @@ whichIndex <- function(I, dim, dimnames = NULL) {
     for (kk in 1:ndim) {
       idxs <- I[, kk]
       if (any(idxs < 1 | idxs > dim[kk])) {
-        stop("Index out of range.")
+        stop("Index out of range")
       }
     }
   } else {

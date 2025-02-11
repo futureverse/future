@@ -70,7 +70,7 @@ journal.Future <- function(x, ...) {
   if (is.null(data)) {
     label <- x$label
     if (is.null(label)) label <- "<none>"
-    stop(sprintf("No journal is available for future ('%s'). Did you forget to enable journaling?", label))
+    stopf("No journal is available for future ('%s'). Did you forget to enable journaling?", label)
   }
   stop_if_not(inherits(data, "FutureJournal"))
   session_uuid <- x$owner

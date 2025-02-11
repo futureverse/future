@@ -31,20 +31,12 @@ for (strategy in supportedStrategies()) {
   rm(list = "my_fcn")
   v <- tryCatch(value(f), error = identity)
   print(v)
-  if (isTRUE(as.logical(Sys.getenv("R_CHECK_IDEAL")))) {
-    if (getOption("future.globals.keepWhere", TRUE)) {
-      stopifnot(identical(v, truth))
-    } else {
-      stopifnot(inherits(v, "error"))
-    }
-  } else if (isTRUE(getOption("future.globals.keepWhere", FALSE))) {
+  if (isTRUE(getOption("future.globals.keepWhere", FALSE))) {
+    message("future.globals.keepWhere=TRUE")
     stopifnot(identical(v, truth))
   } else {
-    if (strategy %in% c("sequential", "multicore")) {
-      stopifnot(inherits(v, "error"))
-    } else {
-      stopifnot(identical(v, truth))
-    }
+    message("future.globals.keepWhere=FALSE")
+    stopifnot(inherits(v, "error"))
   }
   my_fcn <- org_my_fcn
 }

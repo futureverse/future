@@ -26,7 +26,7 @@ run.UniprocessFuture <- function(future, ...) {
   if (future$state != 'created') {
     label <- future$label
     if (is.null(label)) label <- "<none>"
-    stop(FutureError(sprintf("A future ('%s') can only be launched once.", label), future = future))
+    stop(FutureError(sprintf("A future ('%s') can only be launched once", label), future = future))
   }
 
   ## Assert that the process that created the future is
@@ -35,13 +35,6 @@ run.UniprocessFuture <- function(future, ...) {
 
   expr <- getExpression(future)
   envir <- future$envir
-  envir <- new.env(parent = envir)
-
-  ## Assign globals to separate "globals" enclosure environment?
-  globals <- future$globals
-  if (length(globals) > 0) {
-    envir <- assign_globals(envir, globals = globals, debug = debug)
-  }
 
   ## Run future
   future$state <- 'running'
@@ -100,34 +93,12 @@ resolved.UniprocessFuture <- function(x, ...) {
 }
 
 #' @export
-getExpression.UniprocessFuture <- local({
-  tmpl_exit_rng_remove <- bquote_compile({
-    .(exit)
-    RNGkind(.(okind))
-    base::rm(list = ".Random.seed", envir = base::globalenv(), inherits = FALSE)
-  })
-  
-  tmpl_exit_rng_undo <- bquote_compile({
-    base::assign(".Random.seed", .(oseed), envir = base::globalenv(), inherits = FALSE)
-    .(exit)
-  })
+getExpression.UniprocessFuture <- function(future, immediateConditions = TRUE, ...) {
+  ## Assert that no arguments but the first is passed by position
+  assert_no_positional_args_but_first()
+  NextMethod(immediateConditions = immediateConditions)
+}
 
-  function(future, immediateConditions = TRUE, exit = NULL, ...) {
-    ## Assert that no arguments but the first is passed by position
-    assert_no_positional_args_but_first()
-  
-    ## Preserve RNG state?
-    oseed <- get_random_seed()
-    if (is.null(oseed)) {
-      okind <- RNGkind()[1]
-      exit <- bquote_apply(tmpl_exit_rng_remove)
-    } else {
-      exit <- bquote_apply(tmpl_exit_rng_undo)
-    }
-  
-    NextMethod(immediateConditions = immediateConditions, exit = exit)
-  }
-})
 
 
 #' @return
