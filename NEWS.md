@@ -8,6 +8,12 @@
    `plan()`. Previously, this had to be implemented by each backend,
    but now it's handled automatically by the future framework.
 
+## Documentation
+
+ * Updated the future topology vignette with information on the
+   CPU-overuse protection error that may occur when using a nested
+   future plan and how to avoid it.
+ 
 
 # Version 1.34.0 [2024-07-29]
 
