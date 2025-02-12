@@ -46,7 +46,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">future</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.34.0-9125</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.34.0-9126</span>
       </span>
     </div>
 
@@ -313,14 +313,37 @@ This can be achieved by forcing a fixed number of workers at each
 layer:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plan.html">plan</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="../reference/tweak.html">tweak</a></span><span class="op">(</span><span class="va">multisession</span>, workers <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>, <span class="fu"><a href="../reference/tweak.html">tweak</a></span><span class="op">(</span><span class="va">multisession</span>, workers <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="fl">4</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p>When using this approach, there is a risk of setting up too many
-concurrent workers. Because Futureverse has a built-in protection, we
-need to declare nested workers using the As-Is <code>I(.)</code>
-function, which basically tells the parallel framework “trust us, we
-know what we are doing”. To minimize the risk of mistakes and to make
-sure our setup respects <code><a href="../reference/re-exports.html">availableCores()</a></code>, use something
-like:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<p>Note that As-Is <code>I(.)</code> specification for the inner layer,
+i.e. <code>workers = I(4)</code>. If we would just specify
+<code>workers = 4</code>, the future framework would detect this as a
+potential user mistake. This is because by default it prevents nested
+parallelization and allots only a single CPU core to the inner layer,
+i.e. <code><a href="../reference/re-exports.html">availableCores()</a></code> will return one there. However, the
+user requests four CPU cores, which could result in an unintended 400%
+CPU overuse. The future framework detects this discrepancy, and if it is
+too large, it will produce an error. For example, on an eight core
+machine, we would get the following error produced at the inner
+layer:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="op">&gt;</span> plan<span class="kw">(</span><span class="ex">list</span><span class="er">(</span><span class="ex">tweak</span><span class="er">(</span><span class="ex">multisession,</span> workers = 2<span class="kw">)</span><span class="ex">,</span> tweak<span class="er">(</span><span class="ex">multisession,</span> workers = 4<span class="kw">)))</span></span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a><span class="op">&gt;</span> a <span class="ex">%</span><span class="op">&lt;</span>-% { b %<span class="op">&lt;</span>-% 1 <span class="kw">;</span> <span class="ex">b</span> }</span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a><span class="op">&gt;</span> a</span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a><span class="ex">Error</span> in checkNumberOfLocalWorkers<span class="er">(</span><span class="ex">workers</span><span class="kw">)</span> <span class="bu">:</span> </span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>  <span class="ex">Attempting</span> to set up 4 localhost parallel workers with only 1 CPU</span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a><span class="ex">cores</span> available for this R process <span class="er">(</span><span class="ex">per</span> ‘mc.cores’<span class="kw">)</span><span class="ex">,</span> which could</span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a><span class="ex">result</span> in a 400% load. The hard limit is set to 300%. Overusing the</span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a><span class="ex">CPUs</span> has negative impact on the current R process, but also on all</span>
+<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a><span class="ex">other</span> processes of yours and others running on the same machine. See</span>
+<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a><span class="bu">help</span><span class="er">(</span><span class="st">"parallelly.maxWorkers.localhost"</span><span class="ex">,</span> package = <span class="st">"parallelly"</span><span class="kw">)</span> <span class="cf">for</span></span>
+<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a><span class="ex">further</span> explanations and how to override the hard limit that triggered</span>
+<span id="cb7-12"><a href="#cb7-12" tabindex="-1"></a><span class="ex">this</span> error</span></code></pre></div>
+<p>Because Futureverse has this built-in protection, we need to
+explicitly override it by declaring nested workers using the As-Is
+<code>I(.)</code> function. This basically tells the parallel framework
+“trust us, we know what we are doing”. To minimize the risk of mistakes
+and to make sure our setup respects <code><a href="../reference/re-exports.html">availableCores()</a></code>.</p>
+<p>To make sure we stay within the limits of the current machine, it’s
+best to use something like:</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plan.html">plan</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>  <span class="fu"><a href="../reference/tweak.html">tweak</a></span><span class="op">(</span><span class="va">multisession</span>, workers <span class="op">=</span> <span class="fu"><a href="../reference/re-exports.html">availableCores</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/Arithmetic.html" class="external-link">%/%</a></span> <span class="fl">4</span><span class="op">)</span>,</span>
 <span>  <span class="fu"><a href="../reference/tweak.html">tweak</a></span><span class="op">(</span><span class="va">multisession</span>, workers <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="fl">4</span><span class="op">)</span><span class="op">)</span></span>
@@ -336,7 +359,7 @@ only one of the layers.</p>
 <p>With a compute cluster of 3 machines each with 16 cores, we can run
 up to 48 alignment processes in parallel. A natural setup is to have one
 machine process one sample in parallel. We could specify this as:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">nodes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"n1"</span>, <span class="st">"n2"</span>, <span class="st">"n3"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/plan.html">plan</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="../reference/tweak.html">tweak</a></span><span class="op">(</span><span class="va">cluster</span>, workers <span class="op">=</span> <span class="va">nodes</span><span class="op">)</span>, <span class="va">multisession</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><em>Comment:</em> Multisession futures are agile to its environment,
@@ -349,7 +372,7 @@ that we might at the end of each sample have only a few alignment
 processes running on each machine leaving the remaining cores
 idle/unused. An alternative set up is then to use the following
 setup:</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">nodes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"n1"</span>, <span class="st">"n2"</span>, <span class="st">"n3"</span><span class="op">)</span>, each <span class="op">=</span> <span class="fl">8</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/plan.html">plan</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>  <span class="fu"><a href="../reference/tweak.html">tweak</a></span><span class="op">(</span><span class="va">cluster</span>, workers <span class="op">=</span> <span class="va">nodes</span><span class="op">)</span>,</span>
@@ -373,7 +396,7 @@ automatically.</p>
 session to evaluate R expression on the remote compute cluster and its
 three nodes. Here is a proof of concept illustrating how the different
 nested futures are evaluated on different machines.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://future.futureverse.org">future</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://listenv.futureverse.org" class="external-link">listenv</a></span><span class="op">)</span></span>
 <span></span>
@@ -438,7 +461,7 @@ output will be.</p>
 <h2 id="example-adjust-the-number-of-workers-for-each-cluster-node">Example: Adjust the Number of Workers for Each Cluster Node<a class="anchor" aria-label="anchor" href="#example-adjust-the-number-of-workers-for-each-cluster-node"></a>
 </h2>
 <p>When using</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">nodes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"n1"</span>, <span class="st">"n2"</span>, <span class="st">"n3"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/plan.html">plan</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="../reference/tweak.html">tweak</a></span><span class="op">(</span><span class="va">cluster</span>, workers <span class="op">=</span> <span class="va">nodes</span><span class="op">)</span>, <span class="va">multisession</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>the number of workers used on each of the nodes (<code>n1</code>,
@@ -448,17 +471,17 @@ output will be.</p>
 on those nodes. Now, imagine you want to use only 50% of these cores.
 This can be done by tweaking the <code>multisession</code> plan by
 passing a function to <code>workers</code>;</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a>halfCores <span class="ot">&lt;-</span> <span class="cf">function</span>() { <span class="fu">max</span>(<span class="dv">1</span>, <span class="fu">round</span>(<span class="fl">0.5</span> <span class="sc">*</span> <span class="fu">availableCores</span>()))</span>
-<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a><span class="fu">plan</span>(<span class="fu">list</span>(</span>
-<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a>  <span class="fu">tweak</span>(cluster, <span class="at">workers =</span> nodes),</span>
-<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a>  <span class="fu">tweak</span>(multisession, <span class="at">workers =</span> <span class="fu">I</span>(halfCores))</span>
-<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a>))</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a>halfCores <span class="ot">&lt;-</span> <span class="cf">function</span>() { <span class="fu">max</span>(<span class="dv">1</span>, <span class="fu">round</span>(<span class="fl">0.5</span> <span class="sc">*</span> <span class="fu">availableCores</span>()))</span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a><span class="fu">plan</span>(<span class="fu">list</span>(</span>
+<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a>  <span class="fu">tweak</span>(cluster, <span class="at">workers =</span> nodes),</span>
+<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a>  <span class="fu">tweak</span>(multisession, <span class="at">workers =</span> <span class="fu">I</span>(halfCores))</span>
+<span id="cb13-5"><a href="#cb13-5" tabindex="-1"></a>))</span></code></pre></div>
 <p>With this, each node will use at most 50% of the cores available. For
 instance, if <code>n1</code> and <code>n2</code> have eight cores, and
 <code>n3</code> has 32 cores, then they nodes will use four, four, and
 16 cores, respectively.</p>
 <p>Another example is:</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">customWorkers</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="kw"><a href="https://rdrr.io/r/base/switch.html" class="external-link">switch</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.info.html" class="external-link">Sys.info</a></span><span class="op">(</span><span class="op">)</span><span class="op">[[</span><span class="st">"nodename"</span><span class="op">]</span><span class="op">]</span>,</span>
 <span>    <span class="st">"n1"</span> <span class="op">=</span> <span class="fl">2L</span>,</span>
