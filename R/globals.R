@@ -495,9 +495,9 @@ summarize_size_of_globals <- function(globals, sizes = NULL, maxSize = NULL, exp
 
   if (!is.null(maxSize)) {
     if (total_size > maxSize) {
-      msg <- sprintf("%s. This exceeds the maximum allowed size %s (option 'future.globals.maxSize').", msg, asIEC(maxSize))
+      msg <- sprintf("%s. This exceeds the maximum allowed size %s (option 'future.globals.maxSize')", msg, asIEC(maxSize))
     } else {
-      msg <- sprintf("%s. The maximum allowed size is %s (option 'future.globals.maxSize').", msg, asIEC(maxSize))
+      msg <- sprintf("%s. This is less than the maximum allowed size %s (option 'future.globals.maxSize')", msg, asIEC(maxSize))
     }
   }
 
