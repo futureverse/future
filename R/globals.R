@@ -493,12 +493,8 @@ summarize_size_of_globals <- function(globals, sizes = NULL, maxSize = NULL, exp
     msg <- sprintf("The total size of the %d globals exported for future expression (%s) is %s", length(globals), sQuote(hexpr(exprOrg)), asIEC(total_size))
   }
 
-  if (!is.null(maxSize)) {
-    if (total_size > maxSize) {
-      msg <- sprintf("%s. This exceeds the maximum allowed size %s (option 'future.globals.maxSize')", msg, asIEC(maxSize))
-    } else {
-      msg <- sprintf("%s. This is less than the maximum allowed size %s (option 'future.globals.maxSize')", msg, asIEC(maxSize))
-    }
+  if (!is.null(maxSize) && total_size > maxSize) {
+      msg <- sprintf('%s. This exceeds the maximum allowed size %s per by R option "future.globals.maxSize". This limit is set to protect against transfering too large objects to parallel workers by mistake, which may not be intended and could be costly. See help("future.globals.maxSize", package = "future") for further explainations and how to adjust or remove this threshold', msg, asIEC(maxSize))
   }
 
   if (n == 1) {
