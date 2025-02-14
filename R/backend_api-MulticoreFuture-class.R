@@ -48,8 +48,7 @@ run.MulticoreFuture <- function(future, ...) {
 
   mcparallel <- importParallel("mcparallel")
 
-  expr <- getExpression(future)
-  envir <- future$envir
+  data <- getFutureData(future)
 
   t_start <- Sys.time()
   
@@ -73,11 +72,10 @@ run.MulticoreFuture <- function(future, ...) {
   ## Add to registry
   FutureRegistry(reg, action = "add", future = future, earlySignal = TRUE)
 
-  future.args <- list(expr)
   job <- local({
     oopts <- options(mc.cores = NULL)
     on.exit(options(oopts))
-    do.call(parallel::mcparallel, args = future.args, envir = envir)
+    mcparallel(evalFuture(data))
   })
 
   future$job <- job
