@@ -861,6 +861,36 @@ getFutureBackendConfigs.ClusterFuture <- function(future, ...) {
 }
 
 
+getFutureData <- function(future, ...) {
+  debug <- getOption("future.debug", FALSE)
+  if (debug) {
+    mdebug("getFutureData() ...")
+    on.exit(mdebug("getFutureData() ..."))
+  }
+
+  args <- list(...)
+
+  ## Extract the future core
+  data <- list(
+       core = getFutureCore(future),
+    capture = getFutureCapture(future),
+    context = getFutureContext(future, mc.cores = args$mc.cores, local = args$local)
+  )
+
+  ## Tweak per backend?
+  configs <- getFutureBackendConfigs(future)
+  for (name in names(configs)) {
+    config <- configs[[name]]
+    current <- data[[name]]
+    for (key in names(config)) {
+      current[[key]] <- config[[key]]
+    }
+    data[[name]] <- current
+  }
+
+  data
+} ## getFutureData()
+
 
 
 #' Inject code for the next type of future to use for nested futures
@@ -904,42 +934,14 @@ getExpression <- function(future, ...) UseMethod("getExpression")
 getExpression.Future <- local({
   tmpl_expr_evaluate <- bquote_compile({
     "# future:::getExpression.Future(): evaluate the future via evalFuture()"
-    future:::evalFuture(core = .(core), capture = .(capture), context = .(context), cleanup = .(cleanup))
+    future:::evalFuture(data = .(data), cleanup = .(cleanup))
   })
 
   function(future, expr = future$expr, ..., cleanup = TRUE) {
     debug <- getOption("future.debug", FALSE)
     ##  mdebug("getExpression() ...")
-    args <- list(...)
     
-    version <- future$version
-    if (is.null(version)) {
-      warning(FutureWarning("Future version was not set. Using default %s",
-                            sQuote(version)))
-    }
-
-    ## Extract the future core
-    data <- list(
-         core = getFutureCore(future),
-      capture = getFutureCapture(future),
-      context = getFutureContext(future, mc.cores = args$mc.cores, local = args$local)
-    )
-
-    ## Tweak per backend?
-    configs <- getFutureBackendConfigs(future)
-    for (name in names(configs)) {
-      config <- configs[[name]]
-      current <- data[[name]]
-      for (key in names(config)) {
-        current[[key]] <- config[[key]]
-      }
-      data[[name]] <- current
-    }
-
-    core <- data$core
-    capture <- data$capture
-    context <- data$context
-
+    data <- getFutureData(future, ...)
     expr <- bquote_apply(tmpl_expr_evaluate)
 
     if (getOption("future.debug", FALSE)) mprint(expr)

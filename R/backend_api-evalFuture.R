@@ -5,28 +5,35 @@ FutureEvalError <- function(...) {
 }
 
 evalFuture <- function(
-    core = list(
-      expr = NULL,
-      globals = list(),
-      packages = character(0L),
-      seed = NULL
-    ),
-    capture = list(
-      stdout = TRUE,
-      split = FALSE,
-      conditionClasses = character(0L),
-      immediateConditionClasses = character(0L),
-      immediateConditionHandlers = list()
-    ),
-    context = list(
-      backendPackages = character(0L),
-      strategiesR = NULL,
-      threads = NA_integer_,
-      forwardOptions = NULL
+    data = list(
+      core = list(
+        expr = NULL,
+        globals = list(),
+        packages = character(0L),
+        seed = NULL
+      ),
+      capture = list(
+        stdout = TRUE,
+        split = FALSE,
+        conditionClasses = character(0L),
+        immediateConditionClasses = character(0L),
+        immediateConditionHandlers = list()
+      ),
+      context = list(
+        backendPackages = character(0L),
+        strategiesR = NULL,
+        threads = NA_integer_,
+        forwardOptions = NULL
+      )
     ),
     envir = parent.frame(),
     cleanup = TRUE) {
   debug <- FALSE
+
+  core <- data$core
+  capture <- data$capture
+  context <- data$context
+
   expr <- core$expr
   
   globals <- core$globals
