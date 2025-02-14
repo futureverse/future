@@ -33,12 +33,11 @@ run.UniprocessFuture <- function(future, ...) {
   ## also the one that evaluates/resolves/queries it.
   assertOwner(future)
 
-  expr <- getExpression(future)
-  envir <- future$envir
-
+  data <- getFutureData(future)
+  
   ## Run future
   future$state <- 'running'
-  future$result <- eval(expr, envir = envir, enclos = baseenv())
+  future$result <- evalFuture(data)
   future$state <- 'finished'
 
   if (debug) mdebugf("%s started (and completed)", class(future)[1])
