@@ -123,13 +123,8 @@
 #' @importFrom utils capture.output
 #' @export
 plan <- local({
-  defaultStrategy <- structure(sequential, call = substitute(plan(sequential)))
-
-  defaultStack <- structure(list(defaultStrategy),
-                            class = c("FutureStrategyList", "list"))
-
   ## Stack of type of futures to use
-  stack <- defaultStack
+  stack <- NULL
 
   assert_no_disallowed_strategies <- function(stack) {
     noplans <- getOption("future.plan.disallow")
@@ -299,6 +294,20 @@ plan <- local({
     invisible(oldStack)
   } ## plan_set()
 
+  plan_default_stack <- local({
+    defaultStack <- NULL
+                              
+    function() {
+      if (is.null(defaultStack)) {
+        defaultStrategy <- structure(sequential,
+                                     call = substitute(plan(sequential)))
+        defaultStack <<- structure(list(defaultStrategy),
+                                   class = c("FutureStrategyList", "list"))
+      }
+      defaultStack
+    }
+  }) ## plan_default_stack()
+
 
   ## Main function
   function(strategy = NULL, ..., substitute = TRUE, .skip = FALSE, .call = TRUE,
@@ -307,6 +316,9 @@ plan <- local({
     if (is.logical(.skip)) stop_if_not(length(.skip) == 1L, !is.na(.skip))
     if (is.logical(.call)) stop_if_not(length(.call) == 1L, !is.na(.call))
 
+    ## Once per session
+    if (is.null(stack)) stack <<- plan_default_stack()
+    
     ## Predefined "actions":
     if (is.null(strategy) || identical(strategy, "next")) {
       ## Next future strategy?
@@ -325,14 +337,14 @@ plan <- local({
       ## Stop/cleanup any previously registered backends?
       if (.cleanup) plan_cleanup()
       ## Reset stack of future strategies?
-      stack <<- defaultStack
+      stack <<- plan_default_stack()
       return(stack)
     } else if (identical(strategy, "pop")) {
       ## Pop strategy stack and return old stack
       ## (so it can be pushed back later)
       oldStack <- stack
       stack <<- stack[-1L]
-      if (length(stack) == 0L) stack <<- defaultStack
+      if (length(stack) == 0L) stack <<- plan_default_stack()
       return(oldStack)
     }
 
