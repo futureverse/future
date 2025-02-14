@@ -26,7 +26,6 @@ evalFuture <- function(
         forwardOptions = NULL
       )
     ),
-    envir = parent.frame(),
     cleanup = TRUE) {
   debug <- FALSE
 
