@@ -103,7 +103,7 @@ run.ClusterFuture <- function(future, ...) {
   assertOwner(future)
 
   workers <- future$workers
-  expr <- getExpression(future)
+  data <- getFutureData(future)
   persistent <- isTRUE(future$persistent)
 
   ## FutureRegistry to use
@@ -150,7 +150,7 @@ run.ClusterFuture <- function(future, ...) {
 
 
   ## (ii) Attach packages that needs to be attached
-  ##      NOTE: Already take care of by getExpression() of the Future class.
+  ##      NOTE: Already take care of by evalFuture().
   ##      However, if we need to get an early error about missing packages,
   ##      we can get the error here before launching the future.
   t_start <- Sys.time()
@@ -179,7 +179,7 @@ run.ClusterFuture <- function(future, ...) {
   FutureRegistry(reg, action = "add", future = future, earlySignal = FALSE)
 
   ## (iv) Launch future
-  send_call(cl[[1L]], fun = geval, args = list(expr), future = future, when = "launch future on")
+  send_call(cl[[1L]], fun = evalFuture, args = list(data), when = "launch future on")
 
   future$state <- 'running'
 
