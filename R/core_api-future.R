@@ -183,9 +183,10 @@
 #' [plan()] function.  The future strategy must not be
 #' set by the developer, e.g. it must not be called within a package.
 #'
-#' @aliases futureCall
-#' @export
 #' @name future
+#' @aliases futureCall
+#' @rdname future
+#' @export
 future <- function(expr, envir = parent.frame(), substitute = TRUE, lazy = FALSE, seed = FALSE, globals = TRUE, packages = NULL, stdout = TRUE, conditions = "condition", earlySignal = FALSE, label = NULL, gc = FALSE, ...) {
   if (substitute) expr <- substitute(expr)
   t_start <- Sys.time()

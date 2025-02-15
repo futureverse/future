@@ -48,8 +48,7 @@ run.MulticoreFuture <- function(future, ...) {
 
   mcparallel <- importParallel("mcparallel")
 
-  expr <- getExpression(future)
-  envir <- future$envir
+  data <- getFutureData(future)
 
   t_start <- Sys.time()
   
@@ -73,11 +72,10 @@ run.MulticoreFuture <- function(future, ...) {
   ## Add to registry
   FutureRegistry(reg, action = "add", future = future, earlySignal = TRUE)
 
-  future.args <- list(expr)
   job <- local({
     oopts <- options(mc.cores = NULL)
     on.exit(options(oopts))
-    do.call(parallel::mcparallel, args = future.args, envir = envir)
+    mcparallel(evalFuture(data))
   })
 
   future$job <- job
@@ -293,40 +291,3 @@ result.MulticoreFuture <- function(future, ...) {
 
   result
 }
-
-
-#' @export
-getExpression.MulticoreFuture <- local({
-  function(future, expr = future$expr, immediateConditions = TRUE, ...) {
-    ## Assert that no arguments but the first is passed by position
-    assert_no_positional_args_but_first()
-  
-    debug <- getOption("future.debug", FALSE)
-  
-    ## Disable multi-threading in futures?
-    threads <- NA_integer_
-    multithreading <- getOption("future.fork.multithreading.enable", TRUE)  
-    if (isFALSE(multithreading)) {
-      if (supports_omp_threads(assert = TRUE, debug = debug)) {
-        threads <- 1L
-        if (debug) mdebug("- Updated expression to force single-threaded (OpenMP and RcppParallel) processing")
-      } else {
-        warning(FutureWarning("It is not possible to disable OpenMP multi-threading on this systems", future = future))
-      }
-    }
-  
-    ## Inject code for resignaling immediateCondition:s?
-    if (immediateConditions) {
-      resignalImmediateConditions <- getOption("future.multicore.relay.immediate", TRUE)
-      if (resignalImmediateConditions) {
-        immediateConditionClasses <- getOption("future.relay.immediate", "immediateCondition")
-        if (length(immediateConditionClasses) > 0L) {
-          ## Communicate via the file system
-          expr <- bquote_apply(tmpl_expr_send_immediateConditions_via_file)
-        }
-      }
-    } ## if (resignalImmediateConditions && immediateConditions)
-  
-    NextMethod(expr = expr, immediateConditions = immediateConditions, threads = threads)
-  }
-})

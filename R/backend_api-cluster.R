@@ -24,7 +24,7 @@
 #'
 #' # Evaluate futures via four R processes, one running on the local machine,
 #' # two running on LAN machine 'n1' and one on a remote machine
-#' plan(cluster, workers = c("localhost", "n1", "n1", "pi.example.org")
+#' plan(cluster, workers = c("localhost", "n1", "n1", "pi.example.org"))
 #' ```
 #'
 #' @inheritParams ClusterFuture-class

@@ -33,12 +33,10 @@ run.UniprocessFuture <- function(future, ...) {
   ## also the one that evaluates/resolves/queries it.
   assertOwner(future)
 
-  expr <- getExpression(future)
-  envir <- future$envir
-
   ## Run future
   future$state <- 'running'
-  future$result <- eval(expr, envir = envir, enclos = baseenv())
+  data <- getFutureData(future)
+  future$result <- evalFuture(data)
   future$state <- 'finished'
 
   if (debug) mdebugf("%s started (and completed)", class(future)[1])
@@ -91,14 +89,6 @@ resolved.UniprocessFuture <- function(x, ...) {
   }
   NextMethod()
 }
-
-#' @export
-getExpression.UniprocessFuture <- function(future, immediateConditions = TRUE, ...) {
-  ## Assert that no arguments but the first is passed by position
-  assert_no_positional_args_but_first()
-  NextMethod(immediateConditions = immediateConditions)
-}
-
 
 
 #' @return

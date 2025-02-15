@@ -103,7 +103,7 @@ run.ClusterFuture <- function(future, ...) {
   assertOwner(future)
 
   workers <- future$workers
-  expr <- getExpression(future)
+  data <- getFutureData(future)
   persistent <- isTRUE(future$persistent)
 
   ## FutureRegistry to use
@@ -150,7 +150,7 @@ run.ClusterFuture <- function(future, ...) {
 
 
   ## (ii) Attach packages that needs to be attached
-  ##      NOTE: Already take care of by getExpression() of the Future class.
+  ##      NOTE: Already take care of by evalFuture().
   ##      However, if we need to get an early error about missing packages,
   ##      we can get the error here before launching the future.
   t_start <- Sys.time()
@@ -179,7 +179,7 @@ run.ClusterFuture <- function(future, ...) {
   FutureRegistry(reg, action = "add", future = future, earlySignal = FALSE)
 
   ## (iv) Launch future
-  send_call(cl[[1L]], fun = geval, args = list(expr), future = future, when = "launch future on")
+  send_call(cl[[1L]], fun = evalFuture, args = list(data), when = "launch future on")
 
   future$state <- 'running'
 
@@ -563,90 +563,6 @@ requestNode <- function(await, workers, timeout = getOption("future.wait.timeout
 
 
 
-#' @export
-getExpression.ClusterFuture <- local({
-  tmpl_expr_conditions <- future:::bquote_compile({
-    "# future:::getExpression.ClusterFuture(): inject code for instant"
-    "# relaying of 'immediateCondition' objects back to the parent R  "
-    "# process via the existing PSOCK channel                         "
-    ...future.makeSendCondition <- base::local({
-      sendCondition <- NULL
-
-      function(frame = 1L) {
-        if (is.function(sendCondition)) return(sendCondition)
-
-        ns <- getNamespace("parallel")
-        if (exists("sendData", mode = "function", envir = ns)) {
-          parallel_sendData <- get("sendData", mode = "function", envir = ns)
-
-          ## Find the 'master' argument of the worker's {slave,work}Loop()
-          envir <- sys.frame(frame)
-          master <- NULL
-          while (!identical(envir, .GlobalEnv) && !identical(envir, emptyenv())) {
-            if (exists("master", mode = "list", envir = envir, inherits=FALSE)) {
-              master <- get("master", mode = "list", envir = envir, inherits = FALSE)
-              if (inherits(master, c("SOCKnode", "SOCK0node"))) {
-                sendCondition <<- function(cond) {
-                  data <- list(type = "VALUE", value = cond, success = TRUE)
-                  parallel_sendData(master, data)
-                }
-                return(sendCondition)
-              }
-            }
-            frame <- frame + 1L
-            envir <- sys.frame(frame)
-          }
-        }  
-
-        ## Failed to locate 'master' or 'parallel:::sendData()',
-        ## so just ignore conditions
-        sendCondition <<- function(cond) NULL
-      }
-    })
-
-    withCallingHandlers({
-      .(expr)
-    }, immediateCondition = function(cond) {
-      sendCondition <- ...future.makeSendCondition()
-      sendCondition(cond)
-
-      ## Avoid condition from being signaled more than once
-      ## muffleCondition <- future:::muffleCondition()
-      muffleCondition <- .(muffleCondition)
-      muffleCondition(cond)
-    })
-  })
-
-
-  function(future, expr = future$expr, immediateConditions = TRUE, ...) {
-    ## Assert that no arguments but the first is passed by position
-    assert_no_positional_args_but_first()
-  
-    ## Inject code for resignaling immediateCondition:s?
-    if (immediateConditions) {
-      resignalImmediateConditions <- getOption("future.psock.relay.immediate", TRUE)
-      if (resignalImmediateConditions) {
-        immediateConditionClasses <- getOption("future.relay.immediate", "immediateCondition")
-        if (length(immediateConditionClasses) > 0L) {
-          ## Does the cluster node communicate with a connection?
-          ## (if not, it's via MPI)
-          workers <- future$workers
-          ## AD HOC/FIXME: Here 'future$node' is yet not assigned, so we look at
-          ## the first worker and assume the others are the same. /HB 2019-10-23
-          cl <- workers[1L]
-          node <- cl[[1L]]
-          con <- node$con
-          if (!is.null(con)) {
-            expr <- bquote_apply(tmpl_expr_conditions)
-          } ## if (!is.null(con))
-        }
-      }
-    } ## if (resignalImmediateConditions && immediateConditions)
-    
-    NextMethod(expr = expr, immediateConditions = immediateConditions)
-  }
-})
-
 
 send_call <- function(node, ..., when = "send call to", future) {
   sendCall <- importParallel("sendCall")
@@ -772,3 +688,46 @@ post_mortem_cluster_failure <- function(ex, when, node, future) {
 
   msg
 } # post_mortem_cluster_failure()
+
+
+
+getPsockImmediateConditionHandler <- local({
+  sendCondition <- NULL
+
+  function(frame = 1L) {
+    if (is.function(sendCondition)) return(sendCondition)
+
+    ns <- getNamespace("parallel")
+    if (exists("sendData", mode = "function", envir = ns)) {
+      parallel_sendData <- get("sendData", mode = "function", envir = ns)
+
+      ## Find the 'master' argument of the worker's {slave,work}Loop()
+      envir <- sys.frame(frame)
+      master <- NULL
+      while (!identical(envir, .GlobalEnv) && !identical(envir, emptyenv())) {
+        if (exists("master", mode = "list", envir = envir, inherits = FALSE)) {
+          master <- get("master", mode = "list", envir = envir, inherits = FALSE)
+          if (inherits(master, c("SOCKnode", "SOCK0node"))) {
+            sendCondition <<- function(cond) {
+              data <- list(type = "VALUE", value = cond, success = TRUE)
+              parallel_sendData(master, data)
+            }
+            return(sendCondition)
+          }
+        }
+        frame <- frame + 1L
+        envir <- sys.frame(frame)
+      }
+    }  
+
+    ## Failed to locate 'master' or 'parallel:::sendData()',
+    ## so just ignore immedicate conditions
+    sendCondition <<- function(cond) NULL
+  }
+}) ## getPsockImmediateConditionHandler()
+
+
+psockImmediateConditionHandler <- function(cond) {
+  handler <- getPsockImmediateConditionHandler()
+  handler(cond)
+}

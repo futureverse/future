@@ -618,6 +618,281 @@ resolved.Future <- function(x, run = TRUE, ...) {
 }
 
 
+# Get the executable closure, a.k.a. "the core", of the future
+getFutureCore <- function(future, ...) {
+  stop_if_not(inherits(future, "Future"))
+
+  debug <- getOption("future.debug", FALSE)
+  if (debug) {
+    mdebug("getFutureCore() ...")
+    on.exit(mdebug("getFutureCore() ... DONE"))
+  }
+
+  ## Globals used by the future
+  globals <- globals(future)
+
+  ## Packages needed to resolve the future
+  pkgs <- packages(future)
+  if (length(pkgs) > 0) {
+    if (debug) mdebugf("Packages needed by the future expression (n = %d): %s", length(pkgs), commaq(pkgs))
+  } else {
+    if (debug) mdebug("Packages needed by the future expression (n = 0): <none>")
+  }
+
+  ## Create a future core
+  core <- list(
+    expr     = future$expr,
+    globals  = globals,
+    packages = pkgs,
+    seed     = future$seed
+  )
+
+  core
+} # getFutureCore()
+
+
+getFutureCapture <- function(future, ...) {
+  stop_if_not(inherits(future, "Future"))
+
+  debug <- getOption("future.debug", FALSE)
+  if (debug) {
+    mdebug("getFutureCapture() ...")
+    on.exit(mdebug("getFutureCapture() ... DONE"))
+  }
+
+  split <- future$split
+  if (is.null(split)) split <- FALSE
+  stop_if_not(is.logical(split), length(split) == 1L, !is.na(split))
+
+  immediateConditionClasses <- getOption("future.relay.immediate", "immediateCondition")
+  conditionClasses <- future$conditions
+  if (length(immediateConditionClasses) > 0 && !is.null(conditionClasses)) {
+    exclude <- attr(conditionClasses, "exclude", exact = TRUE)
+    muffleInclude <- attr(conditionClasses, "muffleInclude", exact = TRUE)
+    if (is.null(muffleInclude)) muffleInclude <- "^muffle"
+    conditionClasses <- unique(c(conditionClasses, immediateConditionClasses))
+    attr(conditionClasses, "exclude") <- exclude
+    attr(conditionClasses, "muffleInclude") <- muffleInclude
+  }
+
+  capture <- list(
+    stdout                     = future$stdout,
+    split                      = split,
+    conditionClasses           = conditionClasses,
+    immediateConditionClasses  = immediateConditionClasses,
+    immediateConditionHandlers = list()
+  )
+
+  capture
+} # getFutureCapture()
+
+
+getFutureContext <- function(future, mc.cores = NULL, local = TRUE, ...) {
+  stop_if_not(inherits(future, "Future"))
+  
+  debug <- getOption("future.debug", FALSE)
+  if (debug) {
+    mdebug("getFutureContext() ...")
+    on.exit(mdebug("getFutureContext() ... DONE"))
+  }
+
+  ## Future strategies
+  strategies <- plan("list")
+  stop_if_not(length(strategies) >= 1L)
+
+  ## Pass down the default or the remain set of future strategies?
+  strategiesR <- strategies[-1]
+  ##  mdebugf("Number of remaining strategies: %d", length(strategiesR))
+
+  ## Use default future strategy + identify packages needed by the backend
+  if (length(strategiesR) == 0L) {
+    if (debug) mdebug("Packages needed by future strategies (n = 0): <none>")
+    strategiesR <- getOption("future.plan", "sequential")
+    backendPackages <- c("future")
+  } else {
+    ## Identify package namespaces needed for strategies
+    backendPackages <- lapply(strategiesR, FUN = environment)
+    backendPackages <- lapply(backendPackages, FUN = environmentName)
+    backendPackages <- unique(unlist(backendPackages, use.names = FALSE))
+    ## CLEANUP: Only keep those that are loaded in the current session
+    backendPackages <- intersect(backendPackages, loadedNamespaces())
+    backendPackages <- unique(backendPackages)
+    if (debug) mdebugf("Packages needed by future strategies (n = %d): %s", length(backendPackages), commaq(backendPackages))
+  }
+
+  forwardOptions <- list(
+    ## Assert globals when future is created (or at run time)?
+    future.globals.onMissing          = getOption("future.globals.onMissing"),
+  
+    ## Pass down other future.* options
+    future.globals.maxSize            = getOption("future.globals.maxSize"),
+    future.globals.method             = getOption("future.globals.method"),
+    future.globals.onReference        = getOption("future.globals.onReference"),
+    future.globals.resolve            = getOption("future.globals.resolve"),
+    future.resolve.recursive          = getOption("future.resolve.recursive"),
+    future.rng.onMisuse               = getOption("future.rng.onMisuse"),
+    future.rng.onMisuse.keepFuture    = getOption("future.rng.onMisuse.keepFuture"),
+    future.stdout.windows.reencode    = getOption("future.stdout.windows.reencode"),
+
+    future.fork.multithreading.enable = getOption("future.fork.multithreading.enable"),
+
+    future.globalenv.onMisuse         = getOption("future.globalenv.onMisuse"),
+
+    future.makeExpression.skip        = getOption("future.makeExpression.skip"),
+    future.makeExpression.skip.local  = getOption("future.makeExpression.skip.local"),
+    
+    ## Other options relevant to making futures behave consistently
+    ## across backends
+    width                             = getOption("width")
+  )
+
+  if (!is.null(mc.cores)) {
+    forwardOptions$mc.cores <- mc.cores
+  }
+
+  if (is.null(local)) local <- future$local
+  
+  ## To be cleaned up /HB 2025-01-02
+  persistent <- future$persistent
+  if (isTRUE(persistent)) local <- FALSE
+
+  ## Create a future context
+  context <- list(
+    threads         = NA_integer_,
+    strategiesR     = strategiesR,
+    backendPackages = backendPackages,
+    forwardOptions  = forwardOptions,
+    local           = local
+  )
+
+  context
+} # getFutureContext()
+
+
+getFutureBackendConfigs <- function(future, ...) {
+  UseMethod("getFutureBackendConfigs")
+}
+
+#' @export
+getFutureBackendConfigs.Future <- function(future, ...) {
+  list()
+}
+
+#' @export
+getFutureBackendConfigs.UniprocessFuture <- function(future, ...) {
+  capture <- list(
+    immediateConditionHandlers = list(
+      immediateCondition = function(cond) {
+        signalCondition(cond)
+      }
+    )
+  )
+
+  list(
+    capture = capture
+  )
+}
+
+
+#' @export
+getFutureBackendConfigs.MulticoreFuture <- function(future, ...) {
+  debug <- getOption("future.debug", FALSE)
+  
+  path <- immediateConditionsPath(rootPath = tempdir())
+  
+  capture <- list(
+    immediateConditionHandlers = list(
+      immediateCondition = function(cond) {
+        fileImmediateConditionHandler(cond, path = path)
+      }
+    )
+  )
+
+  ## Disable multi-threading in futures?
+  threads <- NA_integer_
+  multithreading <- getOption("future.fork.multithreading.enable", TRUE)  
+  if (isFALSE(multithreading)) {
+    if (supports_omp_threads(assert = TRUE, debug = debug)) {
+      threads <- 1L
+      if (debug) mdebugf("- Force single-threaded (OpenMP and RcppParallel) processing in %s", class(future)[1])
+    } else {
+      warning(FutureWarning("It is not possible to disable OpenMP multi-threading on this systems", future = future))
+    }
+  }
+
+  context <- list(
+    threads = threads
+  )
+
+  list(
+    capture = capture,
+    context = context
+  )
+}
+
+
+
+#' @export
+getFutureBackendConfigs.ClusterFuture <- function(future, ...) {
+  resignalImmediateConditions <- getOption("future.psock.relay.immediate", TRUE)
+  if (!resignalImmediateConditions) return(list())
+  immediateConditionClasses <- getOption("future.relay.immediate", "immediateCondition")
+  if (length(immediateConditionClasses) == 0L) return(list())
+  
+  ## Does the cluster node communicate with a connection?
+  ## (if not, it's via MPI)
+  workers <- future$workers
+  ## AD HOC/FIXME: Here 'future$node' is yet not assigned, so we look at
+  ## the first worker and assume the others are the same. /HB 2019-10-23
+  cl <- workers[1L]
+  node <- cl[[1L]]
+  con <- node$con
+  if (is.null(con)) return(list())
+
+  capture <- list(
+    immediateConditionHandlers = list(
+      immediateCondition = psockImmediateConditionHandler
+    )
+  )
+
+  list(
+    capture = capture
+  )
+}
+
+
+getFutureData <- function(future, ...) {
+  debug <- getOption("future.debug", FALSE)
+  if (debug) {
+    mdebug("getFutureData() ...")
+    on.exit(mdebug("getFutureData() ..."))
+  }
+
+  args <- list(...)
+
+  ## Extract the future core
+  data <- list(
+       core = getFutureCore(future),
+    capture = getFutureCapture(future),
+    context = getFutureContext(future, mc.cores = args$mc.cores, local = args$local)
+  )
+
+  ## Tweak per backend?
+  configs <- getFutureBackendConfigs(future)
+  for (name in names(configs)) {
+    config <- configs[[name]]
+    current <- data[[name]]
+    for (key in names(config)) {
+      current[[key]] <- config[[key]]
+    }
+    data[[name]] <- current
+  }
+
+  data
+} ## getFutureData()
+
+
+
 #' Inject code for the next type of future to use for nested futures
 #'
 #' @param future Current future.
@@ -657,134 +932,18 @@ getExpression <- function(future, ...) UseMethod("getExpression")
 
 #' @export
 getExpression.Future <- local({
-  tmpl_expr_evaluate2 <- bquote_compile({
+  tmpl_expr_evaluate <- bquote_compile({
     "# future:::getExpression.Future(): evaluate the future via evalFuture()"
-    future:::evalFuture(core = .(core), capture = .(capture), context = .(context), split = .(split), immediateConditionClasses = .(immediateConditionClasses), forwardOptions = .(forwardOptions), local = .(local), cleanup = .(cleanup))
+    future:::evalFuture(data = .(data), cleanup = .(cleanup))
   })
 
-  function(future, expr = future$expr, immediateConditions = FALSE, threads = NA_integer_, ..., cleanup = TRUE) {
+  function(future, expr = future$expr, ..., cleanup = TRUE) {
     debug <- getOption("future.debug", FALSE)
     ##  mdebug("getExpression() ...")
-    args <- list(...)
-
-    local <- args$local
-    if (is.null(local)) local <- future$local
     
-    ## To be cleaned up /HB 2025-01-02
-    persistent <- future$persistent
-    if (isTRUE(persistent)) local <- FALSE
-    
-    split <- future$split
-    if (is.null(split)) split <- FALSE
-    stop_if_not(is.logical(split), length(split) == 1L, !is.na(split))
-   
-    version <- future$version
-    if (is.null(version)) {
-      warning(FutureWarning("Future version was not set. Using default %s",
-                            sQuote(version)))
-    }
-  
-    ## Packages needed by the future
-    pkgs <- packages(future)
-    if (length(pkgs) > 0) {
-      if (debug) mdebugf("Packages needed by the future expression (n = %d): %s", length(pkgs), commaq(pkgs))
-    } else {
-      if (debug) mdebug("Packages needed by the future expression (n = 0): <none>")
-    }
-  
-    ## Future strategies
-    strategies <- plan("list")
-    stop_if_not(length(strategies) >= 1L)
-  
-    ## Pass down the default or the remain set of future strategies?
-    strategiesR <- strategies[-1]
-    ##  mdebugf("Number of remaining strategies: %d", length(strategiesR))
-  
-    ## Use default future strategy + identify packages needed by the futures
-    if (length(strategiesR) == 0L) {
-      if (debug) mdebug("Packages needed by future strategies (n = 0): <none>")
-      strategiesR <- getOption("future.plan", "sequential")
-    } else {
-      ## Identify package namespaces needed for strategies
-      pkgsS <- lapply(strategiesR, FUN = environment)
-      pkgsS <- lapply(pkgsS, FUN = environmentName)
-      pkgsS <- unique(unlist(pkgsS, use.names = FALSE))
-      ## CLEANUP: Only keep those that are loaded in the current session
-      pkgsS <- intersect(pkgsS, loadedNamespaces())
-      if (debug) mdebugf("Packages needed by future strategies (n = %d): %s", length(pkgsS), commaq(pkgsS))
-      pkgs <- unique(c(pkgs, pkgsS))
-    }
+    data <- getFutureData(future, ...)
+    expr <- bquote_apply(tmpl_expr_evaluate)
 
-    ## Create a future core
-    globals <- args$globals
-    if (is.null(globals)) globals <- globals(future)
-    core <- list(
-      expr     = expr,
-      globals  = globals,
-      packages = pkgs,
-      seed     = future$seed
-    )
-
-    ## Does the backend support immediate relaying of conditions?
-    if (immediateConditions) {
-      immediateConditionClasses <- getOption("future.relay.immediate", "immediateCondition")
-    } else {
-      immediateConditionClasses <- character(0L)
-    }
-
-    conditionClasses <- future$conditions
-    if (length(immediateConditionClasses) > 0 && !is.null(conditionClasses)) {
-      exclude <- attr(conditionClasses, "exclude", exact = TRUE)
-      muffleInclude <- attr(conditionClasses, "muffleInclude", exact = TRUE)
-      if (is.null(muffleInclude)) muffleInclude <- "^muffle"
-      conditionClasses <- unique(c(conditionClasses, immediateConditionClasses))
-      attr(conditionClasses, "exclude") <- exclude
-      attr(conditionClasses, "muffleInclude") <- muffleInclude
-    }
-
-    capture <- list(
-      stdout           = future$stdout,
-      conditionClasses = conditionClasses
-    )
-
-    context <- list(
-      threads     = threads,
-      strategiesR = strategiesR
-    )
-
-    forwardOptions <- list(
-      ## Assert globals when future is created (or at run time)?
-      future.globals.onMissing          = getOption("future.globals.onMissing"),
-    
-      ## Pass down other future.* options
-      future.globals.maxSize            = getOption("future.globals.maxSize"),
-      future.globals.method             = getOption("future.globals.method"),
-      future.globals.onReference        = getOption("future.globals.onReference"),
-      future.globals.resolve            = getOption("future.globals.resolve"),
-      future.resolve.recursive          = getOption("future.resolve.recursive"),
-      future.rng.onMisuse               = getOption("future.rng.onMisuse"),
-      future.rng.onMisuse.keepFuture    = getOption("future.rng.onMisuse.keepFuture"),
-      future.stdout.windows.reencode    = getOption("future.stdout.windows.reencode"),
-  
-      future.fork.multithreading.enable = getOption("future.fork.multithreading.enable"),
-  
-      future.globalenv.onMisuse         = getOption("future.globalenv.onMisuse"),
-  
-      future.makeExpression.skip        = getOption("future.makeExpression.skip"),
-      future.makeExpression.skip.local  = getOption("future.makeExpression.skip.local"),
-      
-      ## Other options relevant to making futures behave consistently
-      ## across backends
-      width                             = getOption("width")
-    )
-
-    mc.cores <- args$mc.cores
-    if (!is.null(mc.cores)) {
-      forwardOptions$mc.cores <- mc.cores
-    }
-  
-    expr <- bquote_apply(tmpl_expr_evaluate2)
-    
     if (getOption("future.debug", FALSE)) mprint(expr)
   
     ##  mdebug("getExpression() ... DONE")
