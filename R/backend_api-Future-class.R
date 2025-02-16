@@ -242,7 +242,7 @@ print.Future <- function(x, ...) {
 
   ## FIXME: Add method globals_of() for Future such that it's possible
   ## also for SequentialFuture to return something here. /HB 2017-05-17
-  g <- globals(future)
+  g <- future[["globals"]]
   ng <- length(g)
   if (ng > 0) {
     gSizes <- sapply(g, FUN = objectSize)
@@ -257,7 +257,7 @@ print.Future <- function(x, ...) {
     cat("Globals: <none>\n")
   }
   
-  p <- packages(future)
+  p <- future[["packages"]]
   np <- length(p)
   if (np > 0) {
     cat(sprintf("Packages: %d packages (%s)\n", np, commaq(p)))
@@ -632,10 +632,10 @@ getFutureCore <- function(future, ...) {
   }
 
   ## Globals used by the future
-  globals <- globals(future)
+  globals <- future[["globals"]]
 
   ## Packages needed to resolve the future
-  pkgs <- packages(future)
+  pkgs <- future[["packages"]]
   if (length(pkgs) > 0) {
     if (debug) mdebugf("Packages needed by the future expression (n = %d): %s", length(pkgs), commaq(pkgs))
   } else {
@@ -954,21 +954,6 @@ getExpression.Future <- local({
     expr
   }
 }) ## getExpression()
-
-
-globals <- function(future, ...) UseMethod("globals")
-
-#' @exportS3Method
-globals.Future <- function(future, ...) {
-  future[["globals"]]
-}
-
-packages <- function(future, ...) UseMethod("packages")
-
-#' @exportS3Method
-packages.Future <- function(future, ...) {
-  future[["packages"]]
-}
 
 
 #' @export

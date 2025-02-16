@@ -549,7 +549,7 @@ post_mortem_cluster_failure <- function(ex, when, node, future) {
   }
 
   ## (c) Any non-exportable globals?
-  globals <- globals(future)
+  globals <- future[["globals"]]
   postmortem$non_exportable <- assert_no_references(globals, action = "string")
 
   ## (d) Size of globals
@@ -877,7 +877,7 @@ ClusterFutureBackend <- local({
           on.exit(mdebug("requirePackages() ... done"))
         }
         
-        packages <- packages(future)
+        packages <- future[["packages"]]
         if (debug) mdebug(" - packages: [n=%d] %s", length(packages), commaq(packages))
         
         ## Nothing to do?
