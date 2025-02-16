@@ -29,7 +29,7 @@ futureAssign <- function(x, value, envir = parent.frame(), substitute = TRUE, la
   ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   future.args <- list(value, envir = envir, lazy = lazy, seed = seed, globals = globals, packages = packages, stdout = stdout, conditions = conditions, earlySignal = earlySignal, label = label, gc = gc, ...)
   ## Any arguments set via disposible option?
-  args <- getOption("future.disposable", NULL)
+  args <- getOption("future.disposable")
   if (!is.null(args)) {
     for (name in names(args)) future.args[name] <- args[name]
     on.exit(options(future.disposable = NULL))

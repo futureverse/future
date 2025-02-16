@@ -747,7 +747,7 @@ ClusterFutureBackend <- local({
           assertValidConnection(future)
       
           if (is.null(timeout)) {
-            timeout <- getOption("future.cluster.resolved.timeout", NULL)
+            timeout <- getOption("future.cluster.resolved.timeout")
             if (is.null(timeout)) timeout <- getOption("future.resolved.timeout", 0.01)
             if (timeout < 0) {
               warning("Secret option 'future.resolved.timeout' is negative, which causes resolved() to wait until the future is resolved. This feature is only used for testing purposes of the future framework and must not be used elsewhere", immediate. = TRUE)

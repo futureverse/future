@@ -68,7 +68,8 @@ hpaste <- function(..., sep = "", collapse = ", ", lastCollapse = NULL, maxHead 
 
 
 trim <- function(s) {
-  sub("[\t\n\f\r ]+$", "", sub("^[\t\n\f\r ]+", "", s))
+#  sub("[\t\n\f\r ]+$", "", sub("^[\t\n\f\r ]+", "", s))
+  gsub("(^[\t\n\f\r ]+|[\t\n\f\r ]+$)", "", s)
 } # trim()
 
 comma <- function(x, sep = ", ") paste(x, collapse = sep)
