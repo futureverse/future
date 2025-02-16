@@ -52,12 +52,14 @@ resolve.default <- function(x, ...) x
 
 #' @export
 resolve.Future <- function(x, idxs = NULL, recursive = 0, result = FALSE, stdout = FALSE, signal = FALSE, force = FALSE, sleep = getOption("future.wait.interval", 0.01), ...) {
+  future <- x
+  
   ## Automatically update journal entries for Future object
   if (inherits(future, "Future") &&
-      inherits(future$.journal, "FutureJournal")) {
+      inherits(future[[".journal"]], "FutureJournal")) {
     t_start <- Sys.time()
     on.exit({
-      appendToFutureJournal(x,
+      appendToFutureJournal(future,
         event = "resolve",
         category = "overhead",
         start = t_start,
@@ -73,25 +75,25 @@ resolve.Future <- function(x, idxs = NULL, recursive = 0, result = FALSE, stdout
   recursive <- as.numeric(recursive)
   
   ## Nothing to do?
-  if (recursive < 0) return(x)
+  if (recursive < 0) return(future)
 
   relay <- (stdout || signal)
   result <- result || relay
 
   ## Lazy future that is not yet launched?
-  if (x$state == 'created') x <- run(x)
+  if (future[["state"]] == 'created') future <- run(future)
 
   ## Poll for the Future to finish
-  while (!resolved(x)) {
+  while (!resolved(future)) {
     Sys.sleep(sleep)
   }
 
-  msg <- sprintf("A %s was resolved", class(x)[1])
+  msg <- sprintf("A %s was resolved", class(future)[1])
 
   ## Retrieve results?
   if (result) {
-    if (is.null(x$result)) {
-      x$result <- result(x)
+    if (is.null(future[["result"]])) {
+      future[["result"]] <- result(future)
       msg <- sprintf("%s and its result was collected", msg)
     } else {
       sprintf("%s and its result was already collected", msg)
@@ -99,7 +101,7 @@ resolve.Future <- function(x, idxs = NULL, recursive = 0, result = FALSE, stdout
     
     ## Recursively resolve result value?
     if (recursive > 0) {
-      value <- x$result$value
+      value <- future[["result"]]$value
       if (!is.atomic(value)) {
         resolve(value, recursive = recursive - 1, result = TRUE, stdout = stdout, signal = signal, sleep = sleep, ...)
         msg <- sprintf("%s (and resolved itself)", msg)
@@ -108,14 +110,14 @@ resolve.Future <- function(x, idxs = NULL, recursive = 0, result = FALSE, stdout
     }
     result <- NULL     ## Not needed anymore
 
-    if (stdout) value(x, stdout = TRUE, signal = FALSE)
+    if (stdout) value(future, stdout = TRUE, signal = FALSE)
     if (signal) {
       ## Always signal immediateCondition:s and as soon as possible.
       ## They will always be signaled if they exist.
-      signalImmediateConditions(x)
+      signalImmediateConditions(future)
 
       ## Signal all other types of condition
-      signalConditions(x, exclude = getOption("future.relay.immediate", "immediateCondition"), resignal = TRUE, force = TRUE)
+      signalConditions(future, exclude = getOption("future.relay.immediate", "immediateCondition"), resignal = TRUE, force = TRUE)
     }
   } else {
     msg <- sprintf("%s (result was not collected)", msg)
@@ -123,7 +125,7 @@ resolve.Future <- function(x, idxs = NULL, recursive = 0, result = FALSE, stdout
 
   mdebug(msg)
 
-  x
+  future
 } ## resolve() for Future
 
 

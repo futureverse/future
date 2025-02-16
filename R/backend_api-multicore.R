@@ -88,7 +88,7 @@ multicore <- function(..., workers = availableCores(constraints = "multicore"), 
   on.exit(options(oopts))
 
   future <- MulticoreFuture(..., workers = workers, envir = envir)
-  if (!future$lazy) future <- run(future)
+  if (!future[["lazy"]]) future <- run(future)
   invisible(future)
 }
 class(multicore) <- c("multicore", "multiprocess", "future", "function")

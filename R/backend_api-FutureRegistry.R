@@ -13,7 +13,7 @@ FutureRegistry <- local({
       future <- futures[[ii]]
 
       ## Is future even launched?
-      if (future$state == "created") next
+      if (future[["state"]] == "created") next
 
       ## NOTE: It is when calling resolved() on a future with
       ##       early signaling is enabled that conditioned

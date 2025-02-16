@@ -26,11 +26,11 @@
 #' @keywords internal
 signalConditions <- function(future, include = "condition", exclude = NULL, resignal = TRUE, ...) {
   ## Future is not yet launched
-  if (!future$state %in% c("finished", "failed")) {
+  if (!future[["state"]] %in% c("finished", "failed")) {
     stop(FutureError(
       sprintf(
         "Internal error: Cannot resignal future conditions. %s has not yet been resolved (state = %s)",
-        class(future)[1], paste(sQuote(future$state), collapse = ", ")),
+        class(future)[1], paste(sQuote(future[["state"]]), collapse = ", ")),
       future = future))
   }
 
@@ -83,13 +83,13 @@ signalConditions <- function(future, include = "condition", exclude = NULL, resi
       ## Make sure to update 'signaled' information before we exit.
       ## Note, 'future' is an environment.
       result$conditions <- conditions
-      future$result <- result
+      future[["result"]] <- result
       
       ## SPECIAL: By default, don't add 'future.info' because it
       ## modifies the error object, which may break things.
       if (debug && !"future.info" %in% names(condition)) {
         ## Recreate the full call stack
-        cond$calls <- c(future$calls, cond$calls)
+        cond$calls <- c(future[["calls"]], cond$calls)
         condition$future.info <- cond
       }
       stop(condition)
@@ -106,13 +106,13 @@ signalConditions <- function(future, include = "condition", exclude = NULL, resi
   }
 
   ## Drop captured and signalled conditions to save memory?
-  if (isTRUE(attr(future$conditions, "drop"))) {
+  if (isTRUE(attr(future[["conditions"]], "drop"))) {
     conditions <- conditions[!signaled]
   }
 
   ## Make sure to update 'signaled' information on exit
   result$conditions <- conditions
-  future$result <- result
+  future[["result"]] <- result
 
   invisible(future)
 }

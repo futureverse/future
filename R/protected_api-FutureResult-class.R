@@ -118,7 +118,7 @@ print.FutureResult <- function(x, ...) {
   conditions <- x[["conditions"]]
   conditionClasses <- vapply(conditions, FUN = function(c) class(c$condition)[1], FUN.VALUE = NA_character_)
   s <- c(s, sprintf("conditions: [n = %d] %s", length(conditions), paste(conditionClasses, collapse = ", ")))
-  if (!is.null(v <- x$rng)) s <- c(s, sprintf("RNG used: %s", v))
+  if (!is.null(v <- x[["rng"]])) s <- c(s, sprintf("RNG used: %s", v))
   t0 <- x[["started"]]
   t1 <- x[["finished"]]
   s <- c(s, sprintf("duration: %s (started %s)", format(t1-t0), t0))

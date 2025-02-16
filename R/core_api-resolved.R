@@ -22,7 +22,7 @@
 resolved <- function(x, ...) {
   ## Automatically update journal entries for Future object
   if (inherits(future, "Future") &&
-      inherits(future$.journal, "FutureJournal")) {
+      inherits(future[[".journal"]], "FutureJournal")) {
     start <- Sys.time()
     on.exit({
       appendToFutureJournal(x,

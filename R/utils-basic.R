@@ -34,6 +34,7 @@ stop_if_not <- function(...) {
   NULL
 }
 
+
 ## From R.utils 2.0.2 (2015-05-23)
 hpaste <- function(..., sep = "", collapse = ", ", lastCollapse = NULL, maxHead = if (missing(lastCollapse)) 3 else Inf, maxTail = if (is.finite(maxHead)) 1 else Inf, abbreviate = "...") {
   if (is.null(lastCollapse)) lastCollapse <- collapse
@@ -391,7 +392,7 @@ resolveMPI <- local({
     resolveMPI <- cache$resolveMPI
     if (is.null(resolveMPI)) {
       resolveMPI <- function(future) {
-        node <- future$workers[[future$node]]
+        node <- future[["workers"]][[future[["node"]]]]
         warnf("resolved() on %s failed to load the Rmpi package. Will use blocking value() instead and return TRUE", sQuote(class(node)[1]))
         value(future, stdout = FALSE, signal = FALSE)
         TRUE
@@ -401,7 +402,7 @@ resolveMPI <- local({
         ns <- getNamespace("Rmpi")
 
         resolveMPI <- function(future) {
-          node <- future$workers[[future$node]]
+          node <- future[["workers"]][[future[["node"]]]]
           warnf("resolved() on %s failed to find mpi.iprobe() and mpi.any.tag() in Rmpi %s. Will use blocking value() instead and return TRUE", sQuote(class(node)[1]), packageVersion("Rmpi"))
           value(future, stdout = FALSE, signal = FALSE)
           TRUE
@@ -414,7 +415,7 @@ resolveMPI <- local({
           mpi.any.tag <- get("mpi.any.tag", mode = "function", envir = ns,
                              inherits = FALSE)
           resolveMPI <- function(future) {
-            node <- future$workers[[future$node]]
+            node <- future[["workers"]][[future[["node"]]]]
             mpi.iprobe(source = node$rank, comm = node$comm, tag = mpi.any.tag())
           }
         }

@@ -16,18 +16,18 @@
 \alias{FutureJournalCondition}
 \title{A condition (message, warning, or error) that occurred while orchestrating a future}
 \usage{
-FutureCondition(message, call = NULL, uuid = future$uuid, future = NULL)
+FutureCondition(message, call = NULL, uuid = future[["uuid"]], future = NULL)
 
-FutureMessage(message, call = NULL, uuid = future$uuid, future = NULL)
+FutureMessage(message, call = NULL, uuid = future[["uuid"]], future = NULL)
 
-FutureWarning(message, call = NULL, uuid = future$uuid, future = NULL)
+FutureWarning(message, call = NULL, uuid = future[["uuid"]], future = NULL)
 
-FutureError(message, call = NULL, uuid = future$uuid, future = NULL)
+FutureError(message, call = NULL, uuid = future[["uuid"]], future = NULL)
 
 RngFutureCondition(
   message = NULL,
   call = NULL,
-  uuid = future$uuid,
+  uuid = future[["uuid"]],
   future = NULL
 )
 
@@ -41,7 +41,7 @@ GlobalEnvFutureCondition(
   message = NULL,
   call = NULL,
   globalenv = globalenv,
-  uuid = future$uuid,
+  uuid = future[["uuid"]],
   future = NULL
 )
 
@@ -53,7 +53,7 @@ FutureJournalCondition(
   message,
   journal,
   call = NULL,
-  uuid = future$uuid,
+  uuid = future[["uuid"]],
   future = NULL
 )
 }

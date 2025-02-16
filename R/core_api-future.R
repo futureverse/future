@@ -216,7 +216,7 @@ future <- function(expr, envir = parent.frame(), substitute = TRUE, lazy = FALSE
 
   ## WORKAROUND: Was argument 'local' specified?
   ## Comment: Only allowed for persistent 'cluster' futures
-  future$.defaultLocal <- !is.element("local", names(list(...)))
+  future[[".defaultLocal"]] <- !is.element("local", names(list(...)))
 
   ## Enable journaling?
   if (getOption("future.journal", FALSE)) {
@@ -225,9 +225,9 @@ future <- function(expr, envir = parent.frame(), substitute = TRUE, lazy = FALSE
 
   if (!lazy) {
     future <- run(future)
-    future$lazy <- FALSE
+    future[["lazy"]] <- FALSE
     ## Assert that a future was returned
-    stop_if_not(inherits(future, "Future"), !future$lazy)
+    stop_if_not(inherits(future, "Future"), !future[["lazy"]])
   }
   
   future

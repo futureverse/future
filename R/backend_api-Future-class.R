@@ -217,23 +217,24 @@ Future <- function(expr = NULL, envir = parent.frame(), substitute = TRUE, stdou
 #' @importFrom utils head capture.output
 #' @export
 print.Future <- function(x, ...) {
-  class <- class(x)
+  future <- x
+  class <- class(future)
   cat(sprintf("%s:\n", class[1]))
-  label <- x$label
+  label <- future[["label"]]
   if (is.null(label)) label <- "<none>"
   cat("Label: ", sQuote(label), "\n", sep = "")
   cat("Expression:\n")
-  print(x$expr)
-  cat(sprintf("Lazy evaluation: %s\n", x$lazy))
-  cat(sprintf("Asynchronous evaluation: %s\n", x$asynchronous))
-  cat(sprintf("Local evaluation: %s\n", x$local))
-  cat(sprintf("Environment: %s\n", envname(x$envir)))
-  cat(sprintf("Capture standard output: %s\n", x$stdout))
-  if (length(x$conditions) > 0) {
-    exclude <- attr(x$conditions, "exclude", exact = TRUE)
+  print(future[["expr"]])
+  cat(sprintf("Lazy evaluation: %s\n", future[["lazy"]]))
+  cat(sprintf("Asynchronous evaluation: %s\n", future[["asynchronous"]]))
+  cat(sprintf("Local evaluation: %s\n", future[["local"]]))
+  cat(sprintf("Environment: %s\n", envname(future[["envir"]])))
+  cat(sprintf("Capture standard output: %s\n", future[["stdout"]]))
+  if (length(future[["conditions"]]) > 0) {
+    exclude <- attr(future[["conditions"]], "exclude", exact = TRUE)
     if (length(exclude) == 0) exclude <- "nothing"
     cat(sprintf("Capture condition classes: %s (excluding %s)\n",
-                commaq(x$conditions),
+                commaq(future[["conditions"]]),
                 commaq(exclude)))
   } else {
     cat("Capture condition classes: <none>\n")
@@ -241,14 +242,14 @@ print.Future <- function(x, ...) {
 
   ## FIXME: Add method globals_of() for Future such that it's possible
   ## also for SequentialFuture to return something here. /HB 2017-05-17
-  g <- globals(x)
+  g <- globals(future)
   ng <- length(g)
   if (ng > 0) {
     gSizes <- sapply(g, FUN = objectSize)
     gTotalSize <- sum(gSizes)
     g <- head(g, n = 5L)
     gSizes <- head(gSizes, n = 5L)
-    g <- sprintf("%s %s of %s", sapply(g, FUN = function(x) class(x)[1]), sQuote(names(g)), sapply(gSizes, FUN = asIEC))
+    g <- sprintf("%s %s of %s", sapply(g, FUN = function(future) class(future)[1]), sQuote(names(g)), sapply(gSizes, FUN = asIEC))
     if (ng > length(g)) g <- c(g, "...")
     g <- hpaste(g, maxHead = 5L, maxTail = 0L)
     cat(sprintf("Globals: %d objects totaling %s (%s)\n", ng, asIEC(gTotalSize), g))
@@ -256,7 +257,7 @@ print.Future <- function(x, ...) {
     cat("Globals: <none>\n")
   }
   
-  p <- packages(x)
+  p <- packages(future)
   np <- length(p)
   if (np > 0) {
     cat(sprintf("Packages: %d packages (%s)\n", np, commaq(p)))
@@ -264,22 +265,22 @@ print.Future <- function(x, ...) {
     cat("Packages: <none>\n")
   }
   
-  if (is.integer(x$seed)) {
-    cat(sprintf("L'Ecuyer-CMRG RNG seed: c(%s)\n", paste(x$seed, collapse = ", ")))
+  if (is.integer(future[["seed"]])) {
+    cat(sprintf("L'Ecuyer-CMRG RNG seed: c(%s)\n", paste(future[["seed"]], collapse = ", ")))
   } else {
-    cat("L'Ecuyer-CMRG RNG seed: <none> (seed = ", deparse(x$seed), ")\n", sep = "")
+    cat("L'Ecuyer-CMRG RNG seed: <none> (seed = ", deparse(future[["seed"]]), ")\n", sep = "")
   }
 
-  result <- x$result
+  result <- future[["result"]]
   hasResult <- inherits(result, "FutureResult")
   ## BACKWARD COMPATIBILITY
-  hasResult <- hasResult || exists("value", envir = x, inherits = FALSE)
+  hasResult <- hasResult || exists("value", envir = future, inherits = FALSE)
   if (hasResult) {
     cat("Resolved: TRUE\n")
-  } else if (x$state == "created") {
+  } else if (future[["state"]] == "created") {
     ## Don't launch lazy futures here
     cat("Resolved: FALSE\n")
-  } else if (inherits(x, "UniprocessFuture") && x$lazy) {
+  } else if (inherits(future, "UniprocessFuture") && future[["lazy"]]) {
     ## FIXME: Special case; will there every be other cases
     ## for which we need to support this? /HB 2016-05-03
     cat("Resolved: FALSE\n")
@@ -288,16 +289,16 @@ print.Future <- function(x, ...) {
     ## Note that resolved() may produce a FutureError, e.g.
     ## due to invalid connection in a MultisessionFuture
     is_resolved <- FALSE
-    cat(sprintf("Resolved: %s\n", tryCatch(resolved(x, .signalEarly = FALSE), error = function(ex) NA)))
+    cat(sprintf("Resolved: %s\n", tryCatch(resolved(future, .signalEarly = FALSE), error = function(ex) NA)))
   }
 
   if (hasResult) {
     if (inherits(result, "FutureResult")) {
       value <- result$value
-    } else if ("value" %in% names(x)) {
-      .Defunct(msg = sprintf("Detected a %s object that rely on the defunct 'value' field of format version 1.7 or before.", class(x)[1]), package = .packageName)
+    } else if ("value" %in% names(future)) {
+      .Defunct(msg = sprintf("Detected a %s object that rely on the defunct 'value' field of format version 1.7 or before.", class(future)[1]), package = .packageName)
     } else {
-      stop(FutureError(sprintf("The %s object does not have a 'results' field", class(x)[1]), future = future))
+      stop(FutureError(sprintf("The %s object does not have a 'results' field", class(future)[1]), future = future))
     }
     cat(sprintf("Value: %s of class %s\n", asIEC(objectSize(value)), sQuote(class(value)[1])))
     if (inherits(result, "FutureResult")) {
@@ -309,8 +310,8 @@ print.Future <- function(x, ...) {
     cat("Value: <not collected>\n")
     cat("Conditions captured: <none>\n")
   }
-  cat(sprintf("Early signaling: %s\n", isTRUE(x$earlySignal)))
-  cat(sprintf("Owner process: %s\n", x$owner))
+  cat(sprintf("Early signaling: %s\n", isTRUE(future[["earlySignal"]])))
+  cat(sprintf("Owner process: %s\n", future[["owner"]]))
   cat(sprintf("Class: %s\n", commaq(class)))
 } ## print()
 
@@ -326,8 +327,8 @@ assertOwner <- function(future, ...) {
     pid
   }
 
-  if (!identical(future$owner, session_uuid())) {
-    stop(FutureError(sprintf("Invalid usage of futures: A future (here %s) whose value has not yet been collected can only be queried by the R process (%s) that created it, not by any other R processes (%s): %s", sQuote(class(future)[1]), hpid(future$owner), hpid(session_uuid()), hexpr(future$expr)), future = future))
+  if (!identical(future[["owner"]], session_uuid())) {
+    stop(FutureError(sprintf("Invalid usage of futures: A future (here %s) whose value has not yet been collected can only be queried by the R process (%s) that created it, not by any other R processes (%s): %s", sQuote(class(future)[1]), hpid(future[["owner"]]), hpid(session_uuid()), hexpr(future[["expr"]])), future = future))
   }
 
   invisible(future)
@@ -356,22 +357,22 @@ run.Future <- function(future, ...) {
   debug <- getOption("future.debug", FALSE)
   if (debug) {
     mdebug("run() for ", sQuote(class(future)[1]), " ...")
-    mdebug("- state: ", sQuote(future$state))
+    mdebug("- state: ", sQuote(future[["state"]]))
     on.exit(mdebug("run() for ", sQuote(class(future)[1]), " ... done"), add = TRUE)
   }
 
-  if (future$state != "created") {
-    label <- future$label
+  if (future[["state"]] != "created") {
+    label <- future[["label"]]
     if (is.null(label)) label <- "<none>"
     msg <- sprintf("A future ('%s') can only be launched once.", label)
     stop(FutureError(msg, future = future))
   }
 
   ## Sanity check: This method should only called for lazy futures
-  stop_if_not(future$lazy)
+  stop_if_not(future[["lazy"]])
 
-  if (is.null(future$owner)) {
-    future$owner <- session_uuid()
+  if (is.null(future[["owner"]])) {
+    future[["owner"]] <- session_uuid()
   } else {  
     ## Be conservative for now; don't allow lazy futures created in another R
     ## session to be launched. This will hopefully change later, but we won't
@@ -379,7 +380,7 @@ run.Future <- function(future, ...) {
     if (getOption("future.lazy.assertOwner", TRUE)) {
       assertOwner(future)
     } else {
-      future$owner <- session_uuid()
+      future[["owner"]] <- session_uuid()
     }
   }
 
@@ -389,22 +390,22 @@ run.Future <- function(future, ...) {
 
   ## AD HOC/WORKAROUND: /HB 2020-12-21
   args <- list(
-    quote(future$expr),
+    quote(future[["expr"]]),
     substitute = FALSE,
-    envir = future$envir,
+    envir = future[["envir"]],
     lazy = TRUE,
-    stdout = future$stdout,
-    conditions = future$conditions,
-    globals = future$globals,
-    packages = future$packages,
-    seed = future$seed,
-    label = future$label,
-    calls = future$calls
+    stdout = future[["stdout"]],
+    conditions = future[["conditions"]],
+    globals = future[["globals"]],
+    packages = future[["packages"]],
+    seed = future[["seed"]],
+    label = future[["label"]],
+    calls = future[["calls"]]
   )
 
   ## SPECIAL: 'cluster' takes argument 'persistent' for now /HB 2023-01-17
   has_persistent <- ("persistent" %in% names(future))
-  if (has_persistent) args$persistent <- future$persistent
+  if (has_persistent) args$persistent <- future[["persistent"]]
   
   tmpFuture <- do.call(makeFuture, args = args)
 
@@ -423,11 +424,11 @@ run.Future <- function(future, ...) {
   ## AD HOC/SPECIAL:
   ## If 'earlySignal=TRUE' was set explicitly when creating the future,
   ## then override the plan, otherwise use what the plan() says
-  if (isTRUE(future$earlySignal)) tmpFuture$earlySignal <- TRUE
+  if (isTRUE(future[["earlySignal"]])) tmpFuture$earlySignal <- TRUE
 
   ## If 'gc=TRUE' was set explicitly when creating the future,
   ## then override the plan, otherwise use what the plan() says
-  if (isTRUE(future$gc)) tmpFuture$gc <- TRUE
+  if (isTRUE(future[["gc"]])) tmpFuture$gc <- TRUE
 
   ## Copy the full state of this temporary future into the main one
   ## This can be done because Future:s are environments and we can even
@@ -447,14 +448,14 @@ run.Future <- function(future, ...) {
   tmpFuture <- NULL
 
   ## Launch the future?
-  if (future$lazy) {
+  if (future[["lazy"]]) {
     if (debug) mdebug("- Launch lazy future ...")
     future <- run(future)
     if (debug) mdebug("- Launch lazy future ... done")
   }
   
   ## Sanity check: This method was only called for lazy futures
-  stop_if_not(future$state != "created", future$lazy)
+  stop_if_not(future[["state"]] != "created", future[["lazy"]])
 
   future
 }
@@ -464,7 +465,7 @@ run.Future <- function(future, ...) {
 run <- function(future, ...) {
   ## Automatically update journal entries for Future object
   if (inherits(future, "Future") &&
-      inherits(future$.journal, "FutureJournal")) {
+      inherits(future[[".journal"]], "FutureJournal")) {
     start <- Sys.time()
     on.exit({
       appendToFutureJournal(future,
@@ -484,7 +485,7 @@ run <- function(future, ...) {
 result <- function(future, ...) {
   ## Automatically update journal entries for Future object
   if (inherits(future, "Future") &&
-      inherits(future$.journal, "FutureJournal")) {
+      inherits(future[[".journal"]], "FutureJournal")) {
     start <- Sys.time()
     on.exit({
       appendToFutureJournal(future,
@@ -495,14 +496,14 @@ result <- function(future, ...) {
       )
 
       ## Signal FutureJournalCondition?
-      if (!isTRUE(future$.journal_signalled)) {
+      if (!isTRUE(future[[".journal_signalled"]])) {
         journal <- journal(future)
-        label <- future$label
+        label <- future[["label"]]
         if (is.null(label)) label <- "<none>"
         msg <- sprintf("A future ('%s') of class %s was resolved", label, class(future)[1])
         cond <- FutureJournalCondition(message = msg, journal = journal) 
         signalCondition(cond)
-        future$.journal_signalled <- TRUE
+        future[[".journal_signalled"]] <- TRUE
       }
     })
   }
@@ -526,7 +527,7 @@ result <- function(future, ...) {
 #' @keywords internal
 result.Future <- function(future, ...) {
   ## Has the result already been collected?
-  result <- future$result
+  result <- future[["result"]]
   if (!is.null(result)) {
     ## Always signal immediateCondition:s and as soon as possible.
     ## They will always be signaled if they exist.
@@ -536,11 +537,11 @@ result.Future <- function(future, ...) {
     return(result)
   }
   
-  if (future$state == "created") {
+  if (future[["state"]] == "created") {
     future <- run(future)
   }
 
-  if (!future$state %in% c("finished", "failed", "interrupted")) {
+  if (!future[["state"]] %in% c("finished", "failed", "interrupted")) {
     ## BACKWARD COMPATIBILITY:
     ## For now, it is value() that collects the results.  Later we want
     ## all future backends to use result() to do it. /HB 2018-02-22
@@ -551,14 +552,14 @@ result.Future <- function(future, ...) {
     signalImmediateConditions(future)
   }
 
-  result <- future$result
+  result <- future[["result"]]
   if (inherits(result, "FutureResult")) return(result)
 
   ## BACKWARD COMPATIBILITY
-  result <- future$value
+  result <- future[["value"]]
   if (inherits(result, "FutureResult")) return(result)
 
-  version <- future$version
+  version <- future[["version"]]
   if (is.null(version)) {
     warning(FutureWarning("Future version was not set. Using default %s",
                           sQuote(version)))
@@ -567,7 +568,7 @@ result.Future <- function(future, ...) {
   ## Sanity check
   if (version == "1.8") {
     if (is.null(result) && inherits(future, "MulticoreFuture")) {
-      label <- future$label
+      label <- future[["label"]]
       if (is.null(label)) label <- "<none>"
       msg <- sprintf("A future ('%s') of class %s did not produce a FutureResult object but NULL. This suggests that the R worker terminated (crashed?) before the future expression was resolved.", label, class(future)[1])
       stop(FutureError(msg, future = future))
@@ -584,12 +585,12 @@ resolved.Future <- function(x, run = TRUE, ...) {
   if (debug) {
     mdebug("resolved() for ", sQuote(class(x)[1]), " ...")
     on.exit(mdebug("resolved() for ", sQuote(class(x)[1]), " ... done"), add = TRUE)
-    mdebug("- state: ", sQuote(x$state))
+    mdebug("- state: ", sQuote(x[["state"]]))
     mdebug("- run: ", run)
   }
   
   ## A lazy future not even launched?
-  if (x$state == "created") {
+  if (x[["state"]] == "created") {
     if (!run) return(FALSE)
     if (debug) mdebug("- run() ...")
     x <- run(x)
@@ -607,10 +608,10 @@ resolved.Future <- function(x, run = TRUE, ...) {
   ## Note, collect = TRUE will block here, which is intentional
   signalEarly(x, collect = TRUE, ...)
 
-  if (debug) mdebug("- result: ", sQuote(class(x$result)[1]))
-  if (inherits(x$result, "FutureResult")) return(TRUE)
+  if (debug) mdebug("- result: ", sQuote(class(x[["result"]])[1]))
+  if (inherits(x[["result"]], "FutureResult")) return(TRUE)
   
-  res <- (x$state %in% c("finished", "failed", "interrupted"))
+  res <- (x[["state"]] %in% c("finished", "failed", "interrupted"))
 
   if (debug) mdebug("- resolved: ", res)
 
@@ -641,10 +642,10 @@ getFutureCore <- function(future, ...) {
 
   ## Create a future core
   core <- list(
-    expr     = future$expr,
+    expr     = future[["expr"]],
     globals  = globals,
     packages = pkgs,
-    seed     = future$seed
+    seed     = future[["seed"]]
   )
 
   core
@@ -660,12 +661,12 @@ getFutureCapture <- function(future, ...) {
     on.exit(mdebug("getFutureCapture() ... DONE"))
   }
 
-  split <- future$split
+  split <- future[["split"]]
   if (is.null(split)) split <- FALSE
   stop_if_not(is.logical(split), length(split) == 1L, !is.na(split))
 
   immediateConditionClasses <- getOption("future.relay.immediate", "immediateCondition")
-  conditionClasses <- future$conditions
+  conditionClasses <- future[["conditions"]]
   if (length(immediateConditionClasses) > 0 && !is.null(conditionClasses)) {
     exclude <- attr(conditionClasses, "exclude", exact = TRUE)
     muffleInclude <- attr(conditionClasses, "muffleInclude", exact = TRUE)
@@ -676,7 +677,7 @@ getFutureCapture <- function(future, ...) {
   }
 
   capture <- list(
-    stdout                     = future$stdout,
+    stdout                     = future[["stdout"]],
     split                      = split,
     conditionClasses           = conditionClasses,
     immediateConditionClasses  = immediateConditionClasses,
@@ -750,10 +751,10 @@ getFutureContext <- function(future, mc.cores = NULL, local = TRUE, ...) {
     forwardOptions$mc.cores <- mc.cores
   }
 
-  if (is.null(local)) local <- future$local
+  if (is.null(local)) local <- future[["local"]]
   
   ## To be cleaned up /HB 2025-01-02
-  persistent <- future$persistent
+  persistent <- future[["persistent"]]
   if (isTRUE(persistent)) local <- FALSE
 
   ## Create a future context
@@ -841,8 +842,8 @@ getFutureBackendConfigs.ClusterFuture <- function(future, ...) {
   
   ## Does the cluster node communicate with a connection?
   ## (if not, it's via MPI)
-  workers <- future$workers
-  ## AD HOC/FIXME: Here 'future$node' is yet not assigned, so we look at
+  workers <- future[["workers"]]
+  ## AD HOC/FIXME: Here 'future[["node"]]' is yet not assigned, so we look at
   ## the first worker and assume the others are the same. /HB 2019-10-23
   cl <- workers[1L]
   node <- cl[[1L]]
@@ -937,7 +938,7 @@ getExpression.Future <- local({
     future:::evalFuture(data = .(data), cleanup = .(cleanup))
   })
 
-  function(future, expr = future$expr, ..., cleanup = TRUE) {
+  function(future, expr = future[["expr"]], ..., cleanup = TRUE) {
     debug <- getOption("future.debug", FALSE)
     ##  mdebug("getExpression() ...")
     

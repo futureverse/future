@@ -26,7 +26,7 @@
 #' @export
 sequential <- function(..., envir = parent.frame()) {
   future <- SequentialFuture(..., envir = envir)
-  if (!future$lazy) future <- run(future)
+  if (!future[["lazy"]]) future <- run(future)
   invisible(future)
 }
 class(sequential) <- c("sequential", "uniprocess", "future", "function")
