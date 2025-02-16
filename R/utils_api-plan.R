@@ -194,7 +194,7 @@ plan <- local({
 
     init <- attr(evaluator, "init", exact = TRUE)
     if (identical(init, TRUE)) {
-      debug <- getOption("future.debug", FALSE)
+      debug <- isTRUE(getOption("future.debug"))
       if (debug) {
         mdebugf("plan(): plan_init() of %s ...",
                 commaq(class(evaluator)))
@@ -258,14 +258,14 @@ plan <- local({
 
     ## Skip if already set?
     if (skip && equal_strategy_stacks(newStack, oldStack)) {
-      if (getOption("future.debug", FALSE)) {
+      if (isTRUE(getOption("future.debug"))) {
         mdebug("plan(): Skip setting new future strategy stack because it is the same as the current one:")
         mprint(newStack)
       }
       return(oldStack)
     }
 
-    if (getOption("future.debug", FALSE)) {
+    if (isTRUE(getOption("future.debug"))) {
       mdebug("plan(): Setting new future strategy stack:")
       mprint(newStack)
     }
@@ -285,7 +285,7 @@ plan <- local({
 
     ## Sanity checks
     nbrOfWorkers <- nbrOfWorkers()
-    if (getOption("future.debug", FALSE)) {
+    if (isTRUE(getOption("future.debug"))) {
       mdebugf(sprintf("plan(): nbrOfWorkers() = %.0f", nbrOfWorkers))
     }
     stop_if_not(is.numeric(nbrOfWorkers), length(nbrOfWorkers) == 1L, 

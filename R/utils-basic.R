@@ -137,7 +137,7 @@ inherits_from_namespace <- function(env) {
 ## for functions.  If they are functions of namespaces/packages
 ## and exclude == "namespace", then the globals are not assigned
 ## Reference: https://github.com/futureverse/future/issues/515
-assign_globals <- function(envir, globals, exclude = getOption("future.assign_globals.exclude", c("namespace")), debug = getOption("future.debug", FALSE)) {
+assign_globals <- function(envir, globals, exclude = getOption("future.assign_globals.exclude", c("namespace")), debug = isTRUE(getOption("future.debug"))) {
   stop_if_not(is.environment(envir), is.list(globals))
   if (length(globals) == 0L) return(envir)
 
@@ -194,25 +194,25 @@ now <- function(x = Sys.time(), format = "[%H:%M:%OS3] ") {
   format(as.POSIXlt(x, tz = ""), format = format)
 }
 
-mdebug <- function(..., prefix = now(), debug = getOption("future.debug", FALSE)) {
+mdebug <- function(..., prefix = now(), debug = isTRUE(getOption("future.debug"))) {
   if (!debug) return()
   message(prefix, ...)
 }
 
 mdebugf <- function(..., appendLF = TRUE,
-                    prefix = now(), debug = getOption("future.debug", FALSE)) {
+                    prefix = now(), debug = isTRUE(getOption("future.debug"))) {
   if (!debug) return()
   message(prefix, sprintf(...), appendLF = appendLF)
 }
 
 #' @importFrom utils capture.output
-mprint <- function(..., appendLF = TRUE, prefix = now(), debug = getOption("future.debug", FALSE)) {
+mprint <- function(..., appendLF = TRUE, prefix = now(), debug = isTRUE(getOption("future.debug"))) {
   if (!debug) return()
   message(paste(prefix, capture.output(print(...)), sep = "", collapse = "\n"), appendLF = appendLF)
 }
 
 #' @importFrom utils capture.output str
-mstr <- function(..., appendLF = TRUE, prefix = now(), debug = getOption("future.debug", FALSE)) {
+mstr <- function(..., appendLF = TRUE, prefix = now(), debug = isTRUE(getOption("future.debug"))) {
   if (!debug) return()
   message(paste(prefix, capture.output(str(...)), sep = "", collapse = "\n"), appendLF = appendLF)
 }
@@ -429,7 +429,7 @@ resolveMPI <- local({
 })
 
 
-supports_omp_threads <- function(assert = FALSE, debug = getOption("future.debug", FALSE)) {
+supports_omp_threads <- function(assert = FALSE, debug = isTRUE(getOption("future.debug"))) {
   if (!requireNamespace("RhpcBLASctl", quietly = TRUE)) {
     if (assert) {
       stop(FutureError(sprintf("In order to disable multi-threading in multicore futures, the %s package must be installed", sQuote("RhpcBLASctl"))))

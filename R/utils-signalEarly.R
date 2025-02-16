@@ -7,7 +7,7 @@ signalEarly <- function(future, collect = TRUE, .signalEarly = TRUE, ...) {
   ## Don't signal early?
   if (!earlySignal) return(future)
 
-  debug <- getOption("future.debug", FALSE)
+  debug <- isTRUE(getOption("future.debug"))
   if (debug) mdebug("signalEarly() ...")
 
   ## Nothing to do?

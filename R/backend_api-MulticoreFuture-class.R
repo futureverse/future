@@ -34,7 +34,7 @@ as_MulticoreFuture <- function(future, ...) {
 
 #' @export
 run.MulticoreFuture <- function(future, ...) {
-  debug <- getOption("future.debug", FALSE)
+  debug <- isTRUE(getOption("future.debug"))
   
   if (future[["state"]] != "created") {
     label <- future[["label"]]
@@ -145,7 +145,7 @@ resolved.MulticoreFuture <- function(x, run = TRUE, timeout = NULL, ...) {
 
 #' @export
 result.MulticoreFuture <- function(future, ...) {
-  debug <- getOption("future.debug", FALSE)
+  debug <- isTRUE(getOption("future.debug"))
   if (debug) {
     mdebugf("result() for %s ...", class(future)[1])
     on.exit(mdebugf("result() for %s ... done", class(future)[1]))

@@ -45,7 +45,7 @@ signalConditions <- function(future, include = "condition", exclude = NULL, resi
   ## Nothing to do
   if (length(conditions) == 0) return(invisible(future))
 
-  debug <- getOption("future.debug", FALSE)
+  debug <- isTRUE(getOption("future.debug"))
 
   if (debug) {
     mdebug("signalConditions() ...")
@@ -124,7 +124,7 @@ signalImmediateConditions <- function(future, include = getOption("future.relay.
 }
 
 
-make_signalConditionsASAP <- function(nx, stdout = TRUE, signal = TRUE, force = FALSE, debug = getOption("future.debug", FALSE)) {
+make_signalConditionsASAP <- function(nx, stdout = TRUE, signal = TRUE, force = FALSE, debug = isTRUE(getOption("future.debug"))) {
   relay <- (stdout || signal)
   if (!relay && !force) return(function(...) TRUE)
 

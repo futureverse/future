@@ -56,7 +56,7 @@ ClusterRegistry <- local({
 #' @importFrom parallel clusterCall
 addCovrLibPath <- function(cl) {
   if (!is.element("covr", loadedNamespaces())) return(cl)
-  debug <- getOption("future.debug", FALSE)
+  debug <- isTRUE(getOption("future.debug"))
   
   ## WORKAROUND: When running covr::package_coverage(), the
   ## package being tested may actually not be installed in

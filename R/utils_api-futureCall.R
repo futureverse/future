@@ -19,7 +19,7 @@ futureCall <- function(FUN, args = list(), envir = parent.frame(), lazy = FALSE,
   stop_if_not(is.function(FUN))
   stop_if_not(is.list(args))
 
-  debug <- getOption("future.debug", FALSE)  
+  debug <- isTRUE(getOption("future.debug"))  
   if (debug) mdebug("futureCall() ...")
   
   ## NOTE TO SELF: We'd ideally have an 'envir' argument also for

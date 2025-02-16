@@ -41,7 +41,7 @@ readImmediateConditions <- function(path = immediateConditionsPath(rootPath = ro
   stop_if_not(is.character(include), !anyNA(include))
   stop_if_not(is.logical(remove), length(remove) == 1L, !is.na(remove))
 
-  debug <- getOption("future.debug", FALSE)
+  debug <- isTRUE(getOption("future.debug"))
   if (debug) {
     mdebug("readImmediateCondition() ...")
     mdebugf("  - path: %s", sQuote(path))

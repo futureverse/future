@@ -175,7 +175,7 @@ requestCore <- function(await, workers = availableCores(), timeout = getOption("
   stop_if_not(is.finite(timeout), timeout >= 0)
   stop_if_not(is.finite(alpha), alpha > 0)
 
-  debug <- getOption("future.debug", FALSE)
+  debug <- isTRUE(getOption("future.debug"))
   if (debug) mdebugf("requestCore(): workers = %d", workers)
 
   ## No additional cores available?

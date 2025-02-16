@@ -174,38 +174,38 @@ Future <- function(expr = NULL, envir = parent.frame(), substitute = TRUE, stdou
   ## Version of future
   version <- args$version
   if (is.null(version)) version <- "1.8"
-  core$version <- version
+  core[["version"]] <- version
 
   ## Future evaluation
-  core$expr <- expr
-  core$envir <- envir
-  core$stdout <- stdout
-  core$conditions <- conditions
-  core$globals <- globals
-  core$packages <- packages
-  core$seed <- seed
-  core$lazy <- lazy
-  core$asynchronous <- TRUE  ## Reserved for future version (Issue #109)
+  core[["expr"]] <- expr
+  core[["envir"]] <- envir
+  core[["stdout"]] <- stdout
+  core[["conditions"]] <- conditions
+  core[["globals"]] <- globals
+  core[["packages"]] <- packages
+  core[["seed"]] <- seed
+  core[["lazy"]] <- lazy
+  core[["asynchronous"]] <- TRUE  ## Reserved for future version (Issue #109)
 
   ## 'local' is now defunct and always TRUE, unless persistent = TRUE,
   ## which in turn may only be used for cluster futures. /HB 2023-01-11
-  core$local <- TRUE
+  core[["local"]] <- TRUE
 
   ## Result
-  core$result <- NULL
+  core[["result"]] <- NULL
 
   ## Future miscellaneous
-  core$label <- label
-  core$earlySignal <- earlySignal
-  core$gc <- gc
-  core$owner <- session_uuid()
+  core[["label"]] <- label
+  core[["earlySignal"]] <- earlySignal
+  core[["gc"]] <- gc
+  core[["owner"]] <- session_uuid()
   .package$futureCounter <- .package$futureCounter + 1L
-  core$uuid <- uuid(list(owner = core$owner, counter = .package$futureCounter))
-  core$calls <- sys.calls()
+  core[["uuid"]] <- uuid(list(owner = core[["owner"]], counter = .package$futureCounter))
+  core[["calls"]] <- sys.calls()
 
   ## The current state of the future, e.g.
   ## 'created', 'running', 'finished', 'failed', 'interrupted'.
-  core$state <- "created"
+  core[["state"]] <- "created"
 
   ## Additional named arguments
   for (key in args_names) core[[key]] <- args[[key]]
@@ -354,7 +354,7 @@ assertOwner <- function(future, ...) {
 #' @export run
 #' @keywords internal
 run.Future <- function(future, ...) {
-  debug <- getOption("future.debug", FALSE)
+  debug <- isTRUE(getOption("future.debug"))
   if (debug) {
     mdebug("run() for ", sQuote(class(future)[1]), " ...")
     mdebug("- state: ", sQuote(future[["state"]]))
@@ -581,7 +581,7 @@ result.Future <- function(future, ...) {
 
 #' @export
 resolved.Future <- function(x, run = TRUE, ...) {
-  debug <- getOption("future.debug", FALSE)
+  debug <- isTRUE(getOption("future.debug"))
   if (debug) {
     mdebug("resolved() for ", sQuote(class(x)[1]), " ...")
     on.exit(mdebug("resolved() for ", sQuote(class(x)[1]), " ... done"), add = TRUE)
@@ -594,8 +594,10 @@ resolved.Future <- function(x, run = TRUE, ...) {
     if (!run) return(FALSE)
     if (debug) mdebug("- run() ...")
     x <- run(x)
-    if (debug) mdebug("- run() ... done")
-    if (debug) mdebug("- resolved() ...")
+    if (debug) {
+      mdebug("- run() ... done")
+      mdebug("- resolved() ...")
+    }
     res <- resolved(x, ...)
     if (debug) {
       mdebug("- resolved: ", res)
@@ -623,7 +625,7 @@ resolved.Future <- function(x, run = TRUE, ...) {
 getFutureCore <- function(future, ...) {
   stop_if_not(inherits(future, "Future"))
 
-  debug <- getOption("future.debug", FALSE)
+  debug <- isTRUE(getOption("future.debug"))
   if (debug) {
     mdebug("getFutureCore() ...")
     on.exit(mdebug("getFutureCore() ... DONE"))
@@ -655,7 +657,7 @@ getFutureCore <- function(future, ...) {
 getFutureCapture <- function(future, ...) {
   stop_if_not(inherits(future, "Future"))
 
-  debug <- getOption("future.debug", FALSE)
+  debug <- isTRUE(getOption("future.debug"))
   if (debug) {
     mdebug("getFutureCapture() ...")
     on.exit(mdebug("getFutureCapture() ... DONE"))
@@ -691,7 +693,7 @@ getFutureCapture <- function(future, ...) {
 getFutureContext <- function(future, mc.cores = NULL, local = TRUE, ...) {
   stop_if_not(inherits(future, "Future"))
   
-  debug <- getOption("future.debug", FALSE)
+  debug <- isTRUE(getOption("future.debug"))
   if (debug) {
     mdebug("getFutureContext() ...")
     on.exit(mdebug("getFutureContext() ... DONE"))
@@ -797,7 +799,7 @@ getFutureBackendConfigs.UniprocessFuture <- function(future, ...) {
 
 #' @export
 getFutureBackendConfigs.MulticoreFuture <- function(future, ...) {
-  debug <- getOption("future.debug", FALSE)
+  debug <- isTRUE(getOption("future.debug"))
   
   path <- immediateConditionsPath(rootPath = tempdir())
   
@@ -863,7 +865,7 @@ getFutureBackendConfigs.ClusterFuture <- function(future, ...) {
 
 
 getFutureData <- function(future, ...) {
-  debug <- getOption("future.debug", FALSE)
+  debug <- isTRUE(getOption("future.debug"))
   if (debug) {
     mdebug("getFutureData() ...")
     on.exit(mdebug("getFutureData() ..."))
@@ -939,13 +941,13 @@ getExpression.Future <- local({
   })
 
   function(future, expr = future[["expr"]], ..., cleanup = TRUE) {
-    debug <- getOption("future.debug", FALSE)
+    debug <- isTRUE(getOption("future.debug"))
     ##  mdebug("getExpression() ...")
     
     data <- getFutureData(future, ...)
     expr <- bquote_apply(tmpl_expr_evaluate)
 
-    if (getOption("future.debug", FALSE)) mprint(expr)
+    if (isTRUE(getOption("future.debug"))) mprint(expr)
   
     ##  mdebug("getExpression() ... DONE")
     

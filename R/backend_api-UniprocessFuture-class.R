@@ -21,7 +21,7 @@ UniprocessFuture <- function(expr = NULL, substitute = TRUE, envir = parent.fram
 
 #' @export
 run.UniprocessFuture <- function(future, ...) {
-  debug <- getOption("future.debug", FALSE)
+  debug <- isTRUE(getOption("future.debug"))
   
   if (future[["state"]] != 'created') {
     label <- future[["label"]]

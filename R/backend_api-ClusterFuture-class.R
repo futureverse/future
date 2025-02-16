@@ -87,7 +87,7 @@ as_ClusterFuture <- function(future, workers = NULL, ...) {
 
 #' @export
 run.ClusterFuture <- function(future, ...) {
-  debug <- getOption("future.debug", FALSE)
+  debug <- isTRUE(getOption("future.debug"))
   if (debug) {
     mdebug("run.ClusterFuture() ...")
     on.exit(mdebug("run.ClusterFuture() ... done"))
@@ -185,7 +185,7 @@ resolved.ClusterFuture <- function(x, run = TRUE, timeout = NULL, ...) {
 
 #' @export
 result.ClusterFuture <- function(future, ...) {
-  debug <- getOption("future.debug", FALSE)
+  debug <- isTRUE(getOption("future.debug"))
   if (debug) {
     mdebug("result() for ClusterFuture ...")
     on.exit(mdebug("result() for ClusterFuture ... done"))
@@ -208,7 +208,7 @@ result.ClusterFuture <- function(future, ...) {
 
 #' @importFrom parallelly isConnectionValid
 receiveMessageFromWorker <- function(future, ...) {
-  debug <- getOption("future.debug", FALSE)
+  debug <- isTRUE(getOption("future.debug"))
   if (debug) {
     mdebug("receiveMessageFromWorker() for ClusterFuture ...")
     on.exit(mdebug("receiveMessageFromWorker() for ClusterFuture ... done"))
@@ -377,7 +377,7 @@ receiveMessageFromWorker <- function(future, ...) {
 
 
 requestNode <- function(await, workers, timeout = getOption("future.wait.timeout", 30 * 24 * 60 * 60), delta = getOption("future.wait.interval", 0.01), alpha = getOption("future.wait.alpha", 1.01)) {
-  debug <- getOption("future.debug", FALSE)
+  debug <- isTRUE(getOption("future.debug"))
   
   stop_if_not(inherits(workers, "cluster"))
   stop_if_not(is.function(await))
@@ -615,7 +615,7 @@ psockImmediateConditionHandler <- function(cond) {
 
 #' @importFrom parallelly connectionId isConnectionValid
 assertValidConnection <- function(future) {
-  debug <- getOption("future.debug", FALSE)
+  debug <- isTRUE(getOption("future.debug"))
   if (debug) {
     mdebug("assertValidConnection() ...")
     on.exit(mdebug("assertValidConnection() ... done"))
@@ -666,7 +666,7 @@ ClusterFutureBackend <- local({
     ## The name of the internal FutureRegistry
     reg <- sprintf("workers-%s", attr(workers, "name", exact = TRUE))
 
-    debug <- getOption("future.debug", FALSE)
+    debug <- isTRUE(getOption("future.debug"))
     
     list(
       workers = workers,
@@ -728,7 +728,7 @@ ClusterFutureBackend <- local({
       },
 
       isFutureResolved = function(future, timeout = NULL) {
-        debug <- getOption("future.debug", FALSE)
+        debug <- isTRUE(getOption("future.debug"))
         if (debug) {
           mdebug("isFutureResolved() ...")
           on.exit(mdebug("isFutureResolved() ... done"))

@@ -182,7 +182,7 @@ resolve.list <- function(x, idxs = NULL, recursive = 0, result = FALSE, stdout =
     nx <- .length(x)
   }
 
-  debug <- getOption("future.debug", FALSE)
+  debug <- isTRUE(getOption("future.debug"))
   if (debug) {
     mdebug("resolve() on list ...")
     mdebugf(" recursive: %s", recursive)
@@ -298,7 +298,7 @@ resolve.environment <- function(x, idxs = NULL, recursive = 0, result = FALSE, s
   relay <- (stdout || signal)
   result <- result || relay
 
-  debug <- getOption("future.debug", FALSE)
+  debug <- isTRUE(getOption("future.debug"))
   if (debug) {
     mdebug("resolve() on environment ...")
     mdebugf(" recursive: %s", recursive)
@@ -425,7 +425,7 @@ resolve.listenv <- function(x, idxs = NULL, recursive = 0, result = FALSE, stdou
   relay <- (stdout || signal)
   result <- result || relay
 
-  debug <- getOption("future.debug", FALSE)
+  debug <- isTRUE(getOption("future.debug"))
   if (debug) {
     mdebug("resolve() on list environment ...")
     mdebugf(" recursive: %s", recursive)
