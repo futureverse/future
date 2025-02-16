@@ -4,6 +4,34 @@ FutureEvalError <- function(...) {
   ex
 }
 
+
+attachPackages <- function(packages) {
+  ## Nothing to do?
+  if (length(packages) == 0L) return()
+
+  attached_packages <- sub("package:", "", grep("^package:", search(), value = TRUE), fixed = TRUE)
+
+  ## Skip already attached packages
+  packages <- setdiff(packages, attached_packages)
+  if (length(packages) == 0L) return()
+
+  lib.loc <- .libPaths()
+  
+  ## TROUBLESHOOTING: If the package fails to load, then library()
+  ## suppress that error and generates a generic much less
+  ## informative error message.  Because of this, we load the
+  ## namespace first (to get a better error message) and then
+  ## call library(), which attaches the package. /HB 2016-06-16
+  tryCatch({
+    for (pkg in packages) {
+      loadNamespace(pkg)
+      library(pkg, character.only = TRUE, lib.loc = lib.loc, warn.conflicts = FALSE, quietly = FALSE, mask.ok = character(0L), exclude = character(0L), attach.required = TRUE)
+    }
+    NULL
+  }, error = identity)
+} ## attachPackages()
+
+
 evalFuture <- function(
     data = list(
       core = list(
@@ -125,27 +153,7 @@ evalFuture <- function(
   ## -----------------------------------------------------------------
   ## Load and attached backend packages
   ## -----------------------------------------------------------------
-  ## TROUBLESHOOTING: If the package fails to load, then library()
-  ## suppress that error and generates a generic much less
-  ## informative error message.  Because of this, we load the
-  ## namespace first (to get a better error message) and then
-  ## call library(), which attaches the package. /HB 2016-06-16
-  ## NOTE: We use local() here such that 'pkg' is not assigned
-  ##       to the future environment. /HB 2016-07-03
-  if (length(backendPackages) > 0L) {
-    res <- tryCatch({
-      for (pkg in backendPackages) {
-        loadNamespace(pkg)
-        library(pkg, character.only = TRUE)
-      }
-      NULL
-    }, error = identity)
-    if (inherits(res, "error")) {
-      res <- FutureResult(conditions = list(res), started = ...future.startTime)
-      return(res)
-    }
-  }
-
+  attachPackages(backendPackages)
 
 
   ## -----------------------------------------------------------------
@@ -167,26 +175,8 @@ evalFuture <- function(
   ...future.strategy.old <- plan("list")
 
   ## Load and attached packages
-  ## TROUBLESHOOTING: If the package fails to load, then library()
-  ## suppress that error and generates a generic much less
-  ## informative error message.  Because of this, we load the
-  ## namespace first (to get a better error message) and then
-  ## call library(), which attaches the package. /HB 2016-06-16
-  ## NOTE: We use local() here such that 'pkg' is not assigned
-  ##       to the future environment. /HB 2016-07-03
-  if (length(packages) > 0L) {
-    res <- tryCatch({
-      for (pkg in packages) {
-        loadNamespace(pkg)
-        library(pkg, character.only = TRUE)
-      }
-      NULL
-    }, error = identity)
-    if (inherits(res, "error")) {
-      res <- FutureResult(conditions = list(res), started = ...future.startTime)
-      return(res)
-    }
-  }
+  attachPackages(packages)
+
 
   ## Note, we record R options and environment variables _after_
   ## loading and attaching packages, in case they set options/env vars
