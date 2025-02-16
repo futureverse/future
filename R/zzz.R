@@ -1,10 +1,15 @@
 .package <- new.env()
 
+
 ## covr: skip=all
 .onLoad <- function(libname, pkgname) {
   .package[["version"]] <- utils::packageVersion(pkgname)
   .package[["futureCounter"]] <- 0L
 
+  if (isTRUE(as.logical(Sys.getenv("R_FUTURE_PRUNE_PKG_CODE", "FALSE")))) {
+    prune_pkg_code()
+  }
+  
   update_package_option("future.debug", mode = "logical")
   debug <- getOption("future.debug", FALSE)
 
