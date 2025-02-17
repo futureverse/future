@@ -12,7 +12,7 @@ check_connection_details <- function(worker, future) {
   isValid <- isConnectionValid(con)
   if (isValid) return(NULL)
 
-  label <- future$label
+  label <- future[["label"]]
   if (is.null(label)) label <- "<none>"
 
   reason <- attr(isValid, "reason", exact = TRUE)

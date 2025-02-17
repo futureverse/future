@@ -1,49 +1,11 @@
 source("incl/start.R")
+options(future.debug = FALSE)
 
 maxCores <- min(2L, availableCores(methods = "system"))
-
 
 plan("default")
 strategy0 <- plan()
  
-message("*** parseCmdArgs() ...")
-
-args <- parseCmdArgs()
-str(args)
-
-options(future.plan = NULL, future.cmdargs = c("-p", 1L))
-args <- parseCmdArgs()
-str(args)
-stopifnot(args$p == 1L)
-
-options(future.plan = NULL, future.cmdargs = c(sprintf("--parallel=%d", maxCores)))
-args <- parseCmdArgs()
-str(args)
-stopifnot(args$p == maxCores)
-
-options(future.plan = NULL, future.cmdargs = c("-p", 1L, sprintf("--parallel=%d", maxCores)))
-args <- parseCmdArgs()
-str(args)
-stopifnot(args$p == maxCores)
-
-options(future.plan = NULL, future.cmdargs = c("-p", 0L))
-args <- parseCmdArgs()
-stopifnot(is.null(args$p))
-res <- tryCatch(parseCmdArgs(), warning = function(w) w)
-stopifnot(inherits(res, "warning"))
-
-options(future.plan = NULL, future.cmdargs = c("-p", .Machine$integer.max))
-args <- parseCmdArgs()
-stopifnot(is.null(args$p))
-res <- tryCatch(parseCmdArgs(), warning = function(w) w)
-stopifnot(inherits(res, "warning"))
-
-options(future.plan = NULL, future.cmdargs = NULL)
-
-message("*** parseCmdArgs() ... DONE")
-
-
-
 message("*** .onLoad() ...")
 plan("default")
 pkgname <- "future"
@@ -175,34 +137,5 @@ message("- .onLoad() w/ future.plan = 'multisession' & -p 1 ... DONE")
 options(future.plan = NULL, future.cmdargs = NULL, future.availableCores.system = NULL, future.availableCores.fallback = NULL)
 
 message("*** .onLoad() ... DONE")
-
-
-message("*** .onAttach() ...")
-
-pkgname <- "future"
-
-message("- .onAttach() w/ option future.startup.loadScript ...")
-
-for (value in list(NULL, FALSE, TRUE)) {
-  options(future.startup.loadScript = value)
-  .onAttach(pkgname, pkgname)
-}
-
-message("- .onAttach() w/ option future.startup.loadScript ... DONE")
-
-message("- .onAttach() with ./.future.R ...")
-
-pathname <- ".future.R"
-xyz <- 0L
-cat("xyz <- 42L; cat('ping\n')\n", file = pathname)
-.onAttach(pkgname, pkgname)
-print(xyz)
-stopifnot(is.integer(xyz), xyz >= 0, xyz == 42L)
-file.remove(pathname)
-
-message("- .onAttach() with ./.future.R ... DONE")
-
-message("*** .onAttach() ... DONE")
-
 
 source("incl/end.R")

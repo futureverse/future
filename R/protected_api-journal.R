@@ -66,30 +66,30 @@ journal <- function(x, ...) UseMethod("journal")
 
 #' @export
 journal.Future <- function(x, ...) {
-  data <- x$.journal
+  data <- x[[".journal"]]
   if (is.null(data)) {
-    label <- x$label
+    label <- x[["label"]]
     if (is.null(label)) label <- "<none>"
     stopf("No journal is available for future ('%s'). Did you forget to enable journaling?", label)
   }
   stop_if_not(inherits(data, "FutureJournal"))
-  session_uuid <- x$owner
+  session_uuid <- x[["owner"]]
   stop_if_not(length(session_uuid) == 1L, is.character(session_uuid), !is.na(session_uuid))
   
   session_uuid <- rep(session_uuid, times = nrow(data))
   
   ## Backward compatibility (until all backends does this)
-  if (!is.element("evaluate", data$event) && !is.null(x$result)) {
+  if (!is.element("evaluate", data$event) && !is.null(x[["result"]])) {
     stop_if_not(is.character(session_uuid))
     x <- appendToFutureJournal(x,
          event = "evaluate",
       category = "evaluation",
-         start = x$result$started,
-          stop = x$result$finished
+         start = x[["result"]]$started,
+          stop = x[["result"]]$finished
     )
-    data <- x$.journal
-    stop_if_not(length(x$result$session_uuid) == 1L, is.character(x$result$session_uuid))
-    session_uuid <- c(session_uuid, x$result$session_uuid)
+    data <- x[[".journal"]]
+    stop_if_not(length(x[["result"]]$session_uuid) == 1L, is.character(x[["result"]]$session_uuid))
+    session_uuid <- c(session_uuid, x[["result"]]$session_uuid)
     stop_if_not(inherits(data, "FutureJournal"))
   }
 
@@ -102,10 +102,10 @@ journal.Future <- function(x, ...) {
   data$stop <- NULL
 
   ## Append future 'label'
-  data$future_label <- if (is.null(x$label)) NA_character_ else x$label
+  data$future_label <- if (is.null(x[["label"]])) NA_character_ else x[["label"]]
 
   ## Append future UUID
-  data$future_uuid <- as.factor(x$uuid)
+  data$future_uuid <- as.factor(paste(x[["uuid"]], collapse = "-"))
 
   ## Append session UUID
   data$session_uuid <- as.factor(session_uuid)
@@ -269,7 +269,7 @@ print.FutureJournalSummary <- function(x, ...) {
 makeFutureJournal <- function(x, event = "create", category = "other", parent = NA_character_, start = stop, stop = Sys.time()) {
   stop_if_not(
     inherits(x, "Future"),
-    is.null(x$.journal),
+    is.null(x[[".journal"]]),
     length(event) == 1L, is.character(event), !is.na(event),
     length(category) == 1L, is.character(category), !is.na(event),
     length(parent) == 1L, is.character(parent),
@@ -279,13 +279,13 @@ makeFutureJournal <- function(x, event = "create", category = "other", parent = 
 
   data <- data.frame(event = event, category = category, parent = parent, start = start, stop = stop)
   class(data) <- c("FutureJournal", class(data))
-  x$.journal <- data
+  x[[".journal"]] <- data
   invisible(x)
 }
 
 updateFutureJournal <- function(x, event, start = NULL, stop = Sys.time()) {
   ## Nothing to do?
-  if (!inherits(x$.journal, "FutureJournal")) return(x)
+  if (!inherits(x[[".journal"]], "FutureJournal")) return(x)
 
   stop_if_not(
     inherits(x, "Future"),
@@ -294,7 +294,7 @@ updateFutureJournal <- function(x, event, start = NULL, stop = Sys.time()) {
     is.null(stop) || (length(stop) == 1L && inherits(stop, "POSIXct"))
   )
 
-  data <- x$.journal
+  data <- x[[".journal"]]
   stop_if_not(inherits(data, "FutureJournal"))
   row <- which(data$event == event)
   n <- length(row)
@@ -305,16 +305,16 @@ updateFutureJournal <- function(x, event, start = NULL, stop = Sys.time()) {
   if (!is.null(stop)) entry$stop <- stop
   data[row, ] <- entry
   stop_if_not(inherits(data, "FutureJournal"))
-  x$.journal <- data
+  x[[".journal"]] <- data
   invisible(x)
 }
 
 
 appendToFutureJournal <- function(x, event, category = "other", parent = NA_character_, start = Sys.time(), stop = as.POSIXct(NA_real_), skip = TRUE) {
   ## Nothing to do?
-  if (!inherits(x$.journal, "FutureJournal")) return(x)
+  if (!inherits(x[[".journal"]], "FutureJournal")) return(x)
 
-  if (skip && is.element(event, x$.journal$event)) return(x)
+  if (skip && is.element(event, x[[".journal"]]$event)) return(x)
   
   stop_if_not(
     inherits(x, "Future"),
@@ -326,7 +326,7 @@ appendToFutureJournal <- function(x, event, category = "other", parent = NA_char
   )
 
   data <- data.frame(event = event, category = category, parent = parent, start = start, stop = stop)
-  x$.journal <- rbind(x$.journal, data)
+  x[[".journal"]] <- rbind(x[[".journal"]], data)
   invisible(x)
 }
 
@@ -334,7 +334,7 @@ appendToFutureJournal <- function(x, event, category = "other", parent = NA_char
 
 #' @rdname FutureCondition
 #' @export
-FutureJournalCondition <- function(message, journal, call = NULL, uuid = future$uuid, future = NULL) {
+FutureJournalCondition <- function(message, journal, call = NULL, uuid = future[["uuid"]], future = NULL) {
   stop_if_not(inherits(journal, "FutureJournal"))
   cond <- FutureCondition(message = message, call = call, uuid = uuid, future = future)
   cond$journal <- journal

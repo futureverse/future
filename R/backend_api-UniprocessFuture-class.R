@@ -21,10 +21,10 @@ UniprocessFuture <- function(expr = NULL, substitute = TRUE, envir = parent.fram
 
 #' @export
 run.UniprocessFuture <- function(future, ...) {
-  debug <- getOption("future.debug", FALSE)
+  debug <- isTRUE(getOption("future.debug"))
   
-  if (future$state != 'created') {
-    label <- future$label
+  if (future[["state"]] != 'created') {
+    label <- future[["label"]]
     if (is.null(label)) label <- "<none>"
     stop(FutureError(sprintf("A future ('%s') can only be launched once", label), future = future))
   }
@@ -34,10 +34,10 @@ run.UniprocessFuture <- function(future, ...) {
   assertOwner(future)
 
   ## Run future
-  future$state <- 'running'
-  data <- getFutureData(future)
-  future$result <- evalFuture(data)
-  future$state <- 'finished'
+  future[["state"]] <- 'running'
+  data <- getFutureData(future, debug = debug)
+  future[["result"]] <- evalFuture(data)
+  future[["state"]] <- 'finished'
 
   if (debug) mdebugf("%s started (and completed)", class(future)[1])
 
@@ -55,32 +55,32 @@ run.UniprocessFuture <- function(future, ...) {
 #' @export
 result.UniprocessFuture <- function(future, ...) {
   ## Has the result already been collected?
-  result <- future$result
+  result <- future[["result"]]
   if (!is.null(result)) {
     if (inherits(result, "FutureError")) stop(result)
     return(result)
   }
   
-  if (future$state == "created") {
+  if (future[["state"]] == "created") {
     ## Make sure that run() does not signal errors
-    earlySignal <- future$earlySignal
-    future$earlySignal <- FALSE
+    earlySignal <- future[["earlySignal"]]
+    future[["earlySignal"]] <- FALSE
     run(future)
-    future$earlySignal <- earlySignal
+    future[["earlySignal"]] <- earlySignal
   }
 
-  result <- future$result
+  result <- future[["result"]]
   if (inherits(result, "FutureResult")) return(result)
 
   ex <- UnexpectedFutureResultError(future)
-  future$result <- ex
+  future[["result"]] <- ex
   stop(ex)
 }
 
 
 #' @export
 resolved.UniprocessFuture <- function(x, ...) {
-  if (x$lazy) {
+  if (x[["lazy"]]) {
     ## resolved() for lazy uniprocess futures must force result()
     ## such that the future gets resolved.  The reason for this
     ## is so that polling is always possible, e.g.

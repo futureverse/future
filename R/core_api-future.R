@@ -191,15 +191,17 @@ future <- function(expr, envir = parent.frame(), substitute = TRUE, lazy = FALSE
   if (substitute) expr <- substitute(expr)
   t_start <- Sys.time()
 
-  gp <- getGlobalsAndPackages(expr, envir = envir, tweak = tweakExpression, globals = globals)
-  expr <- gp$expr
-  globals <- gp$globals
-  ## Record packages?
-  if (length(packages) > 0 || length(gp$packages) > 0) {
-    packages <- unique(c(gp$packages, packages))
+  if (!is.null(globals)) {
+    gp <- getGlobalsAndPackages(expr, envir = envir, tweak = tweakExpression, globals = globals)
+    expr <- gp$expr
+    globals <- gp$globals
+    ## Record packages?
+    if (length(packages) > 0 || length(gp$packages) > 0) {
+      packages <- c(gp$packages, packages)
+    }
+    gp <- NULL
+    attr(globals, "already-done") <- TRUE
   }
-  gp <- NULL
-  attr(globals, "already-done") <- TRUE
   
   future <- Future(expr, substitute = FALSE,
                    envir = envir,
@@ -216,7 +218,7 @@ future <- function(expr, envir = parent.frame(), substitute = TRUE, lazy = FALSE
 
   ## WORKAROUND: Was argument 'local' specified?
   ## Comment: Only allowed for persistent 'cluster' futures
-  future$.defaultLocal <- !is.element("local", names(list(...)))
+  future[[".defaultLocal"]] <- !is.element("local", names(list(...)))
 
   ## Enable journaling?
   if (getOption("future.journal", FALSE)) {
@@ -225,9 +227,9 @@ future <- function(expr, envir = parent.frame(), substitute = TRUE, lazy = FALSE
 
   if (!lazy) {
     future <- run(future)
-    future$lazy <- FALSE
+    future[["lazy"]] <- FALSE
     ## Assert that a future was returned
-    stop_if_not(inherits(future, "Future"), !future$lazy)
+    stop_if_not(inherits(future, "Future"), !future[["lazy"]])
   }
   
   future

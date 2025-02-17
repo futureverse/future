@@ -24,7 +24,7 @@
 #'
 #' @export
 #' @keywords internal
-FutureCondition <- function(message, call = NULL, uuid = future$uuid, future = NULL) {
+FutureCondition <- function(message, call = NULL, uuid = future[["uuid"]], future = NULL) {
   ## Support different types of input
   if (inherits(message, "condition")) {
     cond <- message
@@ -37,14 +37,17 @@ FutureCondition <- function(message, call = NULL, uuid = future$uuid, future = N
   }
 
   message <- as.character(message)
-  if (length(message) != 1L) {
-    stopf("INTERNAL ERROR: Trying to set up a FutureCondition with length(message) != 1L: %d", length(message))
-  }
+  
+  with_assert({
+    if (length(message) != 1L) {
+      stopf("INTERNAL ERROR: Trying to set up a FutureCondition with length(message) != 1L: %d", length(message))
+    }
 
-  if (!is.null(uuid)) {
-    stop_if_not(is.character(uuid), length(uuid) == 1L, !is.na(uuid))
-  }
-  if (!is.null(future)) stop_if_not(inherits(future, "Future"))
+    if (!is.null(uuid)) {
+      stop_if_not(is.character(uuid), !anyNA(uuid))
+    }
+    if (!is.null(future)) stop_if_not(inherits(future, "Future"))
+  })
 
   if (!getOption("future.onFutureCondition.keepFuture", TRUE)) {
     future <- NULL
@@ -64,7 +67,12 @@ print.FutureCondition <- function(x, ...) {
   NextMethod()
 
   uuid <- attr(x, "uuid", exact = TRUE)
-  cat(sprintf("\n\nFuture UUID: %s\n", if (is.null(uuid)) "<NA>" else uuid))
+  if (is.null(uuid)) {
+    uuid <- "<NA>"
+  } else {
+    uuid <- paste(uuid, collapse = "-")
+  }
+  cat(sprintf("\n\nFuture UUID: %s\n", uuid))
 
   future <- attr(x, "future", exact = TRUE)
 
@@ -87,7 +95,7 @@ print.FutureCondition <- function(x, ...) {
 
 #' @rdname FutureCondition
 #' @export
-FutureMessage <- function(message, call = NULL, uuid = future$uuid, future = NULL) {
+FutureMessage <- function(message, call = NULL, uuid = future[["uuid"]], future = NULL) {
   cond <- FutureCondition(message = message, call = call, uuid = uuid, future = future)
   class <- c("FutureMessage", "message", class(cond))
   class(cond) <- class[!duplicated(class, fromLast = TRUE)]
@@ -97,7 +105,7 @@ FutureMessage <- function(message, call = NULL, uuid = future$uuid, future = NUL
 
 #' @rdname FutureCondition
 #' @export
-FutureWarning <- function(message, call = NULL, uuid = future$uuid, future = NULL) {
+FutureWarning <- function(message, call = NULL, uuid = future[["uuid"]], future = NULL) {
   cond <- FutureCondition(message = message, call = call, uuid = uuid, future = future)
   class <- c("FutureWarning", "warning", class(cond))
   class(cond) <- class[!duplicated(class, fromLast = TRUE)]
@@ -107,7 +115,7 @@ FutureWarning <- function(message, call = NULL, uuid = future$uuid, future = NUL
 
 #' @rdname FutureCondition
 #' @export
-FutureError <- function(message, call = NULL, uuid = future$uuid, future = NULL) {
+FutureError <- function(message, call = NULL, uuid = future[["uuid"]], future = NULL) {
   cond <- FutureCondition(message = message, call = call, uuid = uuid, future = future)
   class <- c("FutureError", "error", class(cond))
   class(cond) <- class[!duplicated(class, fromLast = TRUE)]
@@ -117,9 +125,9 @@ FutureError <- function(message, call = NULL, uuid = future$uuid, future = NULL)
 
 #' @rdname FutureCondition
 #' @export
-RngFutureCondition <- function(message = NULL, call = NULL, uuid = future$uuid, future = NULL) {
+RngFutureCondition <- function(message = NULL, call = NULL, uuid = future[["uuid"]], future = NULL) {
   if (is.null(message)) {
-    label <- future$label
+    label <- future[["label"]]
     if (is.null(label)) label <- "<none>"
     message <- sprintf("UNRELIABLE VALUE: Future (%s) unexpectedly generated random numbers without specifying argument 'seed'. There is a risk that those random numbers are not statistically sound and the overall results might be invalid. To fix this, specify 'seed=TRUE'. This ensures that proper, parallel-safe random numbers are produced via the L'Ecuyer-CMRG method. To disable this check, use 'seed=NULL', or set option 'future.rng.onMisuse' to \"ignore\".", sQuote(label))
   }
@@ -153,10 +161,10 @@ RngFutureError <- function(...) {
 #' @rdname FutureCondition
 #' @export
 UnexpectedFutureResultError <- function(future, hint = NULL) {
-  label <- future$label
+  label <- future[["label"]]
   if (is.null(label)) label <- "<none>"
-  expr <- hexpr(future$expr)
-  result <- future$result
+  expr <- hexpr(future[["expr"]])
+  result <- future[["result"]]
   result_string <- hpaste(as.character(result))
   if (length(result_string) == 0L)
     result_string <- ""
@@ -184,9 +192,9 @@ UnexpectedFutureResultError <- function(future, hint = NULL) {
 
 #' @rdname FutureCondition
 #' @export
-GlobalEnvFutureCondition <- function(message = NULL, call = NULL, globalenv = globalenv, uuid = future$uuid, future = NULL) {
+GlobalEnvFutureCondition <- function(message = NULL, call = NULL, globalenv = globalenv, uuid = future[["uuid"]], future = NULL) {
   if (is.null(message)) {
-    label <- future$label
+    label <- future[["label"]]
     if (is.null(label)) label <- "<none>"
     message <- sprintf("Future (%s) added variables to the global environment. A future expression should never assign variables to the global environment - neither by assign() nor by <<-: [n=%d] %s", label, length(globalenv$added), commaq(globalenv$added))
   }

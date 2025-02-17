@@ -17,13 +17,6 @@ fcn <- function(...) {
   })
 }
 
-message(" - conditions = NULL")
-## Disabling relaying conditions works
-f <- future(fcn(), conditions = NULL)
-v <- value(f)
-message("RESULT: ", v)
-stopifnot(v == "success")
-
 message(" - split = TRUE")
 ## Splitting output works
 f <- future(fcn(), split = TRUE)
@@ -46,6 +39,13 @@ if (isTRUE(as.logical(Sys.getenv("R_CHECK_IDEAL")))) {
   stopifnot(v == "success")
 }
 
+## FIXME: Deprecate 'conditions = NULL' /HB 2025-02-16
+message(" - conditions = NULL (not recommended)")
+## Disabling relaying conditions works
+f <- future(fcn(), conditions = NULL)
+v <- value(f)
+message("RESULT: ", v)
+stopifnot(v == "success")
 
 message("*** withRestart() and muffling ... DONE")
 

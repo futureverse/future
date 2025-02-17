@@ -30,7 +30,7 @@
 #' @export
 #'
 #' @keywords internal
-getGlobalsAndPackages <- function(expr, envir = parent.frame(), tweak = tweakExpression, globals = TRUE, locals = getOption("future.globals.globalsOf.locals", TRUE), resolve = getOption("future.globals.resolve", NULL), persistent = FALSE, maxSize = getOption("future.globals.maxSize", 500 * 1024 ^ 2), ...) {
+getGlobalsAndPackages <- function(expr, envir = parent.frame(), tweak = tweakExpression, globals = TRUE, locals = getOption("future.globals.globalsOf.locals", TRUE), resolve = getOption("future.globals.resolve"), persistent = FALSE, maxSize = getOption("future.globals.maxSize", 500 * 1024 ^ 2), ...) {
   if (is.null(resolve)) {
     resolve <- FALSE
   } else {
@@ -38,7 +38,7 @@ getGlobalsAndPackages <- function(expr, envir = parent.frame(), tweak = tweakExp
     .Deprecated(msg = sprintf("R option %s may only be used for troubleshooting. It must not be used in production since it changes how futures are evaluated and there is a great risk that the results cannot be reproduced elsewhere: %s", sQuote("future.globals.resolve"), sQuote(resolve)), package = .packageName)
   }
   
-  debug <- getOption("future.debug", FALSE)
+  debug <- isTRUE(getOption("future.debug"))
   if (debug) mdebug("getGlobalsAndPackages() ...")
   
   ## Assert that all identified globals exists when future is created?
@@ -50,7 +50,7 @@ getGlobalsAndPackages <- function(expr, envir = parent.frame(), tweak = tweakExp
     ## Default for 'future.globals.onMissing':
     ## Note: It's possible to switch between 'ignore' and 'error'
     ##       at any time. Tests handle both cases. /HB 2016-06-18
-    globals.onMissing <- getOption("future.globals.onMissing", NULL)
+    globals.onMissing <- getOption("future.globals.onMissing")
     if (is.null(globals.onMissing)) {
       globals.onMissing <- "ignore"
       mustExist <- FALSE
@@ -93,7 +93,7 @@ getGlobalsAndPackages <- function(expr, envir = parent.frame(), tweak = tweakExp
     if (globals) {
       if (debug) mdebug("Searching for globals ...")
       ## Algorithm for identifying globals
-      globals.method <- getOption("future.globals.method", NULL)
+      globals.method <- getOption("future.globals.method")
       if (is.null(globals.method)) {
         globals.method <- "ordered"
       } else {

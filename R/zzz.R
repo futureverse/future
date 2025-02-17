@@ -1,12 +1,18 @@
 .package <- new.env()
 
+
 ## covr: skip=all
+#' @importFrom utils packageVersion
 .onLoad <- function(libname, pkgname) {
-  .package[["version"]] <- utils::packageVersion(pkgname)
+  .package[["version"]] <- packageVersion(pkgname)
   .package[["futureCounter"]] <- 0L
 
+  if (isTRUE(as.logical(Sys.getenv("R_FUTURE_PRUNE_PKG_CODE", "FALSE")))) {
+    prune_pkg_code()
+  }
+  
   update_package_option("future.debug", mode = "logical")
-  debug <- getOption("future.debug", FALSE)
+  debug <- isTRUE(getOption("future.debug"))
 
   if (debug) {
     envs <- Sys.getenv()
@@ -78,7 +84,7 @@
 }
 
 
-sourceFutureStartupScript <- function(default = c(".future.R", "~/.future.R"), debug = getOption("future.debug", FALSE)) {
+sourceFutureStartupScript <- function(default = c(".future.R", "~/.future.R"), debug = isTRUE(getOption("future.debug"))) {
   ## Get default from env var?
   pathnames <- Sys.getenv("R_FUTURE_STARTUP_SCRIPT")
   if (nchar(pathnames) == 0L) {

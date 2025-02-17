@@ -52,12 +52,14 @@ resolve.default <- function(x, ...) x
 
 #' @export
 resolve.Future <- function(x, idxs = NULL, recursive = 0, result = FALSE, stdout = FALSE, signal = FALSE, force = FALSE, sleep = getOption("future.wait.interval", 0.01), ...) {
+  future <- x
+  
   ## Automatically update journal entries for Future object
   if (inherits(future, "Future") &&
-      inherits(future$.journal, "FutureJournal")) {
+      inherits(future[[".journal"]], "FutureJournal")) {
     t_start <- Sys.time()
     on.exit({
-      appendToFutureJournal(x,
+      appendToFutureJournal(future,
         event = "resolve",
         category = "overhead",
         start = t_start,
@@ -73,25 +75,25 @@ resolve.Future <- function(x, idxs = NULL, recursive = 0, result = FALSE, stdout
   recursive <- as.numeric(recursive)
   
   ## Nothing to do?
-  if (recursive < 0) return(x)
+  if (recursive < 0) return(future)
 
   relay <- (stdout || signal)
   result <- result || relay
 
   ## Lazy future that is not yet launched?
-  if (x$state == 'created') x <- run(x)
+  if (future[["state"]] == 'created') future <- run(future)
 
   ## Poll for the Future to finish
-  while (!resolved(x)) {
+  while (!resolved(future)) {
     Sys.sleep(sleep)
   }
 
-  msg <- sprintf("A %s was resolved", class(x)[1])
+  msg <- sprintf("A %s was resolved", class(future)[1])
 
   ## Retrieve results?
   if (result) {
-    if (is.null(x$result)) {
-      x$result <- result(x)
+    if (is.null(future[["result"]])) {
+      future[["result"]] <- result(future)
       msg <- sprintf("%s and its result was collected", msg)
     } else {
       sprintf("%s and its result was already collected", msg)
@@ -99,7 +101,7 @@ resolve.Future <- function(x, idxs = NULL, recursive = 0, result = FALSE, stdout
     
     ## Recursively resolve result value?
     if (recursive > 0) {
-      value <- x$result$value
+      value <- future[["result"]]$value
       if (!is.atomic(value)) {
         resolve(value, recursive = recursive - 1, result = TRUE, stdout = stdout, signal = signal, sleep = sleep, ...)
         msg <- sprintf("%s (and resolved itself)", msg)
@@ -108,14 +110,20 @@ resolve.Future <- function(x, idxs = NULL, recursive = 0, result = FALSE, stdout
     }
     result <- NULL     ## Not needed anymore
 
-    if (stdout) value(x, stdout = TRUE, signal = FALSE)
+    if (stdout) value(future, stdout = TRUE, signal = FALSE)
     if (signal) {
       ## Always signal immediateCondition:s and as soon as possible.
       ## They will always be signaled if they exist.
-      signalImmediateConditions(x)
+      conditionClasses <- future[["conditions"]]
+      immediateConditionClasses <- attr(conditionClasses, "immediateConditionClasses", exact = TRUE)
+      if (is.null(immediateConditionClasses)) {
+        immediateConditionClasses <- "immediateCondition"
+      }
+
+      signalImmediateConditions(future, include = immediateConditionClasses)
 
       ## Signal all other types of condition
-      signalConditions(x, exclude = getOption("future.relay.immediate", "immediateCondition"), resignal = TRUE, force = TRUE)
+      signalConditions(future, exclude = immediateConditionClasses, resignal = TRUE, force = TRUE)
     }
   } else {
     msg <- sprintf("%s (result was not collected)", msg)
@@ -123,7 +131,7 @@ resolve.Future <- function(x, idxs = NULL, recursive = 0, result = FALSE, stdout
 
   mdebug(msg)
 
-  x
+  future
 } ## resolve() for Future
 
 
@@ -156,7 +164,7 @@ resolve.list <- function(x, idxs = NULL, recursive = 0, result = FALSE, stdout =
     if (is.matrix(idxs)) {
       idxs <- whichIndex(idxs, dim = dim(x), dimnames = dimnames(x))
     }
-    idxs <- unique(idxs)
+    if (length(idxs) > 1L) idxs <- unique(idxs)
 
     if (is.numeric(idxs)) {
       idxs <- as.numeric(idxs)
@@ -180,7 +188,7 @@ resolve.list <- function(x, idxs = NULL, recursive = 0, result = FALSE, stdout =
     nx <- .length(x)
   }
 
-  debug <- getOption("future.debug", FALSE)
+  debug <- isTRUE(getOption("future.debug"))
   if (debug) {
     mdebug("resolve() on list ...")
     mdebugf(" recursive: %s", recursive)
@@ -279,7 +287,7 @@ resolve.environment <- function(x, idxs = NULL, recursive = 0, result = FALSE, s
     ## Sanity check (because nx == 0 returns early above)
     stop_if_not(length(names) > 0)
 
-    idxs <- unique(idxs)
+    if (length(idxs) > 1L) idxs <- unique(idxs)
 
     idxs <- as.character(idxs)
     unknown <- idxs[!is.element(idxs, names)]
@@ -296,7 +304,7 @@ resolve.environment <- function(x, idxs = NULL, recursive = 0, result = FALSE, s
   relay <- (stdout || signal)
   result <- result || relay
 
-  debug <- getOption("future.debug", FALSE)
+  debug <- isTRUE(getOption("future.debug"))
   if (debug) {
     mdebug("resolve() on environment ...")
     mdebugf(" recursive: %s", recursive)
@@ -396,7 +404,7 @@ resolve.listenv <- function(x, idxs = NULL, recursive = 0, result = FALSE, stdou
     if (is.matrix(idxs)) {
       idxs <- whichIndex(idxs, dim = dim(x), dimnames = dimnames(x))
     }
-    idxs <- unique(idxs)
+    if (length(idxs) > 1L) idxs <- unique(idxs)
 
     if (is.numeric(idxs)) {
       if (any(idxs < 1 | idxs > nx)) {
@@ -423,7 +431,7 @@ resolve.listenv <- function(x, idxs = NULL, recursive = 0, result = FALSE, stdou
   relay <- (stdout || signal)
   result <- result || relay
 
-  debug <- getOption("future.debug", FALSE)
+  debug <- isTRUE(getOption("future.debug"))
   if (debug) {
     mdebug("resolve() on list environment ...")
     mdebugf(" recursive: %s", recursive)

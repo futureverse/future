@@ -34,6 +34,7 @@ stop_if_not <- function(...) {
   NULL
 }
 
+
 ## From R.utils 2.0.2 (2015-05-23)
 hpaste <- function(..., sep = "", collapse = ", ", lastCollapse = NULL, maxHead = if (missing(lastCollapse)) 3 else Inf, maxTail = if (is.finite(maxHead)) 1 else Inf, abbreviate = "...") {
   if (is.null(lastCollapse)) lastCollapse <- collapse
@@ -68,7 +69,8 @@ hpaste <- function(..., sep = "", collapse = ", ", lastCollapse = NULL, maxHead 
 
 
 trim <- function(s) {
-  sub("[\t\n\f\r ]+$", "", sub("^[\t\n\f\r ]+", "", s))
+#  sub("[\t\n\f\r ]+$", "", sub("^[\t\n\f\r ]+", "", s))
+  gsub("(^[\t\n\f\r ]+|[\t\n\f\r ]+$)", "", s)
 } # trim()
 
 comma <- function(x, sep = ", ") paste(x, collapse = sep)
@@ -135,7 +137,7 @@ inherits_from_namespace <- function(env) {
 ## for functions.  If they are functions of namespaces/packages
 ## and exclude == "namespace", then the globals are not assigned
 ## Reference: https://github.com/futureverse/future/issues/515
-assign_globals <- function(envir, globals, exclude = getOption("future.assign_globals.exclude", c("namespace")), debug = getOption("future.debug", FALSE)) {
+assign_globals <- function(envir, globals, exclude = getOption("future.assign_globals.exclude", c("namespace")), debug = isTRUE(getOption("future.debug"))) {
   stop_if_not(is.environment(envir), is.list(globals))
   if (length(globals) == 0L) return(envir)
 
@@ -192,25 +194,25 @@ now <- function(x = Sys.time(), format = "[%H:%M:%OS3] ") {
   format(as.POSIXlt(x, tz = ""), format = format)
 }
 
-mdebug <- function(..., prefix = now(), debug = getOption("future.debug", FALSE)) {
+mdebug <- function(..., prefix = now(), debug = isTRUE(getOption("future.debug"))) {
   if (!debug) return()
   message(prefix, ...)
 }
 
 mdebugf <- function(..., appendLF = TRUE,
-                    prefix = now(), debug = getOption("future.debug", FALSE)) {
+                    prefix = now(), debug = isTRUE(getOption("future.debug"))) {
   if (!debug) return()
   message(prefix, sprintf(...), appendLF = appendLF)
 }
 
 #' @importFrom utils capture.output
-mprint <- function(..., appendLF = TRUE, prefix = now(), debug = getOption("future.debug", FALSE)) {
+mprint <- function(..., appendLF = TRUE, prefix = now(), debug = isTRUE(getOption("future.debug"))) {
   if (!debug) return()
   message(paste(prefix, capture.output(print(...)), sep = "", collapse = "\n"), appendLF = appendLF)
 }
 
 #' @importFrom utils capture.output str
-mstr <- function(..., appendLF = TRUE, prefix = now(), debug = getOption("future.debug", FALSE)) {
+mstr <- function(..., appendLF = TRUE, prefix = now(), debug = isTRUE(getOption("future.debug"))) {
   if (!debug) return()
   message(paste(prefix, capture.output(str(...)), sep = "", collapse = "\n"), appendLF = appendLF)
 }
@@ -246,13 +248,14 @@ geval <- local(function(expr, substitute = FALSE, envir = .GlobalEnv, enclos = b
 })
 
 ## Vectorized version of require() with bells and whistles
+#' @importFrom utils installed.packages
 requirePackages <- local(function(pkgs) {
   requirePackage <- function(pkg) {
     if (require(pkg, character.only = TRUE)) return()
 
     ## Failed to attach package
     msg <- sprintf("Failed to attach package %s in %s", sQuote(pkg), R.version$version.string)
-    data <- utils::installed.packages()
+    data <- installed.packages()
 
     ## Installed, but fails to load/attach?
     if (is.element(pkg, data[, "Package"])) {
@@ -269,7 +272,7 @@ requirePackages <- local(function(pkgs) {
   } ## requirePackage()
 
   ## require() all packages
-  pkgs <- unique(pkgs)
+  if (length(pkgs) > 1) pkgs <- unique(pkgs)
   lapply(pkgs, FUN = requirePackage)
 }) ## requirePackages()
 
@@ -390,7 +393,7 @@ resolveMPI <- local({
     resolveMPI <- cache$resolveMPI
     if (is.null(resolveMPI)) {
       resolveMPI <- function(future) {
-        node <- future$workers[[future$node]]
+        node <- future[["workers"]][[future[["node"]]]]
         warnf("resolved() on %s failed to load the Rmpi package. Will use blocking value() instead and return TRUE", sQuote(class(node)[1]))
         value(future, stdout = FALSE, signal = FALSE)
         TRUE
@@ -400,7 +403,7 @@ resolveMPI <- local({
         ns <- getNamespace("Rmpi")
 
         resolveMPI <- function(future) {
-          node <- future$workers[[future$node]]
+          node <- future[["workers"]][[future[["node"]]]]
           warnf("resolved() on %s failed to find mpi.iprobe() and mpi.any.tag() in Rmpi %s. Will use blocking value() instead and return TRUE", sQuote(class(node)[1]), packageVersion("Rmpi"))
           value(future, stdout = FALSE, signal = FALSE)
           TRUE
@@ -413,7 +416,7 @@ resolveMPI <- local({
           mpi.any.tag <- get("mpi.any.tag", mode = "function", envir = ns,
                              inherits = FALSE)
           resolveMPI <- function(future) {
-            node <- future$workers[[future$node]]
+            node <- future[["workers"]][[future[["node"]]]]
             mpi.iprobe(source = node$rank, comm = node$comm, tag = mpi.any.tag())
           }
         }
@@ -427,7 +430,7 @@ resolveMPI <- local({
 })
 
 
-supports_omp_threads <- function(assert = FALSE, debug = getOption("future.debug", FALSE)) {
+supports_omp_threads <- function(assert = FALSE, debug = isTRUE(getOption("future.debug"))) {
   if (!requireNamespace("RhpcBLASctl", quietly = TRUE)) {
     if (assert) {
       stop(FutureError(sprintf("In order to disable multi-threading in multicore futures, the %s package must be installed", sQuote("RhpcBLASctl"))))

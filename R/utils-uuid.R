@@ -1,30 +1,10 @@
 ## Create a universally unique identifier (UUID) for an R object
 #' @importFrom digest digest
 uuid <- function(source, keep_source = FALSE) {
-  uuid <- digest(source)
-  uuid <- strsplit(uuid, split = "")[[1]]
-  uuid <- paste(c(uuid[1:8], "-", uuid[9:12], "-", uuid[13:16], "-", uuid[17:20], "-", uuid[21:32]), collapse = "")
+  uuid <- digest(source, skip = 0L)
   if (keep_source) attr(uuid, "source") <- source
   uuid
 } ## uuid()
-
-uuid_of_connection <- function(con, ..., must_work = TRUE) {
-  stop_if_not(inherits(con, "connection"))
-  if (must_work) {
-    info <- summary(con)
-    info$opened <- NULL
-    uuid <- uuid(info, ...)
-  } else {
-    uuid <- tryCatch({
-      info <- summary(con)
-      info$opened <- NULL
-      uuid(info, ...)
-    }, error = function(ex) {
-      attr(con, "uuid", exact = TRUE)
-    })
-  }
-  uuid
-} ## uuid_of_connection()
 
 ## A universally unique identifier (UUID) for the current
 ## R process UUID. Generated only once per process ID 'pid'.
@@ -57,3 +37,25 @@ session_uuid <- local({
     uuid
   }
 })
+
+future_uuid <- function(owner, counter) {
+  c(owner, counter)
+}
+
+uuid_of_connection <- function(con, ..., must_work = TRUE) {
+  stop_if_not(inherits(con, "connection"))
+  if (must_work) {
+    info <- summary(con)
+    info$opened <- NULL
+    uuid <- uuid(info, ...)
+  } else {
+    uuid <- tryCatch({
+      info <- summary(con)
+      info$opened <- NULL
+      uuid(info, ...)
+    }, error = function(ex) {
+      attr(con, "uuid", exact = TRUE)
+    })
+  }
+  uuid
+} ## uuid_of_connection()

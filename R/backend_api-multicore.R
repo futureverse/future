@@ -88,7 +88,7 @@ multicore <- function(..., workers = availableCores(constraints = "multicore"), 
   on.exit(options(oopts))
 
   future <- MulticoreFuture(..., workers = workers, envir = envir)
-  if (!future$lazy) future <- run(future)
+  if (!future[["lazy"]]) future <- run(future)
   invisible(future)
 }
 class(multicore) <- c("multicore", "multiprocess", "future", "function")
@@ -175,7 +175,7 @@ requestCore <- function(await, workers = availableCores(), timeout = getOption("
   stop_if_not(is.finite(timeout), timeout >= 0)
   stop_if_not(is.finite(alpha), alpha > 0)
 
-  debug <- getOption("future.debug", FALSE)
+  debug <- isTRUE(getOption("future.debug"))
   if (debug) mdebugf("requestCore(): workers = %d", workers)
 
   ## No additional cores available?
