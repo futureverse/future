@@ -76,7 +76,7 @@ multisession <- function(..., workers = availableCores(), lazy = FALSE, rscript_
   }
 
   future <- MultisessionFuture(..., workers = workers, lazy = lazy, rscript_libs = rscript_libs, envir = envir)
-  if (!future$lazy) future <- run(future)
+  if (!future[["lazy"]]) future <- run(future)
   invisible(future)
 }
 class(multisession) <- c("multisession", "cluster", "multiprocess", "future", "function")

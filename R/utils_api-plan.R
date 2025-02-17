@@ -183,7 +183,7 @@ plan <- local({
       }
     } else {
       ## Backward compatibility for future (<= 1.33.2)
-      if (getOption("future.plan.cleanup.legacy", FALSE)) {
+      if (isTRUE(getOption("future.plan.cleanup.legacy"))) {
         ClusterRegistry(action = "stop")
       }
     }
@@ -194,7 +194,7 @@ plan <- local({
 
     init <- attr(evaluator, "init", exact = TRUE)
     if (identical(init, TRUE)) {
-      debug <- getOption("future.debug", FALSE)
+      debug <- isTRUE(getOption("future.debug"))
       if (debug) {
         mdebugf("plan(): plan_init() of %s ...",
                 commaq(class(evaluator)))
@@ -258,14 +258,14 @@ plan <- local({
 
     ## Skip if already set?
     if (skip && equal_strategy_stacks(newStack, oldStack)) {
-      if (getOption("future.debug", FALSE)) {
+      if (isTRUE(getOption("future.debug"))) {
         mdebug("plan(): Skip setting new future strategy stack because it is the same as the current one:")
         mprint(newStack)
       }
       return(oldStack)
     }
 
-    if (getOption("future.debug", FALSE)) {
+    if (isTRUE(getOption("future.debug"))) {
       mdebug("plan(): Setting new future strategy stack:")
       mprint(newStack)
     }
@@ -284,12 +284,17 @@ plan <- local({
     if (init) plan_init()
 
     ## Sanity checks
-    nbrOfWorkers <- nbrOfWorkers()
-    if (getOption("future.debug", FALSE)) {
-      mdebugf(sprintf("plan(): nbrOfWorkers() = %.0f", nbrOfWorkers))
-    }
-    stop_if_not(is.numeric(nbrOfWorkers), length(nbrOfWorkers) == 1L, 
-                !is.na(nbrOfWorkers), nbrOfWorkers >= 1L)
+    with_assert({
+      nbrOfWorkers <- nbrOfWorkers()
+      if (isTRUE(getOption("future.debug"))) {
+        mdebugf(sprintf("plan(): nbrOfWorkers() = %.0f", nbrOfWorkers))
+      }
+
+      stop_if_not(
+        is.numeric(nbrOfWorkers), length(nbrOfWorkers) == 1L, 
+        !is.na(nbrOfWorkers), nbrOfWorkers >= 1L
+      )
+    })
 
     invisible(oldStack)
   } ## plan_set()
@@ -332,6 +337,10 @@ plan <- local({
       strategy <- getOption("future.plan", sequential)
     } else if (identical(strategy, "list")) {
       ## List stack of future strategies?
+      return(stack)
+    } else if (identical(strategy, "tail")) {
+      ## List stack of future strategies except the first
+      stack <- stack[-1]
       return(stack)
     } else if (identical(strategy, "reset")) {
       ## Stop/cleanup any previously registered backends?

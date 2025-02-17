@@ -36,7 +36,7 @@ value <- function(...) UseMethod("value")
 #' @rdname value
 #' @export
 value.Future <- function(future, stdout = TRUE, signal = TRUE, ...) {
-  if (future$state == "created") {
+  if (future[["state"]] == "created") {
     future <- run(future)
   }
 
@@ -66,9 +66,9 @@ value.Future <- function(future, stdout = TRUE, signal = TRUE, ...) {
     }
 
     ## Drop captured stdout to save memory?
-    if (isTRUE(attr(future$stdout, "drop"))) {
+    if (isTRUE(attr(future[["stdout"]], "drop"))) {
       result$stdout <- NULL
-      future$result <- result
+      future[["result"]] <- result
     }
   }
 
@@ -102,21 +102,21 @@ value.Future <- function(future, stdout = TRUE, signal = TRUE, ...) {
         }
         
         result$conditions <- conditions
-        future$result <- result
+        future[["result"]] <- result
       }
     }
   }
 
 
   ## Was RNG used without requesting RNG seeds?
-  if (!isTRUE(future$.rng_checked) && isFALSE(future$seed) && isTRUE(result$rng)) {
+  if (!isTRUE(future[[".rng_checked"]]) && isFALSE(future[["seed"]]) && isTRUE(result$rng)) {
     ## BACKWARD COMPATIBILITY: Until higher-level APIs set future()
     ## argument 'seed' to indicate that RNGs are used. /HB 2019-12-24
-    if (any(grepl(".doRNG.stream", deparse(future$expr), fixed = TRUE))) {
+    if (any(grepl(".doRNG.stream", deparse(future[["expr"]]), fixed = TRUE))) {
       ## doFuture w/ doRNG, e.g. %dorng%
-    } else if (is_lecyer_cmrg_seed(future$globals$...future.seeds_ii[[1]])) {
+    } else if (is_lecyer_cmrg_seed(future[["globals"]]$...future.seeds_ii[[1]])) {
       .Defunct(msg = "Please upgrade your 'future.apply' or 'furrr' (type 1)")
-    } else if (is_lecyer_cmrg_seed(future$envir$...future.seeds_ii[[1]])) {
+    } else if (is_lecyer_cmrg_seed(future[["envir"]]$...future.seeds_ii[[1]])) {
       .Defunct(msg = "Please upgrade your 'future.apply' or 'furrr' (type 2)")
     } else {
       onMisuse <- getOption("future.rng.onMisuse", "warning")
@@ -146,13 +146,13 @@ value.Future <- function(future, stdout = TRUE, signal = TRUE, ...) {
           }
           
           result$conditions <- conditions
-          future$result <- result
+          future[["result"]] <- result
         }
       }
     }
   }
   
-  future$.rng_checked <- TRUE
+  future[[".rng_checked"]] <- TRUE
 
 
   ## Check for non-exportable objects in the value?
@@ -179,7 +179,7 @@ value.Future <- function(future, stdout = TRUE, signal = TRUE, ...) {
       }
       
       result$conditions <- conditions
-      future$result <- result
+      future[["result"]] <- result
     }
   }
 
@@ -188,9 +188,16 @@ value.Future <- function(future, stdout = TRUE, signal = TRUE, ...) {
   conditions <- result$conditions
   if (length(conditions) > 0) {
     if (signal) {
-      mdebugf("Future state: %s", sQuote(future$state))
+      mdebugf("Future state: %s", sQuote(future[["state"]]))
       ## Will signal an (eval) error, iff exists
-      signalConditions(future, exclude = getOption("future.relay.immediate", "immediateCondition"), resignal = TRUE)
+
+      conditionClasses <- future[["conditions"]]
+      immediateConditionClasses <- attr(conditionClasses, "immediateConditionClasses", exact = TRUE)
+      if (is.null(immediateConditionClasses)) {
+        immediateConditionClasses <- "immediateCondition"
+      }
+
+      signalConditions(future, exclude = immediateConditionClasses, resignal = TRUE)
     } else {
       ## Return 'error' object, iff exists, otherwise NULL
       error <- conditions[[length(conditions)]]$condition

@@ -26,11 +26,11 @@
 #' @keywords internal
 signalConditions <- function(future, include = "condition", exclude = NULL, resignal = TRUE, ...) {
   ## Future is not yet launched
-  if (!future$state %in% c("finished", "failed")) {
+  if (!future[["state"]] %in% c("finished", "failed")) {
     stop(FutureError(
       sprintf(
         "Internal error: Cannot resignal future conditions. %s has not yet been resolved (state = %s)",
-        class(future)[1], paste(sQuote(future$state), collapse = ", ")),
+        class(future)[1], paste(sQuote(future[["state"]]), collapse = ", ")),
       future = future))
   }
 
@@ -45,7 +45,7 @@ signalConditions <- function(future, include = "condition", exclude = NULL, resi
   ## Nothing to do
   if (length(conditions) == 0) return(invisible(future))
 
-  debug <- getOption("future.debug", FALSE)
+  debug <- isTRUE(getOption("future.debug"))
 
   if (debug) {
     mdebug("signalConditions() ...")
@@ -83,13 +83,13 @@ signalConditions <- function(future, include = "condition", exclude = NULL, resi
       ## Make sure to update 'signaled' information before we exit.
       ## Note, 'future' is an environment.
       result$conditions <- conditions
-      future$result <- result
+      future[["result"]] <- result
       
       ## SPECIAL: By default, don't add 'future.info' because it
       ## modifies the error object, which may break things.
       if (debug && !"future.info" %in% names(condition)) {
         ## Recreate the full call stack
-        cond$calls <- c(future$calls, cond$calls)
+        cond$calls <- c(future[["calls"]], cond$calls)
         condition$future.info <- cond
       }
       stop(condition)
@@ -106,25 +106,34 @@ signalConditions <- function(future, include = "condition", exclude = NULL, resi
   }
 
   ## Drop captured and signalled conditions to save memory?
-  if (isTRUE(attr(future$conditions, "drop"))) {
+  if (isTRUE(attr(future[["conditions"]], "drop"))) {
     conditions <- conditions[!signaled]
   }
 
   ## Make sure to update 'signaled' information on exit
   result$conditions <- conditions
-  future$result <- result
+  future[["result"]] <- result
 
   invisible(future)
 }
 
 
-signalImmediateConditions <- function(future, include = getOption("future.relay.immediate", "immediateCondition"), resignal = FALSE, ...) {
+signalImmediateConditions <- function(future, include = NULL, resignal = FALSE, ...) {
+  if (is.null(include)) {
+    conditions <- future[["conditions"]]
+    if (is.null(conditions)) {
+      include <- NULL
+    } else {
+      include <- attr(conditions, "immediateConditionClasses", exact = TRUE)
+      if (is.null(include)) include <- "immediateCondition"
+    }
+  }
   if (length(include) == 0L) return(invisible(future))
   signalConditions(future, include = include, resignal = resignal, ...)
 }
 
 
-make_signalConditionsASAP <- function(nx, stdout = TRUE, signal = TRUE, force = FALSE, debug = getOption("future.debug", FALSE)) {
+make_signalConditionsASAP <- function(nx, stdout = TRUE, signal = TRUE, force = FALSE, debug = isTRUE(getOption("future.debug"))) {
   relay <- (stdout || signal)
   if (!relay && !force) return(function(...) TRUE)
 
@@ -161,12 +170,22 @@ make_signalConditionsASAP <- function(nx, stdout = TRUE, signal = TRUE, force = 
         stop_if_not(inherits(obj, "Future"))
         if (stdout) value(obj, stdout = TRUE, signal = FALSE)
         if (signal) {
+          conditionClasses <- obj[["conditions"]]
+          if (is.null(conditionClasses)) {
+             immediateConditionClasses <- NULL
+          } else {
+            immediateConditionClasses <- attr(conditionClasses, "immediateConditionClasses", exact = TRUE)
+            if (is.null(immediateConditionClasses)) {
+              immediateConditionClasses <- "immediateCondition"
+            }
+          }
+
           ## Always signal immediateCondition:s and as soon as possible.
           ## They will always be signaled if they exist.
-          signalImmediateConditions(obj)
+          signalImmediateConditions(obj, include = immediateConditionClasses)
     
           ## Signal all other types of condition
-          signalConditions(obj, exclude = getOption("future.relay.immediate", "immediateCondition"), resignal = resignal, ...)
+          signalConditions(obj, exclude = immediateConditionClasses, resignal = resignal, ...)
         }
         relayed[ii] <<- TRUE
       }
@@ -196,12 +215,22 @@ make_signalConditionsASAP <- function(nx, stdout = TRUE, signal = TRUE, force = 
       if (inherits(obj, "Future")) {
         if (stdout) value(obj, stdout = TRUE, signal = FALSE)
         if (signal) {
+          conditionClasses <- obj[["conditions"]]
+          if (is.null(conditionClasses)) {
+             immediateConditionClasses <- NULL
+          } else {
+            immediateConditionClasses <- attr(conditionClasses, "immediateConditionClasses", exact = TRUE)
+            if (is.null(immediateConditionClasses)) {
+              immediateConditionClasses <- "immediateCondition"
+            }
+          }
+
           ## Always signal immediateCondition:s and as soon as possible.
           ## They will always be signaled if they exist.
-          signalImmediateConditions(obj)
+          signalImmediateConditions(obj, include = immediateConditionClasses)
     
           ## Signal all other types of condition
-          signalConditions(obj, exclude = getOption("future.relay.immediate", "immediateCondition"), resignal = resignal, ...)
+          signalConditions(obj, exclude = immediateConditionClasses, resignal = resignal, ...)
         }
         relayed[ii] <<- TRUE
       }
@@ -215,10 +244,6 @@ make_signalConditionsASAP <- function(nx, stdout = TRUE, signal = TRUE, force = 
 
 
 muffleCondition <- function(cond, pattern = "^muffle") {
-  inherits <- base::inherits
-  invokeRestart <- base::invokeRestart
-  is.null <- base::is.null
-
   muffled <- FALSE
   if (inherits(cond, "message")) {
     muffled <- grepl(pattern, "muffleMessage")
@@ -228,9 +253,6 @@ muffleCondition <- function(cond, pattern = "^muffle") {
     if (muffled) invokeRestart("muffleWarning")
   } else if (inherits(cond, "condition")) {
     if (!is.null(pattern)) {
-      computeRestarts <- base::computeRestarts
-      grepl <- base::grepl
-  
       ## If there is a "muffle" restart for this condition,
       ## then invoke that restart, i.e. "muffle" the condition
       restarts <- computeRestarts(cond)

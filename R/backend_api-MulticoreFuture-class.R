@@ -24,7 +24,7 @@ MulticoreFuture <- function(expr = NULL, substitute = TRUE, envir = parent.frame
 
 
 as_MulticoreFuture <- function(future, ...) {
-  future$job <- NULL
+  future[["job"]] <- NULL
   
   future <- structure(future, class = c("MulticoreFuture", class(future)))
   
@@ -34,10 +34,10 @@ as_MulticoreFuture <- function(future, ...) {
 
 #' @export
 run.MulticoreFuture <- function(future, ...) {
-  debug <- getOption("future.debug", FALSE)
+  debug <- isTRUE(getOption("future.debug"))
   
-  if (future$state != "created") {
-    label <- future$label
+  if (future[["state"]] != "created") {
+    label <- future[["label"]]
     if (is.null(label)) label <- "<none>"
     stop(FutureError(sprintf("A future ('%s') can only be launched once", label), future = future))
   }
@@ -48,7 +48,7 @@ run.MulticoreFuture <- function(future, ...) {
 
   mcparallel <- importParallel("mcparallel")
 
-  data <- getFutureData(future)
+  data <- getFutureData(future, debug = debug)
 
   t_start <- Sys.time()
   
@@ -56,10 +56,10 @@ run.MulticoreFuture <- function(future, ...) {
   reg <- sprintf("multicore-%s", session_uuid())
   requestCore(
     await = function() FutureRegistry(reg, action = "collect-first", earlySignal = TRUE),
-    workers = future$workers
+    workers = future[["workers"]]
   )
 
-  if (inherits(future$.journal, "FutureJournal")) {
+  if (inherits(future[[".journal"]], "FutureJournal")) {
     appendToFutureJournal(future,
          event = "getWorker",
       category = "other",
@@ -78,8 +78,8 @@ run.MulticoreFuture <- function(future, ...) {
     mcparallel(evalFuture(data))
   })
 
-  future$job <- job
-  future$state <- "running"
+  future[["job"]] <- job
+  future[["state"]] <- "running"
 
   if (debug) mdebugf("%s started", class(future)[1])
   
@@ -89,16 +89,16 @@ run.MulticoreFuture <- function(future, ...) {
 #' @export
 resolved.MulticoreFuture <- function(x, run = TRUE, timeout = NULL, ...) {
   ## A lazy future not even launched?
-  if (x$state == "created") {
+  if (x[["state"]] == "created") {
     if (run) {
       ## If free cores are available, then launch this lazy future
-      if (x$workers > usedCores()) x <- run(x)
+      if (x[["workers"]] > usedCores()) x <- run(x)
     }
     return(FALSE)
   }
 
   ## Is value already collected?
-  if (!is.null(x$result)) {
+  if (!is.null(x[["result"]])) {
     ## Signal conditions early?
     signalEarly(x, ...)
     return(TRUE)
@@ -108,13 +108,13 @@ resolved.MulticoreFuture <- function(x, run = TRUE, timeout = NULL, ...) {
   ## also the one that evaluates/resolves/queries it.
   assertOwner(x)
 
-  job <- x$job
+  job <- x[["job"]]
   stop_if_not(inherits(job, "parallelJob"))
 
   selectChildren <- importParallel("selectChildren")
   
   if (is.null(timeout)) {
-    timeout <- getOption("future.multicore.resolved.timeout", NULL)
+    timeout <- getOption("future.multicore.resolved.timeout")
     if (is.null(timeout)) timeout <- getOption("future.resolved.timeout", 0.01)
     if (timeout < 0) {
       warning("Secret option 'future.resolved.timeout' is negative, which causes resolved() to wait until the future is resolved. This feature is only used for testing purposes of the future framework and must not be used elsewhere", immediate. = TRUE)
@@ -133,8 +133,8 @@ resolved.MulticoreFuture <- function(x, run = TRUE, timeout = NULL, ...) {
   ## Collect and relay immediateCondition if they exists
   conditions <- readImmediateConditions(signal = TRUE)
   ## Record conditions as signaled
-  signaled <- c(x$.signaledConditions, conditions)
-  x$.signaledConditions <- signaled
+  signaled <- c(x[[".signaledConditions"]], conditions)
+  x[[".signaledConditions"]] <- signaled
 
   ## Signal conditions early? (happens only iff requested)
   if (res) signalEarly(x, ...)
@@ -145,20 +145,20 @@ resolved.MulticoreFuture <- function(x, run = TRUE, timeout = NULL, ...) {
 
 #' @export
 result.MulticoreFuture <- function(future, ...) {
-  debug <- getOption("future.debug", FALSE)
+  debug <- isTRUE(getOption("future.debug"))
   if (debug) {
     mdebugf("result() for %s ...", class(future)[1])
     on.exit(mdebugf("result() for %s ... done", class(future)[1]))
   }
 
   ## Has the result already been collected?
-  result <- future$result
+  result <- future[["result"]]
   if (!is.null(result)) {
     if (inherits(result, "FutureError")) stop(result)
     return(result)
   }
 
-  if (future$state == "created") {
+  if (future[["state"]] == "created") {
     future <- run(future)
   }
 
@@ -169,7 +169,7 @@ result.MulticoreFuture <- function(future, ...) {
   ## If not, wait for process to finish, and
   ## then collect and record the value
   mccollect <- importParallel("mccollect")
-  job <- future$job
+  job <- future[["job"]]
   stop_if_not(inherits(job, "parallelJob"))
 
   ## WORKAROUNDS for R (< 3.6.0):
@@ -197,14 +197,14 @@ result.MulticoreFuture <- function(future, ...) {
     
     ## AD HOC: Record whether the forked process is alive or not
     job$alive <- alive
-    future$job <- job
+    future[["job"]] <- job
 
     ## SPECIAL: Check for fallback 'fatal error in wrapper code'
     ## try-error from parallel:::mcparallel().  If detected, then
     ## turn into an error with a more informative error message, cf.
     ## https://github.com/futureverse/future/issues/35
     if (is.null(result) || identical(result, structure("fatal error in wrapper code", class = "try-error"))) {
-      label <- future$label
+      label <- future[["label"]]
       if (is.null(label)) label <- "<none>"
 
       pid_info <- if (is.numeric(pid)) sprintf("PID %.0f", pid) else NULL
@@ -234,7 +234,7 @@ result.MulticoreFuture <- function(future, ...) {
       postmortem$non_exportable <- assert_no_references(future, action = "string")
 
       ## (d) Size of globals
-      postmortem$global_sizes <- summarize_size_of_globals(globals(future))
+      postmortem$global_sizes <- summarize_size_of_globals(future[["globals"]])
 
       postmortem <- unlist(postmortem, use.names = FALSE)
       if (!is.null(postmortem)) {
@@ -250,7 +250,7 @@ result.MulticoreFuture <- function(future, ...) {
       ex <- UnexpectedFutureResultError(future)
       alive <- NA  ## For now, don't remove future when there's an unexpected error /HB 2023-04-19
     }
-    future$result <- ex
+    future[["result"]] <- ex
     
     ## Remove future from FutureRegistry?
     if (!is.na(alive) && !alive) {
@@ -270,16 +270,16 @@ result.MulticoreFuture <- function(future, ...) {
   ## Collect and relay immediateCondition if they exists
   conditions <- readImmediateConditions()
   ## Record conditions as signaled
-  signaled <- c(future$.signaledConditions, conditions)
-  future$.signaledConditions <- signaled
+  signaled <- c(future[[".signaledConditions"]], conditions)
+  future[[".signaledConditions"]] <- signaled
 
   ## Record conditions
   result$conditions <- c(result$conditions, signaled)
   signaled <- NULL
   
-  future$result <- result
+  future[["result"]] <- result
 
-  future$state <- "finished"
+  future[["state"]] <- "finished"
 
   ## Remove from registry
   reg <- sprintf("multicore-%s", session_uuid())

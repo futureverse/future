@@ -47,7 +47,7 @@ futureSessionInfo <- function(test = TRUE, anonymize = TRUE) {
     "future.startup.script"
   )    
   for (name in names) {
-    value <- getOption(name, default = NULL)
+    value <- getOption(name)
     if (is.character(value)) value <- sQuote(value)
     if (is.null(value)) value <- "<not set>"
     mprintf0("- %s=%s", name, value)

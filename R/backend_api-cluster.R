@@ -41,7 +41,7 @@
 #' @export
 cluster <- function(..., persistent = FALSE, workers = availableWorkers(), envir = parent.frame()) {
   future <- ClusterFuture(..., persistent = persistent, workers = workers, envir = envir)
-  if (!future$lazy) future <- run(future)
+  if (!future[["lazy"]]) future <- run(future)
   invisible(future)
 }
 class(cluster) <- c("cluster", "multiprocess", "future", "function")

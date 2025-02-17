@@ -14,12 +14,12 @@
 ConstantFuture <- function(..., globals = TRUE, envir = emptyenv()) {
   future <- Future(..., globals = list(), envir = envir)
   t_start <- Sys.time()
-  future$result <- FutureResult(
-    value = eval(future$expr, envir = envir),
+  future[["result"]] <- FutureResult(
+    value = eval(future[["expr"]], envir = envir),
     started = t_start,
     finished = t_start
   )
-  future$state <- "finished"
+  future[["state"]] <- "finished"
   future <- structure(future, class = c("ConstantFuture", class(future)))
   future
 }
@@ -31,5 +31,5 @@ run.ConstantFuture <- function(future, ...) {
 
 #' @export
 result.ConstantFuture <- function(future, ...) {
-  future$result
+  future[["result"]]
 }

@@ -67,7 +67,7 @@ backtrace <- function(future, envir = parent.frame(), ...) {
   }
 
   ## Recreate the full call stack
-  calls <- c(future$calls, calls)
+  calls <- c(future[["calls"]], calls)
   
   calls
 } ## backtrace()
