@@ -162,7 +162,7 @@ launchFuture.SequentialFutureBackend <- function(backend, future, ...) {
   future
 }
 
-SequentialFutureBackend <- function(...) {
+FutureBackend <- function(...) {
   core <- new.env(parent = emptyenv())
 
   ## Record future plan tweaks, if any
@@ -171,8 +171,15 @@ SequentialFutureBackend <- function(...) {
     core[[name]] <- args[[name]]
   }
   
-  core <- structure(core, class = c("SequentialFutureBackend", "FutureBackend", class(core)))
-    
+  core$futureClasses <- c("FutureBackend")
+  core <- structure(core, class = c("FutureBackend", class(core)))
+}
+
+
+SequentialFutureBackend <- function(...) {
+  core <- FutureBackend(...)
+  core$futureClasses <- c("SequentialFuture", "UniprocessFuture", core$futureClasses)
+  core <- structure(core, class = c("SequentialFutureBackend", class(core)))
   core
 }
 

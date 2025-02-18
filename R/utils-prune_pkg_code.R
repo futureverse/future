@@ -26,7 +26,9 @@ prune_fcn <- function(name, envir) {
     body0 <- body(fcn)
     body <- walkAST(body0, call = prune_fcns)
     if (!identical(body, body0)) {
+      attrs <- attributes(fcn)
       body(fcn) <- body
+      attributes(fcn) <- attrs ## attributes are lost if body is changed
       assign(name, fcn, envir = envir, inherits = FALSE)
       return(TRUE)
     }

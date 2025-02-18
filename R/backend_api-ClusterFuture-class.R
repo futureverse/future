@@ -72,7 +72,7 @@ as_ClusterFuture <- function(future, workers = NULL, ...) {
   ## futures' values.
   ##  workers <- add_cluster_session_info(workers)
   
-  backend <- ClusterFutureBackend(workers, persistent =isTRUE(future[["persistent"]]))
+  backend <- ClusterFutureBackend0(workers, persistent = isTRUE(future[["persistent"]]))
   
   future[["backend"]] <- backend
 
@@ -87,11 +87,11 @@ as_ClusterFuture <- function(future, workers = NULL, ...) {
 
 #' @export
 run.ClusterFuture <- function(future, ...) {
-  debug <- isTRUE(getOption("future.debug"))
-  if (debug) {
-    mdebug("run.ClusterFuture() ...")
-    on.exit(mdebug("run.ClusterFuture() ... done"))
+  if (getOption("future.backend.version", 1L) == 2L) {
+    return(NextMethod())
   }
+
+  debug <- getOption("future.debug", FALSE)
   
   if (future[["state"]] != 'created') {
     label <- future[["label"]]
@@ -103,31 +103,84 @@ run.ClusterFuture <- function(future, ...) {
   ## also the one that evaluates/resolves/queries it.
   assertOwner(future)
 
-  backend <- future[["backend"]]
+  workers <- future[["workers"]]
+  data <- getFutureData(future)
+  persistent <- isTRUE(future[["persistent"]])
+
+  ## FutureRegistry to use
+  reg <- sprintf("workers-%s", attr(workers, "name", exact = TRUE))
 
   ## Next available cluster node
   t_start <- Sys.time()
+  node_idx <- requestNode(await = function() {
+    FutureRegistry(reg, action = "collect-first", earlySignal = TRUE)
+  }, workers = workers)
+  future[["node"]] <- node_idx
 
-  ## (1) Get a free worker. This will block until one is available
-  backend$requestWorker(future)
-
-  ## (2) Attach packages that needs to be attached
-  ##     NOTE: Already take care of by evalFuture().
-  ##     However, if we need to get an early error about missing packages,
-  ##     we can get the error here before launching the future.
-  if (future[["earlySignal"]]) {
-    backend$requirePackages(future = future)
+  ## Cluster node to use
+  cl <- workers[node_idx]
+  
+  if (inherits(future[[".journal"]], "FutureJournal")) {
+    appendToFutureJournal(future,
+         event = "getWorker",
+      category = "overhead",
+        parent = "launch",
+         start = t_start,
+          stop = Sys.time()
+    )
   }
 
-  ## (2) Reset global environment of cluster node such that
+
+  ## (i) Reset global environment of cluster node such that
   ##     previous futures are not affecting this one, which
   ##     may happen even if the future is evaluated inside a
   ##     local, e.g. local({ a <<- 1 }).
-  ##     If the persistent = TRUE, this will be skipped.
-  backend$eraseGlobalEnvironment(future = future)
+  if (!persistent) {
+    t_start <- Sys.time()
+    cluster_call_blocking(cl, fun = grmall, future = future, when = "call grmall() on")
+    if (inherits(future[[".journal"]], "FutureJournal")) {
+      appendToFutureJournal(future,
+           event = "eraseWorker",
+        category = "overhead",
+          parent = "launch",
+           start = t_start,
+            stop = Sys.time()
+      )
+    }
+  }
 
-  ## (3) Launch future
-  backend$launchFuture(future)
+
+  ## (ii) Attach packages that needs to be attached
+  ##      NOTE: Already take care of by evalFuture().
+  ##      However, if we need to get an early error about missing packages,
+  ##      we can get the error here before launching the future.
+  t_start <- Sys.time()
+  packages <- future[["packages"]]
+  if (future[["earlySignal"]] && length(packages) > 0) {
+    if (debug) mdebugf("Attaching %d packages (%s) on cluster node #%d ...",
+                      length(packages), hpaste(sQuote(packages)), node_idx)
+
+    cluster_call_blocking(cl, fun = requirePackages, packages, future = future, when = "call requirePackages() on")
+
+    if (debug) mdebugf("Attaching %d packages (%s) on cluster node #%d ... DONE",
+                      length(packages), hpaste(sQuote(packages)), node_idx)
+  }
+  
+  if (inherits(future[[".journal"]], "FutureJournal")) {
+    appendToFutureJournal(future,
+         event = "attachPackages",
+      category = "overhead",
+        parent = "launch",
+         start = t_start,
+          stop = Sys.time()
+    )
+  }
+
+  ## Add to registry
+  FutureRegistry(reg, action = "add", future = future, earlySignal = FALSE)
+
+  ## (iv) Launch future
+  node_call_nonblocking(cl[[1L]], fun = evalFuture, args = list(data), when = "launch future on")
 
   future[["state"]] <- 'running'
 
@@ -318,7 +371,7 @@ receiveMessageFromWorker <- function(future, ...) {
     if (future[["gc"]]) {
       if (debug) mdebug("- Garbage collecting worker ...")
       ## Cleanup global environment while at it
-      if (!future[["persistent"]]) {
+      if (!isTRUE(future[["persistent"]])) {
         ## Blocking cluster-node call
         cluster_call_blocking(cl[1], fun = grmall, future = future, when = "call grmall() on")
       }
@@ -517,6 +570,12 @@ post_mortem_cluster_failure <- function(ex, when, node, future) {
 
   ## (4) POST-MORTEM ANALYSIS:
   postmortem <- list()
+
+  ## (a) Inspect the 'reason' for known clues
+  if (grepl("ignoring SIGPIPE signal", reason)) {
+    postmortem$sigpipe <- "The SIGPIPE error suggests that the R socket connection to the parallel worker broke, which can happen for different reasons, e.g. the parallel worker crashed"
+  }
+
   ## (a) Did the worker process terminate?
   if (!is.null(host) && is.numeric(pid)) {
     if (localhost) {
@@ -646,7 +705,7 @@ assertValidConnection <- function(future) {
 
 
 
-ClusterFutureBackend <- local({
+ClusterFutureBackend0 <- local({
   indexOf <- function(futures, future) {
     for (ii in seq_along(futures)) {
       if (identical(future, futures[[ii]])) return(ii)
@@ -915,6 +974,77 @@ ClusterFutureBackend <- local({
       }
     )
   }
-}) ## ClusterFutureBackend()
+}) ## ClusterFutureBackend0()
 
 
+
+
+#' @export
+launchFuture.ClusterFutureBackend <- function(backend, future, ...) {
+  debug <- isTRUE(getOption("future.debug"))
+  if (debug) {
+    mdebug("launchFuture() for ClusterFutureBackend ...")
+    on.exit(mdebug("launchFuture() for ClusterFutureBackend ... done"))
+  }
+
+  ## Coerce Future to ClusterFuture
+  args <- list(
+    future,
+    workers = backend[["workers"]]
+  )
+  future <- do.call(as_ClusterFuture, args = args)
+  class(future) <- unique(c(backend$futureClasses, class(future)))
+  
+  backend0 <- future[["backend"]]
+  
+  ## Next available cluster node
+  t_start <- Sys.time()
+
+  ## (1) Get a free worker. This will block until one is available
+  backend0$requestWorker(future)
+
+  ## (2) Attach packages that needs to be attached
+  ##     NOTE: Already take care of by evalFuture().
+  ##     However, if we need to get an early error about missing packages,
+  ##     we can get the error here before launching the future.
+  if (future[["earlySignal"]]) {
+    backend0$requirePackages(future = future)
+  }
+
+  ## (2) Reset global environment of cluster node such that
+  ##     previous futures are not affecting this one, which
+  ##     may happen even if the future is evaluated inside a
+  ##     local, e.g. local({ a <<- 1 }).
+  ##     If the persistent = TRUE, this will be skipped.
+  backend0$eraseGlobalEnvironment(future = future)
+
+  ## (3) Launch future
+  backend0$launchFuture(future)
+
+  future[["state"]] <- "running"
+
+  if (debug) mdebugf("%s started", class(future)[1])
+  
+  invisible(future)
+}
+
+
+ClusterFutureBackend <- function(workers, persistent = FALSE, ...) {
+  core <- new.env(parent = emptyenv())
+
+  ## Record future plan tweaks, if any
+  args <- list(workers = workers, persistent = persistent, ...)
+  for (name in names(args)) {
+    core[[name]] <- args[[name]]
+  }
+  core$futureClasses <- c("ClusterFuture", "Future")
+  core <- structure(core, class = c("ClusterFutureBackend", "FutureBackend", class(core)))
+  core
+}
+
+MultisessionFutureBackend <- function(workers, ...) {
+  core <- ClusterFutureBackend(workers = workers, ...)
+  core$futureClasses <- c("MultisessionFuture", core$futureClasses)
+  core <- structure(core, class = c("MultisessionFutureBackend", class(core)))
+  core
+}

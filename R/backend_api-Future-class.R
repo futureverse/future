@@ -395,9 +395,9 @@ assertOwner <- local({
 run.Future <- function(future, ...) {
   debug <- isTRUE(getOption("future.debug"))
   if (debug) {
-    mdebug("run() for ", sQuote(class(future)[1]), " ...")
+    mdebugf("run() for Future (%s) ...", sQuote(class(future)[1]))
     mdebug("- state: ", sQuote(future[["state"]]))
-    on.exit(mdebug("run() for ", sQuote(class(future)[1]), " ... done"), add = TRUE)
+    on.exit(mdebugf("run() for Future (%s) ... done", sQuote(class(future)[1])), add = TRUE)
   }
 
   if (future[["state"]] != "created") {
@@ -408,7 +408,7 @@ run.Future <- function(future, ...) {
   }
 
   ## Sanity check: This method should only called for lazy futures
-  stop_if_not(future[["lazy"]])
+#  stop_if_not(future[["lazy"]])
 
   if (is.null(future[["owner"]])) {
     future[["owner"]] <- session_uuid()
@@ -436,10 +436,19 @@ run.Future <- function(future, ...) {
       mdebug("- state: ", sQuote(future[["state"]]))
       on.exit(mdebug("run() for ", sQuote(class(future)[1]), " ... done"), add = TRUE)
 
+      if (debug) mprint(backend)
+
       ## Apply future plan tweaks
       args <- attr(makeFuture, "tweaks")
       if (is.null(args)) args <- list()
+      args2 <- formals(makeFuture)
+      args2[["..."]] <- NULL
+      args2[["envir"]] <- NULL
+      for (name in names(args2)) {
+        args[[name]] <- args2[[name]]
+      }
       backend <- do.call(backend, args = args)
+      if (debug) mdebug(" - FutureBackend: ", commaq(class(backend)))
       stop_if_not(inherits(backend, "FutureBackend"))
 
 

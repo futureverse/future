@@ -1,4 +1,5 @@
 source("incl/start.R")
+options(future.debug = FALSE)
 
 ## Local functions
 usedNodes <- function(future) {
