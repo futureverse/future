@@ -713,6 +713,8 @@ ClusterFutureBackend0 <- local({
     NA_integer_
   }
 
+  .timeout <- NULL
+  
   function(workers, persistent = FALSE) {
     ## Attach name to cluster?
     name <- attr(workers, "name", exact = TRUE)
@@ -792,7 +794,7 @@ ClusterFutureBackend0 <- local({
           mdebug("isFutureResolved() ...")
           on.exit(mdebug("isFutureResolved() ... done"))
         }
-      
+
         node_idx <- future[["node"]]
         cl <- workers[node_idx]
         node <- cl[[1]]
@@ -804,13 +806,27 @@ ClusterFutureBackend0 <- local({
           if (!is.na(connId) && connId < 0L) return(FALSE)
       
           assertValidConnection(future)
-      
+
           if (is.null(timeout)) {
-            timeout <- getOption("future.cluster.resolved.timeout")
-            if (is.null(timeout)) timeout <- getOption("future.resolved.timeout", 0.01)
-            if (timeout < 0) {
-              warning("Secret option 'future.resolved.timeout' is negative, which causes resolved() to wait until the future is resolved. This feature is only used for testing purposes of the future framework and must not be used elsewhere", immediate. = TRUE)
-              timeout <- NULL
+            ## FIXME: This should be memoized per plan, when setting up
+            ## the plan /HB 2025-02-18
+            timeout <- .timeout
+            
+            if (is.null(timeout)) {
+              timeout <- getOption("future.cluster.resolved.timeout")
+              if (is.null(timeout)) {
+                timeout <- getOption("future.resolved.timeout")
+                if (is.null(timeout)) {
+                  timeout <- 0.01
+                }
+              }
+              
+              if (timeout < 0) {
+                warning("Secret option 'future.resolved.timeout' is negative, which causes resolved() to wait until the future is resolved. This feature is only used for testing purposes of the future framework and must not be used elsewhere", immediate. = TRUE)
+                timeout <- NULL
+              } else {
+                .timeout <<- timeout
+              }
             }
           }
       
