@@ -573,12 +573,17 @@ evalFuture <- function(
   }      
 
   
+  ## -----------------------------------------------------------------
   ## Limit nested parallelization
+  ## -----------------------------------------------------------------
   ## (a) Identify default number of cores - ignoring plan settings
+  ## FIXME: Can the results here be memoized? Can the results be
+  ## precalculated and stored in the strategy stack? /HB 2025-02-17
   ...future.ncores <- local({
     ans <- NA_integer_
     
     options(parallelly.availableCores.fallback = 1L)
+    ## NOTE: availableCores() is expensive
     ncores <- availableCores(which = "all")
     ncores <- ncores[ncores != ncores["system"]]
     ncores <- ncores[setdiff(names(ncores), c("_R_CHECK_LIMIT_CORES_", "Bioconductor"))]
@@ -593,7 +598,7 @@ evalFuture <- function(
     }
     ans
   })
-
+  
   ## Use the next-level-down ("popped") future strategy
   plan(strategiesR, .cleanup = FALSE, .init = FALSE)
 
