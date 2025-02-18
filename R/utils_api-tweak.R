@@ -134,6 +134,9 @@ tweak.future <- function(strategy, ..., penvir = parent.frame()) {
   ## Restore attributes including class
   attributes(strategy2) <- attrs
 
+  ## Record what tweaks were made
+  attr(strategy2, "tweaks") <- args
+  
   ## Flag that it is tweaked
   class(strategy2) <- c("tweaked", class)
 

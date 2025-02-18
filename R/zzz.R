@@ -1,5 +1,8 @@
 .package <- new.env()
 
+## Update FutureBackend:s
+attr(sequential, "backend") <- SequentialFutureBackend
+
 
 ## covr: skip=all
 #' @importFrom utils packageVersion

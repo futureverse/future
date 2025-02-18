@@ -427,6 +427,34 @@ run.Future <- function(future, ...) {
   makeFuture <- plan("next")
   if (debug) mdebug("- Future backend: ", commaq(class(makeFuture)))
 
+  ## Use new FutureBackend approach?
+  if (getOption("future.backend.version", 1L) == 2L) {
+    ## Implements a FutureBackend?
+    backend <- attr(makeFuture, "backend")
+    if (is.function(backend)) {
+      if (debug) mdebug("Using FutureBackend ...")
+      mdebug("- state: ", sQuote(future[["state"]]))
+      on.exit(mdebug("run() for ", sQuote(class(future)[1]), " ... done"), add = TRUE)
+
+      ## Apply future plan tweaks
+      args <- attr(makeFuture, "tweaks")
+      if (is.null(args)) args <- list()
+      backend <- do.call(backend, args = args)
+      stop_if_not(inherits(backend, "FutureBackend"))
+
+
+      if (debug) mdebug(" - Launching futures ...")
+      future2 <- launchFuture(backend, future = future)
+      if (debug) mdebug(" - Launching futures ... done")
+      if (debug) mdebug(" - Future launched: ", commaq(class(future2)))
+      stop_if_not(inherits(future2, "Future"))
+      if (debug) mdebug("Using FutureBackend ... DONE")
+      
+      return(future2)
+    }
+  }
+
+
   ## AD HOC/WORKAROUND: /HB 2020-12-21
   args <- list(
     quote(future[["expr"]]),
