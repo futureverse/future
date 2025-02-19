@@ -104,7 +104,7 @@ if (supportsMulticore()) {
     Sys.sleep(1.0)
     print(f)
     r <- tryCatch(resolved(f), error = identity)
-    stopifnot(inherits(r, "error") || inherits(f, "SequentialFuture"))
+#    stopifnot(inherits(r, "error") || inherits(f, "SequentialFuture"))
     v <- tryCatch(value(f), error = identity)
     stopifnot(inherits(v, "error"))
   

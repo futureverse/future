@@ -1045,20 +1045,48 @@ launchFuture.ClusterFutureBackend <- function(backend, future, ...) {
 }
 
 
-ClusterFutureBackend <- function(workers, persistent = FALSE, ...) {
-  core <- new.env(parent = emptyenv())
-
-  ## Record future plan tweaks, if any
-  args <- list(workers = workers, persistent = persistent, ...)
-  for (name in names(args)) {
-    core[[name]] <- args[[name]]
+ClusterFutureBackend <- function(workers = availableWorkers(), persistent = FALSE, ...) {
+  if (is.function(workers)) workers <- workers()
+  if (is.null(workers)) {
+    getDefaultCluster <- importParallel("getDefaultCluster")
+    workers <- getDefaultCluster()
+    workers <- addCovrLibPath(workers)
+  } else if (is.character(workers) || is.numeric(workers)) {
+    ## Which '...' arguments should be passed to Future() and 
+    ## which should be passed to makeClusterPSOCK()?
+    workers <- ClusterRegistry("start", workers = workers, ...)
+  } else {
+    workers <- as.cluster(workers)
+    workers <- addCovrLibPath(workers)
   }
+  if (!inherits(workers, "cluster")) {
+    stopf("Argument 'workers' is not of class 'cluster': %s", commaq(class(workers)))
+  }
+  stop_if_not(length(workers) > 0)
+  
+  core <- FutureBackend(workers = workers, persistent = persistent, ...)
   core$futureClasses <- c("ClusterFuture", "Future")
   core <- structure(core, class = c("ClusterFutureBackend", "FutureBackend", class(core)))
   core
 }
 
-MultisessionFutureBackend <- function(workers, ...) {
+
+MultisessionFutureBackend <- function(workers = availableCores(), ...) {
+  default_workers <- missing(workers)
+  if (is.function(workers)) workers <- workers()
+  workers <- structure(as.integer(workers), class = class(workers))
+  stop_if_not(length(workers) == 1, is.finite(workers), workers >= 1)
+  
+  ## Fall back to sequential futures if only a single additional R process
+  ## can be spawned off, i.e. then use the current main R process.
+  ## Sequential futures best reflect how multicore futures handle globals.
+  if (workers == 1L && !inherits(workers, "AsIs")) {
+    ## AD HOC: Make sure plan(multicore) also produces a warning, if needed
+    if (default_workers) supportsMulticore(warn = TRUE)
+    ## covr: skip=1
+    return(SequentialFutureBackend(...))
+  }
+
   core <- ClusterFutureBackend(workers = workers, ...)
   core$futureClasses <- c("MultisessionFuture", core$futureClasses)
   core <- structure(core, class = c("MultisessionFutureBackend", class(core)))
