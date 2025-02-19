@@ -428,7 +428,7 @@ run.Future <- function(future, ...) {
   if (debug) mdebug("- Future backend: ", commaq(class(makeFuture)))
 
   ## Use new FutureBackend approach?
-  if (getOption("future.backend.version", 1L) == 2L) {
+  if (getOption("future.backend.version", 2L) == 2L) {
     ## Implements a FutureBackend?
     backend <- attr(makeFuture, "backend")
     if (is.function(backend)) {
