@@ -108,6 +108,16 @@ SequentialFuture <- function(expr = NULL, envir = parent.frame(), substitute = T
 
 
 
+
+coerceFuture <- function(backend, future, ...) {
+  UseMethod("coerceFuture")
+}
+
+coerceFuture.FutureBackend <- function(backend, future, ...) {
+  class(future) <- unique(c(backend$futureClasses, class(future)))
+  future
+}
+
 launchFuture <- function(backend, future, ...) {
   UseMethod("launchFuture")
 }
@@ -130,9 +140,7 @@ launchFuture.SequentialFutureBackend <- function(backend, future, ...) {
   ## also the one that evaluates/resolves/queries it.
   assertOwner(future)
 
-  ## Coerce to a SequentialFuture
-  ## NOTE: Has to be done before getFutureData() is called
-  class(future) <- c("SequentialFuture", "UniprocessFuture", class(future))
+  future <- coerceFuture(backend, future)
 
   ## Launch future
   future[["state"]] <- "running"

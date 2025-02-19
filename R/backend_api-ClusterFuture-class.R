@@ -1009,7 +1009,7 @@ launchFuture.ClusterFutureBackend <- function(backend, future, ...) {
     workers = backend[["workers"]]
   )
   future <- do.call(as_ClusterFuture, args = args)
-  class(future) <- unique(c(backend$futureClasses, class(future)))
+  future <- coerceFuture(backend, future)
   
   backend0 <- future[["backend"]]
   

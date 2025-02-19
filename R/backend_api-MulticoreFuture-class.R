@@ -291,3 +291,75 @@ result.MulticoreFuture <- function(future, ...) {
 
   result
 }
+
+
+
+#' @export
+launchFuture.MulticoreFutureBackend <- function(backend, future, ...) {
+  debug <- isTRUE(getOption("future.debug"))
+  
+  if (future[["state"]] != "created") {
+    label <- future[["label"]]
+    if (is.null(label)) label <- "<none>"
+    stop(FutureError(sprintf("A future ('%s') can only be launched once", label), future = future))
+  }
+  
+  ## Assert that the process that created the future is
+  ## also the one that evaluates/resolves/queries it.
+  assertOwner(future)
+
+  mcparallel <- importParallel("mcparallel")
+
+  future <- coerceFuture(backend, future)
+
+  data <- getFutureData(future, debug = debug)
+
+  t_start <- Sys.time()
+  
+  ## Get a free worker
+  reg <- sprintf("multicore-%s", session_uuid())
+  requestCore(
+    await = function() FutureRegistry(reg, action = "collect-first", earlySignal = TRUE),
+    workers = backend[["workers"]]
+  )
+
+  if (inherits(future[[".journal"]], "FutureJournal")) {
+    appendToFutureJournal(future,
+         event = "getWorker",
+      category = "other",
+        parent = "launch",
+         start = t_start,
+          stop = Sys.time()
+    )
+  }
+
+  ## Add to registry
+  FutureRegistry(reg, action = "add", future = future, earlySignal = TRUE)
+
+  job <- local({
+    oopts <- options(mc.cores = NULL)
+    on.exit(options(oopts))
+    mcparallel(evalFuture(data))
+  })
+
+  future[["job"]] <- job
+  future[["state"]] <- "running"
+
+  if (debug) mdebugf("%s started", class(future)[1])
+  
+  invisible(future)
+}
+
+
+MulticoreFutureBackend <- function(workers, persistent = FALSE, ...) {
+  core <- new.env(parent = emptyenv())
+
+  ## Record future plan tweaks, if any
+  args <- list(workers = workers, persistent = persistent, ...)
+  for (name in names(args)) {
+    core[[name]] <- args[[name]]
+  }
+  core$futureClasses <- c("MulticoreFuture", "Future")
+  core <- structure(core, class = c("MulticoreFutureBackend", "FutureBackend", class(core)))
+  core
+}

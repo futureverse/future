@@ -4,6 +4,7 @@
 attr(sequential, "backend") <- SequentialFutureBackend
 attr(cluster, "backend") <- ClusterFutureBackend
 attr(multisession, "backend") <- MultisessionFutureBackend
+attr(multicore, "backend") <- MulticoreFutureBackend
 
 
 ## covr: skip=all
