@@ -113,7 +113,7 @@ coerceFuture <- function(backend, future, ...) {
   UseMethod("coerceFuture")
 }
 
-#' @exportS3method
+#' @exportS3Method
 coerceFuture.FutureBackend <- function(backend, future, ...) {
   class(future) <- unique(c(backend$futureClasses, class(future)))
   future

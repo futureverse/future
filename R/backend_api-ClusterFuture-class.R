@@ -71,14 +71,23 @@ as_ClusterFuture <- function(future, workers = NULL, ...) {
   ## the send/receive data to be out of sync and therefore corrupt the
   ## futures' values.
   ##  workers <- add_cluster_session_info(workers)
-  
-  backend <- ClusterFutureBackend0(workers, persistent = isTRUE(future[["persistent"]]))
-  
-  future[["backend"]] <- backend
 
-  ## FIXME: To be removed when safe; maybe third-party code rely on this /HB 2025-02-15
-  future[["workers"]] <- backend$workers
+  ## Attach name to cluster?
+  name <- attr(workers, "name", exact = TRUE)
+  if (is.null(name)) {
+    name <- digest(workers)
+    stop_if_not(length(name) > 0, nzchar(name))
+    attr(workers, "name") <- name
+  }
 
+  future[["backend"]] <- list(
+    workers = workers, 
+        reg = sprintf("workers-%s", attr(workers, "name", exact = TRUE))
+  )
+
+  ## FIXME: To be cleaned out /HB 2025-02-19
+  future[["workers"]] <- workers
+  
   future <- structure(future, class = c("ClusterFuture", class(future)))
 
   future
@@ -103,12 +112,12 @@ run.ClusterFuture <- function(future, ...) {
   ## also the one that evaluates/resolves/queries it.
   assertOwner(future)
 
-  workers <- future[["workers"]]
+  backend <- future[["backend"]]
+  workers <- backend$workers
+  reg <- backend$reg
+
   data <- getFutureData(future)
   persistent <- isTRUE(future[["persistent"]])
-
-  ## FutureRegistry to use
-  reg <- sprintf("workers-%s", attr(workers, "name", exact = TRUE))
 
   ## Next available cluster node
   t_start <- Sys.time()
@@ -193,6 +202,8 @@ run.ClusterFuture <- function(future, ...) {
 #' @importFrom parallelly connectionId
 #' @export
 resolved.ClusterFuture <- function(x, run = TRUE, timeout = NULL, ...) {
+  debug <- isTRUE(getOption("future.debug"))
+  
   future <- x
   backend <- future[["backend"]]
   workers <- backend$workers
@@ -204,10 +215,14 @@ resolved.ClusterFuture <- function(x, run = TRUE, timeout = NULL, ...) {
       ## Can we launch it?  Are there available workers?
       
       ## Collect one resolved future, if one exists
-      backend$collectResolvedFutures()
+      FutureRegistry(reg, action = "collect-first", earlySignal = TRUE)
 
       ## Find which nodes are available
-      avail <- backend$isWorkerFree()
+      avail <- rep(TRUE, times = length(workers))
+      futures <- FutureRegistry(reg, action = "list", earlySignal = FALSE)
+      nodes <- unlist(lapply(futures, FUN = function(f) f$node), use.names = FALSE)
+      avail[nodes] <- FALSE
+      if (debug) mdebug(" - avail: [n=%d] %s", length(avail), commaq(avail))
       
       ## If at least one is available, then launch this lazy future
       if (any(avail)) future <- run(future)
@@ -226,7 +241,78 @@ resolved.ClusterFuture <- function(x, run = TRUE, timeout = NULL, ...) {
   ## also the one that evaluates/resolves/queries it.
   assertOwner(future)
 
-  res <- backend$isFutureResolved(future)
+  if (debug) mdebug("isFutureResolved() ...")
+
+  node_idx <- future[["node"]]
+  cl <- workers[node_idx]
+  node <- cl[[1]]
+
+  ## Check if workers socket connection is available for reading
+  if (!is.null(con <- node$con)) {
+    ## AD HOC/SPECIAL CASE: Skip if connection has been serialized and lacks internal representation. /HB 2018-10-27
+    connId <- connectionId(con)
+    if (!is.na(connId) && connId < 0L) return(FALSE)
+
+    assertValidConnection(future)
+
+    if (is.null(timeout)) {
+      ## FIXME: This should be memoized per plan, when setting up
+      ## the plan /HB 2025-02-18
+      
+      if (is.null(timeout)) {
+        timeout <- getOption("future.cluster.resolved.timeout")
+        if (is.null(timeout)) {
+          timeout <- getOption("future.resolved.timeout")
+          if (is.null(timeout)) {
+            timeout <- 0.01
+          }
+        }
+        
+        if (timeout < 0) {
+          warning("Secret option 'future.resolved.timeout' is negative, which causes resolved() to wait until the future is resolved. This feature is only used for testing purposes of the future framework and must not be used elsewhere", immediate. = TRUE)
+          timeout <- NULL
+        }
+      }
+    }
+
+    ## WORKAROUND: Non-integer timeouts (at least < 2.0 seconds) may result in
+    ## infinite waiting (PR17203).  Fixed in R devel r73470 (2017-10-05)
+    ## and R 3.4.3 (https://github.com/HenrikBengtsson/Wishlist-for-R/issues/35)
+    if (.Platform$OS.type != "windows" && getRversion() < "3.4.3") {
+      timeout <- round(timeout, digits = 0L)
+    }
+
+
+    maxCount <- 100L
+    count <- 0L
+    while (count < maxCount) {
+      ## Is there a message from the worker waiting?
+      res <- socketSelect(list(con), write = FALSE, timeout = timeout)
+      if (!res) break
+
+      ## Receive it
+      msg <- receiveMessageFromWorker(future)
+
+      ## If the message contains a FutureResult, then the future is resolved
+      ## and we are done here
+      res <- inherits(msg, "FutureResult")
+      msg <- NULL
+      if (res) break
+
+      ## If not, we received a condition that has already been signaled
+      ## by receiveMessageFromWorker().  However, it could be that there is
+      ## another condition messages available, so lets check again
+      count <- count + 1L
+    } ## while()
+  } else if (inherits(node, "MPInode")) {
+    res <- resolveMPI(future)
+  } else {
+    warnf("resolved() is not yet implemented for workers of class %s. Will use value() instead and return TRUE", sQuote(class(node)[1]))
+    value(future, stdout = FALSE, signal = FALSE)
+    res <- TRUE
+  }
+
+  if (debug) mdebug("isFutureResolved() ... done")
 
   ## Signal conditions early? (happens only iff requested)
   if (res) signalEarly(x, ...)
@@ -252,8 +338,11 @@ result.ClusterFuture <- function(future, ...) {
     return(result)
   }
 
-  backend <- future[["backend"]]
-  backend$collectFutureResult(future)
+  result <- NULL
+  while (!inherits(result, "FutureResult")) {
+    result <- receiveMessageFromWorker(future)
+  }
+  result
 }
 
 
@@ -360,7 +449,7 @@ receiveMessageFromWorker <- function(future, ...) {
     if (debug) mdebug("- Received FutureResult")
   
     ## Remove from backend
-    backend$removeFuture(future)
+    FutureRegistry(reg, action = "remove", future = future, earlySignal = FALSE)
     if (debug) mdebug("- Erased future from future backend")
 
     ## Always signal immediateCondition:s and as soon as possible.
@@ -704,297 +793,6 @@ assertValidConnection <- function(future) {
 }
 
 
-
-ClusterFutureBackend0 <- local({
-  indexOf <- function(futures, future) {
-    for (ii in seq_along(futures)) {
-      if (identical(future, futures[[ii]])) return(ii)
-    }
-    NA_integer_
-  }
-
-  .timeout <- NULL
-  
-  function(workers, persistent = FALSE) {
-    ## Attach name to cluster?
-    name <- attr(workers, "name", exact = TRUE)
-    if (is.null(name)) {
-      name <- digest(workers)
-      stop_if_not(length(name) > 0, nzchar(name))
-      attr(workers, "name") <- name
-    }
-
-    ## The name of the internal FutureRegistry
-    reg <- sprintf("workers-%s", attr(workers, "name", exact = TRUE))
-
-    debug <- isTRUE(getOption("future.debug"))
-    
-    list(
-      workers = workers,
-      
-      persistent = persistent,
-      
-      ## FutureRegistry name
-      reg = reg,
-
-      isWorkerFree <- function() {
-        if (debug) {
-          mdebug("isWorkerFree() ...")
-          on.exit(mdebug("isWorkerFree() ... done"))
-        }
-        ## Find which node is available
-        avail <- rep(TRUE, times = length(workers))
-        futures <- FutureRegistry(reg, action = "list", earlySignal = FALSE)
-        nodes <- unlist(lapply(futures, FUN = function(f) f$node), use.names = FALSE)
-        avail[nodes] <- FALSE
-        if (debug) mdebug(" - avail: [n=%d] %s", length(avail), commaq(avail))
-        avail
-      },
-
-      requestWorker = function(future) {
-        if (debug) {
-          mdebug("requestWorker() ...")
-          on.exit(mdebug("requestWorker() ... done"))
-        }
-
-        ## Next available cluster node
-        t_start <- Sys.time()
-
-        node_idx <- requestNode(await = function() {
-          FutureRegistry(reg, action = "collect-first", earlySignal = TRUE)
-        }, workers = workers)
-        future[["node"]] <- node_idx
-
-        if (inherits(future[[".journal"]], "FutureJournal")) {
-          appendToFutureJournal(future,
-               event = "getWorker",
-            category = "overhead",
-              parent = "launch",
-               start = t_start,
-                stop = Sys.time()
-          )
-        }
-
-        if (debug) mdebugf(" - cluster node index: %d", node_idx)
-        node_idx
-      },
-
-      collectResolvedFutures = function() {
-        if (debug) {
-          mdebug("collectResolvedFutures() ...")
-          on.exit(mdebug("collectResolvedFutures() ... done"))
-        }
-        ## Collect one resolved future, if one exists
-        FutureRegistry(reg, action = "collect-first", earlySignal = TRUE)
-      },
-
-      isFutureResolved = function(future, timeout = NULL) {
-        debug <- isTRUE(getOption("future.debug"))
-        if (debug) {
-          mdebug("isFutureResolved() ...")
-          on.exit(mdebug("isFutureResolved() ... done"))
-        }
-
-        node_idx <- future[["node"]]
-        cl <- workers[node_idx]
-        node <- cl[[1]]
-      
-        ## Check if workers socket connection is available for reading
-        if (!is.null(con <- node$con)) {
-          ## AD HOC/SPECIAL CASE: Skip if connection has been serialized and lacks internal representation. /HB 2018-10-27
-          connId <- connectionId(con)
-          if (!is.na(connId) && connId < 0L) return(FALSE)
-      
-          assertValidConnection(future)
-
-          if (is.null(timeout)) {
-            ## FIXME: This should be memoized per plan, when setting up
-            ## the plan /HB 2025-02-18
-            timeout <- .timeout
-            
-            if (is.null(timeout)) {
-              timeout <- getOption("future.cluster.resolved.timeout")
-              if (is.null(timeout)) {
-                timeout <- getOption("future.resolved.timeout")
-                if (is.null(timeout)) {
-                  timeout <- 0.01
-                }
-              }
-              
-              if (timeout < 0) {
-                warning("Secret option 'future.resolved.timeout' is negative, which causes resolved() to wait until the future is resolved. This feature is only used for testing purposes of the future framework and must not be used elsewhere", immediate. = TRUE)
-                timeout <- NULL
-              } else {
-                .timeout <<- timeout
-              }
-            }
-          }
-      
-          ## WORKAROUND: Non-integer timeouts (at least < 2.0 seconds) may result in
-          ## infinite waiting (PR17203).  Fixed in R devel r73470 (2017-10-05)
-          ## and R 3.4.3 (https://github.com/HenrikBengtsson/Wishlist-for-R/issues/35)
-          if (.Platform$OS.type != "windows" && getRversion() < "3.4.3") {
-            timeout <- round(timeout, digits = 0L)
-          }
-          maxCount <- 100L
-          count <- 0L
-          while (count < maxCount) {
-            ## Is there a message from the worker waiting?
-            res <- socketSelect(list(con), write = FALSE, timeout = timeout)
-            if (!res) break
-      
-            ## Receive it
-            msg <- receiveMessageFromWorker(future)
-      
-            ## If the message contains a FutureResult, then the future is resolved
-            ## and we are done here
-            res <- inherits(msg, "FutureResult")
-            msg <- NULL
-            if (res) break
-      
-            ## If not, we received a condition that has already been signaled
-            ## by receiveMessageFromWorker().  However, it could be that there is
-            ## another condition messages available, so lets check again
-            count <- count + 1L
-          } ## while()
-        } else if (inherits(node, "MPInode")) {
-          res <- resolveMPI(future)
-        } else {
-          warnf("resolved() is not yet implemented for workers of class %s. Will use value() instead and return TRUE", sQuote(class(node)[1]))
-          value(future, stdout = FALSE, signal = FALSE)
-          res <- TRUE
-        }
-        
-        res
-      },
-
-      removeFuture = function(future) {
-        if (debug) {
-          mdebug("removeFuture() ...")
-          on.exit(mdebug("removeFuture() ... done"))
-        }
-        FutureRegistry(reg, action = "remove", future = future, earlySignal = FALSE)
-      },
-
-      launchFuture = function(future) {
-        if (debug) {
-          mdebug("launchFuture() ...")
-          on.exit(mdebug("launchFuture() ... done"))
-        }
-        worker <- future[["node"]]
-        stop_if_not(
-          length(worker) == 1L, is.integer(worker), !is.na(worker),
-          worker >= 1L, worker <= length(workers)
-        ) 
-        if (debug) mdebugf(" - cluster node index: %d", worker)
-        data <- getFutureData(future, debug = debug)
-        node <- workers[[worker]]
-        ## Non-blocking cluster-node call
-        node_call_nonblocking(node, fun = evalFuture, args = list(data), future = future, when = "launch future on")
-        FutureRegistry(reg, action = "add", future = future, earlySignal = FALSE)
-      },
-
-      collectFutureResult = function(future) {
-        if (debug) {
-          mdebug("collectFutureResult() ...")
-          on.exit(mdebug("collectFutureResult() ... done"))
-        }
-        msg <- NULL
-        while (!inherits(msg, "FutureResult")) {
-          msg <- receiveMessageFromWorker(future)
-        }
-        msg
-      },
-
-      eraseGlobalEnvironment = function(future) {
-        ## Nothing to do?
-        if (persistent) {
-          return(FALSE)
-        }
-      
-        if (debug) {
-          mdebug("eraseGlobalEnvironment() ...")
-          on.exit(mdebug("eraseGlobalEnvironment() ... done"))
-        }
-        
-        worker <- future[["node"]]
-        stop_if_not(
-          length(worker) == 1L, is.integer(worker), !is.na(worker),
-          worker >= 1L, worker <= length(workers)
-        )
-        if (debug) mdebugf(" - cluster node index: %d", worker)
-
-        t_start <- Sys.time()
-        
-        ## (i) Reset global environment of cluster node such that
-        ##     previous futures are not affecting this one, which
-        ##     may happen even if the future is evaluated inside a
-        ##     local, e.g. local({ a <<- 1 }).
-        cl <- workers[worker]
-        ## Blocking cluster-node call
-        cluster_call_blocking(cl, fun = grmall, future = future, when = "call grmall() on")
-
-        ## Add event to future journal
-        if (inherits(future[[".journal"]], "FutureJournal")) {
-          appendToFutureJournal(future,
-               event = "eraseWorker",
-            category = "overhead",
-              parent = "launch",
-               start = t_start,
-                stop = Sys.time()
-          )
-        }
-      },
-
-      requirePackages = function(future) {
-        if (debug) {
-          mdebug("requirePackages() ...")
-          on.exit(mdebug("requirePackages() ... done"))
-        }
-        
-        packages <- future[["packages"]]
-        if (debug) mdebug(" - packages: [n=%d] %s", length(packages), commaq(packages))
-        
-        ## Nothing to do?
-        if (length(packages) == 0L) return(FALSE)
-
-        worker <- future[["node"]]
-        stop_if_not(
-          length(worker) == 1L, is.integer(worker), !is.na(worker),
-          worker >= 1L, worker <= length(workers)
-        )
-        if (debug) mdebugf(" - cluster node index: %d", worker)
-
-        t_start <- Sys.time()
-
-        ## (ii) Attach packages that needs to be attached
-        ##      NOTE: Already take care of by evalFuture().
-        ##      However, if we need to get an early error about missing packages,
-        ##      we can get the error here before launching the future.
-        cl <- workers[worker]
-        if (debug) mdebug("Attaching packages on worker ...")
-        ## Blocking cluster-node call
-        cluster_call_blocking(cl, fun = requirePackages, packages, future = future, when = "call requirePackages() on")
-        if (debug) mdebug("Attaching packages on worker ... done")
-        
-        ## Add event to future journal?
-        if (inherits(future[[".journal"]], "FutureJournal")) {
-          appendToFutureJournal(future,
-               event = "attachPackages",
-            category = "overhead",
-              parent = "launch",
-               start = t_start,
-                stop = Sys.time()
-          )
-        }
-      }
-    )
-  }
-}) ## ClusterFutureBackend0()
-
-
-
-
 #' @export
 launchFuture.ClusterFutureBackend <- function(backend, future, ...) {
   debug <- isTRUE(getOption("future.debug"))
@@ -1011,20 +809,71 @@ launchFuture.ClusterFutureBackend <- function(backend, future, ...) {
   future <- do.call(as_ClusterFuture, args = args)
   future <- coerceFuture(backend, future)
   
-  backend0 <- future[["backend"]]
-  
   ## Next available cluster node
   t_start <- Sys.time()
 
   ## (1) Get a free worker. This will block until one is available
-  backend0$requestWorker(future)
+  if (debug) mdebug("requestWorker() ...")
+
+  ## FIXME: backend[["workers"]] != future[["workers"]]
+  workers <- future[["workers"]]
+  reg <- sprintf("workers-%s", attr(workers, "name", exact = TRUE))
+  
+  node_idx <- requestNode(await = function() {
+    FutureRegistry(reg, action = "collect-first", earlySignal = TRUE)
+  }, workers = workers)
+  future[["node"]] <- node_idx
+
+  if (inherits(future[[".journal"]], "FutureJournal")) {
+    appendToFutureJournal(future,
+         event = "getWorker",
+      category = "overhead",
+        parent = "launch",
+         start = t_start,
+          stop = Sys.time()
+    )
+  }
+
+  if (debug) mdebugf(" - cluster node index: %d", node_idx)
+  if (debug) mdebug("requestWorker() ... done")
 
   ## (2) Attach packages that needs to be attached
   ##     NOTE: Already take care of by evalFuture().
   ##     However, if we need to get an early error about missing packages,
   ##     we can get the error here before launching the future.
   if (future[["earlySignal"]]) {
-    backend0$requirePackages(future = future)
+    if (debug) mdebug("requirePackages() ...")
+    
+    packages <- future[["packages"]]
+    if (debug) mdebug(" - packages: [n=%d] %s", length(packages), commaq(packages))
+    
+    ## Nothing to do?
+    if (length(packages) > 0L) { 
+      t_start <- Sys.time()
+  
+      ## (ii) Attach packages that needs to be attached
+      ##      NOTE: Already take care of by evalFuture().
+      ##      However, if we need to get an early error about missing packages,
+      ##      we can get the error here before launching the future.
+      cl <- workers[node_idx]
+      if (debug) mdebug("Attaching packages on worker ...")
+      ## Blocking cluster-node call
+      cluster_call_blocking(cl, fun = requirePackages, packages, future = future, when = "call requirePackages() on")
+      if (debug) mdebug("Attaching packages on worker ... done")
+      
+      ## Add event to future journal?
+      if (inherits(future[[".journal"]], "FutureJournal")) {
+        appendToFutureJournal(future,
+             event = "attachPackages",
+          category = "overhead",
+            parent = "launch",
+             start = t_start,
+              stop = Sys.time()
+        )
+      }
+    }
+    
+    if (debug) mdebug("requirePackages() ... done")
   }
 
   ## (2) Reset global environment of cluster node such that
@@ -1032,10 +881,47 @@ launchFuture.ClusterFutureBackend <- function(backend, future, ...) {
   ##     may happen even if the future is evaluated inside a
   ##     local, e.g. local({ a <<- 1 }).
   ##     If the persistent = TRUE, this will be skipped.
-  backend0$eraseGlobalEnvironment(future = future)
+  persistent <- isTRUE(future[["persistent"]])
+  if (!persistent) {
+    if (debug) mdebug("eraseGlobalEnvironment() ...")
+    
+    t_start <- Sys.time()
+    
+    ## (i) Reset global environment of cluster node such that
+    ##     previous futures are not affecting this one, which
+    ##     may happen even if the future is evaluated inside a
+    ##     local, e.g. local({ a <<- 1 }).
+    cl <- workers[node_idx]
+    ## Blocking cluster-node call
+    cluster_call_blocking(cl, fun = grmall, future = future, when = "call grmall() on")
+
+    ## Add event to future journal
+    if (inherits(future[[".journal"]], "FutureJournal")) {
+      appendToFutureJournal(future,
+           event = "eraseWorker",
+        category = "overhead",
+          parent = "launch",
+           start = t_start,
+            stop = Sys.time()
+      )
+    }
+    if (debug) mdebug("eraseGlobalEnvironment() ... done")
+  }
 
   ## (3) Launch future
-  backend0$launchFuture(future)
+  if (debug) mdebug("launchFuture() ...")
+  worker <- future[["node"]]
+  stop_if_not(
+    length(worker) == 1L, is.integer(worker), !is.na(worker),
+    worker >= 1L, worker <= length(workers)
+  ) 
+  if (debug) mdebugf(" - cluster node index: %d", worker)
+  data <- getFutureData(future, debug = debug)
+  node <- workers[[worker]]
+  ## Non-blocking cluster-node call
+  node_call_nonblocking(node, fun = evalFuture, args = list(data), future = future, when = "launch future on")
+  FutureRegistry(reg, action = "add", future = future, earlySignal = FALSE)
+  if (debug) mdebug("launchFuture() ... done")
 
   future[["state"]] <- "running"
 

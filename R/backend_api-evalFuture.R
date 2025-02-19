@@ -22,13 +22,12 @@ attachPackages <- function(packages) {
   packages <- setdiff(packages, attached_packages)
   if (length(packages) == 0L) return()
 
-  lib.loc <- .libPaths()
-  
   ## TROUBLESHOOTING: If the package fails to load, then library()
   ## suppress that error and generates a generic much less
   ## informative error message.  Because of this, we load the
   ## namespace first (to get a better error message) and then
   ## call library(), which attaches the package. /HB 2016-06-16
+  lib.loc <- .libPaths()
   tryCatch({
     for (pkg in packages) {
       loadNamespace(pkg)
