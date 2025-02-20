@@ -74,7 +74,7 @@
 |bcmaps                       |2.2.1     |       |        |     |
 |[BEKKs](problems.md#bekks)   |1.4.5     |       |        |1    |
 |bhmbasket                    |0.9.5     |       |        |     |
-|[bigDM](problems.md#bigdm)   |0.5.5     |       |        |2    |
+|[bigDM](problems.md#bigdm)   |0.5.5     |       |        |2 -1 |
 |[bistablehistory](problems.md#bistablehistory)|1.1.2     |       |        |2    |
 |bkmrhat                      |1.1.3     |       |        |     |
 |[blavaan](problems.md#blavaan)|0.5-8     |       |        |3    |
@@ -256,7 +256,7 @@
 |mice                         |3.17.0    |       |        |     |
 |migraph                      |1.4.5     |       |        |     |
 |[mikropml](problems.md#mikropml)|1.6.1     |       |        |1    |
-|[MineICA](problems.md#mineica)|1.46.0    |       |4       |4    |
+|[MineICA](problems.md#mineica)|1.46.0    |1 -1   |3       |4    |
 |[missSBM](problems.md#misssbm)|1.0.4     |       |        |1    |
 |[mistyR](problems.md#mistyr) |1.14.0    |       |        |2    |
 |mlr3                         |0.22.1    |       |        |     |

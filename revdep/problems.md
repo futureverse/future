@@ -374,6 +374,15 @@ Run `revdepcheck::revdep_details(, "bigDM")` for more info
 
 </details>
 
+## Newly fixed
+
+*   checking installed package size ... NOTE
+    ```
+      installed size is  5.3Mb
+      sub-directories of 1Mb or more:
+        data   5.0Mb
+    ```
+
 ## In both
 
 *   checking package dependencies ... NOTE
@@ -849,8 +858,9 @@ Run `revdepcheck::revdep_details(, "Coxmos")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  5.5Mb
+      installed size is  5.6Mb
       sub-directories of 1Mb or more:
+        R      1.0Mb
         data   1.2Mb
         doc    2.8Mb
     ```
@@ -973,7 +983,6 @@ Run `revdepcheck::revdep_details(, "dipsaus")` for more info
     ```
       installed size is  6.6Mb
       sub-directories of 1Mb or more:
-        R      1.0Mb
         libs   4.2Mb
     ```
 
@@ -1717,8 +1726,9 @@ Run `revdepcheck::revdep_details(, "GeoModels")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  5.8Mb
+      installed size is  6.0Mb
       sub-directories of 1Mb or more:
+        R      1.0Mb
         data   1.9Mb
         libs   2.7Mb
     ```
@@ -2089,9 +2099,9 @@ Run `revdepcheck::revdep_details(, "httpgd")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 12.5Mb
+      installed size is 13.1Mb
       sub-directories of 1Mb or more:
-        libs  11.9Mb
+        libs  12.5Mb
     ```
 
 # hwep
@@ -2281,8 +2291,9 @@ Run `revdepcheck::revdep_details(, "ISAnalytics")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  7.5Mb
+      installed size is  7.8Mb
       sub-directories of 1Mb or more:
+        R      1.0Mb
         data   1.4Mb
         doc    3.8Mb
     ```
@@ -2681,7 +2692,59 @@ Run `revdepcheck::revdep_details(, "MineICA")` for more info
 
 </details>
 
+## Newly fixed
+
+*   checking examples ... ERROR
+    ```
+    Running examples in ‘MineICA-Ex.R’ failed
+    The error most likely occurred in:
+    
+    > ### Name: IcaSet
+    > ### Title: Class to Contain and Describe an ICA decomposition of
+    > ###   High-Throughput Data.
+    > ### Aliases: class:IcaSet IcaSet IcaSet-class [ [,ANY,ANY,IcaSet-method
+    > ###   [,IcaSet,ANY-method [,IcaSet,ANY,ANY-method
+    > ###   [,IcaSet,ANY,ANY,ANY-method [<- [<-,IcaSet,ANY,ANY,ANY,ANY-method
+    > ###   [<-,IcaSet,ANY,ANY,ANY-method [<-,IcaSet,ANY,ANY-method organism
+    ...
+    > ###   Slist,IcaSet-method SlistByGene,IcaSet-method Alist,IcaSet-method
+    > ### Keywords: classes
+    > 
+    > ### ** Examples
+    > 
+    > # create an instance of IcaSet
+    > new("IcaSet")
+    Error: Your query has been redirected to http://status.ensembl.org indicating this Ensembl service is currently unavailable.
+    Look at ?useEnsembl for details on how to try a mirror site.
+    Execution halted
+    ```
+
 ## In both
+
+*   checking re-building of vignette outputs ... ERROR
+    ```
+    Error(s) in re-building vignettes:
+    --- re-building ‘MineICA.Rnw’ using Sweave
+    Loading required package: BiocGenerics
+    
+    Attaching package: ‘BiocGenerics’
+    
+    The following objects are masked from ‘package:stats’:
+    
+        IQR, mad, sd, var, xtabs
+    
+    ...
+    Error : Your query has been redirected to http://status.ensembl.org indicating this Ensembl service is currently unavailable.
+    Look at ?useEnsembl for details on how to try a mirror site.
+    
+    --- failed re-building ‘MineICA.Rnw’
+    
+    SUMMARY: processing the following file failed:
+      ‘MineICA.Rnw’
+    
+    Error: Vignette re-building failed.
+    Execution halted
+    ```
 
 *   checking dependencies in R code ... WARNING
     ```
@@ -2731,31 +2794,6 @@ Run `revdepcheck::revdep_details(, "MineICA")` for more info
     should have documentation entries.
     See chapter ‘Writing R documentation files’ in the ‘Writing R
     Extensions’ manual.
-    ```
-
-*   checking re-building of vignette outputs ... WARNING
-    ```
-    Error(s) in re-building vignettes:
-    --- re-building ‘MineICA.Rnw’ using Sweave
-    Loading required package: BiocGenerics
-    
-    Attaching package: ‘BiocGenerics’
-    
-    The following objects are masked from ‘package:stats’:
-    
-        IQR, mad, sd, var, xtabs
-    
-    ...
-    l.23 \usepackage
-                    {subfig}^^M
-    !  ==> Fatal error occurred, no output PDF file produced!
-    --- failed re-building ‘MineICA.Rnw’
-    
-    SUMMARY: processing the following file failed:
-      ‘MineICA.Rnw’
-    
-    Error: Vignette re-building failed.
-    Execution halted
     ```
 
 *   checking package dependencies ... NOTE
@@ -2848,6 +2886,7 @@ Run `revdepcheck::revdep_details(, "missSBM")` for more info
     ```
       installed size is 10.0Mb
       sub-directories of 1Mb or more:
+        R      1.0Mb
         libs   8.0Mb
     ```
 
@@ -3082,7 +3121,7 @@ Run `revdepcheck::revdep_details(, "multitool")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  5.1Mb
+      installed size is  5.0Mb
       sub-directories of 1Mb or more:
         doc   4.3Mb
     ```
@@ -4294,7 +4333,7 @@ Run `revdepcheck::revdep_details(, "SeuratObject")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  5.5Mb
+      installed size is  5.6Mb
       sub-directories of 1Mb or more:
         R      1.5Mb
         libs   3.2Mb
@@ -5055,9 +5094,8 @@ Run `revdepcheck::revdep_details(, "stars")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  7.3Mb
+      installed size is  6.8Mb
       sub-directories of 1Mb or more:
-        R     1.0Mb
         doc   2.9Mb
         nc    1.7Mb
     ```
