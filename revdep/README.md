@@ -10,7 +10,7 @@
 |collate  |en_US.UTF-8                                               |
 |ctype    |en_US.UTF-8                                               |
 |tz       |America/Los_Angeles                                       |
-|date     |2025-02-11                                                |
+|date     |2025-02-19                                                |
 |pandoc   |3.6.3 @ /software/c4/cbi/software/pandoc-3.6.3/bin/pandoc |
 |quarto   |NA                                                        |
 
@@ -18,7 +18,7 @@
 
 |package    |old    |new         |Δ  |
 |:----------|:------|:-----------|:--|
-|future     |1.34.0 |1.34.0-9123 |*  |
+|future     |1.34.0 |1.34.0-9204 |*  |
 |codetools  |0.2-20 |0.2-20      |   |
 |digest     |0.6.37 |0.6.37      |   |
 |globals    |0.16.3 |0.16.3      |   |
@@ -55,7 +55,7 @@
 |alookr                       |0.3.9     |       |        |     |
 |alphaci                      |1.0.1     |       |        |     |
 |[altdoc](problems.md#altdoc) |0.5.0     |1      |        |     |
-|antaresEditObject            |0.7.1     |       |        |     |
+|antaresEditObject            |0.9.0     |       |        |     |
 |ao                           |1.1.0     |       |        |     |
 |[apsimx](problems.md#apsimx) |2.8.0     |       |        |1    |
 |arkdb                        |0.0.18    |       |        |     |
@@ -91,7 +91,7 @@
 |[ceRNAnetsim](problems.md#cernanetsim)|1.18.0    |       |        |1    |
 |Certara.RsNLME.ModelExecutor |3.0.1     |       |        |     |
 |cft                          |1.0.0     |       |        |     |
-|chatAI4R                     |0.2.10    |       |        |     |
+|chatAI4R                     |0.3.6     |       |        |     |
 |[ChromSCape](problems.md#chromscape)|1.16.0    |       |3       |4    |
 |[civis](problems.md#civis)   |3.1.2     |       |        |1    |
 |clickR                       |0.9.45    |       |        |     |
@@ -194,13 +194,13 @@
 |hacksig                      |0.1.2     |       |        |     |
 |[hal9001](problems.md#hal9001)|0.4.6     |       |        |1    |
 |haldensify                   |0.2.3     |       |        |     |
-|[hbamr](problems.md#hbamr)   |2.4.0     |       |        |2    |
+|[hbamr](problems.md#hbamr)   |2.4.1     |       |        |2    |
 |[hero](problems.md#hero)     |0.6       |       |        |2    |
 |[heterogen](problems.md#heterogen)|1.2.33    |       |        |1    |
 |hoopR                        |2.1.0     |       |        |     |
 |[httpgd](problems.md#httpgd) |2.0.2     |1      |        |2    |
 |[hwep](problems.md#hwep)     |2.0.2     |       |        |3    |
-|hydroloom                    |1.1.0     |       |        |     |
+|[hydroloom](problems.md#hydroloom)|1.1.0     |       |        |1    |
 |idmodelr                     |0.4.0     |       |        |     |
 |imagefluency                 |0.2.5     |       |        |     |
 |iml                          |0.11.3    |       |        |     |
@@ -234,12 +234,12 @@
 |lemna                        |1.0.1     |       |        |     |
 |LexFindR                     |1.1.0     |       |        |     |
 |lgr                          |0.4.4     |       |        |     |
-|[lidR](problems.md#lidr)     |4.1.2     |       |        |1    |
+|[lidR](problems.md#lidr)     |4.1.2     |1      |        |1    |
 |lightr                       |1.8.0     |       |        |     |
 |lmtp                         |1.4.0     |       |        |     |
 |LTFHPlus                     |2.1.2     |       |        |     |
 |LWFBrook90R                  |0.6.1     |       |        |     |
-|maestro                      |0.5.0     |       |        |     |
+|maestro                      |0.5.1     |       |        |     |
 |[MAI](problems.md#mai)       |1.12.0    |       |        |1    |
 |malariaAtlas                 |1.6.3     |       |        |     |
 |MAMS                         |3.0.0     |       |        |     |
@@ -250,7 +250,7 @@
 |mcmcensemble                 |3.1.0     |       |        |     |
 |mcp                          |0.3.4     |       |        |     |
 |merTools                     |0.6.2     |       |        |     |
-|[metaGE](problems.md#metage) |1.1.0     |       |        |1    |
+|[metaGE](problems.md#metage) |1.2.0     |       |        |1    |
 |metasnf                      |2.0.0     |       |        |     |
 |MIC                          |1.0.2     |       |        |     |
 |mice                         |3.17.0    |       |        |     |
@@ -262,13 +262,13 @@
 |mlr3                         |0.22.1    |       |        |     |
 |mlr3db                       |0.5.2     |       |        |     |
 |mlr3inferr                   |0.1.0     |       |        |     |
-|mlr3pipelines                |0.7.1     |       |        |     |
+|[mlr3pipelines](problems.md#mlr3pipelines)|0.7.1     |1      |        |     |
 |mlr3resampling               |2024.9.6  |       |        |     |
 |mlr3spatial                  |0.5.0     |       |        |     |
 |mlr3summary                  |0.1.0     |       |        |     |
-|mlr3torch                    |0.2.0     |       |        |     |
+|mlr3torch                    |0.2.1     |       |        |     |
 |[mlr3tuning](problems.md#mlr3tuning)|1.3.0     |       |        |1    |
-|modelsummary                 |2.3.0     |       |        |-1   |
+|modelsummary                 |2.3.0     |       |        |     |
 |[momentuHMM](problems.md#momentuhmm)|1.5.5     |       |        |1    |
 |[MOSS](problems.md#moss)     |0.2.2     |       |        |1    |
 |mplusParallel.automation     |0.0.1.1   |       |        |     |
@@ -285,7 +285,7 @@
 |nfl4th                       |1.0.4     |       |        |     |
 |[nflfastR](problems.md#nflfastr)|5.0.0     |       |        |1    |
 |[nflseedR](problems.md#nflseedr)|1.2.0     |       |        |1    |
-|[nhdplusTools](problems.md#nhdplustools)|1.3.0     |       |        |1    |
+|[nhdplusTools](problems.md#nhdplustools)|1.3.1     |       |        |1    |
 |nixtlar                      |0.6.2     |       |        |     |
 |nncc                         |2.0.0     |       |        |     |
 |[oncomsm](problems.md#oncomsm)|0.1.4     |       |        |2    |
@@ -305,7 +305,7 @@
 |PeakSegDisk                  |2024.10.1 |       |        |     |
 |penaltyLearning              |2024.9.3  |       |        |     |
 |pGRN                         |0.3.5     |       |        |     |
-|[pgxRpi](problems.md#pgxrpi) |1.2.2     |       |        |2    |
+|[pgxRpi](problems.md#pgxrpi) |1.2.3     |2      |        |2    |
 |[photosynthesis](problems.md#photosynthesis)|2.1.5     |       |        |2    |
 |[phylolm](problems.md#phylolm)|2.6.5     |       |        |1    |
 |phylopath                    |1.3.0     |       |        |     |
@@ -313,8 +313,9 @@
 |PINstimation                 |0.1.2     |       |        |     |
 |[pliman](problems.md#pliman) |3.0.0     |       |        |1    |
 |[PLNmodels](problems.md#plnmodels)|1.2.0     |       |        |1    |
-|plumber                      |1.2.2     |       |        |     |
+|plumber                      |1.3.0     |       |        |     |
 |polle                        |1.5       |       |        |     |
+|[polykde](problems.md#polykde)|1.0.0     |       |        |1    |
 |POMADE                       |0.2.0     |       |        |     |
 |[portvine](problems.md#portvine)|1.0.3     |       |        |1    |
 |powRICLPM                    |0.2.1     |       |        |     |
@@ -325,7 +326,7 @@
 |[Prostar](problems.md#prostar)|1.38.1    |       |        |3    |
 |proteus                      |1.1.4     |       |        |     |
 |protti                       |0.9.1     |       |        |     |
-|[psborrow2](problems.md#psborrow2)|0.0.3.4   |       |        |1    |
+|[psborrow2](problems.md#psborrow2)|0.0.4.0   |       |        |2    |
 |PSCBS                        |0.67.0    |       |        |     |
 |[pseudohouseholds](problems.md#pseudohouseholds)|0.1.1     |       |        |1    |
 |PUMP                         |1.0.3     |       |        |     |
@@ -387,7 +388,6 @@
 |simIDM                       |0.1.0     |       |        |     |
 |sims                         |0.0.4     |       |        |     |
 |[simtrial](problems.md#simtrial)|0.4.2     |       |        |1    |
-|[sits](problems.md#sits)     |1.5.1     |       |        |1    |
 |skewlmm                      |1.1.2     |       |        |     |
 |[skpr](problems.md#skpr)     |1.7.1     |       |        |1    |
 |[SmCCNet](problems.md#smccnet)|2.0.3     |       |1       |     |
@@ -456,7 +456,7 @@
 |wildmeta                     |0.3.2     |       |        |     |
 |wingen                       |2.1.2     |       |        |     |
 |[winputall](problems.md#winputall)|1.0.1     |       |        |2    |
-|[wru](problems.md#wru)       |3.0.3     |       |        |2    |
+|[wru](problems.md#wru)       |3.0.3     |1      |        |2    |
 |xegaPopulation               |1.0.0.0   |       |        |     |
 |[XNAString](problems.md#xnastring)|1.14.0    |       |1       |3    |
 |ycevo                        |0.2.1     |       |        |     |
