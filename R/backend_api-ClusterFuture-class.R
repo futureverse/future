@@ -369,8 +369,8 @@ receiveMessageFromWorker <- function(future, ...) {
   recvResult <- importParallel("recvResult")
 
   backend <- future[["backend"]]
-  if (!inherits(backend, "FutureBackend")) {
-    stop(sprintf("[INTERNAL ERROR] receiveMessageFromWorker(): the 'backend' element of the %s object is not a FutureBackend object: %s", class(future)[1], class(backend)[1]))
+  if (!inherits(backend, "FutureBackend") && !is.list(backend)) {
+    stop(sprintf("[INTERNAL ERROR] receiveMessageFromWorker(): the 'backend' element of the %s object is neither a FutureBackend object nor a list: %s", class(future)[1], class(backend)[1]))
   }
   workers <- backend$workers
   reg <- backend$reg
