@@ -133,8 +133,9 @@ Run `revdepcheck::revdep_details(, "apsimx")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  7.1Mb
+      installed size is  7.4Mb
       sub-directories of 1Mb or more:
+        R         1.0Mb
         extdata   5.5Mb
     ```
 
@@ -256,19 +257,19 @@ Run `revdepcheck::revdep_details(, "batchtools")` for more info
 
 *   checking dependencies in R code ... NOTE
     ```
-    c4-dev4:pid2325156: PSM3 can't open nic unit: 3 (err=23)
-    c4-dev4:pid2325156.R: Unable to create UDP socket for enp3s0f1: Address family not supported by protocol
-    c4-dev4:pid2325156.R: Unable to initialize sockets NIC /sys/class/net/enp3s0f1 (unit 3:0)
-    c4-dev4:pid2325156: PSM3 can't open nic unit: 3 (err=23)
-    c4-dev4:pid2325156.R: Unable to create UDP socket for enp3s0f1: Address family not supported by protocol
-    c4-dev4:pid2325156.R: Unable to initialize sockets NIC /sys/class/net/enp3s0f1 (unit 3:0)
-    c4-dev4:pid2325156: PSM3 can't open nic unit: 3 (err=23)
-    c4-dev4:pid2325156.R: Unable to create UDP socket for enp3s0f1: Address family not supported by protocol
-    c4-dev4:pid2325156.R: Unable to initialize sockets NIC /sys/class/net/enp3s0f1 (unit 3:0)
-    c4-dev4:pid2325156: PSM3 can't open nic unit: 3 (err=23)
+    c4-dev4:pid1222488: PSM3 can't open nic unit: 3 (err=23)
+    c4-dev4:pid1222488.R: Unable to create UDP socket for enp3s0f1: Address family not supported by protocol
+    c4-dev4:pid1222488.R: Unable to initialize sockets NIC /sys/class/net/enp3s0f1 (unit 3:0)
+    c4-dev4:pid1222488: PSM3 can't open nic unit: 3 (err=23)
+    c4-dev4:pid1222488.R: Unable to create UDP socket for enp3s0f1: Address family not supported by protocol
+    c4-dev4:pid1222488.R: Unable to initialize sockets NIC /sys/class/net/enp3s0f1 (unit 3:0)
+    c4-dev4:pid1222488: PSM3 can't open nic unit: 3 (err=23)
+    c4-dev4:pid1222488.R: Unable to create UDP socket for enp3s0f1: Address family not supported by protocol
+    c4-dev4:pid1222488.R: Unable to initialize sockets NIC /sys/class/net/enp3s0f1 (unit 3:0)
+    c4-dev4:pid1222488: PSM3 can't open nic unit: 3 (err=23)
     ...
-    c4-dev4:pid2325156.R: Unable to create UDP socket for enp3s0f1: Address family not supported by protocol
-    c4-dev4:pid2325156.R: Unable to initialize sockets NIC /sys/class/net/enp3s0f1 (unit 3:0)
+    c4-dev4:pid1222488.R: Unable to create UDP socket for enp3s0f1: Address family not supported by protocol
+    c4-dev4:pid1222488.R: Unable to initialize sockets NIC /sys/class/net/enp3s0f1 (unit 3:0)
     --------------------------------------------------------------------------
     Open MPI failed an OFI Libfabric library call (fi_endpoint).  This is highly
     unusual; your job may behave unpredictably (and/or abort) after this.
@@ -947,7 +948,7 @@ Run `revdepcheck::revdep_details(, "deseats")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  8.6Mb
+      installed size is  8.5Mb
       sub-directories of 1Mb or more:
         libs   7.8Mb
     ```
@@ -970,8 +971,9 @@ Run `revdepcheck::revdep_details(, "dipsaus")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  6.2Mb
+      installed size is  6.6Mb
       sub-directories of 1Mb or more:
+        R      1.0Mb
         libs   4.2Mb
     ```
 
@@ -1087,8 +1089,9 @@ Run `revdepcheck::revdep_details(, "distantia")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  9.5Mb
+      installed size is  9.9Mb
       sub-directories of 1Mb or more:
+        help   1.0Mb
         libs   7.8Mb
     ```
 
@@ -1126,15 +1129,15 @@ Run `revdepcheck::revdep_details(, "doFuture")` for more info
      ERROR
     Running the tests in ‘tests/foreach_dofuture,globals.R’ failed.
     Last 50 lines of output:
-      [15:27:07.806]  $ x             : int [1:3] 1 2 3
-      [15:27:07.806]  $ ...future.x_ii: num 42
-      [15:27:07.806]  - attr(*, "where")=List of 2
-      [15:27:07.806]   ..$ x             :<environment: R_EmptyEnv> 
+      [03:51:31.414]  $ x             : int [1:3] 1 2 3
+      [03:51:31.414]  $ ...future.x_ii: num 42
+      [03:51:31.414]  - attr(*, "where")=List of 2
+      [03:51:31.414]   ..$ x             :<environment: R_EmptyEnv> 
     ...
-      [15:27:07.877]   ..$ message: chr "'...' used in an incorrect context"
-      [15:27:07.877]   ..$ call   : language doTryCatch(return(expr), name, parentenv, handler)
-      [15:27:07.877]   ..- attr(*, "class")= chr [1:3] "simpleError" "error" "condition"
-      [15:27:07.883] - accumulating results
+      [03:51:31.443]   ..$ message: chr "'...' used in an incorrect context"
+      [03:51:31.443]   ..$ call   : language doTryCatch(return(expr), name, parentenv, handler)
+      [03:51:31.443]   ..- attr(*, "class")= chr [1:3] "simpleError" "error" "condition"
+      [03:51:31.450] - accumulating results
       List of 2
        $ message: chr "'...' used in an incorrect context"
        $ call   : language doTryCatch(return(expr), name, parentenv, handler)
@@ -1161,9 +1164,9 @@ Run `revdepcheck::revdep_details(, "DT")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  7.8Mb
+      installed size is  6.5Mb
       sub-directories of 1Mb or more:
-        htmlwidgets   7.0Mb
+        htmlwidgets   5.6Mb
     ```
 
 # EFAtools
@@ -1222,10 +1225,10 @@ Run `revdepcheck::revdep_details(, "envi")` for more info
 
 <details>
 
-* Version: 1.7.0
+* Version: 1.7.1
 * GitHub: https://github.com/epiforecasts/EpiNow2
 * Source code: https://github.com/cran/EpiNow2
-* Date/Publication: 2025-02-05 08:30:02 UTC
+* Date/Publication: 2025-02-19 23:40:09 UTC
 * Number of recursive dependencies: 131
 
 Run `revdepcheck::revdep_details(, "EpiNow2")` for more info
@@ -1241,10 +1244,10 @@ Run `revdepcheck::revdep_details(, "EpiNow2")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 265.1Mb
+      installed size is 502.1Mb
       sub-directories of 1Mb or more:
         doc     1.5Mb
-        libs  261.1Mb
+        libs  498.2Mb
     ```
 
 *   checking Rd cross-references ... NOTE
@@ -1327,11 +1330,11 @@ Run `revdepcheck::revdep_details(, "fdacluster")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 23.5Mb
+      installed size is 23.6Mb
       sub-directories of 1Mb or more:
         R      1.9Mb
         doc    1.5Mb
-        help   2.1Mb
+        help   2.2Mb
         libs  17.5Mb
     ```
 
@@ -1582,6 +1585,30 @@ Run `revdepcheck::revdep_details(, "GeDS")` for more info
     See ‘/c4/home/henrik/futureverse/future/revdep/checks/GeDS/new/GeDS.Rcheck/00install.out’ for details.
     ```
 
+# genBaRcode
+
+<details>
+
+* Version: 1.2.7
+* GitHub: NA
+* Source code: https://github.com/cran/genBaRcode
+* Date/Publication: 2023-12-11 13:10:05 UTC
+* Number of recursive dependencies: 165
+
+Run `revdepcheck::revdep_details(, "genBaRcode")` for more info
+
+</details>
+
+## In both
+
+*   checking installed package size ... NOTE
+    ```
+      installed size is  5.5Mb
+      sub-directories of 1Mb or more:
+        doc       1.0Mb
+        extdata   4.0Mb
+    ```
+
 # geocmeans
 
 <details>
@@ -1690,9 +1717,8 @@ Run `revdepcheck::revdep_details(, "GeoModels")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  6.0Mb
+      installed size is  5.8Mb
       sub-directories of 1Mb or more:
-        R      1.0Mb
         data   1.9Mb
         libs   2.7Mb
     ```
@@ -1958,19 +1984,19 @@ Run `revdepcheck::revdep_details(, "hero")` for more info
 
 *   checking dependencies in R code ... NOTE
     ```
-    c4-dev4:pid3282180: PSM3 can't open nic unit: 3 (err=23)
-    c4-dev4:pid3282180.R: Unable to create UDP socket for enp3s0f1: Address family not supported by protocol
-    c4-dev4:pid3282180.R: Unable to initialize sockets NIC /sys/class/net/enp3s0f1 (unit 3:0)
-    c4-dev4:pid3282180: PSM3 can't open nic unit: 3 (err=23)
-    c4-dev4:pid3282180.R: Unable to create UDP socket for enp3s0f1: Address family not supported by protocol
-    c4-dev4:pid3282180.R: Unable to initialize sockets NIC /sys/class/net/enp3s0f1 (unit 3:0)
-    c4-dev4:pid3282180: PSM3 can't open nic unit: 3 (err=23)
-    c4-dev4:pid3282180.R: Unable to create UDP socket for enp3s0f1: Address family not supported by protocol
-    c4-dev4:pid3282180.R: Unable to initialize sockets NIC /sys/class/net/enp3s0f1 (unit 3:0)
-    c4-dev4:pid3282180: PSM3 can't open nic unit: 3 (err=23)
+    c4-dev4:pid2186380: PSM3 can't open nic unit: 3 (err=23)
+    c4-dev4:pid2186380.R: Unable to create UDP socket for enp3s0f1: Address family not supported by protocol
+    c4-dev4:pid2186380.R: Unable to initialize sockets NIC /sys/class/net/enp3s0f1 (unit 3:0)
+    c4-dev4:pid2186380: PSM3 can't open nic unit: 3 (err=23)
+    c4-dev4:pid2186380.R: Unable to create UDP socket for enp3s0f1: Address family not supported by protocol
+    c4-dev4:pid2186380.R: Unable to initialize sockets NIC /sys/class/net/enp3s0f1 (unit 3:0)
+    c4-dev4:pid2186380: PSM3 can't open nic unit: 3 (err=23)
+    c4-dev4:pid2186380.R: Unable to create UDP socket for enp3s0f1: Address family not supported by protocol
+    c4-dev4:pid2186380.R: Unable to initialize sockets NIC /sys/class/net/enp3s0f1 (unit 3:0)
+    c4-dev4:pid2186380: PSM3 can't open nic unit: 3 (err=23)
     ...
-    c4-dev4:pid3282180.R: Unable to create UDP socket for enp3s0f1: Address family not supported by protocol
-    c4-dev4:pid3282180.R: Unable to initialize sockets NIC /sys/class/net/enp3s0f1 (unit 3:0)
+    c4-dev4:pid2186380.R: Unable to create UDP socket for enp3s0f1: Address family not supported by protocol
+    c4-dev4:pid2186380.R: Unable to initialize sockets NIC /sys/class/net/enp3s0f1 (unit 3:0)
     --------------------------------------------------------------------------
     Open MPI failed an OFI Libfabric library call (fi_endpoint).  This is highly
     unusual; your job may behave unpredictably (and/or abort) after this.
@@ -2033,7 +2059,7 @@ Run `revdepcheck::revdep_details(, "httpgd")` for more info
 
 *   checking tests ...
     ```
-      Running ‘testthat.R’/software/c4/cbi/software/_rocky8/R-4.4.2-gcc13/lib64/R/bin/BATCH: line 60: 3264554 Segmentation fault      (core dumped) ${R_HOME}/bin/R -f ${in} ${opts} ${R_BATCH_OPTIONS} > ${out} 2>&1
+      Running ‘testthat.R’/software/c4/cbi/software/_rocky8/R-4.4.2-gcc13/lib64/R/bin/BATCH: line 60: 2028277 Segmentation fault      (core dumped) ${R_HOME}/bin/R -f ${in} ${opts} ${R_BATCH_OPTIONS} > ${out} 2>&1
     
      ERROR
     Running the tests in ‘tests/testthat.R’ failed.
@@ -2052,7 +2078,7 @@ Run `revdepcheck::revdep_details(, "httpgd")` for more info
       Execution halted
       
        *** caught segfault ***
-      address (nil), cause 'unknown'
+      address 0x87fc208, cause 'invalid permissions'
       An irrecoverable exception occurred. R is aborting now ...
     ```
 
@@ -2255,9 +2281,8 @@ Run `revdepcheck::revdep_details(, "ISAnalytics")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  7.8Mb
+      installed size is  7.5Mb
       sub-directories of 1Mb or more:
-        R      1.0Mb
         data   1.4Mb
         doc    3.8Mb
     ```
@@ -2896,23 +2921,47 @@ Run `revdepcheck::revdep_details(, "mlr3pipelines")` for more info
      ERROR
     Running the tests in ‘tests/testthat.R’ failed.
     Last 50 lines of output:
-        'test_pipeop_replicate.R:9:3', 'test_pipeop_rowapply.R:9:3',
-        'test_pipeop_scale.R:8:3', 'test_pipeop_scale.R:18:3',
-        'test_pipeop_scalemaxabs.R:7:3', 'test_pipeop_scalerange.R:8:3',
-        'test_pipeop_select.R:9:3', 'test_pipeop_smote.R:10:3',
-        'test_pipeop_smotenc.R:8:3', 'test_pipeop_spatialsign.R:7:3',
-        'test_pipeop_subsample.R:10:3', 'test_pipeop_targetinvert.R:4:3',
+        'test_GraphLearner.R:334:3', 'test_GraphLearner.R:399:3',
+        'test_mlr_graphs_branching.R:26:3', 'test_mlr_graphs_bagging.R:6:3',
+        'test_mlr_graphs_robustify.R:5:3', 'test_pipeop_adas.R:8:3',
+        'test_pipeop_blsmote.R:8:3', 'test_pipeop_branch.R:4:3',
+        'test_pipeop_chunk.R:4:3', 'test_pipeop_boxcox.R:9:3',
+        'test_pipeop_classbalancing.R:10:3', 'test_pipeop_classweights.R:10:3',
     ...
-       14. │           │   └─base::eval(expr, p)
-       15. │           │     └─base::eval(expr, p)
-       16. │           └─smotefamily::BLSMOTE(X = dt, target = task$truth())
-       17. │             └─base::stop("K cannot exceed the size of DANGER")
-       18. └─base::.handleSimpleError(...)
-       19.   └─mlr3pipelines (local) h(simpleError(msg, call))
+      ── Error ('test_dictionary.R:251:3'): Cannot add pipeops with keys that invalidates the convenience for id incrementation ──
+      Error in ``$.R6`(mlr_pipeops, clone)`: R6 class DictionaryPipeOp/Dictionary/R6 does not have slot 'clone'!
+      Backtrace:
+          ▆
+       1. ├─mlr_pipeops$clone at test_dictionary.R:251:3
+       2. └─global `$.R6`(mlr_pipeops, clone) at test_dictionary.R:251:3
       
-      [ FAIL 2 | WARN 0 | SKIP 90 | PASS 12839 ]
+      [ FAIL 1 | WARN 0 | SKIP 90 | PASS 12843 ]
       Error: Test failures
       Execution halted
+    ```
+
+# mlr3torch
+
+<details>
+
+* Version: 0.2.1
+* GitHub: https://github.com/mlr-org/mlr3torch
+* Source code: https://github.com/cran/mlr3torch
+* Date/Publication: 2025-02-13 16:00:02 UTC
+* Number of recursive dependencies: 107
+
+Run `revdepcheck::revdep_details(, "mlr3torch")` for more info
+
+</details>
+
+## In both
+
+*   checking installed package size ... NOTE
+    ```
+      installed size is  5.7Mb
+      sub-directories of 1Mb or more:
+        R      4.0Mb
+        help   1.6Mb
     ```
 
 # mlr3tuning
@@ -3532,6 +3581,29 @@ Run `revdepcheck::revdep_details(, "phylolm")` for more info
     Packages unavailable to check Rd xrefs: ‘geiger’, ‘caper’
     ```
 
+# phylopath
+
+<details>
+
+* Version: 1.3.0
+* GitHub: https://github.com/Ax3man/phylopath
+* Source code: https://github.com/cran/phylopath
+* Date/Publication: 2024-06-11 23:10:02 UTC
+* Number of recursive dependencies: 96
+
+Run `revdepcheck::revdep_details(, "phylopath")` for more info
+
+</details>
+
+## In both
+
+*   checking installed package size ... NOTE
+    ```
+      installed size is  5.5Mb
+      sub-directories of 1Mb or more:
+        doc   4.7Mb
+    ```
+
 # pliman
 
 <details>
@@ -3550,8 +3622,9 @@ Run `revdepcheck::revdep_details(, "pliman")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  8.6Mb
+      installed size is  8.9Mb
       sub-directories of 1Mb or more:
+        R            1.0Mb
         libs         5.3Mb
         tmp_images   1.9Mb
     ```
@@ -3574,8 +3647,9 @@ Run `revdepcheck::revdep_details(, "PLNmodels")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 27.6Mb
+      installed size is 27.7Mb
       sub-directories of 1Mb or more:
+        R      1.0Mb
         data   1.4Mb
         doc    2.1Mb
         libs  22.4Mb
@@ -4184,9 +4258,9 @@ Run `revdepcheck::revdep_details(, "Seurat")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 16.1Mb
+      installed size is 16.4Mb
       sub-directories of 1Mb or more:
-        R      1.7Mb
+        R      2.0Mb
         libs  13.4Mb
     ```
 
@@ -4304,10 +4378,11 @@ Run `revdepcheck::revdep_details(, "shiny")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 13.7Mb
+      installed size is 14.0Mb
       sub-directories of 1Mb or more:
-        R     1.5Mb
-        www  10.4Mb
+        R      1.5Mb
+        help   1.2Mb
+        www   10.4Mb
     ```
 
 # shiny.worker
@@ -4735,7 +4810,7 @@ Run `revdepcheck::revdep_details(, "spatialwarnings")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  8.1Mb
+      installed size is  8.0Mb
       sub-directories of 1Mb or more:
         libs   6.7Mb
     ```
@@ -4902,9 +4977,9 @@ Run `revdepcheck::revdep_details(, "squat")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 21.3Mb
+      installed size is 19.9Mb
       sub-directories of 1Mb or more:
-        data   2.5Mb
+        data   1.1Mb
         help   1.1Mb
         libs  17.5Mb
     ```
@@ -5541,8 +5616,9 @@ Run `revdepcheck::revdep_details(, "tsmarch")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 21.5Mb
+      installed size is 22.0Mb
       sub-directories of 1Mb or more:
+        R      1.0Mb
         doc    1.6Mb
         libs  18.5Mb
     ```
@@ -5807,37 +5883,12 @@ Run `revdepcheck::revdep_details(, "wru")` for more info
 
 ## In both
 
-*   checking tests ...
-    ```
-      Running ‘testthat.R’
-     ERROR
-    Running the tests in ‘tests/testthat.R’ failed.
-    Complete output:
-      > library(testthat)
-      > library(wru)
-      
-      Please cite as:
-      
-      Khanna K, Bertelsen B, Olivella S, Rosenman E, Rossell Hayes A, Imai K
-    ...
-      Backtrace:
-          ▆
-       1. └─wru::predict_race(...) at test-predict_race_2010.R:188:3
-       2.   └─wru:::predict_race_new(...)
-       3.     └─base::readRDS(paste0(path, "/wru-data-first_c.rds"))
-       4.       └─base::gzfile(file, "rb")
-      
-      [ FAIL 1 | WARN 1 | SKIP 23 | PASS 10 ]
-      Error: Test failures
-      Execution halted
-    ```
-
 *   checking installed package size ... NOTE
     ```
-      installed size is  7.5Mb
+      installed size is  9.7Mb
       sub-directories of 1Mb or more:
         data   3.5Mb
-        help   1.9Mb
+        help   4.1Mb
         libs   1.9Mb
     ```
 
