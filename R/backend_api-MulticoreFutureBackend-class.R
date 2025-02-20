@@ -27,7 +27,7 @@ MulticoreFutureBackend <- function(workers = availableCores(constraints = "multi
   }
 
   core <- FutureBackend(workers = workers, ...)
-  core$futureClasses <- c("MulticoreFuture", "Future")
+  core[["futureClasses"]] <- c("MulticoreFuture", core[["futureClasses"]])
   core <- structure(core, class = c("MulticoreFutureBackend", "FutureBackend", class(core)))
   core
 }
@@ -49,7 +49,7 @@ launchFuture.MulticoreFutureBackend <- function(backend, future, ...) {
 
   mcparallel <- importParallel("mcparallel")
 
-  future <- coerceFuture(backend, future)
+  class(future) <- backend[["futureClasses"]]
 
   data <- getFutureData(future, debug = debug)
 

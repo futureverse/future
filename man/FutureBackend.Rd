@@ -4,9 +4,9 @@
 %   R/backend_api-MulticoreFutureBackend-class.R,
 %   R/backend_api-MultisessionFutureBackend-class.R,
 %   R/backend_api-SequentialFutureBackend-class.R
-\name{FutureBackend}
-\alias{FutureBackend}
+\name{ClusterFutureBackend}
 \alias{ClusterFutureBackend}
+\alias{FutureBackend}
 \alias{launchFuture}
 \alias{MulticoreFutureBackend}
 \alias{MultisessionFutureBackend}

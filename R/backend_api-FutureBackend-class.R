@@ -17,20 +17,11 @@ FutureBackend <- function(...) {
     core[[name]] <- args[[name]]
   }
   
-  core$futureClasses <- c("FutureBackend")
+  core[["futureClasses"]] <- c("FutureBackend")
   core <- structure(core, class = c("FutureBackend", class(core)))
+  core
 }
 
-
-coerceFuture <- function(backend, future, ...) {
-  UseMethod("coerceFuture")
-}
-
-#' @export
-coerceFuture.FutureBackend <- function(backend, future, ...) {
-  class(future) <- unique(c(backend$futureClasses, class(future)))
-  future
-}
 
 
 #' `launchFuture()` launches a future on the backend.

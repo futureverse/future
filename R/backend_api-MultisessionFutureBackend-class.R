@@ -26,7 +26,7 @@ MultisessionFutureBackend <- function(workers = availableCores(), ...) {
   }
 
   core <- ClusterFutureBackend(workers = workers, ...)
-  core$futureClasses <- c("MultisessionFuture", core$futureClasses)
+  core[["futureClasses"]] <- c("MultisessionFuture", core[["futureClasses"]])
   core <- structure(core, class = c("MultisessionFutureBackend", class(core)))
   core
 }

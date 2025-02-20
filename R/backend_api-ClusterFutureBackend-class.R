@@ -33,7 +33,7 @@ ClusterFutureBackend <- function(workers = availableWorkers(), persistent = FALS
   stop_if_not(length(workers) > 0)
   
   core <- FutureBackend(workers = workers, persistent = persistent, ...)
-  core$futureClasses <- c("ClusterFuture", "Future")
+  core[["futureClasses"]] <- c("ClusterFuture", core[["futureClasses"]])
   core <- structure(core, class = c("ClusterFutureBackend", "FutureBackend", class(core)))
   core
 }
@@ -53,7 +53,7 @@ launchFuture.ClusterFutureBackend <- function(backend, future, ...) {
     workers = backend[["workers"]]
   )
   future <- do.call(as_ClusterFuture, args = args)
-  future <- coerceFuture(backend, future)
+  class(future) <- backend[["futureClasses"]]
   
   ## Next available cluster node
   t_start <- Sys.time()
@@ -195,7 +195,7 @@ MultisessionFutureBackend <- function(workers = availableCores(), ...) {
   }
 
   core <- ClusterFutureBackend(workers = workers, ...)
-  core$futureClasses <- c("MultisessionFuture", core$futureClasses)
+  core[["futureClasses"]] <- c("MultisessionFuture", core[["futureClasses"]])
   core <- structure(core, class = c("MultisessionFutureBackend", class(core)))
   core
 }

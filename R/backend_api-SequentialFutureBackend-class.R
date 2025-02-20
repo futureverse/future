@@ -10,7 +10,7 @@
 #' @export
 SequentialFutureBackend <- function(...) {
   core <- FutureBackend(...)
-  core$futureClasses <- c("SequentialFuture", "UniprocessFuture", core$futureClasses)
+  core[["futureClasses"]] <- c("SequentialFuture", "UniprocessFuture", core[["futureClasses"]])
   core <- structure(core, class = c("SequentialFutureBackend", class(core)))
   core
 }
@@ -34,7 +34,7 @@ launchFuture.SequentialFutureBackend <- function(backend, future, ...) {
   ## also the one that evaluates/resolves/queries it.
   assertOwner(future)
 
-  future <- coerceFuture(backend, future)
+  class(future) <- backend[["futureClasses"]]
 
   ## Launch future
   future[["state"]] <- "running"
@@ -46,7 +46,7 @@ launchFuture.SequentialFutureBackend <- function(backend, future, ...) {
   split <- backend[["split"]]
   if (!is.null(split)) data$capture$split <- split
   earlySignal <- backend[["earlySignal"]]
-  if (!is.null(earlySignal)) future$earlySignal <- earlySignal
+  if (!is.null(earlySignal)) future[["earlySignal"]] <- earlySignal
 
   future[["result"]] <- evalFuture(data)
   
