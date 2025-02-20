@@ -84,10 +84,7 @@ for (mc in 1:2) {
     stopifnot( (mc2 <= 1 && a$pid  == pid) || (a$pid  != pid) )
     stopifnot( (mc2 <= 1 && a$pid1 == pid) || (a$pid1 != pid) )
     stopifnot( (mc2 <= 1 && a$pid2 == pid) || (a$pid2 != pid) )
-    stopifnot(
-      ((mc2 <= 1 || a$cores <= 2) && a$pid2 != a$pid1)
-      ||
-      (a$pid2 == a$pid1)
+    stopifnot(((mc2 <= 1 || a$cores <= 2) && a$pid2 == a$pid1) || (a$pid2 != a$pid1)
     )
 
     if (mc == 1L && !winWorkaround) {

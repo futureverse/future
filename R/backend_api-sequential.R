@@ -18,15 +18,15 @@
 #' @inheritParams Future-class
 #' 
 #' @return
-#' A [SequentialFuture].
+#' A [Future].
 #'
 #' @example incl/sequential.R
 #'
 #' @aliases uniprocess
 #' @export
 sequential <- function(..., envir = parent.frame()) {
-  future <- SequentialFuture(..., envir = envir)
-  if (!future[["lazy"]]) future <- run(future)
-  invisible(future)
+  f <- Future(..., envir = envir)
+  class(f) <- c("SequentialFuture", "UniprocessFuture", "Future")
+  f
 }
 class(sequential) <- c("sequential", "uniprocess", "future", "function")

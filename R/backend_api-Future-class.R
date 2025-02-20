@@ -458,7 +458,7 @@ run.Future <- function(future, ...) {
   }
 
   ## Use new FutureBackend approach?
-  if (inherits(backend, "FutureBackend") && getOption("future.backend.version", 2L) == 2L) {
+  if (inherits(backend, "FutureBackend")) {
     if (future[["state"]] != "created") {
       label <- future[["label"]]
       if (is.null(label)) label <- "<none>"

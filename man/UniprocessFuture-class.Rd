@@ -3,19 +3,9 @@
 \name{UniprocessFuture-class}
 \alias{UniprocessFuture-class}
 \alias{UniprocessFuture}
-\alias{SequentialFuture}
 \title{An uniprocess future is a future whose value will be resolved synchronously in the current process}
 \usage{
 UniprocessFuture(expr = NULL, substitute = TRUE, envir = parent.frame(), ...)
-
-SequentialFuture(
-  expr = NULL,
-  envir = parent.frame(),
-  substitute = TRUE,
-  lazy = FALSE,
-  globals = TRUE,
-  ...
-)
 }
 \arguments{
 \item{expr}{An \R \link[base]{expression}.}
@@ -27,27 +17,11 @@ SequentialFuture(
 identified.}
 
 \item{\dots}{Additional named elements passed to \code{\link[=Future]{Future()}}.}
-
-\item{lazy}{If FALSE (default), the future is resolved
-eagerly (starting immediately), otherwise not.}
-
-\item{globals}{(optional) a logical, a character vector, or a named list
-to control how globals are handled.
-For details, see section 'Globals used by future expressions'
-in the help for \code{\link[=future]{future()}}.}
 }
 \value{
 \code{UniprocessFuture()} returns an object of class \code{UniprocessFuture}.
-
-\code{SequentialFuture()} returns an object of class \code{SequentialProcess},
-which inherits from \code{UniprocessFuture}.
 }
 \description{
 An uniprocess future is a future whose value will be resolved synchronously in the current process
 }
-\section{Usage}{
-
-To use 'sequential' futures, use \code{plan(sequential)}, cf. \link{sequential}.
-}
-
 \keyword{internal}

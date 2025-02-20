@@ -14,7 +14,7 @@ sequential(..., envir = parent.frame())
 identified.}
 }
 \value{
-A \link{SequentialFuture}.
+A \link{Future}.
 }
 \description{
 A sequential future is a future that is evaluated sequentially in the
