@@ -450,7 +450,9 @@ run.Future <- function(future, ...) {
     }
     backend <- do.call(backend, args = args)
     if (debug) mdebug(" - FutureBackend: ", commaq(class(backend)))
-    stop_if_not(inherits(backend, "FutureBackend"))
+    if (!inherits(backend, "FutureBackend")) {
+      stop(sprintf("[INTERNAL ERROR] run.Future(): the 'backend' generated for the %s object is not a FutureBackend object: %s", class(makeFuture)[1], class(backend)[1]))
+    }
   } else {
     backend <- NULL
   }
