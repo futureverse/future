@@ -24,9 +24,6 @@ launchFuture.SequentialFutureBackend <- function(backend, future, ...) {
     on.exit(mdebugf("launchFuture() for %s ... DONE", commaq(class(backend))))
   }
 
-  ## Launch future
-  future[["state"]] <- "running"
-
   ## Get future
   data <- getFutureData(future, debug = debug)
 
@@ -36,8 +33,9 @@ launchFuture.SequentialFutureBackend <- function(backend, future, ...) {
   earlySignal <- backend[["earlySignal"]]
   if (!is.null(earlySignal)) future[["earlySignal"]] <- earlySignal
 
+  ## Launch future
+  future[["state"]] <- "running"
   future[["result"]] <- evalFuture(data)
-  
   future[["state"]] <- "finished"
 
   if (debug) mdebugf("%s started (and completed)", class(future)[1])
