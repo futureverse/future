@@ -36,20 +36,8 @@ MulticoreFutureBackend <- function(workers = availableCores(constraints = "multi
 #' @export
 launchFuture.MulticoreFutureBackend <- function(backend, future, ...) {
   debug <- isTRUE(getOption("future.debug"))
-  
-  if (future[["state"]] != "created") {
-    label <- future[["label"]]
-    if (is.null(label)) label <- "<none>"
-    stop(FutureError(sprintf("A future ('%s') can only be launched once", label), future = future))
-  }
-  
-  ## Assert that the process that created the future is
-  ## also the one that evaluates/resolves/queries it.
-  assertOwner(future)
 
   mcparallel <- importParallel("mcparallel")
-
-  class(future) <- backend[["futureClasses"]]
 
   data <- getFutureData(future, debug = debug)
 

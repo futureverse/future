@@ -427,43 +427,57 @@ run.Future <- function(future, ...) {
   makeFuture <- plan("next")
   if (debug) mdebug("- Future backend: ", commaq(class(makeFuture)))
 
-  ## Use new FutureBackend approach?
-  if (getOption("future.backend.version", 2L) == 2L) {
-    ## Implements a FutureBackend?
-    backend <- attr(makeFuture, "backend")
-    if (is.function(backend)) {
-      if (debug) mdebug("Using FutureBackend ...")
-      mdebug("- state: ", sQuote(future[["state"]]))
-      on.exit(mdebug("run() for ", sQuote(class(future)[1]), " ... done"), add = TRUE)
+  ## Implements a FutureBackend?
+  backend <- attr(makeFuture, "backend")
+  if (is.function(backend)) {
+    if (debug) mdebug("Using FutureBackend ...")
+    mdebug("- state: ", sQuote(future[["state"]]))
+    on.exit(mdebug("run() for ", sQuote(class(future)[1]), " ... done"), add = TRUE)
 
-      if (debug) mprint(backend)
+    if (debug) mprint(backend)
 
-      ## Apply future plan tweaks
-      args <- attr(makeFuture, "tweaks")
-      if (is.null(args)) args <- list()
+    ## Apply future plan tweaks
+    args <- attr(makeFuture, "tweaks")
+    if (is.null(args)) args <- list()
 
-      args2 <- formals(makeFuture)
-      args2$`...` <- NULL
-      args2$envir <- NULL
-      args2$lazy <- NULL  ## bc multisession; should be removed
-      
-      for (name in names(args2)) {
-        args[[name]] <- args2[[name]]
-      }
-      backend <- do.call(backend, args = args)
-      if (debug) mdebug(" - FutureBackend: ", commaq(class(backend)))
-      stop_if_not(inherits(backend, "FutureBackend"))
-
-
-      if (debug) mdebug(" - Launching futures ...")
-      future2 <- launchFuture(backend, future = future)
-      if (debug) mdebug(" - Launching futures ... done")
-      if (debug) mdebug(" - Future launched: ", commaq(class(future2)))
-      stop_if_not(inherits(future2, "Future"))
-      if (debug) mdebug("Using FutureBackend ... DONE")
-      
-      return(future2)
+    args2 <- formals(makeFuture)
+    args2$`...` <- NULL
+    args2$envir <- NULL
+    args2$lazy <- NULL  ## bc multisession; should be removed
+    
+    for (name in names(args2)) {
+      args[[name]] <- args2[[name]]
     }
+    backend <- do.call(backend, args = args)
+    if (debug) mdebug(" - FutureBackend: ", commaq(class(backend)))
+    stop_if_not(inherits(backend, "FutureBackend"))
+  } else {
+    backend <- NULL
+  }
+
+  ## Use new FutureBackend approach?
+  if (inherits(backend, "FutureBackend") && getOption("future.backend.version", 2L) == 2L) {
+    if (future[["state"]] != "created") {
+      label <- future[["label"]]
+      if (is.null(label)) label <- "<none>"
+      stop(FutureError(sprintf("A future ('%s') can only be launched once", label), future = future))
+    }
+    
+    ## Assert that the process that created the future is
+    ## also the one that evaluates/resolves/queries it.
+    assertOwner(future)
+
+    ## Coerce to target Future class
+    class(future) <- backend[["futureClasses"]]
+
+    if (debug) mdebug(" - Launching futures ...")
+    future2 <- launchFuture(backend, future = future)
+    if (debug) mdebug(" - Launching futures ... done")
+    if (debug) mdebug(" - Future launched: ", commaq(class(future2)))
+    stop_if_not(inherits(future2, "Future"))
+    if (debug) mdebug("Using FutureBackend ... DONE")
+    
+    return(future2)
   }
 
 
@@ -533,6 +547,9 @@ run.Future <- function(future, ...) {
     future <- run(future)
     if (debug) mdebug("- Launch lazy future ... done")
   }
+
+  ## Set FutureBackend, if it exists
+  future[["backend"]] <- backend
   
   ## Sanity check: This method was only called for lazy futures
   stop_if_not(future[["state"]] != "created", future[["lazy"]])

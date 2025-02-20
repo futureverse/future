@@ -96,7 +96,7 @@ as_ClusterFuture <- function(future, workers = NULL, ...) {
 
 #' @export
 run.ClusterFuture <- function(future, ...) {
-  if (getOption("future.backend.version", 1L) == 2L) {
+  if (getOption("future.backend.version", 2L) == 2L) {
     return(NextMethod())
   }
 
@@ -113,8 +113,8 @@ run.ClusterFuture <- function(future, ...) {
   assertOwner(future)
 
   backend <- future[["backend"]]
-  workers <- backend$workers
-  reg <- backend$reg
+  workers <- backend[["workers"]]
+  reg <- backend[["reg"]]
 
   data <- getFutureData(future)
   persistent <- isTRUE(future[["persistent"]])
@@ -369,6 +369,7 @@ receiveMessageFromWorker <- function(future, ...) {
   recvResult <- importParallel("recvResult")
 
   backend <- future[["backend"]]
+  stop_if_not(inherits(backend, "FutureBackend"))
   workers <- backend$workers
   reg <- backend$reg
 

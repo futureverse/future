@@ -17,7 +17,7 @@ FutureBackend <- function(...) {
     core[[name]] <- args[[name]]
   }
   
-  core[["futureClasses"]] <- c("FutureBackend")
+  core[["futureClasses"]] <- c("Future")
   core <- structure(core, class = c("FutureBackend", class(core)))
   core
 }

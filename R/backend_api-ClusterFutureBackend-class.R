@@ -31,8 +31,26 @@ ClusterFutureBackend <- function(workers = availableWorkers(), persistent = FALS
     stopf("Argument 'workers' is not of class 'cluster': %s", commaq(class(workers)))
   }
   stop_if_not(length(workers) > 0)
-  
-  core <- FutureBackend(workers = workers, persistent = persistent, ...)
+
+  ## Attached workers' session information, unless already done.
+  ## FIXME: We cannot do this here, because it introduces a race condition
+  ## where multiple similar requests may appear at the same time bringing
+  ## the send/receive data to be out of sync and therefore corrupt the
+  ## futures' values.
+  ##  workers <- add_cluster_session_info(workers)
+
+  ## Attach name to cluster?
+  name <- attr(workers, "name", exact = TRUE)
+  if (is.null(name)) {
+    name <- digest(workers)
+    stop_if_not(length(name) > 0, nzchar(name))
+    attr(workers, "name") <- name
+  }
+
+  ## Name of the FutureRegistry
+  reg <- sprintf("workers-%s", name)
+
+  core <- FutureBackend(workers = workers, persistent = persistent, reg = reg, ...)
   core[["futureClasses"]] <- c("ClusterFuture", core[["futureClasses"]])
   core <- structure(core, class = c("ClusterFutureBackend", "FutureBackend", class(core)))
   core
@@ -47,13 +65,16 @@ launchFuture.ClusterFutureBackend <- function(backend, future, ...) {
     on.exit(mdebug("launchFuture() for ClusterFutureBackend ... done"))
   }
 
-  ## Coerce Future to ClusterFuture
-  args <- list(
-    future,
-    workers = backend[["workers"]]
-  )
-  future <- do.call(as_ClusterFuture, args = args)
-  class(future) <- backend[["futureClasses"]]
+  ## Record 'backend' in future for now
+  future[["backend"]] <- backend
+
+  workers <- backend[["workers"]]
+  reg <- backend[["reg"]]
+  if (debug) {
+    mdebug("Workers:")
+    mstr(workers)
+    mdebug("FutureRegistry: ", sQuote(reg))
+  }
   
   ## Next available cluster node
   t_start <- Sys.time()
@@ -61,10 +82,6 @@ launchFuture.ClusterFutureBackend <- function(backend, future, ...) {
   ## (1) Get a free worker. This will block until one is available
   if (debug) mdebug("requestWorker() ...")
 
-  ## FIXME: backend[["workers"]] != future[["workers"]]
-  workers <- future[["workers"]]
-  reg <- sprintf("workers-%s", attr(workers, "name", exact = TRUE))
-  
   node_idx <- requestNode(await = function() {
     FutureRegistry(reg, action = "collect-first", earlySignal = TRUE)
   }, workers = workers)
