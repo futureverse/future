@@ -60,7 +60,7 @@ sticky_globals <- function(erase = FALSE, name = "future:sticky_globals", pos = 
 #' nodes.
 #'
 #' @importFrom parallel clusterCall
-#' @keywords internals
+#' @keywords internal
 clusterExportSticky <- function(cl, globals) {
   stop_if_not(inherits(cl, "cluster"))
   
