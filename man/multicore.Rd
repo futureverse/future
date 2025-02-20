@@ -21,7 +21,7 @@ is created} and its value is used to configure the workers.}
 identified.}
 }
 \value{
-A \link{MulticoreFuture}.
+A \link{Future}.
 If \code{workers == 1}, then all processing using done in the
 current/main \R session and we therefore fall back to using a
 sequential future. To override this fallback, use \code{workers = I(1)}.

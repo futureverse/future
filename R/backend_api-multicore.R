@@ -19,14 +19,13 @@
 #'
 #' @inheritParams future
 #' @inheritParams Future-class
-#' @inheritParams MulticoreFuture-class
 #'
 #' @param workers The number of parallel processes to use.
 #' If a function, it is called without arguments _when the future
 #' is created_ and its value is used to configure the workers.
 #'
 #' @return
-#' A \link{MulticoreFuture}.
+#' A [Future].
 #' If `workers == 1`, then all processing using done in the
 #' current/main \R session and we therefore fall back to using a
 #' sequential future. To override this fallback, use `workers = I(1)`.
@@ -68,28 +67,10 @@
 #'
 #' @export
 multicore <- function(..., workers = availableCores(constraints = "multicore"), envir = parent.frame()) {
-  default_workers <- missing(workers)
-  if (is.function(workers)) workers <- workers()
-  workers <- structure(as.integer(workers), class = class(workers))
-  stop_if_not(is.finite(workers), workers >= 1L)
-
-  ## Fall back to sequential futures if only a single additional R process
-  ## can be spawned off, i.e. then use the current main R process.
-  ## Sequential futures best reflect how multicore futures handle globals.
-  if ((workers == 1L && !inherits(workers, "AsIs")) ||
-      !supportsMulticore(warn = TRUE)) {
-    ## AD HOC: Make sure plan(multicore) also produces a warning, if needed
-    if (default_workers) supportsMulticore(warn = TRUE)
-    ## covr: skip=1
-    return(sequential(..., envir = envir))
-  }
-
-  oopts <- options(mc.cores = workers)
-  on.exit(options(oopts))
-
-  future <- MulticoreFuture(..., workers = workers, envir = envir)
-  if (!future[["lazy"]]) future <- run(future)
-  invisible(future)
+  f <- Future(..., envir = envir)
+  f[["workers"]] <- workers
+  class(f) <- c("MulticoreFuture", "MultiprocessFuture", "Future")
+  f
 }
 class(multicore) <- c("multicore", "multiprocess", "future", "function")
 

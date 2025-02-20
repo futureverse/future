@@ -2,20 +2,12 @@
 % Please edit documentation in R/backend_api-MulticoreFuture-class.R
 \name{MulticoreFuture-class}
 \alias{MulticoreFuture-class}
-\alias{MulticoreFuture}
+\alias{resolved.MulticoreFuture}
 \title{A multicore future is a future whose value will be resolved asynchronously in a parallel process}
 \usage{
-MulticoreFuture(expr = NULL, substitute = TRUE, envir = parent.frame(), ...)
+\method{resolved}{MulticoreFuture}(x, run = TRUE, timeout = NULL, ...)
 }
 \arguments{
-\item{expr}{An \R \link[base]{expression}.}
-
-\item{substitute}{If TRUE, argument \code{expr} is
-\code{\link[base]{substitute}()}:ed, otherwise not.}
-
-\item{envir}{The \link{environment} from where global objects should be
-identified.}
-
 \item{...}{Additional named elements passed to \code{\link[=Future]{Future()}}.}
 }
 \value{
