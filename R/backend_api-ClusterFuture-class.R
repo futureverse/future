@@ -199,6 +199,47 @@ run.ClusterFuture <- function(future, ...) {
 }
 
 
+getSocketSelectTimeout <- function(future, timeout = NULL) {
+  if (!is.null(timeout)) return(timeout)
+  
+  ## FIXME: This should be memoized per plan, when setting up
+  ## the plan /HB 2025-02-18
+  timeout <- future[["resolved.timeout"]]
+  if (!is.null(timeout)) return(timeout)
+
+  timeout <- getOption("future.cluster.resolved.timeout")
+  if (is.null(timeout)) {
+    if (is.null(timeout)) {
+      timeout <- getOption("future.resolved.timeout")
+      if (is.null(timeout)) {
+        timeout <- 0.01
+      }
+    }
+      
+    if (timeout < 0) {
+      warning("Secret option 'future.resolved.timeout' is negative, which causes resolved() to wait until the future is resolved. This feature is only used for testing purposes of the future framework and must not be used elsewhere", immediate. = TRUE)
+      timeout <- NULL
+    }
+  }
+
+  ## WORKAROUND: Non-integer timeouts (at least < 2.0 seconds) may result
+  ## in infinite waiting (PR17203).  Fixed in R devel r73470 (2017-10-05)
+  ## and R 3.4.3
+  ## Source: https://github.com/HenrikBengtsson/Wishlist-for-R/issues/35
+  if (.Platform$OS.type != "windows" && getRversion() < "3.4.3") {
+    timeout <- round(timeout, digits = 0L)
+  }
+  attr(timeout, "validated") <- TRUE
+    
+  ## Memoize 'timeout' in Future object
+  if (!is.null(timeout)) {
+    future[["resolved.timeout"]] <- timeout
+  }
+
+  timeout
+} ## getSocketSelectTimeout()
+
+
 #' @importFrom parallelly connectionId
 #' @export
 resolved.ClusterFuture <- function(x, run = TRUE, timeout = NULL, ...) {
@@ -249,41 +290,28 @@ resolved.ClusterFuture <- function(x, run = TRUE, timeout = NULL, ...) {
 
   ## Check if workers socket connection is available for reading
   if (!is.null(con <- node$con)) {
-    ## AD HOC/SPECIAL CASE: Skip if connection has been serialized and lacks internal representation. /HB 2018-10-27
+    ## AD HOC/SPECIAL CASE: Skip if connection has been serialized and lacks
+    ## internal representation. /HB 2018-10-27
     connId <- connectionId(con)
     if (!is.na(connId) && connId < 0L) return(FALSE)
 
     assertValidConnection(future)
 
     if (is.null(timeout)) {
-      ## FIXME: This should be memoized per plan, when setting up
-      ## the plan /HB 2025-02-18
-      
-      if (is.null(timeout)) {
-        timeout <- getOption("future.cluster.resolved.timeout")
-        if (is.null(timeout)) {
-          timeout <- getOption("future.resolved.timeout")
-          if (is.null(timeout)) {
-            timeout <- 0.01
-          }
-        }
-        
-        if (timeout < 0) {
-          warning("Secret option 'future.resolved.timeout' is negative, which causes resolved() to wait until the future is resolved. This feature is only used for testing purposes of the future framework and must not be used elsewhere", immediate. = TRUE)
-          timeout <- NULL
-        }
+      timeout <- getSocketSelectTimeout(future, timeout = timeout)
+    } else {
+      ## WORKAROUND: Non-integer timeouts (at least < 2.0 seconds) may result
+      ## n infinite waiting (PR17203).  Fixed in R devel r73470 (2017-10-05)
+      ## and R 3.4.3
+      ## Source: https://github.com/HenrikBengtsson/Wishlist-for-R/issues/35
+      if (!isTRUE(attr(timeout, "validated", exact = TRUE)) && .Platform$OS.type != "windows" && getRversion() < "3.4.3") {
+        timeout <- round(timeout, digits = 0L)
       }
     }
 
-    ## WORKAROUND: Non-integer timeouts (at least < 2.0 seconds) may result in
-    ## infinite waiting (PR17203).  Fixed in R devel r73470 (2017-10-05)
-    ## and R 3.4.3 (https://github.com/HenrikBengtsson/Wishlist-for-R/issues/35)
-    if (.Platform$OS.type != "windows" && getRversion() < "3.4.3") {
-      timeout <- round(timeout, digits = 0L)
-    }
-
-
+    ## Number of non-FutureResult objects to receive, before giving up
     maxCount <- 100L
+    
     count <- 0L
     while (count < maxCount) {
       ## Is there a message from the worker waiting?
