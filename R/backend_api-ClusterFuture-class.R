@@ -577,7 +577,7 @@ requestNode <- function(await, workers, timeout = getOption("future.wait.timeout
   ## Find which node is available
   avail <- rep(TRUE, times = length(workers))
   futures <- FutureRegistry(reg, action = "list", earlySignal = FALSE)
-  nodes <- unlist(lapply(futures, FUN = function(f) f$node), use.names = FALSE)
+  nodes <- unlist(lapply(futures, FUN = function(f) f[["node"]]), use.names = FALSE)
   avail[nodes] <- FALSE
 
   ## Sanity check

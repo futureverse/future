@@ -120,7 +120,7 @@ jobs:
         if: runner.os == 'Windows'
         run: |
           rcmdcheck::rcmdcheck(
-            args = c("--no-manual", "--ignore-vignetttes", "--as-cran", if (.Platform$OS.type == "windows" && getRversion() >= "4.2.0") "--no-multiarch"),
+            args = c("--no-manual", "--ignore-vignettes", "--as-cran", if (.Platform$OS.type == "windows" && getRversion() >= "4.2.0") "--no-multiarch"),
             check_dir = "check"
           )
         shell: Rscript {0}
