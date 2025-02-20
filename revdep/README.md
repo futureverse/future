@@ -10,7 +10,7 @@
 |collate  |en_US.UTF-8                                               |
 |ctype    |en_US.UTF-8                                               |
 |tz       |America/Los_Angeles                                       |
-|date     |2025-02-17                                                |
+|date     |2025-02-20                                                |
 |pandoc   |3.6.3 @ /software/c4/cbi/software/pandoc-3.6.3/bin/pandoc |
 |quarto   |NA                                                        |
 
@@ -18,7 +18,7 @@
 
 |package    |old    |new         |Δ  |
 |:----------|:------|:-----------|:--|
-|future     |1.34.0 |1.34.0-9140 |*  |
+|future     |1.34.0 |1.34.0-9209 |*  |
 |codetools  |0.2-20 |0.2-20      |   |
 |digest     |0.6.37 |0.6.37      |   |
 |globals    |0.16.3 |0.16.3      |   |
@@ -136,7 +136,7 @@
 |[envi](problems.md#envi)     |1.0.0     |       |1       |     |
 |epe4md                       |0.1.4     |       |        |     |
 |EpiForsk                     |0.1.1     |       |        |     |
-|[EpiNow2](problems.md#epinow2)|1.7.0     |       |        |4    |
+|[EpiNow2](problems.md#epinow2)|1.7.1     |       |        |4    |
 |[epitweetr](problems.md#epitweetr)|2.2.16    |       |        |2    |
 |epwshiftr                    |0.1.4     |       |        |     |
 |erah                         |2.0.1     |       |        |     |
@@ -172,7 +172,7 @@
 |futureverse                  |0.1.0     |       |        |     |
 |fxTWAPLS                     |0.1.3     |       |        |     |
 |[GeDS](problems.md#geds)     |0.2.6     |       |1       |     |
-|genBaRcode                   |1.2.7     |       |        |     |
+|[genBaRcode](problems.md#genbarcode)|1.2.7     |       |        |1    |
 |[geocmeans](problems.md#geocmeans)|0.3.4     |       |        |1    |
 |[geohabnet](problems.md#geohabnet)|2.1.3     |2      |        |     |
 |[GeoModels](problems.md#geomodels)|2.1.0     |       |        |1    |
@@ -234,12 +234,12 @@
 |lemna                        |1.0.1     |       |        |     |
 |LexFindR                     |1.1.0     |       |        |     |
 |lgr                          |0.4.4     |       |        |     |
-|[lidR](problems.md#lidr)     |4.1.2     |       |        |1    |
+|[lidR](problems.md#lidr)     |4.1.2     |1      |        |1    |
 |lightr                       |1.8.0     |       |        |     |
 |lmtp                         |1.4.0     |       |        |     |
 |LTFHPlus                     |2.1.2     |       |        |     |
 |LWFBrook90R                  |0.6.1     |       |        |     |
-|maestro                      |0.5.0     |       |        |     |
+|maestro                      |0.5.1     |       |        |     |
 |[MAI](problems.md#mai)       |1.12.0    |       |        |1    |
 |malariaAtlas                 |1.6.3     |       |        |     |
 |MAMS                         |3.0.0     |       |        |     |
@@ -250,7 +250,7 @@
 |mcmcensemble                 |3.1.0     |       |        |     |
 |mcp                          |0.3.4     |       |        |     |
 |merTools                     |0.6.2     |       |        |     |
-|[metaGE](problems.md#metage) |1.1.0     |       |        |1    |
+|[metaGE](problems.md#metage) |1.2.0     |       |        |1    |
 |metasnf                      |2.0.0     |       |        |     |
 |MIC                          |1.0.2     |       |        |     |
 |mice                         |3.17.0    |       |        |     |
@@ -266,7 +266,7 @@
 |mlr3resampling               |2024.9.6  |       |        |     |
 |mlr3spatial                  |0.5.0     |       |        |     |
 |mlr3summary                  |0.1.0     |       |        |     |
-|mlr3torch                    |0.2.1     |       |        |     |
+|[mlr3torch](problems.md#mlr3torch)|0.2.1     |       |        |1    |
 |[mlr3tuning](problems.md#mlr3tuning)|1.3.0     |       |        |1    |
 |modelsummary                 |2.3.0     |       |        |     |
 |[momentuHMM](problems.md#momentuhmm)|1.5.5     |       |        |1    |
@@ -308,12 +308,12 @@
 |[pgxRpi](problems.md#pgxrpi) |1.2.3     |2      |        |2    |
 |[photosynthesis](problems.md#photosynthesis)|2.1.5     |       |        |2    |
 |[phylolm](problems.md#phylolm)|2.6.5     |       |        |1    |
-|phylopath                    |1.3.0     |       |        |     |
+|[phylopath](problems.md#phylopath)|1.3.0     |       |        |1    |
 |phylospatial                 |1.0.0     |       |        |     |
 |PINstimation                 |0.1.2     |       |        |     |
 |[pliman](problems.md#pliman) |3.0.0     |       |        |1    |
 |[PLNmodels](problems.md#plnmodels)|1.2.0     |       |        |1    |
-|plumber                      |1.2.2     |       |        |     |
+|plumber                      |1.3.0     |       |        |     |
 |polle                        |1.5       |       |        |     |
 |[polykde](problems.md#polykde)|1.0.0     |       |        |1    |
 |POMADE                       |0.2.0     |       |        |     |
@@ -356,7 +356,7 @@
 |rsi                          |0.3.2     |       |        |     |
 |RTransferEntropy             |0.2.21    |       |        |     |
 |s3fs                         |0.1.7     |       |        |     |
-|saeczi                       |0.2.0     |       |        |     |
+|saeczi                       |0.2.0     |       |        |-1   |
 |sampcompR                    |0.2.6     |       |        |     |
 |[sapfluxnetr](problems.md#sapfluxnetr)|0.1.4     |       |        |1    |
 |[SCArray.sat](problems.md#scarraysat)|1.6.0     |       |        |1    |
@@ -366,7 +366,7 @@
 |[sctransform](problems.md#sctransform)|0.4.1     |       |        |1    |
 |[sdmTMB](problems.md#sdmtmb) |0.6.0     |       |        |1    |
 |seer                         |1.1.8     |       |        |     |
-|segtest                      |1.0.2     |       |        |     |
+|segtest                      |1.0.2     |       |        |-1   |
 |semPower                     |2.1.1     |       |        |     |
 |semTests                     |0.5.0     |       |        |     |
 |semtree                      |0.9.20    |       |        |     |

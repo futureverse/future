@@ -1,10 +1,11 @@
 source("incl/start.R")
+options(future.debug = FALSE)
 
 strategies <- supportedStrategies()
 
 message("*** Nested futures ...")
 
-for (strategy1 in strategies) {
+for (strategy1 in rev(strategies)) {
   for (strategy2 in strategies) {
     message(sprintf("- plan(list('%s', '%s')) ...", strategy1, strategy2))
     plan(list(a = strategy1, b = strategy2))
@@ -54,6 +55,7 @@ for (strategy1 in strategies) {
         list(a = a, nested_a = nested_a, plan_a = plan_a,
              b = b, nested_b = nested_b, plan_b = plan_b)
       }
+      
       y
     }
 
@@ -97,6 +99,8 @@ for (strategy1 in strategies) {
     })
     y <- value(f)
     stopifnot(identical(y, y_truth))
+
+    plan(sequential)
     
     message(sprintf("- plan(list('%s', '%s')) ... DONE", strategy1, strategy2))
   }

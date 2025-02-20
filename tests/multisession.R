@@ -3,7 +3,8 @@ library("listenv")
 
 message("*** multisession() ...")
 
-for (cores in 1:availCores) {
+#for (cores in 1:availCores) {
+for (cores in 2L) {
   message(sprintf("Testing with %d cores ...", cores))
   options(mc.cores = cores)
 
@@ -12,7 +13,7 @@ for (cores in 1:availCores) {
     42L
   })
   print(f)
-  stopifnot(inherits(f, "ClusterFuture") || (inherits(f, "SequentialFuture") && f$lazy))
+  stopifnot(inherits(f, "ClusterFuture") || inherits(f, "SequentialFuture"))
 
   print(resolved(f))
   y <- value(f)

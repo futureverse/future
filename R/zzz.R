@@ -1,5 +1,11 @@
 .package <- new.env()
 
+## Update FutureBackend:s
+attr(sequential, "backend") <- SequentialFutureBackend
+attr(cluster, "backend") <- ClusterFutureBackend
+attr(multisession, "backend") <- MultisessionFutureBackend
+attr(multicore, "backend") <- MulticoreFutureBackend
+
 
 ## covr: skip=all
 #' @importFrom utils packageVersion
@@ -10,7 +16,7 @@
   if (isTRUE(as.logical(Sys.getenv("R_FUTURE_PRUNE_PKG_CODE", "FALSE")))) {
     prune_pkg_code()
   }
-  
+
   update_package_option("future.debug", mode = "logical")
   debug <- isTRUE(getOption("future.debug"))
 
@@ -28,7 +34,6 @@
   ## .GlobalEnv$.Random.seed.
   session_uuid(attributes = FALSE)
 
-
   ## Report on future plan, if set
   strategy <- getOption("future.plan")
   if (!is.null(strategy)) {
@@ -40,7 +45,6 @@
       }
     }
   }
-
 
   args <- parseCmdArgs()
   p <- args$p

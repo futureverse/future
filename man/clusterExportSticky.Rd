@@ -22,4 +22,4 @@ Export globals to the sticky-globals environment of the cluster nodes
 This requires that the \pkg{future} package is installed on the cluster
 nodes.
 }
-\keyword{internals}
+\keyword{internal}

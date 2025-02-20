@@ -22,13 +22,12 @@ attachPackages <- function(packages) {
   packages <- setdiff(packages, attached_packages)
   if (length(packages) == 0L) return()
 
-  lib.loc <- .libPaths()
-  
   ## TROUBLESHOOTING: If the package fails to load, then library()
   ## suppress that error and generates a generic much less
   ## informative error message.  Because of this, we load the
   ## namespace first (to get a better error message) and then
   ## call library(), which attaches the package. /HB 2016-06-16
+  lib.loc <- .libPaths()
   tryCatch({
     for (pkg in packages) {
       loadNamespace(pkg)
@@ -570,30 +569,37 @@ evalFuture <- function(
     if ("threads" %in% reset) {
       on.exit(setNumberOfThreads(old), add = TRUE)
     }
-  }      
+  }
 
   
+  ## -----------------------------------------------------------------
   ## Limit nested parallelization
+  ## -----------------------------------------------------------------
+  ...future.ncores <- NA_integer_
+  
   ## (a) Identify default number of cores - ignoring plan settings
-  ...future.ncores <- local({
-    ans <- NA_integer_
-    
-    options(parallelly.availableCores.fallback = 1L)
-    ncores <- availableCores(which = "all")
-    ncores <- ncores[ncores != ncores["system"]]
-    ncores <- ncores[setdiff(names(ncores), c("_R_CHECK_LIMIT_CORES_", "Bioconductor"))]
-    n_ncores <- length(ncores)
-    if (n_ncores > 0) {
-      if (n_ncores > 1) {
-        ncores <- ncores[setdiff(names(ncores), "fallback")]
-      }
+  ## FIXME: Can the results here be memoized? Can the results be
+  ## precalculated and stored in the strategy stack? /HB 2025-02-17
+  if (FALSE) {
+    ...future.ncores <- local({
+      ans <- NA_integer_
+      options(parallelly.availableCores.fallback = 1L)
+      ## NOTE: availableCores() is expensive
+      ncores <- availableCores(which = "all")
+      ncores <- ncores[setdiff(names(ncores), c("system", "_R_CHECK_LIMIT_CORES_", "Bioconductor"))]
+      n_ncores <- length(ncores)
       if (n_ncores > 0) {
-        ans <- min(ncores, na.rm = TRUE)
+        if (n_ncores > 1) {
+          ncores <- ncores[setdiff(names(ncores), "fallback")]
+        }
+        if (n_ncores > 0) {
+          ans <- min(ncores, na.rm = TRUE)
+        }
       }
-    }
-    ans
-  })
-
+      ans
+    })
+  }
+  
   ## Use the next-level-down ("popped") future strategy
   plan(strategiesR, .cleanup = FALSE, .init = FALSE)
 

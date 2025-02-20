@@ -1,10 +1,12 @@
 source("incl/start.R")
+options(future.debug = FALSE)
 
 ## Local functions
 usedNodes <- function(future) {
+  backend <- future[["backend"]]
   ## Number of unresolved cluster futures
-  workers <- future$workers
-  reg <- sprintf("workers-%s", attr(workers, "name"))
+  workers <- backend[["workers"]]
+  reg <- backend[["reg"]]
   c(used = length(future:::FutureRegistry(reg, action = "list")), total = length(workers))
 }
 
