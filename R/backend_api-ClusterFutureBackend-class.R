@@ -69,7 +69,11 @@ launchFuture.ClusterFutureBackend <- function(backend, future, ...) {
   future[["backend"]] <- backend
 
   workers <- backend[["workers"]]
+  stop_if_not(inherits(workers, "cluster"))
+  
   reg <- backend[["reg"]]
+  stop_if_not(is.character(reg), length(reg) == 1L)
+  
   if (debug) {
     mdebug("Workers:")
     mstr(workers)
@@ -179,6 +183,7 @@ launchFuture.ClusterFutureBackend <- function(backend, future, ...) {
     worker >= 1L, worker <= length(workers)
   ) 
   if (debug) mdebugf(" - cluster node index: %d", worker)
+  future[["workers"]] <- workers  ## FIXME
   data <- getFutureData(future, debug = debug)
   node <- workers[[worker]]
   ## Non-blocking cluster-node call

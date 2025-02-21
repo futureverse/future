@@ -424,37 +424,15 @@ run.Future <- function(future, ...) {
   }
 
   ## Create temporary future for a specific backend, but don't launch it
-  makeFuture <- plan("next")
-  if (debug) mdebug("- Future backend: ", commaq(class(makeFuture)))
+  evaluator <- plan("next")
+  if (debug) mdebug("- Future backend: ", commaq(class(evaluator)))
 
   ## Implements a FutureBackend?
-  backend <- attr(makeFuture, "backend")
-  if (is.function(backend)) {
-    if (debug) mdebug("Using FutureBackend ...")
-    mdebug("- state: ", sQuote(future[["state"]]))
-    on.exit(mdebug("run() for ", sQuote(class(future)[1]), " ... done"), add = TRUE)
-
-    if (debug) mprint(backend)
-
-    ## Apply future plan tweaks
-    args <- attr(makeFuture, "tweaks")
-    if (is.null(args)) args <- list()
-
-    args2 <- formals(makeFuture)
-    args2$`...` <- NULL
-    args2$envir <- NULL
-    args2$lazy <- NULL  ## bc multisession; should be removed
-    
-    for (name in names(args2)) {
-      args[[name]] <- args2[[name]]
-    }
-    backend <- do.call(backend, args = args)
-    if (debug) mdebug(" - FutureBackend: ", commaq(class(backend)))
+  backend <- makeFutureBackend(evaluator)
+  if (!is.null(backend)) {
     if (!inherits(backend, "FutureBackend")) {
-      stop(sprintf("[INTERNAL ERROR] run.Future(): the 'backend' generated for the %s object is not a FutureBackend object: %s", class(makeFuture)[1], class(backend)[1]))
+      stop(sprintf("[INTERNAL ERROR] run.Future(): the 'backend' generated for the %s object is not a FutureBackend object: %s", class(evaluator)[1], class(backend)[1]))
     }
-  } else {
-    backend <- NULL
   }
 
   ## Use new FutureBackend approach?
@@ -503,12 +481,12 @@ run.Future <- function(future, ...) {
   has_persistent <- ("persistent" %in% names(future))
   if (has_persistent) args$persistent <- future[["persistent"]]
   
-  tmpFuture <- do.call(makeFuture, args = args)
+  tmpFuture <- do.call(evaluator, args = args)
 
   ## SPECIAL: 'cluster' takes argument 'persistent' for now /HB 2023-01-17
   if (has_persistent) {
-    if (inherits(makeFuture, "cluster") &&
-        !inherits(makeFuture, "multisession")) {
+    if (inherits(evaluator, "cluster") &&
+        !inherits(evaluator, "multisession")) {
       tmpFuture[["local"]] <- !tmpFuture[["persistent"]]
     } else {
       .Defunct(msg = "Future field 'persistent' is defunct and must not be set", package = .packageName)
@@ -959,10 +937,13 @@ getFutureBackendConfigs.ClusterFuture <- function(future, ..., debug = isTRUE(ge
   ## Does the cluster node communicate with a connection?
   ## (if not, it's via MPI)
   workers <- future[["workers"]]
+  stop_if_not(inherits(workers, "cluster"))
   ## AD HOC/FIXME: Here 'future[["node"]]' is yet not assigned, so we look at
   ## the first worker and assume the others are the same. /HB 2019-10-23
   cl <- workers[1L]
+  stop_if_not(inherits(cl, "cluster"))
   node <- cl[[1L]]
+  stop_if_not(inherits(node, c("SOCK0node", "SOCKnode")))
   con <- node$con
   if (is.null(con)) return(list())
 

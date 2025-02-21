@@ -45,3 +45,28 @@ launchFuture <- function(backend, future, ...) {
 launchFuture.FutureBackend <- function(backend, future, ...) {
   stop(sprintf("No launchFuture() method implemented for %s", sQuote(class(backend)[1])))
 }
+
+
+makeFutureBackend <- function(evaluator, ...) {
+  backend <- attr(evaluator, "backend")
+
+  ## Old future strategies do not implement a FutureBackend
+  if (is.null(backend)) return(NULL)
+  
+  stop_if_not(is.function(backend))
+
+  ## Apply future plan tweaks
+  args <- attr(evaluator, "tweaks")
+  if (is.null(args)) args <- list()
+  args2 <- formals(evaluator)
+  args2$`...` <- NULL
+  args2$envir <- NULL
+  args2$lazy <- NULL  ## bc multisession; should be removed
+  for (name in names(args2)) {
+    args[[name]] <- args2[[name]]
+  }
+  backend <- do.call(backend, args = args)
+  stop_if_not(inherits(backend, "FutureBackend"))
+
+  backend
+}
