@@ -10,7 +10,7 @@
 |collate  |en_US.UTF-8                                               |
 |ctype    |en_US.UTF-8                                               |
 |tz       |America/Los_Angeles                                       |
-|date     |2025-02-20                                                |
+|date     |2025-02-21                                                |
 |pandoc   |3.6.3 @ /software/c4/cbi/software/pandoc-3.6.3/bin/pandoc |
 |quarto   |NA                                                        |
 
@@ -18,7 +18,7 @@
 
 |package    |old    |new         |Δ  |
 |:----------|:------|:-----------|:--|
-|future     |1.34.0 |1.34.0-9209 |*  |
+|future     |1.34.0 |1.34.0-9210 |*  |
 |codetools  |0.2-20 |0.2-20      |   |
 |digest     |0.6.37 |0.6.37      |   |
 |globals    |0.16.3 |0.16.3      |   |
@@ -33,13 +33,12 @@
 |:----------------|:-------|:-----|:-------|:----|
 |[TriDimRegression](failures.md#tridimregression)|1.0.2   |1     |        |     |
 
-## New problems (4)
+## New problems (3)
 
 |package   |version |error  |warning |note |
 |:---------|:-------|:------|:-------|:----|
 |[distantia](problems.md#distantia)|2.0.2   |__+1__ |        |3    |
 |[doFuture](problems.md#dofuture)|1.0.1   |__+1__ |        |     |
-|[flexFitR](problems.md#flexfitr)|1.0.0   |__+1__ |        |     |
 |[WARDEN](problems.md#warden)|0.99.1  |__+1__ |        |     |
 
 ## All (415)
@@ -74,7 +73,7 @@
 |bcmaps                       |2.2.1     |       |        |     |
 |[BEKKs](problems.md#bekks)   |1.4.5     |       |        |1    |
 |bhmbasket                    |0.9.5     |       |        |     |
-|[bigDM](problems.md#bigdm)   |0.5.5     |       |        |2 -1 |
+|[bigDM](problems.md#bigdm)   |0.5.5     |       |        |2    |
 |[bistablehistory](problems.md#bistablehistory)|1.1.2     |       |        |2    |
 |bkmrhat                      |1.1.3     |       |        |     |
 |[blavaan](problems.md#blavaan)|0.5-8     |       |        |3    |
@@ -111,7 +110,7 @@
 |cvCovEst                     |1.2.2     |       |        |     |
 |[dar](problems.md#dar)       |1.2.0     |       |        |1    |
 |dartR.popgen                 |1.0.0     |       |        |     |
-|dataquieR                    |2.1.0     |       |        |     |
+|dataquieR                    |2.5.0     |       |        |     |
 |DeclareDesign                |1.0.10    |       |        |     |
 |delayed                      |0.5.0     |       |        |     |
 |[deseats](problems.md#deseats)|1.1.0     |       |        |1    |
@@ -155,7 +154,7 @@
 |finbif                       |0.9.9     |       |        |     |
 |fitlandr                     |0.1.0     |       |        |     |
 |[FLAMES](problems.md#flames) |2.0.2     |1      |        |4    |
-|[flexFitR](problems.md#flexfitr)|1.0.0     |__+1__ |        |     |
+|flexFitR                     |1.1.0     |       |        |     |
 |[flowGraph](problems.md#flowgraph)|1.14.0    |       |        |3    |
 |flowml                       |0.1.3     |       |        |     |
 |fmeffects                    |0.1.4     |       |        |     |
@@ -172,7 +171,7 @@
 |futureverse                  |0.1.0     |       |        |     |
 |fxTWAPLS                     |0.1.3     |       |        |     |
 |[GeDS](problems.md#geds)     |0.2.6     |       |1       |     |
-|[genBaRcode](problems.md#genbarcode)|1.2.7     |       |        |1    |
+|genBaRcode                   |1.2.7     |       |        |     |
 |[geocmeans](problems.md#geocmeans)|0.3.4     |       |        |1    |
 |[geohabnet](problems.md#geohabnet)|2.1.3     |2      |        |     |
 |[GeoModels](problems.md#geomodels)|2.1.0     |       |        |1    |
@@ -227,7 +226,7 @@
 |LandComp                     |0.0.5     |       |        |     |
 |[latentcor](problems.md#latentcor)|2.0.1     |       |        |1    |
 |lava                         |1.8.1     |       |        |     |
-|lavaangui                    |0.2.3     |       |        |     |
+|lavaangui                    |0.2.4     |       |        |     |
 |ldaPrototype                 |0.3.1     |       |        |     |
 |ldmppr                       |1.0.3     |       |        |     |
 |[ldsr](problems.md#ldsr)     |0.0.2     |       |        |2    |
@@ -256,7 +255,7 @@
 |mice                         |3.17.0    |       |        |     |
 |migraph                      |1.4.5     |       |        |     |
 |[mikropml](problems.md#mikropml)|1.6.1     |       |        |1    |
-|[MineICA](problems.md#mineica)|1.46.0    |1 -1   |3       |4    |
+|[MineICA](problems.md#mineica)|1.46.0    |       |4       |4    |
 |[missSBM](problems.md#misssbm)|1.0.4     |       |        |1    |
 |[mistyR](problems.md#mistyr) |1.14.0    |       |        |2    |
 |mlr3                         |0.22.1    |       |        |     |
@@ -266,7 +265,7 @@
 |mlr3resampling               |2024.9.6  |       |        |     |
 |mlr3spatial                  |0.5.0     |       |        |     |
 |mlr3summary                  |0.1.0     |       |        |     |
-|[mlr3torch](problems.md#mlr3torch)|0.2.1     |       |        |1    |
+|mlr3torch                    |0.2.1     |       |        |     |
 |[mlr3tuning](problems.md#mlr3tuning)|1.3.0     |       |        |1    |
 |modelsummary                 |2.3.0     |       |        |     |
 |[momentuHMM](problems.md#momentuhmm)|1.5.5     |       |        |1    |
@@ -308,7 +307,7 @@
 |[pgxRpi](problems.md#pgxrpi) |1.2.3     |2      |        |2    |
 |[photosynthesis](problems.md#photosynthesis)|2.1.5     |       |        |2    |
 |[phylolm](problems.md#phylolm)|2.6.5     |       |        |1    |
-|[phylopath](problems.md#phylopath)|1.3.0     |       |        |1    |
+|phylopath                    |1.3.0     |       |        |     |
 |phylospatial                 |1.0.0     |       |        |     |
 |PINstimation                 |0.1.2     |       |        |     |
 |[pliman](problems.md#pliman) |3.0.0     |       |        |1    |
@@ -328,7 +327,7 @@
 |protti                       |0.9.1     |       |        |     |
 |[psborrow2](problems.md#psborrow2)|0.0.4.0   |       |        |2    |
 |PSCBS                        |0.67.0    |       |        |     |
-|[pseudohouseholds](problems.md#pseudohouseholds)|0.1.1     |       |        |1    |
+|[pseudohouseholds](problems.md#pseudohouseholds)|0.1.1     |       |        |2    |
 |PUMP                         |1.0.3     |       |        |     |
 |[qape](problems.md#qape)     |2.1       |       |        |1    |
 |QBMS                         |1.5.0     |       |        |     |
@@ -356,7 +355,7 @@
 |rsi                          |0.3.2     |       |        |     |
 |RTransferEntropy             |0.2.21    |       |        |     |
 |s3fs                         |0.1.7     |       |        |     |
-|saeczi                       |0.2.0     |       |        |-1   |
+|saeczi                       |0.2.0     |       |        |     |
 |sampcompR                    |0.2.6     |       |        |     |
 |[sapfluxnetr](problems.md#sapfluxnetr)|0.1.4     |       |        |1    |
 |[SCArray.sat](problems.md#scarraysat)|1.6.0     |       |        |1    |
@@ -366,7 +365,7 @@
 |[sctransform](problems.md#sctransform)|0.4.1     |       |        |1    |
 |[sdmTMB](problems.md#sdmtmb) |0.6.0     |       |        |1    |
 |seer                         |1.1.8     |       |        |     |
-|segtest                      |1.0.2     |       |        |-1   |
+|segtest                      |1.0.2     |       |        |     |
 |semPower                     |2.1.1     |       |        |     |
 |semTests                     |0.5.0     |       |        |     |
 |semtree                      |0.9.20    |       |        |     |
@@ -410,7 +409,7 @@
 |[spNetwork](problems.md#spnetwork)|0.4.4.5   |       |        |1    |
 |spStack                      |1.0.1     |       |        |     |
 |[squat](problems.md#squat)   |0.3.0     |2      |        |1    |
-|[ssdtools](problems.md#ssdtools)|2.2.0     |       |        |1    |
+|[ssdtools](problems.md#ssdtools)|2.3.0     |       |        |1    |
 |stacks                       |1.0.5     |       |        |     |
 |[stars](problems.md#stars)   |0.6-8     |1      |        |2    |
 |startR                       |2.4.0     |       |        |     |
