@@ -1145,7 +1145,7 @@ install.packages("future")
 プレリリースバージョンは GitHub の `develop` ブランチにあり、インストールするには次のようにする。
 
 ``` r
-remotes::install_github("HenrikBengtsson/future", ref="develop")
+remotes::install_github("futureverse/future", ref="develop")
 ```
 
 これはソースからのインストールとなる。
