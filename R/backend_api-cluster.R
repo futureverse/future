@@ -40,9 +40,11 @@
 #'
 #' @export
 cluster <- function(..., persistent = FALSE, workers = availableWorkers(), envir = parent.frame()) {
-  future <- ClusterFuture(..., persistent = persistent, workers = workers, envir = envir)
-  if (!future[["lazy"]]) future <- run(future)
-  invisible(future)
+  f <- Future(..., envir = envir)
+  f[["workers"]] <- workers
+  f[["persistent"]] <- persistent
+  class(f) <- c("ClusterFuture", "MultiprocessFuture", "Future")
+  f
 }
 class(cluster) <- c("cluster", "multiprocess", "future", "function")
 attr(cluster, "init") <- TRUE

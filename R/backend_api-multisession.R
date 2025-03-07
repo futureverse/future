@@ -65,19 +65,10 @@
 #'
 #' @export
 multisession <- function(..., workers = availableCores(), lazy = FALSE, rscript_libs = .libPaths(), envir = parent.frame()) {
-  if (is.function(workers)) workers <- workers()
-  workers <- structure(as.integer(workers), class = class(workers))
-  stop_if_not(length(workers) == 1, is.finite(workers), workers >= 1)
-
-  ## Fall back to lazy sequential futures if only a single R session can be used,
-  ## that is, then use the current main R process.
-  if (workers == 1L && !inherits(workers, "AsIs")) {
-    return(sequential(..., lazy = TRUE, envir = envir))
-  }
-
-  future <- MultisessionFuture(..., workers = workers, lazy = lazy, rscript_libs = rscript_libs, envir = envir)
-  if (!future[["lazy"]]) future <- run(future)
-  invisible(future)
+  f <- Future(..., lazy = lazy, envir = envir)
+  f[["workers"]] <- workers
+  class(f) <- c("MultisessionFuture", "MultiprocessFuture", "Future")
+  f
 }
 class(multisession) <- c("multisession", "cluster", "multiprocess", "future", "function")
 attr(multisession, "init") <- TRUE

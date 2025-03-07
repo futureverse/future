@@ -13,7 +13,7 @@
 #' @keywords internal
 #' @rdname FutureBackend
 #' @export
-ClusterFutureBackend <- function(workers = availableWorkers(), persistent = FALSE, ...) {
+ClusterFutureBackend <- function(workers = availableWorkers(), persistent = FALSE, earlySignal = TRUE, ...) {
   if (is.function(workers)) workers <- workers()
   if (is.null(workers)) {
     getDefaultCluster <- importParallel("getDefaultCluster")

@@ -17,24 +17,25 @@ nbrOfWorkers <- function(evaluator = NULL) {
 
 
 #' @export
+nbrOfWorkers.ClusterFutureBackend <- function(evaluator) {
+  backend <- evaluator
+  workers <- backend[["workers"]]
+  stop_if_not(length(workers) > 0L, inherits(workers, "cluster"))
+  workers <- length(workers)
+  stop_if_not(length(workers) == 1L, !is.na(workers), workers >= 1L, is.finite(workers))
+  workers
+}
+
+#' @export
+nbrOfWorkers.SequentialFutureBackend <- function(evaluator) {
+  1L
+}
+
+#' @export
 nbrOfWorkers.cluster <- function(evaluator) {
   assert_no_positional_args_but_first()
-  
-  expr <- formals(evaluator)$workers
-  workers <- eval(expr, enclos = baseenv())
-  if (is.function(workers)) workers <- workers()
-  if (is.character(workers)) {
-    stop_if_not(!anyNA(workers))
-    workers <- length(workers)
-  } else if (is.numeric(workers)) {
-  } else if (inherits(workers, "cluster")) {
-    workers <- length(workers)
-  } else {
-    stopf("Unsupported type of 'workers' for evaluator of class %s: %s", commaq(class(evaluator)), class(workers)[1])
-  }
-  stop_if_not(length(workers) == 1L, !is.na(workers), workers >= 1L, is.finite(workers))
-
-  workers
+  backend <- makeFutureBackend(evaluator)
+  nbrOfWorkers(backend)
 }
 
 #' @export
@@ -106,22 +107,14 @@ nbrOfFreeWorkers <- function(evaluator = NULL, background = FALSE, ...) {
 
 
 #' @export
-nbrOfFreeWorkers.cluster <- function(evaluator, background = FALSE, ...) {
-  assert_no_positional_args_but_first()
-  
-  workers <- nbrOfWorkers(evaluator)
-  
-  ## Create a dummy, lazy future based on the future strategy ("evaluator")
-  f <- evaluator(NULL, lazy = TRUE)
+nbrOfFreeWorkers.ClusterFutureBackend <- function(evaluator, ...) {
+  backend <- evaluator
+  workers <- backend[["workers"]]
+  stop_if_not(length(workers) > 0L, inherits(workers, "cluster"))
+  workers <- length(workers)
+  reg <- backend$reg
+  stop_if_not(length(reg) == 1L, is.character(reg), nzchar(reg))
 
-  ## Special case
-  if (inherits(f, "SequentialFuture")) {
-    return(if (isTRUE(background)) 0L else 1L)
-  }
-  
-  name <- attr(f$workers, "name", exact = TRUE)
-  stop_if_not(is.character(name), length(name) == 1L)
-  reg <- sprintf("workers-%s", name)
   ## Number of unresolved cluster futures
   usedNodes <- length(FutureRegistry(reg, action = "list", earlySignal = FALSE))
   
@@ -129,6 +122,20 @@ nbrOfFreeWorkers.cluster <- function(evaluator, background = FALSE, ...) {
   stop_if_not(length(workers) == 1L, !is.na(workers), workers >= 0L, is.finite(workers))
   
   workers
+}
+
+#' @export
+nbrOfFreeWorkers.SequentialFutureBackend <- function(evaluator, background = FALSE, ...) {
+  assert_no_positional_args_but_first()
+  if (isTRUE(background)) 0L else 1L
+}
+
+
+#' @export
+nbrOfFreeWorkers.cluster <- function(evaluator, background = FALSE, ...) {
+  assert_no_positional_args_but_first()
+  backend <- makeFutureBackend(evaluator)
+  nbrOfFreeWorkers(backend, background = background, ...)
 }
 
 

@@ -27,7 +27,7 @@ MulticoreFutureBackend <- function(workers = availableCores(constraints = "multi
   }
 
   core <- FutureBackend(workers = workers, ...)
-  core[["futureClasses"]] <- c("MulticoreFuture", core[["futureClasses"]])
+  core[["futureClasses"]] <- c("MulticoreFuture", "MultiprocessFuture", core[["futureClasses"]])
   core <- structure(core, class = c("MulticoreFutureBackend", "FutureBackend", class(core)))
   core
 }

@@ -247,9 +247,10 @@ resolved.ClusterFuture <- function(x, run = TRUE, timeout = NULL, ...) {
   
   future <- x
   backend <- future[["backend"]]
+  stop_if_not(inherits(backend, "FutureBackend"))
   workers <- backend$workers
   reg <- backend$reg
-
+  
   ## A lazy future not even launched?
   if (future[["state"]] == "created") {
     if (run) {
