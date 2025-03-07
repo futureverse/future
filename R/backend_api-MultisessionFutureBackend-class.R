@@ -12,6 +12,7 @@
 MultisessionFutureBackend <- function(workers = availableCores(), ...) {
   default_workers <- missing(workers)
   if (is.function(workers)) workers <- workers()
+  stop_if_not(is.numeric(workers))
   workers <- structure(as.integer(workers), class = class(workers))
   stop_if_not(length(workers) == 1, is.finite(workers), workers >= 1)
   
