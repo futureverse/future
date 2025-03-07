@@ -17,6 +17,7 @@ ClusterFutureBackend(
   workers = availableWorkers(),
   persistent = FALSE,
   earlySignal = TRUE,
+  gc = FALSE,
   ...
 )
 

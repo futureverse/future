@@ -27,28 +27,27 @@ nbrOfWorkers.ClusterFutureBackend <- function(evaluator) {
 }
 
 #' @export
+nbrOfWorkers.MulticoreFutureBackend <- function(evaluator) {
+  assert_no_positional_args_but_first()
+  backend <- evaluator
+  workers <- backend[["workers"]]
+  stop_if_not(length(workers) == 1L, !is.na(workers), workers >= 1L, is.finite(workers))
+  workers
+}
+
+#' @export
 nbrOfWorkers.SequentialFutureBackend <- function(evaluator) {
   1L
-}
-
-#' @export
-nbrOfWorkers.cluster <- function(evaluator) {
-  assert_no_positional_args_but_first()
-  backend <- makeFutureBackend(evaluator)
-  nbrOfWorkers(backend)
-}
-
-#' @export
-nbrOfWorkers.uniprocess <- function(evaluator) {
-  assert_no_positional_args_but_first()
-  backend <- makeFutureBackend(evaluator)
-  nbrOfWorkers(backend)
 }
 
 
 #' @export
 nbrOfWorkers.multiprocess <- function(evaluator) {
   assert_no_positional_args_but_first()
+  backend <- makeFutureBackend(evaluator)
+  if (inherits(backend, "FutureBackend")) {
+    return(nbrOfWorkers(backend))
+  }  
   
   expr <- formals(evaluator)$workers
   workers <- eval(expr, enclos = baseenv())
@@ -61,6 +60,7 @@ nbrOfWorkers.multiprocess <- function(evaluator) {
 
   workers
 }
+
 
 #' @export
 nbrOfWorkers.future <- function(evaluator) {
@@ -130,6 +130,23 @@ nbrOfFreeWorkers.ClusterFutureBackend <- function(evaluator, ...) {
 }
 
 #' @export
+nbrOfFreeWorkers.MulticoreFutureBackend <- function(evaluator, background = FALSE, ...) {
+  assert_no_positional_args_but_first()
+  backend <- evaluator
+  workers <- backend[["workers"]]
+  workers <- workers - usedCores()
+  stop_if_not(length(workers) == 1L, !is.na(workers), workers >= 0L, is.finite(workers))
+  workers
+}
+
+#' @export
+nbrOfFreeWorkers.MultiprocessFutureBackend <- function(evaluator, background = FALSE, ...) {
+  assert_no_positional_args_but_first()
+  backend <- evaluator
+  stopf("nbrOfFreeWorkers() is not implemented for this type of future backend (please contacts the maintainer of that backend): %s", commaq(class(evaluator)))
+}
+
+#' @export
 nbrOfFreeWorkers.SequentialFutureBackend <- function(evaluator, background = FALSE, ...) {
   assert_no_positional_args_but_first()
   if (isTRUE(background)) 0L else 1L
@@ -137,40 +154,24 @@ nbrOfFreeWorkers.SequentialFutureBackend <- function(evaluator, background = FAL
 
 
 #' @export
-nbrOfFreeWorkers.cluster <- function(evaluator, background = FALSE, ...) {
+nbrOfFreeWorkers.multiprocess <- function(evaluator, background = FALSE, ...) {
   assert_no_positional_args_but_first()
   backend <- makeFutureBackend(evaluator)
-  nbrOfFreeWorkers(backend, background = background, ...)
-}
-
-
-#' @export
-nbrOfFreeWorkers.uniprocess <- function(evaluator, background = FALSE, ...) {
-  assert_no_positional_args_but_first()
-
-  if (isTRUE(background)) 0L else 1L
-}
-
-#' @export
-nbrOfFreeWorkers.multicore <- function(evaluator, background = FALSE, ...) {
-  assert_no_positional_args_but_first()
-  
-  workers <- nbrOfWorkers(evaluator)
-  
-  workers <- workers - usedCores()
-  stop_if_not(length(workers) == 1L, !is.na(workers), workers >= 0L, is.finite(workers))
-
-  workers
-}
-
-#' @export
-nbrOfFreeWorkers.multiprocess <- function(evaluator, background = FALSE, ...) {
+  if (inherits(backend, "FutureBackend")) {
+    return(nbrOfFreeWorkers(backend, background = background, ...))
+  }  
   stopf("nbrOfFreeWorkers() is not implemented for this type of future backend (please contacts the maintainer of that backend): %s", commaq(class(evaluator)))
 }
+
 
 #' @export
 nbrOfFreeWorkers.future <- function(evaluator, background = FALSE, ...) {
   assert_no_positional_args_but_first()
+
+  backend <- makeFutureBackend(evaluator)
+  if (inherits(backend, "FutureBackend")) {
+    return(nbrOfFreeWorkers(backend, background = background, ...))
+  }  
 
   workers <- nbrOfWorkers(evaluator)
   if (is.infinite(workers)) return(workers)

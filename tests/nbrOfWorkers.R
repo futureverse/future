@@ -100,11 +100,6 @@ n <- nbrOfWorkers()
 message(sprintf("nbrOfWorkers: %d", n))
 stopifnot(n == max(1L, nworkers - 1L))
 
-message("Type of future: constant")
-n <- nbrOfWorkers(constant)
-message(sprintf("nbrOfWorkers: %d", n))
-stopifnot(n == 1)
-
 message("Type of future: <future>")
 foo <- structure(function(...) NULL, class = c("future"))
 n <- nbrOfWorkers(foo)
