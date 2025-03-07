@@ -31,7 +31,6 @@ jobs:
           
           - {os: ubuntu-latest,  r: 'release'  , availablecores: 1, label: 'availableCores.system=1' }
           - {os: ubuntu-latest,  r: 'release'  , availablecores: 2, label: 'availableCores.system=2' }
-          - {os: ubuntu-latest,  r: 'release'  , backend_version: 1, label: 'backend_version=1' }
           - {os: ubuntu-latest,  r: 'release'  , language: ko,    label: ko    }
           - {os: ubuntu-latest,  r: 'release'  , language: zh_CN, label: zh_CN }
           - {os: ubuntu-latest,  r: 'release'  , language: zh_TW, label: zh_TW }
@@ -60,7 +59,6 @@ jobs:
       R_PARALLELLY_AVAILABLECORES_SYSTEM: ${{ matrix.config.availablecores }}
       R_FUTURE_RNG_ONMISUSE: error
       R_FUTURE_GLOBALS_KEEPWHERE: ${{ matrix.config.globals_keepWhere }}
-      R_FUTURE_BACKEND_VERSION: ${{ matrix.config.backend_version }}
       
     steps:
       - uses: actions/checkout@v4
