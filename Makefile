@@ -15,10 +15,12 @@ spelling:
 future.tests/%:
 	$(R_SCRIPT) -e "future.tests::check" --args --test-plan=$*
 
-future.tests/future.mirai: future.tests/future.mirai\:\:mirai_multisession future.tests/future.mirai\:\:mirai_cluster
+future.tests_future.mirai: future.tests/future.mirai\:\:mirai_multisession future.tests/future.mirai\:\:mirai_cluster
 
-future.tests/future.callr: future.tests/future.callr\:\:callr
+future.tests_future.callr: future.tests/future.callr\:\:callr
 
-future.tests/future.batchtools: future.tests/future.batchtools\:\:batchtools_local
+future.tests_future.batchtools: future.tests/future.batchtools\:\:batchtools_local
 
-future.tests: future.tests/sequential future.tests/multicore future.tests/multisession future.tests/cluster
+future.tests_built_in: future.tests/sequential future.tests/multicore future.tests/multisession future.tests/cluster
+
+future.tests: future.tests_built_in
