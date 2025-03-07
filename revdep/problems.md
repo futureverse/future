@@ -133,9 +133,8 @@ Run `revdepcheck::revdep_details(, "apsimx")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  7.4Mb
+      installed size is  7.1Mb
       sub-directories of 1Mb or more:
-        R         1.0Mb
         extdata   5.5Mb
     ```
 
@@ -204,7 +203,7 @@ Run `revdepcheck::revdep_details(, "BAMBI")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  7.9Mb
+      installed size is  8.0Mb
       sub-directories of 1Mb or more:
         libs   7.4Mb
     ```
@@ -257,19 +256,19 @@ Run `revdepcheck::revdep_details(, "batchtools")` for more info
 
 *   checking dependencies in R code ... NOTE
     ```
-    c4-dev4:pid1222488: PSM3 can't open nic unit: 3 (err=23)
-    c4-dev4:pid1222488.R: Unable to create UDP socket for enp3s0f1: Address family not supported by protocol
-    c4-dev4:pid1222488.R: Unable to initialize sockets NIC /sys/class/net/enp3s0f1 (unit 3:0)
-    c4-dev4:pid1222488: PSM3 can't open nic unit: 3 (err=23)
-    c4-dev4:pid1222488.R: Unable to create UDP socket for enp3s0f1: Address family not supported by protocol
-    c4-dev4:pid1222488.R: Unable to initialize sockets NIC /sys/class/net/enp3s0f1 (unit 3:0)
-    c4-dev4:pid1222488: PSM3 can't open nic unit: 3 (err=23)
-    c4-dev4:pid1222488.R: Unable to create UDP socket for enp3s0f1: Address family not supported by protocol
-    c4-dev4:pid1222488.R: Unable to initialize sockets NIC /sys/class/net/enp3s0f1 (unit 3:0)
-    c4-dev4:pid1222488: PSM3 can't open nic unit: 3 (err=23)
+    c4-dev4:pid109381: PSM3 can't open nic unit: 3 (err=23)
+    c4-dev4:pid109381.R: Unable to create UDP socket for enp3s0f1: Address family not supported by protocol
+    c4-dev4:pid109381.R: Unable to initialize sockets NIC /sys/class/net/enp3s0f1 (unit 3:0)
+    c4-dev4:pid109381: PSM3 can't open nic unit: 3 (err=23)
+    c4-dev4:pid109381.R: Unable to create UDP socket for enp3s0f1: Address family not supported by protocol
+    c4-dev4:pid109381.R: Unable to initialize sockets NIC /sys/class/net/enp3s0f1 (unit 3:0)
+    c4-dev4:pid109381: PSM3 can't open nic unit: 3 (err=23)
+    c4-dev4:pid109381.R: Unable to create UDP socket for enp3s0f1: Address family not supported by protocol
+    c4-dev4:pid109381.R: Unable to initialize sockets NIC /sys/class/net/enp3s0f1 (unit 3:0)
+    c4-dev4:pid109381: PSM3 can't open nic unit: 3 (err=23)
     ...
-    c4-dev4:pid1222488.R: Unable to create UDP socket for enp3s0f1: Address family not supported by protocol
-    c4-dev4:pid1222488.R: Unable to initialize sockets NIC /sys/class/net/enp3s0f1 (unit 3:0)
+    c4-dev4:pid109381.R: Unable to create UDP socket for enp3s0f1: Address family not supported by protocol
+    c4-dev4:pid109381.R: Unable to initialize sockets NIC /sys/class/net/enp3s0f1 (unit 3:0)
     --------------------------------------------------------------------------
     Open MPI failed an OFI Libfabric library call (fi_endpoint).  This is highly
     unusual; your job may behave unpredictably (and/or abort) after this.
@@ -373,15 +372,6 @@ Run `revdepcheck::revdep_details(, "BEKKs")` for more info
 Run `revdepcheck::revdep_details(, "bigDM")` for more info
 
 </details>
-
-## Newly fixed
-
-*   checking installed package size ... NOTE
-    ```
-      installed size is  5.3Mb
-      sub-directories of 1Mb or more:
-        data   5.0Mb
-    ```
 
 ## In both
 
@@ -858,9 +848,8 @@ Run `revdepcheck::revdep_details(, "Coxmos")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  5.6Mb
+      installed size is  5.5Mb
       sub-directories of 1Mb or more:
-        R      1.0Mb
         data   1.2Mb
         doc    2.8Mb
     ```
@@ -981,7 +970,7 @@ Run `revdepcheck::revdep_details(, "dipsaus")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  6.6Mb
+      installed size is  6.2Mb
       sub-directories of 1Mb or more:
         libs   4.2Mb
     ```
@@ -1098,9 +1087,8 @@ Run `revdepcheck::revdep_details(, "distantia")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  9.9Mb
+      installed size is  9.5Mb
       sub-directories of 1Mb or more:
-        help   1.0Mb
         libs   7.8Mb
     ```
 
@@ -1138,15 +1126,15 @@ Run `revdepcheck::revdep_details(, "doFuture")` for more info
      ERROR
     Running the tests in ‘tests/foreach_dofuture,globals.R’ failed.
     Last 50 lines of output:
-      [03:51:31.414]  $ x             : int [1:3] 1 2 3
-      [03:51:31.414]  $ ...future.x_ii: num 42
-      [03:51:31.414]  - attr(*, "where")=List of 2
-      [03:51:31.414]   ..$ x             :<environment: R_EmptyEnv> 
+      [19:23:03.218]  $ x             : int [1:3] 1 2 3
+      [19:23:03.218]  $ ...future.x_ii: num 42
+      [19:23:03.218]  - attr(*, "where")=List of 2
+      [19:23:03.218]   ..$ x             :<environment: R_EmptyEnv> 
     ...
-      [03:51:31.443]   ..$ message: chr "'...' used in an incorrect context"
-      [03:51:31.443]   ..$ call   : language doTryCatch(return(expr), name, parentenv, handler)
-      [03:51:31.443]   ..- attr(*, "class")= chr [1:3] "simpleError" "error" "condition"
-      [03:51:31.450] - accumulating results
+      [19:23:03.239]   ..$ message: chr "'...' used in an incorrect context"
+      [19:23:03.239]   ..$ call   : language doTryCatch(return(expr), name, parentenv, handler)
+      [19:23:03.239]   ..- attr(*, "class")= chr [1:3] "simpleError" "error" "condition"
+      [19:23:03.244] - accumulating results
       List of 2
        $ message: chr "'...' used in an incorrect context"
        $ call   : language doTryCatch(return(expr), name, parentenv, handler)
@@ -1173,7 +1161,7 @@ Run `revdepcheck::revdep_details(, "DT")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  6.5Mb
+      installed size is  6.4Mb
       sub-directories of 1Mb or more:
         htmlwidgets   5.6Mb
     ```
@@ -1253,10 +1241,10 @@ Run `revdepcheck::revdep_details(, "EpiNow2")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 502.1Mb
+      installed size is 265.0Mb
       sub-directories of 1Mb or more:
         doc     1.5Mb
-        libs  498.2Mb
+        libs  261.1Mb
     ```
 
 *   checking Rd cross-references ... NOTE
@@ -1339,11 +1327,11 @@ Run `revdepcheck::revdep_details(, "fdacluster")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 23.6Mb
+      installed size is 23.5Mb
       sub-directories of 1Mb or more:
         R      1.9Mb
         doc    1.5Mb
-        help   2.2Mb
+        help   2.1Mb
         libs  17.5Mb
     ```
 
@@ -1468,47 +1456,6 @@ Run `revdepcheck::revdep_details(, "FLAMES")` for more info
     GNU make is a SystemRequirements.
     ```
 
-# flexFitR
-
-<details>
-
-* Version: 1.0.0
-* GitHub: https://github.com/AparicioJohan/flexFitR
-* Source code: https://github.com/cran/flexFitR
-* Date/Publication: 2025-01-20 17:01:56 UTC
-* Number of recursive dependencies: 136
-
-Run `revdepcheck::revdep_details(, "flexFitR")` for more info
-
-</details>
-
-## Newly broken
-
-*   checking re-building of vignette outputs ... ERROR
-    ```
-    Error(s) in re-building vignettes:
-      ...
-    --- re-building ‘canopy-model.Rmd’ using rmarkdown
-    --- finished re-building ‘canopy-model.Rmd’
-    
-    --- re-building ‘how_to_start.Rmd’ using rmarkdown
-    --- finished re-building ‘how_to_start.Rmd’
-    
-    --- re-building ‘maturity-model.Rmd’ using rmarkdown
-    --- finished re-building ‘maturity-model.Rmd’
-    ...
-    Quitting from lines 68-77 [unnamed-chunk-4] (predicted_values.Rmd)
-    Error: processing vignette 'predicted_values.Rmd' failed with diagnostics:
-    object 'ccode' not found
-    --- failed re-building ‘predicted_values.Rmd’
-    
-    SUMMARY: processing the following file failed:
-      ‘predicted_values.Rmd’
-    
-    Error: Vignette re-building failed.
-    Execution halted
-    ```
-
 # flowGraph
 
 <details>
@@ -1592,30 +1539,6 @@ Run `revdepcheck::revdep_details(, "GeDS")` for more info
     Found the following significant warnings:
       Warning: no DISPLAY variable so Tk is not available
     See ‘/c4/home/henrik/futureverse/future/revdep/checks/GeDS/new/GeDS.Rcheck/00install.out’ for details.
-    ```
-
-# genBaRcode
-
-<details>
-
-* Version: 1.2.7
-* GitHub: NA
-* Source code: https://github.com/cran/genBaRcode
-* Date/Publication: 2023-12-11 13:10:05 UTC
-* Number of recursive dependencies: 165
-
-Run `revdepcheck::revdep_details(, "genBaRcode")` for more info
-
-</details>
-
-## In both
-
-*   checking installed package size ... NOTE
-    ```
-      installed size is  5.5Mb
-      sub-directories of 1Mb or more:
-        doc       1.0Mb
-        extdata   4.0Mb
     ```
 
 # geocmeans
@@ -1994,19 +1917,19 @@ Run `revdepcheck::revdep_details(, "hero")` for more info
 
 *   checking dependencies in R code ... NOTE
     ```
-    c4-dev4:pid2186380: PSM3 can't open nic unit: 3 (err=23)
-    c4-dev4:pid2186380.R: Unable to create UDP socket for enp3s0f1: Address family not supported by protocol
-    c4-dev4:pid2186380.R: Unable to initialize sockets NIC /sys/class/net/enp3s0f1 (unit 3:0)
-    c4-dev4:pid2186380: PSM3 can't open nic unit: 3 (err=23)
-    c4-dev4:pid2186380.R: Unable to create UDP socket for enp3s0f1: Address family not supported by protocol
-    c4-dev4:pid2186380.R: Unable to initialize sockets NIC /sys/class/net/enp3s0f1 (unit 3:0)
-    c4-dev4:pid2186380: PSM3 can't open nic unit: 3 (err=23)
-    c4-dev4:pid2186380.R: Unable to create UDP socket for enp3s0f1: Address family not supported by protocol
-    c4-dev4:pid2186380.R: Unable to initialize sockets NIC /sys/class/net/enp3s0f1 (unit 3:0)
-    c4-dev4:pid2186380: PSM3 can't open nic unit: 3 (err=23)
+    c4-dev4:pid858392: PSM3 can't open nic unit: 3 (err=23)
+    c4-dev4:pid858392.R: Unable to create UDP socket for enp3s0f1: Address family not supported by protocol
+    c4-dev4:pid858392.R: Unable to initialize sockets NIC /sys/class/net/enp3s0f1 (unit 3:0)
+    c4-dev4:pid858392: PSM3 can't open nic unit: 3 (err=23)
+    c4-dev4:pid858392.R: Unable to create UDP socket for enp3s0f1: Address family not supported by protocol
+    c4-dev4:pid858392.R: Unable to initialize sockets NIC /sys/class/net/enp3s0f1 (unit 3:0)
+    c4-dev4:pid858392: PSM3 can't open nic unit: 3 (err=23)
+    c4-dev4:pid858392.R: Unable to create UDP socket for enp3s0f1: Address family not supported by protocol
+    c4-dev4:pid858392.R: Unable to initialize sockets NIC /sys/class/net/enp3s0f1 (unit 3:0)
+    c4-dev4:pid858392: PSM3 can't open nic unit: 3 (err=23)
     ...
-    c4-dev4:pid2186380.R: Unable to create UDP socket for enp3s0f1: Address family not supported by protocol
-    c4-dev4:pid2186380.R: Unable to initialize sockets NIC /sys/class/net/enp3s0f1 (unit 3:0)
+    c4-dev4:pid858392.R: Unable to create UDP socket for enp3s0f1: Address family not supported by protocol
+    c4-dev4:pid858392.R: Unable to initialize sockets NIC /sys/class/net/enp3s0f1 (unit 3:0)
     --------------------------------------------------------------------------
     Open MPI failed an OFI Libfabric library call (fi_endpoint).  This is highly
     unusual; your job may behave unpredictably (and/or abort) after this.
@@ -2069,7 +1992,7 @@ Run `revdepcheck::revdep_details(, "httpgd")` for more info
 
 *   checking tests ...
     ```
-      Running ‘testthat.R’/software/c4/cbi/software/_rocky8/R-4.4.2-gcc13/lib64/R/bin/BATCH: line 60: 2028277 Segmentation fault      (core dumped) ${R_HOME}/bin/R -f ${in} ${opts} ${R_BATCH_OPTIONS} > ${out} 2>&1
+      Running ‘testthat.R’/software/c4/cbi/software/_rocky8/R-4.4.2-gcc13/lib64/R/bin/BATCH: line 60: 782791 Segmentation fault      (core dumped) ${R_HOME}/bin/R -f ${in} ${opts} ${R_BATCH_OPTIONS} > ${out} 2>&1
     
      ERROR
     Running the tests in ‘tests/testthat.R’ failed.
@@ -2088,7 +2011,7 @@ Run `revdepcheck::revdep_details(, "httpgd")` for more info
       Execution halted
       
        *** caught segfault ***
-      address 0x87fc208, cause 'invalid permissions'
+      address 0x10, cause 'memory not mapped'
       An irrecoverable exception occurred. R is aborting now ...
     ```
 
@@ -2099,9 +2022,9 @@ Run `revdepcheck::revdep_details(, "httpgd")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 13.1Mb
+      installed size is 12.5Mb
       sub-directories of 1Mb or more:
-        libs  12.5Mb
+        libs  11.9Mb
     ```
 
 # hwep
@@ -2291,9 +2214,8 @@ Run `revdepcheck::revdep_details(, "ISAnalytics")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  7.8Mb
+      installed size is  7.5Mb
       sub-directories of 1Mb or more:
-        R      1.0Mb
         data   1.4Mb
         doc    3.8Mb
     ```
@@ -2500,13 +2422,13 @@ Run `revdepcheck::revdep_details(, "lidR")` for more info
       Running ‘testthat.R’
      ERROR
     Running the tests in ‘tests/testthat.R’ failed.
-    Complete output:
-      > Sys.setenv("R_TESTS" = "")
-      > 
+    Last 50 lines of output:
       > library(testthat)
       > library(lidR)
       > test_check("lidR")
       Tests using raster: terra 
+      Tests using future: TRUE 
+      Tests using OpenMP thread: 24 
     ...
       1/7744 mismatches
       [4990] 0.048 - 0.047 == 0.001
@@ -2515,7 +2437,7 @@ Run `revdepcheck::revdep_details(, "lidR")` for more info
       1/7744 mismatches
       [4990] 0.048 - 0.047 == 0.001
       
-      [ FAIL 2 | WARN 0 | SKIP 43 | PASS 1302 ]
+      [ FAIL 3 | WARN 0 | SKIP 43 | PASS 1301 ]
       Error: Test failures
       Execution halted
     ```
@@ -2692,59 +2614,7 @@ Run `revdepcheck::revdep_details(, "MineICA")` for more info
 
 </details>
 
-## Newly fixed
-
-*   checking examples ... ERROR
-    ```
-    Running examples in ‘MineICA-Ex.R’ failed
-    The error most likely occurred in:
-    
-    > ### Name: IcaSet
-    > ### Title: Class to Contain and Describe an ICA decomposition of
-    > ###   High-Throughput Data.
-    > ### Aliases: class:IcaSet IcaSet IcaSet-class [ [,ANY,ANY,IcaSet-method
-    > ###   [,IcaSet,ANY-method [,IcaSet,ANY,ANY-method
-    > ###   [,IcaSet,ANY,ANY,ANY-method [<- [<-,IcaSet,ANY,ANY,ANY,ANY-method
-    > ###   [<-,IcaSet,ANY,ANY,ANY-method [<-,IcaSet,ANY,ANY-method organism
-    ...
-    > ###   Slist,IcaSet-method SlistByGene,IcaSet-method Alist,IcaSet-method
-    > ### Keywords: classes
-    > 
-    > ### ** Examples
-    > 
-    > # create an instance of IcaSet
-    > new("IcaSet")
-    Error: Your query has been redirected to http://status.ensembl.org indicating this Ensembl service is currently unavailable.
-    Look at ?useEnsembl for details on how to try a mirror site.
-    Execution halted
-    ```
-
 ## In both
-
-*   checking re-building of vignette outputs ... ERROR
-    ```
-    Error(s) in re-building vignettes:
-    --- re-building ‘MineICA.Rnw’ using Sweave
-    Loading required package: BiocGenerics
-    
-    Attaching package: ‘BiocGenerics’
-    
-    The following objects are masked from ‘package:stats’:
-    
-        IQR, mad, sd, var, xtabs
-    
-    ...
-    Error : Your query has been redirected to http://status.ensembl.org indicating this Ensembl service is currently unavailable.
-    Look at ?useEnsembl for details on how to try a mirror site.
-    
-    --- failed re-building ‘MineICA.Rnw’
-    
-    SUMMARY: processing the following file failed:
-      ‘MineICA.Rnw’
-    
-    Error: Vignette re-building failed.
-    Execution halted
-    ```
 
 *   checking dependencies in R code ... WARNING
     ```
@@ -2794,6 +2664,31 @@ Run `revdepcheck::revdep_details(, "MineICA")` for more info
     should have documentation entries.
     See chapter ‘Writing R documentation files’ in the ‘Writing R
     Extensions’ manual.
+    ```
+
+*   checking re-building of vignette outputs ... WARNING
+    ```
+    Error(s) in re-building vignettes:
+    --- re-building ‘MineICA.Rnw’ using Sweave
+    Loading required package: BiocGenerics
+    
+    Attaching package: ‘BiocGenerics’
+    
+    The following objects are masked from ‘package:stats’:
+    
+        IQR, mad, sd, var, xtabs
+    
+    ...
+    l.23 \usepackage
+                    {subfig}^^M
+    !  ==> Fatal error occurred, no output PDF file produced!
+    --- failed re-building ‘MineICA.Rnw’
+    
+    SUMMARY: processing the following file failed:
+      ‘MineICA.Rnw’
+    
+    Error: Vignette re-building failed.
+    Execution halted
     ```
 
 *   checking package dependencies ... NOTE
@@ -2886,7 +2781,6 @@ Run `revdepcheck::revdep_details(, "missSBM")` for more info
     ```
       installed size is 10.0Mb
       sub-directories of 1Mb or more:
-        R      1.0Mb
         libs   8.0Mb
     ```
 
@@ -2964,8 +2858,8 @@ Run `revdepcheck::revdep_details(, "mlr3pipelines")` for more info
         'test_mlr_graphs_branching.R:26:3', 'test_mlr_graphs_bagging.R:6:3',
         'test_mlr_graphs_robustify.R:5:3', 'test_pipeop_adas.R:8:3',
         'test_pipeop_blsmote.R:8:3', 'test_pipeop_branch.R:4:3',
-        'test_pipeop_chunk.R:4:3', 'test_pipeop_boxcox.R:9:3',
-        'test_pipeop_classbalancing.R:10:3', 'test_pipeop_classweights.R:10:3',
+        'test_pipeop_chunk.R:4:3', 'test_pipeop_classbalancing.R:10:3',
+        'test_pipeop_boxcox.R:9:3', 'test_pipeop_classweights.R:10:3',
     ...
       ── Error ('test_dictionary.R:251:3'): Cannot add pipeops with keys that invalidates the convenience for id incrementation ──
       Error in ``$.R6`(mlr_pipeops, clone)`: R6 class DictionaryPipeOp/Dictionary/R6 does not have slot 'clone'!
@@ -2977,30 +2871,6 @@ Run `revdepcheck::revdep_details(, "mlr3pipelines")` for more info
       [ FAIL 1 | WARN 0 | SKIP 90 | PASS 12843 ]
       Error: Test failures
       Execution halted
-    ```
-
-# mlr3torch
-
-<details>
-
-* Version: 0.2.1
-* GitHub: https://github.com/mlr-org/mlr3torch
-* Source code: https://github.com/cran/mlr3torch
-* Date/Publication: 2025-02-13 16:00:02 UTC
-* Number of recursive dependencies: 107
-
-Run `revdepcheck::revdep_details(, "mlr3torch")` for more info
-
-</details>
-
-## In both
-
-*   checking installed package size ... NOTE
-    ```
-      installed size is  5.7Mb
-      sub-directories of 1Mb or more:
-        R      4.0Mb
-        help   1.6Mb
     ```
 
 # mlr3tuning
@@ -3620,29 +3490,6 @@ Run `revdepcheck::revdep_details(, "phylolm")` for more info
     Packages unavailable to check Rd xrefs: ‘geiger’, ‘caper’
     ```
 
-# phylopath
-
-<details>
-
-* Version: 1.3.0
-* GitHub: https://github.com/Ax3man/phylopath
-* Source code: https://github.com/cran/phylopath
-* Date/Publication: 2024-06-11 23:10:02 UTC
-* Number of recursive dependencies: 96
-
-Run `revdepcheck::revdep_details(, "phylopath")` for more info
-
-</details>
-
-## In both
-
-*   checking installed package size ... NOTE
-    ```
-      installed size is  5.5Mb
-      sub-directories of 1Mb or more:
-        doc   4.7Mb
-    ```
-
 # pliman
 
 <details>
@@ -3686,9 +3533,8 @@ Run `revdepcheck::revdep_details(, "PLNmodels")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 27.7Mb
+      installed size is 27.6Mb
       sub-directories of 1Mb or more:
-        R      1.0Mb
         data   1.4Mb
         doc    2.1Mb
         libs  22.4Mb
@@ -3881,6 +3727,13 @@ Run `revdepcheck::revdep_details(, "pseudohouseholds")` for more info
 </details>
 
 ## In both
+
+*   checking installed package size ... NOTE
+    ```
+      installed size is 12.8Mb
+      sub-directories of 1Mb or more:
+        data  12.5Mb
+    ```
 
 *   checking data for non-ASCII characters ... NOTE
     ```
@@ -4297,9 +4150,9 @@ Run `revdepcheck::revdep_details(, "Seurat")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 16.4Mb
+      installed size is 16.1Mb
       sub-directories of 1Mb or more:
-        R      2.0Mb
+        R      1.7Mb
         libs  13.4Mb
     ```
 
@@ -4333,7 +4186,7 @@ Run `revdepcheck::revdep_details(, "SeuratObject")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  5.6Mb
+      installed size is  5.5Mb
       sub-directories of 1Mb or more:
         R      1.5Mb
         libs   3.2Mb
@@ -4417,11 +4270,10 @@ Run `revdepcheck::revdep_details(, "shiny")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 14.0Mb
+      installed size is 13.7Mb
       sub-directories of 1Mb or more:
-        R      1.5Mb
-        help   1.2Mb
-        www   10.4Mb
+        R     1.5Mb
+        www  10.4Mb
     ```
 
 # shiny.worker
@@ -5027,10 +4879,10 @@ Run `revdepcheck::revdep_details(, "squat")` for more info
 
 <details>
 
-* Version: 2.2.0
+* Version: 2.3.0
 * GitHub: https://github.com/bcgov/ssdtools
 * Source code: https://github.com/cran/ssdtools
-* Date/Publication: 2025-01-14 19:10:02 UTC
+* Date/Publication: 2025-02-20 13:20:02 UTC
 * Number of recursive dependencies: 127
 
 Run `revdepcheck::revdep_details(, "ssdtools")` for more info
@@ -5041,7 +4893,7 @@ Run `revdepcheck::revdep_details(, "ssdtools")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 38.5Mb
+      installed size is 38.4Mb
       sub-directories of 1Mb or more:
         libs  37.3Mb
     ```
@@ -5343,7 +5195,7 @@ Run `revdepcheck::revdep_details(, "tenm")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  5.9Mb
+      installed size is  6.0Mb
       sub-directories of 1Mb or more:
         extdata   5.0Mb
     ```
@@ -5654,9 +5506,8 @@ Run `revdepcheck::revdep_details(, "tsmarch")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 22.0Mb
+      installed size is 21.5Mb
       sub-directories of 1Mb or more:
-        R      1.0Mb
         doc    1.6Mb
         libs  18.5Mb
     ```
@@ -5923,10 +5774,10 @@ Run `revdepcheck::revdep_details(, "wru")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  9.7Mb
+      installed size is  7.5Mb
       sub-directories of 1Mb or more:
         data   3.5Mb
-        help   4.1Mb
+        help   1.9Mb
         libs   1.9Mb
     ```
 
