@@ -17,6 +17,7 @@ prune_call <- function(expr, name) {
 prune_fcns <- function(expr) {
   expr <- prune_call(expr, name = "stop_if_not")
   expr <- prune_call(expr, name = "with_assert")
+  expr <- prune_call(expr, name = "assert_no_positional_args_but_first")
   expr
 }
 

@@ -41,8 +41,8 @@ nbrOfWorkers.cluster <- function(evaluator) {
 #' @export
 nbrOfWorkers.uniprocess <- function(evaluator) {
   assert_no_positional_args_but_first()
-  
-  1L
+  backend <- makeFutureBackend(evaluator)
+  nbrOfWorkers(backend)
 }
 
 
@@ -65,6 +65,11 @@ nbrOfWorkers.multiprocess <- function(evaluator) {
 #' @export
 nbrOfWorkers.future <- function(evaluator) {
   assert_no_positional_args_but_first()
+
+  backend <- makeFutureBackend(evaluator)
+  if (inherits(backend, "FutureBackend")) {
+    return(nbrOfWorkers(backend))
+  }  
   
   expr <- formals(evaluator)$workers
   workers <- eval(expr, enclos = baseenv())
