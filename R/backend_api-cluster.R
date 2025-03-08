@@ -27,14 +27,25 @@
 #' plan(cluster, workers = c("localhost", "n1", "n1", "pi.example.org"))
 #' ```
 #'
-#' @inheritParams ClusterFuture-class
 #' @inheritParams Future-class
 #' @inheritParams future
 #'
-#' @param \dots Additional named elements passed to [ClusterFuture()].
+#' @param workers A \code{\link[parallel:makeCluster]{cluster}} object,
+#' a character vector of host names, a positive numeric scalar,
+#' or a function.
+#' If a character vector or a numeric scalar, a `cluster` object
+#' is created using \code{\link[parallelly:makeClusterPSOCK]{makeClusterPSOCK}(workers)}.
+#' If a function, it is called without arguments _when the future
+#' is created_ and its value is used to configure the workers.
+#' The function should return any of the above types.
+#'
+#' @param persistent If FALSE, the evaluation environment is cleared
+#' from objects prior to the evaluation of the future.
+#' 
+#' @param \dots Additional named elements passed to [Future()].
 #'
 #' @return
-#' A \link{ClusterFuture}.
+#' A ClusterFuture.
 #'
 #' @example incl/cluster.R
 #'
