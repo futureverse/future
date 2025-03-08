@@ -93,3 +93,25 @@ launchFuture.MulticoreFutureBackend <- local({
     invisible(future)
   }
 })
+
+
+#' @export
+nbrOfWorkers.MulticoreFutureBackend <- function(evaluator) {
+  assert_no_positional_args_but_first()
+  backend <- evaluator
+  workers <- backend[["workers"]]
+  stop_if_not(length(workers) == 1L, !is.na(workers), workers >= 1L, is.finite(workers))
+  workers
+}
+
+
+#' @export
+nbrOfFreeWorkers.MulticoreFutureBackend <- function(evaluator, background = FALSE, ...) {
+  assert_no_positional_args_but_first()
+  backend <- evaluator
+  workers <- backend[["workers"]]
+  workers <- workers - usedCores()
+  stop_if_not(length(workers) == 1L, !is.na(workers), workers >= 0L, is.finite(workers))
+  workers
+}
+

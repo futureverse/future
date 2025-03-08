@@ -36,7 +36,7 @@
 #' This is passed down as-is to [parallelly::makeClusterPSOCK()].
 #'
 #' @return
-#' A \link{MultisessionFuture}.
+#' A MultisessionFuture.
 #' If `workers == 1`, then all processing is done in the
 #' current/main \R session and we therefore fall back to using a
 #' lazy future.  To override this fallback, use `workers = I(1)`.

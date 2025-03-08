@@ -16,7 +16,8 @@ winWorkaround <- (.Platform$OS.type == "windows" && getRversion() >= "4.0.0")
 
 message("*** Nested futures - mc.cores ...")
 
-strategies <- "multisession"
+strategies <- NULL
+if (!covr_testing) strategies <- c(strategies, "multisession")
 if (supportsMulticore()) strategies <- c(strategies, "multicore")
 
 pid <- Sys.getpid()

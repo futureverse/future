@@ -24,7 +24,7 @@ attr(multicore, "backend") <- MulticoreFutureBackend
   ## runs checks on examples, because, for instance,
   ## R_FUTURE_PLAN=multisession, will create connections that
   ## the check code will think are left over connections.
-  if (!nzchar(Sys.getenv("R_FUTURE_PLAN")) && "CheckExEnv" %in% search()) {
+  if (nzchar(Sys.getenv("R_FUTURE_PLAN")) && "CheckExEnv" %in% search()) {
     Sys.unsetenv("R_FUTURE_PLAN")
   }
   

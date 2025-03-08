@@ -221,3 +221,33 @@ launchFuture.ClusterFutureBackend <- function(backend, future, ...) {
   
   invisible(future)
 }
+
+
+#' @export
+nbrOfWorkers.ClusterFutureBackend <- function(evaluator) {
+  backend <- evaluator
+  workers <- backend[["workers"]]
+  stop_if_not(length(workers) > 0L, inherits(workers, "cluster"))
+  workers <- length(workers)
+  stop_if_not(length(workers) == 1L, !is.na(workers), workers >= 1L, is.finite(workers))
+  workers
+}
+
+
+#' @export
+nbrOfFreeWorkers.ClusterFutureBackend <- function(evaluator, ...) {
+  backend <- evaluator
+  workers <- backend[["workers"]]
+  stop_if_not(length(workers) > 0L, inherits(workers, "cluster"))
+  workers <- length(workers)
+  reg <- backend[["reg"]]
+  stop_if_not(length(reg) == 1L, is.character(reg), nzchar(reg))
+
+  ## Number of unresolved cluster futures
+  usedNodes <- length(FutureRegistry(reg, action = "list", earlySignal = FALSE))
+  
+  workers <- workers - usedNodes
+  stop_if_not(length(workers) == 1L, !is.na(workers), workers >= 0L, is.finite(workers))
+  
+  workers
+}

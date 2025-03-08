@@ -12,7 +12,7 @@ cluster(
 )
 }
 \arguments{
-\item{\dots}{Additional named elements passed to \code{\link[=ClusterFuture]{ClusterFuture()}}.}
+\item{\dots}{Additional named elements passed to \code{\link[=Future]{Future()}}.}
 
 \item{persistent}{If FALSE, the evaluation environment is cleared
 from objects prior to the evaluation of the future.}
@@ -30,7 +30,7 @@ The function should return any of the above types.}
 identified.}
 }
 \value{
-A \link{ClusterFuture}.
+A ClusterFuture.
 }
 \description{
 A cluster future is a future that uses cluster evaluation,

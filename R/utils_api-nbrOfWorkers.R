@@ -17,31 +17,6 @@ nbrOfWorkers <- function(evaluator = NULL) {
 
 
 #' @export
-nbrOfWorkers.ClusterFutureBackend <- function(evaluator) {
-  backend <- evaluator
-  workers <- backend[["workers"]]
-  stop_if_not(length(workers) > 0L, inherits(workers, "cluster"))
-  workers <- length(workers)
-  stop_if_not(length(workers) == 1L, !is.na(workers), workers >= 1L, is.finite(workers))
-  workers
-}
-
-#' @export
-nbrOfWorkers.MulticoreFutureBackend <- function(evaluator) {
-  assert_no_positional_args_but_first()
-  backend <- evaluator
-  workers <- backend[["workers"]]
-  stop_if_not(length(workers) == 1L, !is.na(workers), workers >= 1L, is.finite(workers))
-  workers
-}
-
-#' @export
-nbrOfWorkers.SequentialFutureBackend <- function(evaluator) {
-  1L
-}
-
-
-#' @export
 nbrOfWorkers.multiprocess <- function(evaluator) {
   assert_no_positional_args_but_first()
   backend <- makeFutureBackend(evaluator)
@@ -110,47 +85,6 @@ nbrOfFreeWorkers <- function(evaluator = NULL, background = FALSE, ...) {
   UseMethod("nbrOfFreeWorkers")
 }
 
-
-#' @export
-nbrOfFreeWorkers.ClusterFutureBackend <- function(evaluator, ...) {
-  backend <- evaluator
-  workers <- backend[["workers"]]
-  stop_if_not(length(workers) > 0L, inherits(workers, "cluster"))
-  workers <- length(workers)
-  reg <- backend[["reg"]]
-  stop_if_not(length(reg) == 1L, is.character(reg), nzchar(reg))
-
-  ## Number of unresolved cluster futures
-  usedNodes <- length(FutureRegistry(reg, action = "list", earlySignal = FALSE))
-  
-  workers <- workers - usedNodes
-  stop_if_not(length(workers) == 1L, !is.na(workers), workers >= 0L, is.finite(workers))
-  
-  workers
-}
-
-#' @export
-nbrOfFreeWorkers.MulticoreFutureBackend <- function(evaluator, background = FALSE, ...) {
-  assert_no_positional_args_but_first()
-  backend <- evaluator
-  workers <- backend[["workers"]]
-  workers <- workers - usedCores()
-  stop_if_not(length(workers) == 1L, !is.na(workers), workers >= 0L, is.finite(workers))
-  workers
-}
-
-#' @export
-nbrOfFreeWorkers.MultiprocessFutureBackend <- function(evaluator, background = FALSE, ...) {
-  assert_no_positional_args_but_first()
-  backend <- evaluator
-  stopf("nbrOfFreeWorkers() is not implemented for this type of future backend (please contacts the maintainer of that backend): %s", commaq(class(evaluator)))
-}
-
-#' @export
-nbrOfFreeWorkers.SequentialFutureBackend <- function(evaluator, background = FALSE, ...) {
-  assert_no_positional_args_but_first()
-  if (isTRUE(background)) 0L else 1L
-}
 
 
 #' @export
