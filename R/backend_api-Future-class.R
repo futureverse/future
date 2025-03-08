@@ -783,8 +783,7 @@ getFutureContext <- function(future, mc.cores = NULL, local = TRUE, ..., debug =
   ## Use default future strategy + identify packages needed by the backend
   if (length(strategiesR) == 0L) {
     if (debug) mdebug("Packages needed by future strategies (n = 0): <none>")
-    strategiesR <- getOption("future.plan")
-    if (is.null(strategiesR)) strategiesR <- sequential
+    strategiesR <- sequential
     backendPackages <- c("future")
   } else {
     ## Identify package namespaces needed for strategies

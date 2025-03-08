@@ -47,6 +47,11 @@ ClusterRegistry <- local({
 
 .makeCluster <- function(workers, ...) {
   if (length(workers) == 0L) return(NULL)
+  oenv <- Sys.getenv("R_FUTURE_PLAN", NA_character_)
+  Sys.unsetenv("R_FUTURE_PLAN")
+  on.exit({
+    if (!is.na(oenv)) Sys.setenv(R_FUTURE_PLAN = oenv)
+  })
   cl <- makeClusterPSOCK(workers, ...)
   cl <- addCovrLibPath(cl)
   cl
