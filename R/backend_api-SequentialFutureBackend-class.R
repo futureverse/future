@@ -51,3 +51,16 @@ launchFuture.SequentialFutureBackend <- function(backend, future, ...) {
 
   future
 }
+
+
+#' @export
+nbrOfWorkers.SequentialFutureBackend <- function(evaluator) {
+  1L
+}
+
+
+#' @export
+nbrOfFreeWorkers.SequentialFutureBackend <- function(evaluator, background = FALSE, ...) {
+  assert_no_positional_args_but_first()
+  if (isTRUE(background)) 0L else 1L
+}
