@@ -36,7 +36,7 @@ prune_debug <- function(expr) {
       return(expr)
     if (as.character(lhs) != "debug")
       return(expr)
-    expr <- NULL
+    expr <- quote(debug <- FALSE)
   }
   expr
 }
