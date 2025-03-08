@@ -10,7 +10,7 @@
 |collate  |en_US.UTF-8                                               |
 |ctype    |en_US.UTF-8                                               |
 |tz       |America/Los_Angeles                                       |
-|date     |2025-03-07                                                |
+|date     |2025-03-08                                                |
 |pandoc   |3.6.3 @ /software/c4/cbi/software/pandoc-3.6.3/bin/pandoc |
 |quarto   |NA                                                        |
 
@@ -69,10 +69,10 @@
 |BatchGetSymbols              |2.6.4     |       |        |     |
 |[batchtools](problems.md#batchtools)|0.9.17    |       |        |2    |
 |bayesian                     |1.0.1     |       |        |     |
-|BayesianMCPMod               |1.1.0     |       |        |     |
+|[BayesianMCPMod](problems.md#bayesianmcpmod)|1.1.0     |       |        |1    |
 |[bayesmove](problems.md#bayesmove)|0.2.1     |       |        |1    |
 |[bbknnR](problems.md#bbknnr) |1.1.1     |       |        |1    |
-|bcmaps                       |2.2.1     |       |        |     |
+|[bcmaps](problems.md#bcmaps) |2.2.1     |       |        |1    |
 |[BEKKs](problems.md#bekks)   |1.4.5     |       |        |1    |
 |bhmbasket                    |0.9.5     |       |        |     |
 |[bigDM](problems.md#bigdm)   |0.5.5     |       |        |2    |
@@ -94,13 +94,13 @@
 |cft                          |1.0.0     |       |        |     |
 |chatAI4R                     |0.3.6     |       |        |     |
 |[ChromSCape](problems.md#chromscape)|1.16.0    |       |3       |4    |
-|[civis](problems.md#civis)   |3.1.2     |       |        |1    |
+|[civis](problems.md#civis)   |3.1.2     |       |        |2    |
 |clickR                       |0.9.45    |       |        |     |
 |Clustering                   |1.7.10    |       |        |     |
 |[ClustIRR](problems.md#clustirr)|1.4.0     |       |        |2    |
 |[codalm](problems.md#codalm) |0.1.2     |       |        |1    |
 |[codebook](problems.md#codebook)|0.9.6     |       |        |1    |
-|[collinear](problems.md#collinear)|2.0.0     |       |        |1    |
+|[collinear](problems.md#collinear)|2.0.0     |       |        |2    |
 |conformalInference.fd        |1.1.1     |       |        |     |
 |conformalInference.multi     |1.1.1     |       |        |     |
 |[Coxmos](problems.md#coxmos) |1.1.2     |       |        |1    |
@@ -272,7 +272,7 @@
 |[mlr3tuning](problems.md#mlr3tuning)|1.3.0     |       |        |1    |
 |modelsummary                 |2.3.0     |       |        |     |
 |[momentuHMM](problems.md#momentuhmm)|1.5.5     |       |        |1    |
-|[MOSS](problems.md#moss)     |0.2.2     |       |        |1 -1 |
+|[MOSS](problems.md#moss)     |0.2.2     |       |        |1    |
 |mplusParallel.automation     |0.0.1.1   |       |        |     |
 |mrgsim.parallel              |0.2.1     |       |        |     |
 |mslp                         |1.8.0     |       |        |     |
@@ -331,7 +331,7 @@
 |protti                       |0.9.1     |       |        |     |
 |[psborrow2](problems.md#psborrow2)|0.0.4.0   |       |        |2    |
 |PSCBS                        |0.67.0    |       |        |     |
-|[pseudohouseholds](problems.md#pseudohouseholds)|0.1.1     |       |        |1    |
+|[pseudohouseholds](problems.md#pseudohouseholds)|0.1.1     |       |        |2    |
 |PUMP                         |1.0.3     |       |        |     |
 |[qape](problems.md#qape)     |2.1       |       |        |1    |
 |QBMS                         |1.5.0     |       |        |     |
@@ -393,7 +393,7 @@
 |[simtrial](problems.md#simtrial)|0.4.2     |       |        |1    |
 |skewlmm                      |1.1.2     |       |        |     |
 |[skpr](problems.md#skpr)     |1.7.1     |       |        |1    |
-|[SmCCNet](problems.md#smccnet)|2.0.3     |       |1       |     |
+|[SmCCNet](problems.md#smccnet)|2.0.3     |       |1       |1    |
 |[smoots](problems.md#smoots) |1.1.4     |       |        |1    |
 |sNPLS                        |1.0.27    |       |        |     |
 |[solitude](problems.md#solitude)|1.1.3     |       |        |1    |
