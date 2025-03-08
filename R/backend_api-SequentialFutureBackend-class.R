@@ -30,8 +30,6 @@ launchFuture.SequentialFutureBackend <- function(backend, future, ...) {
   ## Apply backend tweaks
   split <- backend[["split"]]
   if (!is.null(split)) data[["capture"]][["split"]] <- split
-  earlySignal <- backend[["earlySignal"]]
-  if (!is.null(earlySignal)) future[["earlySignal"]] <- earlySignal
 
   ## Launch future
   future[["state"]] <- "running"

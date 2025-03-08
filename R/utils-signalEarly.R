@@ -1,11 +1,9 @@
 signalEarly <- function(future, collect = TRUE, .signalEarly = TRUE, ...) {
+  ## Don't signal early?
+  if (!isTRUE(future[["earlySignal"]])) return(future)
+
   ## Future is not yet launched
   if (future[["state"]] == "created") return(future)
-
-  earlySignal <- future[["earlySignal"]]
-
-  ## Don't signal early?
-  if (!earlySignal) return(future)
 
   debug <- isTRUE(getOption("future.debug"))
   if (debug) mdebug("signalEarly() ...")
