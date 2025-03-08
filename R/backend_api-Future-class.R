@@ -403,7 +403,7 @@ run.Future <- function(future, ...) {
   if (future[["state"]] != "created") {
     label <- future[["label"]]
     if (is.null(label)) label <- "<none>"
-    msg <- sprintf("A future ('%s') can only be launched once.", label)
+    msg <- sprintf("A future ('%s') can only be launched once", label)
     stop(FutureError(msg, future = future))
   }
 
@@ -430,19 +430,6 @@ run.Future <- function(future, ...) {
   ## Implements a FutureBackend?
   backend <- makeFutureBackend(evaluator)
   if (!is.null(backend)) {
-    if (!inherits(backend, "FutureBackend")) {
-      stop(sprintf("[INTERNAL ERROR] run.Future(): the 'backend' generated for the %s object is not a FutureBackend object: %s", class(evaluator)[1], class(backend)[1]))
-    }
-  }
-
-  ## Use new FutureBackend approach?
-  if (inherits(backend, "FutureBackend")) {
-    if (future[["state"]] != "created") {
-      label <- future[["label"]]
-      if (is.null(label)) label <- "<none>"
-      stop(FutureError(sprintf("A future ('%s') can only be launched once", label), future = future))
-    }
-    
     ## Assert that the process that created the future is
     ## also the one that evaluates/resolves/queries it.
     assertOwner(future)
