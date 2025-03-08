@@ -44,45 +44,52 @@ MulticoreFutureBackend <- function(workers = availableCores(constraints = "multi
 
 
 #' @export
-launchFuture.MulticoreFutureBackend <- function(backend, future, ...) {
-  debug <- isTRUE(getOption("future.debug"))
-
-  mcparallel <- importParallel("mcparallel")
-
-  data <- getFutureData(future, debug = debug)
-
-  t_start <- Sys.time()
+launchFuture.MulticoreFutureBackend <- local({
+  mcparallel <- import_parallel_fcn("mcparallel")
   
-  ## Get a free worker
-  reg <- sprintf("multicore-%s", session_uuid())
-  requestCore(
-    await = function() FutureRegistry(reg, action = "collect-first", earlySignal = TRUE),
-    workers = backend[["workers"]]
-  )
-
-  if (inherits(future[[".journal"]], "FutureJournal")) {
-    appendToFutureJournal(future,
-         event = "getWorker",
-      category = "other",
-        parent = "launch",
-         start = t_start,
-          stop = Sys.time()
-    )
+  function(backend, future, ...) {
+    debug <- isTRUE(getOption("future.debug"))
+  
+    data <- getFutureData(future, debug = debug)
+  
+    t_start <- Sys.time()
+  
+    workers <- backend[["workers"]]
+    reg <- backend[["reg"]]
+  
+    timeout <- backend[["future.wait.timeout"]]
+    delta <- backend[["future.wait.interval"]]
+    alpha <- backend[["future.wait.alpha"]]
+  
+    ## Get a free worker
+    requestCore(await = function() {
+      FutureRegistry(reg, action = "collect-first", earlySignal = TRUE)
+    }, workers = workers, timeout = timeout, delta = delta, alpha = alpha)
+  
+    if (inherits(future[[".journal"]], "FutureJournal")) {
+      appendToFutureJournal(future,
+           event = "getWorker",
+        category = "other",
+          parent = "launch",
+           start = t_start,
+            stop = Sys.time()
+      )
+    }
+  
+    ## Add to registry
+    FutureRegistry(reg, action = "add", future = future, earlySignal = TRUE)
+  
+    job <- local({
+      oopts <- options(mc.cores = NULL)
+      on.exit(options(oopts))
+      mcparallel(evalFuture(data))
+    })
+  
+    future[["job"]] <- job
+    future[["state"]] <- "running"
+  
+    if (debug) mdebugf("%s started", class(future)[1])
+    
+    invisible(future)
   }
-
-  ## Add to registry
-  FutureRegistry(reg, action = "add", future = future, earlySignal = TRUE)
-
-  job <- local({
-    oopts <- options(mc.cores = NULL)
-    on.exit(options(oopts))
-    mcparallel(evalFuture(data))
-  })
-
-  future[["job"]] <- job
-  future[["state"]] <- "running"
-
-  if (debug) mdebugf("%s started", class(future)[1])
-  
-  invisible(future)
-}
+})

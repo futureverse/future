@@ -13,6 +13,15 @@ import_parallelly <- function(...) {
   import_from(..., package = "parallelly")
 }
 
+import_parallel <- function(...) {
+  import_from(..., package = "parallel")
+}
+
+import_parallel_fcn <- function(name, ...) {
+  import_from(name, ..., default = function(...) {
+    stop(sprintf("No such function: parallel:::%s()", name))
+  }, package = "parallel")
+}
 
 ## We are currently importing the following non-exported functions:
 ## * cluster futures:

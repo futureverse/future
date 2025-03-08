@@ -13,58 +13,61 @@
 #' @keywords internal
 #' @rdname FutureBackend
 #' @export
-ClusterFutureBackend <- function(workers = availableWorkers(), persistent = FALSE, earlySignal = TRUE, gc = FALSE, ...) {
-  if (is.function(workers)) workers <- workers()
-  if (is.null(workers)) {
-    getDefaultCluster <- importParallel("getDefaultCluster")
-    workers <- getDefaultCluster()
-    workers <- addCovrLibPath(workers)
-  } else if (is.character(workers) || is.numeric(workers)) {
-    ## Which '...' arguments should be passed to Future() and 
-    ## which should be passed to makeClusterPSOCK()?
-    workers <- ClusterRegistry("start", workers = workers, ...)
-  } else {
-    workers <- as.cluster(workers)
-    workers <- addCovrLibPath(workers)
+ClusterFutureBackend <- local({
+  getDefaultCluster <- import_parallel_fcn("getDefaultCluster")
+  
+    function(workers = availableWorkers(), persistent = FALSE, earlySignal = TRUE, gc = FALSE, ...) {
+    if (is.function(workers)) workers <- workers()
+    if (is.null(workers)) {
+      workers <- getDefaultCluster()
+      workers <- addCovrLibPath(workers)
+    } else if (is.character(workers) || is.numeric(workers)) {
+      ## Which '...' arguments should be passed to Future() and 
+      ## which should be passed to makeClusterPSOCK()?
+      workers <- ClusterRegistry("start", workers = workers, ...)
+    } else {
+      workers <- as.cluster(workers)
+      workers <- addCovrLibPath(workers)
+    }
+    if (!inherits(workers, "cluster")) {
+      stopf("Argument 'workers' is not of class 'cluster': %s", commaq(class(workers)))
+    }
+    stop_if_not(length(workers) > 0)
+  
+    ## Attached workers' session information, unless already done.
+    ## FIXME: We cannot do this here, because it introduces a race condition
+    ## where multiple similar requests may appear at the same time bringing
+    ## the send/receive data to be out of sync and therefore corrupt the
+    ## futures' values.
+    ##  workers <- add_cluster_session_info(workers)
+  
+    ## Attach name to cluster?
+    name <- attr(workers, "name", exact = TRUE)
+    if (is.null(name)) {
+      name <- digest(workers)
+      stop_if_not(length(name) > 0, nzchar(name))
+      attr(workers, "name") <- name
+    }
+  
+    ## Name of the FutureRegistry
+    reg <- sprintf("workers-%s", name)
+  
+    core <- FutureBackend(
+      workers = workers,
+      persistent = persistent,
+      reg = reg,
+      earlySignal = earlySignal,
+      gc = gc,
+      future.wait.timeout = getOption("future.wait.timeout", 30 * 24 * 60 * 60),
+      future.wait.interval = getOption("future.wait.interval", 0.01),
+      future.wait.alpha = getOption("future.wait.alpha", 1.01),
+      ...
+    )
+    core[["futureClasses"]] <- c("ClusterFuture", core[["futureClasses"]])
+    core <- structure(core, class = c("ClusterFutureBackend", "FutureBackend", class(core)))
+    core
   }
-  if (!inherits(workers, "cluster")) {
-    stopf("Argument 'workers' is not of class 'cluster': %s", commaq(class(workers)))
-  }
-  stop_if_not(length(workers) > 0)
-
-  ## Attached workers' session information, unless already done.
-  ## FIXME: We cannot do this here, because it introduces a race condition
-  ## where multiple similar requests may appear at the same time bringing
-  ## the send/receive data to be out of sync and therefore corrupt the
-  ## futures' values.
-  ##  workers <- add_cluster_session_info(workers)
-
-  ## Attach name to cluster?
-  name <- attr(workers, "name", exact = TRUE)
-  if (is.null(name)) {
-    name <- digest(workers)
-    stop_if_not(length(name) > 0, nzchar(name))
-    attr(workers, "name") <- name
-  }
-
-  ## Name of the FutureRegistry
-  reg <- sprintf("workers-%s", name)
-
-  core <- FutureBackend(
-    workers = workers,
-    persistent = persistent,
-    reg = reg,
-    earlySignal = earlySignal,
-    gc = gc,
-    future.wait.timeout = getOption("future.wait.timeout", 30 * 24 * 60 * 60),
-    future.wait.interval = getOption("future.wait.interval", 0.01),
-    future.wait.alpha = getOption("future.wait.alpha", 1.01),
-    ...
-  )
-  core[["futureClasses"]] <- c("ClusterFuture", core[["futureClasses"]])
-  core <- structure(core, class = c("ClusterFutureBackend", "FutureBackend", class(core)))
-  core
-}
+})
 
 
 #' @export
