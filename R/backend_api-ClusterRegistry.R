@@ -59,18 +59,27 @@ ClusterRegistry <- local({
 
 
 #' @importFrom parallel clusterCall
-addCovrLibPath <- function(cl) {
-  if (!is.element("covr", loadedNamespaces())) return(cl)
-  debug <- isTRUE(getOption("future.debug"))
+addCovrLibPath <- local({
+  is_covr <- NULL
   
-  ## WORKAROUND: When running covr::package_coverage(), the
-  ## package being tested may actually not be installed in
-  ## library path used by covr.  We here add that path iff
-  ## covr is being used. /HB 2016-01-15
-  if (debug) mdebug("covr::package_coverage() workaround ...")
-  libPath <- .libPaths()[1]
-  clusterCall(cl, fun = function() .libPaths(c(libPath, .libPaths())))
-  if (debug) mdebug("covr::package_coverage() workaround ... DONE")
-
-  cl
-}
+  function(cl) {
+    if (!is.null(is_covr)) {
+      if (!is_covr) return(cl)
+    } else {
+      is_covr <<- is.element("covr", loadedNamespaces())
+      if (!is_covr) return(cl)
+    }
+    debug <- isTRUE(getOption("future.debug"))
+    
+    ## WORKAROUND: When running covr::package_coverage(), the
+    ## package being tested may actually not be installed in
+    ## library path used by covr.  We here add that path iff
+    ## covr is being used. /HB 2016-01-15
+    if (debug) mdebug("covr::package_coverage() workaround ...")
+    libPath <- .libPaths()[1]
+    clusterCall(cl, fun = function() .libPaths(c(libPath, .libPaths())))
+    if (debug) mdebug("covr::package_coverage() workaround ... DONE")
+  
+    cl
+  }
+})
