@@ -20,6 +20,14 @@ attr(multicore, "backend") <- MulticoreFutureBackend
   update_package_option("future.debug", mode = "logical")
   debug <- isTRUE(getOption("future.debug"))
 
+  ## Special case: Disable 'R_FUTURE_PLAN' when 'R CMD check'
+  ## runs checks on examples, because, for instance,
+  ## R_FUTURE_PLAN=multisession, will create connections that
+  ## the check code will think are left over connections.
+  if (!is.na(Sys.getenv("R_FUTURE_PLAN")) && "CheckExEnv" %in% search()) {
+    Sys.unsetenv("R_FUTURE_PLAN")
+  }
+  
   if (debug) {
     envs <- Sys.getenv()
     envs <- envs[grep("R_FUTURE_", names(envs), fixed = TRUE)]
