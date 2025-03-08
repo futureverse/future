@@ -13,6 +13,7 @@ getGlobalsAndPackages(
   resolve = getOption("future.globals.resolve"),
   persistent = FALSE,
   maxSize = getOption("future.globals.maxSize", 500 * 1024^2),
+  onReference = getOption("future.globals.onReference", "ignore"),
   ...
 )
 }

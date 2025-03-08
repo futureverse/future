@@ -30,7 +30,7 @@
 #' @export
 #'
 #' @keywords internal
-getGlobalsAndPackages <- function(expr, envir = parent.frame(), tweak = tweakExpression, globals = TRUE, locals = getOption("future.globals.globalsOf.locals", TRUE), resolve = getOption("future.globals.resolve"), persistent = FALSE, maxSize = getOption("future.globals.maxSize", 500 * 1024 ^ 2), ...) {
+getGlobalsAndPackages <- function(expr, envir = parent.frame(), tweak = tweakExpression, globals = TRUE, locals = getOption("future.globals.globalsOf.locals", TRUE), resolve = getOption("future.globals.resolve"), persistent = FALSE, maxSize = getOption("future.globals.maxSize", 500 * 1024 ^ 2), onReference = getOption("future.globals.onReference", "ignore"), ...) {
   if (is.null(resolve)) {
     resolve <- FALSE
   } else {
@@ -385,13 +385,12 @@ getGlobalsAndPackages <- function(expr, envir = parent.frame(), tweak = tweakExp
 
   ## Protect against references?
   if (length(globals) > 0L) {
-    action <- getOption("future.globals.onReference", "ignore")
-    if (action != "ignore") {
+    if (onReference != "ignore") {
       if (debug) {
-        mdebugf("Checking for globals with references (future.globals.onReference = \"%s\") ...", action, appendLF = FALSE)
+        mdebugf("Checking for globals with references (future.globals.onReference = \"%s\") ...", onReference, appendLF = FALSE)
       }
       t <- system.time({
-        assert_no_references(globals, action = action)
+        assert_no_references(globals, action = onReference)
       }, gcFirst = FALSE)
       if (debug) mdebugf("[%.3f s]", t[3])
     }

@@ -191,8 +191,10 @@ future <- function(expr, envir = parent.frame(), substitute = TRUE, lazy = FALSE
   if (substitute) expr <- substitute(expr)
   t_start <- Sys.time()
 
+  onReference <- getOption("future.globals.onReference", "ignore")
+
   if (!is.null(globals)) {
-    gp <- getGlobalsAndPackages(expr, envir = envir, tweak = tweakExpression, globals = globals)
+    gp <- getGlobalsAndPackages(expr, envir = envir, tweak = tweakExpression, globals = globals, onReference = onReference)
     expr <- gp[["expr"]]
     globals <- gp[["globals"]]
     ## Record packages?
@@ -202,7 +204,7 @@ future <- function(expr, envir = parent.frame(), substitute = TRUE, lazy = FALSE
     gp <- NULL
     attr(globals, "already-done") <- TRUE
   }
-  
+
   future <- Future(expr, substitute = FALSE,
                    envir = envir,
                    lazy = TRUE,
@@ -214,6 +216,7 @@ future <- function(expr, envir = parent.frame(), substitute = TRUE, lazy = FALSE
                    earlySignal = earlySignal,
                    label = label,
                    gc = gc,
+                   onReference = onReference,
                    ...)
 
   ## WORKAROUND: Was argument 'local' specified?

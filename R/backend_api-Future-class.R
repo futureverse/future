@@ -124,6 +124,11 @@ Future <- function(expr = NULL, envir = parent.frame(), substitute = TRUE, stdou
 
   args <- list(...)
   args_names <- names(args)
+  if ("onReference" %in% args_names) {
+    onReference <- args[["onReference"]]
+  } else {
+    onReference <- getOption("future.globals.onReference", "ignore")
+  }
 
   ## WORKAROUND: Skip scanning of globals if already done /HB 2021-01-18
   if (!is.null(globals)) {
@@ -132,7 +137,7 @@ Future <- function(expr = NULL, envir = parent.frame(), substitute = TRUE, stdou
       ## Global objects?
       ## 'persistent' is only allowed for ClusterFuture:s, which will be
       ## asserted when run() is called /HB 2023-01-17
-      gp <- getGlobalsAndPackages(expr, envir = envir, tweak = tweakExpression, globals = globals, persistent = isTRUE(args[["persistent"]]))
+      gp <- getGlobalsAndPackages(expr, envir = envir, tweak = tweakExpression, globals = globals, persistent = isTRUE(args[["persistent"]]), onReference = onReference)
       globals <- gp[["globals"]]
       expr <- gp[["expr"]]
     
@@ -230,6 +235,7 @@ Future <- function(expr = NULL, envir = parent.frame(), substitute = TRUE, stdou
   core[["label"]] <- label
   core[["earlySignal"]] <- earlySignal
   core[["gc"]] <- gc
+  core[["onReference"]] <- onReference
   core[["owner"]] <- session_uuid()
   counter <- .package[["futureCounter"]] <- .package[["futureCounter"]] + 1L
   core[["uuid"]] <- future_uuid(owner = core[["owner"]], counter = counter)
@@ -792,7 +798,7 @@ getFutureContext <- function(future, mc.cores = NULL, local = TRUE, ..., debug =
     ## Pass down other future.* options
     future.globals.maxSize            = getOption("future.globals.maxSize"),
     future.globals.method             = getOption("future.globals.method"),
-    future.globals.onReference        = getOption("future.globals.onReference"),
+    future.globals.onReference        = future[["onReference"]],
     future.globals.resolve            = getOption("future.globals.resolve"),
     future.resolve.recursive          = getOption("future.resolve.recursive"),
     future.rng.onMisuse               = getOption("future.rng.onMisuse"),

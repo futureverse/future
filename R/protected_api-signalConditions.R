@@ -25,6 +25,9 @@
 #'
 #' @keywords internal
 signalConditions <- function(future, include = "condition", exclude = NULL, resignal = TRUE, ...) {
+  ## Nothing to do?
+  if (length(include) == 0L) return(invisible(future))
+  
   ## Future is not yet launched
   if (!future[["state"]] %in% c("finished", "failed")) {
     stop(FutureError(
@@ -34,9 +37,6 @@ signalConditions <- function(future, include = "condition", exclude = NULL, resi
       future = future))
   }
 
-  ## Nothing to do?
-  if (length(include) == 0L) return(invisible(future))
-  
   result <- result(future)
   stop_if_not(inherits(result, "FutureResult"))
   

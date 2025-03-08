@@ -45,7 +45,6 @@ value.Future <- function(future, stdout = TRUE, signal = TRUE, ...) {
 
   value <- result[["value"]]
   visible <- result[["visible"]]
-  if (is.null(visible)) visible <- TRUE
 
   ## Always signal immediateCondition:s and as soon as possible.
   ## They will always be signaled if they exist.
@@ -156,7 +155,7 @@ value.Future <- function(future, stdout = TRUE, signal = TRUE, ...) {
 
 
   ## Check for non-exportable objects in the value?
-  onReference <- getOption("future.globals.onReference", "ignore")
+  onReference <- future[["onReference"]]
   if (onReference %in% c("error", "warning")) {
     new <- tryCatch({
       assert_no_references(value, action = onReference, source = "value")
@@ -208,7 +207,7 @@ value.Future <- function(future, stdout = TRUE, signal = TRUE, ...) {
     }
   }
   
-  if (visible) value else invisible(value)
+  if (isTRUE(visible)) value else invisible(value)
 }
 
 
