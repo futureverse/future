@@ -31,6 +31,10 @@ launchFuture.SequentialFutureBackend <- function(backend, future, ...) {
   split <- backend[["split"]]
   if (!is.null(split)) data[["capture"]][["split"]] <- split
 
+  ## Inherit 'earlySignal' from backend?
+  earlySignal <- backend[["earlySignal"]]
+  if (!is.null(earlySignal)) future[["earlySignal"]] <- earlySignal
+
   ## Launch future
   future[["state"]] <- "running"
   future[["result"]] <- evalFuture(data)
