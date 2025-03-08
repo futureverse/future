@@ -50,7 +50,17 @@ ClusterFutureBackend <- function(workers = availableWorkers(), persistent = FALS
   ## Name of the FutureRegistry
   reg <- sprintf("workers-%s", name)
 
-  core <- FutureBackend(workers = workers, persistent = persistent, reg = reg, earlySignal = earlySignal, gc = gc, ...)
+  core <- FutureBackend(
+    workers = workers,
+    persistent = persistent,
+    reg = reg,
+    earlySignal = earlySignal,
+    gc = gc,
+    future.wait.timeout = getOption("future.wait.timeout", 30 * 24 * 60 * 60),
+    future.wait.interval = getOption("future.wait.interval", 0.01),
+    future.wait.alpha = getOption("future.wait.alpha", 1.01),
+    ...
+  )
   core[["futureClasses"]] <- c("ClusterFuture", core[["futureClasses"]])
   core <- structure(core, class = c("ClusterFutureBackend", "FutureBackend", class(core)))
   core
@@ -86,9 +96,13 @@ launchFuture.ClusterFutureBackend <- function(backend, future, ...) {
   ## (1) Get a free worker. This will block until one is available
   if (debug) mdebug("requestWorker() ...")
 
+  timeout <- backend[["future.wait.timeout"]]
+  delta <- backend[["future.wait.interval"]]
+  alpha <- backend[["future.wait.alpha"]]
+
   node_idx <- requestNode(await = function() {
     FutureRegistry(reg, action = "collect-first", earlySignal = TRUE)
-  }, workers = workers)
+  }, workers = workers, timeout = timeout, delta = delta, alpha = alpha)
   future[["node"]] <- node_idx
 
   if (inherits(future[[".journal"]], "FutureJournal")) {

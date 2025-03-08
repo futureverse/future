@@ -27,7 +27,16 @@ MulticoreFutureBackend <- function(workers = availableCores(constraints = "multi
     return(SequentialFutureBackend(...))
   }
 
-  core <- FutureBackend(workers = workers, ...)
+  reg <- sprintf("multicore-%s", session_uuid())
+
+  core <- FutureBackend(
+    workers = workers,
+    reg = reg,
+    future.wait.timeout = getOption("future.wait.timeout", 30 * 24 * 60 * 60),
+    future.wait.interval = getOption("future.wait.interval", 0.01),
+    future.wait.alpha = getOption("future.wait.alpha", 1.01),
+    ...
+  )
   core[["futureClasses"]] <- c("MulticoreFuture", "MultiprocessFuture", core[["futureClasses"]])
   core <- structure(core, class = c("MulticoreFutureBackend", "FutureBackend", class(core)))
   core

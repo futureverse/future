@@ -228,13 +228,18 @@ launchFuture.MulticoreFutureBackend <- function(backend, future, ...) {
   data <- getFutureData(future, debug = debug)
 
   t_start <- Sys.time()
-  
+
+  workers <- backend[["workers"]]
+  reg <- backend[["reg"]]
+
+  timeout <- backend[["future.wait.timeout"]]
+  delta <- backend[["future.wait.interval"]]
+  alpha <- backend[["future.wait.alpha"]]
+
   ## Get a free worker
-  reg <- sprintf("multicore-%s", session_uuid())
-  requestCore(
-    await = function() FutureRegistry(reg, action = "collect-first", earlySignal = TRUE),
-    workers = backend[["workers"]]
-  )
+  requestCore(await = function() {
+    FutureRegistry(reg, action = "collect-first", earlySignal = TRUE)
+  }, workers = workers, timeout = timeout, delta = delta, alpha = alpha)
 
   if (inherits(future[[".journal"]], "FutureJournal")) {
     appendToFutureJournal(future,
