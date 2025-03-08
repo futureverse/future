@@ -13,7 +13,7 @@
 #' @keywords internal
 #' @rdname FutureBackend
 #' @export
-ClusterFutureBackend <- function(workers = availableWorkers(), persistent = FALSE, earlySignal = TRUE, ...) {
+ClusterFutureBackend <- function(workers = availableWorkers(), persistent = FALSE, earlySignal = TRUE, gc = FALSE, ...) {
   if (is.function(workers)) workers <- workers()
   if (is.null(workers)) {
     getDefaultCluster <- importParallel("getDefaultCluster")
@@ -50,7 +50,7 @@ ClusterFutureBackend <- function(workers = availableWorkers(), persistent = FALS
   ## Name of the FutureRegistry
   reg <- sprintf("workers-%s", name)
 
-  core <- FutureBackend(workers = workers, persistent = persistent, reg = reg, ...)
+  core <- FutureBackend(workers = workers, persistent = persistent, reg = reg, earlySignal = earlySignal, gc = gc, ...)
   core[["futureClasses"]] <- c("ClusterFuture", core[["futureClasses"]])
   core <- structure(core, class = c("ClusterFutureBackend", "FutureBackend", class(core)))
   core
@@ -175,7 +175,14 @@ launchFuture.ClusterFutureBackend <- function(backend, future, ...) {
     if (debug) mdebug("eraseGlobalEnvironment() ... done")
   }
 
-  ## (3) Launch future
+
+  ## (3) Garbage collection
+  if (isTRUE(backend[["gc"]])) {
+    cluster_call_blocking(cl, fun = gc, future = future, when = "call gc() on")
+  }
+  
+
+  ## (4) Launch future
   if (debug) mdebug("launchFuture() ...")
   worker <- future[["node"]]
   stop_if_not(
