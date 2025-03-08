@@ -14,8 +14,8 @@ message("Library paths: ", commaq(.libPaths()))
 message("Package path: ", sQuote(system.file(package = "future")))
 message("TMPDIR for parallel workers: ", sQuote(Sys.getenv("TMPDIR")))
 
-types <- "PSOCK"
-
+types <- NULL
+if (!covr_testing) types <- c(types, "PSOCK")
 if (supportsMulticore()) types <- c(types, "FORK")
 
 pid <- Sys.getpid()
