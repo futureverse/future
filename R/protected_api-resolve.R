@@ -101,7 +101,7 @@ resolve.Future <- function(x, idxs = NULL, recursive = 0, result = FALSE, stdout
     
     ## Recursively resolve result value?
     if (recursive > 0) {
-      value <- future[["result"]]$value
+      value <- future[["result"]][["value"]]
       if (!is.atomic(value)) {
         resolve(value, recursive = recursive - 1, result = TRUE, stdout = stdout, signal = signal, sleep = sleep, ...)
         msg <- sprintf("%s (and resolved itself)", msg)
@@ -220,7 +220,7 @@ resolve.list <- function(x, idxs = NULL, recursive = 0, result = FALSE, stdout =
         ## so that future can be resolved in the asynchronously
         if (inherits(obj, "Future")) {
           ## Lazy future that is not yet launched?
-          if (obj$state == 'created') obj <- run(obj)
+          if (obj[["state"]] == 'created') obj <- run(obj)
           if (!resolved(obj)) next
           if (debug) mdebugf("Future #%d", ii)
           if (result) value(obj, stdout = FALSE, signal = FALSE)
@@ -338,7 +338,7 @@ resolve.environment <- function(x, idxs = NULL, recursive = 0, result = FALSE, s
         ## so that future can be resolved in the asynchronously
         if (inherits(obj, "Future")) {
           ## Lazy future that is not yet launched?
-          if (obj$state == 'created') obj <- run(obj)
+          if (obj[["state"]] == 'created') obj <- run(obj)
           if (!resolved(obj)) next
           if (debug) mdebugf("Future #%d", ii)
           if (result) value(obj, stdout = FALSE, signal = FALSE)
@@ -465,7 +465,7 @@ resolve.listenv <- function(x, idxs = NULL, recursive = 0, result = FALSE, stdou
         ## so that future can be resolved in the asynchronously
         if (inherits(obj, "Future")) {
           ## Lazy future that is not yet launched?
-          if (obj$state == 'created') obj <- run(obj)
+          if (obj[["state"]] == 'created') obj <- run(obj)
           if (!resolved(obj)) next
           if (debug) mdebugf("Future #%d", ii)
           if (result) value(obj, stdout = FALSE, signal = FALSE)

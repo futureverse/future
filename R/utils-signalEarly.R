@@ -22,7 +22,7 @@ signalEarly <- function(future, collect = TRUE, .signalEarly = TRUE, ...) {
   result <- result(future)
   stop_if_not(inherits(result, "FutureResult"))
   
-  conditions <- result$conditions
+  conditions <- result[["conditions"]]
   
   ## Nothing to do?
   if (!.signalEarly || length(conditions) == 0L) {
@@ -36,7 +36,7 @@ signalEarly <- function(future, collect = TRUE, .signalEarly = TRUE, ...) {
   
   if (debug) {
     conditionClasses <- vapply(conditions,
-                               FUN = function(c) class(c$condition)[1],
+                               FUN = function(c) class(c[["condition"]])[1],
                                FUN.VALUE = NA_character_)
     mdebugf("signalEarly(): Condition classes = [n=%s] %s",
            length(conditionClasses), hpaste(sQuote(conditionClasses)))

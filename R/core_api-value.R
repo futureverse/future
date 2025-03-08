@@ -43,8 +43,8 @@ value.Future <- function(future, stdout = TRUE, signal = TRUE, ...) {
   result <- result(future)
   stop_if_not(inherits(result, "FutureResult"))
 
-  value <- result$value
-  visible <- result$visible
+  value <- result[["value"]]
+  visible <- result[["visible"]]
   if (is.null(visible)) visible <- TRUE
 
   ## Always signal immediateCondition:s and as soon as possible.
@@ -53,12 +53,12 @@ value.Future <- function(future, stdout = TRUE, signal = TRUE, ...) {
 
   ## Output captured standard output?
   if (stdout) {
-    if (length(result$stdout) > 0 &&
-        inherits(result$stdout, "character")) {
-      out <- paste(result$stdout, collapse = "\n")
+    if (length(result[["stdout"]]) > 0 &&
+        inherits(result[["stdout"]], "character")) {
+      out <- paste(result[["stdout"]], collapse = "\n")
       if (nzchar(out)) {
         ## AD HOC: Fix captured UTF-8 output on MS Windows?
-        if (!isTRUE(result$r_info$captures_utf8) && getOption("future.stdout.windows.reencode", TRUE)) {
+        if (!isTRUE(result[["r_info"]][["captures_utf8"]]) && getOption("future.stdout.windows.reencode", TRUE)) {
           out <- adhoc_native_to_utf8(out)
         }
         cat(out)
@@ -67,20 +67,20 @@ value.Future <- function(future, stdout = TRUE, signal = TRUE, ...) {
 
     ## Drop captured stdout to save memory?
     if (isTRUE(attr(future[["stdout"]], "drop"))) {
-      result$stdout <- NULL
+      result[["stdout"]] <- NULL
       future[["result"]] <- result
     }
   }
 
 
   ## Were there any variables added to the global enviroment?
-  if (length(result$globalenv$added) > 0L) {
+  if (length(result[["globalenv"]][["added"]]) > 0L) {
     onMisuse <- getOption("future.globalenv.onMisuse", "ignore")
     if (onMisuse != "ignore") {
       if (onMisuse == "error") {
-        cond <- GlobalEnvFutureError(globalenv = result$globalenv, future = future)
+        cond <- GlobalEnvFutureError(globalenv = result[["globalenv"]], future = future)
       } else if (onMisuse == "warning") {
-        cond <- GlobalEnvFutureWarning(globalenv = result$globalenv, future = future)
+        cond <- GlobalEnvFutureWarning(globalenv = result[["globalenv"]], future = future)
       } else {
         cond <- NULL
         warnf("Unknown value on option 'future.globalenv.onMisuse': %s",
@@ -90,18 +90,18 @@ value.Future <- function(future, stdout = TRUE, signal = TRUE, ...) {
       if (!is.null(cond)) {
         ## FutureCondition to stack of captured conditions
         new <- list(condition = cond, signaled = FALSE)
-        conditions <- result$conditions
+        conditions <- result[["conditions"]]
         n <- length(conditions)
       
         ## An existing run-time error takes precedence
-        if (n > 0L && inherits(conditions[[n]]$condition, "error")) {
+        if (n > 0L && inherits(conditions[[n]][["condition"]], "error")) {
           conditions[[n + 1L]] <- conditions[[n]]
           conditions[[n]] <- new
         } else {
           conditions[[n + 1L]] <- new
         }
         
-        result$conditions <- conditions
+        result[["conditions"]] <- conditions
         future[["result"]] <- result
       }
     }
@@ -109,14 +109,14 @@ value.Future <- function(future, stdout = TRUE, signal = TRUE, ...) {
 
 
   ## Was RNG used without requesting RNG seeds?
-  if (!isTRUE(future[[".rng_checked"]]) && isFALSE(future[["seed"]]) && isTRUE(result$rng)) {
+  if (!isTRUE(future[[".rng_checked"]]) && isFALSE(future[["seed"]]) && isTRUE(result[["rng"]])) {
     ## BACKWARD COMPATIBILITY: Until higher-level APIs set future()
     ## argument 'seed' to indicate that RNGs are used. /HB 2019-12-24
     if (any(grepl(".doRNG.stream", deparse(future[["expr"]]), fixed = TRUE))) {
       ## doFuture w/ doRNG, e.g. %dorng%
-    } else if (is_lecyer_cmrg_seed(future[["globals"]]$...future.seeds_ii[[1]])) {
+    } else if (is_lecyer_cmrg_seed(future[["globals"]][["...future.seeds_ii"]][[1]])) {
       .Defunct(msg = "Please upgrade your 'future.apply' or 'furrr' (type 1)")
-    } else if (is_lecyer_cmrg_seed(future[["envir"]]$...future.seeds_ii[[1]])) {
+    } else if (is_lecyer_cmrg_seed(future[["envir"]][["...future.seeds_ii"]][[1]])) {
       .Defunct(msg = "Please upgrade your 'future.apply' or 'furrr' (type 2)")
     } else {
       onMisuse <- getOption("future.rng.onMisuse", "warning")
@@ -134,18 +134,18 @@ value.Future <- function(future, stdout = TRUE, signal = TRUE, ...) {
         if (!is.null(cond)) {
           ## RngFutureCondition to stack of captured conditions
           new <- list(condition = cond, signaled = FALSE)
-          conditions <- result$conditions
+          conditions <- result[["conditions"]]
           n <- length(conditions)
           
           ## An existing run-time error takes precedence
-          if (n > 0L && inherits(conditions[[n]]$condition, "error")) {
+          if (n > 0L && inherits(conditions[[n]][["condition"]], "error")) {
             conditions[[n + 1L]] <- conditions[[n]]
             conditions[[n]] <- new
           } else {
             conditions[[n + 1L]] <- new
           }
           
-          result$conditions <- conditions
+          result[["conditions"]] <- conditions
           future[["result"]] <- result
         }
       }
@@ -167,25 +167,25 @@ value.Future <- function(future, stdout = TRUE, signal = TRUE, ...) {
 
     if (!is.null(new)) {
       ## Append FutureCondition to the regular condition stack
-      conditions <- result$conditions
+      conditions <- result[["conditions"]]
       n <- length(conditions)
 
       ## An existing run-time error takes precedence
-      if (n > 0L && inherits(conditions[[n]]$condition, "error")) {
+      if (n > 0L && inherits(conditions[[n]][["condition"]], "error")) {
         conditions[[n + 1L]] <- conditions[[n]]
         conditions[[n]] <- new
       } else {
         conditions[[n + 1L]] <- new
       }
       
-      result$conditions <- conditions
+      result[["conditions"]] <- conditions
       future[["result"]] <- result
     }
   }
 
 
   ## Signal captured conditions?
-  conditions <- result$conditions
+  conditions <- result[["conditions"]]
   if (length(conditions) > 0) {
     if (signal) {
       mdebugf("Future state: %s", sQuote(future[["state"]]))
@@ -200,7 +200,7 @@ value.Future <- function(future, stdout = TRUE, signal = TRUE, ...) {
       signalConditions(future, exclude = immediateConditionClasses, resignal = TRUE)
     } else {
       ## Return 'error' object, iff exists, otherwise NULL
-      error <- conditions[[length(conditions)]]$condition
+      error <- conditions[[length(conditions)]][["condition"]]
       if (inherits(error, "error")) {
         value <- error
         visible <- TRUE

@@ -59,8 +59,8 @@ makeFutureBackend <- function(evaluator, ...) {
   args <- attr(evaluator, "tweaks")
   if (is.null(args)) args <- list()
   args2 <- formals(evaluator)
-  args2$`...` <- NULL
-  args2$envir <- NULL
+  args2[["..."]] <- NULL
+  args2[["envir"]] <- NULL
   args2$lazy <- NULL         ## bc multisession; should be removed
   for (name in names(args2)) {
     args[[name]] <- args2[[name]]

@@ -11,12 +11,12 @@ stealth_sample <- function(x, size = length(x), replace = FALSE, ...) {
     return(rep(x, times = size))
   }
   
-  oseed <- .GlobalEnv$.Random.seed
+  oseed <- .GlobalEnv[[".Random.seed"]]
   on.exit({
     if (is.null(oseed)) {
       rm(list = ".Random.seed", envir = .GlobalEnv, inherits = FALSE)
     } else {
-      .GlobalEnv$.Random.seed <- oseed
+      .GlobalEnv[[".Random.seed"]] <- oseed
     }
   })
 
@@ -29,7 +29,7 @@ stealth_sample <- function(x, size = length(x), replace = FALSE, ...) {
   time_offset <- paste(time_offset, collapse = "")
   time_offset <- as.numeric(time_offset)
   time_offset <- time_offset + Sys.getpid() ## process ID
-  time_offset <- time_offset %% .Machine$integer.max
+  time_offset <- time_offset %% .Machine[["integer.max"]]
   set.seed(time_offset)
 
   sample(x, size = size, replace = replace, ...)

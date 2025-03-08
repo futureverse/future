@@ -29,7 +29,7 @@ session_uuid <- local({
       info = info,
       pid = pid,
       time = Sys.time(),
-      random = stealth_sample(.Machine$integer.max, size = 1L)
+      random = stealth_sample(.Machine[["integer.max"]], size = 1L)
     )
     uuid <- uuid(info, keep_source = TRUE)
     uuids[[pidstr]] <<- uuid
@@ -46,12 +46,12 @@ uuid_of_connection <- function(con, ..., must_work = TRUE) {
   stop_if_not(inherits(con, "connection"))
   if (must_work) {
     info <- summary(con)
-    info$opened <- NULL
+    info[["opened"]] <- NULL
     uuid <- uuid(info, ...)
   } else {
     uuid <- tryCatch({
       info <- summary(con)
-      info$opened <- NULL
+      info[["opened"]] <- NULL
       uuid(info, ...)
     }, error = function(ex) {
       attr(con, "uuid", exact = TRUE)

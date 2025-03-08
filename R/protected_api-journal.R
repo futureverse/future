@@ -79,54 +79,54 @@ journal.Future <- function(x, ...) {
   session_uuid <- rep(session_uuid, times = nrow(data))
   
   ## Backward compatibility (until all backends does this)
-  if (!is.element("evaluate", data$event) && !is.null(x[["result"]])) {
+  if (!is.element("evaluate", data[["event"]]) && !is.null(x[["result"]])) {
     stop_if_not(is.character(session_uuid))
     x <- appendToFutureJournal(x,
          event = "evaluate",
       category = "evaluation",
-         start = x[["result"]]$started,
-          stop = x[["result"]]$finished
+         start = x[["result"]][["started"]],
+          stop = x[["result"]][["finished"]]
     )
     data <- x[[".journal"]]
-    stop_if_not(length(x[["result"]]$session_uuid) == 1L, is.character(x[["result"]]$session_uuid))
-    session_uuid <- c(session_uuid, x[["result"]]$session_uuid)
+    stop_if_not(length(x[["result"]][["session_uuid"]]) == 1L, is.character(x[["result"]][["session_uuid"]]))
+    session_uuid <- c(session_uuid, x[["result"]][["session_uuid"]])
     stop_if_not(inherits(data, "FutureJournal"))
   }
 
   ## Find relative time zero
-  baseline <- min(data$start, na.rm = TRUE)
+  baseline <- min(data[["start"]], na.rm = TRUE)
 
   ## Append 'at' and 'duration'
-  data$at <- data$start - baseline
-  data$duration <- data$stop - data$start
-  data$stop <- NULL
+  data[["at"]] <- data[["start"]] - baseline
+  data[["duration"]] <- data[["stop"]] - data[["start"]]
+  data[["stop"]] <- NULL
 
   ## Append future 'label'
-  data$future_label <- if (is.null(x[["label"]])) NA_character_ else x[["label"]]
+  data[["future_label"]] <- if (is.null(x[["label"]])) NA_character_ else x[["label"]]
 
   ## Append future UUID
-  data$future_uuid <- as.factor(paste(x[["uuid"]], collapse = "-"))
+  data[["future_uuid"]] <- as.factor(paste(x[["uuid"]], collapse = "-"))
 
   ## Append session UUID
-  data$session_uuid <- as.factor(session_uuid)
+  data[["session_uuid"]] <- as.factor(session_uuid)
 
   ## Coerce 'event' to a factor
   known_levels <- c("lifespan", "create", "launch", "resolved", "gather", "evaluate")
   extra_levels <- c("attachPackages", "eraseWorker", "exportGlobals", "receiveResult", "getWorker")
-  other_levels <- sort(setdiff(data$event, known_levels))
+  other_levels <- sort(setdiff(data[["event"]], known_levels))
   levels <- c(known_levels, other_levels)
-  data$event <- factor(data$event, levels = levels)
+  data[["event"]] <- factor(data[["event"]], levels = levels)
 
   ## Coerce 'category' to a factor
   levels <- c("evaluation", "overhead", "waiting")
-  data$category <- factor(data$category, levels = levels)
+  data[["category"]] <- factor(data[["category"]], levels = levels)
 
   ## Coerce 'category' to a factor
   levels <- c("evaluation", "overhead", "waiting")
-  data$category <- factor(data$category, levels = levels)
+  data[["category"]] <- factor(data[["category"]], levels = levels)
 
   ## Sort by relative start time
-  if (nrow(data) > 1L) data <- data[order(data$at), ]
+  if (nrow(data) > 1L) data <- data[order(data[["at"]]), ]
 
   data
 }
@@ -135,8 +135,8 @@ journal.Future <- function(x, ...) {
 journal.FutureJournal <- function(x, baseline = NULL, ...) {
   ## Reset relative time zero?
   if (!is.null(baseline)) {
-    if (isTRUE(baseline)) baseline <- min(x$start, na.rm = TRUE)
-    x$at <- x$start - baseline
+    if (isTRUE(baseline)) baseline <- min(x[["start"]], na.rm = TRUE)
+    x[["at"]] <- x[["start"]] - baseline
   }
   x
 }
@@ -147,7 +147,7 @@ journal.list <- function(x, baseline = TRUE, ...) {
   if (isTRUE(baseline)) {
     stop_if_not(baseline >= 1L, baseline <= length(x))
     x <- lapply(x, FUN = journal, ...)
-    start <- lapply(x, FUN = function(x) min(x$start, na.rm = TRUE))
+    start <- lapply(x, FUN = function(x) min(x[["start"]], na.rm = TRUE))
     start <- Reduce(c, start)
     baseline <- min(start, na.rm = TRUE)
   }
@@ -177,11 +177,11 @@ summary.FutureJournal <- function(object, ...) {
   
   dt_top <- subset(object, is.na(parent))
 
-  uuids <- unique(dt_top$future_uuid)
+  uuids <- unique(dt_top[["future_uuid"]])
   nbr_of_futures <- length(uuids)
 
   ## Calculate 'stop' times
-  dt_top$stop <- dt_top$start + dt_top$duration
+  dt_top[["stop"]] <- dt_top[["start"]] + dt_top[["duration"]]
 
   ## -------------------------------------------------------
   ## 1. Calculate the total walltime
@@ -296,13 +296,13 @@ updateFutureJournal <- function(x, event, start = NULL, stop = Sys.time()) {
 
   data <- x[[".journal"]]
   stop_if_not(inherits(data, "FutureJournal"))
-  row <- which(data$event == event)
+  row <- which(data[["event"]] == event)
   n <- length(row)
   if (n == 0L) stop("No such 'event' entry in journal: ", sQuote(event))
   if (n > 1L) row <- row[n]
   entry <- data[row, ]
-  if (!is.null(start)) entry$start <- start
-  if (!is.null(stop)) entry$stop <- stop
+  if (!is.null(start)) entry[["start"]] <- start
+  if (!is.null(stop)) entry[["stop"]] <- stop
   data[row, ] <- entry
   stop_if_not(inherits(data, "FutureJournal"))
   x[[".journal"]] <- data
@@ -314,7 +314,7 @@ appendToFutureJournal <- function(x, event, category = "other", parent = NA_char
   ## Nothing to do?
   if (!inherits(x[[".journal"]], "FutureJournal")) return(x)
 
-  if (skip && is.element(event, x[[".journal"]]$event)) return(x)
+  if (skip && is.element(event, x[[".journal"]][["event"]])) return(x)
   
   stop_if_not(
     inherits(x, "Future"),
@@ -337,7 +337,7 @@ appendToFutureJournal <- function(x, event, category = "other", parent = NA_char
 FutureJournalCondition <- function(message, journal, call = NULL, uuid = future[["uuid"]], future = NULL) {
   stop_if_not(inherits(journal, "FutureJournal"))
   cond <- FutureCondition(message = message, call = call, uuid = uuid, future = future)
-  cond$journal <- journal
+  cond[["journal"]] <- journal
   class <- c("FutureJournalCondition", class(cond))
   class(cond) <- class[!duplicated(class, fromLast = TRUE)]
   cond
@@ -345,5 +345,5 @@ FutureJournalCondition <- function(message, journal, call = NULL, uuid = future[
 
 #' @export
 journal.FutureJournalCondition <- function(x, ...) {
-  x$journal
+  x[["journal"]]
 }

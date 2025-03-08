@@ -43,8 +43,8 @@ futureCall <- function(FUN, args = list(), envir = parent.frame(), lazy = FALSE,
 
 #      expr <- do.call(call, args = c(list("FUN"), list(...)))
       gp <- getGlobalsAndPackages(expr, envir = globalEnv, tweak = tweakExpression, globals = TRUE)
-      globals <- gp$globals
-      packages <- unique(c(packages, gp$packages))
+      globals <- gp[["globals"]]
+      packages <- unique(c(packages, gp[["packages"]]))
       gp <- NULL
       
       if (debug) {
@@ -75,14 +75,14 @@ futureCall <- function(FUN, args = list(), envir = parent.frame(), lazy = FALSE,
   globals <- cleanup(globals, drop = "missing")
 
   names <- names(globals)
-  if (!is.element("FUN", names)) globals$FUN <- FUN
-  if (!is.element("args", names)) globals$args <- args
+  if (!is.element("FUN", names)) globals[["FUN"]] <- FUN
+  if (!is.element("args", names)) globals[["args"]] <- args
 
   names <- setdiff(names(globals), c("FUN", "args"))
   if (length(names) > 0) {
-    env <- environment(globals$FUN)
+    env <- environment(globals[["FUN"]])
     env <- new.env(parent = env)
-    environment(globals$FUN) <- env
+    environment(globals[["FUN"]]) <- env
     for (name in names) {
       env[[name]] <- globals[[name]]
     }

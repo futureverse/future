@@ -118,7 +118,7 @@ futureSessionInfo <- function(test = TRUE, anonymize = TRUE) {
     message("Worker R session details:")
     mprint0(vs)
     
-    npid <- length(unique(vs$pid))
+    npid <- length(unique(vs[["pid"]]))
     if (npid == nbrOfWorkers()) {
       mprintf0("Number of unique worker PIDs: %d (as expected)", npid)
     } else {

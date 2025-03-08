@@ -44,13 +44,13 @@ backtrace <- function(future, envir = parent.frame(), ...) {
   }
 
   result <- result(future)
-  conditions <- result$conditions
+  conditions <- result[["conditions"]]
   
   ## Find 'error' condition
   error <- NULL
   for (kk in seq_along(conditions)) {
     c <- conditions[[kk]]
-    if (inherits(c$condition, "error")) {
+    if (inherits(c[["condition"]], "error")) {
       error <- c
       break
     }
@@ -60,7 +60,7 @@ backtrace <- function(future, envir = parent.frame(), ...) {
     stopf("No error was caught for this future: %s", sQuote(expr))
   }
 
-  calls <- error$calls
+  calls <- error[["calls"]]
 
   if (is.null(calls)) {
     stopf("The error call stack was not recorded for this future: %s", sQuote(expr))

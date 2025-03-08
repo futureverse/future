@@ -4,7 +4,7 @@
 ## (https://stat.ethz.ch/pipermail/r-devel/2016-October/073331.html)
 #' @importFrom parallelly isConnectionValid
 check_connection_details <- function(worker, future) {
-  con <- worker$con
+  con <- worker[["con"]]
   
   ## Not a worker with a connection?
   if (!inherits(con, "connection")) return(NULL)

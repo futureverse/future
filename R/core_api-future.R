@@ -193,11 +193,11 @@ future <- function(expr, envir = parent.frame(), substitute = TRUE, lazy = FALSE
 
   if (!is.null(globals)) {
     gp <- getGlobalsAndPackages(expr, envir = envir, tweak = tweakExpression, globals = globals)
-    expr <- gp$expr
-    globals <- gp$globals
+    expr <- gp[["expr"]]
+    globals <- gp[["globals"]]
     ## Record packages?
-    if (length(packages) > 0 || length(gp$packages) > 0) {
-      packages <- c(gp$packages, packages)
+    if (length(packages) > 0 || length(gp[["packages"]]) > 0) {
+      packages <- c(gp[["packages"]], packages)
     }
     gp <- NULL
     attr(globals, "already-done") <- TRUE
@@ -221,7 +221,7 @@ future <- function(expr, envir = parent.frame(), substitute = TRUE, lazy = FALSE
   future[[".defaultLocal"]] <- !is.element("local", names(list(...)))
 
   ## Enable journaling?
-  if (getOption("future.journal", FALSE)) {
+  if (isTRUE(getOption("future.journal"))) {
     future <- makeFutureJournal(future, event = "create", category = "overhead", start = t_start)
   }
 

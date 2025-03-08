@@ -121,7 +121,7 @@ getSocketSelectTimeout <- function(future, timeout = NULL) {
   ## in infinite waiting (PR17203).  Fixed in R devel r73470 (2017-10-05)
   ## and R 3.4.3
   ## Source: https://github.com/HenrikBengtsson/Wishlist-for-R/issues/35
-  if (.Platform$OS.type != "windows" && getRversion() < "3.4.3") {
+  if (.Platform[["OS.type"]] != "windows" && getRversion() < "3.4.3") {
     timeout <- round(timeout, digits = 0L)
   }
   attr(timeout, "validated") <- TRUE
@@ -143,8 +143,8 @@ resolved.ClusterFuture <- function(x, run = TRUE, timeout = NULL, ...) {
   future <- x
   backend <- future[["backend"]]
   stop_if_not(inherits(backend, "FutureBackend"))
-  workers <- backend$workers
-  reg <- backend$reg
+  workers <- backend[["workers"]]
+  reg <- backend[["reg"]]
   
   ## A lazy future not even launched?
   if (future[["state"]] == "created") {
@@ -157,7 +157,7 @@ resolved.ClusterFuture <- function(x, run = TRUE, timeout = NULL, ...) {
       ## Find which nodes are available
       avail <- rep(TRUE, times = length(workers))
       futures <- FutureRegistry(reg, action = "list", earlySignal = FALSE)
-      nodes <- unlist(lapply(futures, FUN = function(f) f$node), use.names = FALSE)
+      nodes <- unlist(lapply(futures, FUN = function(f) f[["node"]]), use.names = FALSE)
       avail[nodes] <- FALSE
       if (debug) mdebug(" - avail: [n=%d] %s", length(avail), commaq(avail))
       
@@ -185,7 +185,7 @@ resolved.ClusterFuture <- function(x, run = TRUE, timeout = NULL, ...) {
   node <- cl[[1]]
 
   ## Check if workers socket connection is available for reading
-  if (!is.null(con <- node$con)) {
+  if (!is.null(con <- node[["con"]])) {
     ## AD HOC/SPECIAL CASE: Skip if connection has been serialized and lacks
     ## internal representation. /HB 2018-10-27
     connId <- connectionId(con)
@@ -200,7 +200,7 @@ resolved.ClusterFuture <- function(x, run = TRUE, timeout = NULL, ...) {
       ## n infinite waiting (PR17203).  Fixed in R devel r73470 (2017-10-05)
       ## and R 3.4.3
       ## Source: https://github.com/HenrikBengtsson/Wishlist-for-R/issues/35
-      if (!isTRUE(attr(timeout, "validated", exact = TRUE)) && .Platform$OS.type != "windows" && getRversion() < "3.4.3") {
+      if (!isTRUE(attr(timeout, "validated", exact = TRUE)) && .Platform[["OS.type"]] != "windows" && getRversion() < "3.4.3") {
         timeout <- round(timeout, digits = 0L)
       }
     }
@@ -296,8 +296,8 @@ receiveMessageFromWorker <- function(future, ...) {
   if (!inherits(backend, "FutureBackend") && !is.list(backend)) {
     stop(sprintf("[INTERNAL ERROR] receiveMessageFromWorker(): the 'backend' element of the %s object is neither a FutureBackend object nor a list: %s", class(future)[1], class(backend)[1]))
   }
-  workers <- backend$workers
-  reg <- backend$reg
+  workers <- backend[["workers"]]
+  reg <- backend[["reg"]]
 
   node_idx <- future[["node"]]
   if (debug) mdebugf(" - cluster node index: %d", node_idx)
@@ -318,7 +318,7 @@ receiveMessageFromWorker <- function(future, ...) {
   if (inherits(ack, "error")) {
     if (debug) mdebugf("- parallel:::recvResult() produced an error: %s", conditionMessage(ack))
     msg <- post_mortem_cluster_failure(ack, when = "receive message results from", node = node, future = future)
-    ex <- FutureError(msg, call = ack$call, future = future)
+    ex <- FutureError(msg, call = ack[["call"]], future = future)
     future[["result"]] <- ex
     stop(ex)          
   }
@@ -367,7 +367,7 @@ receiveMessageFromWorker <- function(future, ...) {
     ## they will be resignaled each time value() is called.
     signaled <- future[[".signaledConditions"]]
     if (length(signaled) > 0) {
-      result$conditions <- c(future[[".signaledConditions"]], result$conditions)
+      result[["conditions"]] <- c(future[[".signaledConditions"]], result[["conditions"]])
       future[[".signaledConditions"]] <- NULL
     }
 
@@ -430,9 +430,9 @@ receiveMessageFromWorker <- function(future, ...) {
     }
 
     ## Increment signal count
-    signaled <- condition$signaled
+    signaled <- condition[["signaled"]]
     if (is.null(signaled)) signaled <- 0L
-    condition$signaled <- signaled + 1L
+    condition[["signaled"]] <- signaled + 1L
     
     ## Record condition as signaled
     signaled <- future[[".signaledConditions"]]
@@ -562,13 +562,13 @@ post_mortem_cluster_failure <- function(ex, when, node, future) {
   ## (2) Information on the cluster node
   
   ## (a) Process information on the worker, if available
-  pid <- node$session_info$process$pid
+  pid <- node[["session_info"]][["process"]][["pid"]]
   pid_info <- if (is.numeric(pid)) sprintf("PID %.0f", pid) else NULL
 
   ## (b) Host information on the worker, if available
   ##     AD HOC: This assumes that the worker has a hostname, which is not
   ##     the case for MPI workers. /HB 2017-03-07
-  host <- node$host
+  host <- node[["host"]]
   localhost <- isTRUE(attr(host, "localhost", exact = TRUE))
   host_info <- if (!is.null(host)) {
     sprintf("on %s%s", if (localhost) "localhost " else "", sQuote(host))
@@ -589,7 +589,7 @@ post_mortem_cluster_failure <- function(ex, when, node, future) {
 
   ## (a) Inspect the 'reason' for known clues
   if (grepl("ignoring SIGPIPE signal", reason)) {
-    postmortem$sigpipe <- "The SIGPIPE error suggests that the R socket connection to the parallel worker broke, which can happen for different reasons, e.g. the parallel worker crashed"
+    postmortem[["sigpipe"]] <- "The SIGPIPE error suggests that the R socket connection to the parallel worker broke, which can happen for different reasons, e.g. the parallel worker crashed"
   }
 
   ## (a) Did the worker process terminate?
@@ -615,20 +615,20 @@ post_mortem_cluster_failure <- function(ex, when, node, future) {
         msg2 <- "No process exists with this PID on the remote host, i.e. the remote worker is no longer alive"
       }
     }
-    postmortem$alive <- msg2
+    postmortem[["alive"]] <- msg2
   }
 
   ## (b) Did the worker use a connection that changed?
-  if (inherits(node$con, "connection")) {
-    postmortem$connection <- check_connection_details(node, future = future)
+  if (inherits(node[["con"]], "connection")) {
+    postmortem[["connection"]] <- check_connection_details(node, future = future)
   }
 
   ## (c) Any non-exportable globals?
   globals <- future[["globals"]]
-  postmortem$non_exportable <- assert_no_references(globals, action = "string")
+  postmortem[["non_exportable"]] <- assert_no_references(globals, action = "string")
 
   ## (d) Size of globals
-  postmortem$global_sizes <- summarize_size_of_globals(globals)
+  postmortem[["global_sizes"]] <- summarize_size_of_globals(globals)
 
   ## (5) The final error message
   msg <- sprintf("%s (%s) failed to %s %s. The reason reported was %s",
@@ -701,11 +701,11 @@ assertValidConnection <- function(future) {
   node_idx <- future[["node"]]
   if (debug) mdebugf(" - cluster node index: %d", node_idx)
 
-  cl <- backend$workers[node_idx]
+  cl <- backend[["workers"]][node_idx]
   node <- cl[[1]]
 
   ## Nothing to do?
-  if (is.null(con <- node$con)) return()
+  if (is.null(con <- node[["con"]])) return()
 
   ## AD HOC/SPECIAL CASE: Skip if connection has been serialized and lacks internal representation. /HB 2018-10-27
   connId <- connectionId(con)

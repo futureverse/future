@@ -95,8 +95,8 @@ bquote_apply <- function(tmpl, envir = parent.frame()) {
   
   for (kk in seq_along(tmpl)) {
     entry <- tmpl[[kk]]
-    value <- eval(entry$expression, envir = envir)
-    at <- entry$at
+    value <- eval(entry[["expression"]], envir = envir)
+    at <- entry[["at"]]
     
     ## Special case: Result becomes just a value
     nat <- length(at)

@@ -49,7 +49,7 @@ nbrOfWorkers.multiprocess <- function(evaluator) {
     return(nbrOfWorkers(backend))
   }  
   
-  expr <- formals(evaluator)$workers
+  expr <- formals(evaluator)[["workers"]]
   workers <- eval(expr, enclos = baseenv())
   if (is.function(workers)) workers <- workers()
   if (is.numeric(workers)) {
@@ -71,7 +71,7 @@ nbrOfWorkers.future <- function(evaluator) {
     return(nbrOfWorkers(backend))
   }  
   
-  expr <- formals(evaluator)$workers
+  expr <- formals(evaluator)[["workers"]]
   workers <- eval(expr, enclos = baseenv())
   if (is.function(workers)) workers <- workers()
   if (is.numeric(workers)) {
@@ -117,7 +117,7 @@ nbrOfFreeWorkers.ClusterFutureBackend <- function(evaluator, ...) {
   workers <- backend[["workers"]]
   stop_if_not(length(workers) > 0L, inherits(workers, "cluster"))
   workers <- length(workers)
-  reg <- backend$reg
+  reg <- backend[["reg"]]
   stop_if_not(length(reg) == 1L, is.character(reg), nzchar(reg))
 
   ## Number of unresolved cluster futures

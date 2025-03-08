@@ -114,14 +114,14 @@ result.MulticoreFuture <- function(future, ...) {
   if (!inherits(result, "FutureResult")) {
     if (debug) mdebugf("Detected non-FutureResult result ...")
     alive <- NA
-    pid <- job$pid
+    pid <- job[["pid"]]
     if (is.numeric(pid)) {
       pid_exists <- import_parallelly("pid_exists")
       alive <- pid_exists(pid)
     }
     
     ## AD HOC: Record whether the forked process is alive or not
-    job$alive <- alive
+    job[["alive"]] <- alive
     future[["job"]] <- job
 
     ## SPECIAL: Check for fallback 'fatal error in wrapper code'
@@ -152,14 +152,14 @@ result.MulticoreFuture <- function(future, ...) {
         } else {
           msg2 <- "No process exists with this PID, i.e. the forked localhost worker is no longer alive"
         }
-        postmortem$alive <- msg2
+        postmortem[["alive"]] <- msg2
       }
 
       ## (c) Any non-exportable globals?
-      postmortem$non_exportable <- assert_no_references(future, action = "string")
+      postmortem[["non_exportable"]] <- assert_no_references(future, action = "string")
 
       ## (d) Size of globals
-      postmortem$global_sizes <- summarize_size_of_globals(future[["globals"]])
+      postmortem[["global_sizes"]] <- summarize_size_of_globals(future[["globals"]])
 
       postmortem <- unlist(postmortem, use.names = FALSE)
       if (!is.null(postmortem)) {
@@ -199,7 +199,7 @@ result.MulticoreFuture <- function(future, ...) {
   future[[".signaledConditions"]] <- signaled
 
   ## Record conditions
-  result$conditions <- c(result$conditions, signaled)
+  result[["conditions"]] <- c(result[["conditions"]], signaled)
   signaled <- NULL
   
   future[["result"]] <- result

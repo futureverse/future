@@ -133,7 +133,7 @@ mandelbrot.numeric <- function(xmid = -0.75, ymid = 0.0, side = 3.0,
 #' @importFrom grDevices as.raster hsv
 #' @keywords internal
 as.raster.Mandelbrot <- function(x, ...) {
-  maxIter <- attr(x, "params", exact = TRUE)$maxIter
+  maxIter <- attr(x, "params", exact = TRUE)[["maxIter"]]
   img <- hsv(h = x / maxIter, s = 1, v = 1)
   img[x == maxIter] <- "#000000"
   dim(img) <- dim(x)

@@ -28,7 +28,7 @@ capture_journals <- function(expr, substitute = TRUE, envir = parent.frame()) {
   withCallingHandlers({
     eval(expr, envir = envir)
   }, FutureJournalCondition = function(cond) {
-    journals <<- c(journals, list(cond$journal))
+    journals <<- c(journals, list(cond[["journal"]]))
   })
   
   journals

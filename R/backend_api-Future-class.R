@@ -132,13 +132,13 @@ Future <- function(expr = NULL, envir = parent.frame(), substitute = TRUE, stdou
       ## Global objects?
       ## 'persistent' is only allowed for ClusterFuture:s, which will be
       ## asserted when run() is called /HB 2023-01-17
-      gp <- getGlobalsAndPackages(expr, envir = envir, tweak = tweakExpression, globals = globals, persistent = isTRUE(args$persistent))
-      globals <- gp$globals
-      expr <- gp$expr
+      gp <- getGlobalsAndPackages(expr, envir = envir, tweak = tweakExpression, globals = globals, persistent = isTRUE(args[["persistent"]]))
+      globals <- gp[["globals"]]
+      expr <- gp[["expr"]]
     
       ## Record packages?
-      if (length(packages) > 0 || (length(gp$packages) > 0 && lazy)) {
-        packages <- c(gp$packages, packages)
+      if (length(packages) > 0 || (length(gp[["packages"]]) > 0 && lazy)) {
+        packages <- c(gp[["packages"]], packages)
       }
       
       gp <- NULL
@@ -202,7 +202,7 @@ Future <- function(expr = NULL, envir = parent.frame(), substitute = TRUE, stdou
   core <- new.env(parent = emptyenv())
 
   ## Version of future
-  version <- args$version
+  version <- args[["version"]]
   if (is.null(version)) version <- "1.8"
   core[["version"]] <- version
 
@@ -331,7 +331,7 @@ print.Future <- function(x, ...) {
 
   if (hasResult) {
     if (inherits(result, "FutureResult")) {
-      value <- result$value
+      value <- result[["value"]]
     } else if ("value" %in% names(future)) {
       .Defunct(msg = sprintf("Detected a %s object that rely on the defunct 'value' field of format version 1.7 or before.", class(future)[1]), package = .packageName)
     } else {
@@ -339,8 +339,8 @@ print.Future <- function(x, ...) {
     }
     cat(sprintf("Value: %s of class %s\n", asIEC(objectSize(value)), sQuote(class(value)[1])))
     if (inherits(result, "FutureResult")) {
-      conditions <- result$conditions
-      conditionClasses <- vapply(conditions, FUN = function(c) class(c$condition)[1], FUN.VALUE = NA_character_)
+      conditions <- result[["conditions"]]
+      conditionClasses <- vapply(conditions, FUN = function(c) class(c[["condition"]])[1], FUN.VALUE = NA_character_)
       cat(sprintf("Conditions captured: [n=%d] %s\n", length(conditionClasses), hpaste(sQuote(conditionClasses))))
     }
   } else {
@@ -358,8 +358,8 @@ assertOwner <- local({
   hpid <- function(uuid) {
     info <- attr(uuid, "source", exact = TRUE)
     if (is.null(info)) info <- list(pid = NA_integer_, host = NA_character_)
-    stop_if_not(is.list(info), length(info$pid) == 1L, length(info$host) == 1L)
-    pid <- sprintf("%s; pid %d on %s", uuid, info$pid, info$host)
+    stop_if_not(is.list(info), length(info[["pid"]]) == 1L, length(info[["host"]]) == 1L)
+    pid <- sprintf("%s; pid %d on %s", uuid, info[["pid"]], info[["host"]])
     stop_if_not(length(pid) == 1L)
     pid
   }
@@ -466,7 +466,7 @@ run.Future <- function(future, ...) {
 
   ## SPECIAL: 'cluster' takes argument 'persistent' for now /HB 2023-01-17
   has_persistent <- ("persistent" %in% names(future))
-  if (has_persistent) args$persistent <- future[["persistent"]]
+  if (has_persistent) args[["persistent"]] <- future[["persistent"]]
   
   tmpFuture <- do.call(evaluator, args = args)
 
@@ -812,7 +812,7 @@ getFutureContext <- function(future, mc.cores = NULL, local = TRUE, ..., debug =
   )
 
   if (!is.null(mc.cores)) {
-    forwardOptions$mc.cores <- mc.cores
+    forwardOptions[["mc.cores"]] <- mc.cores
   }
 
   reset <- future[["reset"]]
@@ -930,7 +930,7 @@ getFutureBackendConfigs.ClusterFuture <- function(future, ..., debug = isTRUE(ge
   stop_if_not(inherits(cl, "cluster"))
   node <- cl[[1L]]
   stop_if_not(inherits(node, c("SOCK0node", "SOCKnode")))
-  con <- node$con
+  con <- node[["con"]]
   if (is.null(con)) return(list())
 
   capture <- list(
@@ -957,7 +957,7 @@ getFutureData <- function(future, ..., debug = isTRUE(getOption("future.debug"))
   data <- list(
        core = getFutureCore(future, debug = debug),
     capture = getFutureCapture(future, debug = debug),
-    context = getFutureContext(future, mc.cores = args$mc.cores, local = args$local, debug = debug)
+    context = getFutureContext(future, mc.cores = args[["mc.cores"]], local = args[["local"]], debug = debug)
   )
 
   ## Tweak per backend?

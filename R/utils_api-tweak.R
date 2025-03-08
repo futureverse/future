@@ -129,7 +129,7 @@ tweak.future <- function(strategy, ..., penvir = parent.frame()) {
   ## to pick up package dependencies from there, which then are attached on
   ## the future worker.
   environment(strategy2) <- new.env(parent = environment(strategy))
-  environment(strategy2)$strategy <- strategy
+  environment(strategy2)[["strategy"]] <- strategy
 
   ## Restore attributes including class
   attributes(strategy2) <- attrs

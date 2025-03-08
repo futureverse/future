@@ -39,7 +39,7 @@ attr(multicore, "backend") <- MulticoreFutureBackend
   update_package_options(debug = debug)
   
   ## Initiate the R session UUID, which will also set/update
-  ## .GlobalEnv$.Random.seed.
+  ## .GlobalEnv[[".Random.seed"]].
   session_uuid(attributes = FALSE)
 
   ## Report on future plan, if set
@@ -55,7 +55,7 @@ attr(multicore, "backend") <- MulticoreFutureBackend
   }
 
   args <- parseCmdArgs()
-  p <- args$p
+  p <- args[["p"]]
   if (!is.null(p)) {
     if (debug) mdebugf("R command-line argument: -p %s", p)
     
@@ -152,7 +152,7 @@ sourceFutureStartupScript <- function(default = c(".future.R", "~/.future.R"), d
   tryCatch({
     source(pathname, chdir = FALSE, echo = FALSE, local = FALSE)
   }, error = function(ex) {
-    msg <- sprintf("Failed to source %s file while attaching the future package. Will ignore this error, but please investigate. The error message was: %s", sQuote(pathname), sQuote(ex$message))
+    msg <- sprintf("Failed to source %s file while attaching the future package. Will ignore this error, but please investigate. The error message was: %s", sQuote(pathname), sQuote(ex[["message"]]))
     if (debug) mdebug(msg)
     warning(msg)
   })
