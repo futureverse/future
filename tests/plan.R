@@ -190,8 +190,12 @@ plan(cluster, workers = cl)
 ## %plan% can operate on any expression, so it
 ## works just as an withPlan({ ... }, plan = ...)
 fun <- { plan("next") } %plan% sequential
-f <- fun(1)
-stopifnot(inherits(f, "SequentialFuture"), !f$lazy, inherits(f, "SequentialFuture"))
+
+## Non-FutureBackend:s should be called directly
+if (is.null(attr(fun, "backend"))) {
+  f <- fun(1)
+  stopifnot(inherits(f, "SequentialFuture"), !f$lazy, inherits(f, "SequentialFuture"))
+}
 
 x %<-% { a <- 1 } %plan% sequential
 stopifnot(inherits(plan("next"), "cluster"))

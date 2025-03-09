@@ -65,10 +65,7 @@
 #'
 #' @export
 multisession <- function(..., workers = availableCores(), lazy = FALSE, rscript_libs = .libPaths(), envir = parent.frame()) {
-  f <- Future(..., lazy = lazy, envir = envir)
-  f[["workers"]] <- workers
-  class(f) <- c("MultisessionFuture", "MultiprocessFuture", "Future")
-  f
+  stop("INTERNAL ERROR: The future::multisession() function implements the FutureBackend and should never be called directly")
 }
 class(multisession) <- c("multisession", "cluster", "multiprocess", "future", "function")
 attr(multisession, "init") <- TRUE

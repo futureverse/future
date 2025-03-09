@@ -103,28 +103,31 @@
       ## recursive loop caused by other plan() calls.
       attr(evaluator, "init") <- "done"
 
-      ## Create dummy future to trigger setup (minimum overhead)
-      f <- evaluator(NA, label = "future-plan-test", 
-                     globals = FALSE, lazy = FALSE)
-
-      ## Cleanup, by resolving it
-      ## (otherwise the garbage collector would have to do it)
-      res <- tryCatch({
-        value(f)
-      }, FutureError = identity)
-      if (inherits(res, "FutureError")) {
-        res[["message"]] <- paste0(
-          "Initialization of plan() failed, because the test future used for validation failed. The reason was: ", conditionMessage(res))
-        stop(res)
-      }
-
-      if (!identical(res, NA)) {
-        res <- if (is.null(res)) {
-          "NULL"
-        } else {
-          commaq(res)
+      ## Non-FutureBackend backends are initiated by calling the evaluator
+      if (is.null(attr(evaluator, "backend"))) {
+        ## Create dummy future to trigger setup (minimum overhead)
+        f <- evaluator(NA, label = "future-plan-test", 
+                       globals = FALSE, lazy = FALSE)
+  
+        ## Cleanup, by resolving it
+        ## (otherwise the garbage collector would have to do it)
+        res <- tryCatch({
+          value(f)
+        }, FutureError = identity)
+        if (inherits(res, "FutureError")) {
+          res[["message"]] <- paste0(
+            "Initialization of plan() failed, because the test future used for validation failed. The reason was: ", conditionMessage(res))
+          stop(res)
         }
-        stop(FutureError(sprintf("Initialization of plan() failed, because the value of the test future is not NA as expected: %s", res)))
+  
+        if (!identical(res, NA)) {
+          res <- if (is.null(res)) {
+            "NULL"
+          } else {
+            commaq(res)
+          }
+          stop(FutureError(sprintf("Initialization of plan() failed, because the value of the test future is not NA as expected: %s", res)))
+        }
       }
       
       if (debug) {

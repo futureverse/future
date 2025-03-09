@@ -69,10 +69,7 @@
 #'
 #' @export
 multicore <- function(..., workers = availableCores(constraints = "multicore"), envir = parent.frame()) {
-  f <- Future(..., envir = envir)
-  f[["workers"]] <- workers
-  class(f) <- c("MulticoreFuture", "MultiprocessFuture", "Future")
-  f
+  stop("INTERNAL ERROR: The future::multicore() function implements the FutureBackend and should never be called directly")
 }
 class(multicore) <- c("multicore", "multiprocess", "future", "function")
 

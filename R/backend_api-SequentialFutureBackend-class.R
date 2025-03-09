@@ -27,9 +27,7 @@
 #' @aliases uniprocess
 #' @export
 sequential <- function(..., envir = parent.frame()) {
-  f <- Future(..., envir = envir)
-  class(f) <- c("SequentialFuture", "UniprocessFuture", "Future")
-  f
+  stop("INTERNAL ERROR: The future::sequential() function implements the FutureBackend and should never be called directly")
 }
 class(sequential) <- c("sequential", "uniprocess", "future", "function")
 

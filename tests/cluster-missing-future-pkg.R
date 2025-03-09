@@ -47,6 +47,7 @@ for (type in types) {
         
     res <- tryCatch({
       plan(cluster, workers = cl)
+      value(future(NA))
     }, error = identity)
     print(res)
     stopifnot(inherits(res, "FutureError"))

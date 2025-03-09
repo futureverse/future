@@ -51,11 +51,7 @@
 #'
 #' @export
 cluster <- function(..., persistent = FALSE, workers = availableWorkers(), envir = parent.frame()) {
-  f <- Future(..., envir = envir)
-  f[["workers"]] <- workers
-  f[["persistent"]] <- persistent
-  class(f) <- c("ClusterFuture", "MultiprocessFuture", "Future")
-  f
+  stop("INTERNAL ERROR: The future::cluster() function implements the FutureBackend and should never be called directly")
 }
 class(cluster) <- c("cluster", "multiprocess", "future", "function")
 attr(cluster, "init") <- TRUE

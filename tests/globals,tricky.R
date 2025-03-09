@@ -141,16 +141,15 @@ for (cores in 1:availCores) {
       message(sprintf("value(b) = %g", value(b)))
       stopifnot(value(b) == 2)
 
-
       ## BUG FIX: In future (<= 1.0.0) a global 'pkg' would be
       ## overwritten by the name of the last package attached
       ## by the future.
       pkg <- "foo"
-      f <- sequential({ pkg })
+      f <- future({ pkg })
       v <- value(f)
       message(sprintf("value(f) = %s", sQuote(v)))
       stopifnot(pkg == "foo", v == "foo")
-      
+
       message(sprintf("Method for identifying globals: '%s' ... DONE", method))
     }
 
@@ -178,6 +177,8 @@ for (cores in 1:availCores) {
     v <- value(f)
     message(sprintf("value(f) = %s", sQuote(v)))
     stopifnot(v == TRUE)
+    
+    plan(sequential)
   } ## for (strategy ...)
 
   message(sprintf("Testing with %d cores ... DONE", cores))
