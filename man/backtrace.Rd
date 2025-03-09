@@ -11,7 +11,7 @@ backtrace(future, envir = parent.frame(), ...)
 
 \item{envir}{the environment where to locate the future.}
 
-\item{\dots}{Not used.}
+\item{\ldots}{Not used.}
 }
 \value{
 A list with the future's call stack that led up to the error.

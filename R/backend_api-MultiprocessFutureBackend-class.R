@@ -25,7 +25,7 @@ nbrOfFreeWorkers.MultiprocessFutureBackend <- function(evaluator, background = F
 #'
 #' @inheritParams Future-class
 #' 
-#' @param \dots Additional named elements passed to [Future()].
+#' @param \ldots Additional named elements passed to [Future()].
 #'
 #' @return
 #' `MultiprocessFuture()` returns an object of class `MultiprocessFuture`.

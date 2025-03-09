@@ -24,6 +24,8 @@
 #' If a function, it is called without arguments _when the future
 #' is created_ and its value is used to configure the workers.
 #'
+#' @param \ldots Additional named elements to [Future()].
+#'
 #' @return
 #' A [Future].
 #' If `workers == 1`, then all processing using done in the

@@ -8,8 +8,6 @@
 ConstantFuture(..., globals = TRUE, envir = emptyenv())
 }
 \arguments{
-\item{...}{Additional named elements of the future.}
-
 \item{globals}{(optional) a logical, a character vector, or a named list
 to control how globals are handled.
 For details, see section 'Globals used by future expressions'

@@ -73,7 +73,7 @@ nbrOfWorkers.NULL <- function(evaluator) {
 #' background are considered.  If FALSE, also workers running in the main \R
 #' process are considered, e.g. when using the 'sequential' backend.
 #'
-#' @param \dots Not used; reserved for future use.
+#' @param \ldots Not used; reserved for future use.
 #'
 #' @return
 #' `nbrOfFreeWorkers()` returns a non-negative number in

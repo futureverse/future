@@ -13,8 +13,6 @@ multisession(
 )
 }
 \arguments{
-\item{\dots}{Additional arguments passed to \code{\link[=Future]{Future()}}.}
-
 \item{workers}{The number of parallel processes to use.
 If a function, it is called without arguments \emph{when the future
 is created} and its value is used to configure the workers.}
@@ -34,6 +32,8 @@ This is passed down as-is to \code{\link[parallelly:makeClusterPSOCK]{parallelly
 
 \item{envir}{The \link{environment} from where global objects should be
 identified.}
+
+\item{\ldots}{Additional arguments passed to \code{\link[=Future]{Future()}}.}
 }
 \value{
 A MultisessionFuture.

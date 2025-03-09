@@ -20,7 +20,7 @@
 #' limit, an informative error message is produced. If
 #' `maxSize = +Inf`, then this assertion is skipped. (Default: 500 MiB).
 #'
-#' @param \dots Not used.
+#' @param \ldots Not used.
 #'
 #' @return A named list with elements `expr` (the tweaked expression), `globals` (a named list of class [FutureGlobals]) and `packages` (a character string).
 #'

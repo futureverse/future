@@ -13,7 +13,7 @@
 #' @param rng If TRUE, the `.Random.seed` was updated from resolving the
 #' future, otherwise not.
 #'
-#' @param \dots (optional) Additional named results to be returned.
+#' @param \ldots (optional) Additional named results to be returned.
 #' 
 #' @param started,finished \link[base:DateTimeClasses]{POSIXct} timestamps
 #' when the evaluation of the future expression was started and finished.

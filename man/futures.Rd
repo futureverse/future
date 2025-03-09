@@ -9,7 +9,7 @@ futures(x, ...)
 \arguments{
 \item{x}{An environment, a list, or a list environment.}
 
-\item{\dots}{Not used.}
+\item{\ldots}{Not used.}
 }
 \value{
 An object of same type as \code{x} and with the same names

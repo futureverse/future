@@ -17,6 +17,8 @@
 #' @inheritParams future
 #' @inheritParams Future-class
 #' 
+#' @param \ldots Additional named elements to [Future()].
+#'
 #' @return
 #' A [Future].
 #'

@@ -3,7 +3,7 @@
 #' @param x A \link{Future}, a list, or an environment (which also
 #' includes \link[listenv:listenv]{list environment}).
 #'
-#' @param \dots Not used.
+#' @param \ldots Not used.
 #'
 #' @return A logical of the same length and dimensions as `x`.
 #' Each element is TRUE unless the corresponding element is a

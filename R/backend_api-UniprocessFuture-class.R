@@ -2,7 +2,7 @@
 #'
 #' @inheritParams Future-class
 #' 
-#' @param \dots Additional named elements passed to [Future()].
+#' @param \ldots Additional named elements passed to [Future()].
 #'
 #' @return
 #' `UniprocessFuture()` returns an object of class `UniprocessFuture`.

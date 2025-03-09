@@ -7,9 +7,6 @@
 \usage{
 \method{resolved}{MulticoreFuture}(x, run = TRUE, timeout = NULL, ...)
 }
-\arguments{
-\item{...}{Additional named elements passed to \code{\link[=Future]{Future()}}.}
-}
 \value{
 \code{MulticoreFuture()} returns an object of class \code{MulticoreFuture}.
 }

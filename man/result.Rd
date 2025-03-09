@@ -10,7 +10,7 @@
 \arguments{
 \item{future}{A \link{Future}.}
 
-\item{\dots}{Not used.}
+\item{\ldots}{Not used.}
 }
 \value{
 The \link{FutureResult} object.

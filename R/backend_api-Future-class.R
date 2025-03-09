@@ -80,7 +80,7 @@
 #'
 #' @param label An optional character string label attached to the future.
 #'
-#' @param \dots Additional named elements of the future.
+#' @param \ldots Additional named elements of the future.
 #' 
 #' @return
 #' `Future()` returns an object of class `Future`.
@@ -383,7 +383,7 @@ assertOwner <- local({
 #' Run a future
 #'
 #' @param future A \link{Future}.
-#' @param \dots Not used.
+#' @param \ldots Not used.
 #'
 #' @return The [Future] object.
 #'
@@ -583,7 +583,7 @@ result <- function(future, ...) {
 #' Get the results of a resolved future
 #'
 #' @param future A \link{Future}.
-#' @param \dots Not used.
+#' @param \ldots Not used.
 #'
 #' @return The [FutureResult] object.
 #'
@@ -882,7 +882,7 @@ getFutureData <- function(future, ..., debug = isTRUE(getOption("future.debug"))
 #' Inject code for the next type of future to use for nested futures
 #'
 #' @param future Current future.
-#' @param \dots Not used.
+#' @param \ldots Not used.
 #'
 #' @return A future expression with code injected to set what
 #' type of future to use for nested futures, iff any.

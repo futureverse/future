@@ -135,8 +135,6 @@ as number of free workers and whether \code{earlySignal} is TRUE (more
 frequently) or FALSE (less frequently).
 \emph{Some types of futures ignore this argument.}}
 
-\item{\dots}{Additional arguments passed to \code{\link[=Future]{Future()}}.}
-
 \item{x}{the name of a future variable, which will hold the value
 of the future expression (as a promise).}
 
@@ -146,6 +144,8 @@ should be assigned.}
 \item{FUN}{A \link[base]{function} to be evaluated.}
 
 \item{args}{A \link[base]{list} of arguments passed to function \code{FUN}.}
+
+\item{\ldots}{Additional arguments passed to \code{\link[=Future]{Future()}}.}
 }
 \value{
 \code{f <- future(expr)} creates a \link{Future} \code{f} that evaluates expression \code{expr}, the value of the future is retrieved using \code{v <- value(f)}.

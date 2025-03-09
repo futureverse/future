@@ -4,7 +4,7 @@
 #'
 #' @param envir the environment where to locate the future.
 #'
-#' @param \dots Not used.
+#' @param \ldots Not used.
 #'
 #' @return A list with the future's call stack that led up to the error.
 #'

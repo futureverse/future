@@ -10,7 +10,7 @@ getExpression(future, ...)
 \arguments{
 \item{future}{Current future.}
 
-\item{\dots}{Not used.}
+\item{\ldots}{Not used.}
 }
 \value{
 A future expression with code injected to set what

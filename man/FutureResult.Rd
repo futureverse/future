@@ -36,12 +36,12 @@ call stack and a timestamp.}
 \item{rng}{If TRUE, the \code{.Random.seed} was updated from resolving the
 future, otherwise not.}
 
-\item{\dots}{(optional) Additional named results to be returned.}
-
 \item{started, finished}{\link[base:DateTimeClasses]{POSIXct} timestamps
 when the evaluation of the future expression was started and finished.}
 
 \item{version}{The version format of the results.}
+
+\item{\ldots}{(optional) Additional named results to be returned.}
 }
 \value{
 An object of class FutureResult.

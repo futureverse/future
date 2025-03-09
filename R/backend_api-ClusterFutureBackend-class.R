@@ -42,7 +42,7 @@
 #' @param persistent If FALSE, the evaluation environment is cleared
 #' from objects prior to the evaluation of the future.
 #' 
-#' @param \dots Additional named elements passed to [Future()].
+#' @param \ldots Additional named elements passed to [Future()].
 #'
 #' @return
 #' A ClusterFuture.

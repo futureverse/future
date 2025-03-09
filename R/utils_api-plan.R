@@ -148,7 +148,7 @@
 #' @param strategy The evaluation function (or name of it) to use
 #' for resolving a future. If `NULL`, then the current strategy is returned.
 #'
-#' @param \dots Additional arguments overriding the default arguments
+#' @param \ldots Additional arguments overriding the default arguments
 #' of the evaluation function.  Which additional arguments are supported
 #' depends on what evaluation function is used, e.g. several support
 #' argument `workers` but not all. For details, see the individual

@@ -11,14 +11,14 @@ multicore(
 )
 }
 \arguments{
-\item{...}{Additional arguments passed to \code{\link[=Future]{Future()}}.}
-
 \item{workers}{The number of parallel processes to use.
 If a function, it is called without arguments \emph{when the future
 is created} and its value is used to configure the workers.}
 
 \item{envir}{The \link{environment} from where global objects should be
 identified.}
+
+\item{\ldots}{Additional named elements to \code{\link[=Future]{Future()}}.}
 }
 \value{
 A \link{Future}.

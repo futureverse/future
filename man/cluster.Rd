@@ -12,8 +12,6 @@ cluster(
 )
 }
 \arguments{
-\item{\dots}{Additional named elements passed to \code{\link[=Future]{Future()}}.}
-
 \item{persistent}{If FALSE, the evaluation environment is cleared
 from objects prior to the evaluation of the future.}
 
@@ -28,6 +26,8 @@ The function should return any of the above types.}
 
 \item{envir}{The \link{environment} from where global objects should be
 identified.}
+
+\item{\ldots}{Additional named elements passed to \code{\link[=Future]{Future()}}.}
 }
 \value{
 A ClusterFuture.

@@ -8,10 +8,10 @@
 sequential(..., envir = parent.frame())
 }
 \arguments{
-\item{...}{Additional arguments passed to \code{\link[=Future]{Future()}}.}
-
 \item{envir}{The \link{environment} from where global objects should be
 identified.}
+
+\item{\ldots}{Additional named elements to \code{\link[=Future]{Future()}}.}
 }
 \value{
 A \link{Future}.

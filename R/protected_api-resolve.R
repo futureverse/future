@@ -30,7 +30,7 @@
 #' @param sleep Number of seconds to wait before checking if futures have been
 #' resolved since last time.
 #'
-#' @param \dots Not used.
+#' @param \ldots Not used.
 #'
 #' @return Returns `x` (regardless of subsetting or not).
 #' If `signal` is TRUE and one of the futures produces an error, then

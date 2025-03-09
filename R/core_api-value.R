@@ -13,7 +13,7 @@
 #' @param signal If TRUE, \link[base]{conditions} captured while resolving
 #' futures are relayed, otherwise not.
 #' 
-#' @param \dots All arguments used by the S3 methods.
+#' @param \ldots All arguments used by the S3 methods.
 #'
 #' @return
 #' `value()` of a Future object returns the value of the future, which can

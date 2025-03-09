@@ -16,7 +16,7 @@ MultiprocessFuture(expr = NULL, substitute = TRUE, envir = parent.frame(), ...)
 \item{envir}{The \link{environment} from where global objects should be
 identified.}
 
-\item{\dots}{Additional named elements passed to \code{\link[=Future]{Future()}}.}
+\item{\ldots}{Additional named elements passed to \code{\link[=Future]{Future()}}.}
 }
 \value{
 \code{MultiprocessFuture()} returns an object of class \code{MultiprocessFuture}.

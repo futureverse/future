@@ -94,7 +94,7 @@ as possible or not.}
 
 \item{label}{An optional character string label attached to the future.}
 
-\item{\dots}{Additional named elements of the future.}
+\item{\ldots}{Additional named elements of the future.}
 }
 \value{
 \code{Future()} returns an object of class \code{Future}.

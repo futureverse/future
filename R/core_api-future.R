@@ -16,7 +16,7 @@
 #' 
 #' @param expr,value An \R \link[base]{expression}.
 #'
-#' @param \dots Additional arguments passed to [Future()].
+#' @param \ldots Additional arguments passed to [Future()].
 #'
 #' @return
 #' `f <- future(expr)` creates a [Future] `f` that evaluates expression `expr`, the value of the future is retrieved using `v <- value(f)`.

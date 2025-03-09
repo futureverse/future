@@ -23,7 +23,7 @@
 #' @inheritParams Future-class
 #' @inheritParams future
 #' 
-#' @param \dots Additional arguments passed to [Future()].
+#' @param \ldots Additional arguments passed to [Future()].
 #'
 #' @param rscript_libs A character vector of \R package library folders that
 #' the workers should use.  The default is `.libPaths()` so that multisession

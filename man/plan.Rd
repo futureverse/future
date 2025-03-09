@@ -18,12 +18,6 @@ plan(
 \item{strategy}{The evaluation function (or name of it) to use
 for resolving a future. If \code{NULL}, then the current strategy is returned.}
 
-\item{\dots}{Additional arguments overriding the default arguments
-of the evaluation function.  Which additional arguments are supported
-depends on what evaluation function is used, e.g. several support
-argument \code{workers} but not all. For details, see the individual
-functions of which some are linked to below.}
-
 \item{substitute}{If \code{TRUE}, the \code{strategy} expression is
 \code{substitute()}:d, otherwise not.}
 
@@ -35,6 +29,12 @@ that is the same as what is currently in use, will be skipped.}
 \item{.cleanup}{(internal) Used to stop implicitly started clusters.}
 
 \item{.init}{(internal) Used to initiate workers.}
+
+\item{\ldots}{Additional arguments overriding the default arguments
+of the evaluation function.  Which additional arguments are supported
+depends on what evaluation function is used, e.g. several support
+argument \code{workers} but not all. For details, see the individual
+functions of which some are linked to below.}
 }
 \value{
 If a new strategy is chosen, then the previous one is returned

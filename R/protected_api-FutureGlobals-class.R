@@ -7,7 +7,7 @@
 #' 
 #' @param total_size The total size of all globals, if known.
 #' 
-#' @param \dots Not used.
+#' @param \ldots Not used.
 #'
 #' @return An object of class `FutureGlobals`.
 #'

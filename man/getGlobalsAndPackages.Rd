@@ -39,7 +39,7 @@ mistake.  If the total size of the global objects are greater than this
 limit, an informative error message is produced. If
 \code{maxSize = +Inf}, then this assertion is skipped. (Default: 500 MiB).}
 
-\item{\dots}{Not used.}
+\item{\ldots}{Not used.}
 }
 \value{
 A named list with elements \code{expr} (the tweaked expression), \code{globals} (a named list of class \link{FutureGlobals}) and \code{packages} (a character string).
