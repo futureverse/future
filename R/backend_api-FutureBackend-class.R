@@ -70,3 +70,9 @@ makeFutureBackend <- function(evaluator, ...) {
 
   backend
 }
+
+
+#' @export
+getFutureBackendConfigs.Future <- function(future, ...) {
+  list()
+}

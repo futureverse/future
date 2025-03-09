@@ -100,3 +100,22 @@ nbrOfFreeWorkers.SequentialFutureBackend <- function(evaluator, background = FAL
   assert_no_positional_args_but_first()
   if (isTRUE(background)) 0L else 1L
 }
+
+
+#' @export
+getFutureBackendConfigs.UniprocessFuture <- function(future, ...) {
+  conditionClasses <- future[["conditions"]]
+  if (is.null(conditionClasses)) return(list())
+  
+  capture <- list(
+    immediateConditionHandlers = list(
+      immediateCondition = function(cond) {
+        signalCondition(cond)
+      }
+    )
+  )
+
+  list(
+    capture = capture
+  )
+}

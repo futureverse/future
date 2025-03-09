@@ -540,3 +540,42 @@ result.MulticoreFuture <- local({
     result
   }
 })
+
+
+#' @export
+getFutureBackendConfigs.MulticoreFuture <- function(future, ..., debug = isTRUE(getOption("future.debug"))) {
+  conditionClasses <- future[["conditions"]]
+  if (is.null(conditionClasses)) {
+    capture <- list()
+  } else {
+    path <- immediateConditionsPath(rootPath = tempdir())
+    capture <- list(
+      immediateConditionHandlers = list(
+        immediateCondition = function(cond) {
+          fileImmediateConditionHandler(cond, path = path)
+        }
+      )
+    )
+  }
+
+  ## Disable multi-threading in futures?
+  threads <- NA_integer_
+  multithreading <- getOption("future.fork.multithreading.enable", TRUE)  
+  if (isFALSE(multithreading)) {
+    if (supports_omp_threads(assert = TRUE, debug = debug)) {
+      threads <- 1L
+      if (debug) mdebugf("- Force single-threaded (OpenMP and RcppParallel) processing in %s", class(future)[1])
+    } else {
+      warning(FutureWarning("It is not possible to disable OpenMP multi-threading on this systems", future = future))
+    }
+  }
+
+  context <- list(
+    threads = threads
+  )
+
+  list(
+    capture = capture,
+    context = context
+  )
+}

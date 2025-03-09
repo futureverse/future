@@ -1040,3 +1040,44 @@ assertValidConnection <- function(future) {
     stop(FutureError(msg, future = future))
   }
 }
+
+
+
+#' @export
+getFutureBackendConfigs.ClusterFuture <- function(future, ..., debug = isTRUE(getOption("future.debug"))) {
+  resignalImmediateConditions <- getOption("future.psock.relay.immediate", TRUE)
+  if (!resignalImmediateConditions) return(list())
+
+  conditionClasses <- future[["conditions"]]
+  if (is.null(conditionClasses)) return(list())
+  
+  immediateConditionClasses <- attr(conditionClasses, "immediateConditionClasses", exact = TRUE)
+  if (is.null(immediateConditionClasses)) {
+    immediateConditionClasses <- "immediateCondition"
+  } else if (length(immediateConditionClasses) == 0L) {
+    return(list())
+  }
+  
+  ## Does the cluster node communicate with a connection?
+  ## (if not, it's via MPI)
+  workers <- future[["workers"]]
+  stop_if_not(inherits(workers, "cluster"))
+  ## AD HOC/FIXME: Here 'future[["node"]]' is yet not assigned, so we look at
+  ## the first worker and assume the others are the same. /HB 2019-10-23
+  cl <- workers[1L]
+  stop_if_not(inherits(cl, "cluster"))
+  node <- cl[[1L]]
+  stop_if_not(inherits(node, c("SOCK0node", "SOCKnode")))
+  con <- node[["con"]]
+  if (is.null(con)) return(list())
+
+  capture <- list(
+    immediateConditionHandlers = list(
+      immediateCondition = psockImmediateConditionHandler
+    )
+  )
+
+  list(
+    capture = capture
+  )
+}
