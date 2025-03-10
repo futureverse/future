@@ -25,7 +25,7 @@ e.g. sequentially or in parallel."><meta property="og:image" content="https://fu
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">future</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.34.0-9126</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.34.0-9302</span>
       </span>
     </div>
 
@@ -158,7 +158,7 @@ e.g. sequentially or in parallel."><meta property="og:image" content="https://fu
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Plan how to resolve a future</h1>
-    <small class="dont-index">Source: <a href="https://github.com/futureverse/future/blob/HEAD/R/zzz.plan.R" class="external-link"><code>R/zzz.plan.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/futureverse/future/blob/HEAD/R/utils_api-plan.R" class="external-link"><code>R/utils_api-plan.R</code></a></small>
     <div class="hidden name"><code>plan.Rd</code></div>
     </div>
 
@@ -189,14 +189,6 @@ e.g. sequentially or in parallel.</p>
 for resolving a future. If <code>NULL</code>, then the current strategy is returned.</p></dd>
 
 
-<dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>Additional arguments overriding the default arguments
-of the evaluation function.  Which additional arguments are supported
-depends on what evaluation function is used, e.g. several support
-argument <code>workers</code> but not all. For details, see the individual
-functions of which some are linked to below.</p></dd>
-
-
 <dt id="arg-substitute">substitute<a class="anchor" aria-label="anchor" href="#arg-substitute"></a></dt>
 <dd><p>If <code>TRUE</code>, the <code>strategy</code> expression is
 <code><a href="https://rdrr.io/r/base/substitute.html" class="external-link">substitute()</a></code>:d, otherwise not.</p></dd>
@@ -217,6 +209,14 @@ that is the same as what is currently in use, will be skipped.</p></dd>
 
 <dt id="arg--init">.init<a class="anchor" aria-label="anchor" href="#arg--init"></a></dt>
 <dd><p>(internal) Used to initiate workers.</p></dd>
+
+
+<dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
+<dd><p>Additional arguments overriding the default arguments
+of the evaluation function.  Which additional arguments are supported
+depends on what evaluation function is used, e.g. several support
+argument <code>workers</code> but not all. For details, see the individual
+functions of which some are linked to below.</p></dd>
 
 </dl></div>
     <div id="value">

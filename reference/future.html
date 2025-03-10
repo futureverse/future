@@ -32,7 +32,7 @@ switching from, say, sequential to parallel processing."><meta property="og:imag
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">future</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.34.0-9126</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.34.0-9302</span>
       </span>
     </div>
 
@@ -165,7 +165,7 @@ switching from, say, sequential to parallel processing."><meta property="og:imag
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Create a future</h1>
-    <small class="dont-index">Source: <a href="https://github.com/futureverse/future/blob/HEAD/R/future.R" class="external-link"><code>R/future.R</code></a>, <a href="https://github.com/futureverse/future/blob/HEAD/R/futureAssign.R" class="external-link"><code>R/futureAssign.R</code></a>, <a href="https://github.com/futureverse/future/blob/HEAD/R/futureAssign_OP.R" class="external-link"><code>R/futureAssign_OP.R</code></a>, and 1 more</small>
+    <small class="dont-index">Source: <a href="https://github.com/futureverse/future/blob/HEAD/R/core_api-future.R" class="external-link"><code>R/core_api-future.R</code></a>, <a href="https://github.com/futureverse/future/blob/HEAD/R/delayed_api-futureAssign.R" class="external-link"><code>R/delayed_api-futureAssign.R</code></a>, <a href="https://github.com/futureverse/future/blob/HEAD/R/infix_api-futureAssign_OP.R" class="external-link"><code>R/infix_api-futureAssign_OP.R</code></a>, and 1 more</small>
     <div class="hidden name"><code>future.Rd</code></div>
     </div>
 
@@ -336,10 +336,6 @@ frequently) or FALSE (less frequently).
 <em>Some types of futures ignore this argument.</em></p></dd>
 
 
-<dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>Additional arguments passed to <code><a href="Future-class.html">Future()</a></code>.</p></dd>
-
-
 <dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
 <dd><p>the name of a future variable, which will hold the value
 of the future expression (as a promise).</p></dd>
@@ -356,6 +352,10 @@ should be assigned.</p></dd>
 
 <dt id="arg-args">args<a class="anchor" aria-label="anchor" href="#arg-args"></a></dt>
 <dd><p>A <a href="https://rdrr.io/r/base/list.html" class="external-link">list</a> of arguments passed to function <code>FUN</code>.</p></dd>
+
+
+<dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
+<dd><p>Additional arguments passed to <code><a href="Future-class.html">Future()</a></code>.</p></dd>
 
 </dl></div>
     <div id="value">

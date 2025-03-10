@@ -23,7 +23,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">future</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.34.0-9126</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.34.0-9302</span>
       </span>
     </div>
 
@@ -156,7 +156,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>An uniprocess future is a future whose value will be resolved synchronously in the current process</h1>
-    <small class="dont-index">Source: <a href="https://github.com/futureverse/future/blob/HEAD/R/UniprocessFuture-class.R" class="external-link"><code>R/UniprocessFuture-class.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/futureverse/future/blob/HEAD/R/backend_api-UniprocessFuture-class.R" class="external-link"><code>R/backend_api-UniprocessFuture-class.R</code></a></small>
     <div class="hidden name"><code>UniprocessFuture-class.Rd</code></div>
     </div>
 
@@ -165,16 +165,7 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">UniprocessFuture</span><span class="op">(</span>expr <span class="op">=</span> <span class="cn">NULL</span>, substitute <span class="op">=</span> <span class="cn">TRUE</span>, envir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sys.parent.html" class="external-link">parent.frame</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu">SequentialFuture</span><span class="op">(</span></span>
-<span>  expr <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  envir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sys.parent.html" class="external-link">parent.frame</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>  substitute <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  lazy <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  globals <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  <span class="va">...</span></span>
-<span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">UniprocessFuture</span><span class="op">(</span>expr <span class="op">=</span> <span class="cn">NULL</span>, substitute <span class="op">=</span> <span class="cn">TRUE</span>, envir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sys.parent.html" class="external-link">parent.frame</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -198,30 +189,10 @@ identified.</p></dd>
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>Additional named elements passed to <code><a href="Future-class.html">Future()</a></code>.</p></dd>
 
-
-<dt id="arg-lazy">lazy<a class="anchor" aria-label="anchor" href="#arg-lazy"></a></dt>
-<dd><p>If FALSE (default), the future is resolved
-eagerly (starting immediately), otherwise not.</p></dd>
-
-
-<dt id="arg-globals">globals<a class="anchor" aria-label="anchor" href="#arg-globals"></a></dt>
-<dd><p>(optional) a logical, a character vector, or a named list
-to control how globals are handled.
-For details, see section 'Globals used by future expressions'
-in the help for <code><a href="future.html">future()</a></code>.</p></dd>
-
 </dl></div>
     <div id="value">
     <h2>Value</h2>
     <p><code>UniprocessFuture()</code> returns an object of class <code>UniprocessFuture</code>.</p>
-<p><code>SequentialFuture()</code> returns an object of class <code>SequentialProcess</code>,
-which inherits from <code>UniprocessFuture</code>.</p>
-    </div>
-    <div id="usage">
-    <h2>Usage</h2>
-
-
-<p>To use 'sequential' futures, use <code>plan(sequential)</code>, cf. <a href="sequential.html">sequential</a>.</p>
     </div>
 
   </div>

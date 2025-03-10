@@ -16,9 +16,9 @@
 <url><loc>https://future.futureverse.org/authors.html</loc></url>
 <url><loc>https://future.futureverse.org/index.html</loc></url>
 <url><loc>https://future.futureverse.org/news/index.html</loc></url>
-<url><loc>https://future.futureverse.org/reference/ClusterFuture-class.html</loc></url>
 <url><loc>https://future.futureverse.org/reference/ConstantFuture-class.html</loc></url>
 <url><loc>https://future.futureverse.org/reference/Future-class.html</loc></url>
+<url><loc>https://future.futureverse.org/reference/FutureBackend.html</loc></url>
 <url><loc>https://future.futureverse.org/reference/FutureCondition.html</loc></url>
 <url><loc>https://future.futureverse.org/reference/FutureGlobals.html</loc></url>
 <url><loc>https://future.futureverse.org/reference/FutureResult.html</loc></url>
@@ -46,6 +46,7 @@
 <url><loc>https://future.futureverse.org/reference/grapes-tweak-grapes.html</loc></url>
 <url><loc>https://future.futureverse.org/reference/index.html</loc></url>
 <url><loc>https://future.futureverse.org/reference/mandelbrot.html</loc></url>
+<url><loc>https://future.futureverse.org/reference/minifuture.html</loc></url>
 <url><loc>https://future.futureverse.org/reference/multicore.html</loc></url>
 <url><loc>https://future.futureverse.org/reference/multisession.html</loc></url>
 <url><loc>https://future.futureverse.org/reference/nbrOfWorkers.html</loc></url>
@@ -68,5 +69,6 @@
 <url><loc>https://future.futureverse.org/reference/tweak.html</loc></url>
 <url><loc>https://future.futureverse.org/reference/usedCores.html</loc></url>
 <url><loc>https://future.futureverse.org/reference/value.html</loc></url>
+<url><loc>https://future.futureverse.org/reference/with.FutureStrategyList.html</loc></url>
 </urlset>
 

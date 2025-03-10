@@ -23,7 +23,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">future</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.34.0-9126</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.34.0-9302</span>
       </span>
     </div>
 
@@ -156,7 +156,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>A multicore future is a future whose value will be resolved asynchronously in a parallel process</h1>
-    <small class="dont-index">Source: <a href="https://github.com/futureverse/future/blob/HEAD/R/MulticoreFuture-class.R" class="external-link"><code>R/MulticoreFuture-class.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/futureverse/future/blob/HEAD/R/backend_api-MulticoreFutureBackend-class.R" class="external-link"><code>R/backend_api-MulticoreFutureBackend-class.R</code></a></small>
     <div class="hidden name"><code>MulticoreFuture-class.Rd</code></div>
     </div>
 
@@ -165,31 +165,10 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">MulticoreFuture</span><span class="op">(</span>expr <span class="op">=</span> <span class="cn">NULL</span>, substitute <span class="op">=</span> <span class="cn">TRUE</span>, envir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sys.parent.html" class="external-link">parent.frame</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for class 'MulticoreFuture'</span></span>
+<span><span class="fu"><a href="resolved.html">resolved</a></span><span class="op">(</span><span class="va">x</span>, run <span class="op">=</span> <span class="cn">TRUE</span>, timeout <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
-    <div id="arguments">
-    <h2>Arguments</h2>
-
-
-<dl><dt id="arg-expr">expr<a class="anchor" aria-label="anchor" href="#arg-expr"></a></dt>
-<dd><p>An <span style="R">R</span> <a href="https://rdrr.io/r/base/expression.html" class="external-link">expression</a>.</p></dd>
-
-
-<dt id="arg-substitute">substitute<a class="anchor" aria-label="anchor" href="#arg-substitute"></a></dt>
-<dd><p>If TRUE, argument <code>expr</code> is
-<code><a href="https://rdrr.io/r/base/substitute.html" class="external-link">substitute</a>()</code>:ed, otherwise not.</p></dd>
-
-
-<dt id="arg-envir">envir<a class="anchor" aria-label="anchor" href="#arg-envir"></a></dt>
-<dd><p>The <a href="https://rdrr.io/r/base/environment.html" class="external-link">environment</a> from where global objects should be
-identified.</p></dd>
-
-
-<dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>Additional named elements passed to <code><a href="Future-class.html">Future()</a></code>.</p></dd>
-
-</dl></div>
     <div id="value">
     <h2>Value</h2>
     <p><code>MulticoreFuture()</code> returns an object of class <code>MulticoreFuture</code>.</p>

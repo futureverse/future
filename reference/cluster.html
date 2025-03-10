@@ -25,7 +25,7 @@ parallel in another process."><meta property="og:image" content="https://future.
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">future</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.34.0-9126</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.34.0-9302</span>
       </span>
     </div>
 
@@ -158,7 +158,7 @@ parallel in another process."><meta property="og:image" content="https://future.
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Create a cluster future whose value will be resolved asynchronously in a parallel process</h1>
-    <small class="dont-index">Source: <a href="https://github.com/futureverse/future/blob/HEAD/R/cluster.R" class="external-link"><code>R/cluster.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/futureverse/future/blob/HEAD/R/backend_api-ClusterFutureBackend-class.R" class="external-link"><code>R/backend_api-ClusterFutureBackend-class.R</code></a></small>
     <div class="hidden name"><code>cluster.Rd</code></div>
     </div>
 
@@ -181,11 +181,7 @@ parallel in another process</em>.</p>
     <h2>Arguments</h2>
 
 
-<dl><dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>Additional named elements passed to <code><a href="ClusterFuture-class.html">ClusterFuture()</a></code>.</p></dd>
-
-
-<dt id="arg-persistent">persistent<a class="anchor" aria-label="anchor" href="#arg-persistent"></a></dt>
+<dl><dt id="arg-persistent">persistent<a class="anchor" aria-label="anchor" href="#arg-persistent"></a></dt>
 <dd><p>If FALSE, the evaluation environment is cleared
 from objects prior to the evaluation of the future.</p></dd>
 
@@ -205,32 +201,35 @@ The function should return any of the above types.</p></dd>
 <dd><p>The <a href="https://rdrr.io/r/base/environment.html" class="external-link">environment</a> from where global objects should be
 identified.</p></dd>
 
+
+<dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
+<dd><p>Additional named elements passed to <code><a href="Future-class.html">Future()</a></code>.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A <a href="ClusterFuture-class.html">ClusterFuture</a>.</p>
+    <p>A ClusterFuture.</p>
     </div>
     <div id="details">
     <h2>Details</h2>
     <p>This function is <em>not</em> meant to be called directly.  Instead, the
 typical usages are:</p>
-<p></p><div class="sourceCode r"><pre><code># Evaluate futures via a single background R process on the local machine
-plan(cluster, workers = 1)
-
-# Evaluate futures via two background R processes on the local machine
-plan(cluster, workers = 2)
-
-# Evaluate futures via a single R process on another machine on on the
-# local area network (LAN)
-plan(cluster, workers = "raspberry-pi")
-
-# Evaluate futures via a single R process running on a remote machine
-plan(cluster, workers = "pi.example.org")
-
-# Evaluate futures via four R processes, one running on the local machine,
-# two running on LAN machine 'n1' and one on a remote machine
-plan(cluster, workers = c("localhost", "n1", "n1", "pi.example.org")
-</code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="co"># Evaluate futures via a single background R process on the local machine</span></span>
+<span><span class="fu"><a href="../reference/plan.html">plan</a></span><span class="op">(</span><span class="va">cluster</span>, workers <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Evaluate futures via two background R processes on the local machine</span></span>
+<span><span class="fu"><a href="../reference/plan.html">plan</a></span><span class="op">(</span><span class="va">cluster</span>, workers <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Evaluate futures via a single R process on another machine on on the</span></span>
+<span><span class="co"># local area network (LAN)</span></span>
+<span><span class="fu"><a href="../reference/plan.html">plan</a></span><span class="op">(</span><span class="va">cluster</span>, workers <span class="op">=</span> <span class="st">"raspberry-pi"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Evaluate futures via a single R process running on a remote machine</span></span>
+<span><span class="fu"><a href="../reference/plan.html">plan</a></span><span class="op">(</span><span class="va">cluster</span>, workers <span class="op">=</span> <span class="st">"pi.example.org"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Evaluate futures via four R processes, one running on the local machine,</span></span>
+<span><span class="co"># two running on LAN machine 'n1' and one on a remote machine</span></span>
+<span><span class="fu"><a href="../reference/plan.html">plan</a></span><span class="op">(</span><span class="va">cluster</span>, workers <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"localhost"</span>, <span class="st">"n1"</span>, <span class="st">"n1"</span>, <span class="st">"pi.example.org"</span><span class="op">)</span><span class="op">)</span></span></code></pre><p></p></div>
     </div>
 
     <div id="ref-examples">

@@ -23,7 +23,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">future</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.34.0-9126</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.34.0-9302</span>
       </span>
     </div>
 
@@ -156,7 +156,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Retrieves global variables of an expression and their associated packages</h1>
-    <small class="dont-index">Source: <a href="https://github.com/futureverse/future/blob/HEAD/R/globals.R" class="external-link"><code>R/globals.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/futureverse/future/blob/HEAD/R/protected_api-globals.R" class="external-link"><code>R/protected_api-globals.R</code></a></small>
     <div class="hidden name"><code>getGlobalsAndPackages.Rd</code></div>
     </div>
 
@@ -171,9 +171,10 @@
 <span>  tweak <span class="op">=</span> <span class="va">tweakExpression</span>,</span>
 <span>  globals <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  locals <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"future.globals.globalsOf.locals"</span>, <span class="cn">TRUE</span><span class="op">)</span>,</span>
-<span>  resolve <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"future.globals.resolve"</span>, <span class="cn">NULL</span><span class="op">)</span>,</span>
+<span>  resolve <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"future.globals.resolve"</span><span class="op">)</span>,</span>
 <span>  persistent <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  maxSize <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"future.globals.maxSize"</span>, <span class="fl">500</span> <span class="op">*</span> <span class="fl">1024</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span>,</span>
+<span>  onReference <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"future.globals.onReference"</span>, <span class="st">"ignore"</span><span class="op">)</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
