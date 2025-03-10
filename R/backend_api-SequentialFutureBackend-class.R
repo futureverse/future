@@ -28,7 +28,7 @@
 #' @export
 sequential <- function(..., envir = parent.frame()) {
   if (! "fiery" %in% loadedNamespaces()) {
-    stop("The future::sequential() function implements the FutureBackend and should never be called directly. This will soon become defunct")
+    stop("The future::sequential() function implements the FutureBackend and should never be called directly")
   }
   f <- Future(..., envir = envir)
   class(f) <- c("SequentialFuture", "UniprocessFuture", "Future")
