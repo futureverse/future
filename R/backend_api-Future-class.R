@@ -444,6 +444,7 @@ run.Future <- function(future, ...) {
     class(future) <- backend[["futureClasses"]]
 
     if (debug) mdebug(" - Launching futures ...")
+    future[["backend"]] <- backend
     future2 <- launchFuture(backend, future = future)
     if (debug) mdebug(" - Launching futures ... done")
     if (debug) mdebug(" - Future launched: ", commaq(class(future2)))

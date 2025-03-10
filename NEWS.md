@@ -20,6 +20,10 @@
    
  * Interrupted futures are now handled and produce an informative warning.
 
+ * Interrupted futures are reset of vanilla, lazy futures. This way
+   interrupted futures can be re-evaluated again, for instance, on
+   another future backend.
+
 ## Bug Fixes
 
  * Now 'interrupt' conditions are captured during the evaluation of
