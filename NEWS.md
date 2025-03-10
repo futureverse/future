@@ -15,6 +15,9 @@
    on having to specify globals and packages, not having conditions
    and standard output relayed, and ignoring random number generation.
 
+ * Add `with(<plan>, <expression>)` method to evaluate an expression,
+   including futures, using a temporary future plan.
+
 ## Bug Fixes
 
  * Now 'interrupt' conditions are captured during the evaluation of
