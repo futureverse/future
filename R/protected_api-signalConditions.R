@@ -103,7 +103,7 @@ signalConditions <- function(future, include = "condition", exclude = NULL, resi
       host <- source[["host"]]
       pid <- source[["pid"]]
       msg <- sprintf("A future ('%s') of class %s was interrupted at %s, while running on %s (pid %s)", label, class(future)[1], format(when, format = "%FT%T"), sQuote(host), pid)
-      warning(FutureWarning(msg, future = future))
+      warning(FutureInterruptWarning(msg, future = future))
     } else if (inherits(condition, "warning")) {
       warning(condition)
     } else if (inherits(condition, "message")) {
