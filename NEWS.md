@@ -9,6 +9,11 @@
    but now it's handled automatically by the future framework.
    
  * Add new FutureBackend API for writing future backends.
+ 
+ * Add `minifuture()`, which is like `future()`, but with different
+   default arguments resulting in less overhead with the added burden
+   on having to specify globals and packages, not having conditions
+   and standard output relayed, and ignoring random number generation.
 
 ## Bug Fixes
 
