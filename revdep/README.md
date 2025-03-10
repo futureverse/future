@@ -27,10 +27,11 @@
 
 # Revdeps
 
-## Failed to check (1)
+## Failed to check (2)
 
 |package          |version |error |warning |note |
 |:----------------|:-------|:-----|:-------|:----|
+|[OutSeekR](failures.md#outseekr)|1.0.0   |1     |        |     |
 |[TriDimRegression](failures.md#tridimregression)|1.0.2   |1     |        |     |
 
 ## New problems (3)
@@ -69,7 +70,7 @@
 |BatchGetSymbols              |2.6.4     |       |        |     |
 |[batchtools](problems.md#batchtools)|0.9.17    |       |        |2    |
 |bayesian                     |1.0.1     |       |        |     |
-|[BayesianMCPMod](problems.md#bayesianmcpmod)|1.1.0     |       |        |1    |
+|BayesianMCPMod               |1.1.0     |       |        |     |
 |[bayesmove](problems.md#bayesmove)|0.2.1     |       |        |1    |
 |[bbknnR](problems.md#bbknnr) |1.1.1     |       |        |1    |
 |bcmaps                       |2.2.1     |       |        |     |
@@ -296,7 +297,7 @@
 |[OptimalGoldstandardDesigns](problems.md#optimalgoldstandarddesigns)|1.0.1     |       |        |1    |
 |optimLanduse                 |1.2.1     |       |        |     |
 |origami                      |1.0.7     |       |        |     |
-|OutSeekR                     |1.0.0     |       |        |     |
+|[OutSeekR](failures.md#outseekr)|1.0.0     |1      |        |     |
 |[PAMpal](problems.md#pampal) |1.4.4     |       |1       |     |
 |[PAMscapes](problems.md#pamscapes)|0.10.0    |       |1       |     |
 |paramsim                     |0.1.0     |       |        |     |
@@ -311,7 +312,7 @@
 |[pgxRpi](problems.md#pgxrpi) |1.2.3     |       |        |2    |
 |[photosynthesis](problems.md#photosynthesis)|2.1.5     |       |        |2    |
 |[phylolm](problems.md#phylolm)|2.6.5     |       |        |1    |
-|[phylopath](problems.md#phylopath)|1.3.0     |       |        |1    |
+|phylopath                    |1.3.0     |       |        |     |
 |phylospatial                 |1.0.0     |       |        |     |
 |PINstimation                 |0.1.2     |       |        |     |
 |[pliman](problems.md#pliman) |3.0.0     |       |        |1    |
