@@ -105,9 +105,9 @@ readImmediateConditions <- function(path = immediateConditionsPath(rootPath = ro
   conds <- lapply(conds, FUN = function(condition) {
     signalCondition(condition)
     ## Increment signal count
-    signaled <- condition$signaled
+    signaled <- condition[["signaled"]]
     if (is.null(signaled)) signaled <- 0L
-    condition$signaled <- signaled + 1L
+    condition[["signaled"]] <- signaled + 1L
     condition
   })
   mdebugf(" - Resignal conditions ... done")
@@ -167,7 +167,7 @@ save_rds <- function(object, pathname, ...) {
     msg <- conditionMessage(ex)
     fi_tmp <- file.info(pathname_tmp)
     msg <- sprintf("saveRDS() failed to save to temporary file %s (%.0f bytes; last modified on %s). The reason was: %s", sQuote(pathname_tmp), fi_tmp[["size"]], fi_tmp[["mtime"]], msg)
-    ex$message <- msg
+    ex[["message"]] <- msg
     stop(ex)
   })
   stop_if_not(file_test("-f", pathname_tmp))

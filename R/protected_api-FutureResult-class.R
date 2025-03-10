@@ -13,7 +13,7 @@
 #' @param rng If TRUE, the `.Random.seed` was updated from resolving the
 #' future, otherwise not.
 #'
-#' @param \dots (optional) Additional named results to be returned.
+#' @param \ldots (optional) Additional named results to be returned.
 #' 
 #' @param started,finished \link[base:DateTimeClasses]{POSIXct} timestamps
 #' when the evaluation of the future expression was started and finished.
@@ -113,10 +113,10 @@ as.character.FutureResult <- function(x, ...) {
 print.FutureResult <- function(x, ...) {
   s <- sprintf("%s:", class(x)[1])
   s <- c(s, sprintf("value: %s", commaq(class(x[["value"]]))))
-  if (!is.null(v <- x$visible)) s <- c(s, sprintf("visible: %s", v))
+  if (!is.null(v <- x[["visible"]])) s <- c(s, sprintf("visible: %s", v))
   s <- c(s, sprintf("stdout: %s", class(x[["stdout"]])))
   conditions <- x[["conditions"]]
-  conditionClasses <- vapply(conditions, FUN = function(c) class(c$condition)[1], FUN.VALUE = NA_character_)
+  conditionClasses <- vapply(conditions, FUN = function(c) class(c[["condition"]])[1], FUN.VALUE = NA_character_)
   s <- c(s, sprintf("conditions: [n = %d] %s", length(conditions), paste(conditionClasses, collapse = ", ")))
   if (!is.null(v <- x[["rng"]])) s <- c(s, sprintf("RNG used: %s", v))
   t0 <- x[["started"]]

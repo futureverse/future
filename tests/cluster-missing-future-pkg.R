@@ -6,8 +6,8 @@ message("*** cluster() ...")
 message("Library paths: ", commaq(.libPaths()))
 message("Package path: ", sQuote(system.file(package = "future")))
 
-types <- "PSOCK"
-
+types <- NULL
+if (!covr_testing) types <- c(types, "PSOCK")
 if (supportsMulticore()) types <- c(types, "FORK")
 
 setupClusterWithoutPkgs <- function(type = "PSOCK", withouts = c("future")) {
@@ -47,6 +47,7 @@ for (type in types) {
         
     res <- tryCatch({
       plan(cluster, workers = cl)
+      value(future(NA))
     }, error = identity)
     print(res)
     stopifnot(inherits(res, "FutureError"))

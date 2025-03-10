@@ -1,3 +1,10 @@
+## Used only internally
+constant <- function(...) {
+  ConstantFuture(...)
+}
+class(constant) <- c("constant", "uniprocess", "future", "function")
+
+
 #' A future with a constant value
 #'
 #' A constant future is a future whose expression is a constant

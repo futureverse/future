@@ -34,19 +34,19 @@
 #' @noRd
 get_random_seed <- function() {
   env <- globalenv()
-  env$.Random.seed
+  env[[".Random.seed"]]
 }
 
 #' @rdname random_seed_utils
 #' @noRd
 set_random_seed <- function(seed, kind = NULL) {
   env <- globalenv()
-  old_seed <- env$.Random.seed
+  old_seed <- env[[".Random.seed"]]
   if (is.null(seed)) {
     if (!is.null(kind)) RNGkind(kind)
     rm(list = ".Random.seed", envir = env, inherits = FALSE)
   } else {
-    env$.Random.seed <- seed
+    env[[".Random.seed"]] <- seed
   }
   invisible(old_seed)
 }

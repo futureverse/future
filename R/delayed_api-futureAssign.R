@@ -54,7 +54,7 @@ futureAssign <- function(x, value, envir = parent.frame(), substitute = TRUE, la
 
   ## Assign future to assignment environment
   future_without_gc <- future
-  future_without_gc$.gcenv <- NULL
+  future_without_gc[[".gcenv"]] <- NULL
   assign(future_name, future_without_gc, envir = assign.env)
 
 
@@ -65,7 +65,7 @@ futureAssign <- function(x, value, envir = parent.frame(), substitute = TRUE, la
   ## "delayed" error, which will be thrown each time the variable is
   ## retrieved.
   env <- new.env()
-  env$job <- future
+  env[["job"]] <- future
   delayedAssign(x, local({
     value <- value(future)
     ## Remove internal future variable

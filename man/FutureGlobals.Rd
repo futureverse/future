@@ -21,7 +21,7 @@ have been scanned for and resolved futures or not.}
 
 \item{total_size}{The total size of all globals, if known.}
 
-\item{\dots}{Not used.}
+\item{\ldots}{Not used.}
 }
 \value{
 An object of class \code{FutureGlobals}.

@@ -20,6 +20,14 @@ attr(multicore, "backend") <- MulticoreFutureBackend
   update_package_option("future.debug", mode = "logical")
   debug <- isTRUE(getOption("future.debug"))
 
+  ## Special case: Disable 'R_FUTURE_PLAN' when 'R CMD check'
+  ## runs checks on examples, because, for instance,
+  ## R_FUTURE_PLAN=multisession, will create connections that
+  ## the check code will think are left over connections.
+  if (nzchar(Sys.getenv("R_FUTURE_PLAN")) && "CheckExEnv" %in% search()) {
+    Sys.unsetenv("R_FUTURE_PLAN")
+  }
+  
   if (debug) {
     envs <- Sys.getenv()
     envs <- envs[grep("R_FUTURE_", names(envs), fixed = TRUE)]
@@ -31,7 +39,7 @@ attr(multicore, "backend") <- MulticoreFutureBackend
   update_package_options(debug = debug)
   
   ## Initiate the R session UUID, which will also set/update
-  ## .GlobalEnv$.Random.seed.
+  ## .GlobalEnv[[".Random.seed"]].
   session_uuid(attributes = FALSE)
 
   ## Report on future plan, if set
@@ -47,7 +55,7 @@ attr(multicore, "backend") <- MulticoreFutureBackend
   }
 
   args <- parseCmdArgs()
-  p <- args$p
+  p <- args[["p"]]
   if (!is.null(p)) {
     if (debug) mdebugf("R command-line argument: -p %s", p)
     
@@ -144,7 +152,7 @@ sourceFutureStartupScript <- function(default = c(".future.R", "~/.future.R"), d
   tryCatch({
     source(pathname, chdir = FALSE, echo = FALSE, local = FALSE)
   }, error = function(ex) {
-    msg <- sprintf("Failed to source %s file while attaching the future package. Will ignore this error, but please investigate. The error message was: %s", sQuote(pathname), sQuote(ex$message))
+    msg <- sprintf("Failed to source %s file while attaching the future package. Will ignore this error, but please investigate. The error message was: %s", sQuote(pathname), sQuote(ex[["message"]]))
     if (debug) mdebug(msg)
     warning(msg)
   })

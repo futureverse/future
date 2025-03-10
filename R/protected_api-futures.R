@@ -5,7 +5,7 @@
 #' Non-future elements are returned as is.
 #'
 #' @param x An environment, a list, or a list environment.
-#' @param \dots Not used.
+#' @param \ldots Not used.
 #'
 #' @return An object of same type as `x` and with the same names
 #' and/or dimensions, if set.

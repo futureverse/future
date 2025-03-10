@@ -220,32 +220,32 @@ evalFuture <- function(
     )) {
   debug <- FALSE
 
-  core <- data$core
-  capture <- data$capture
-  context <- data$context
+  core <- data[["core"]]
+  capture <- data[["capture"]]
+  context <- data[["context"]]
 
-  expr <- core$expr
+  expr <- core[["expr"]]
   
-  globals <- core$globals
-  packages <- core$packages
-  seed <- core$seed
+  globals <- core[["globals"]]
+  packages <- core[["packages"]]
+  seed <- core[["seed"]]
 
-  stdout <- capture$stdout
-  split <- capture$split
+  stdout <- capture[["stdout"]]
+  split <- capture[["split"]]
   if (is.null(stdout)) stdout <- TRUE
-  conditionClasses <- capture$conditionClasses
-  immediateConditionClasses <- capture$immediateConditionClasses
-  immediateConditionHandlers <- capture$immediateConditionHandlers
+  conditionClasses <- capture[["conditionClasses"]]
+  immediateConditionClasses <- capture[["immediateConditionClasses"]]
+  immediateConditionHandlers <- capture[["immediateConditionHandlers"]]
 
-  backendPackages <- context$backendPackages
-  strategiesR <- context$strategiesR
-  threads <- context$threads
-  forwardOptions <- context$forwardOptions
+  backendPackages <- context[["backendPackages"]]
+  strategiesR <- context[["strategiesR"]]
+  threads <- context[["threads"]]
+  forwardOptions <- context[["forwardOptions"]]
   if (is.null(threads)) threads <- NA_integer_
   ## This will eventually always be TRUE
-  local <- context$local
+  local <- context[["local"]]
   if (is.null(local)) local <- TRUE
-  reset <- context$reset
+  reset <- context[["reset"]]
 
   with_assert({
     if (!is.null(immediateConditionHandlers)) {
@@ -341,7 +341,7 @@ evalFuture <- function(
   
       on.exit({
         ## (d) Reset environment variables
-        if (.Platform$OS.type == "windows") {
+        if (.Platform[["OS.type"]] == "windows") {
           ## On MS Windows, there are two special cases to consider:
           ##
           ## (1) You cannot have empty environment variables. When one is assigned
@@ -432,8 +432,8 @@ evalFuture <- function(
         ## that will, as documented, trigger any warnings collected
         ## internally to be removed.
         ## https://github.com/futureverse/future/issues/645
-        if (identical(getOption("nwarnings"), ...future.oldOptions$nwarnings)) {
-          ...future.oldOptions$nwarnings <- NULL
+        if (identical(getOption("nwarnings"), ...future.oldOptions[["nwarnings"]])) {
+          ...future.oldOptions[["nwarnings"]] <- NULL
         }
         options(...future.oldOptions)
     
@@ -546,7 +546,7 @@ evalFuture <- function(
     } else {  ## stdout = FALSE
       ## Silence all output by sending it to the void
       ...future.stdout <- file(
-        switch(.Platform$OS.type, windows = "NUL", "/dev/null"),
+        switch(.Platform[["OS.type"]], windows = "NUL", "/dev/null"),
         open = "w"
       )
     }
@@ -707,8 +707,8 @@ evalFuture <- function(
     withCallingHandlers({
       ...future.value <- withVisible(eval(expr, envir = globalenv()))
       FutureResult(
-        value = ...future.value$value,
-        visible = ...future.value$visible,
+        value = ...future.value[["value"]],
+        visible = ...future.value[["visible"]],
         conditions = ...future.conditions,
         rng = !identical(globalenv()[[".Random.seed"]], ...future.rng),
         globalenv = if (globalenv) list(added = setdiff(names(.GlobalEnv), ...future.globalenv.names)) else NULL,
@@ -762,7 +762,7 @@ evalFuture <- function(
           ## Record condition
           ...future.conditions[[length(...future.conditions) + 1L]] <<- list(
             condition = cond,
-            calls     = c(sysCalls(from = ...future.frame), cond$call),
+            calls     = c(sysCalls(from = ...future.frame), cond[["call"]]),
             session   = sessionInformation(),
             timestamp = Sys.time(),
             signaled  = 0L
@@ -809,7 +809,7 @@ evalFuture <- function(
   if (!is.na(stdout)) {
     sink(type = "output", split = split)
     if (stdout) {
-      ...future.result$stdout <- rawToChar(
+      ...future.result[["stdout"]] <- rawToChar(
         rawConnectionValue(...future.stdout)
       )
     } else {

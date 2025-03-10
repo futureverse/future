@@ -1,3 +1,39 @@
+#' Create a sequential future whose value will be in the current \R session
+#'
+#' A sequential future is a future that is evaluated sequentially in the
+#' current \R session similarly to how \R expressions are evaluated in \R.
+#' The only difference to \R itself is that globals are validated
+#' by default just as for all other types of futures in this package.
+#'
+#' @details
+#' This function is _not_ meant to be called directly.  Instead, the
+#' typical usages are:
+#'
+#' ```r
+#' # Evaluate futures sequentially in the current R process
+#' plan(sequential)
+#' ```
+#'
+#' @inheritParams future
+#' @inheritParams Future-class
+#' 
+#' @param \ldots Additional named elements to [Future()].
+#'
+#' @return
+#' A [Future].
+#'
+#' @example incl/sequential.R
+#'
+#' @aliases uniprocess
+#' @export
+sequential <- function(..., envir = parent.frame()) {
+  stop("INTERNAL ERROR: The future::sequential() function implements the FutureBackend and should never be called directly")
+}
+class(sequential) <- c("sequential", "uniprocess", "future", "function")
+
+
+
+
 #' A SequentialFutureBackend resolves futures sequentially in the current R session
 #'
 #' @inheritParams FutureBackend
@@ -29,7 +65,9 @@ launchFuture.SequentialFutureBackend <- function(backend, future, ...) {
 
   ## Apply backend tweaks
   split <- backend[["split"]]
-  if (!is.null(split)) data$capture$split <- split
+  if (!is.null(split)) data[["capture"]][["split"]] <- split
+
+  ## Inherit 'earlySignal' from backend?
   earlySignal <- backend[["earlySignal"]]
   if (!is.null(earlySignal)) future[["earlySignal"]] <- earlySignal
 
@@ -48,4 +86,36 @@ launchFuture.SequentialFutureBackend <- function(backend, future, ...) {
   signalEarly(future, collect = FALSE)
 
   future
+}
+
+
+#' @export
+nbrOfWorkers.SequentialFutureBackend <- function(evaluator) {
+  1L
+}
+
+
+#' @export
+nbrOfFreeWorkers.SequentialFutureBackend <- function(evaluator, background = FALSE, ...) {
+  assert_no_positional_args_but_first()
+  if (isTRUE(background)) 0L else 1L
+}
+
+
+#' @export
+getFutureBackendConfigs.UniprocessFuture <- function(future, ...) {
+  conditionClasses <- future[["conditions"]]
+  if (is.null(conditionClasses)) return(list())
+  
+  capture <- list(
+    immediateConditionHandlers = list(
+      immediateCondition = function(cond) {
+        signalCondition(cond)
+      }
+    )
+  )
+
+  list(
+    capture = capture
+  )
 }

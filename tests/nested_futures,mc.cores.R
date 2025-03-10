@@ -16,7 +16,8 @@ winWorkaround <- (.Platform$OS.type == "windows" && getRversion() >= "4.0.0")
 
 message("*** Nested futures - mc.cores ...")
 
-strategies <- "multisession"
+strategies <- NULL
+if (!covr_testing) strategies <- c(strategies, "multisession")
 if (supportsMulticore()) strategies <- c(strategies, "multicore")
 
 pid <- Sys.getpid()
@@ -84,10 +85,7 @@ for (mc in 1:2) {
     stopifnot( (mc2 <= 1 && a$pid  == pid) || (a$pid  != pid) )
     stopifnot( (mc2 <= 1 && a$pid1 == pid) || (a$pid1 != pid) )
     stopifnot( (mc2 <= 1 && a$pid2 == pid) || (a$pid2 != pid) )
-    stopifnot(
-      ((mc2 <= 1 || a$cores <= 2) && a$pid2 != a$pid1)
-      ||
-      (a$pid2 == a$pid1)
+    stopifnot(((mc2 <= 1 || a$cores <= 2) && a$pid2 == a$pid1) || (a$pid2 != a$pid1)
     )
 
     if (mc == 1L && !winWorkaround) {

@@ -1,7 +1,7 @@
 #' Tweak a future function by adjusting its default arguments
 #'
 #' @param strategy An existing future function or the name of one.
-#' @param \dots Named arguments to replace the defaults of existing
+#' @param \ldots Named arguments to replace the defaults of existing
 #' arguments.
 #' @param penvir The environment used when searching for a future
 #' function by its name.
@@ -129,7 +129,7 @@ tweak.future <- function(strategy, ..., penvir = parent.frame()) {
   ## to pick up package dependencies from there, which then are attached on
   ## the future worker.
   environment(strategy2) <- new.env(parent = environment(strategy))
-  environment(strategy2)$strategy <- strategy
+  environment(strategy2)[["strategy"]] <- strategy
 
   ## Restore attributes including class
   attributes(strategy2) <- attrs

@@ -19,8 +19,6 @@ value(...)
 \method{value}{environment}(x, stdout = TRUE, signal = TRUE, ...)
 }
 \arguments{
-\item{\dots}{All arguments used by the S3 methods.}
-
 \item{future, x}{A \link{Future}, an environment, a list, or a list environment.}
 
 \item{stdout}{If TRUE, standard output captured while resolving futures
@@ -28,6 +26,8 @@ is relayed, otherwise not.}
 
 \item{signal}{If TRUE, \link[base]{conditions} captured while resolving
 futures are relayed, otherwise not.}
+
+\item{\ldots}{All arguments used by the S3 methods.}
 }
 \value{
 \code{value()} of a Future object returns the value of the future, which can

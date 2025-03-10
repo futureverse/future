@@ -14,7 +14,7 @@
 #' @param resignal If TRUE, then already signaled conditions are signaled
 #' again, otherwise not.
 #'
-#' @param \dots Not used.
+#' @param \ldots Not used.
 #'
 #' @return Returns the [Future] where conditioned that were signaled
 #' have been flagged to have been signaled.
@@ -25,6 +25,9 @@
 #'
 #' @keywords internal
 signalConditions <- function(future, include = "condition", exclude = NULL, resignal = TRUE, ...) {
+  ## Nothing to do?
+  if (length(include) == 0L) return(invisible(future))
+  
   ## Future is not yet launched
   if (!future[["state"]] %in% c("finished", "failed")) {
     stop(FutureError(
@@ -34,13 +37,10 @@ signalConditions <- function(future, include = "condition", exclude = NULL, resi
       future = future))
   }
 
-  ## Nothing to do?
-  if (length(include) == 0L) return(invisible(future))
-  
   result <- result(future)
   stop_if_not(inherits(result, "FutureResult"))
   
-  conditions <- result$conditions
+  conditions <- result[["conditions"]]
   
   ## Nothing to do
   if (length(conditions) == 0) return(invisible(future))
@@ -63,9 +63,9 @@ signalConditions <- function(future, include = "condition", exclude = NULL, resi
     cond <- conditions[[kk]]
 
     ## Skip already signaled conditions?
-    if (!resignal && !is.null(cond$signaled) && cond$signaled > 0L) next
+    if (!resignal && !is.null(cond[["signaled"]]) && cond[["signaled"]] > 0L) next
     
-    condition <- cond$condition
+    condition <- cond[["condition"]]
 
     ## Don't signal condition based on 'exclude'?
     if (length(exclude) > 0L && inherits(condition, exclude)) next
@@ -76,21 +76,21 @@ signalConditions <- function(future, include = "condition", exclude = NULL, resi
     mdebugf(" - Condition #%d: %s", kk, paste(sQuote(class(condition)), collapse = ", "))
 
     ## Flag condition as signaled
-    cond$signaled <- cond$signaled + 1L
+    cond[["signaled"]] <- cond[["signaled"]] + 1L
     conditions[[kk]] <- cond
     
     if (inherits(condition, "error")) {
       ## Make sure to update 'signaled' information before we exit.
       ## Note, 'future' is an environment.
-      result$conditions <- conditions
+      result[["conditions"]] <- conditions
       future[["result"]] <- result
       
       ## SPECIAL: By default, don't add 'future.info' because it
       ## modifies the error object, which may break things.
       if (debug && !"future.info" %in% names(condition)) {
         ## Recreate the full call stack
-        cond$calls <- c(future[["calls"]], cond$calls)
-        condition$future.info <- cond
+        cond[["calls"]] <- c(future[["calls"]], cond[["calls"]])
+        condition[["future.info"]] <- cond
       }
       stop(condition)
     } else if (inherits(condition, "warning")) {
@@ -111,7 +111,7 @@ signalConditions <- function(future, include = "condition", exclude = NULL, resi
   }
 
   ## Make sure to update 'signaled' information on exit
-  result$conditions <- conditions
+  result[["conditions"]] <- conditions
   future[["result"]] <- result
 
   invisible(future)
@@ -257,7 +257,7 @@ muffleCondition <- function(cond, pattern = "^muffle") {
       ## then invoke that restart, i.e. "muffle" the condition
       restarts <- computeRestarts(cond)
       for (restart in restarts) {
-        name <- restart$name
+        name <- restart[["name"]]
         if (is.null(name)) next
         if (!grepl(pattern, name)) next
         invokeRestart(restart)

@@ -43,7 +43,7 @@ otherwise not.}
 \item{sleep}{Number of seconds to wait before checking if futures have been
 resolved since last time.}
 
-\item{\dots}{Not used.}
+\item{\ldots}{Not used.}
 }
 \value{
 Returns \code{x} (regardless of subsetting or not).

@@ -16,7 +16,7 @@
 #' 
 #' @param expr,value An \R \link[base]{expression}.
 #'
-#' @param \dots Additional arguments passed to [Future()].
+#' @param \ldots Additional arguments passed to [Future()].
 #'
 #' @return
 #' `f <- future(expr)` creates a [Future] `f` that evaluates expression `expr`, the value of the future is retrieved using `v <- value(f)`.
@@ -191,18 +191,20 @@ future <- function(expr, envir = parent.frame(), substitute = TRUE, lazy = FALSE
   if (substitute) expr <- substitute(expr)
   t_start <- Sys.time()
 
+  onReference <- getOption("future.globals.onReference", "ignore")
+
   if (!is.null(globals)) {
-    gp <- getGlobalsAndPackages(expr, envir = envir, tweak = tweakExpression, globals = globals)
-    expr <- gp$expr
-    globals <- gp$globals
+    gp <- getGlobalsAndPackages(expr, envir = envir, tweak = tweakExpression, globals = globals, onReference = onReference)
+    expr <- gp[["expr"]]
+    globals <- gp[["globals"]]
     ## Record packages?
-    if (length(packages) > 0 || length(gp$packages) > 0) {
-      packages <- c(gp$packages, packages)
+    if (length(packages) > 0 || length(gp[["packages"]]) > 0) {
+      packages <- c(gp[["packages"]], packages)
     }
     gp <- NULL
     attr(globals, "already-done") <- TRUE
   }
-  
+
   future <- Future(expr, substitute = FALSE,
                    envir = envir,
                    lazy = TRUE,
@@ -214,6 +216,7 @@ future <- function(expr, envir = parent.frame(), substitute = TRUE, lazy = FALSE
                    earlySignal = earlySignal,
                    label = label,
                    gc = gc,
+                   onReference = onReference,
                    ...)
 
   ## WORKAROUND: Was argument 'local' specified?
@@ -221,7 +224,7 @@ future <- function(expr, envir = parent.frame(), substitute = TRUE, lazy = FALSE
   future[[".defaultLocal"]] <- !is.element("local", names(list(...)))
 
   ## Enable journaling?
-  if (getOption("future.journal", FALSE)) {
+  if (isTRUE(getOption("future.journal"))) {
     future <- makeFutureJournal(future, event = "create", category = "overhead", start = t_start)
   }
 

@@ -2,7 +2,7 @@
 #'
 #' @inheritParams Future-class
 #' 
-#' @param \dots Additional named elements passed to [Future()].
+#' @param \ldots Additional named elements passed to [Future()].
 #'
 #' @return
 #' `UniprocessFuture()` returns an object of class `UniprocessFuture`.
@@ -88,20 +88,4 @@ resolved.UniprocessFuture <- function(x, ...) {
     result(x)
   }
   NextMethod()
-}
-
-
-#' @return
-#' `SequentialFuture()` returns an object of class `SequentialProcess`,
-#' which inherits from `UniprocessFuture`.
-#'
-#' @section Usage:
-#' To use 'sequential' futures, use `plan(sequential)`, cf. [sequential].
-#'
-#' @rdname UniprocessFuture-class
-#' @export
-SequentialFuture <- function(expr = NULL, envir = parent.frame(), substitute = TRUE, lazy = FALSE, globals = TRUE, ...) {
-  if (substitute) expr <- substitute(expr)
-  f <- UniprocessFuture(expr = expr, envir = envir, substitute = FALSE, lazy = lazy, globals = globals, ...)
-  structure(f, class = c("SequentialFuture", class(f)))
 }

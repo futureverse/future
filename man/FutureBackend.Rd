@@ -13,7 +13,13 @@
 \alias{SequentialFutureBackend}
 \title{A ClusterFutureBackend resolves futures in parallel using any PSOCK cluster}
 \usage{
-ClusterFutureBackend(workers = availableWorkers(), persistent = FALSE, ...)
+ClusterFutureBackend(
+  workers = availableWorkers(),
+  persistent = FALSE,
+  earlySignal = TRUE,
+  gc = FALSE,
+  ...
+)
 
 FutureBackend(...)
 

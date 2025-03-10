@@ -80,7 +80,7 @@
 #'
 #' @param label An optional character string label attached to the future.
 #'
-#' @param \dots Additional named elements of the future.
+#' @param \ldots Additional named elements of the future.
 #' 
 #' @return
 #' `Future()` returns an object of class `Future`.
@@ -124,6 +124,11 @@ Future <- function(expr = NULL, envir = parent.frame(), substitute = TRUE, stdou
 
   args <- list(...)
   args_names <- names(args)
+  if ("onReference" %in% args_names) {
+    onReference <- args[["onReference"]]
+  } else {
+    onReference <- getOption("future.globals.onReference", "ignore")
+  }
 
   ## WORKAROUND: Skip scanning of globals if already done /HB 2021-01-18
   if (!is.null(globals)) {
@@ -132,13 +137,13 @@ Future <- function(expr = NULL, envir = parent.frame(), substitute = TRUE, stdou
       ## Global objects?
       ## 'persistent' is only allowed for ClusterFuture:s, which will be
       ## asserted when run() is called /HB 2023-01-17
-      gp <- getGlobalsAndPackages(expr, envir = envir, tweak = tweakExpression, globals = globals, persistent = isTRUE(args$persistent))
-      globals <- gp$globals
-      expr <- gp$expr
+      gp <- getGlobalsAndPackages(expr, envir = envir, tweak = tweakExpression, globals = globals, persistent = isTRUE(args[["persistent"]]), onReference = onReference)
+      globals <- gp[["globals"]]
+      expr <- gp[["expr"]]
     
       ## Record packages?
-      if (length(packages) > 0 || (length(gp$packages) > 0 && lazy)) {
-        packages <- c(gp$packages, packages)
+      if (length(packages) > 0 || (length(gp[["packages"]]) > 0 && lazy)) {
+        packages <- c(gp[["packages"]], packages)
       }
       
       gp <- NULL
@@ -202,7 +207,7 @@ Future <- function(expr = NULL, envir = parent.frame(), substitute = TRUE, stdou
   core <- new.env(parent = emptyenv())
 
   ## Version of future
-  version <- args$version
+  version <- args[["version"]]
   if (is.null(version)) version <- "1.8"
   core[["version"]] <- version
 
@@ -230,6 +235,7 @@ Future <- function(expr = NULL, envir = parent.frame(), substitute = TRUE, stdou
   core[["label"]] <- label
   core[["earlySignal"]] <- earlySignal
   core[["gc"]] <- gc
+  core[["onReference"]] <- onReference
   core[["owner"]] <- session_uuid()
   counter <- .package[["futureCounter"]] <- .package[["futureCounter"]] + 1L
   core[["uuid"]] <- future_uuid(owner = core[["owner"]], counter = counter)
@@ -331,7 +337,7 @@ print.Future <- function(x, ...) {
 
   if (hasResult) {
     if (inherits(result, "FutureResult")) {
-      value <- result$value
+      value <- result[["value"]]
     } else if ("value" %in% names(future)) {
       .Defunct(msg = sprintf("Detected a %s object that rely on the defunct 'value' field of format version 1.7 or before.", class(future)[1]), package = .packageName)
     } else {
@@ -339,8 +345,8 @@ print.Future <- function(x, ...) {
     }
     cat(sprintf("Value: %s of class %s\n", asIEC(objectSize(value)), sQuote(class(value)[1])))
     if (inherits(result, "FutureResult")) {
-      conditions <- result$conditions
-      conditionClasses <- vapply(conditions, FUN = function(c) class(c$condition)[1], FUN.VALUE = NA_character_)
+      conditions <- result[["conditions"]]
+      conditionClasses <- vapply(conditions, FUN = function(c) class(c[["condition"]])[1], FUN.VALUE = NA_character_)
       cat(sprintf("Conditions captured: [n=%d] %s\n", length(conditionClasses), hpaste(sQuote(conditionClasses))))
     }
   } else {
@@ -358,8 +364,8 @@ assertOwner <- local({
   hpid <- function(uuid) {
     info <- attr(uuid, "source", exact = TRUE)
     if (is.null(info)) info <- list(pid = NA_integer_, host = NA_character_)
-    stop_if_not(is.list(info), length(info$pid) == 1L, length(info$host) == 1L)
-    pid <- sprintf("%s; pid %d on %s", uuid, info$pid, info$host)
+    stop_if_not(is.list(info), length(info[["pid"]]) == 1L, length(info[["host"]]) == 1L)
+    pid <- sprintf("%s; pid %d on %s", uuid, info[["pid"]], info[["host"]])
     stop_if_not(length(pid) == 1L)
     pid
   }
@@ -377,7 +383,7 @@ assertOwner <- local({
 #' Run a future
 #'
 #' @param future A \link{Future}.
-#' @param \dots Not used.
+#' @param \ldots Not used.
 #'
 #' @return The [Future] object.
 #'
@@ -403,7 +409,7 @@ run.Future <- function(future, ...) {
   if (future[["state"]] != "created") {
     label <- future[["label"]]
     if (is.null(label)) label <- "<none>"
-    msg <- sprintf("A future ('%s') can only be launched once.", label)
+    msg <- sprintf("A future ('%s') can only be launched once", label)
     stop(FutureError(msg, future = future))
   }
 
@@ -424,47 +430,12 @@ run.Future <- function(future, ...) {
   }
 
   ## Create temporary future for a specific backend, but don't launch it
-  makeFuture <- plan("next")
-  if (debug) mdebug("- Future backend: ", commaq(class(makeFuture)))
+  evaluator <- plan("next")
+  if (debug) mdebug("- Future backend: ", commaq(class(evaluator)))
 
   ## Implements a FutureBackend?
-  backend <- attr(makeFuture, "backend")
-  if (is.function(backend)) {
-    if (debug) mdebug("Using FutureBackend ...")
-    mdebug("- state: ", sQuote(future[["state"]]))
-    on.exit(mdebug("run() for ", sQuote(class(future)[1]), " ... done"), add = TRUE)
-
-    if (debug) mprint(backend)
-
-    ## Apply future plan tweaks
-    args <- attr(makeFuture, "tweaks")
-    if (is.null(args)) args <- list()
-
-    args2 <- formals(makeFuture)
-    args2$`...` <- NULL
-    args2$envir <- NULL
-    args2$lazy <- NULL  ## bc multisession; should be removed
-    
-    for (name in names(args2)) {
-      args[[name]] <- args2[[name]]
-    }
-    backend <- do.call(backend, args = args)
-    if (debug) mdebug(" - FutureBackend: ", commaq(class(backend)))
-    if (!inherits(backend, "FutureBackend")) {
-      stop(sprintf("[INTERNAL ERROR] run.Future(): the 'backend' generated for the %s object is not a FutureBackend object: %s", class(makeFuture)[1], class(backend)[1]))
-    }
-  } else {
-    backend <- NULL
-  }
-
-  ## Use new FutureBackend approach?
-  if (inherits(backend, "FutureBackend") && getOption("future.backend.version", 2L) == 2L) {
-    if (future[["state"]] != "created") {
-      label <- future[["label"]]
-      if (is.null(label)) label <- "<none>"
-      stop(FutureError(sprintf("A future ('%s') can only be launched once", label), future = future))
-    }
-    
+  backend <- makeFutureBackend(evaluator)
+  if (!is.null(backend)) {
     ## Assert that the process that created the future is
     ## also the one that evaluates/resolves/queries it.
     assertOwner(future)
@@ -501,14 +472,14 @@ run.Future <- function(future, ...) {
 
   ## SPECIAL: 'cluster' takes argument 'persistent' for now /HB 2023-01-17
   has_persistent <- ("persistent" %in% names(future))
-  if (has_persistent) args$persistent <- future[["persistent"]]
+  if (has_persistent) args[["persistent"]] <- future[["persistent"]]
   
-  tmpFuture <- do.call(makeFuture, args = args)
+  tmpFuture <- do.call(evaluator, args = args)
 
   ## SPECIAL: 'cluster' takes argument 'persistent' for now /HB 2023-01-17
   if (has_persistent) {
-    if (inherits(makeFuture, "cluster") &&
-        !inherits(makeFuture, "multisession")) {
+    if (inherits(evaluator, "cluster") &&
+        !inherits(evaluator, "multisession")) {
       tmpFuture[["local"]] <- !tmpFuture[["persistent"]]
     } else {
       .Defunct(msg = "Future field 'persistent' is defunct and must not be set", package = .packageName)
@@ -612,7 +583,7 @@ result <- function(future, ...) {
 #' Get the results of a resolved future
 #'
 #' @param future A \link{Future}.
-#' @param \dots Not used.
+#' @param \ldots Not used.
 #'
 #' @return The [FutureResult] object.
 #'
@@ -805,8 +776,7 @@ getFutureContext <- function(future, mc.cores = NULL, local = TRUE, ..., debug =
   ## Use default future strategy + identify packages needed by the backend
   if (length(strategiesR) == 0L) {
     if (debug) mdebug("Packages needed by future strategies (n = 0): <none>")
-    strategiesR <- getOption("future.plan")
-    if (is.null(strategiesR)) strategiesR <- sequential
+    strategiesR <- sequential
     backendPackages <- c("future")
   } else {
     ## Identify package namespaces needed for strategies
@@ -828,7 +798,7 @@ getFutureContext <- function(future, mc.cores = NULL, local = TRUE, ..., debug =
     ## Pass down other future.* options
     future.globals.maxSize            = getOption("future.globals.maxSize"),
     future.globals.method             = getOption("future.globals.method"),
-    future.globals.onReference        = getOption("future.globals.onReference"),
+    future.globals.onReference        = future[["onReference"]],
     future.globals.resolve            = getOption("future.globals.resolve"),
     future.resolve.recursive          = getOption("future.resolve.recursive"),
     future.rng.onMisuse               = getOption("future.rng.onMisuse"),
@@ -848,7 +818,7 @@ getFutureContext <- function(future, mc.cores = NULL, local = TRUE, ..., debug =
   )
 
   if (!is.null(mc.cores)) {
-    forwardOptions$mc.cores <- mc.cores
+    forwardOptions[["mc.cores"]] <- mc.cores
   }
 
   reset <- future[["reset"]]
@@ -877,106 +847,6 @@ getFutureBackendConfigs <- function(future, ...) {
   UseMethod("getFutureBackendConfigs")
 }
 
-#' @export
-getFutureBackendConfigs.Future <- function(future, ...) {
-  list()
-}
-
-#' @export
-getFutureBackendConfigs.UniprocessFuture <- function(future, ...) {
-  conditionClasses <- future[["conditions"]]
-  if (is.null(conditionClasses)) return(list())
-  
-  capture <- list(
-    immediateConditionHandlers = list(
-      immediateCondition = function(cond) {
-        signalCondition(cond)
-      }
-    )
-  )
-
-  list(
-    capture = capture
-  )
-}
-
-
-#' @export
-getFutureBackendConfigs.MulticoreFuture <- function(future, ..., debug = isTRUE(getOption("future.debug"))) {
-  conditionClasses <- future[["conditions"]]
-  if (is.null(conditionClasses)) {
-    capture <- list()
-  } else {
-    path <- immediateConditionsPath(rootPath = tempdir())
-    capture <- list(
-      immediateConditionHandlers = list(
-        immediateCondition = function(cond) {
-          fileImmediateConditionHandler(cond, path = path)
-        }
-      )
-    )
-  }
-
-  ## Disable multi-threading in futures?
-  threads <- NA_integer_
-  multithreading <- getOption("future.fork.multithreading.enable", TRUE)  
-  if (isFALSE(multithreading)) {
-    if (supports_omp_threads(assert = TRUE, debug = debug)) {
-      threads <- 1L
-      if (debug) mdebugf("- Force single-threaded (OpenMP and RcppParallel) processing in %s", class(future)[1])
-    } else {
-      warning(FutureWarning("It is not possible to disable OpenMP multi-threading on this systems", future = future))
-    }
-  }
-
-  context <- list(
-    threads = threads
-  )
-
-  list(
-    capture = capture,
-    context = context
-  )
-}
-
-
-
-#' @export
-getFutureBackendConfigs.ClusterFuture <- function(future, ..., debug = isTRUE(getOption("future.debug"))) {
-  resignalImmediateConditions <- getOption("future.psock.relay.immediate", TRUE)
-  if (!resignalImmediateConditions) return(list())
-
-  conditionClasses <- future[["conditions"]]
-  if (is.null(conditionClasses)) return(list())
-  
-  immediateConditionClasses <- attr(conditionClasses, "immediateConditionClasses", exact = TRUE)
-  if (is.null(immediateConditionClasses)) {
-    immediateConditionClasses <- "immediateCondition"
-  } else if (length(immediateConditionClasses) == 0L) {
-    return(list())
-  }
-  
-  ## Does the cluster node communicate with a connection?
-  ## (if not, it's via MPI)
-  workers <- future[["workers"]]
-  ## AD HOC/FIXME: Here 'future[["node"]]' is yet not assigned, so we look at
-  ## the first worker and assume the others are the same. /HB 2019-10-23
-  cl <- workers[1L]
-  node <- cl[[1L]]
-  con <- node$con
-  if (is.null(con)) return(list())
-
-  capture <- list(
-    immediateConditionHandlers = list(
-      immediateCondition = psockImmediateConditionHandler
-    )
-  )
-
-  list(
-    capture = capture
-  )
-}
-
 
 getFutureData <- function(future, ..., debug = isTRUE(getOption("future.debug"))) {
   if (debug) {
@@ -990,7 +860,7 @@ getFutureData <- function(future, ..., debug = isTRUE(getOption("future.debug"))
   data <- list(
        core = getFutureCore(future, debug = debug),
     capture = getFutureCapture(future, debug = debug),
-    context = getFutureContext(future, mc.cores = args$mc.cores, local = args$local, debug = debug)
+    context = getFutureContext(future, mc.cores = args[["mc.cores"]], local = args[["local"]], debug = debug)
   )
 
   ## Tweak per backend?
@@ -1012,7 +882,7 @@ getFutureData <- function(future, ..., debug = isTRUE(getOption("future.debug"))
 #' Inject code for the next type of future to use for nested futures
 #'
 #' @param future Current future.
-#' @param \dots Not used.
+#' @param \ldots Not used.
 #'
 #' @return A future expression with code injected to set what
 #' type of future to use for nested futures, iff any.

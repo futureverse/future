@@ -94,7 +94,7 @@ FutureRegistry <- local({
     ## Early signaling of conditions?
     if (earlySignal && length(futures) > 0L) {
       ## Which futures have early signaling enabled?
-      idxs <- lapply(futures, FUN = function(f) f$earlySignal)
+      idxs <- lapply(futures, FUN = function(f) f[["earlySignal"]])
       idxs <- which(unlist(idxs, use.names = FALSE))
 
       ## Any futures to be scanned for early signaling?

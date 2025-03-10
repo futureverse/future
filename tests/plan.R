@@ -115,6 +115,56 @@ stopifnot(identical(v, 42L))
 plan(sequential)
 
 
+message("*** plan(sequential, gc = TRUE)")
+oplan <- plan(cluster, gc = TRUE)
+f <- future(42L)
+v <- value(f)
+print(v)
+stopifnot(identical(v, 42L))
+plan(sequential)
+
+message("*** plan(cluster, gc = TRUE)")
+oplan <- plan(cluster, gc = TRUE)
+f <- future(42L)
+v <- value(f)
+print(v)
+stopifnot(identical(v, 42L))
+plan(sequential)
+
+message("*** plan(multisession, gc = TRUE)")
+oplan <- plan(cluster, gc = TRUE)
+f <- future(42L)
+v <- value(f)
+print(v)
+stopifnot(identical(v, 42L))
+plan(sequential)
+
+
+message("*** plan(sequential, earlySignal = TRUE)")
+oplan <- plan(cluster, earlySignal = TRUE)
+f <- future(42L)
+v <- value(f)
+print(v)
+stopifnot(identical(v, 42L))
+plan(sequential)
+
+message("*** plan(cluster, earlySignal = TRUE)")
+oplan <- plan(cluster, earlySignal = TRUE)
+f <- future(42L)
+v <- value(f)
+print(v)
+stopifnot(identical(v, 42L))
+plan(sequential)
+
+message("*** plan(multisession, earlySignal = TRUE)")
+oplan <- plan(cluster, earlySignal = TRUE)
+f <- future(42L)
+v <- value(f)
+print(v)
+stopifnot(identical(v, 42L))
+plan(sequential)
+
+
 
 message("*** old <- plan(new)")
 truth <- plan("list")
@@ -140,8 +190,12 @@ plan(cluster, workers = cl)
 ## %plan% can operate on any expression, so it
 ## works just as an withPlan({ ... }, plan = ...)
 fun <- { plan("next") } %plan% sequential
-f <- fun(1)
-stopifnot(inherits(f, "SequentialFuture"), !f$lazy, inherits(f, "SequentialFuture"))
+
+## Non-FutureBackend:s should be called directly
+if (is.null(attr(fun, "backend"))) {
+  f <- fun(1)
+  stopifnot(inherits(f, "SequentialFuture"), !f$lazy, inherits(f, "SequentialFuture"))
+}
 
 x %<-% { a <- 1 } %plan% sequential
 stopifnot(inherits(plan("next"), "cluster"))

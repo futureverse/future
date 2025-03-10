@@ -133,9 +133,8 @@ Run `revdepcheck::revdep_details(, "apsimx")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  7.4Mb
+      installed size is  7.1Mb
       sub-directories of 1Mb or more:
-        R         1.0Mb
         extdata   5.5Mb
     ```
 
@@ -257,26 +256,22 @@ Run `revdepcheck::revdep_details(, "batchtools")` for more info
 
 *   checking dependencies in R code ... NOTE
     ```
-    c4-dev4:pid1222488: PSM3 can't open nic unit: 3 (err=23)
-    c4-dev4:pid1222488.R: Unable to create UDP socket for enp3s0f1: Address family not supported by protocol
-    c4-dev4:pid1222488.R: Unable to initialize sockets NIC /sys/class/net/enp3s0f1 (unit 3:0)
-    c4-dev4:pid1222488: PSM3 can't open nic unit: 3 (err=23)
-    c4-dev4:pid1222488.R: Unable to create UDP socket for enp3s0f1: Address family not supported by protocol
-    c4-dev4:pid1222488.R: Unable to initialize sockets NIC /sys/class/net/enp3s0f1 (unit 3:0)
-    c4-dev4:pid1222488: PSM3 can't open nic unit: 3 (err=23)
-    c4-dev4:pid1222488.R: Unable to create UDP socket for enp3s0f1: Address family not supported by protocol
-    c4-dev4:pid1222488.R: Unable to initialize sockets NIC /sys/class/net/enp3s0f1 (unit 3:0)
-    c4-dev4:pid1222488: PSM3 can't open nic unit: 3 (err=23)
-    ...
-    c4-dev4:pid1222488.R: Unable to create UDP socket for enp3s0f1: Address family not supported by protocol
-    c4-dev4:pid1222488.R: Unable to initialize sockets NIC /sys/class/net/enp3s0f1 (unit 3:0)
+    [c4-n43:791017] OPAL ERROR: Not initialized in file ext2x_client.c at line 112
     --------------------------------------------------------------------------
-    Open MPI failed an OFI Libfabric library call (fi_endpoint).  This is highly
-    unusual; your job may behave unpredictably (and/or abort) after this.
+    The application appears to have been direct launched using "srun",
+    but OMPI was not built with SLURM's PMI support and therefore cannot
+    execute. There are several options for building PMI support under
+    SLURM, depending upon the SLURM version you are using:
     
-      Local host: c4-dev4
-      Location: mtl_ofi_component.c:513
-      Error: Invalid argument (22)
+      version 16.05 or later: you can use SLURM's PMIx support. This
+      requires that you configure and build SLURM --with-pmix.
+    
+      Versions earlier than 16.05: you must use either SLURM's PMI-1 or
+      PMI-2 support. SLURM builds PMI-1 by default, or you can manually
+      install PMI-2. You must then build Open MPI using --with-pmi pointing
+      to the SLURM PMI library location.
+    
+    Please configure as appropriate and try again.
     --------------------------------------------------------------------------
     ```
 
@@ -288,6 +283,29 @@ Run `revdepcheck::revdep_details(, "batchtools")` for more info
     checkRd: (-1) addAlgorithm.Rd:31: Lost braces
         31 | Algorithms are functions which get the code{data} part as well as the problem instance (the return value of the
            |                                            ^
+    ```
+
+# BayesianMCPMod
+
+<details>
+
+* Version: 1.1.0
+* GitHub: https://github.com/Boehringer-Ingelheim/BayesianMCPMod
+* Source code: https://github.com/cran/BayesianMCPMod
+* Date/Publication: 2025-03-07 19:00:07 UTC
+* Number of recursive dependencies: 148
+
+Run `revdepcheck::revdep_details(, "BayesianMCPMod")` for more info
+
+</details>
+
+## In both
+
+*   checking installed package size ... NOTE
+    ```
+      installed size is  8.8Mb
+      sub-directories of 1Mb or more:
+        doc   8.2Mb
     ```
 
 # bayesmove
@@ -373,15 +391,6 @@ Run `revdepcheck::revdep_details(, "BEKKs")` for more info
 Run `revdepcheck::revdep_details(, "bigDM")` for more info
 
 </details>
-
-## Newly fixed
-
-*   checking installed package size ... NOTE
-    ```
-      installed size is  5.3Mb
-      sub-directories of 1Mb or more:
-        data   5.0Mb
-    ```
 
 ## In both
 
@@ -540,10 +549,10 @@ Run `revdepcheck::revdep_details(, "bslib")` for more info
 
 <details>
 
-* Version: 0.1.0
+* Version: 0.2.0
 * GitHub: https://github.com/XiaoZhangryy/CAESAR.Suite
 * Source code: https://github.com/cran/CAESAR.Suite
-* Date/Publication: 2024-09-16 14:20:06 UTC
+* Date/Publication: 2025-03-03 10:10:01 UTC
 * Number of recursive dependencies: 269
 
 Run `revdepcheck::revdep_details(, "CAESAR.Suite")` for more info
@@ -554,10 +563,10 @@ Run `revdepcheck::revdep_details(, "CAESAR.Suite")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 10.3Mb
+      installed size is 10.4Mb
       sub-directories of 1Mb or more:
         data   1.4Mb
-        doc    1.1Mb
+        doc    1.2Mb
         libs   7.5Mb
     ```
 
@@ -834,6 +843,13 @@ Run `revdepcheck::revdep_details(, "collinear")` for more info
 
 ## In both
 
+*   checking installed package size ... NOTE
+    ```
+      installed size is  7.4Mb
+      sub-directories of 1Mb or more:
+        data   7.0Mb
+    ```
+
 *   checking data for non-ASCII characters ... NOTE
     ```
       Note: found 89 marked Latin-1 strings
@@ -844,10 +860,10 @@ Run `revdepcheck::revdep_details(, "collinear")` for more info
 
 <details>
 
-* Version: 1.1.1
+* Version: 1.1.2
 * GitHub: https://github.com/BiostatOmics/Coxmos
 * Source code: https://github.com/cran/Coxmos
-* Date/Publication: 2025-02-06 13:10:05 UTC
+* Date/Publication: 2025-03-05 16:30:02 UTC
 * Number of recursive dependencies: 201
 
 Run `revdepcheck::revdep_details(, "Coxmos")` for more info
@@ -858,22 +874,21 @@ Run `revdepcheck::revdep_details(, "Coxmos")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  5.6Mb
+      installed size is  5.8Mb
       sub-directories of 1Mb or more:
-        R      1.0Mb
         data   1.2Mb
-        doc    2.8Mb
+        doc    3.1Mb
     ```
 
 # cSEM
 
 <details>
 
-* Version: 0.5.0
-* GitHub: https://github.com/M-E-Rademaker/cSEM
+* Version: 0.6.0
+* GitHub: https://github.com/FloSchuberth/cSEM
 * Source code: https://github.com/cran/cSEM
-* Date/Publication: 2022-11-24 17:50:05 UTC
-* Number of recursive dependencies: 127
+* Date/Publication: 2025-02-25 10:00:02 UTC
+* Number of recursive dependencies: 146
 
 Run `revdepcheck::revdep_details(, "cSEM")` for more info
 
@@ -885,13 +900,6 @@ Run `revdepcheck::revdep_details(, "cSEM")` for more info
     ```
     Namespace in Imports field not imported from: ‘Rdpack’
       All declared Imports should be used.
-    ```
-
-*   checking Rd files ... NOTE
-    ```
-    checkRd: (-1) calculateEffects.Rd:24: Lost braces; missing escapes or markup?
-        24 | equals (I-B)^{-1}Gamma. The indirect effect equals the difference between
-           |              ^
     ```
 
 # CSGo
@@ -925,7 +933,7 @@ Run `revdepcheck::revdep_details(, "CSGo")` for more info
 * GitHub: https://github.com/MicrobialGenomics-IrsicaixaOrg/dar
 * Source code: https://github.com/cran/dar
 * Date/Publication: 2024-10-29
-* Number of recursive dependencies: 395
+* Number of recursive dependencies: 394
 
 Run `revdepcheck::revdep_details(, "dar")` for more info
 
@@ -981,7 +989,7 @@ Run `revdepcheck::revdep_details(, "dipsaus")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  6.6Mb
+      installed size is  6.2Mb
       sub-directories of 1Mb or more:
         libs   4.2Mb
     ```
@@ -1098,9 +1106,8 @@ Run `revdepcheck::revdep_details(, "distantia")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  9.9Mb
+      installed size is  9.5Mb
       sub-directories of 1Mb or more:
-        help   1.0Mb
         libs   7.8Mb
     ```
 
@@ -1138,15 +1145,15 @@ Run `revdepcheck::revdep_details(, "doFuture")` for more info
      ERROR
     Running the tests in ‘tests/foreach_dofuture,globals.R’ failed.
     Last 50 lines of output:
-      [03:51:31.414]  $ x             : int [1:3] 1 2 3
-      [03:51:31.414]  $ ...future.x_ii: num 42
-      [03:51:31.414]  - attr(*, "where")=List of 2
-      [03:51:31.414]   ..$ x             :<environment: R_EmptyEnv> 
+      [08:41:18.093]  $ x             : int [1:3] 1 2 3
+      [08:41:18.093]  $ ...future.x_ii: num 42
+      [08:41:18.093]  - attr(*, "where")=List of 2
+      [08:41:18.093]   ..$ x             :<environment: R_EmptyEnv> 
     ...
-      [03:51:31.443]   ..$ message: chr "'...' used in an incorrect context"
-      [03:51:31.443]   ..$ call   : language doTryCatch(return(expr), name, parentenv, handler)
-      [03:51:31.443]   ..- attr(*, "class")= chr [1:3] "simpleError" "error" "condition"
-      [03:51:31.450] - accumulating results
+      [08:41:18.117]   ..$ message: chr "'...' used in an incorrect context"
+      [08:41:18.117]   ..$ call   : language doTryCatch(return(expr), name, parentenv, handler)
+      [08:41:18.117]   ..- attr(*, "class")= chr [1:3] "simpleError" "error" "condition"
+      [08:41:18.122] - accumulating results
       List of 2
        $ message: chr "'...' used in an incorrect context"
        $ call   : language doTryCatch(return(expr), name, parentenv, handler)
@@ -1196,7 +1203,7 @@ Run `revdepcheck::revdep_details(, "EFAtools")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  7.5Mb
+      installed size is  7.6Mb
       sub-directories of 1Mb or more:
         libs   6.2Mb
     ```
@@ -1253,10 +1260,10 @@ Run `revdepcheck::revdep_details(, "EpiNow2")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 502.1Mb
+      installed size is 265.0Mb
       sub-directories of 1Mb or more:
         doc     1.5Mb
-        libs  498.2Mb
+        libs  261.1Mb
     ```
 
 *   checking Rd cross-references ... NOTE
@@ -1339,11 +1346,11 @@ Run `revdepcheck::revdep_details(, "fdacluster")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 23.6Mb
+      installed size is 23.5Mb
       sub-directories of 1Mb or more:
         R      1.9Mb
         doc    1.5Mb
-        help   2.2Mb
+        help   2.1Mb
         libs  17.5Mb
     ```
 
@@ -1468,47 +1475,6 @@ Run `revdepcheck::revdep_details(, "FLAMES")` for more info
     GNU make is a SystemRequirements.
     ```
 
-# flexFitR
-
-<details>
-
-* Version: 1.0.0
-* GitHub: https://github.com/AparicioJohan/flexFitR
-* Source code: https://github.com/cran/flexFitR
-* Date/Publication: 2025-01-20 17:01:56 UTC
-* Number of recursive dependencies: 136
-
-Run `revdepcheck::revdep_details(, "flexFitR")` for more info
-
-</details>
-
-## Newly broken
-
-*   checking re-building of vignette outputs ... ERROR
-    ```
-    Error(s) in re-building vignettes:
-      ...
-    --- re-building ‘canopy-model.Rmd’ using rmarkdown
-    --- finished re-building ‘canopy-model.Rmd’
-    
-    --- re-building ‘how_to_start.Rmd’ using rmarkdown
-    --- finished re-building ‘how_to_start.Rmd’
-    
-    --- re-building ‘maturity-model.Rmd’ using rmarkdown
-    --- finished re-building ‘maturity-model.Rmd’
-    ...
-    Quitting from lines 68-77 [unnamed-chunk-4] (predicted_values.Rmd)
-    Error: processing vignette 'predicted_values.Rmd' failed with diagnostics:
-    object 'ccode' not found
-    --- failed re-building ‘predicted_values.Rmd’
-    
-    SUMMARY: processing the following file failed:
-      ‘predicted_values.Rmd’
-    
-    Error: Vignette re-building failed.
-    Execution halted
-    ```
-
 # flowGraph
 
 <details>
@@ -1592,30 +1558,6 @@ Run `revdepcheck::revdep_details(, "GeDS")` for more info
     Found the following significant warnings:
       Warning: no DISPLAY variable so Tk is not available
     See ‘/c4/home/henrik/futureverse/future/revdep/checks/GeDS/new/GeDS.Rcheck/00install.out’ for details.
-    ```
-
-# genBaRcode
-
-<details>
-
-* Version: 1.2.7
-* GitHub: NA
-* Source code: https://github.com/cran/genBaRcode
-* Date/Publication: 2023-12-11 13:10:05 UTC
-* Number of recursive dependencies: 165
-
-Run `revdepcheck::revdep_details(, "genBaRcode")` for more info
-
-</details>
-
-## In both
-
-*   checking installed package size ... NOTE
-    ```
-      installed size is  5.5Mb
-      sub-directories of 1Mb or more:
-        doc       1.0Mb
-        extdata   4.0Mb
     ```
 
 # geocmeans
@@ -1726,9 +1668,8 @@ Run `revdepcheck::revdep_details(, "GeoModels")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  6.0Mb
+      installed size is  5.8Mb
       sub-directories of 1Mb or more:
-        R      1.0Mb
         data   1.9Mb
         libs   2.7Mb
     ```
@@ -1952,10 +1893,10 @@ Run `revdepcheck::revdep_details(, "hal9001")` for more info
 
 <details>
 
-* Version: 2.4.1
+* Version: 2.4.2
 * GitHub: https://github.com/jbolstad/hbamr
 * Source code: https://github.com/cran/hbamr
-* Date/Publication: 2025-02-13 05:30:06 UTC
+* Date/Publication: 2025-03-05 11:40:03 UTC
 * Number of recursive dependencies: 90
 
 Run `revdepcheck::revdep_details(, "hbamr")` for more info
@@ -1994,26 +1935,22 @@ Run `revdepcheck::revdep_details(, "hero")` for more info
 
 *   checking dependencies in R code ... NOTE
     ```
-    c4-dev4:pid2186380: PSM3 can't open nic unit: 3 (err=23)
-    c4-dev4:pid2186380.R: Unable to create UDP socket for enp3s0f1: Address family not supported by protocol
-    c4-dev4:pid2186380.R: Unable to initialize sockets NIC /sys/class/net/enp3s0f1 (unit 3:0)
-    c4-dev4:pid2186380: PSM3 can't open nic unit: 3 (err=23)
-    c4-dev4:pid2186380.R: Unable to create UDP socket for enp3s0f1: Address family not supported by protocol
-    c4-dev4:pid2186380.R: Unable to initialize sockets NIC /sys/class/net/enp3s0f1 (unit 3:0)
-    c4-dev4:pid2186380: PSM3 can't open nic unit: 3 (err=23)
-    c4-dev4:pid2186380.R: Unable to create UDP socket for enp3s0f1: Address family not supported by protocol
-    c4-dev4:pid2186380.R: Unable to initialize sockets NIC /sys/class/net/enp3s0f1 (unit 3:0)
-    c4-dev4:pid2186380: PSM3 can't open nic unit: 3 (err=23)
-    ...
-    c4-dev4:pid2186380.R: Unable to create UDP socket for enp3s0f1: Address family not supported by protocol
-    c4-dev4:pid2186380.R: Unable to initialize sockets NIC /sys/class/net/enp3s0f1 (unit 3:0)
+    [c4-n43:2776543] OPAL ERROR: Not initialized in file ext2x_client.c at line 112
     --------------------------------------------------------------------------
-    Open MPI failed an OFI Libfabric library call (fi_endpoint).  This is highly
-    unusual; your job may behave unpredictably (and/or abort) after this.
+    The application appears to have been direct launched using "srun",
+    but OMPI was not built with SLURM's PMI support and therefore cannot
+    execute. There are several options for building PMI support under
+    SLURM, depending upon the SLURM version you are using:
     
-      Local host: c4-dev4
-      Location: mtl_ofi_component.c:513
-      Error: Invalid argument (22)
+      version 16.05 or later: you can use SLURM's PMIx support. This
+      requires that you configure and build SLURM --with-pmix.
+    
+      Versions earlier than 16.05: you must use either SLURM's PMI-1 or
+      PMI-2 support. SLURM builds PMI-1 by default, or you can manually
+      install PMI-2. You must then build Open MPI using --with-pmi pointing
+      to the SLURM PMI library location.
+    
+    Please configure as appropriate and try again.
     --------------------------------------------------------------------------
     ```
 
@@ -2055,10 +1992,10 @@ Run `revdepcheck::revdep_details(, "heterogen")` for more info
 
 <details>
 
-* Version: 2.0.2
+* Version: 2.0.3
 * GitHub: https://github.com/nx10/httpgd
 * Source code: https://github.com/cran/httpgd
-* Date/Publication: 2024-06-05 21:40:27 UTC
+* Date/Publication: 2025-02-28 09:40:05 UTC
 * Number of recursive dependencies: 59
 
 Run `revdepcheck::revdep_details(, "httpgd")` for more info
@@ -2069,39 +2006,34 @@ Run `revdepcheck::revdep_details(, "httpgd")` for more info
 
 *   checking tests ...
     ```
-      Running ‘testthat.R’/software/c4/cbi/software/_rocky8/R-4.4.2-gcc13/lib64/R/bin/BATCH: line 60: 2028277 Segmentation fault      (core dumped) ${R_HOME}/bin/R -f ${in} ${opts} ${R_BATCH_OPTIONS} > ${out} 2>&1
-    
+      Running ‘testthat.R’
      ERROR
     Running the tests in ‘tests/testthat.R’ failed.
     Last 50 lines of output:
+                           (right here) ------^
+      
+      Backtrace:
+          ▆
        1. └─jsonlite::fromJSON(httr::content(res, as = "text")) at test-server.R:62:3
        2.   └─jsonlite:::parse_and_simplify(...)
-       3.     └─jsonlite:::parseJSON(txt, bigint_as_char)
-       4.       └─jsonlite:::parse_string(txt, bigint_as_char)
-      ── Error ('test-server.R:83:5'): Clear plots ───────────────────────────────────
     ...
+      1/1 mismatches
+      [1] 503 - 200 == 303
+      ── Failure ('test-server.R:145:3'): Delete plot status ─────────────────────────
+      httr::status_code(fetch_get(hgd_url("remove", index = 99))) not equal to 404.
       1/1 mismatches
       [1] 503 - 404 == 99
       
       [ FAIL 16 | WARN 0 | SKIP 0 | PASS 2 ]
       Error: Test failures
       Execution halted
-      
-       *** caught segfault ***
-      address 0x87fc208, cause 'invalid permissions'
-      An irrecoverable exception occurred. R is aborting now ...
-    ```
-
-*   checking C++ specification ... NOTE
-    ```
-      Specified C++14: please drop specification unless essential
     ```
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 13.1Mb
+      installed size is 12.6Mb
       sub-directories of 1Mb or more:
-        libs  12.5Mb
+        libs  12.0Mb
     ```
 
 # hwep
@@ -2137,27 +2069,6 @@ Run `revdepcheck::revdep_details(, "hwep")` for more info
 *   checking for GNU extensions in Makefiles ... NOTE
     ```
     GNU make is a SystemRequirements.
-    ```
-
-# hydroloom
-
-<details>
-
-* Version: 1.1.0
-* GitHub: https://github.com/DOI-USGS/hydroloom
-* Source code: https://github.com/cran/hydroloom
-* Date/Publication: 2024-08-26 06:20:02 UTC
-* Number of recursive dependencies: 146
-
-Run `revdepcheck::revdep_details(, "hydroloom")` for more info
-
-</details>
-
-## In both
-
-*   checking package dependencies ... NOTE
-    ```
-    Package suggested but not available for checking: ‘nhdplusTools’
     ```
 
 # infercnv
@@ -2291,9 +2202,8 @@ Run `revdepcheck::revdep_details(, "ISAnalytics")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  7.8Mb
+      installed size is  7.5Mb
       sub-directories of 1Mb or more:
-        R      1.0Mb
         data   1.4Mb
         doc    3.8Mb
     ```
@@ -2497,7 +2407,8 @@ Run `revdepcheck::revdep_details(, "lidR")` for more info
 
 *   checking tests ...
     ```
-      Running ‘testthat.R’
+      Running ‘testthat.R’/software/c4/cbi/software/_rocky8/R-4.4.3-gcc13/lib64/R/bin/BATCH: line 60: 2304033 Aborted                 (core dumped) ${R_HOME}/bin/R -f ${in} ${opts} ${R_BATCH_OPTIONS} > ${out} 2>&1
+    
      ERROR
     Running the tests in ‘tests/testthat.R’ failed.
     Complete output:
@@ -2507,17 +2418,14 @@ Run `revdepcheck::revdep_details(, "lidR")` for more info
       > library(lidR)
       > test_check("lidR")
       Tests using raster: terra 
-    ...
-      1/7744 mismatches
-      [4990] 0.048 - 0.047 == 0.001
-      ── Failure ('test-rasterize_canopy.R:132:3'): rasterize_canopy pit-free works both with LAS and LAScatalog ──
-      lidR:::raster_values(x) not equal to lidR:::raster_values(y).
-      1/7744 mismatches
-      [4990] 0.048 - 0.047 == 0.001
-      
-      [ FAIL 2 | WARN 0 | SKIP 43 | PASS 1302 ]
-      Error: Test failures
-      Execution halted
+      Tests using future: TRUE 
+      Tests using OpenMP thread: 32 
+      Tests using rlas: 1.8.0 
+      OGR: Unsupported geometry type
+      OGR: Unsupported geometry type
+      Chunk 1 of 1 (100%): state ✓
+      terminate called after throwing an instance of 'std::length_error'
+        what():  basic_string::_M_create
     ```
 
 *   checking installed package size ... NOTE
@@ -2624,11 +2532,11 @@ Run `revdepcheck::revdep_details(, "mapme.biodiversity")` for more info
 
 <details>
 
-* Version: 1.2.0
+* Version: 1.2.1
 * GitHub: NA
 * Source code: https://github.com/cran/metaGE
-* Date/Publication: 2025-02-18 23:50:12 UTC
-* Number of recursive dependencies: 162
+* Date/Publication: 2025-02-22 23:10:02 UTC
+* Number of recursive dependencies: 161
 
 Run `revdepcheck::revdep_details(, "metaGE")` for more info
 
@@ -2692,59 +2600,7 @@ Run `revdepcheck::revdep_details(, "MineICA")` for more info
 
 </details>
 
-## Newly fixed
-
-*   checking examples ... ERROR
-    ```
-    Running examples in ‘MineICA-Ex.R’ failed
-    The error most likely occurred in:
-    
-    > ### Name: IcaSet
-    > ### Title: Class to Contain and Describe an ICA decomposition of
-    > ###   High-Throughput Data.
-    > ### Aliases: class:IcaSet IcaSet IcaSet-class [ [,ANY,ANY,IcaSet-method
-    > ###   [,IcaSet,ANY-method [,IcaSet,ANY,ANY-method
-    > ###   [,IcaSet,ANY,ANY,ANY-method [<- [<-,IcaSet,ANY,ANY,ANY,ANY-method
-    > ###   [<-,IcaSet,ANY,ANY,ANY-method [<-,IcaSet,ANY,ANY-method organism
-    ...
-    > ###   Slist,IcaSet-method SlistByGene,IcaSet-method Alist,IcaSet-method
-    > ### Keywords: classes
-    > 
-    > ### ** Examples
-    > 
-    > # create an instance of IcaSet
-    > new("IcaSet")
-    Error: Your query has been redirected to http://status.ensembl.org indicating this Ensembl service is currently unavailable.
-    Look at ?useEnsembl for details on how to try a mirror site.
-    Execution halted
-    ```
-
 ## In both
-
-*   checking re-building of vignette outputs ... ERROR
-    ```
-    Error(s) in re-building vignettes:
-    --- re-building ‘MineICA.Rnw’ using Sweave
-    Loading required package: BiocGenerics
-    
-    Attaching package: ‘BiocGenerics’
-    
-    The following objects are masked from ‘package:stats’:
-    
-        IQR, mad, sd, var, xtabs
-    
-    ...
-    Error : Your query has been redirected to http://status.ensembl.org indicating this Ensembl service is currently unavailable.
-    Look at ?useEnsembl for details on how to try a mirror site.
-    
-    --- failed re-building ‘MineICA.Rnw’
-    
-    SUMMARY: processing the following file failed:
-      ‘MineICA.Rnw’
-    
-    Error: Vignette re-building failed.
-    Execution halted
-    ```
 
 *   checking dependencies in R code ... WARNING
     ```
@@ -2794,6 +2650,31 @@ Run `revdepcheck::revdep_details(, "MineICA")` for more info
     should have documentation entries.
     See chapter ‘Writing R documentation files’ in the ‘Writing R
     Extensions’ manual.
+    ```
+
+*   checking re-building of vignette outputs ... WARNING
+    ```
+    Error(s) in re-building vignettes:
+    --- re-building ‘MineICA.Rnw’ using Sweave
+    Loading required package: BiocGenerics
+    
+    Attaching package: ‘BiocGenerics’
+    
+    The following objects are masked from ‘package:stats’:
+    
+        IQR, mad, sd, var, xtabs
+    
+    ...
+    l.23 \usepackage
+                    {subfig}^^M
+    !  ==> Fatal error occurred, no output PDF file produced!
+    --- failed re-building ‘MineICA.Rnw’
+    
+    SUMMARY: processing the following file failed:
+      ‘MineICA.Rnw’
+    
+    Error: Vignette re-building failed.
+    Execution halted
     ```
 
 *   checking package dependencies ... NOTE
@@ -2886,7 +2767,6 @@ Run `revdepcheck::revdep_details(, "missSBM")` for more info
     ```
       installed size is 10.0Mb
       sub-directories of 1Mb or more:
-        R      1.0Mb
         libs   8.0Mb
     ```
 
@@ -2905,6 +2785,14 @@ Run `revdepcheck::revdep_details(, "mistyR")` for more info
 </details>
 
 ## In both
+
+*   checking installed package size ... NOTE
+    ```
+      installed size is  5.6Mb
+      sub-directories of 1Mb or more:
+        data   4.0Mb
+        doc    1.4Mb
+    ```
 
 *   checking R code for possible problems ... NOTE
     ```
@@ -2936,71 +2824,6 @@ Run `revdepcheck::revdep_details(, "mistyR")` for more info
     checkRd: (-1) collect_results.Rd:32: Lost braces; missing escapes or markup?
         32 |             for all performance measures for each {target} over all samples.}
            |                                                   ^
-    ```
-
-# mlr3pipelines
-
-<details>
-
-* Version: 0.7.1
-* GitHub: https://github.com/mlr-org/mlr3pipelines
-* Source code: https://github.com/cran/mlr3pipelines
-* Date/Publication: 2024-11-14 22:40:02 UTC
-* Number of recursive dependencies: 167
-
-Run `revdepcheck::revdep_details(, "mlr3pipelines")` for more info
-
-</details>
-
-## In both
-
-*   checking tests ...
-    ```
-      Running ‘testthat.R’
-     ERROR
-    Running the tests in ‘tests/testthat.R’ failed.
-    Last 50 lines of output:
-        'test_GraphLearner.R:334:3', 'test_GraphLearner.R:399:3',
-        'test_mlr_graphs_branching.R:26:3', 'test_mlr_graphs_bagging.R:6:3',
-        'test_mlr_graphs_robustify.R:5:3', 'test_pipeop_adas.R:8:3',
-        'test_pipeop_blsmote.R:8:3', 'test_pipeop_branch.R:4:3',
-        'test_pipeop_chunk.R:4:3', 'test_pipeop_boxcox.R:9:3',
-        'test_pipeop_classbalancing.R:10:3', 'test_pipeop_classweights.R:10:3',
-    ...
-      ── Error ('test_dictionary.R:251:3'): Cannot add pipeops with keys that invalidates the convenience for id incrementation ──
-      Error in ``$.R6`(mlr_pipeops, clone)`: R6 class DictionaryPipeOp/Dictionary/R6 does not have slot 'clone'!
-      Backtrace:
-          ▆
-       1. ├─mlr_pipeops$clone at test_dictionary.R:251:3
-       2. └─global `$.R6`(mlr_pipeops, clone) at test_dictionary.R:251:3
-      
-      [ FAIL 1 | WARN 0 | SKIP 90 | PASS 12843 ]
-      Error: Test failures
-      Execution halted
-    ```
-
-# mlr3torch
-
-<details>
-
-* Version: 0.2.1
-* GitHub: https://github.com/mlr-org/mlr3torch
-* Source code: https://github.com/cran/mlr3torch
-* Date/Publication: 2025-02-13 16:00:02 UTC
-* Number of recursive dependencies: 107
-
-Run `revdepcheck::revdep_details(, "mlr3torch")` for more info
-
-</details>
-
-## In both
-
-*   checking installed package size ... NOTE
-    ```
-      installed size is  5.7Mb
-      sub-directories of 1Mb or more:
-        R      4.0Mb
-        help   1.6Mb
     ```
 
 # mlr3tuning
@@ -3134,7 +2957,7 @@ Run `revdepcheck::revdep_details(, "multitool")` for more info
 * GitHub: https://github.com/lhe17/nebula
 * Source code: https://github.com/cran/nebula
 * Date/Publication: 2024-02-15 23:00:02 UTC
-* Number of recursive dependencies: 173
+* Number of recursive dependencies: 172
 
 Run `revdepcheck::revdep_details(, "nebula")` for more info
 
@@ -3207,7 +3030,7 @@ Run `revdepcheck::revdep_details(, "nflseedR")` for more info
 * GitHub: https://github.com/doi-usgs/nhdplusTools
 * Source code: https://github.com/cran/nhdplusTools
 * Date/Publication: 2025-02-14 23:20:02 UTC
-* Number of recursive dependencies: 137
+* Number of recursive dependencies: 138
 
 Run `revdepcheck::revdep_details(, "nhdplusTools")` for more info
 
@@ -3299,6 +3122,29 @@ Run `revdepcheck::revdep_details(, "OptimalGoldstandardDesigns")` for more info
            |                                                ^
     ```
 
+# PAMpal
+
+<details>
+
+* Version: 1.4.4
+* GitHub: NA
+* Source code: https://github.com/cran/PAMpal
+* Date/Publication: 2025-03-04 00:20:02 UTC
+* Number of recursive dependencies: 123
+
+Run `revdepcheck::revdep_details(, "PAMpal")` for more info
+
+</details>
+
+## In both
+
+*   checking whether package ‘PAMpal’ can be installed ... WARNING
+    ```
+    Found the following significant warnings:
+      Warning: no DISPLAY variable so Tk is not available
+    See ‘/c4/home/henrik/futureverse/future/revdep/checks/PAMpal/new/PAMpal.Rcheck/00install.out’ for details.
+    ```
+
 # PAMscapes
 
 <details>
@@ -3351,15 +3197,15 @@ Run `revdepcheck::revdep_details(, "pareg")` for more info
     > 
     > df_genes <- data.frame(
     ...
-       │     └─ openssl >=1.1.1q,<1.1.2a , which conflicts with any installable versions previously reported;
-       ├─ tensorflow 2.10.0 would require
-       │  └─ tensorflow-base [2.10.0 eigen_py38h1969d1f_0|2.10.0 gpu_py38h6559e04_0|2.10.0 mkl_py38hb9daa73_0], which requires
-       │     └─ python >=3.8,<3.9.0a0 , which conflicts with any installable versions previously reported;
-       └─ tensorflow 2.10.0 would require
-          └─ tensorflow-base [2.10.0 eigen_py39h1969d1f_0|2.10.0 gpu_py39h6559e04_0|2.10.0 mkl_py39hb9daa73_0], which requires
-             └─ python >=3.9,<3.10.0a0 , which conflicts with any installable versions previously reported.
-    
-    Error: one or more Python packages failed to install [error code 1]
+    + )
+    > fit <- pareg(df_genes, df_terms, max_iterations = 10)
+    Error in py_module_import(module, convert = convert) : 
+      ModuleNotFoundError: No module named 'tensorflow'
+    Run `reticulate::py_last_error()` for details.
+    Error in .activate_fallback(proc, testload, env = env, envpath = envpath,  : 
+      ModuleNotFoundError: No module named 'tensorflow'
+    Run `reticulate::py_last_error()` for details.
+    Calls: pareg -> basiliskStart -> .activate_fallback
     Execution halted
     ```
 
@@ -3368,38 +3214,38 @@ Run `revdepcheck::revdep_details(, "pareg")` for more info
       Running ‘testthat.R’
      ERROR
     Running the tests in ‘tests/testthat.R’ failed.
-    Last 50 lines of output:
+    Complete output:
+      > library(testthat)
+      > library(pareg)
+      Loading required package: tensorflow
+      Loading required package: tfprobability
       
       
-      Preparing transaction: ...working... done
-      Verifying transaction: ...working... done
-      Executing transaction: ...working... done
-      + /c4/home/henrik/.cache/R/basilisk/1.18.0/0/bin/conda install --yes --prefix /c4/home/henrik/.cache/R/basilisk/1.18.0/pareg/1.8.0/pareg 'python=3.10.14' -c anaconda --override-channels
     ...
-            └─ tensorflow-base [2.10.0 eigen_py39h1969d1f_0|2.10.0 gpu_py39h6559e04_0|2.10.0 mkl_py39hb9daa73_0], which requires
-               └─ python >=3.9,<3.10.0a0 , which conflicts with any installable versions previously reported.
-      
-      Error: one or more Python packages failed to install [error code 1]
-      In addition: Warning messages:
-      1: In check_forbidden_install("Python packages") :
-        cannot install Python packages during R CMD check
-      2: In check_forbidden_install("Conda Environments") :
-        cannot install Conda Environments during R CMD check
+      +   testload = c("tensorflow", "tensorflow_probability")
+      + )
+      Error in py_module_import(module, convert = convert) : 
+        ModuleNotFoundError: No module named 'tensorflow'
+      Run `reticulate::py_last_error()` for details.
+      Error in .activate_fallback(proc, testload, env = env, envpath = envpath,  : 
+        ModuleNotFoundError: No module named 'tensorflow'
+      Run `reticulate::py_last_error()` for details.
+      Calls: <Anonymous> -> .activate_fallback
       Execution halted
     ```
 
 *   checking re-building of vignette outputs ... ERROR
     ```
     Error(s) in re-building vignettes:
+      ...
     --- re-building ‘pareg.Rmd’ using rmarkdown
     The magick package is required to crop "/c4/home/henrik/futureverse/future/revdep/checks/pareg/new/pareg.Rcheck/vign_test/pareg/vignettes/pareg_files/figure-html/unnamed-chunk-4-1.png" but not available.
     The magick package is required to crop "/c4/home/henrik/futureverse/future/revdep/checks/pareg/new/pareg.Rcheck/vign_test/pareg/vignettes/pareg_files/figure-html/unnamed-chunk-5-1.png" but not available.
-    Channels:
-     - anaconda
-    Platform: linux-64
-    Collecting package metadata (repodata.json): ...working... done
-    Solving environment: ...working... done
     
+    Quitting from lines 145-150 [unnamed-chunk-9] (pareg.Rmd)
+    Error: processing vignette 'pareg.Rmd' failed with diagnostics:
+    ModuleNotFoundError: No module named 'tensorflow'
+    Run `reticulate::py_last_error()` for details.
     ...
     --- re-building ‘pathway_similarities.Rmd’ using rmarkdown
     The magick package is required to crop "/c4/home/henrik/futureverse/future/revdep/checks/pareg/new/pareg.Rcheck/vign_test/pareg/vignettes/pathway_similarities_files/figure-html/unnamed-chunk-2-1.png" but not available.
@@ -3506,61 +3352,11 @@ Run `revdepcheck::revdep_details(, "pgxRpi")` for more info
 
 ## In both
 
-*   checking tests ...
-    ```
-      Running ‘testthat.R’
-     ERROR
-    Running the tests in ‘tests/testthat.R’ failed.
-    Last 50 lines of output:
-      
-       trying: https://progenetix.org/services/cnvstats/?biosampleIds=pgxbs-kftvh94d,pgxbs-kftvh94g,pgxbs-kftvh972 
-      
-       trying: https://progenetix.org/services/cnvstats/?individualIds=pgxind-kftx3565,pgxind-kftx5g4v 
-      
-       trying: https://progenetix.org/services/cnvstats/?filters=pgx:icdom-88503 
-    ...
-      ── Error ('test_variants.R:83:5'): retrieve fraction variant with filters ──────
-      <subscriptOutOfBoundsError/error/condition>
-      Error in `result$response$resultSets[[1]]`: subscript out of bounds
-      Backtrace:
-          ▆
-       1. └─base::lapply(result$response$resultSets[[1]]$results, unlist) at test_variants.R:83:5
-      
-      [ FAIL 6 | WARN 0 | SKIP 0 | PASS 30 ]
-      Error: Test failures
-      Execution halted
-    ```
-
-*   checking re-building of vignette outputs ... ERROR
-    ```
-    Error(s) in re-building vignettes:
-    --- re-building ‘Introduction_1_load_metadata.Rmd’ using rmarkdown
-    The magick package is required to crop "/c4/home/henrik/futureverse/future/revdep/checks/pgxRpi/new/pgxRpi.Rcheck/vign_test/pgxRpi/vignettes/Introduction_1_load_metadata_files/figure-html/unnamed-chunk-12-1.png" but not available.
-    --- finished re-building ‘Introduction_1_load_metadata.Rmd’
-    
-    --- re-building ‘Introduction_2_query_variants.Rmd’ using rmarkdown
-    
-    Quitting from lines 145-146 [unnamed-chunk-9] (Introduction_2_query_variants.Rmd)
-    Error: processing vignette 'Introduction_2_query_variants.Rmd' failed with diagnostics:
-    subscript out of bounds
-    ...
-    The magick package is required to crop "/c4/home/henrik/futureverse/future/revdep/checks/pgxRpi/new/pgxRpi.Rcheck/vign_test/pgxRpi/vignettes/Introduction_4_process_pgxseg_files/figure-html/unnamed-chunk-14-1.png" but not available.
-    The magick package is required to crop "/c4/home/henrik/futureverse/future/revdep/checks/pgxRpi/new/pgxRpi.Rcheck/vign_test/pgxRpi/vignettes/Introduction_4_process_pgxseg_files/figure-html/unnamed-chunk-15-1.png" but not available.
-    The magick package is required to crop "/c4/home/henrik/futureverse/future/revdep/checks/pgxRpi/new/pgxRpi.Rcheck/vign_test/pgxRpi/vignettes/Introduction_4_process_pgxseg_files/figure-html/unnamed-chunk-16-1.png" but not available.
-    --- finished re-building ‘Introduction_4_process_pgxseg.Rmd’
-    
-    SUMMARY: processing the following file failed:
-      ‘Introduction_2_query_variants.Rmd’
-    
-    Error: Vignette re-building failed.
-    Execution halted
-    ```
-
 *   checking installed package size ... NOTE
     ```
-      installed size is  5.4Mb
+      installed size is  9.7Mb
       sub-directories of 1Mb or more:
-        doc   5.1Mb
+        doc   9.4Mb
     ```
 
 *   checking R code for possible problems ... NOTE
@@ -3661,9 +3457,8 @@ Run `revdepcheck::revdep_details(, "pliman")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  8.9Mb
+      installed size is  8.6Mb
       sub-directories of 1Mb or more:
-        R            1.0Mb
         libs         5.3Mb
         tmp_images   1.9Mb
     ```
@@ -3686,9 +3481,8 @@ Run `revdepcheck::revdep_details(, "PLNmodels")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 27.7Mb
+      installed size is 27.6Mb
       sub-directories of 1Mb or more:
-        R      1.0Mb
         data   1.4Mb
         doc    2.1Mb
         libs  22.4Mb
@@ -3846,7 +3640,7 @@ Run `revdepcheck::revdep_details(, "Prostar")` for more info
 * GitHub: https://github.com/Genentech/psborrow2
 * Source code: https://github.com/cran/psborrow2
 * Date/Publication: 2025-02-12 15:20:02 UTC
-* Number of recursive dependencies: 152
+* Number of recursive dependencies: 154
 
 Run `revdepcheck::revdep_details(, "psborrow2")` for more info
 
@@ -3959,7 +3753,7 @@ Run `revdepcheck::revdep_details(, "QDNAseq")` for more info
 * GitHub: NA
 * Source code: https://github.com/cran/RAINBOWR
 * Date/Publication: 2024-03-03 09:12:36 UTC
-* Number of recursive dependencies: 154
+* Number of recursive dependencies: 153
 
 Run `revdepcheck::revdep_details(, "RAINBOWR")` for more info
 
@@ -3969,8 +3763,9 @@ Run `revdepcheck::revdep_details(, "RAINBOWR")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 42.9Mb
+      installed size is 43.3Mb
       sub-directories of 1Mb or more:
+        R      1.0Mb
         libs  41.5Mb
     ```
 
@@ -4281,7 +4076,7 @@ Run `revdepcheck::revdep_details(, "sentopics")` for more info
 * GitHub: https://github.com/satijalab/seurat
 * Source code: https://github.com/cran/Seurat
 * Date/Publication: 2025-01-24 06:50:06 UTC
-* Number of recursive dependencies: 282
+* Number of recursive dependencies: 281
 
 Run `revdepcheck::revdep_details(, "Seurat")` for more info
 
@@ -4297,9 +4092,9 @@ Run `revdepcheck::revdep_details(, "Seurat")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 16.4Mb
+      installed size is 16.1Mb
       sub-directories of 1Mb or more:
-        R      2.0Mb
+        R      1.7Mb
         libs  13.4Mb
     ```
 
@@ -4333,7 +4128,7 @@ Run `revdepcheck::revdep_details(, "SeuratObject")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  5.6Mb
+      installed size is  5.5Mb
       sub-directories of 1Mb or more:
         R      1.5Mb
         libs   3.2Mb
@@ -4417,7 +4212,7 @@ Run `revdepcheck::revdep_details(, "shiny")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 14.0Mb
+      installed size is 14.1Mb
       sub-directories of 1Mb or more:
         R      1.5Mb
         help   1.2Mb
@@ -4824,6 +4619,14 @@ Run `revdepcheck::revdep_details(, "SPARSEMODr")` for more info
 
 ## In both
 
+*   checking installed package size ... NOTE
+    ```
+      installed size is  5.4Mb
+      sub-directories of 1Mb or more:
+        doc    1.2Mb
+        libs   4.0Mb
+    ```
+
 *   checking dependencies in R code ... NOTE
     ```
     Namespaces in Imports field not imported from:
@@ -5027,10 +4830,10 @@ Run `revdepcheck::revdep_details(, "squat")` for more info
 
 <details>
 
-* Version: 2.2.0
+* Version: 2.3.0
 * GitHub: https://github.com/bcgov/ssdtools
 * Source code: https://github.com/cran/ssdtools
-* Date/Publication: 2025-01-14 19:10:02 UTC
+* Date/Publication: 2025-02-20 13:20:02 UTC
 * Number of recursive dependencies: 127
 
 Run `revdepcheck::revdep_details(, "ssdtools")` for more info
@@ -5041,7 +4844,7 @@ Run `revdepcheck::revdep_details(, "ssdtools")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 38.5Mb
+      installed size is 38.4Mb
       sub-directories of 1Mb or more:
         libs  37.3Mb
     ```
@@ -5094,8 +4897,9 @@ Run `revdepcheck::revdep_details(, "stars")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  6.8Mb
+      installed size is  7.3Mb
       sub-directories of 1Mb or more:
+        R     1.0Mb
         doc   2.9Mb
         nc    1.7Mb
     ```
@@ -5424,13 +5228,13 @@ Run `revdepcheck::revdep_details(, "tramvs")` for more info
     Error(s) in re-building vignettes:
       ...
     --- re-building ‘tramvs.Rnw’ using knitr
+    Warning in texi2dvi(file = file, pdf = TRUE, clean = clean, quiet = quiet,  :
+      texi2dvi script/program not available, using emulation
     Error: processing vignette 'tramvs.Rnw' failed with diagnostics:
-    Running 'texi2dvi' on 'tramvs.tex' failed.
+    unable to run pdflatex on 'tramvs.tex'
     LaTeX errors:
     ! LaTeX Error: File `wrapfig.sty' not found.
     
-    Type X to quit or <RETURN> to proceed,
-    or enter new name. (Default extension: sty)
     ...
     l.68 \usepackage
                     {float}^^M
@@ -5473,7 +5277,7 @@ Run `revdepcheck::revdep_details(, "TreeMineR")` for more info
 * GitHub: https://github.com/ms609/TreeSearch
 * Source code: https://github.com/cran/TreeSearch
 * Date/Publication: 2024-05-23 13:40:03 UTC
-* Number of recursive dependencies: 124
+* Number of recursive dependencies: 123
 
 Run `revdepcheck::revdep_details(, "TreeSearch")` for more info
 
@@ -5608,9 +5412,9 @@ Run `revdepcheck::revdep_details(, "tsgarch")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 144.3Mb
+      installed size is 144.2Mb
       sub-directories of 1Mb or more:
-        libs  143.2Mb
+        libs  143.1Mb
     ```
 
 # tsmarch
@@ -5654,9 +5458,8 @@ Run `revdepcheck::revdep_details(, "tsmarch")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 22.0Mb
+      installed size is 21.5Mb
       sub-directories of 1Mb or more:
-        R      1.0Mb
         doc    1.6Mb
         libs  18.5Mb
     ```
@@ -5718,7 +5521,7 @@ Run `revdepcheck::revdep_details(, "UCSCXenaShiny")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  8.0Mb
+      installed size is  8.1Mb
       sub-directories of 1Mb or more:
         data       1.1Mb
         doc        1.4Mb
@@ -5923,10 +5726,10 @@ Run `revdepcheck::revdep_details(, "wru")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  9.7Mb
+      installed size is  7.5Mb
       sub-directories of 1Mb or more:
         data   3.5Mb
-        help   4.1Mb
+        help   1.9Mb
         libs   1.9Mb
     ```
 

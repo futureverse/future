@@ -254,7 +254,7 @@ requirePackages <- local(function(pkgs) {
     if (require(pkg, character.only = TRUE)) return()
 
     ## Failed to attach package
-    msg <- sprintf("Failed to attach package %s in %s", sQuote(pkg), R.version$version.string)
+    msg <- sprintf("Failed to attach package %s in %s", sQuote(pkg), R.version[["version.string"]])
     data <- installed.packages()
 
     ## Installed, but fails to load/attach?
@@ -318,7 +318,7 @@ parseCmdArgs <- function() {
       msg <- sprintf("future: Ignoring requested number of processes, because it is greater than the number of cores/child processes available (= %d) to this R process: %s", max, cmdarg)
       warning(msg, call. = FALSE, immediate. = TRUE)
     } else {
-      args$p <- value
+      args[["p"]] <- value
     }
   }
 
@@ -368,7 +368,7 @@ parseCmdArgs <- function() {
 #' 
 #' @keywords internal
 nullcon <- local({
-  nullfile <- switch(.Platform$OS.type, windows = "NUL", "/dev/null")
+  nullfile <- switch(.Platform[["OS.type"]], windows = "NUL", "/dev/null")
   .nullcon <- function() file(nullfile, open = "wb", raw = TRUE)
 
   ## Assert that a null device exists
@@ -377,7 +377,7 @@ nullcon <- local({
     on.exit(close(con))
     cat("test", file = con)
   }, error = function(ex) {
-    stopf("Failed to write to null file (%s) on this platform (%s). Please report this the maintainer of the 'future' package.", sQuote(nullfile), sQuote(.Platform$OS.type))
+    stopf("Failed to write to null file (%s) on this platform (%s). Please report this the maintainer of the 'future' package.", sQuote(nullfile), sQuote(.Platform[["OS.type"]]))
   })
   
   .nullcon
@@ -390,7 +390,7 @@ resolveMPI <- local({
   cache <- list()
   
   function(future) {
-    resolveMPI <- cache$resolveMPI
+    resolveMPI <- cache[["resolveMPI"]]
     if (is.null(resolveMPI)) {
       resolveMPI <- function(future) {
         node <- future[["workers"]][[future[["node"]]]]
@@ -417,12 +417,12 @@ resolveMPI <- local({
                              inherits = FALSE)
           resolveMPI <- function(future) {
             node <- future[["workers"]][[future[["node"]]]]
-            mpi.iprobe(source = node$rank, comm = node$comm, tag = mpi.any.tag())
+            mpi.iprobe(source = node[["rank"]], comm = node[["comm"]], tag = mpi.any.tag())
           }
         }
       }
       stop_if_not(is.function(resolveMPI))
-      cache$resolveMPI <<- resolveMPI
+      cache[["resolveMPI"]] <<- resolveMPI
     }
 
     resolveMPI(future)
@@ -455,7 +455,7 @@ supports_omp_threads <- function(assert = FALSE, debug = isTRUE(getOption("futur
 
 ## On MS Windows, support for capturing UTF8 symbols was added in R 4.2.0,
 ## but it requires a certain setup.
-can_capture_utf8 <- if (.Platform$OS.type == "windows") {
+can_capture_utf8 <- if (.Platform[["OS.type"]] == "windows") {
   if (getRversion() >= "4.2.0") {
     local({
       truth <- "\u2713" ## checkmark

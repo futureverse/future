@@ -18,7 +18,7 @@ by \code{\link[=plan]{plan()}} is used.}
 background are considered.  If FALSE, also workers running in the main \R
 process are considered, e.g. when using the 'sequential' backend.}
 
-\item{\dots}{Not used; reserved for future use.}
+\item{\ldots}{Not used; reserved for future use.}
 }
 \value{
 \code{nbrOfWorkers()} returns a positive number in \eqn{{1, 2, 3, ...}}, which
