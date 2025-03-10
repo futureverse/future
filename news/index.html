@@ -167,6 +167,7 @@
 <li><p>Add new FutureBackend API for writing future backends.</p></li>
 <li><p>Add <code><a href="../reference/minifuture.html">minifuture()</a></code>, which is like <code><a href="../reference/future.html">future()</a></code>, but with different default arguments resulting in less overhead with the added burden on having to specify globals and packages, not having conditions and standard output relayed, and ignoring random number generation.</p></li>
 <li><p>Add <code>with(&lt;plan&gt;, &lt;expression&gt;)</code> method to evaluate an expression, including futures, using a temporary future plan.</p></li>
+<li><p>Interrupted futures are now handled and produce an informative warning.</p></li>
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-development-version">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h3>
