@@ -10,6 +10,13 @@
    
  * Add new FutureBackend API for writing future backends.
 
+## Bug Fixes
+
+ * Now 'interrupt' conditions are captured during the evaluation of
+   the future, and results in the evaluation being terminated
+   nicely. Previously, it would result in un-determistic behavior
+   depending of future backend.
+
 ## Documentation
 
  * Updated the future topology vignette with information on the

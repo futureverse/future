@@ -793,6 +793,13 @@ evalFuture <- function(
         }
       } ## function(cond)
     ) ## withCallingHandlers()
+  }, interrupt = function(ex) {
+    FutureResult(
+      conditions = ...future.conditions,
+      rng = !identical(globalenv()[[".Random.seed"]], ...future.rng),
+      globalenv = if (globalenv) list(added = setdiff(names(.GlobalEnv), ...future.globalenv.names)) else NULL,
+      started = ...future.startTime
+    )
   }, error = function(ex) {
     FutureResult(
       conditions = ...future.conditions,
