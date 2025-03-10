@@ -7,6 +7,8 @@
    `parallelly::availableCores()` or set by the future
    `plan()`. Previously, this had to be implemented by each backend,
    but now it's handled automatically by the future framework.
+   
+ * Add new FutureBackend API for writing future backends.
 
 ## Documentation
 
