@@ -1,3 +1,22 @@
+# OutSeekR
+
+<details>
+
+* Version: 1.0.0
+* GitHub: NA
+* Source code: https://github.com/cran/OutSeekR
+* Date/Publication: 2024-11-19 09:10:05 UTC
+* Number of recursive dependencies: 58
+
+Run `revdepcheck::revdep_details(, "OutSeekR")` for more info
+
+</details>
+
+## In both
+
+*   R CMD check timed out
+    
+
 # TriDimRegression
 
 <details>

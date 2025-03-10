@@ -27,7 +27,7 @@
 #' @aliases uniprocess
 #' @export
 sequential <- function(..., envir = parent.frame()) {
-  .Deprecated("The future::sequential() function implements the FutureBackend and should never be called directly. This will soon become defunct")
+#  stop("The future::sequential() function implements the FutureBackend and should never be called directly. This will soon become defunct")
   f <- Future(..., envir = envir)
   class(f) <- c("SequentialFuture", "UniprocessFuture", "Future")
   f  

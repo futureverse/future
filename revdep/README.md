@@ -27,10 +27,11 @@
 
 # Revdeps
 
-## Failed to check (1)
+## Failed to check (2)
 
 |package          |version |error |warning |note |
 |:----------------|:-------|:-----|:-------|:----|
+|[OutSeekR](failures.md#outseekr)|1.0.0   |1     |        |     |
 |[TriDimRegression](failures.md#tridimregression)|1.0.2   |1     |        |     |
 
 ## New problems (3)
@@ -69,7 +70,7 @@
 |BatchGetSymbols              |2.6.4     |       |        |     |
 |[batchtools](problems.md#batchtools)|0.9.17    |       |        |2    |
 |bayesian                     |1.0.1     |       |        |     |
-|[BayesianMCPMod](problems.md#bayesianmcpmod)|1.1.0     |       |        |1    |
+|BayesianMCPMod               |1.1.0     |       |        |     |
 |[bayesmove](problems.md#bayesmove)|0.2.1     |       |        |1    |
 |[bbknnR](problems.md#bbknnr) |1.1.1     |       |        |1    |
 |bcmaps                       |2.2.1     |       |        |     |
@@ -100,7 +101,7 @@
 |[ClustIRR](problems.md#clustirr)|1.4.0     |       |        |2    |
 |[codalm](problems.md#codalm) |0.1.2     |       |        |1    |
 |[codebook](problems.md#codebook)|0.9.6     |       |        |1    |
-|[collinear](problems.md#collinear)|2.0.0     |       |        |2    |
+|[collinear](problems.md#collinear)|2.0.0     |       |        |1    |
 |conformalInference.fd        |1.1.1     |       |        |     |
 |conformalInference.multi     |1.1.1     |       |        |     |
 |[Coxmos](problems.md#coxmos) |1.1.2     |       |        |1    |
@@ -260,7 +261,7 @@
 |[mikropml](problems.md#mikropml)|1.6.1     |       |        |1    |
 |[MineICA](problems.md#mineica)|1.46.0    |       |4       |4    |
 |[missSBM](problems.md#misssbm)|1.0.4     |       |        |1    |
-|[mistyR](problems.md#mistyr) |1.14.0    |       |        |3    |
+|[mistyR](problems.md#mistyr) |1.14.0    |       |        |2    |
 |mlr3                         |0.22.1    |       |        |     |
 |mlr3db                       |0.5.2     |       |        |     |
 |mlr3inferr                   |0.1.0     |       |        |     |
@@ -296,7 +297,7 @@
 |[OptimalGoldstandardDesigns](problems.md#optimalgoldstandarddesigns)|1.0.1     |       |        |1    |
 |optimLanduse                 |1.2.1     |       |        |     |
 |origami                      |1.0.7     |       |        |     |
-|OutSeekR                     |1.0.0     |       |        |     |
+|[OutSeekR](failures.md#outseekr)|1.0.0     |1      |        |     |
 |[PAMpal](problems.md#pampal) |1.4.4     |       |1       |     |
 |[PAMscapes](problems.md#pamscapes)|0.10.0    |       |1       |     |
 |paramsim                     |0.1.0     |       |        |     |
@@ -311,7 +312,7 @@
 |[pgxRpi](problems.md#pgxrpi) |1.2.3     |       |        |2    |
 |[photosynthesis](problems.md#photosynthesis)|2.1.5     |       |        |2    |
 |[phylolm](problems.md#phylolm)|2.6.5     |       |        |1    |
-|[phylopath](problems.md#phylopath)|1.3.0     |       |        |1    |
+|phylopath                    |1.3.0     |       |        |     |
 |phylospatial                 |1.0.0     |       |        |     |
 |PINstimation                 |0.1.2     |       |        |     |
 |[pliman](problems.md#pliman) |3.0.0     |       |        |1    |
@@ -402,7 +403,7 @@
 |[spaMM](problems.md#spamm)   |4.5.0     |       |        |2    |
 |spanishoddata                |0.1.0     |       |        |     |
 |[sparrpowR](problems.md#sparrpowr)|0.2.8     |       |1       |     |
-|[SPARSEMODr](problems.md#sparsemodr)|1.2.0     |       |        |2    |
+|[SPARSEMODr](problems.md#sparsemodr)|1.2.0     |       |        |1    |
 |spatialTIME                  |1.3.4-5   |       |        |     |
 |[spatialwarnings](problems.md#spatialwarnings)|3.1.0     |       |        |1    |
 |spdesign                     |0.0.5     |       |        |     |
