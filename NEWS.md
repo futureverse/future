@@ -17,6 +17,8 @@
 
  * Add `with(<plan>, <expression>)` method to evaluate an expression,
    including futures, using a temporary future plan.
+   
+ * Interrupted futures are now handled and produce an informative warning.
 
 ## Bug Fixes
 

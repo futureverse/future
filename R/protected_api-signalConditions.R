@@ -78,7 +78,7 @@ signalConditions <- function(future, include = "condition", exclude = NULL, resi
     ## Flag condition as signaled
     cond[["signaled"]] <- cond[["signaled"]] + 1L
     conditions[[kk]] <- cond
-    
+
     if (inherits(condition, "error")) {
       ## Make sure to update 'signaled' information before we exit.
       ## Note, 'future' is an environment.
@@ -93,6 +93,17 @@ signalConditions <- function(future, include = "condition", exclude = NULL, resi
         condition[["future.info"]] <- cond
       }
       stop(condition)
+    } else if (inherits(condition, "interrupt")) {
+      label <- future[["label"]]
+      if (is.null(label)) label <- "<none>"
+      result <- future[["result"]]
+      when <- result[["finished"]]
+      session_uuid <- result[["session_uuid"]]
+      source <- attr(session_uuid, "source")
+      host <- source[["host"]]
+      pid <- source[["pid"]]
+      msg <- sprintf("A future ('%s') of class %s was interrupted at %s, while running on %s (pid %s)", label, class(future)[1], format(when, format = "%FT%T"), sQuote(host), pid)
+      warning(FutureWarning(msg, future = future))
     } else if (inherits(condition, "warning")) {
       warning(condition)
     } else if (inherits(condition, "message")) {
