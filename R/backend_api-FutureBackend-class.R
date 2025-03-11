@@ -76,8 +76,9 @@ resetFuture.FutureBackend <- function(backend, future, ...) {
     "calls",
     "state"
   )
-  class(future) <- "Future"
   
+  class(future) <- "Future"
+
   drop <- setdiff(names(future), core_fields)
   for (name in drop) {
     future[[name]] <- NULL
@@ -85,7 +86,7 @@ resetFuture.FutureBackend <- function(backend, future, ...) {
 
   future[["state"]] <- "created"
   future[["lazy"]] <- TRUE
-
+  
   future
 }
 

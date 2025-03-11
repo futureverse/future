@@ -27,9 +27,9 @@
 signalConditions <- function(future, include = "condition", exclude = NULL, resignal = TRUE, ...) {
   ## Nothing to do?
   if (length(include) == 0L) return(invisible(future))
-  
+
   ## Future is not yet launched
-  if (!future[["state"]] %in% c("finished", "failed")) {
+  if (!future[["state"]] %in% c("finished", "failed", "interrupted")) {
     stop(FutureError(
       sprintf(
         "Internal error: Cannot resignal future conditions. %s has not yet been resolved (state = %s)",
@@ -73,7 +73,7 @@ signalConditions <- function(future, include = "condition", exclude = NULL, resi
     ## Don't signal condition based on 'include'?
     if (length(include) > 0L && !inherits(condition, include)) next
 
-    mdebugf(" - Condition #%d: %s", kk, paste(sQuote(class(condition)), collapse = ", "))
+    if (debug) mdebugf(" - Condition #%d: %s", kk, paste(sQuote(class(condition)), collapse = ", "))
 
     ## Flag condition as signaled
     cond[["signaled"]] <- cond[["signaled"]] + 1L
@@ -104,8 +104,12 @@ signalConditions <- function(future, include = "condition", exclude = NULL, resi
       pid <- source[["pid"]]
       msg <- sprintf("A future ('%s') of class %s was interrupted at %s, while running on %s (pid %s). The future was reset to a vanilla, lazy future, which can be re-evaluted again", label, class(future)[1], format(when, format = "%FT%T"), sQuote(host), pid)
       backend <- future[["backend"]]
-      if (!is.null(backend)) future <- resetFuture(backend, future)
+      if (!is.null(backend)) {
+        if (debug) mdebugf(" - Resetting future")
+        future <- resetFuture(backend, future)
+      }
       warning(FutureInterruptWarning(msg, future = future))
+      return(invisible(future))
     } else if (inherits(condition, "warning")) {
       warning(condition)
     } else if (inherits(condition, "message")) {
@@ -122,7 +126,7 @@ signalConditions <- function(future, include = "condition", exclude = NULL, resi
   if (isTRUE(attr(future[["conditions"]], "drop"))) {
     conditions <- conditions[!signaled]
   }
-
+  
   ## Make sure to update 'signaled' information on exit
   result[["conditions"]] <- conditions
   future[["result"]] <- result
