@@ -107,7 +107,6 @@
 
     ## Clean up
     if (is.function(cleanup_fcn)) {
-      message("- cleanup()")
       cleanup_fcn()
     } else if (is.null(cleanup_fcn)) {
       ## Backward compatibility for future (<= 1.33.2)
