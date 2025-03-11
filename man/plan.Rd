@@ -2,6 +2,7 @@
 % Please edit documentation in R/utils_api-plan.R, R/utils_api-with.R
 \name{plan}
 \alias{plan}
+\alias{withPlan}
 \alias{localPlan}
 \title{Plan how to resolve a future}
 \usage{
@@ -15,12 +16,21 @@ plan(
   .init = TRUE
 )
 
-localPlan(
+withPlan(
   strategy = NULL,
-  ...,
+  expr,
+  envir = parent.frame(),
   .cleanup = NA,
   substitute = TRUE,
-  envir = parent.frame()
+  ...
+)
+
+localPlan(
+  strategy = NULL,
+  .cleanup = NA,
+  envir = parent.frame(),
+  substitute = TRUE,
+  ...
 )
 }
 \arguments{
@@ -39,7 +49,9 @@ that is the same as what is currently in use, will be skipped.}
 
 \item{.init}{(internal) Used to initiate workers.}
 
-\item{envir}{The environment where the future plan should be set.}
+\item{expr}{An R expression to be evaluated.}
+
+\item{envir}{The environment where the future plan should be set and the expression evaluated.}
 
 \item{\ldots}{Additional arguments overriding the default arguments
 of the evaluation function.  Which additional arguments are supported
@@ -48,8 +60,12 @@ argument \code{workers} but not all. For details, see the individual
 functions of which some are linked to below.}
 }
 \value{
-If a new strategy is chosen, then the previous one is returned
-(invisible), otherwise the current one is returned (visibly).
+\code{plan()} returns a the previous plan invisibly if a new strategy
+is chosen, otherwise it returns the current one visibly.
+
+\code{withPlan()} returns the value of the expression evaluated.
+
+\code{localPlan()} returns the current future plan before applying the temporary one.
 }
 \description{
 This function allows \emph{the user} to plan the future, more specifically,
@@ -119,12 +135,14 @@ automatically with any new backends developed after you wrote your code.
 
 If you think it is necessary to modify the future strategy within a
 function, then make sure to undo the changes when exiting the function.
-This can be done using:
+This can be archived by using \code{\link[=localPlan]{localPlan()}}, e.g.
 
 \preformatted{
-  oplan <- plan(new_set_of_strategies)
-  on.exit(plan(oplan), add = TRUE)
-  [...]
+  my_fcn <- function(x) {
+    localPlan(multisession)
+    y <- analyze(x)
+    summarize(y)
+  }
 }
 
 This is important because the end-user might have already set the future

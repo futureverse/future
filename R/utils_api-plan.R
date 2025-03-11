@@ -197,8 +197,9 @@
 #'
 #' @param .init (internal) Used to initiate workers.
 #'
-#' @return If a new strategy is chosen, then the previous one is returned
-#' (invisible), otherwise the current one is returned (visibly).
+#' @return
+#' `plan()` returns a the previous plan invisibly if a new strategy
+#' is chosen, otherwise it returns the current one visibly.
 #'
 #' @example incl/plan.R
 #'
@@ -262,12 +263,14 @@
 #'
 #' If you think it is necessary to modify the future strategy within a
 #' function, then make sure to undo the changes when exiting the function.
-#' This can be done using:
+#' This can be archived by using [localPlan()], e.g.
 #'
 #' \preformatted{
-#'   oplan <- plan(new_set_of_strategies)
-#'   on.exit(plan(oplan), add = TRUE)
-#'   [...]
+#'   my_fcn <- function(x) {
+#'     localPlan(multisession)
+#'     y <- analyze(x)
+#'     summarize(y)
+#'   }
 #' }
 #'
 #' This is important because the end-user might have already set the future
