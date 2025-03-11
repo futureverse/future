@@ -46,7 +46,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">future</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.34.0-9302</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.34.0-9304</span>
       </span>
     </div>
 
@@ -267,12 +267,10 @@ might mess up the <code><a href="../reference/plan.html">plan()</a></code> that 
 further parallelization.</p>
 <p>If you still think it is necessary to set <code><a href="../reference/plan.html">plan()</a></code>, make
 sure to undo when the function exits, also on errors. This can be done
-by using <code><a href="https://rdrr.io/r/base/on.exit.html" class="external-link">on.exit()</a></code>, e.g.</p>
+by using <code><a href="../reference/plan.html">localPlan()</a></code>, e.g.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">my_fcn</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="va">oplan</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plan.html">plan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/on.exit.html" class="external-link">on.exit</a></span><span class="op">(</span><span class="fu"><a href="../reference/plan.html">plan</a></span><span class="op">(</span><span class="va">oplan</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
+<span>  <span class="fu"><a href="../reference/plan.html">localPlan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span></span>
 <span>  <span class="va">y</span> <span class="op">&lt;-</span> <span class="fu">analyze</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span>  <span class="fu">summarize</span><span class="op">(</span><span class="va">y</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
@@ -283,8 +281,7 @@ parallel or sequentially. This often result in code like:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">my_fcn</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">parallel</span> <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="kw">if</span> <span class="op">(</span><span class="va">parallel</span><span class="op">)</span> <span class="op">{</span></span>
-<span>    <span class="va">oplan</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plan.html">plan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/base/on.exit.html" class="external-link">on.exit</a></span><span class="op">(</span><span class="fu"><a href="../reference/plan.html">plan</a></span><span class="op">(</span><span class="va">oplan</span><span class="op">)</span><span class="op">)</span></span>
+<span>    <span class="fu"><a href="../reference/plan.html">localPlan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span></span>
 <span>    <span class="va">y</span> <span class="op">&lt;-</span> <span class="fu">future_lapply</span><span class="op">(</span><span class="va">x</span>, FUN <span class="op">=</span> <span class="va">analyze</span><span class="op">)</span> <span class="co">## from future.apply package</span></span>
 <span>  <span class="op">}</span> <span class="kw">else</span> <span class="op">{</span></span>
 <span>    <span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">x</span>, FUN <span class="op">=</span> <span class="va">analyze</span><span class="op">)</span></span>

@@ -25,7 +25,7 @@ e.g. sequentially or in parallel."><meta property="og:image" content="https://fu
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">future</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.34.0-9302</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.34.0-9304</span>
       </span>
     </div>
 
@@ -158,7 +158,7 @@ e.g. sequentially or in parallel."><meta property="og:image" content="https://fu
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Plan how to resolve a future</h1>
-    <small class="dont-index">Source: <a href="https://github.com/futureverse/future/blob/HEAD/R/utils_api-plan.R" class="external-link"><code>R/utils_api-plan.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/futureverse/future/blob/HEAD/R/utils_api-plan.R" class="external-link"><code>R/utils_api-plan.R</code></a>, <a href="https://github.com/futureverse/future/blob/HEAD/R/utils_api-withPlan.R" class="external-link"><code>R/utils_api-withPlan.R</code></a></small>
     <div class="hidden name"><code>plan.Rd</code></div>
     </div>
 
@@ -175,8 +175,25 @@ e.g. sequentially or in parallel.</p>
 <span>  substitute <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  .skip <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  .call <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  .cleanup <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  .cleanup <span class="op">=</span> <span class="cn">NA</span>,</span>
 <span>  .init <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">withPlan</span><span class="op">(</span></span>
+<span>  strategy <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">expr</span>,</span>
+<span>  envir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sys.parent.html" class="external-link">parent.frame</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  .cleanup <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  substitute <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">localPlan</span><span class="op">(</span></span>
+<span>  strategy <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  .cleanup <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  envir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sys.parent.html" class="external-link">parent.frame</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  substitute <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -211,6 +228,14 @@ that is the same as what is currently in use, will be skipped.</p></dd>
 <dd><p>(internal) Used to initiate workers.</p></dd>
 
 
+<dt id="arg-expr">expr<a class="anchor" aria-label="anchor" href="#arg-expr"></a></dt>
+<dd><p>An R expression to be evaluated.</p></dd>
+
+
+<dt id="arg-envir">envir<a class="anchor" aria-label="anchor" href="#arg-envir"></a></dt>
+<dd><p>The environment where the future plan should be set and the expression evaluated.</p></dd>
+
+
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>Additional arguments overriding the default arguments
 of the evaluation function.  Which additional arguments are supported
@@ -221,8 +246,10 @@ functions of which some are linked to below.</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>If a new strategy is chosen, then the previous one is returned
-(invisible), otherwise the current one is returned (visibly).</p>
+    <p><code>plan()</code> returns a the previous plan invisibly if a new strategy
+is chosen, otherwise it returns the current one visibly.</p>
+<p><code>withPlan()</code> returns the value of the expression evaluated.</p>
+<p><code>localPlan()</code> returns the current future plan before applying the temporary one.</p>
     </div>
     <div id="details">
     <h2>Details</h2>
@@ -286,12 +313,13 @@ any assumptions about what backends are available, your code will also work
 automatically with any new backends developed after you wrote your code.</p>
 <p>If you think it is necessary to modify the future strategy within a
 function, then make sure to undo the changes when exiting the function.
-This can be done using:</p>
-<div class="sourceCode"><pre><code>
-  oplan &lt;- plan(new_set_of_strategies)
-  on.exit(plan(oplan), add = TRUE)
-  [...]
-</code></pre></div>
+This can be archived by using <code>localPlan()</code>, e.g.</p>
+<div class="sourceCode"><pre><code><span></span>
+<span>  <span class="va">my_fcn</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="fu"><a href="../reference/plan.html">localPlan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span></span>
+<span>    <span class="va">y</span> <span class="op">&lt;-</span> <span class="fu">analyze</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span>    <span class="fu">summarize</span><span class="op">(</span><span class="va">y</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span></code></pre></div>
 
 <p>This is important because the end-user might have already set the future
 strategy elsewhere for other purposes and will most likely not known that
