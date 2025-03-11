@@ -2,6 +2,9 @@
 
 ## New Features
 
+ * Add `localPlan(<plan>)` to set a future plan temporarily in local
+   environment, e.g. inside a function.
+
  * Add `with(<plan>, <expression>)` method to evaluate an expression,
    including futures, using a temporary future plan.
    
