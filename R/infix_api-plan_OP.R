@@ -18,7 +18,14 @@
 
   ## Temporarily use a different plan
   oplan <- plan("list")
-  on.exit(plan(oplan, substitute = FALSE, .call = NULL, .cleanup = TRUE, .init = FALSE))
+  on.exit({
+    ## Note, we cannot use .cleanup = TRUE here, because the
+    ## future created with the future assignment, needs it
+    ## the backend to be alive in order for result() to work.
+    ## FIXME: Figure out how to delay the cleanup until
+    ## the delayed future assignment is resolved. /HB 2025-03-11
+    plan(oplan, substitute = FALSE, .call = NULL, .cleanup = FALSE, .init = FALSE)
+  })
   plan(strategy, substitute = FALSE, .call = NULL, .cleanup = FALSE, .init = FALSE)
 
   eval(fassignment, envir = envir, enclos = baseenv())
