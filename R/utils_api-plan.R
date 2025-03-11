@@ -72,19 +72,48 @@
   }) ## plan_default_stack()
 
 
-  plan_cleanup <- function(evaluator) {
-    cleanup <- attr(evaluator, "cleanup", exact = TRUE)
-    if (!is.null(cleanup)) {
-      if (is.function(cleanup)) {
-        cleanup()
-      } else {
-        stop(FutureError(sprintf("Unknown type of 'cleanup' attribute on current future strategy: %s", commaq(class(cleanup)))))
+  plan_cleanup <- function(evaluator, cleanup = NA) {
+    ## Nothing to do?
+    if (identical(cleanup, FALSE)) return()
+    
+    cleanup_fcn <- attr(evaluator, "cleanup", exact = TRUE)
+
+    ## Nothing to do?
+    if (is.null(cleanup_fcn) &&
+        !isTRUE(getOption("future.plan.cleanup.legacy"))) {
+      return()
+    }
+
+    ## Skip clean up for other reasons?
+    if (is.na(cleanup)) {
+      ## Skip because this was called via with(plan(...), ...)?
+      calls <- sys.calls()
+      ncalls <- length(calls)
+      if (ncalls > 3L) {
+        for (ii in (ncalls-3L):1) {
+          call <- calls[[ii]]
+          fcn <- call[[1]]
+          if (is.symbol(fcn) && fcn == as.symbol("with")) {
+            return()
+          } else if (is.call(fcn) &&
+                     is.symbol(fcn[[1]]) && fcn[[1]] == as.symbol("::") &&
+                     is.symbol(fcn[[2]]) && fcn[[2]] == as.symbol("base") &&
+                     is.symbol(fcn[[3]]) && fcn[[3]] == as.symbol("with")) {
+            return()
+          }
+        }
       }
-    } else {
+    }
+
+    ## Clean up
+    if (is.function(cleanup_fcn)) {
+      message("- cleanup()")
+      cleanup_fcn()
+    } else if (is.null(cleanup_fcn)) {
       ## Backward compatibility for future (<= 1.33.2)
-      if (isTRUE(getOption("future.plan.cleanup.legacy"))) {
-        ClusterRegistry(action = "stop")
-      }
+      ClusterRegistry(action = "stop")
+    } else {
+      stop(FutureError(sprintf("Unknown type of 'cleanup' attribute on current future strategy: %s", commaq(class(cleanup_fcn)))))
     }
   } ## plan_cleanup()
 
@@ -270,7 +299,7 @@ plan <- local({
   ## Stack of type of futures to use
   stack <- NULL
 
-  plan_set <- function(newStack, skip = TRUE, cleanup = TRUE, init = TRUE) {
+  plan_set <- function(newStack, skip = TRUE, cleanup = NA, init = TRUE) {
     stop_if_not(!is.null(newStack), is.list(newStack), length(newStack) >= 1L)
 
     oldStack <- stack
@@ -298,7 +327,7 @@ plan <- local({
     warn_about_multicore(newStack)
 
     ## Stop/cleanup any previously registered backends?
-    if (cleanup) plan_cleanup(stack[[1L]])
+    plan_cleanup(stack[[1L]], cleanup = cleanup)
 
     stack <<- newStack
 
@@ -324,7 +353,7 @@ plan <- local({
 
   ## Main function
   function(strategy = NULL, ..., substitute = TRUE, .skip = FALSE, .call = TRUE,
-           .cleanup = TRUE, .init = TRUE) {
+           .cleanup = NA, .init = TRUE) {
     if (substitute) strategy <- substitute(strategy)
     if (is.logical(.skip)) stop_if_not(length(.skip) == 1L, !is.na(.skip))
     if (is.logical(.call)) stop_if_not(length(.call) == 1L, !is.na(.call))
@@ -352,7 +381,7 @@ plan <- local({
       return(stack)
     } else if (identical(strategy, "reset")) {
       ## Stop/cleanup any previously registered backends?
-      if (.cleanup) plan_cleanup(stack[[1]])
+      plan_cleanup(stack[[1]], cleanup = .cleanup)
       ## Reset stack of future strategies?
       stack <<- plan_default_stack()
       return(stack)

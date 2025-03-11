@@ -4,4 +4,3 @@ with(plan(multisession, workers = 2), {
   w_pid <- value(f)
   c(main = Sys.getpid(), worker = w_pid)
 })
-

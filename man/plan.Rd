@@ -10,7 +10,7 @@ plan(
   substitute = TRUE,
   .skip = FALSE,
   .call = TRUE,
-  .cleanup = TRUE,
+  .cleanup = NA,
   .init = TRUE
 )
 }
