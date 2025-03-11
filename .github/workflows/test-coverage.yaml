@@ -1,4 +1,5 @@
-on: [push]
+on:
+  workflow_dispatch:  # Enables manual triggering
 
 name: test-coverage.yaml
 
