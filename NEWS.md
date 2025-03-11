@@ -8,9 +8,6 @@
  * Add `localPlan(<plan>)` to set a future plan temporarily in local
    environment, e.g. inside a function.
 
- * Add `with(<plan>, <expression>)` method to evaluate an expression,
-   including futures, using a temporary future plan.
-   
  * Add `minifuture()`, which is like `future()`, but with different
    default arguments resulting in less overhead with the added burden
    on having to specify globals and packages, not having conditions

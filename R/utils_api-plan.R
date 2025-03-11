@@ -84,27 +84,6 @@
       return()
     }
 
-    ## Skip clean up for other reasons?
-    if (is.na(cleanup)) {
-      ## Skip because this was called via with(plan(...), ...)?
-      calls <- sys.calls()
-      ncalls <- length(calls)
-      if (ncalls > 3L) {
-        for (ii in (ncalls-3L):1) {
-          call <- calls[[ii]]
-          fcn <- call[[1]]
-          if (is.symbol(fcn) && fcn == as.symbol("with")) {
-            return()
-          } else if (is.call(fcn) &&
-                     is.symbol(fcn[[1]]) && fcn[[1]] == as.symbol("::") &&
-                     is.symbol(fcn[[2]]) && fcn[[2]] == as.symbol("base") &&
-                     is.symbol(fcn[[3]]) && fcn[[3]] == as.symbol("with")) {
-            return()
-          }
-        }
-      }
-    }
-
     ## Clean up
     if (is.function(cleanup_fcn)) {
       cleanup_fcn()
