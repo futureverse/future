@@ -194,7 +194,7 @@ requestCore <- function(await, workers = availableCores(), timeout = getOption("
     stop(msg)
   }
 
-  invisible(unname(finished))
+  unname(finished)
 }
 
 #' A MulticoreFutureBackend resolves futures in parallel using forked processing on the current machine
@@ -289,7 +289,7 @@ launchFuture.MulticoreFutureBackend <- local({
   
     if (debug) mdebugf("%s started", class(future)[1])
     
-    invisible(future)
+    future
   }
 })
 

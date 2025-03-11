@@ -48,7 +48,7 @@ run.UniprocessFuture <- function(future, ...) {
   ## Signal conditions early, iff specified for the given future
   signalEarly(future, collect = FALSE)
 
-  invisible(future)
+  future
 }
 
 

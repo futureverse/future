@@ -44,5 +44,5 @@ signalEarly <- function(future, collect = TRUE, .signalEarly = TRUE, ...) {
   
   if (debug) mdebug("signalEarly() ... DONE")
 
-  invisible(future)
+  future
 }

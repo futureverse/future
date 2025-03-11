@@ -43,7 +43,7 @@ FutureRegistry <- local({
       }
     } ## for (ii ...)
 
-    invisible(futures)
+    futures
   } ## collectValues()
 
 

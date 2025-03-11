@@ -115,7 +115,7 @@ readImmediateConditions <- function(path = immediateConditionsPath(rootPath = ro
   ## Remove files?
   if (remove && length(files) > 0L) file.remove(files)
 
-  invisible(conds)
+  conds
 }
 
 
@@ -146,7 +146,7 @@ saveImmediateCondition <- function(cond, path = immediateConditionsPath(rootPath
 #'
 #' @param \ldots (optional) Additional arguments passed to [base::saveRDS()].
 #'
-#' @return (invisible) The pathname of the RDS written.
+#' @return The pathname of the RDS written.
 #'
 #' @details
 #' Uses [base::saveRDS] internally but writes the object atomically by first
@@ -185,7 +185,7 @@ save_rds <- function(object, pathname, ...) {
     stop(msg)
   }
 
-  invisible(pathname)
+  pathname
 }
 
 

@@ -26,7 +26,7 @@
 #' @keywords internal
 signalConditions <- function(future, include = "condition", exclude = NULL, resignal = TRUE, ...) {
   ## Nothing to do?
-  if (length(include) == 0L) return(invisible(future))
+  if (length(include) == 0L) return(future)
 
   ## Future is not yet launched
   if (!future[["state"]] %in% c("finished", "failed", "interrupted")) {
@@ -43,7 +43,7 @@ signalConditions <- function(future, include = "condition", exclude = NULL, resi
   conditions <- result[["conditions"]]
   
   ## Nothing to do
-  if (length(conditions) == 0) return(invisible(future))
+  if (length(conditions) == 0) return(future)
 
   debug <- isTRUE(getOption("future.debug"))
 
@@ -109,7 +109,7 @@ signalConditions <- function(future, include = "condition", exclude = NULL, resi
         future <- resetFuture(backend, future)
       }
       warning(FutureInterruptWarning(msg, future = future))
-      return(invisible(future))
+      return(future)
     } else if (inherits(condition, "warning")) {
       warning(condition)
     } else if (inherits(condition, "message")) {
@@ -131,7 +131,7 @@ signalConditions <- function(future, include = "condition", exclude = NULL, resi
   result[["conditions"]] <- conditions
   future[["result"]] <- result
 
-  invisible(future)
+  future
 }
 
 
@@ -145,7 +145,7 @@ signalImmediateConditions <- function(future, include = NULL, resignal = FALSE, 
       if (is.null(include)) include <- "immediateCondition"
     }
   }
-  if (length(include) == 0L) return(invisible(future))
+  if (length(include) == 0L) return(future)
   signalConditions(future, include = include, resignal = resignal, ...)
 }
 
@@ -284,5 +284,5 @@ muffleCondition <- function(cond, pattern = "^muffle") {
     }
   }
 
-  invisible(muffled)
+  muffled
 } ## muffleCondition()

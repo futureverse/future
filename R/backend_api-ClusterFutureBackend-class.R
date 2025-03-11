@@ -284,7 +284,7 @@ launchFuture.ClusterFutureBackend <- function(backend, future, ...) {
 
   if (debug) mdebugf("%s started", class(future)[1])
   
-  invisible(future)
+  future
 }
 
 
@@ -360,7 +360,7 @@ ClusterRegistry <- local({
       last <<- NULL
     }
 
-    invisible(cluster)
+    cluster
   }
 }) ## ClusterRegistry()
 

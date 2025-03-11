@@ -280,7 +280,7 @@ makeFutureJournal <- function(x, event = "create", category = "other", parent = 
   data <- data.frame(event = event, category = category, parent = parent, start = start, stop = stop)
   class(data) <- c("FutureJournal", class(data))
   x[[".journal"]] <- data
-  invisible(x)
+  x
 }
 
 updateFutureJournal <- function(x, event, start = NULL, stop = Sys.time()) {
@@ -306,7 +306,7 @@ updateFutureJournal <- function(x, event, start = NULL, stop = Sys.time()) {
   data[row, ] <- entry
   stop_if_not(inherits(data, "FutureJournal"))
   x[[".journal"]] <- data
-  invisible(x)
+  x
 }
 
 
@@ -327,7 +327,7 @@ appendToFutureJournal <- function(x, event, category = "other", parent = NA_char
 
   data <- data.frame(event = event, category = category, parent = parent, start = start, stop = stop)
   x[[".journal"]] <- rbind(x[[".journal"]], data)
-  invisible(x)
+  x
 }
 
 
