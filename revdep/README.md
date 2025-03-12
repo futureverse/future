@@ -10,7 +10,7 @@
 |collate  |en_US.UTF-8                                               |
 |ctype    |en_US.UTF-8                                               |
 |tz       |America/Los_Angeles                                       |
-|date     |2025-03-09                                                |
+|date     |2025-03-11                                                |
 |pandoc   |3.6.3 @ /software/c4/cbi/software/pandoc-3.6.3/bin/pandoc |
 |quarto   |NA                                                        |
 
@@ -18,7 +18,7 @@
 
 |package    |old    |new         |Δ  |
 |:----------|:------|:-----------|:--|
-|future     |1.34.0 |1.34.0-9210 |*  |
+|future     |1.34.0 |1.34.0-9303 |*  |
 |codetools  |0.2-20 |0.2-20      |   |
 |digest     |0.6.37 |0.6.37      |   |
 |globals    |0.16.3 |0.16.3      |   |
@@ -27,11 +27,10 @@
 
 # Revdeps
 
-## Failed to check (2)
+## Failed to check (1)
 
 |package          |version |error |warning |note |
 |:----------------|:-------|:-----|:-------|:----|
-|[OutSeekR](failures.md#outseekr)|1.0.0   |1     |        |     |
 |[TriDimRegression](failures.md#tridimregression)|1.0.2   |1     |        |     |
 
 ## New problems (3)
@@ -42,7 +41,7 @@
 |[doFuture](problems.md#dofuture)|1.0.1   |__+1__ |        |     |
 |[WARDEN](problems.md#warden)|0.99.1  |__+1__ |        |     |
 
-## All (420)
+## All (421)
 
 |package                      |version   |error  |warning |note |
 |:----------------------------|:---------|:------|:-------|:----|
@@ -52,13 +51,13 @@
 |[aifeducation](problems.md#aifeducation)|1.0.2     |       |        |2    |
 |[AIPW](problems.md#aipw)     |0.6.3.2   |       |        |1    |
 |[AIscreenR](problems.md#aiscreenr)|0.1.1     |       |        |1    |
-|ale                          |0.3.0     |       |        |     |
+|ale                          |0.3.1     |       |        |     |
 |alookr                       |0.3.9     |       |        |     |
 |alphaci                      |1.0.1     |       |        |     |
 |[altdoc](problems.md#altdoc) |0.5.0     |1      |        |     |
 |antaresEditObject            |0.9.0     |       |        |     |
 |ao                           |1.1.0     |       |        |     |
-|[apsimx](problems.md#apsimx) |2.8.0     |       |        |1    |
+|[apsimx](problems.md#apsimx) |2.8.235   |       |        |1    |
 |arkdb                        |0.0.18    |       |        |     |
 |[aroma.affymetrix](problems.md#aromaaffymetrix)|3.2.2     |       |        |1    |
 |aroma.cn                     |1.7.1     |       |        |     |
@@ -101,7 +100,7 @@
 |[ClustIRR](problems.md#clustirr)|1.4.0     |       |        |2    |
 |[codalm](problems.md#codalm) |0.1.2     |       |        |1    |
 |[codebook](problems.md#codebook)|0.9.6     |       |        |1    |
-|[collinear](problems.md#collinear)|2.0.0     |       |        |2    |
+|[collinear](problems.md#collinear)|2.0.0     |       |        |1    |
 |conformalInference.fd        |1.1.1     |       |        |     |
 |conformalInference.multi     |1.1.1     |       |        |     |
 |[Coxmos](problems.md#coxmos) |1.1.2     |       |        |1    |
@@ -173,8 +172,8 @@
 |future.tests                 |0.7.0     |       |        |     |
 |futureverse                  |0.1.0     |       |        |     |
 |fxTWAPLS                     |0.1.3     |       |        |     |
-|[GeDS](problems.md#geds)     |0.2.6     |       |1       |     |
-|genBaRcode                   |1.2.7     |       |        |     |
+|[GeDS](problems.md#geds)     |0.2.7     |       |1       |     |
+|genBaRcode                   |1.2.8     |       |        |     |
 |[geocmeans](problems.md#geocmeans)|0.3.4     |       |        |1    |
 |[geohabnet](problems.md#geohabnet)|2.1.3     |2      |        |     |
 |[GeoModels](problems.md#geomodels)|2.1.0     |       |        |1    |
@@ -261,7 +260,7 @@
 |[mikropml](problems.md#mikropml)|1.6.1     |       |        |1    |
 |[MineICA](problems.md#mineica)|1.46.0    |       |4       |4    |
 |[missSBM](problems.md#misssbm)|1.0.4     |       |        |1    |
-|[mistyR](problems.md#mistyr) |1.14.0    |       |        |3    |
+|[mistyR](problems.md#mistyr) |1.14.0    |       |        |2    |
 |mlr3                         |0.22.1    |       |        |     |
 |mlr3db                       |0.5.2     |       |        |     |
 |mlr3inferr                   |0.1.0     |       |        |     |
@@ -271,7 +270,7 @@
 |mlr3summary                  |0.1.0     |       |        |     |
 |mlr3torch                    |0.2.1     |       |        |     |
 |[mlr3tuning](problems.md#mlr3tuning)|1.3.0     |       |        |1    |
-|modelsummary                 |2.3.0     |       |        |-1   |
+|[modelsummary](problems.md#modelsummary)|2.3.0     |       |        |1    |
 |[momentuHMM](problems.md#momentuhmm)|1.5.5     |       |        |1    |
 |[MOSS](problems.md#moss)     |0.2.2     |       |        |1    |
 |mplusParallel.automation     |0.0.1.1   |       |        |     |
@@ -282,6 +281,7 @@
 |[multitool](problems.md#multitool)|0.1.4     |       |        |1    |
 |multiverse                   |0.6.2     |       |        |     |
 |[nebula](problems.md#nebula) |1.5.3     |       |        |1    |
+|nestedcv                     |0.8.0     |       |        |     |
 |netseer                      |0.1.1     |       |        |     |
 |netShiny                     |1.0       |       |        |     |
 |NetSimR                      |0.1.5     |       |        |     |
@@ -297,7 +297,7 @@
 |[OptimalGoldstandardDesigns](problems.md#optimalgoldstandarddesigns)|1.0.1     |       |        |1    |
 |optimLanduse                 |1.2.1     |       |        |     |
 |origami                      |1.0.7     |       |        |     |
-|[OutSeekR](failures.md#outseekr)|1.0.0     |1      |        |     |
+|OutSeekR                     |1.0.0     |       |        |     |
 |[PAMpal](problems.md#pampal) |1.4.4     |       |1       |     |
 |[PAMscapes](problems.md#pamscapes)|0.10.0    |       |1       |     |
 |paramsim                     |0.1.0     |       |        |     |
@@ -316,7 +316,7 @@
 |phylospatial                 |1.0.0     |       |        |     |
 |PINstimation                 |0.1.2     |       |        |     |
 |[pliman](problems.md#pliman) |3.0.0     |       |        |1    |
-|[PLNmodels](problems.md#plnmodels)|1.2.0     |       |        |1    |
+|[PLNmodels](problems.md#plnmodels)|1.2.1     |       |        |1    |
 |plumber                      |1.3.0     |       |        |     |
 |polle                        |1.5       |       |        |     |
 |[polykde](problems.md#polykde)|1.0.0     |       |        |1    |
@@ -403,7 +403,7 @@
 |[spaMM](problems.md#spamm)   |4.5.0     |       |        |2    |
 |spanishoddata                |0.1.0     |       |        |     |
 |[sparrpowR](problems.md#sparrpowr)|0.2.8     |       |1       |     |
-|[SPARSEMODr](problems.md#sparsemodr)|1.2.0     |       |        |2    |
+|[SPARSEMODr](problems.md#sparsemodr)|1.2.0     |       |        |1    |
 |spatialTIME                  |1.3.4-5   |       |        |     |
 |[spatialwarnings](problems.md#spatialwarnings)|3.1.0     |       |        |1    |
 |spdesign                     |0.0.5     |       |        |     |
