@@ -1,7 +1,13 @@
 source("incl/start.R")
 options(future.debug = FALSE)
 
-for (strategy in supportedStrategies()) {
+strategies <- supportedStrategies()
+
+## For unknown reasons, SIGINT interrupts is not caught by the
+## future in R (<= 4.3.3), leading to R being terminated
+if (getRversion() < "4.4") strategies <- setdiff(strategies, "sequential")
+
+for (strategy in strategies) {
   message(sprintf("- plan('%s') ...", strategy))
   plan(strategy)
 

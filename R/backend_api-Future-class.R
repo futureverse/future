@@ -104,7 +104,6 @@ Future <- function(expr = NULL, envir = parent.frame(), substitute = TRUE, stdou
   if (substitute) expr <- substitute(expr)
   t_start <- Sys.time()
 
-  seed_arg <- seed
   if (is.null(seed)) {
   } else if (isFALSE(seed)) {
   } else if (is_lecyer_cmrg_seed(seed)) {
