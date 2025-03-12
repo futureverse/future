@@ -15,10 +15,6 @@
 
  * Interrupted futures are now handled and produce an informative warning.
 
- * Interrupted futures are reset to vanilla, lazy futures. This way
-   interrupted futures can be re-evaluated again, for instance, on
-   another future backend.
-   
  * All parallel backends now prevent nested parallelization, unless
    explicitly allowed, e.g. settings recognized by
    `parallelly::availableCores()` or set by the future
