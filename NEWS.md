@@ -13,7 +13,7 @@
    on having to specify globals and packages, not having conditions
    and standard output relayed, and ignoring random number generation.
 
- * Interrupted futures are now handled and produce an informative warning.
+ * Interrupted futures are now handled and produce an informative error.
 
  * All parallel backends now prevent nested parallelization, unless
    explicitly allowed, e.g. settings recognized by

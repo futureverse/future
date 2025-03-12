@@ -13,7 +13,7 @@
 \alias{GlobalEnvFutureCondition}
 \alias{GlobalEnvFutureWarning}
 \alias{GlobalEnvFutureError}
-\alias{FutureInterruptWarning}
+\alias{FutureInterruptError}
 \alias{FutureJournalCondition}
 \title{A condition (message, warning, or error) that occurred while orchestrating a future}
 \usage{
@@ -50,7 +50,7 @@ GlobalEnvFutureWarning(...)
 
 GlobalEnvFutureError(...)
 
-FutureInterruptWarning(..., future = NULL)
+FutureInterruptError(..., future = NULL)
 
 FutureJournalCondition(
   message,
