@@ -30,9 +30,12 @@
 ## Bug Fixes
 
  * Now 'interrupt' conditions are captured during the evaluation of
-   the future, and results in the evaluation being terminated
-   nicely. Previously, it would result in un-determistic behavior
-   depending of future backend.
+   the future, and results in the evaluation being terminated with a
+   `FutureInterruptError`. Not all backends manage to catch
+   interrupts, leading to the parallel R workers to terminate,
+   resulting in a regular `FutureError`. Previously, interrupts would
+   result in un-determistic behavior and errors depending of future
+   backend.
 
 ## Documentation
 

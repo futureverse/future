@@ -38,8 +38,8 @@ Using \code{stdout = structure(TRUE, drop = TRUE)} causes the captured
 standard output to be dropped from the future object as soon as it has
 been relayed. This can help decrease the overall memory consumed by
 captured output across futures.
-Using \code{stdout = NA} (not recommended) avoids intercepting the standard
-output; behavior of such unhandled standard output depends on the future}
+Using \code{stdout = NA} fully avoids intercepting the standard output;
+behavior of such unhandled standard output depends on the future backend.}
 
 \item{conditions}{A character string of conditions classes to be captured
 and relayed.  The default is to relay all conditions, including messages

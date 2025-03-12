@@ -23,8 +23,8 @@
 #' standard output to be dropped from the future object as soon as it has
 #' been relayed. This can help decrease the overall memory consumed by
 #' captured output across futures.
-#' Using `stdout = NA` (not recommended) avoids intercepting the standard
-#' output; behavior of such unhandled standard output depends on the future
+#' Using `stdout = NA` fully avoids intercepting the standard output;
+#' behavior of such unhandled standard output depends on the future backend.
 #  backend and the environment from which R runs.
 #' 
 #' @param conditions A character string of conditions classes to be captured
