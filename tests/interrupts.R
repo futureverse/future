@@ -3,9 +3,15 @@ options(future.debug = FALSE)
 
 strategies <- supportedStrategies()
 
-## For unknown reasons, SIGINT interrupts is not caught by the
-## future in R (<= 4.3.3), leading to R being terminated
-if (getRversion() < "4.4") strategies <- setdiff(strategies, "sequential")
+## Signalling SIGINT to an R future process might end up
+## terminating the whole R process. Because of that, we
+## might get a FutureError, because we can no longer
+## communicate with the worker.
+##
+## Because of this, we skip interrupt testing 'sequential',
+## because it might terminate the R process running this unit test.
+## Comment: This has happend on win-devel, but also R 4.3.0 on Linux.
+strategies <- setdiff(strategies, "sequential")
 
 for (strategy in strategies) {
   message(sprintf("- plan('%s') ...", strategy))
@@ -14,17 +20,35 @@ for (strategy in strategies) {
   f <- future({
     message("Hello world!")
     cat("Hi there\n")
-    tools::pskill(Sys.getpid(), signal = tools::SIGINT)
+    res <- tools::pskill(Sys.getpid(), signal = tools::SIGINT)
+    cat(sprintf("tools::pskill() value: %s\n", res))
     42
   })
-  r <- result(f)
-  res <- tryCatch({
+  r <- tryCatch({
+    result(f)
+  }, FutureError = identity)
+  stopifnot(
+    #  (i) Ideally, regular resuts, but ..
+    inherits(r, "FutureResult") ||
+    #  (ii) SIGINT might crash the R parallel worker
+    inherits(r, "FutureError")
+  }
+
+  v <- tryCatch({
     value(f)
-  }, FutureInterruptError = identity)
-  print(res)
+  }, FutureError = identity)
+  print(v)
 
   ## A future interrupting itself is not supported on all backends
-  stopifnot(inherits(res, "FutureInterruptError") || res == 42)
+  stopifnot(
+    #   (i) Ideally the SIGINT interrupt condition is caught, but ...
+    inherits(v, "FutureInterruptError") ||
+    #  (ii) it might crash the R parallel worker, e.g. communication
+    #       channels are shutdown ...
+    inherits(v, "FutureError") ||
+    # (iii)  ... or have no effect at all
+    v == 42
+  )
 }
 
 source("incl/end.R")
