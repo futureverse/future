@@ -32,7 +32,7 @@ for (strategy in strategies) {
     inherits(r, "FutureResult") ||
     #  (ii) SIGINT might crash the R parallel worker
     inherits(r, "FutureError")
-  }
+  )
 
   v <- tryCatch({
     value(f)
