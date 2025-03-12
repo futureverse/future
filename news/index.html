@@ -173,7 +173,7 @@
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-development-version">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h3>
-<ul><li>Now ‘interrupt’ conditions are captured during the evaluation of the future, and results in the evaluation being terminated nicely. Previously, it would result in un-determistic behavior depending of future backend.</li>
+<ul><li>Now ‘interrupt’ conditions are captured during the evaluation of the future, and results in the evaluation being terminated with a <code>FutureInterruptError</code>. Not all backends manage to catch interrupts, leading to the parallel R workers to terminate, resulting in a regular <code>FutureError</code>. Previously, interrupts would result in un-determistic behavior and errors depending of future backend.</li>
 </ul></div>
 <div class="section level3">
 <h3 id="documentation-development-version">Documentation<a class="anchor" aria-label="anchor" href="#documentation-development-version"></a></h3>
