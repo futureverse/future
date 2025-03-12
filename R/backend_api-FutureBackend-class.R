@@ -47,50 +47,6 @@ launchFuture.FutureBackend <- function(backend, future, ...) {
 }
 
 
-#' @rdname FutureBackend
-#' @export
-resetFuture <- function(backend, future, ...) {
-  UseMethod("resetFuture")
-}
-
-
-#' @export
-resetFuture.FutureBackend <- function(backend, future, ...) {
-  core_fields <- c(
-    "version",
-    "expr",
-    "envir",
-    "stdout",
-    "conditions",
-    "globals",
-    "packages",
-    "seed",
-    "lazy",
-    "asynchronous",
-    "local",
-    "reset",
-    "label",
-    "earlySignal",
-    "gc",
-    "onReference",
-    "calls",
-    "state"
-  )
-  
-  class(future) <- "Future"
-
-  drop <- setdiff(names(future), core_fields)
-  for (name in drop) {
-    future[[name]] <- NULL
-  }
-
-  future[["state"]] <- "created"
-  future[["lazy"]] <- TRUE
-  
-  future
-}
-
-
 makeFutureBackend <- function(evaluator, ...) {
   backend <- attr(evaluator, "backend")
 

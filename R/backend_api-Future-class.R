@@ -103,7 +103,8 @@
 Future <- function(expr = NULL, envir = parent.frame(), substitute = TRUE, stdout = TRUE, conditions = "condition", globals = list(), packages = NULL, seed = FALSE, lazy = FALSE, gc = FALSE, earlySignal = FALSE, label = NULL, ...) {
   if (substitute) expr <- substitute(expr)
   t_start <- Sys.time()
-  
+
+  seed_arg <- seed
   if (is.null(seed)) {
   } else if (isFALSE(seed)) {
   } else if (is_lecyer_cmrg_seed(seed)) {
@@ -690,6 +691,7 @@ resolved.Future <- function(x, run = TRUE, ...) {
 
   res
 }
+
 
 
 # Get the executable closure, a.k.a. "the core", of the future

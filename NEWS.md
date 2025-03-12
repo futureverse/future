@@ -15,6 +15,10 @@
 
  * Interrupted futures are now handled and produce an informative error.
 
+ * Add `reset()`, which resets a future that has completed, failed, or
+   been interrupted. The future is reset back to a lazy, vanilla
+   future that can be relaunched.
+ 
  * All parallel backends now prevent nested parallelization, unless
    explicitly allowed, e.g. settings recognized by
    `parallelly::availableCores()` or set by the future

@@ -8,7 +8,6 @@
 \alias{ClusterFutureBackend}
 \alias{FutureBackend}
 \alias{launchFuture}
-\alias{resetFuture}
 \alias{MulticoreFutureBackend}
 \alias{MultisessionFutureBackend}
 \alias{SequentialFutureBackend}
@@ -25,8 +24,6 @@ ClusterFutureBackend(
 FutureBackend(...)
 
 launchFuture(backend, future, ...)
-
-resetFuture(backend, future, ...)
 
 MulticoreFutureBackend(
   workers = availableCores(constraints = "multicore"),
