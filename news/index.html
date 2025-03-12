@@ -23,7 +23,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">future</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.34.0-9304</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.34.0-9305</span>
       </span>
     </div>
 
@@ -166,8 +166,8 @@
 <ul><li><p>Add <code>withPlan(&lt;plan&gt;, &lt;expression&gt;)</code> method to evaluate an expression, including futures, using a temporary future plan.</p></li>
 <li><p>Add <code>localPlan(&lt;plan&gt;)</code> to set a future plan temporarily in local environment, e.g. inside a function.</p></li>
 <li><p>Add <code><a href="../reference/minifuture.html">minifuture()</a></code>, which is like <code><a href="../reference/future.html">future()</a></code>, but with different default arguments resulting in less overhead with the added burden on having to specify globals and packages, not having conditions and standard output relayed, and ignoring random number generation.</p></li>
-<li><p>Interrupted futures are now handled and produce an informative warning.</p></li>
-<li><p>Interrupted futures are reset to vanilla, lazy futures. This way interrupted futures can be re-evaluated again, for instance, on another future backend.</p></li>
+<li><p>Interrupted futures are now handled and produce an informative error.</p></li>
+<li><p>Add <code><a href="../reference/reset.html">reset()</a></code>, which resets a future that has completed, failed, or been interrupted. The future is reset back to a lazy, vanilla future that can be relaunched.</p></li>
 <li><p>All parallel backends now prevent nested parallelization, unless explicitly allowed, e.g. settings recognized by <code><a href="https://parallelly.futureverse.org/reference/availableCores.html" class="external-link">parallelly::availableCores()</a></code> or set by the future <code><a href="../reference/plan.html">plan()</a></code>. Previously, this had to be implemented by each backend, but now it’s handled automatically by the future framework.</p></li>
 <li><p>Add new FutureBackend API for writing future backends.</p></li>
 </ul></div>
