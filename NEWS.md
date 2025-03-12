@@ -2,20 +2,19 @@
 
 ## New Features
 
- * Add `with(<plan>, <expression>)` method to evaluate an expression,
-   including futures, using a temporary future plan.
+ * Add `withPlan(<plan>, <expression>)` method to evaluate an
+   expression, including futures, using a temporary future plan.
    
+ * Add `localPlan(<plan>)` to set a future plan temporarily in local
+   environment, e.g. inside a function.
+
  * Add `minifuture()`, which is like `future()`, but with different
    default arguments resulting in less overhead with the added burden
    on having to specify globals and packages, not having conditions
    and standard output relayed, and ignoring random number generation.
 
- * Interrupted futures are now handled and produce an informative warning.
+ * Interrupted futures are now handled and produce an informative error.
 
- * Interrupted futures are reset to vanilla, lazy futures. This way
-   interrupted futures can be re-evaluated again, for instance, on
-   another future backend.
-   
  * All parallel backends now prevent nested parallelization, unless
    explicitly allowed, e.g. settings recognized by
    `parallelly::availableCores()` or set by the future

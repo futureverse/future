@@ -226,9 +226,9 @@ GlobalEnvFutureError <- function(...) {
 
 #' @rdname FutureCondition
 #' @export
-FutureInterruptWarning <- function(..., future = NULL) {
-  cond <- FutureWarning(..., future = future)
-  class <- c("FutureInterruptWarning", "FutureWarning", "warning", class(cond))
+FutureInterruptError <- function(..., future = NULL) {
+  cond <- FutureError(..., future = future)
+  class <- c("FutureInterruptError", "FutureError", "warning", class(cond))
   class(cond) <- class[!duplicated(class, fromLast = TRUE)]
   cond
 }

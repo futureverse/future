@@ -84,27 +84,6 @@
       return()
     }
 
-    ## Skip clean up for other reasons?
-    if (is.na(cleanup)) {
-      ## Skip because this was called via with(plan(...), ...)?
-      calls <- sys.calls()
-      ncalls <- length(calls)
-      if (ncalls > 3L) {
-        for (ii in (ncalls-3L):1) {
-          call <- calls[[ii]]
-          fcn <- call[[1]]
-          if (is.symbol(fcn) && fcn == as.symbol("with")) {
-            return()
-          } else if (is.call(fcn) &&
-                     is.symbol(fcn[[1]]) && fcn[[1]] == as.symbol("::") &&
-                     is.symbol(fcn[[2]]) && fcn[[2]] == as.symbol("base") &&
-                     is.symbol(fcn[[3]]) && fcn[[3]] == as.symbol("with")) {
-            return()
-          }
-        }
-      }
-    }
-
     ## Clean up
     if (is.function(cleanup_fcn)) {
       cleanup_fcn()
@@ -197,8 +176,9 @@
 #'
 #' @param .init (internal) Used to initiate workers.
 #'
-#' @return If a new strategy is chosen, then the previous one is returned
-#' (invisible), otherwise the current one is returned (visibly).
+#' @return
+#' `plan()` returns a the previous plan invisibly if a new strategy
+#' is chosen, otherwise it returns the current one visibly.
 #'
 #' @example incl/plan.R
 #'
@@ -262,12 +242,14 @@
 #'
 #' If you think it is necessary to modify the future strategy within a
 #' function, then make sure to undo the changes when exiting the function.
-#' This can be done using:
+#' This can be archived by using [localPlan()], e.g.
 #'
 #' \preformatted{
-#'   oplan <- plan(new_set_of_strategies)
-#'   on.exit(plan(oplan), add = TRUE)
-#'   [...]
+#'   my_fcn <- function(x) {
+#'     localPlan(multisession)
+#'     y <- analyze(x)
+#'     summarize(y)
+#'   }
 #' }
 #'
 #' This is important because the end-user might have already set the future

@@ -12,12 +12,13 @@ for (strategy in supportedStrategies()) {
     42
   })
   r <- result(f)
-  v <- value(f)
-  print(v)
+  res <- tryCatch({
+    value(f)
+  }, FutureInterruptError = identity)
+  print(res)
 
-  ## Interruptiing the evaluation of itself is not supported
-  ## on all backends
-  stopifnot(is.null(v) || v == 42)
+  ## A future interrupting itself is not supported on all backends
+  stopifnot(inherits(res, "FutureInterruptError") || res == 42)
 }
 
 source("incl/end.R")
