@@ -23,7 +23,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">future</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.34.0-9305</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.34.0-9306</span>
       </span>
     </div>
 
@@ -170,6 +170,8 @@
 <li><p>Add <code><a href="../reference/reset.html">reset()</a></code>, which resets a future that has completed, failed, or been interrupted. The future is reset back to a lazy, vanilla future that can be relaunched.</p></li>
 <li><p>All parallel backends now prevent nested parallelization, unless explicitly allowed, e.g. settings recognized by <code><a href="https://parallelly.futureverse.org/reference/availableCores.html" class="external-link">parallelly::availableCores()</a></code> or set by the future <code><a href="../reference/plan.html">plan()</a></code>. Previously, this had to be implemented by each backend, but now it’s handled automatically by the future framework.</p></li>
 <li><p>Add new FutureBackend API for writing future backends.</p></li>
+<li><p>Added argument <code>maxSizeOfObjects</code> to <code><a href="../reference/future.html">future()</a></code>, which controls the maximum total size of objects send to and from the worker. The default value can be controlled when setting up the future backend, e.g. <code>plan(multisession, maxSizeOfObjects = 1000^3)</code>.</p></li>
+<li><p>The default value <code>maxSizeOfObjects</code> is now configured per backend, and if not set there, by R option <code>future.globals.maxSize</code> (sic!). Backends <code>sequential</code> and <code>multicore</code> has no such limit, i.e. `<code>maxSizeOfObjects = +Inf</code>.</p></li>
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-development-version">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h3>
