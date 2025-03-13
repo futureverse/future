@@ -50,7 +50,7 @@
 #' @example incl/cluster.R
 #'
 #' @export
-cluster <- function(..., persistent = FALSE, workers = availableWorkers(), envir = parent.frame()) {
+cluster <- function(..., persistent = FALSE, workers = availableWorkers(), gc = FALSE, earlySignal = FALSE, maxSizeOfObjects = NULL, envir = parent.frame()) {
   stop("INTERNAL ERROR: The future::cluster() function implements the FutureBackend and should never be called directly")
 }
 class(cluster) <- c("cluster", "multiprocess", "future", "function")
@@ -81,7 +81,7 @@ attr(cluster, "tweakable") <- quote(c(makeClusterPSOCK_args(), "persistent"))
 ClusterFutureBackend <- local({
   getDefaultCluster <- import_parallel_fcn("getDefaultCluster")
   
-    function(workers = availableWorkers(), persistent = FALSE, earlySignal = TRUE, gc = FALSE, ...) {
+    function(workers = availableWorkers(), persistent = FALSE, gc = TRUE, earlySignal = TRUE, ...) {
     if (is.function(workers)) workers <- workers()
     if (is.null(workers)) {
       workers <- getDefaultCluster()
@@ -122,7 +122,6 @@ ClusterFutureBackend <- local({
       persistent = persistent,
       reg = reg,
       earlySignal = earlySignal,
-      gc = gc,
       future.wait.timeout = getOption("future.wait.timeout", 30 * 24 * 60 * 60),
       future.wait.interval = getOption("future.wait.interval", 0.01),
       future.wait.alpha = getOption("future.wait.alpha", 1.01),
@@ -259,10 +258,12 @@ launchFuture.ClusterFutureBackend <- function(backend, future, ...) {
 
 
   ## (3) Garbage collection
-  if (isTRUE(backend[["gc"]])) {
+  ## FIXME: This is _before_, not _after_ as documented
+  ##        Should use gc[1] for before and gc[2] for after
+  if (isTRUE(future[["gc"]])) {
     cluster_call_blocking(cl, fun = gc, future = future, when = "call gc() on")
   }
-  
+
 
   ## (4) Launch future
   if (debug) mdebug("launchFuture() ...")

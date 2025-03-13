@@ -20,9 +20,10 @@ future(
   packages = NULL,
   stdout = TRUE,
   conditions = "condition",
-  earlySignal = FALSE,
   label = NULL,
   gc = FALSE,
+  earlySignal = FALSE,
+  maxSizeOfObjects = NULL,
   ...
 )
 
@@ -123,9 +124,6 @@ Using \code{conditions = NULL} (not recommended) avoids intercepting conditions,
 except from errors; behavior of such unhandled conditions depends on the
 future backend and the environment from which R runs.}
 
-\item{earlySignal}{Specified whether conditions should be signaled as soon
-as possible or not.}
-
 \item{label}{An optional character string label attached to the future.}
 
 \item{gc}{If TRUE, the garbage collector run (in the process that
@@ -134,6 +132,20 @@ Exactly when the values are collected may depend on various factors such
 as number of free workers and whether \code{earlySignal} is TRUE (more
 frequently) or FALSE (less frequently).
 \emph{Some types of futures ignore this argument.}}
+
+\item{earlySignal}{Specified whether conditions should be signaled as soon
+as possible or not.}
+
+\item{maxSizeOfObjects}{The maximum allowed total size, in bytes, of all
+objects to and from the parallel worker allows.
+This can help to protect against unexpectedly large data transfers between
+the parent process and the parallel workers - data that is often transferred
+over the network, which sometimes also includes the internet. For instance,
+if you sit at home and have set up a future backend with workers running
+remotely at your university or company, then you might want to use this
+protection to avoid transferring giga- or terabytes of data without noticing.
+(Default: \eqn{500 \cdot 1024^2} bytes = 500 MiB, unless overridden by a
+FutureBackend subclass, or by R option \link{future.globals.maxSize} (sic!))}
 
 \item{x}{the name of a future variable, which will hold the value
 of the future expression (as a promise).}

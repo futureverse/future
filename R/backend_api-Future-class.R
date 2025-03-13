@@ -7,6 +7,8 @@
 #' value is not available.  As soon as it is _resolved_, the value
 #' is available via \code{\link[future]{value}()}.
 #'
+#' @inheritParams FutureBackend
+#'
 #' @param expr An \R \link[base]{expression}.
 #'
 #' @param envir The [environment] from where global objects should be
@@ -100,7 +102,7 @@
 #' @export
 #' @keywords internal
 #' @name Future-class
-Future <- function(expr = NULL, envir = parent.frame(), substitute = TRUE, stdout = TRUE, conditions = "condition", globals = list(), packages = NULL, seed = FALSE, lazy = FALSE, gc = FALSE, earlySignal = FALSE, label = NULL, ...) {
+Future <- function(expr = NULL, envir = parent.frame(), substitute = TRUE, stdout = TRUE, conditions = "condition", globals = list(), packages = NULL, seed = FALSE, lazy = FALSE, gc = FALSE, earlySignal = FALSE, maxSizeOfObjects = NULL, label = NULL, ...) {
   if (substitute) expr <- substitute(expr)
   t_start <- Sys.time()
 
@@ -137,7 +139,7 @@ Future <- function(expr = NULL, envir = parent.frame(), substitute = TRUE, stdou
       ## Global objects?
       ## 'persistent' is only allowed for ClusterFuture:s, which will be
       ## asserted when run() is called /HB 2023-01-17
-      gp <- getGlobalsAndPackages(expr, envir = envir, tweak = tweakExpression, globals = globals, persistent = isTRUE(args[["persistent"]]), onReference = onReference)
+      gp <- getGlobalsAndPackages(expr, envir = envir, tweak = tweakExpression, globals = globals, persistent = isTRUE(args[["persistent"]]), onReference = onReference, maxSize = +Inf)
       globals <- gp[["globals"]]
       expr <- gp[["expr"]]
     
@@ -235,6 +237,8 @@ Future <- function(expr = NULL, envir = parent.frame(), substitute = TRUE, stdou
   core[["label"]] <- label
   core[["earlySignal"]] <- earlySignal
   core[["gc"]] <- gc
+  core[["maxSizeOfObjects"]] <- maxSizeOfObjects
+  
   core[["onReference"]] <- onReference
   core[["owner"]] <- session_uuid()
   counter <- .package[["futureCounter"]] <- .package[["futureCounter"]] + 1L
@@ -442,6 +446,55 @@ run.Future <- function(future, ...) {
 
     ## Coerce to target Future class
     class(future) <- backend[["futureClasses"]]
+
+    ## Add future settings with defaults from the backend
+    for (name in c("earlySignal", "gc", "maxSizeOfObjects")) {
+      if (is.null(future[[name]])) {
+        future[[name]] <- backend[[name]]
+      }
+    }
+
+    ## Check globals
+    globals <- future[["globals"]]
+    if (length(globals) > 0) {
+      if (debug) mdebug(" - Checking size limitations of globals ...")
+      
+      ## (i) Maximum allowed total size of globals
+      maxSizeOfObjects <- future[["maxSizeOfObjects"]]
+      if (debug) mdebugf("   - Total size of globals allowed: %.2g bytes", maxSizeOfObjects)
+      
+      ## (ii) Calculate the total size of globals, if needed
+      total_size <- attr(globals, "total_size")
+      if (is.na(total_size)) {
+        if (is.finite(maxSizeOfObjects)) {
+          total_size <- objectSize(globals)
+          attr(globals, "total_size") <- total_size
+          future[["globals"]] <- globals
+        }
+      }
+
+      if (debug) {
+        if (is.finite(total_size)) {
+          mdebugf("   - Total size of globals: %.2g bytes", total_size)
+        } else {
+          mdebug("   - Total size of globals: <skipped per backend>")
+        }
+      }
+
+      ## (iii) Assert that the total size is within limits
+      if (!is.na(total_size) && total_size > maxSizeOfObjects) {
+        n <- min(length(globals), 3L)
+        top_sizes <- unlist(lapply(globals[1:n], FUN = objectSize), use.names = TRUE)
+        msg <- summarize_size_of_globals(
+          globals, sizes = top_sizes, maxSize = maxSizeOfObjects,
+          exprOrg = future[["expr"]], debug = debug
+        )
+        if (debug) mdebug(msg)
+        stop(FutureError(msg, future = future))
+      }
+      if (debug) mdebug(" - Checking size limitations of globals ... DONE")
+    } ## if (length(globals) > 0)
+
 
     if (debug) mdebug(" - Launching futures ...")
     future[["backend"]] <- backend
@@ -770,6 +823,8 @@ getFutureContext <- function(future, mc.cores = NULL, local = TRUE, ..., debug =
     on.exit(mdebug("getFutureContext() ... DONE"))
   }
 
+  backend <- future[["backend"]]
+  
   ## Future strategies
   strategiesR <- plan("tail")
   stop_if_not(length(strategiesR) >= 0L)
@@ -798,7 +853,7 @@ getFutureContext <- function(future, mc.cores = NULL, local = TRUE, ..., debug =
     future.globals.onMissing          = getOption("future.globals.onMissing"),
   
     ## Pass down other future.* options
-    future.globals.maxSize            = getOption("future.globals.maxSize"),
+    future.globals.maxSize            = future[["maxSizeOfObjects"]],
     future.globals.method             = getOption("future.globals.method"),
     future.globals.onReference        = future[["onReference"]],
     future.globals.resolve            = getOption("future.globals.resolve"),

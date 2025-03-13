@@ -187,14 +187,14 @@
 #' @aliases futureCall
 #' @rdname future
 #' @export
-future <- function(expr, envir = parent.frame(), substitute = TRUE, lazy = FALSE, seed = FALSE, globals = TRUE, packages = NULL, stdout = TRUE, conditions = "condition", earlySignal = FALSE, label = NULL, gc = FALSE, ...) {
+future <- function(expr, envir = parent.frame(), substitute = TRUE, lazy = FALSE, seed = FALSE, globals = TRUE, packages = NULL, stdout = TRUE, conditions = "condition", label = NULL, gc = FALSE, earlySignal = FALSE, maxSizeOfObjects = NULL, ...) {
   if (substitute) expr <- substitute(expr)
   t_start <- Sys.time()
 
   onReference <- getOption("future.globals.onReference", "ignore")
 
   if (!is.null(globals)) {
-    gp <- getGlobalsAndPackages(expr, envir = envir, tweak = tweakExpression, globals = globals, onReference = onReference)
+    gp <- getGlobalsAndPackages(expr, envir = envir, tweak = tweakExpression, globals = globals, onReference = onReference, maxSize = +Inf)
     expr <- gp[["expr"]]
     globals <- gp[["globals"]]
     ## Record packages?

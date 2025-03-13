@@ -26,7 +26,7 @@
 #'
 #' @aliases uniprocess
 #' @export
-sequential <- function(..., envir = parent.frame()) {
+sequential <- function(..., gc = FALSE, earlySignal = FALSE, maxSizeOfObjects = NULL, envir = parent.frame()) {
   if (! "fiery" %in% loadedNamespaces()) {
     stop("The future::sequential() function implements the FutureBackend and should never be called directly")
   }
@@ -49,8 +49,8 @@ class(sequential) <- c("sequential", "uniprocess", "future", "function")
 #' @keywords internal
 #' @rdname FutureBackend
 #' @export
-SequentialFutureBackend <- function(...) {
-  core <- FutureBackend(...)
+SequentialFutureBackend <- function(..., maxSizeOfObjects = +Inf) {
+  core <- FutureBackend(..., maxSizeOfObjects = maxSizeOfObjects)
   core[["futureClasses"]] <- c("SequentialFuture", "UniprocessFuture", core[["futureClasses"]])
   core <- structure(core, class = c("SequentialFutureBackend", class(core)))
   core

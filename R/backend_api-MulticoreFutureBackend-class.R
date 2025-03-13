@@ -68,7 +68,7 @@
 #' system.
 #'
 #' @export
-multicore <- function(..., workers = availableCores(constraints = "multicore"), envir = parent.frame()) {
+multicore <- function(..., workers = availableCores(constraints = "multicore"), gc = FALSE, earlySignal = FALSE, maxSizeOfObjects = NULL, envir = parent.frame()) {
   stop("INTERNAL ERROR: The future::multicore() function implements the FutureBackend and should never be called directly")
 }
 class(multicore) <- c("multicore", "multiprocess", "future", "function")
@@ -208,7 +208,7 @@ requestCore <- function(await, workers = availableCores(), timeout = getOption("
 #' @keywords internal
 #' @rdname FutureBackend
 #' @export
-MulticoreFutureBackend <- function(workers = availableCores(constraints = "multicore"), ...) {
+MulticoreFutureBackend <- function(workers = availableCores(constraints = "multicore"), maxSizeOfObjects = +Inf, ...) {
   default_workers <- missing(workers)
   if (is.function(workers)) workers <- workers()
   stop_if_not(is.numeric(workers))
@@ -234,7 +234,8 @@ MulticoreFutureBackend <- function(workers = availableCores(constraints = "multi
     future.wait.timeout = getOption("future.wait.timeout", 30 * 24 * 60 * 60),
     future.wait.interval = getOption("future.wait.interval", 0.01),
     future.wait.alpha = getOption("future.wait.alpha", 1.01),
-    ...
+    ...,
+    maxSizeOfObjects = maxSizeOfObjects
   )
   core[["futureClasses"]] <- c("MulticoreFuture", "MultiprocessFuture", core[["futureClasses"]])
   core <- structure(core, class = c("MulticoreFutureBackend", "FutureBackend", class(core)))

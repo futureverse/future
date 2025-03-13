@@ -16,47 +16,78 @@
 ClusterFutureBackend(
   workers = availableWorkers(),
   persistent = FALSE,
+  gc = TRUE,
   earlySignal = TRUE,
-  gc = FALSE,
   ...
 )
 
-FutureBackend(...)
+FutureBackend(
+  ...,
+  earlySignal = FALSE,
+  gc = FALSE,
+  maxSizeOfObjects = getOption("future.globals.maxSize", 500 * 1024^2)
+)
 
 launchFuture(backend, future, ...)
 
 MulticoreFutureBackend(
   workers = availableCores(constraints = "multicore"),
+  maxSizeOfObjects = +Inf,
   ...
 )
 
 MultisessionFutureBackend(workers = availableCores(), ...)
 
-SequentialFutureBackend(...)
+SequentialFutureBackend(..., maxSizeOfObjects = +Inf)
 }
 \arguments{
 \item{workers}{...}
 
 \item{persistent}{(deprecated) ...}
 
+\item{gc}{Overrides the default behavior of whether futures should trigger
+garbage collection via \code{\link[=gc]{gc()}} on the parallel worker after the value has
+been collected from the worker.
+This can help to release memory sooner than letting R itself on the parallel
+worker decided when it is needed. Releasing memory sooner can help to fit
+more parallel workers on a machine with limited amount of total memory.
+(Default: \code{FALSE})}
+
+\item{earlySignal}{Overrides the default behavior on whether futures
+should resignal ("relay") conditions captured as soon as possible, or
+delayed, for instance, until \code{\link[=value]{value()}} is called on the future.
+(Default: \code{FALSE})}
+
+\item{maxSizeOfObjects}{The maximum allowed total size, in bytes, of all
+objects to and from the parallel worker allows.
+This can help to protect against unexpectedly large data transfers between
+the parent process and the parallel workers - data that is often transferred
+over the network, which sometimes also includes the internet. For instance,
+if you sit at home and have set up a future backend with workers running
+remotely at your university or company, then you might want to use this
+protection to avoid transferring giga- or terabytes of data without noticing.
+(Default: \eqn{500 \cdot 1024^2} bytes = 500 MiB, unless overridden by a
+FutureBackend subclass, or by R option \link{future.globals.maxSize} (sic!))}
+
 \item{backend}{a \link{FutureBackend}.}
 
-\item{future}{a \link{Future} to be launched on the backend.}
+\item{future}{a \link{Future} to be started.}
 
 \item{\ldots}{(optional) not used.}
 }
 \value{
-\code{FutureBackend()} returns a \code{FutureBackend} that inherits an
-environment.
+\code{FutureBackend()} returns a FutureBackend object, which inherits an
+environment. Specific future backends are defined by subclasses
+implementing the FutureBackend API.
 
-\code{launchFuture()} returns a the launched \code{Future} object.
+\code{launchFuture()} returns the launched \code{Future} object.
 }
 \description{
 A ClusterFutureBackend resolves futures in parallel using any PSOCK cluster
 
-A backend that controls how futures are launched on parallel workers
+Configure a backend that controls how and where futures are evaluated
 
-\code{launchFuture()} launches a future on the backend.
+\code{launchFuture()} runs a future on the backend.
 
 A MulticoreFutureBackend resolves futures in parallel using forked processing on the current machine
 
@@ -76,4 +107,10 @@ The \code{MultisessionFutureBackend} backend is selected by
 
 The \code{SequentialFutureBackend} is selected by \code{plan(sequential)}.
 }
+\section{The FutureBackend API}{
+
+The \code{FutureBackend} class specifies FutureBackend API,
+that all backends must implement and comply to. Specifically,
+}
+
 \keyword{internal}
