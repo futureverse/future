@@ -463,7 +463,7 @@ zero or more arguments. For example, we can use as in:</p>
 <span></span>
 <span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu">my_mean</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, trim <span class="op">=</span> <span class="fl">0.1</span>, na.rm <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <p>This makes sure that the <code>trim</code> and the <code>na.rm</code>
-arguments are pass down to the <code><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean()</a></code> function.</p>
+arguments are passed down to the <code><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean()</a></code> function.</p>
 <p>We can also use it to pass arguments in map-reduce calls to anonymous
 functions as in:</p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
@@ -471,7 +471,7 @@ functions as in:</p>
 <span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">X</span>, FUN <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span>
 <span><span class="op">}</span>, digits <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></code></pre></div>
-<p>Note how <code>digits = 3</code> is pass to the anonymous function
+<p>Note how <code>digits = 3</code> is passed to the anonymous function
 via its <code>...</code> argument, which is then passed on to
 <code><a href="https://rdrr.io/r/base/Round.html" class="external-link">round()</a></code>, effectively calling
 <code>round(X[[1]], digits = 3)</code>,
