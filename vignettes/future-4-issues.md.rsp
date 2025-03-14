@@ -260,7 +260,7 @@ my_mean <- function(x, ...) mean(x, ...)
 y <- my_mean(1:10, trim = 0.1, na.rm = FALSE)
 ```
 
-This makes sure that the `trim` and the `na.rm` arguments are pass
+This makes sure that the `trim` and the `na.rm` arguments are passed
 down to the `mean()` function.
 
 We can also use it to pass arguments in map-reduce calls to anonymous
@@ -273,7 +273,7 @@ y <- lapply(X, FUN = function(x, ...) {
 }, digits = 3)
 ```
 
-Note how `digits = 3` is pass to the anonymous function via its `...`
+Note how `digits = 3` is passed to the anonymous function via its `...`
 argument, which is then passed on to `round()`, effectively calling
 `round(X[[1]], digits = 3)`, `round(X[[2]], digits = 3)`, and so on.
 
