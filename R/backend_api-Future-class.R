@@ -199,6 +199,14 @@ Future <- function(expr = NULL, envir = parent.frame(), substitute = TRUE, stdou
     }
   }
 
+  ## Backward compatibility; there might be code out there that sets
+  ## option 'future.globals.maxSize' just before created the future.
+  ## FIXME: The plan is to eventually remove this, and only query
+  ## the option when setting up the backend.
+  if (is.null(maxSizeOfObjects)) {
+    maxSizeOfObjects <- getOption("future.globals.maxSize", NULL)
+  }
+
   if ("reset" %in% args_names) {
     reset <- args[["reset"]]
     stop_if_not(is.character(reset), !anyNA(reset))
@@ -461,6 +469,7 @@ run.Future <- function(future, ...) {
       
       ## (i) Maximum allowed total size of globals
       maxSizeOfObjects <- future[["maxSizeOfObjects"]]
+
       if (debug) mdebugf("   - Total size of globals allowed: %.2g bytes", maxSizeOfObjects)
       
       ## (ii) Calculate the total size of globals, if needed
@@ -475,7 +484,7 @@ run.Future <- function(future, ...) {
 
       if (debug) {
         if (is.finite(total_size)) {
-          mdebugf("   - Total size of globals: %.2g bytes", total_size)
+          mdebugf("   - Total size of globals: %s", asIEC(total_size))
         } else {
           mdebug("   - Total size of globals: <skipped per backend>")
         }
@@ -489,6 +498,7 @@ run.Future <- function(future, ...) {
           globals, sizes = top_sizes, maxSize = maxSizeOfObjects,
           exprOrg = future[["expr"]], debug = debug
         )
+        msg <- sprintf("Will not launch future due to the size of the globals %s exceeds %s. %s", asIEC(total_size), asIEC(maxSizeOfObjects), msg)
         if (debug) mdebug(msg)
         stop(FutureError(msg, future = future))
       }
