@@ -462,7 +462,8 @@ run.Future <- function(future, ...) {
       }
     }
 
-    ## Check globals
+
+    ## Protect against  exporting too large objects
     globals <- future[["globals"]]
     if (length(globals) > 0) {
       if (debug) mdebug(" - Checking size limitations of globals ...")
@@ -476,7 +477,9 @@ run.Future <- function(future, ...) {
       total_size <- attr(globals, "total_size")
       if (is.na(total_size)) {
         if (is.finite(maxSizeOfObjects)) {
-          total_size <- objectSize(globals)
+          sizes <- lapply(globals, FUN = objectSize)
+          sizes <- unlist(sizes, use.names = TRUE)
+          total_size <- sum(sizes, na.rm = TRUE)
           attr(globals, "total_size") <- total_size
           future[["globals"]] <- globals
         }
@@ -492,16 +495,18 @@ run.Future <- function(future, ...) {
 
       ## (iii) Assert that the total size is within limits
       if (!is.na(total_size) && total_size > maxSizeOfObjects) {
-        n <- min(length(globals), 3L)
-        top_sizes <- unlist(lapply(globals[1:n], FUN = objectSize), use.names = TRUE)
-        msg <- summarize_size_of_globals(
-          globals, sizes = top_sizes, maxSize = maxSizeOfObjects,
-          exprOrg = future[["expr"]], debug = debug
-        )
+        sizes <- lapply(globals, FUN = objectSize)
+        sizes <- unlist(sizes, use.names = TRUE)
+        total_size <- sum(sizes, na.rm = TRUE)
+        msg <- summarize_size_of_globals(globals,
+                                         sizes = sizes,
+                                         maxSize = maxSizeOfObjects,
+                                         exprOrg = future[["expr"]],
+                                         debug = debug)
         msg <- sprintf("Will not launch future due to the size of the globals %s exceeds %s. %s", asIEC(total_size), asIEC(maxSizeOfObjects), msg)
         if (debug) mdebug(msg)
-        stop(FutureError(msg, future = future))
-      }
+        if (total_size > maxSizeOfObjects) stop(FutureError(msg, future = future))
+      }          
       if (debug) mdebug(" - Checking size limitations of globals ... DONE")
     } ## if (length(globals) > 0)
 
