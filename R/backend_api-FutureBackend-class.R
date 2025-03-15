@@ -86,6 +86,31 @@ launchFuture.FutureBackend <- function(backend, future, ...) {
 }
 
 
+#' `interruptFuture()` interrupts a future on the backend.
+#'
+#' @param backend a [FutureBackend].
+#'
+#' @param future a [Future] to be started.
+#'
+#' @param \ldots (optional) not used.
+#'
+#' @return
+#' `interruptFuture()` returns the interrupted `Future` object,
+#' if supported, other the unmodified future.
+#'
+#' @rdname FutureBackend
+#' @export
+interruptFuture <- function(backend, future, ...) {
+  UseMethod("interruptFuture")
+}
+
+#' @export
+interruptFuture.FutureBackend <- function(backend, future, ...) {
+  ## Default is to ignore interrupt requests
+  future
+}
+
+
 makeFutureBackend <- function(evaluator, ...) {
   backend <- attr(evaluator, "backend")
 

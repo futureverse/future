@@ -8,6 +8,7 @@
 \alias{ClusterFutureBackend}
 \alias{FutureBackend}
 \alias{launchFuture}
+\alias{interruptFuture}
 \alias{MulticoreFutureBackend}
 \alias{MultisessionFutureBackend}
 \alias{SequentialFutureBackend}
@@ -30,6 +31,8 @@ FutureBackend(
 )
 
 launchFuture(backend, future, ...)
+
+interruptFuture(backend, future, ...)
 
 MulticoreFutureBackend(
   workers = availableCores(constraints = "multicore"),
@@ -82,6 +85,9 @@ environment. Specific future backends are defined by subclasses
 implementing the FutureBackend API.
 
 \code{launchFuture()} returns the launched \code{Future} object.
+
+\code{interruptFuture()} returns the interrupted \code{Future} object,
+if supported, other the unmodified future.
 }
 \description{
 A ClusterFutureBackend resolves futures in parallel using any PSOCK cluster
@@ -89,6 +95,8 @@ A ClusterFutureBackend resolves futures in parallel using any PSOCK cluster
 Configure a backend that controls how and where futures are evaluated
 
 \code{launchFuture()} runs a future on the backend.
+
+\code{interruptFuture()} interrupts a future on the backend.
 
 A MulticoreFutureBackend resolves futures in parallel using forked processing on the current machine
 

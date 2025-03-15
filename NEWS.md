@@ -6,6 +6,9 @@
    methods to evaluate an expression, including futures, using a
    temporary future plan.
 
+ * Add `interrupt()`, which interrupts a future, if the parallel
+   backend supports it, otherwise it is silently ignored.
+ 
  * Add `reset()`, which resets a future that has completed, failed, or
    been interrupted. The future is reset back to a lazy, vanilla
    future that can be relaunched.

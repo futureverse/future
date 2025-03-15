@@ -519,7 +519,7 @@ resolved.ClusterFuture <- function(x, run = TRUE, timeout = NULL, ...) {
 
     ## Number of non-FutureResult objects to receive, before giving up
     maxCount <- 100L
-    
+
     count <- 0L
     while (count < maxCount) {
       ## Is there a message from the worker waiting?
@@ -532,8 +532,14 @@ resolved.ClusterFuture <- function(x, run = TRUE, timeout = NULL, ...) {
       ## If the message contains a FutureResult, then the future is resolved
       ## and we are done here
       res <- inherits(msg, "FutureResult")
-      msg <- NULL
       if (res) break
+
+      ## If the message contains a FutureInterruptError, then the future
+      ## was interrupted and we are done here
+      res <- inherits(msg, "FutureInterruptError")
+      if (res) break
+
+      msg <- NULL
 
       ## If not, we received a condition that has already been signaled
       ## by receiveMessageFromWorker().  However, it could be that there is
@@ -558,6 +564,7 @@ resolved.ClusterFuture <- function(x, run = TRUE, timeout = NULL, ...) {
 
 
 
+#' @importFrom parallelly isNodeAlive cloneNode
 #' @export
 result.ClusterFuture <- function(future, ...) {
   debug <- isTRUE(getOption("future.debug"))
@@ -574,11 +581,14 @@ result.ClusterFuture <- function(future, ...) {
     return(result)
   }
 
-  result <- NULL
-  while (!inherits(result, "FutureResult")) {
+  repeat({
     result <- receiveMessageFromWorker(future, debug = debug)
-  }
-  result
+    if (inherits(result, "FutureResult")) {
+      return(result)
+    } else if (inherits(result, "FutureInterruptError")) {
+      stop(result)
+    }
+  })
 }
 
 
@@ -617,18 +627,50 @@ receiveMessageFromWorker <- local({
     node <- cl[[1]]
   
     t_start <- Sys.time()
-  
+
     ## If not, wait for process to finish, and
     ## then collect and record the value
     msg <- NULL
     ack <- tryCatch({
       msg <- recvResult(node)
-      TRUE
+      TRUE    
     }, error = function(ex) ex)
     if (debug) mprint(ack)
   
     if (inherits(ack, "error")) {
       if (debug) mdebugf("- parallel:::recvResult() produced an error: %s", conditionMessage(ack))
+
+      if (future[["state"]] == "interrupted") {
+        if (debug) mdebugf("- Detected interrupted %s whose result cannot be retrieved", sQuote(class(future)[1]))
+  
+        ## Post-mortem details
+        label <- future[["label"]]
+        if (is.null(label)) label <- "<none>"
+        backend <- future[["backend"]]
+        workers <- backend[["workers"]]
+        node_idx <- future[["node"]]
+        cl <- workers[node_idx]
+        node <- cl[[1]]
+        host <- node[["host"]]
+        msg <- sprintf("A future ('%s') of class %s was interrupted, while running on %s", label, class(future)[1], sQuote(host))
+        if (inherits(node, "RichSOCKnode")) {
+          pid <- node[["session_info"]][["process"]][["pid"]]
+          if (!is.null(pid)) msg <- sprintf("%s (pid %s)", msg, pid)
+        }
+        result <- FutureInterruptError(msg, future = future)
+        future[["result"]] <- result
+
+
+        ## Try to relaunch worker, if it is no longer running
+        if (!isNodeAlive(node)) {
+          node2 <- cloneNode(node)
+          workers[[node_idx]] <- node2
+          backend[["workers"]] <- workers
+        }
+
+        return(result)
+      }
+
       msg <- post_mortem_cluster_failure(ack, when = "receive message results from", node = node, future = future)
       ex <- FutureError(msg, call = ack[["call"]], future = future)
       future[["result"]] <- ex
@@ -1077,4 +1119,16 @@ getFutureBackendConfigs.ClusterFuture <- function(future, ..., debug = isTRUE(ge
   list(
     capture = capture
   )
+}
+
+
+#' @importFrom parallelly killNode
+#' @export
+interruptFuture.ClusterFutureBackend <- function(backend, future, ...) {
+  workers <- backend[["workers"]]
+  node_idx <- future[["node"]]
+  node <- workers[[node_idx]]
+  void <- suppressWarnings(killNode(node))
+  future[["state"]] <- "interrupted"
+  future
 }

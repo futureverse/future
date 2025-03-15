@@ -432,7 +432,9 @@ result.MulticoreFuture <- local({
     ##  1. Pass single job as list, cf.
     ##     https://bugs.r-project.org/bugzilla3/show_bug.cgi?id=17413
     jobs <- if (getRversion() >= "3.6.0") job else list(job)
-    
+
+    ## NOTE: Will produce a "1 parallel job did not deliver a result" warning
+    ## if the parallel worker has been interrupted and terminated
     result <- mccollect(jobs = jobs, wait = TRUE)[[1L]]
     
     ## NOTE: In Issue #218 it was suggested that parallel:::rmChild() could
@@ -460,7 +462,15 @@ result.MulticoreFuture <- local({
       if (is.null(result) || identical(result, structure("fatal error in wrapper code", class = "try-error"))) {
         label <- future[["label"]]
         if (is.null(label)) label <- "<none>"
-  
+
+        if (future[["state"]] == "interrupted") {
+          if (debug) mdebugf("- Detected interrupted %s whose result cannot be retrieved", sQuote(class(future)[1]))
+          msg <- sprintf("A future ('%s') of class %s was interrupted, while running on localhost (pid %d)", label, class(future)[1], pid)
+          result <- FutureInterruptError(msg, future = future)
+          future[["result"]] <- result
+          stop(result)
+        }
+
         pid_info <- if (is.numeric(pid)) sprintf("PID %.0f", pid) else NULL
         info <- pid_info
         msg <- sprintf("Failed to retrieve the result of %s (%s) from the forked worker (on localhost; %s)", class(future)[1], label, info)
@@ -585,3 +595,16 @@ getFutureBackendConfigs.MulticoreFuture <- function(future, ..., debug = isTRUE(
     context = context
   )
 }
+
+
+
+#' @importFrom parallelly killNode
+#' @export
+interruptFuture.MulticoreFutureBackend <- function(backend, future, ...) {
+  job <- future[["job"]]
+  pid <- job[["pid"]]
+  void <- tools::pskill(pid)
+  future[["state"]] <- "interrupted"
+  future
+}
+

@@ -6,6 +6,7 @@
 #' @param x A Future.
 #'
 #' @param \ldots All arguments used by the S3 methods.
+#'
 #' @return
 #' `reset()` returns a lazy, vanilla [Future] that can be relaunched.
 #'
