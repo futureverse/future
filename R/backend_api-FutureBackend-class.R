@@ -37,7 +37,7 @@
 #'
 #' @keywords internal
 #' @export
-FutureBackend <- function(..., earlySignal = FALSE, gc = FALSE, maxSizeOfObjects = getOption("future.globals.maxSize", 500 * 1024 ^ 2)) {
+FutureBackend <- function(..., earlySignal = FALSE, gc = FALSE, maxSizeOfObjects = getOption("future.globals.maxSize", 500 * 1024 ^ 2), hooks = FALSE) {
   core <- new.env(parent = emptyenv())
 
   if (!is.logical(gc)) {
@@ -48,9 +48,10 @@ FutureBackend <- function(..., earlySignal = FALSE, gc = FALSE, maxSizeOfObjects
   stop_if_not(length(gc) == 1L, is.logical(gc), !is.na(gc))
   stop_if_not(length(maxSizeOfObjects) == 1L, is.numeric(maxSizeOfObjects),
               !is.na(maxSizeOfObjects), maxSizeOfObjects >= 0)
+  stop_if_not(length(hooks) == 1L, is.logical(hooks), !is.na(hooks))
   
   ## Record future plan tweaks, if any
-  args <- list(..., earlySignal = earlySignal, maxSizeOfObjects = maxSizeOfObjects, gc = gc)
+  args <- list(..., earlySignal = earlySignal, maxSizeOfObjects = maxSizeOfObjects, gc = gc, hooks = hooks)
   for (name in names(args)) {
     core[[name]] <- args[[name]]
   }

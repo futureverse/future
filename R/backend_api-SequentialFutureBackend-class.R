@@ -65,6 +65,12 @@ launchFuture.SequentialFutureBackend <- function(backend, future, ...) {
     on.exit(mdebugf("launchFuture() for %s ... DONE", commaq(class(backend))))
   }
 
+  hooks <- backend[["hooks"]]
+  if (hooks) {
+     hook <- getHook("future::launchFuture::begin")
+     hook(backend, future = future, ...)
+  }
+  
   ## Get future
   data <- getFutureData(future, debug = debug)
 
@@ -91,6 +97,12 @@ launchFuture.SequentialFutureBackend <- function(backend, future, ...) {
 
   ## Signal conditions early, iff specified for the given future
   signalEarly(future, collect = FALSE)
+
+  hooks <- backend[["hooks"]]
+  if (hooks) {
+     hook <- getHook("future::launchFuture::end")
+     hook(backend, future = future, ...)
+  }
 
   future
 }

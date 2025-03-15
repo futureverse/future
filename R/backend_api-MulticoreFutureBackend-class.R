@@ -249,7 +249,13 @@ launchFuture.MulticoreFutureBackend <- local({
   
   function(backend, future, ...) {
     debug <- isTRUE(getOption("future.debug"))
-  
+
+    hooks <- backend[["hooks"]]
+    if (hooks) {
+       hook <- getHook("future::launchFuture::begin")
+       hook(backend, future = future, ...)
+    }
+
     data <- getFutureData(future, debug = debug)
   
     t_start <- Sys.time()

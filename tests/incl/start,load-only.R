@@ -61,7 +61,6 @@ fullTest <- (Sys.getenv("_R_CHECK_FULL_") != "")
 .onAttach <- future:::.onAttach
 asIEC <- future:::asIEC
 ClusterRegistry <- future:::ClusterRegistry
-constant <- future:::constant
 FutureRegistry <- future:::FutureRegistry
 gassign <- future:::gassign
 get_future <- future:::get_future

@@ -1,25 +1,6 @@
-## Used only internally
-constant <- function(...) {
-  ConstantFuture(...)
-}
-class(constant) <- c("constant", "uniprocess", "future", "function")
-
-
-#' A future with a constant value
-#'
-#' A constant future is a future whose expression is a constant
-#' and therefore by definition is already resolved upon creation.
-#'
-#' @inheritParams Future-class
-#' 
-#' @return
-#' `ConstantFuture()` returns an object of class `ConstantFuture`.
-#'
-#' @export
-#' @name ConstantFuture-class
-#' @keywords internal
-ConstantFuture <- function(..., globals = TRUE, envir = emptyenv()) {
-  future <- Future(..., globals = list(), envir = envir)
+# Used by getGlobalsAndPackages()
+ConstantFuture <- function(..., globals = NULL, packages = NULL, stdout = NA, conditions = NULL, seed = NULL, lazy = FALSE, envir = emptyenv()) {
+  future <- Future(..., NULL, packages = NULL, stdout = NA, conditions = NULL, seed = NULL, lazy = FALSE, envir = envir)
   t_start <- Sys.time()
   future[["result"]] <- FutureResult(
     value = eval(future[["expr"]], envir = envir),

@@ -25,7 +25,8 @@ FutureBackend(
   ...,
   earlySignal = FALSE,
   gc = FALSE,
-  maxSizeOfObjects = getOption("future.globals.maxSize", 500 * 1024^2)
+  maxSizeOfObjects = getOption("future.globals.maxSize", 500 * 1024^2),
+  hooks = FALSE
 )
 
 launchFuture(backend, future, ...)
