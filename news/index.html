@@ -163,15 +163,14 @@
 <h2 class="page-header" data-toc-text="development version" id="version-development-version">Version (development version)<a class="anchor" aria-label="anchor" href="#version-development-version"></a></h2>
 <div class="section level3">
 <h3 id="new-features-development-version">New Features<a class="anchor" aria-label="anchor" href="#new-features-development-version"></a></h3>
-<ul><li><p>Add <code>withPlan(&lt;plan&gt;, &lt;expression&gt;)</code> method to evaluate an expression, including futures, using a temporary future plan.</p></li>
-<li><p>Add <code>localPlan(&lt;plan&gt;)</code> to set a future plan temporarily in local environment, e.g. inside a function.</p></li>
+<ul><li><p>Add <code>withPlan(&lt;plan&gt;, &lt;expression&gt;)</code> method to evaluate an expression, including futures, using a temporary future plan. Add <code>localPlan(&lt;plan&gt;)</code> to set a future plan temporarily in local environment, e.g. inside a function.</p></li>
+<li><p>Add <code><a href="../reference/reset.html">reset()</a></code>, which resets a future that has completed, failed, or been interrupted. The future is reset back to a lazy, vanilla future that can be relaunched.</p></li>
 <li><p>Add <code><a href="../reference/minifuture.html">minifuture()</a></code>, which is like <code><a href="../reference/future.html">future()</a></code>, but with different default arguments resulting in less overhead with the added burden on having to specify globals and packages, not having conditions and standard output relayed, and ignoring random number generation.</p></li>
 <li><p>Interrupted futures are now handled and produce an informative error.</p></li>
-<li><p>Add <code><a href="../reference/reset.html">reset()</a></code>, which resets a future that has completed, failed, or been interrupted. The future is reset back to a lazy, vanilla future that can be relaunched.</p></li>
 <li><p>All parallel backends now prevent nested parallelization, unless explicitly allowed, e.g. settings recognized by <code><a href="https://parallelly.futureverse.org/reference/availableCores.html" class="external-link">parallelly::availableCores()</a></code> or set by the future <code><a href="../reference/plan.html">plan()</a></code>. Previously, this had to be implemented by each backend, but now it’s handled automatically by the future framework.</p></li>
 <li><p>Add new FutureBackend API for writing future backends.</p></li>
 <li><p>Added argument <code>maxSizeOfObjects</code> to <code><a href="../reference/future.html">future()</a></code>, which controls the maximum total size of objects send to and from the worker. The default value can be controlled when setting up the future backend, e.g. <code>plan(multisession, maxSizeOfObjects = 1000^3)</code>.</p></li>
-<li><p>The default value <code>maxSizeOfObjects</code> is now configured per backend, and if not set there, by R option <code>future.globals.maxSize</code> (sic!). Backends <code>sequential</code> and <code>multicore</code> has no such limit, i.e. `<code>maxSizeOfObjects = +Inf</code>.</p></li>
+<li><p>The default value <code>maxSizeOfObjects</code> is now configured per backend, and if not set there, by R option <code>future.globals.maxSize</code> (sic!). Backends <code>sequential</code> and <code>multicore</code> has no such limit, i.e. <code>maxSizeOfObjects = +Inf</code>.</p></li>
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-development-version">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h3>
@@ -183,7 +182,7 @@
 </ul></div>
 <div class="section level3">
 <h3 id="cleanup-development-version">Cleanup<a class="anchor" aria-label="anchor" href="#cleanup-development-version"></a></h3>
-<ul><li>Starting with <strong>future</strong> 1.20.0 (2020-10-30), several low-level functions for creating and working PSOCK and MPI clusters were moved to the <strong>parallelly</strong> package. For backward-compatibility reasons, those functions were kept in <strong>future</strong> as re-exports, e.g. <code><a href="../reference/re-exports.html">future::makeClusterPSOCK()</a></code> would still, which <code><a href="https://parallelly.futureverse.org/reference/makeClusterPSOCK.html" class="external-link">parallelly::makeClusterPSOCK()</a></code> is the new preferred use. The long-term goal is to clean out these re-exports. Starting with this release, the <strong>future</strong> package no longer re-exports <code>autoStopCluster()</code>, <code>makeClusterMPI()</code>, <code>makeNodePSOCK()</code>.</li>
+<ul><li>Starting with <strong>future</strong> 1.20.0 (2020-10-30), several low-level functions for creating and working PSOCK and MPI clusters were moved to the <strong>parallelly</strong> package. For backward-compatibility reasons, those functions were kept in <strong>future</strong> as re-exports, e.g. <code><a href="../reference/re-exports.html">future::makeClusterPSOCK()</a></code> still works, whereas <code><a href="https://parallelly.futureverse.org/reference/makeClusterPSOCK.html" class="external-link">parallelly::makeClusterPSOCK()</a></code> is the preferred use. The long-term goal is to clean out these re-exports. Starting with this release, the <strong>future</strong> package no longer re-exports <code>autoStopCluster()</code>, <code>makeClusterMPI()</code>, <code>makeNodePSOCK()</code>.</li>
 </ul></div>
 </div>
     <div class="section level2">
