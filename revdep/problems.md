@@ -156,9 +156,9 @@ Run `revdepcheck::revdep_details(, "aroma.affymetrix")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  5.4Mb
+      installed size is  5.7Mb
       sub-directories of 1Mb or more:
-        R             2.3Mb
+        R             2.5Mb
         help          1.1Mb
         testScripts   1.1Mb
     ```
@@ -256,7 +256,7 @@ Run `revdepcheck::revdep_details(, "batchtools")` for more info
 
 *   checking dependencies in R code ... NOTE
     ```
-    [c4-n12:1612958] OPAL ERROR: Not initialized in file ext2x_client.c at line 112
+    [c4-n12:2644030] OPAL ERROR: Not initialized in file ext2x_client.c at line 112
     --------------------------------------------------------------------------
     The application appears to have been direct launched using "srun",
     but OMPI was not built with SLURM's PMI support and therefore cannot
@@ -369,6 +369,20 @@ Run `revdepcheck::revdep_details(, "bigDM")` for more info
 
 </details>
 
+## Newly broken
+
+*   checking whether package ‘bigDM’ can be installed ... WARNING
+    ```
+    Found the following significant warnings:
+      Warning: replacing previous import ‘crayon::reset’ by ‘future::reset’ when loading ‘bigDM’
+    See ‘/c4/home/henrik/futureverse/future/revdep/checks/bigDM/new/bigDM.Rcheck/00install.out’ for details.
+    ```
+
+*   checking Rd files ... WARNING
+    ```
+    prepare_Rd: replacing previous import ‘crayon::reset’ by ‘future::reset’ when loading ‘bigDM’
+    ```
+
 ## In both
 
 *   checking package dependencies ... NOTE
@@ -467,9 +481,9 @@ Run `revdepcheck::revdep_details(, "brms")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  8.8Mb
+      installed size is  9.0Mb
       sub-directories of 1Mb or more:
-        R     3.8Mb
+        R     4.0Mb
         doc   3.6Mb
     ```
 
@@ -491,9 +505,9 @@ Run `revdepcheck::revdep_details(, "bsitar")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  7.7Mb
+      installed size is  7.9Mb
       sub-directories of 1Mb or more:
-        R      1.3Mb
+        R      1.5Mb
         data   5.3Mb
     ```
 
@@ -538,6 +552,31 @@ Run `revdepcheck::revdep_details(, "CAESAR.Suite")` for more info
 
 ## In both
 
+*   checking re-building of vignette outputs ... ERROR
+    ```
+    Error(s) in re-building vignettes:
+    --- re-building ‘STMOB.Rmd’ using rmarkdown
+    trying URL 'https://github.com/XiaoZhangryy/CAESAR.Suite/blob/master/vignettes_data/MOB_ST.rda?raw=true'
+    Content type 'application/octet-stream' length 5988380 bytes (5.7 MB)
+    ==================================================
+    downloaded 5.7 MB
+    
+    trying URL 'https://github.com/XiaoZhangryy/CAESAR.Suite/blob/master/vignettes_data/MOB_scRNA.rda?raw=true'
+    Content type 'application/octet-stream' length 48066404 bytes (45.8 MB)
+    ==================================================
+    ...
+    Quitting from lines 323-331 [unnamed-chunk-19] (XeniumBC.Rmd)
+    Error: processing vignette 'XeniumBC.Rmd' failed with diagnostics:
+    attempt to set 'colnames' on an object with less than two dimensions
+    --- failed re-building ‘XeniumBC.Rmd’
+    
+    SUMMARY: processing the following file failed:
+      ‘XeniumBC.Rmd’
+    
+    Error: Vignette re-building failed.
+    Execution halted
+    ```
+
 *   checking installed package size ... NOTE
     ```
       installed size is 10.4Mb
@@ -576,6 +615,29 @@ Run `revdepcheck::revdep_details(, "ceRNAnetsim")` for more info
       perturbed_count
     ```
 
+# Certara.RsNLME.ModelExecutor
+
+<details>
+
+* Version: 3.0.1
+* GitHub: NA
+* Source code: https://github.com/cran/Certara.RsNLME.ModelExecutor
+* Date/Publication: 2025-01-07 16:40:01 UTC
+* Number of recursive dependencies: 116
+
+Run `revdepcheck::revdep_details(, "Certara.RsNLME.ModelExecutor")` for more info
+
+</details>
+
+## Newly broken
+
+*   checking whether package ‘Certara.RsNLME.ModelExecutor’ can be installed ... WARNING
+    ```
+    Found the following significant warnings:
+      Warning: replacing previous import ‘future::reset’ by ‘shinyjs::reset’ when loading ‘Certara.RsNLME.ModelExecutor’
+    See ‘/c4/home/henrik/futureverse/future/revdep/checks/Certara.RsNLME.ModelExecutor/new/Certara.RsNLME.ModelExecutor.Rcheck/00install.out’ for details.
+    ```
+
 # ChromSCape
 
 <details>
@@ -591,6 +653,31 @@ Run `revdepcheck::revdep_details(, "ChromSCape")` for more info
 </details>
 
 ## In both
+
+*   checking examples ... ERROR
+    ```
+    Running examples in ‘ChromSCape-Ex.R’ failed
+    The error most likely occurred in:
+    
+    > ### Name: get_pathway_mat_scExp
+    > ### Title: Get pathway matrix
+    > ### Aliases: get_pathway_mat_scExp
+    > 
+    > ### ** Examples
+    > 
+    > data(scExp)
+    ...
+      4. │   └─tibble:::`[.tbl_df`(msigdbr::msigdbr("Homo sapiens"), , columns)
+      5. │     └─tibble:::vectbl_as_col_location(...)
+      6. │       ├─tibble:::subclass_col_index_errors(...)
+      7. │       │ └─base::withCallingHandlers(...)
+      8. │       └─vctrs::vec_as_location(j, n, names, missing = "error", call = call)
+      9. └─vctrs (local) `<fn>`()
+     10.   └─vctrs:::stop_subscript_oob(...)
+     11.     └─vctrs:::stop_subscript(...)
+     12.       └─rlang::abort(...)
+    Execution halted
+    ```
 
 *   checking dependencies in R code ... WARNING
     ```
@@ -844,9 +931,8 @@ Run `revdepcheck::revdep_details(, "Coxmos")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  5.9Mb
+      installed size is  5.8Mb
       sub-directories of 1Mb or more:
-        R      1.0Mb
         data   1.2Mb
         doc    3.1Mb
     ```
@@ -956,12 +1042,40 @@ Run `revdepcheck::revdep_details(, "dipsaus")` for more info
 
 </details>
 
+## Newly broken
+
+*   checking examples ... ERROR
+    ```
+    Running examples in ‘dipsaus-Ex.R’ failed
+    The error most likely occurred in:
+    
+    > ### Name: PersistContainer
+    > ### Title: Wrapper to cache key-value pairs and persist across sessions
+    > ### Aliases: PersistContainer
+    > 
+    > ### ** Examples
+    > 
+    > 
+    ...
+    Error in force(value) : no function to return from, jumping to top level
+    Warning in save_item() : restarting interrupted promise evaluation
+    [1] 123
+    Error in save_item() : no function to return from, jumping to top level
+    Warning in container$cache(key = "a", value = { :
+      restarting interrupted promise evaluation
+    [1] 123
+    Error in container$cache(key = "a", value = { : 
+      no function to return from, jumping to top level
+    Execution halted
+    ```
+
 ## In both
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  6.2Mb
+      installed size is  6.6Mb
       sub-directories of 1Mb or more:
+        R      1.0Mb
         libs   4.2Mb
     ```
 
@@ -1077,9 +1191,8 @@ Run `revdepcheck::revdep_details(, "distantia")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  9.9Mb
+      installed size is  9.5Mb
       sub-directories of 1Mb or more:
-        help   1.0Mb
         libs   7.8Mb
     ```
 
@@ -1117,15 +1230,15 @@ Run `revdepcheck::revdep_details(, "doFuture")` for more info
      ERROR
     Running the tests in ‘tests/foreach_dofuture,globals.R’ failed.
     Last 50 lines of output:
-      [18:01:08.446]  $ x             : int [1:3] 1 2 3
-      [18:01:08.446]  $ ...future.x_ii: num 42
-      [18:01:08.446]  - attr(*, "where")=List of 2
-      [18:01:08.446]   ..$ x             :<environment: R_EmptyEnv> 
+      [18:34:22.038]  $ x             : int [1:3] 1 2 3
+      [18:34:22.038]  $ ...future.x_ii: num 42
+      [18:34:22.038]  - attr(*, "where")=List of 2
+      [18:34:22.038]   ..$ x             :<environment: R_EmptyEnv> 
     ...
-      [18:01:08.456]   ..$ message: chr "'...' used in an incorrect context"
-      [18:01:08.456]   ..$ call   : language doTryCatch(return(expr), name, parentenv, handler)
-      [18:01:08.456]   ..- attr(*, "class")= chr [1:3] "simpleError" "error" "condition"
-      [18:01:08.458] - accumulating results
+      [18:34:22.072]   ..$ message: chr "'...' used in an incorrect context"
+      [18:34:22.072]   ..$ call   : language doTryCatch(return(expr), name, parentenv, handler)
+      [18:34:22.072]   ..- attr(*, "class")= chr [1:3] "simpleError" "error" "condition"
+      [18:34:22.080] - accumulating results
       List of 2
        $ message: chr "'...' used in an incorrect context"
        $ call   : language doTryCatch(return(expr), name, parentenv, handler)
@@ -1152,7 +1265,7 @@ Run `revdepcheck::revdep_details(, "DT")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  6.5Mb
+      installed size is  6.4Mb
       sub-directories of 1Mb or more:
         htmlwidgets   5.6Mb
     ```
@@ -1513,10 +1626,10 @@ Run `revdepcheck::revdep_details(, "forecastML")` for more info
 
 <details>
 
-* Version: 0.2.7
+* Version: 0.2.8
 * GitHub: https://github.com/emilioluissaenzguillen/GeDS
 * Source code: https://github.com/cran/GeDS
-* Date/Publication: 2025-03-11 14:30:06 UTC
+* Date/Publication: 2025-03-14 10:10:02 UTC
 * Number of recursive dependencies: 46
 
 Run `revdepcheck::revdep_details(, "GeDS")` for more info
@@ -1838,6 +1951,40 @@ Run `revdepcheck::revdep_details(, "hackeRnews")` for more info
       'LazyData' is specified without a 'data' directory
     ```
 
+# hacksig
+
+<details>
+
+* Version: 0.1.2
+* GitHub: https://github.com/Acare/hacksig
+* Source code: https://github.com/cran/hacksig
+* Date/Publication: 2022-02-17 14:22:02 UTC
+* Number of recursive dependencies: 74
+
+Run `revdepcheck::revdep_details(, "hacksig")` for more info
+
+</details>
+
+## In both
+
+*   checking re-building of vignette outputs ... ERROR
+    ```
+    Error(s) in re-building vignettes:
+      ...
+    --- re-building ‘hacksig.Rmd’ using rmarkdown
+    
+    Quitting from lines 216-225 [unnamed-chunk-19] (hacksig.Rmd)
+    Error: processing vignette 'hacksig.Rmd' failed with diagnostics:
+    Unknown subcollection.
+    --- failed re-building ‘hacksig.Rmd’
+    
+    SUMMARY: processing the following file failed:
+      ‘hacksig.Rmd’
+    
+    Error: Vignette re-building failed.
+    Execution halted
+    ```
+
 # hal9001
 
 <details>
@@ -1907,7 +2054,7 @@ Run `revdepcheck::revdep_details(, "hero")` for more info
 
 *   checking dependencies in R code ... NOTE
     ```
-    [c4-n43:2342051] OPAL ERROR: Not initialized in file ext2x_client.c at line 112
+    [c4-n12:3296275] OPAL ERROR: Not initialized in file ext2x_client.c at line 112
     --------------------------------------------------------------------------
     The application appears to have been direct launched using "srun",
     but OMPI was not built with SLURM's PMI support and therefore cannot
@@ -1978,24 +2125,34 @@ Run `revdepcheck::revdep_details(, "httpgd")` for more info
 
 *   checking tests ...
     ```
-      Running ‘testthat.R’/software/c4/cbi/software/_rocky8/R-4.4.3-gcc13/lib64/R/bin/BATCH: line 60: 730658 Aborted                 (core dumped) ${R_HOME}/bin/R -f ${in} ${opts} ${R_BATCH_OPTIONS} > ${out} 2>&1
+      Running ‘testthat.R’/software/c4/cbi/software/_rocky8/R-4.4.3-gcc13/lib64/R/bin/BATCH: line 60: 3298846 Segmentation fault      (core dumped) ${R_HOME}/bin/R -f ${in} ${opts} ${R_BATCH_OPTIONS} > ${out} 2>&1
     
      ERROR
     Running the tests in ‘tests/testthat.R’ failed.
-    Complete output:
-      > library(testthat)
-      > library(httpgd)
-      > 
-      > test_check("httpgd")
-      terminate called after throwing an instance of 'std::system_error'
-        what():  epoll: Too many open files
+    Last 50 lines of output:
+       1. └─jsonlite::fromJSON(httr::content(res, as = "text")) at test-server.R:62:3
+       2.   └─jsonlite:::parse_and_simplify(...)
+       3.     └─jsonlite:::parseJSON(txt, bigint_as_char)
+       4.       └─jsonlite:::parse_string(txt, bigint_as_char)
+      ── Error ('test-server.R:83:5'): Clear plots ───────────────────────────────────
+    ...
+      1/1 mismatches
+      [1] 503 - 404 == 99
+      
+      [ FAIL 16 | WARN 0 | SKIP 0 | PASS 2 ]
+      Error: Test failures
+      Execution halted
+      
+       *** caught segfault ***
+      address 0x1b35f58, cause 'invalid permissions'
+      An irrecoverable exception occurred. R is aborting now ...
     ```
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 14.6Mb
+      installed size is 12.6Mb
       sub-directories of 1Mb or more:
-        libs  14.0Mb
+        libs  12.0Mb
     ```
 
 # hwep
@@ -2051,8 +2208,9 @@ Run `revdepcheck::revdep_details(, "infercnv")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  5.2Mb
+      installed size is  5.6Mb
       sub-directories of 1Mb or more:
+        R         1.0Mb
         extdata   3.1Mb
     ```
 
@@ -2369,7 +2527,7 @@ Run `revdepcheck::revdep_details(, "lidR")` for more info
 
 *   checking tests ...
     ```
-      Running ‘testthat.R’/software/c4/cbi/software/_rocky8/R-4.4.3-gcc13/lib64/R/bin/BATCH: line 60: 1053074 Aborted                 (core dumped) ${R_HOME}/bin/R -f ${in} ${opts} ${R_BATCH_OPTIONS} > ${out} 2>&1
+      Running ‘testthat.R’/software/c4/cbi/software/_rocky8/R-4.4.3-gcc13/lib64/R/bin/BATCH: line 60: 3977534 Aborted                 (core dumped) ${R_HOME}/bin/R -f ${in} ${opts} ${R_BATCH_OPTIONS} > ${out} 2>&1
     
      ERROR
     Running the tests in ‘tests/testthat.R’ failed.
@@ -2564,6 +2722,31 @@ Run `revdepcheck::revdep_details(, "MineICA")` for more info
 
 ## In both
 
+*   checking re-building of vignette outputs ... ERROR
+    ```
+    Error(s) in re-building vignettes:
+    --- re-building ‘MineICA.Rnw’ using Sweave
+    Loading required package: BiocGenerics
+    
+    Attaching package: ‘BiocGenerics’
+    
+    The following objects are masked from ‘package:stats’:
+    
+        IQR, mad, sd, var, xtabs
+    
+    ...
+    Caused by error in `curl::curl_fetch_memory()`:
+    ! Timeout was reached [www.ensembl.org]: Operation timed out after 10000 milliseconds with 0 bytes received"
+    
+    --- failed re-building ‘MineICA.Rnw’
+    
+    SUMMARY: processing the following file failed:
+      ‘MineICA.Rnw’
+    
+    Error: Vignette re-building failed.
+    Execution halted
+    ```
+
 *   checking dependencies in R code ... WARNING
     ```
     Namespace in Imports field not imported from: ‘lumiHumanAll.db’
@@ -2612,31 +2795,6 @@ Run `revdepcheck::revdep_details(, "MineICA")` for more info
     should have documentation entries.
     See chapter ‘Writing R documentation files’ in the ‘Writing R
     Extensions’ manual.
-    ```
-
-*   checking re-building of vignette outputs ... WARNING
-    ```
-    Error(s) in re-building vignettes:
-    --- re-building ‘MineICA.Rnw’ using Sweave
-    Loading required package: BiocGenerics
-    
-    Attaching package: ‘BiocGenerics’
-    
-    The following objects are masked from ‘package:stats’:
-    
-        IQR, mad, sd, var, xtabs
-    
-    ...
-    l.23 \usepackage
-                    {subfig}^^M
-    !  ==> Fatal error occurred, no output PDF file produced!
-    --- failed re-building ‘MineICA.Rnw’
-    
-    SUMMARY: processing the following file failed:
-      ‘MineICA.Rnw’
-    
-    Error: Vignette re-building failed.
-    Execution halted
     ```
 
 *   checking package dependencies ... NOTE
@@ -2713,10 +2871,10 @@ Run `revdepcheck::revdep_details(, "MineICA")` for more info
 
 <details>
 
-* Version: 1.0.4
+* Version: 1.0.5
 * GitHub: https://github.com/grossSBM/missSBM
 * Source code: https://github.com/cran/missSBM
-* Date/Publication: 2023-10-24 16:00:05 UTC
+* Date/Publication: 2025-03-13 08:30:02 UTC
 * Number of recursive dependencies: 112
 
 Run `revdepcheck::revdep_details(, "missSBM")` for more info
@@ -2727,8 +2885,9 @@ Run `revdepcheck::revdep_details(, "missSBM")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 10.0Mb
+      installed size is 10.2Mb
       sub-directories of 1Mb or more:
+        R      1.0Mb
         libs   8.0Mb
     ```
 
@@ -2780,6 +2939,27 @@ Run `revdepcheck::revdep_details(, "mistyR")` for more info
            |                                                   ^
     ```
 
+# mlr3
+
+<details>
+
+* Version: 0.23.0
+* GitHub: https://github.com/mlr-org/mlr3
+* Source code: https://github.com/cran/mlr3
+* Date/Publication: 2025-03-12 12:30:02 UTC
+* Number of recursive dependencies: 49
+
+Run `revdepcheck::revdep_details(, "mlr3")` for more info
+
+</details>
+
+## In both
+
+*   checking Rd cross-references ... NOTE
+    ```
+    Package unavailable to check Rd xrefs: ‘mlr3oml’
+    ```
+
 # mlr3tuning
 
 <details>
@@ -2799,30 +2979,6 @@ Run `revdepcheck::revdep_details(, "mlr3tuning")` for more info
 *   checking package dependencies ... NOTE
     ```
     Package suggested but not available for checking: ‘mlflow’
-    ```
-
-# modelsummary
-
-<details>
-
-* Version: 2.3.0
-* GitHub: https://github.com/vincentarelbundock/modelsummary
-* Source code: https://github.com/cran/modelsummary
-* Date/Publication: 2025-02-02 12:50:02 UTC
-* Number of recursive dependencies: 321
-
-Run `revdepcheck::revdep_details(, "modelsummary")` for more info
-
-</details>
-
-## In both
-
-*   checking installed package size ... NOTE
-    ```
-      installed size is  5.4Mb
-      sub-directories of 1Mb or more:
-        help       3.3Mb
-        tinytest   1.7Mb
     ```
 
 # momentuHMM
@@ -3562,6 +3718,15 @@ Run `revdepcheck::revdep_details(, "Prostar")` for more info
 
 </details>
 
+## Newly broken
+
+*   checking whether package ‘Prostar’ can be installed ... WARNING
+    ```
+    Found the following significant warnings:
+      Warning: replacing previous import ‘future::reset’ by ‘shinyjs::reset’ when loading ‘Prostar’
+    See ‘/c4/home/henrik/futureverse/future/revdep/checks/Prostar/new/Prostar.Rcheck/00install.out’ for details.
+    ```
+
 ## In both
 
 *   checking for hidden files and directories ... NOTE
@@ -3983,9 +4148,9 @@ Run `revdepcheck::revdep_details(, "sdmTMB")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 97.9Mb
+      installed size is 98.1Mb
       sub-directories of 1Mb or more:
-        libs  95.9Mb
+        libs  96.2Mb
     ```
 
 # sentopics
@@ -4049,7 +4214,7 @@ Run `revdepcheck::revdep_details(, "Seurat")` for more info
       installed size is 16.1Mb
       sub-directories of 1Mb or more:
         R      1.7Mb
-        libs  13.4Mb
+        libs  13.5Mb
     ```
 
 *   checking Rd cross-references ... NOTE
@@ -4166,9 +4331,9 @@ Run `revdepcheck::revdep_details(, "shiny")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 14.2Mb
+      installed size is 13.7Mb
       sub-directories of 1Mb or more:
-        R     2.0Mb
+        R     1.5Mb
         www  10.4Mb
     ```
 
@@ -4331,6 +4496,33 @@ Run `revdepcheck::revdep_details(, "signeR")` for more info
 Run `revdepcheck::revdep_details(, "SimDesign")` for more info
 
 </details>
+
+## Newly fixed
+
+*   checking re-building of vignette outputs ... ERROR
+    ```
+    Error(s) in re-building vignettes:
+    --- re-building ‘Catch_errors.Rmd’ using rmarkdown
+    --- finished re-building ‘Catch_errors.Rmd’
+    
+    --- re-building ‘Fixed_obj_fun.Rmd’ using rmarkdown
+    
+    Quitting from lines 65-69 [unnamed-chunk-5] (Fixed_obj_fun.Rmd)
+    Error: processing vignette 'Fixed_obj_fun.Rmd' failed with diagnostics:
+    creation of server socket failed: port 11444 cannot be opened
+    --- failed re-building ‘Fixed_obj_fun.Rmd’
+    ...
+    --- finished re-building ‘Saving-results.Rmd’
+    
+    --- re-building ‘SimDesign-intro.Rmd’ using rmarkdown
+    --- finished re-building ‘SimDesign-intro.Rmd’
+    
+    SUMMARY: processing the following file failed:
+      ‘Fixed_obj_fun.Rmd’
+    
+    Error: Vignette re-building failed.
+    Execution halted
+    ```
 
 ## In both
 
@@ -5151,6 +5343,29 @@ Run `revdepcheck::revdep_details(, "tglkmeans")` for more info
     GNU make is a SystemRequirements.
     ```
 
+# TKCat
+
+<details>
+
+* Version: 1.1.11
+* GitHub: https://github.com/patzaw/TKCat
+* Source code: https://github.com/cran/TKCat
+* Date/Publication: 2024-07-03 14:50:02 UTC
+* Number of recursive dependencies: 123
+
+Run `revdepcheck::revdep_details(, "TKCat")` for more info
+
+</details>
+
+## Newly broken
+
+*   checking whether package ‘TKCat’ can be installed ... WARNING
+    ```
+    Found the following significant warnings:
+      Warning: replacing previous import ‘crayon::reset’ by ‘future::reset’ when loading ‘TKCat’
+    See ‘/c4/home/henrik/futureverse/future/revdep/checks/TKCat/new/TKCat.Rcheck/00install.out’ for details.
+    ```
+
 # tramvs
 
 <details>
@@ -5335,7 +5550,7 @@ Run `revdepcheck::revdep_details(, "tsdistributions")` for more info
     ```
       installed size is 42.9Mb
       sub-directories of 1Mb or more:
-        libs  42.2Mb
+        libs  42.3Mb
     ```
 
 # tsgarch
@@ -5356,9 +5571,9 @@ Run `revdepcheck::revdep_details(, "tsgarch")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 144.4Mb
+      installed size is 144.3Mb
       sub-directories of 1Mb or more:
-        libs  143.3Mb
+        libs  143.2Mb
     ```
 
 # tsmarch
@@ -5402,7 +5617,7 @@ Run `revdepcheck::revdep_details(, "tsmarch")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 21.5Mb
+      installed size is 21.6Mb
       sub-directories of 1Mb or more:
         doc    1.6Mb
         libs  18.5Mb
@@ -5513,9 +5728,9 @@ Run `revdepcheck::revdep_details(, "vital")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  6.0Mb
+      installed size is  6.1Mb
       sub-directories of 1Mb or more:
-        data   4.4Mb
+        data   4.5Mb
         help   1.3Mb
     ```
 
@@ -5670,9 +5885,9 @@ Run `revdepcheck::revdep_details(, "wru")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  8.0Mb
+      installed size is  7.5Mb
       sub-directories of 1Mb or more:
-        data   4.0Mb
+        data   3.5Mb
         help   1.9Mb
         libs   1.9Mb
     ```
