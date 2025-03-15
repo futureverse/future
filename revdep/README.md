@@ -27,16 +27,13 @@
 
 # Revdeps
 
-## Failed to check (4)
+## Failed to check (1)
 
 |package          |version |error |warning |note |
 |:----------------|:-------|:-----|:-------|:----|
-|arkdb            |?       |      |        |     |
-|mlr3db           |?       |      |        |     |
-|spanishoddata    |?       |      |        |     |
 |[TriDimRegression](failures.md#tridimregression)|1.0.2   |1     |        |     |
 
-## New problems (8)
+## New problems (9)
 
 |package                      |version |error  |warning |note |
 |:----------------------------|:-------|:------|:-------|:----|
@@ -45,6 +42,7 @@
 |[dipsaus](problems.md#dipsaus)|0.3.0   |__+1__ |        |1    |
 |[distantia](problems.md#distantia)|2.0.2   |__+1__ |        |3    |
 |[doFuture](problems.md#dofuture)|1.0.1   |__+1__ |        |     |
+|[future.tests](problems.md#futuretests)|0.7.0   |__+1__ |        |     |
 |[Prostar](problems.md#prostar)|1.38.1  |       |__+1__  |3    |
 |[TKCat](problems.md#tkcat)   |1.1.11  |       |__+1__  |     |
 |[WARDEN](problems.md#warden) |0.99.1  |__+1__ |        |     |
@@ -66,7 +64,7 @@
 |antaresEditObject            |0.9.0     |       |        |     |
 |ao                           |1.1.0     |       |        |     |
 |[apsimx](problems.md#apsimx) |2.8.235   |       |        |1    |
-|arkdb                        |?         |       |        |     |
+|arkdb                        |0.0.18    |       |        |     |
 |[aroma.affymetrix](problems.md#aromaaffymetrix)|3.2.2     |       |        |1    |
 |aroma.cn                     |1.7.1     |       |        |     |
 |[aroma.core](problems.md#aromacore)|3.3.1     |       |        |1    |
@@ -177,7 +175,7 @@
 |future.batchtools            |0.12.1    |       |        |     |
 |future.callr                 |0.8.2     |       |        |     |
 |future.mirai                 |0.2.2     |       |        |     |
-|future.tests                 |0.7.0     |       |        |     |
+|[future.tests](problems.md#futuretests)|0.7.0     |__+1__ |        |     |
 |futureverse                  |0.1.0     |       |        |     |
 |fxTWAPLS                     |0.1.3     |       |        |     |
 |[GeDS](problems.md#geds)     |0.2.8     |       |1       |     |
@@ -270,7 +268,7 @@
 |[missSBM](problems.md#misssbm)|1.0.5     |       |        |1    |
 |[mistyR](problems.md#mistyr) |1.14.0    |       |        |2    |
 |[mlr3](problems.md#mlr3)     |0.23.0    |       |        |1    |
-|mlr3db                       |?         |       |        |     |
+|mlr3db                       |0.5.2     |       |        |     |
 |mlr3inferr                   |0.1.0     |       |        |     |
 |mlr3pipelines                |0.7.2     |       |        |     |
 |mlr3resampling               |2024.9.6  |       |        |     |
@@ -278,7 +276,7 @@
 |mlr3summary                  |0.1.0     |       |        |     |
 |mlr3torch                    |0.2.1     |       |        |     |
 |[mlr3tuning](problems.md#mlr3tuning)|1.3.0     |       |        |1    |
-|modelsummary                 |2.3.0     |       |        |-1   |
+|[modelsummary](problems.md#modelsummary)|2.3.0     |       |        |1    |
 |[momentuHMM](problems.md#momentuhmm)|1.5.5     |       |        |1    |
 |[MOSS](problems.md#moss)     |0.2.2     |       |        |1    |
 |mplusParallel.automation     |0.0.1.1   |       |        |     |
@@ -395,7 +393,7 @@
 |[sigminer](problems.md#sigminer)|2.3.1     |       |        |1    |
 |[Signac](problems.md#signac) |1.14.0    |       |        |1    |
 |[signeR](problems.md#signer) |2.8.0     |       |        |4    |
-|[SimDesign](problems.md#simdesign)|2.18      |-1     |        |1    |
+|[SimDesign](problems.md#simdesign)|2.18      |       |        |1    |
 |simglm                       |0.8.9     |       |        |     |
 |simhelpers                   |0.3.1     |       |        |     |
 |simIDM                       |0.1.0     |       |        |     |
@@ -410,7 +408,7 @@
 |sovereign                    |1.2.1     |       |        |     |
 |[SpaDES.core](problems.md#spadescore)|2.1.0     |       |        |2    |
 |[spaMM](problems.md#spamm)   |4.5.0     |       |        |2    |
-|spanishoddata                |?         |       |        |     |
+|spanishoddata                |0.1.0     |       |        |     |
 |[sparrpowR](problems.md#sparrpowr)|0.2.8     |       |1       |     |
 |[SPARSEMODr](problems.md#sparsemodr)|1.2.0     |       |        |1    |
 |spatialTIME                  |1.3.4-5   |       |        |     |

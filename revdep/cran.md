@@ -1,8 +1,8 @@
 ## revdepcheck results
 
-We checked 422 reverse dependencies (397 from CRAN + 25 from Bioconductor), comparing R CMD check results across CRAN and dev versions of this package.
+We checked 422 reverse dependencies (400 from CRAN + 22 from Bioconductor), comparing R CMD check results across CRAN and dev versions of this package.
 
- * We saw 7 new problems
+ * We saw 8 new problems
  * We failed to check 1 packages
 
 Issues with CRAN packages are summarised below.
@@ -24,6 +24,9 @@ Issues with CRAN packages are summarised below.
   checking tests ...
 
 * doFuture
+  checking tests ...
+
+* future.tests
   checking tests ...
 
 * TKCat
