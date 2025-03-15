@@ -6,13 +6,33 @@
 #' are also useful outside of the \pkg{future} framework.
 #'
 #' * [parallelly::as.cluster()]
+#    Used by: googleComputeEngineR(1)
 #' * [parallelly::autoStopCluster()]   (no longer re-exported)
+#    Used by: <none>
 #' * [parallelly::availableCores()]
+#    Used by: aroma.affymetrix(1,2), ARPALData, BatchGetSymbols,
+#             bistablehistory, codalm, crossmap, cft, CSCNet, deseats,
+#             dipsaus, drimmR, elevatr, foieGras(3), future.BatchJobs(3),
+#             future.callr, GetBCBData, gtfs2emis, heterogen, isoreader,
+#             ItemResponseTrees, ldaPrototype, lidR, meedr, microservices,
+#             microsynth, origami, PINstimation, powRICLPM, rBiasCorrection,
+#             readsdr, recforest, rkeops, sigminer, skpr, smoots, sovereign,
+#             TriDimRegression, uci, updog, whitewater, yfR
 #' * [parallelly::availableWorkers()]
+#    Used by: aroma.affymetrix(1,2), wqspt(1)
 #' * [parallelly::makeClusterMPI()]    (no longer re-exported)
+#    Used by: <none>
 #' * [parallelly::makeClusterPSOCK()]
+#    Used by: bigDM(1), eatRep, fect, foieGras(3), googleComputeEngineR(1),
+#             gsynth, interflex, ivDiag
 #' * [parallelly::makeNodePSOCK()]     (no longer re-exported)
+#    Used by: <none>
 #' * [parallelly::supportsMulticore()]
+#    Used by: crossmap, dhReg, furrr(1), microservices, sctransform
+#
+#  (1) PR sent
+#  (2) Non-breaking; code is never run
+#  (3) No longer on CRAN
 #' 
 #' For backward-compatible reasons, _some_ of these functions remain
 #' available as exact copies also from this package (as re-exports), e.g.
