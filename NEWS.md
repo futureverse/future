@@ -2,12 +2,14 @@
 
 ## New Features
 
- * Add `withPlan(<plan>, <expression>)` method to evaluate an
-   expression, including futures, using a temporary future plan.
-   
- * Add `localPlan(<plan>)` to set a future plan temporarily in local
-   environment, e.g. inside a function.
+ * Add `localPlan(<plan>)` and `withPlan(<plan>, <expression>)`
+   methods to evaluate an expression, including futures, using a
+   temporary future plan.
 
+ * Add `reset()`, which resets a future that has completed, failed, or
+   been interrupted. The future is reset back to a lazy, vanilla
+   future that can be relaunched.
+ 
  * Add `minifuture()`, which is like `future()`, but with different
    default arguments resulting in less overhead with the added burden
    on having to specify globals and packages, not having conditions
@@ -15,10 +17,6 @@
 
  * Interrupted futures are now handled and produce an informative error.
 
- * Add `reset()`, which resets a future that has completed, failed, or
-   been interrupted. The future is reset back to a lazy, vanilla
-   future that can be relaunched.
- 
  * All parallel backends now prevent nested parallelization, unless
    explicitly allowed, e.g. settings recognized by
    `parallelly::availableCores()` or set by the future
@@ -35,7 +33,7 @@
  * The default value `maxSizeOfObjects` is now configured per backend,
    and if not set there, by R option `future.globals.maxSize` (sic!).
    Backends `sequential` and `multicore` has no such limit, i.e.
-   ``maxSizeOfObjects = +Inf`.
+   `maxSizeOfObjects = +Inf`.
 
 ## Bug Fixes
 
@@ -59,8 +57,8 @@
    functions for creating and working PSOCK and MPI clusters were
    moved to the **parallelly** package. For backward-compatibility
    reasons, those functions were kept in **future** as re-exports,
-   e.g. `future::makeClusterPSOCK()` would still, which
-   `parallelly::makeClusterPSOCK()` is the new preferred use.  The
+   e.g. `future::makeClusterPSOCK()` still works, whereas
+   `parallelly::makeClusterPSOCK()` is the preferred use. The
    long-term goal is to clean out these re-exports. Starting with this
    release, the **future** package no longer re-exports
    `autoStopCluster()`, `makeClusterMPI()`, `makeNodePSOCK()`.
