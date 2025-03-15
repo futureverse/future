@@ -566,7 +566,7 @@ getFutureBackendConfigs.MulticoreFuture <- function(future, ..., debug = isTRUE(
 
   ## Disable multi-threading in futures?
   threads <- NA_integer_
-  multithreading <- getOption("future.fork.multithreading.enable", TRUE)  
+  multithreading <- getOption("future.fork.multithreading.enable")
   if (isFALSE(multithreading)) {
     if (supports_omp_threads(assert = TRUE, debug = debug)) {
       threads <- 1L

@@ -1042,8 +1042,8 @@ assertValidConnection <- function(future) {
 
 #' @export
 getFutureBackendConfigs.ClusterFuture <- function(future, ..., debug = isTRUE(getOption("future.debug"))) {
-  resignalImmediateConditions <- getOption("future.psock.relay.immediate", TRUE)
-  if (!resignalImmediateConditions) return(list())
+  resignalImmediateConditions <- getOption("future.psock.relay.immediate")
+  if (isFALSE(resignalImmediateConditions)) return(list())
 
   conditionClasses <- future[["conditions"]]
   if (is.null(conditionClasses)) return(list())

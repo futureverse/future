@@ -131,7 +131,8 @@ Future <- function(expr = NULL, envir = parent.frame(), substitute = TRUE, stdou
   if ("onReference" %in% args_names) {
     onReference <- args[["onReference"]]
   } else {
-    onReference <- getOption("future.globals.onReference", "ignore")
+    onReference <- getOption("future.globals.onReference")
+    if (is.null(onReference)) onReference <- "ignore"
   }
 
   ## WORKAROUND: Skip scanning of globals if already done /HB 2021-01-18
@@ -206,7 +207,7 @@ Future <- function(expr = NULL, envir = parent.frame(), substitute = TRUE, stdou
   ## FIXME: The plan is to eventually remove this, and only query
   ## the option when setting up the backend.
   if (is.null(maxSizeOfObjects)) {
-    maxSizeOfObjects <- getOption("future.globals.maxSize", NULL)
+    maxSizeOfObjects <- getOption("future.globals.maxSize")
   }
 
   if ("reset" %in% args_names) {

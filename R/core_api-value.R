@@ -57,7 +57,8 @@ value.Future <- function(future, stdout = TRUE, signal = TRUE, ...) {
       out <- paste(result[["stdout"]], collapse = "\n")
       if (nzchar(out)) {
         ## AD HOC: Fix captured UTF-8 output on MS Windows?
-        if (!isTRUE(result[["r_info"]][["captures_utf8"]]) && getOption("future.stdout.windows.reencode", TRUE)) {
+        if (!isTRUE(result[["r_info"]][["captures_utf8"]]) &&
+            getOption("future.stdout.windows.reencode", TRUE)) {
           out <- adhoc_native_to_utf8(out)
         }
         cat(out)
@@ -74,7 +75,8 @@ value.Future <- function(future, stdout = TRUE, signal = TRUE, ...) {
 
   ## Were there any variables added to the global enviroment?
   if (length(result[["globalenv"]][["added"]]) > 0L) {
-    onMisuse <- getOption("future.globalenv.onMisuse", "ignore")
+    onMisuse <- getOption("future.globalenv.onMisuse")
+    if (is.null(onMisuse)) onMisuse <- "ignore"
     if (onMisuse != "ignore") {
       if (onMisuse == "error") {
         cond <- GlobalEnvFutureError(globalenv = result[["globalenv"]], future = future)
@@ -121,7 +123,8 @@ value.Future <- function(future, stdout = TRUE, signal = TRUE, ...) {
     } else if (is_seed(future[["envir"]][["...future.seeds_ii"]][[1]])) {
       .Defunct(msg = "Please upgrade your 'future.apply' or 'furrr' (type 2)")
     } else {
-      onMisuse <- getOption("future.rng.onMisuse", "warning")
+      onMisuse <- getOption("future.rng.onMisuse")
+      if (is.null(onMisuse)) onMisuse <- "warning"
       if (onMisuse != "ignore") {
         if (onMisuse == "error") {
           cond <- RngFutureError(future = future)

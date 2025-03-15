@@ -191,7 +191,8 @@ future <- function(expr, envir = parent.frame(), substitute = TRUE, lazy = FALSE
   if (substitute) expr <- substitute(expr)
   t_start <- Sys.time()
 
-  onReference <- getOption("future.globals.onReference", "ignore")
+  onReference <- getOption("future.globals.onReference")
+  if (is.null(onReference)) onReference <- "ignore"
 
   if (!is.null(globals)) {
     gp <- getGlobalsAndPackages(expr, envir = envir, tweak = tweakExpression, globals = globals, onReference = onReference, maxSize = +Inf)

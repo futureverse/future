@@ -352,7 +352,8 @@ plan <- local({
       stop_if_not(is.function(strategy))
       return(strategy)
     } else if (identical(strategy, "default")) {
-      strategy <- getOption("future.plan", sequential)
+      strategy <- getOption("future.plan")
+      if (is.null(strategy)) strategy <- sequential
     } else if (identical(strategy, "list")) {
       ## List stack of future strategies?
       return(stack)

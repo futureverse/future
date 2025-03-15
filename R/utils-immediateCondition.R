@@ -38,7 +38,6 @@ immediateConditionsPath <- local({
 #' @importFrom utils file_test
 #' @keywords internal
 readImmediateConditions <- function(path = immediateConditionsPath(rootPath = rootPath), rootPath = tempdir(), pattern = "[.]rds$", include = getOption("future.relay.immediate", "immediateCondition"), signal = FALSE, remove = TRUE) {
-  stop_if_not(is.character(include), !anyNA(include))
   stop_if_not(is.logical(remove), length(remove) == 1L, !is.na(remove))
 
   debug <- isTRUE(getOption("future.debug"))
@@ -70,6 +69,13 @@ readImmediateConditions <- function(path = immediateConditionsPath(rootPath = ro
   ## Nothing to do?
   if (length(files) == 0L) return(list())
 
+  ## Default for argument 'include'
+  if (missing(include)) {
+    include <- getOption("future.relay.immediate")
+    if (is.null(include)) include <- "immediateCondition"
+  }
+  stop_if_not(is.character(include), !anyNA(include))
+  
   ## Drop the ones that does not contain 'time' and 'condition' of the
   ## required class 'include'
   keep <- vapply(objs, FUN = function(x) {

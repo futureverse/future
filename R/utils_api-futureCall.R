@@ -41,7 +41,8 @@ futureCall <- function(FUN, args = list(), envir = parent.frame(), lazy = FALSE,
     ## Gather all globals?
     if (globals) {
       if (debug) mdebug("Finding globals ...")
-      onReference <- getOption("future.globals.onReference", "ignore")
+      onReference <- getOption("future.globals.onReference")
+      if (is.null(onReference)) onReference <- "ignore"
 #      expr <- do.call(call, args = c(list("FUN"), list(...)))
       gp <- getGlobalsAndPackages(expr, envir = globalEnv, tweak = tweakExpression, globals = TRUE, onReference = onReference)
       globals <- gp[["globals"]]

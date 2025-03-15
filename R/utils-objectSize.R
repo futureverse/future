@@ -2,13 +2,13 @@
 #' @keywords internal 
 #' @importFrom utils object.size
 #' @importFrom parallelly serializedSize
-objectSize <- function(x, depth = 3L, enclosure = getOption("future.globals.objectSize.enclosure", FALSE)) {
+objectSize <- function(x, depth = 3L, enclosure = FALSE) {
   # Nothing to do?
   if (isNamespace(x)) return(0)
   if (depth <= 0) return(0)
 
-  method <- getOption("future.globals.objectSize.method", "serializedSize")
-  if (method == "serializedSize") {
+  method <- getOption("future.globals.objectSize.method")
+  if (is.null(method) || method == "serializedSize") {
     size <- serializedSize(x)
     return(size)
   } else if (method != "objectSize") {
@@ -18,7 +18,10 @@ objectSize <- function(x, depth = 3L, enclosure = getOption("future.globals.obje
   if (!is.list(x) && !is.environment(x)) {
     size <- unclass(object.size(x))
     ## Issue #176 is because of this
-    if (enclosure) x <- environment(x)
+    if (missing(enclosure)) {
+      enclosure <- getOption("future.globals.objectSize.enclosure")
+    }
+    if (isTRUE(enclosure)) x <- environment(x)
   } else {
     size <- 0
   }
