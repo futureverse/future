@@ -98,7 +98,6 @@
 #' right-hand-side (RHS) \R expression and assigns its future value
 #' to a variable as a \emph{\link[base:delayedAssign]{promise}}.
 #'
-#' @importFrom parallel nextRNGStream nextRNGSubStream
 #' @export
 #' @keywords internal
 #' @name Future-class
@@ -108,13 +107,16 @@ Future <- function(expr = NULL, envir = parent.frame(), substitute = TRUE, stdou
 
   if (is.null(seed)) {
   } else if (isFALSE(seed)) {
-  } else if (is_lecyer_cmrg_seed(seed)) {
   } else {
-    if (isTRUE(seed)) {
-      sample.int(n = 1L, size = 1L, replace = FALSE)
+    rng_config <- parallel_rng_kind()
+    if (rng_config[["is_seed"]](seed)) {
+    } else {
+      if (isTRUE(seed)) {
+        sample.int(n = 1L, size = 1L, replace = FALSE)
+      }
+      .seed <- rng_config[["as_seed"]](seed)
+      seed <- rng_config[["next_stream"]](.seed)
     }
-    .seed <- as_lecyer_cmrg_seed(seed)
-    seed <- nextRNGSubStream(.seed)
   }
 
   with_assert({

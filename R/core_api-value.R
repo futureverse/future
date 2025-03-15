@@ -111,11 +111,14 @@ value.Future <- function(future, stdout = TRUE, signal = TRUE, ...) {
   if (!isTRUE(future[[".rng_checked"]]) && isFALSE(future[["seed"]]) && isTRUE(result[["rng"]])) {
     ## BACKWARD COMPATIBILITY: Until higher-level APIs set future()
     ## argument 'seed' to indicate that RNGs are used. /HB 2019-12-24
+    rng_config <- parallel_rng_kind()
+    is_seed <- rng_config[["is_seed"]]
+    
     if (any(grepl(".doRNG.stream", deparse(future[["expr"]]), fixed = TRUE))) {
       ## doFuture w/ doRNG, e.g. %dorng%
-    } else if (is_lecyer_cmrg_seed(future[["globals"]][["...future.seeds_ii"]][[1]])) {
+    } else if (is_seed(future[["globals"]][["...future.seeds_ii"]][[1]])) {
       .Defunct(msg = "Please upgrade your 'future.apply' or 'furrr' (type 1)")
-    } else if (is_lecyer_cmrg_seed(future[["envir"]][["...future.seeds_ii"]][[1]])) {
+    } else if (is_seed(future[["envir"]][["...future.seeds_ii"]][[1]])) {
       .Defunct(msg = "Please upgrade your 'future.apply' or 'furrr' (type 2)")
     } else {
       onMisuse <- getOption("future.rng.onMisuse", "warning")

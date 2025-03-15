@@ -129,7 +129,7 @@ RngFutureCondition <- function(message = NULL, call = NULL, uuid = future[["uuid
   if (is.null(message)) {
     label <- future[["label"]]
     if (is.null(label)) label <- "<none>"
-    message <- sprintf("UNRELIABLE VALUE: Future (%s) unexpectedly generated random numbers without specifying argument 'seed'. There is a risk that those random numbers are not statistically sound and the overall results might be invalid. To fix this, specify 'seed=TRUE'. This ensures that proper, parallel-safe random numbers are produced via the L'Ecuyer-CMRG method. To disable this check, use 'seed=NULL', or set option 'future.rng.onMisuse' to \"ignore\".", sQuote(label))
+    message <- sprintf("UNRELIABLE VALUE: Future (%s) unexpectedly generated random numbers without specifying argument 'seed'. There is a risk that those random numbers are not statistically sound and the overall results might be invalid. To fix this, specify 'seed=TRUE'. This ensures that proper, parallel-safe random numbers are produced. To disable this check, use 'seed=NULL', or set option 'future.rng.onMisuse' to \"ignore\".", sQuote(label))
   }
   cond <- FutureCondition(message = message, call = call, uuid = uuid, future = future)
   class <- c("RngFutureCondition", class(cond))
