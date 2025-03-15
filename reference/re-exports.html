@@ -26,7 +26,7 @@ are also useful outside of the future framework."><meta property="og:image" cont
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">future</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.34.0-9306</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.34.0-9307</span>
       </span>
     </div>
 
@@ -175,18 +175,20 @@ are also useful outside of the <span class="pkg">future</span> framework.</p>
     <h2>Details</h2>
 
 <ul><li><p><code><a href="https://parallelly.futureverse.org/reference/as.cluster.html" class="external-link">parallelly::as.cluster()</a></code></p></li>
-<li><p><code><a href="https://parallelly.futureverse.org/reference/autoStopCluster.html" class="external-link">parallelly::autoStopCluster()</a></code></p></li>
+<li><p><code><a href="https://parallelly.futureverse.org/reference/autoStopCluster.html" class="external-link">parallelly::autoStopCluster()</a></code>   (no longer re-exported)</p></li>
 <li><p><code><a href="https://parallelly.futureverse.org/reference/availableCores.html" class="external-link">parallelly::availableCores()</a></code></p></li>
 <li><p><code><a href="https://parallelly.futureverse.org/reference/availableWorkers.html" class="external-link">parallelly::availableWorkers()</a></code></p></li>
-<li><p><code><a href="https://parallelly.futureverse.org/reference/makeClusterMPI.html" class="external-link">parallelly::makeClusterMPI()</a></code></p></li>
+<li><p><code><a href="https://parallelly.futureverse.org/reference/makeClusterMPI.html" class="external-link">parallelly::makeClusterMPI()</a></code>    (no longer re-exported)</p></li>
 <li><p><code><a href="https://parallelly.futureverse.org/reference/makeClusterPSOCK.html" class="external-link">parallelly::makeClusterPSOCK()</a></code></p></li>
-<li><p><code><a href="https://parallelly.futureverse.org/reference/makeClusterPSOCK.html" class="external-link">parallelly::makeNodePSOCK()</a></code></p></li>
+<li><p><code><a href="https://parallelly.futureverse.org/reference/makeClusterPSOCK.html" class="external-link">parallelly::makeNodePSOCK()</a></code>     (no longer re-exported)</p></li>
 <li><p><code><a href="https://parallelly.futureverse.org/reference/supportsMulticore.html" class="external-link">parallelly::supportsMulticore()</a></code></p></li>
-</ul><p>For backward-compatible reasons, these functions remain available as
-exact copies also from this package (as re-exports).  For example,</p>
+</ul><p>For backward-compatible reasons, <em>some</em> of these functions remain
+available as exact copies also from this package (as re-exports), e.g.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">cl</span> <span class="op">&lt;-</span> <span class="fu">parallelly</span><span class="fu">::</span><span class="fu"><a href="https://parallelly.futureverse.org/reference/makeClusterPSOCK.html" class="external-link">makeClusterPSOCK</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span></span></code></pre><p></p></div>
 <p>can still be accessed as:</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">cl</span> <span class="op">&lt;-</span> <span class="fu">future</span><span class="fu">::</span><span class="fu"><a href="../reference/re-exports.html">makeClusterPSOCK</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span></span></code></pre><p></p></div>
+<p>Note that the long-term goal is to remove all of them from this package.</p>
+<p>For example</p>
     </div>
 
   </div>

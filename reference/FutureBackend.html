@@ -28,7 +28,7 @@ A SequentialFutureBackend resolves futures sequentially in the current R session
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">future</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.34.0-9306</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.34.0-9307</span>
       </span>
     </div>
 
@@ -187,7 +187,8 @@ A SequentialFutureBackend resolves futures sequentially in the current R session
 <span>  <span class="va">...</span>,</span>
 <span>  earlySignal <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  gc <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  maxSizeOfObjects <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"future.globals.maxSize"</span>, <span class="fl">500</span> <span class="op">*</span> <span class="fl">1024</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span></span>
+<span>  maxSizeOfObjects <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"future.globals.maxSize"</span>, <span class="fl">500</span> <span class="op">*</span> <span class="fl">1024</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span>,</span>
+<span>  hooks <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">launchFuture</span><span class="op">(</span><span class="va">backend</span>, <span class="va">future</span>, <span class="va">...</span><span class="op">)</span></span>

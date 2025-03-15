@@ -23,7 +23,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">future</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.34.0-9306</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.34.0-9307</span>
       </span>
     </div>
 
@@ -180,6 +180,10 @@
 <div class="section level3">
 <h3 id="documentation-development-version">Documentation<a class="anchor" aria-label="anchor" href="#documentation-development-version"></a></h3>
 <ul><li>Updated the future topology vignette with information on the CPU-overuse protection error that may occur when using a nested future plan and how to avoid it.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="cleanup-development-version">Cleanup<a class="anchor" aria-label="anchor" href="#cleanup-development-version"></a></h3>
+<ul><li>Starting with <strong>future</strong> 1.20.0 (2020-10-30), several low-level functions for creating and working PSOCK and MPI clusters were moved to the <strong>parallelly</strong> package. For backward-compatibility reasons, those functions were kept in <strong>future</strong> as re-exports, e.g. <code><a href="../reference/re-exports.html">future::makeClusterPSOCK()</a></code> would still, which <code><a href="https://parallelly.futureverse.org/reference/makeClusterPSOCK.html" class="external-link">parallelly::makeClusterPSOCK()</a></code> is the new preferred use. The long-term goal is to clean out these re-exports. Starting with this release, the <strong>future</strong> package no longer re-exports <code>autoStopCluster()</code>, <code>makeClusterMPI()</code>, <code>makeNodePSOCK()</code>.</li>
 </ul></div>
 </div>
     <div class="section level2">
@@ -520,7 +524,7 @@
 <li><p>Launching R or Rscript with command-line option <code>--parallel=n</code>, where n &gt; 1, will now use ‘multisession’ as future strategy. Previously, it would use ‘multiprocess’, which is now deprecated.</p></li>
 <li><p>Support for <code>local = FALSE</code> is deprecated. For the time being, it remains supported for ‘transparent’ futures and ‘cluster’ futures that use <code>persistent = TRUE</code>. However, note that <code>persistent =    TRUE</code> will also deprecated at some point in the future. These deprecations are required in order to further standardize the Future API across various types of parallel backends.</p></li>
 <li><p>Now multisession workers inherit the package library path from the main R session <em>when they are created</em>, that is, when calling <code>plan(multisession)</code>. To avoid this, use <code>plan(multisession,    rscript_libs = NULL)</code>, which is an argument passed down to <code><a href="../reference/re-exports.html">makeClusterPSOCK()</a></code>. With this update, ‘sequential’, ‘multisession’, and ‘multicore’ futures see the exact same library path.</p></li>
-<li><p>Several functions for managing <strong>parallel</strong>-style processing have been moved to a new <strong>parallelly</strong> package. Specifically, functions <code><a href="../reference/re-exports.html">availableCores()</a></code>, <code><a href="../reference/re-exports.html">availableWorkers()</a></code>, <code><a href="../reference/re-exports.html">supportsMulticore()</a></code>, <code><a href="../reference/re-exports.html">as.cluster()</a></code>, <code><a href="../reference/re-exports.html">autoStopCluster()</a></code>, <code><a href="../reference/re-exports.html">makeClusterMPI()</a></code>, <code><a href="../reference/re-exports.html">makeClusterPSOCK()</a></code>, and <code><a href="../reference/re-exports.html">makeNodePSOCK()</a></code> have been moved. None of them are specific to futures per se and are likely useful elsewhere too. Also, having them in a separate, standalone package will speed up the process of releasing any updates to these functions. The code base of the <strong>future</strong> package shrunk about 10-15% from this migration. For backward compatibility, the migrated functions remain in this package as re-exports.</p></li>
+<li><p>Several functions for managing <strong>parallel</strong>-style processing have been moved to a new <strong>parallelly</strong> package. Specifically, functions <code><a href="../reference/re-exports.html">availableCores()</a></code>, <code><a href="../reference/re-exports.html">availableWorkers()</a></code>, <code><a href="../reference/re-exports.html">supportsMulticore()</a></code>, <code><a href="../reference/re-exports.html">as.cluster()</a></code>, <code>autoStopCluster()</code>, <code>makeClusterMPI()</code>, <code><a href="../reference/re-exports.html">makeClusterPSOCK()</a></code>, and <code>makeNodePSOCK()</code> have been moved. None of them are specific to futures per se and are likely useful elsewhere too. Also, having them in a separate, standalone package will speed up the process of releasing any updates to these functions. The code base of the <strong>future</strong> package shrunk about 10-15% from this migration. For backward compatibility, the migrated functions remain in this package as re-exports.</p></li>
 </ul></div>
 <div class="section level3">
 <h3 id="new-features-1-20-0">New Features<a class="anchor" aria-label="anchor" href="#new-features-1-20-0"></a></h3>
@@ -573,7 +577,7 @@
 <h3 id="new-features-1-19-0">New Features<a class="anchor" aria-label="anchor" href="#new-features-1-19-0"></a></h3>
 <ul><li><p><code><a href="../reference/re-exports.html">makeClusterPSOCK()</a></code> will now retry to create a cluster node up to <code>tries</code> (default: 3) times before giving up. If argument <code>port</code> species more than one port (e.g. <code>port = "random"</code>) then it will also attempt find a valid random port up to <code>tries</code> times before giving up. The pre-validation of the random port is only supported in R (&gt;= 4.0.0) and skipped otherwise.</p></li>
 <li><p><code><a href="../reference/re-exports.html">makeClusterPSOCK()</a></code> skips shell quoting of the elements in <code>rscript</code> if it inherits from <code>AsIs</code>.</p></li>
-<li><p><code><a href="../reference/re-exports.html">makeClusterPSOCK()</a></code>, or actually <code><a href="../reference/re-exports.html">makeNodePSOCK()</a></code>, gained argument <code>quiet</code>, which can be used to silence output produced by <code>manual = TRUE</code>.</p></li>
+<li><p><code><a href="../reference/re-exports.html">makeClusterPSOCK()</a></code>, or actually <code>makeNodePSOCK()</code>, gained argument <code>quiet</code>, which can be used to silence output produced by <code>manual = TRUE</code>.</p></li>
 <li><p>If multithreading is disabled but multicore futures fail to acknowledge the setting on the current system, then an informative <code>FutureWarning</code> is produced by such futures.</p></li>
 <li><p>Now <code><a href="../reference/re-exports.html">availableCores()</a></code> better supports Slurm. Specifically, if environment variable <code>SLURM_CPUS_PER_TASK</code> is not set, which requires that option <code>--slurm-cpus-per-task=n</code> is specified and <code>SLURM_JOB_NUM_NODES=1</code>, then it falls back to using <code>SLURM_CPUS_ON_NODE</code>, e.g. when using <code>--ntasks=n</code>.</p></li>
 <li><p>Now <code><a href="../reference/re-exports.html">availableCores()</a></code> and <code><a href="../reference/re-exports.html">availableWorkers()</a></code> supports LSF/OpenLava. Specifically, they acknowledge environment variable <code>LSB_DJOB_NUMPROC</code> and <code>LSB_HOSTS</code>, respectively.</p></li>
@@ -608,7 +612,7 @@
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-1-18-0">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-1-18-0"></a></h3>
-<ul><li><p>Made <code><a href="../reference/re-exports.html">makeClusterPSOCK()</a></code> and <code><a href="../reference/re-exports.html">makeNodePSOCK()</a></code> agile to the name change from <code>parallel:::.slaveRSOCK()</code> to <code>parallel:::.workRSOCK()</code> in R (&gt;= 4.1.0).</p></li>
+<ul><li><p>Made <code><a href="../reference/re-exports.html">makeClusterPSOCK()</a></code> and <code>makeNodePSOCK()</code> agile to the name change from <code>parallel:::.slaveRSOCK()</code> to <code>parallel:::.workRSOCK()</code> in R (&gt;= 4.1.0).</p></li>
 <li><p><code>makeClusterPSOCK(..., rscript)</code> will not try to locate <code>rscript[1]</code> if argument <code>homogeneous</code> is FALSE (or inferred to be FALSE).</p></li>
 <li><p><code>makeClusterPSOCK(..., rscript_envs)</code> would result in a syntax error when starting the workers due to non-ASCII quotation marks if option <code>useFancyQuotes</code> was not set to FALSE.</p></li>
 <li><p><code>plan(list(...))</code> would produce ‘Error in UseMethod(“tweak”) : no applicable method for ’tweak’ applied to an object of class “list”’ if a non-function object named ‘list’ was on the search path.</p></li>
@@ -707,7 +711,7 @@
 <li><p>Package would set or update the RNG state of R (<code>.Random.seed</code>) when loaded, which could affect RNG reproducibility.</p></li>
 <li><p>Package could set <code>.Random.seed</code> to NULL, instead of removing it, which in turn would produce a warning on “‘.Random.seed’ is not an integer vector but of type ‘NULL’, so ignored” when the next random number generated.</p></li>
 <li><p>Now a future assignment to list environments produce more informative error messages if attempting to assign to more than one element.</p></li>
-<li><p><code><a href="../reference/re-exports.html">makeClusterMPI()</a></code> did not work for MPI clusters with <code>comm</code> other than <code>1</code>.</p></li>
+<li><p><code>makeClusterMPI()</code> did not work for MPI clusters with <code>comm</code> other than <code>1</code>.</p></li>
 </ul></div>
 <div class="section level3">
 <h3 id="deprecated-and-defunct-1-15-0">Deprecated and Defunct<a class="anchor" aria-label="anchor" href="#deprecated-and-defunct-1-15-0"></a></h3>
@@ -807,7 +811,7 @@
 <h2 class="page-header" data-toc-text="1.11.1" id="version-1111">Version 1.11.1<a class="anchor" aria-label="anchor" href="#version-1111"></a></h2>
 <div class="section level3">
 <h3 id="new-features-1-11-1">New Features<a class="anchor" aria-label="anchor" href="#new-features-1-11-1"></a></h3>
-<ul><li><p>The defaults of several arguments of <code><a href="../reference/re-exports.html">makeClusterPSOCK()</a></code> and <code><a href="../reference/re-exports.html">makeNodePSOCK()</a></code> can now be controlled via environment variables in addition to R options that was supported in the past. An advantage of using environment variables is that they will be inherited by child processes, also nested ones.</p></li>
+<ul><li><p>The defaults of several arguments of <code><a href="../reference/re-exports.html">makeClusterPSOCK()</a></code> and <code>makeNodePSOCK()</code> can now be controlled via environment variables in addition to R options that was supported in the past. An advantage of using environment variables is that they will be inherited by child processes, also nested ones.</p></li>
 <li><p>The printing of future plans is now less verbose when the <code>workers</code> argument is a complex object such as a PSOCK cluster object. Previously, the output would include verbose output of attributes, etc.</p></li>
 </ul></div>
 <div class="section level3">
@@ -856,7 +860,7 @@
 <ul><li><p>Add support for manually specifying globals in addition to those that are automatically identified via argument <code>globals</code> or <code>%globals%</code>. Two examples are <code>globals = structure(TRUE, add =    list(a = 42L, b = 3.14))</code> and <code>globals = structure(TRUE, add =    c("a", "b"))</code>. Analogously, attribute <code>ignore</code> can be used to exclude automatically identified globals.</p></li>
 <li><p>The error reported when failing to retrieve the results of a future evaluated on a localhost cluster/multisession worker or a forked/multicore worker is now more informative. Specifically, it mentions whether the worker process is still alive or not.</p></li>
 <li><p>Add <code>makeClusterMPI(n)</code> for creating MPI-based clusters of a similar kind as <code>parallel::makeCluster(n, type = "MPI")</code> but that also attempts to workaround issues where <code><a href="https://rdrr.io/r/parallel/makeCluster.html" class="external-link">parallel::stopCluster()</a></code> causes R to stall.</p></li>
-<li><p><code><a href="../reference/re-exports.html">makeClusterPSOCK()</a></code> and <code><a href="../reference/re-exports.html">makeClusterMPI()</a></code> gained argument <code>autoStop</code> for controlling whether the cluster should be automatically stopped when garbage collected or not.</p></li>
+<li><p><code><a href="../reference/re-exports.html">makeClusterPSOCK()</a></code> and <code>makeClusterMPI()</code> gained argument <code>autoStop</code> for controlling whether the cluster should be automatically stopped when garbage collected or not.</p></li>
 <li><p>BETA: Now <code><a href="../reference/resolved.html">resolved()</a></code> for <code>ClusterFuture</code> is non-blocking also for clusters of type <code>MPIcluster</code> as created by <code>parallel::makeCluster(..., type = "MPI")</code>.</p></li>
 </ul></div>
 <div class="section level3">
@@ -1033,7 +1037,7 @@
 <div class="section level3">
 <h3 id="new-features-1-5-0">New Features<a class="anchor" aria-label="anchor" href="#new-features-1-5-0"></a></h3>
 <ul><li><p><code><a href="../reference/re-exports.html">makeClusterPSOCK()</a></code> now defaults to use the Windows PuTTY software’s SSH client <code>plink -ssh</code>, if <code>ssh</code> is not found.</p></li>
-<li><p>Argument <code>homogeneous</code> of <code><a href="../reference/re-exports.html">makeNodePSOCK()</a></code>, a helper function of <code><a href="../reference/re-exports.html">makeClusterPSOCK()</a></code>, will default to FALSE also if the hostname is a fully qualified domain name (FQDN), that is, it “contains periods”. For instance, <code>c('node1', 'node2.server.org')</code> will use <code>homogeneous = TRUE</code> for the first worker and <code>homogeneous = FALSE</code> for the second.</p></li>
+<li><p>Argument <code>homogeneous</code> of <code>makeNodePSOCK()</code>, a helper function of <code><a href="../reference/re-exports.html">makeClusterPSOCK()</a></code>, will default to FALSE also if the hostname is a fully qualified domain name (FQDN), that is, it “contains periods”. For instance, <code>c('node1', 'node2.server.org')</code> will use <code>homogeneous = TRUE</code> for the first worker and <code>homogeneous = FALSE</code> for the second.</p></li>
 <li><p><code><a href="../reference/re-exports.html">makeClusterPSOCK()</a></code> now asserts that each cluster node is functioning by retrieving and recording the node’s session information including the process ID of the corresponding R process.</p></li>
 <li><p>Nested futures sets option <code>mc.cores</code> to prevent spawning of recursive parallel processes by mistake. Because ‘mc.cores’ controls <em>additional</em> processes, it was previously set to zero. However, since some functions such as <code>mclapply()</code> does not support that, it is now set to one instead.</p></li>
 </ul></div>
@@ -1069,7 +1073,7 @@
 <div class="section level3">
 <h3 id="new-features-1-4-0">New Features<a class="anchor" aria-label="anchor" href="#new-features-1-4-0"></a></h3>
 <ul><li><p><code><a href="../reference/future.html">future()</a></code> and <code>future_lapply()</code> gained argument <code>packages</code> for explicitly specifying packages to be attached when the futures are evaluated. Note that the default throughout the <strong>future</strong> package is that all globals and all required packages are automatically identified and gathered, so in most cases those do not have to be specified manually.</p></li>
-<li><p>The default values for arguments <code>connectTimeout</code> and <code>timeout</code> of <code><a href="../reference/re-exports.html">makeNodePSOCK()</a></code> can now be controlled via global options.</p></li>
+<li><p>The default values for arguments <code>connectTimeout</code> and <code>timeout</code> of <code>makeNodePSOCK()</code> can now be controlled via global options.</p></li>
 </ul></div>
 <div class="section level3">
 <h3 id="random-number-generation-1-4-0">Random Number Generation<a class="anchor" aria-label="anchor" href="#random-number-generation-1-4-0"></a></h3>
