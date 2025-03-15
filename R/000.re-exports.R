@@ -6,16 +6,16 @@
 #' are also useful outside of the \pkg{future} framework.
 #'
 #' * [parallelly::as.cluster()]
-#' * [parallelly::autoStopCluster()]
+#' * [parallelly::autoStopCluster()]   (no longer re-exported)
 #' * [parallelly::availableCores()]
 #' * [parallelly::availableWorkers()]
-#' * [parallelly::makeClusterMPI()]
+#' * [parallelly::makeClusterMPI()]    (no longer re-exported)
 #' * [parallelly::makeClusterPSOCK()]
-#' * [parallelly::makeNodePSOCK()]
+#' * [parallelly::makeNodePSOCK()]     (no longer re-exported)
 #' * [parallelly::supportsMulticore()]
 #' 
-#' For backward-compatible reasons, these functions remain available as
-#' exact copies also from this package (as re-exports).  For example,
+#' For backward-compatible reasons, _some_ of these functions remain
+#' available as exact copies also from this package (as re-exports), e.g.
 #'
 #' ```r
 #' cl <- parallelly::makeClusterPSOCK(2)
@@ -27,13 +27,13 @@
 #' cl <- future::makeClusterPSOCK(2)
 #' ```
 #'
+#' Note that the long-term goal is to remove all of them from this package.
+#'
+#' For example
+#'
 #' @importFrom parallelly as.cluster
 #' @export as.cluster
 #' @aliases as.cluster
-#'
-#' @importFrom parallelly autoStopCluster
-#' @export autoStopCluster
-#' @aliases autoStopCluster
 #'
 #' @importFrom parallelly availableCores
 #' @export availableCores
@@ -43,17 +43,9 @@
 #' @export availableWorkers
 #' @aliases availableWorkers
 #'
-#' @importFrom parallelly makeClusterMPI
-#' @export makeClusterMPI
-#' @aliases makeClusterMPI
-#'
 #' @importFrom parallelly makeClusterPSOCK
 #' @export makeClusterPSOCK
 #' @aliases makeClusterPSOCK
-#'
-#' @importFrom parallelly makeNodePSOCK
-#' @export makeNodePSOCK
-#' @aliases makeNodePSOCK
 #'
 #' @importFrom parallelly supportsMulticore
 #' @export supportsMulticore

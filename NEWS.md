@@ -52,7 +52,19 @@
  * Updated the future topology vignette with information on the
    CPU-overuse protection error that may occur when using a nested
    future plan and how to avoid it.
- 
+
+## Cleanup
+
+ * Starting with **future** 1.20.0 (2020-10-30), several low-level
+   functions for creating and working PSOCK and MPI clusters were
+   moved to the **parallelly** package. For backward-compatibility
+   reasons, those functions were kept in **future** as re-exports,
+   e.g. `future::makeClusterPSOCK()` would still, which
+   `parallelly::makeClusterPSOCK()` is the new preferred use.  The
+   long-term goal is to clean out these re-exports. Starting with this
+   release, the **future** package no longer re-exports
+   `autoStopCluster()`, `makeClusterMPI()`, `makeNodePSOCK()`.
+
 
 # Version 1.34.0 [2024-07-29]
 
