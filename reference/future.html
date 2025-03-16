@@ -165,7 +165,7 @@ switching from, say, sequential to parallel processing."><meta property="og:imag
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Create a future</h1>
-    <small class="dont-index">Source: <a href="https://github.com/futureverse/future/blob/HEAD/R/core_api-future.R" class="external-link"><code>R/core_api-future.R</code></a>, <a href="https://github.com/futureverse/future/blob/HEAD/R/utils_api-futureCall.R" class="external-link"><code>R/utils_api-futureCall.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/futureverse/future/blob/HEAD/R/core_api-future.R" class="external-link"><code>R/core_api-future.R</code></a>, <a href="https://github.com/futureverse/future/blob/HEAD/R/utils_api-futureCall.R" class="external-link"><code>R/utils_api-futureCall.R</code></a>, <a href="https://github.com/futureverse/future/blob/HEAD/R/utils_api-minifuture.R" class="external-link"><code>R/utils_api-minifuture.R</code></a></small>
     <div class="hidden name"><code>future.Rd</code></div>
     </div>
 
@@ -214,6 +214,18 @@ switching from, say, sequential to parallel processing.</p>
 <span>  label <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  gc <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">minifuture</span><span class="op">(</span></span>
+<span>  <span class="va">expr</span>,</span>
+<span>  substitute <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  globals <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  packages <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  stdout <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  conditions <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  seed <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">...</span>,</span>
+<span>  envir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sys.parent.html" class="external-link">parent.frame</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -344,8 +356,12 @@ FutureBackend subclass, or by R option <a href="future.options.html">future.glob
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p><code>f &lt;- future(expr)</code> creates a <a href="Future-class.html">Future</a> <code>f</code> that evaluates expression <code>expr</code>, the value of the future is retrieved using <code>v &lt;- value(f)</code>.</p>
-<p><code>f &lt;- futureCall(FUN, args)</code> creates a <a href="Future-class.html">Future</a> <code>f</code> that calls function <code>FUN</code> with arguments <code>args</code>, where the value of the future is retrieved using <code>x &lt;- value(f)</code>.</p>
+    <p><code>future()</code> returns <a href="Future-class.html">Future</a> that evaluates expression <code>expr</code>.</p>
+<p><code>futureCall()</code> returns a <a href="Future-class.html">Future</a> that calls function <code>FUN</code> with
+arguments <code>args</code>.</p>
+<p>minifuture(expr)` creates a future with minimal overhead, by disabling
+user-friendly behaviors, e.g. automatic identification of global
+variables and packages needed, and relaying of output.</p>
     </div>
     <div id="details">
     <h2>Details</h2>
