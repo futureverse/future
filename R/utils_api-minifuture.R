@@ -1,17 +1,9 @@
-#' Create a minimalistic future with minimal automatic features
+#' @return
+#' minifuture(expr)` creates a future with minimal overhead, by disabling
+#' user-friendly behaviors, e.g. automatic identification of global
+#' variables and packages needed, and relaying of output.
 #'
-#' Same as [future()], but with different default arguments. Specifically,
-#' globals and packages must be manually specified, conditions are not
-#' captured, standard output is not captured, random seeds are not declared
-#' or set.
-#'
-#' @inheritParams future
-#'
-#' @param expr An \R \link[base]{expression}.
-#'
-#' @param \ldots Additional arguments passed to [future()].
-#'
-#' @return A [Future]
+#' @rdname future
 #' @export
 minifuture <- function(expr, substitute = TRUE, globals = NULL, packages = NULL, stdout = NA, conditions = NULL, seed = NULL, ..., envir = parent.frame()) {
   if (substitute) expr <- substitute(expr)

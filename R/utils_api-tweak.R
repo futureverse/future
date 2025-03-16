@@ -12,6 +12,7 @@
 #' Use [plan()] to set a future to become the
 #' new default strategy.
 #'
+#' @rdname plan
 #' @export
 tweak <- function(strategy, ..., penvir = parent.frame()) UseMethod("tweak")
 
