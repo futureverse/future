@@ -145,52 +145,56 @@
 #' To set \R options or environment variables when \R starts (even before the \pkg{future} package is loaded), see the \link[base]{Startup} help page.  The \href{https://cran.r-project.org/package=startup}{\pkg{startup}} package provides a friendly mechanism for configurating \R's startup process.
 #'
 #' @aliases
-#' future.cmdargs 
-#' .future.R
+#' future.options 
+#'
 #' future.startup.script
-#' R_FUTURE_STARTUP_SCRIPT
 #' future.debug
-#' R_FUTURE_DEBUG
 #' future.demo.mandelbrot.region
-#' R_FUTURE_DEMO_MANDELBROT_REGION
 #' future.demo.mandelbrot.nrow
-#' R_FUTURE_DEMO_MANDELBROT_NROW
 #' future.fork.multithreading.enable
-#' R_FUTURE_FORK_MULTITHREADING_ENABLE
 #' future.globals.maxSize
-#' R_FUTURE_GLOBALS_MAXSIZE
 #' future.globals.method
-#' R_FUTURE_GLOBALS_METHOD
 #' future.globals.onMissing
-#' R_FUTURE_GLOBALS_ONMISSING
 #' future.globals.resolve
-#' R_FUTURE_GLOBALS_RESOLVE
 #' future.globals.onReference
-#' R_FUTURE_GLOBALS_ONREFERENCE
+#' future.globals.onReference
 #' future.plan
-#' R_FUTURE_PLAN
 #' future.onFutureCondition.keepFuture
-#' R_FUTURE_ONFUTURECONDITION_KEEPFUTURE
 #' future.resolve.recursive
-#' R_FUTURE_RESOLVE_RECURSIVE
 #' future.globalenv.onMisuse
-#' R_FUTURE_GLOBALENV_ONMISUSE
 #' future.rng.onMisuse
-#' R_FUTURE_RNG_ONMISUSE
 #' future.wait.alpha
-#' R_FUTURE_WAIT_ALPHA
 #' future.wait.interval
-#' R_FUTURE_WAIT_INTERVAL
 #' future.wait.timeout
+#' future.output.windows.reencode
+#' future.journal
+#' future.globals.objectSize.method
+#'
+#' R_FUTURE_STARTUP_SCRIPT
+#' R_FUTURE_DEBUG
+#' R_FUTURE_DEMO_MANDELBROT_REGION
+#' R_FUTURE_DEMO_MANDELBROT_NROW
+#' R_FUTURE_FORK_MULTITHREADING_ENABLE
+#' R_FUTURE_GLOBALS_MAXSIZE
+#' R_FUTURE_GLOBALS_METHOD
+#' R_FUTURE_GLOBALS_ONMISSING
+#' R_FUTURE_GLOBALS_RESOLVE
+#' R_FUTURE_GLOBALS_ONREFERENCE
+#' R_FUTURE_PLAN
+#' R_FUTURE_ONFUTURECONDITION_KEEPFUTURE
+#' R_FUTURE_RESOLVE_RECURSIVE
+#' R_FUTURE_GLOBALENV_ONMISUSE
+#' R_FUTURE_RNG_ONMISUSE
+#' R_FUTURE_WAIT_ALPHA
+#' R_FUTURE_WAIT_INTERVAL
 #' R_FUTURE_WAIT_TIMEOUT
 #' R_FUTURE_RESOLVED_TIMEOUT
-#' future.output.windows.reencode
 #' R_FUTURE_OUTPUT_WINDOWS_REENCODE
-#' future.journal
 #' R_FUTURE_JOURNAL
 #' R_FUTURE_GLOBALS_OBJECTSIZE_METHOD
-#' future.globals.objectSize.method
-#' future.options 
+#'
+#' future.cmdargs 
+#' .future.R
 #'
 #' @name zzz-future.options 
 NULL

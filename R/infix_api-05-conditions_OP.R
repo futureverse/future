@@ -7,6 +7,7 @@
 #'
 #' @param capture If TRUE, the standard output will be captured, otherwise not.
 #'
+#' @aliases %conditions%
 #' @rdname futureAssign
 #' @export
 `%conditions%` <- function(fassignment, capture) {

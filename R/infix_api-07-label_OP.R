@@ -6,7 +6,7 @@
 #'        `x %<-% { expr }`.
 #' @inheritParams future
 #'
-#' @aliases `%label%`
+#' @aliases %label%
 #' @rdname futureAssign
 #'
 #' @export

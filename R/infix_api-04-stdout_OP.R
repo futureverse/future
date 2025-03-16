@@ -7,7 +7,7 @@
 #'
 #' @param capture If TRUE, the standard output will be captured, otherwise not.
 #'
-#' @aliases `%stdout%`
+#' @aliases %stdout%
 #' @rdname futureAssign
 #'
 #' @export

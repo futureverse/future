@@ -12,18 +12,12 @@
 \alias{\%globals\%}
 \alias{\%packages\%}
 \alias{\%seed\%}
-\alias{`\%seed\%`}
 \alias{\%stdout\%}
-\alias{`\%stdout\%`}
 \alias{\%conditions\%}
 \alias{\%lazy\%}
-\alias{`\%lazy\%`}
 \alias{\%label\%}
-\alias{`\%label\%`}
 \alias{\%plan\%}
-\alias{`\%plan\%`}
 \alias{\%tweak\%}
-\alias{`\%tweak\%`}
 \title{Create a future assignment}
 \usage{
 futureAssign(

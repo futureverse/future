@@ -7,7 +7,7 @@
 #' @param strategy The mechanism for how the future should be
 #'        resolved. See [plan()] for further details.
 #'
-#' @aliases `%plan%`
+#' @aliases %plan%
 #' @rdname futureAssign
 #'
 #' @export

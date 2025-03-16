@@ -7,7 +7,7 @@
 #' @param tweaks A named list (or vector) with arguments that
 #' should be changed relative to the current strategy.
 #'
-#' @aliases `%tweak%`
+#' @aliases %tweak%
 #' @rdname futureAssign
 #'
 #' @export
