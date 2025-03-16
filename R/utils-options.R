@@ -190,8 +190,9 @@
 #' R_FUTURE_JOURNAL
 #' R_FUTURE_GLOBALS_OBJECTSIZE_METHOD
 #' future.globals.objectSize.method
+#' future.options 
 #'
-#' @name future.options 
+#' @name zzz-future.options 
 NULL
 
 
