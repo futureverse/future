@@ -15,7 +15,7 @@
  
  * Add `minifuture()`, which is like `future()`, but with different
    default arguments resulting in less overhead with the added burden
-   on having to specify globals and packages, not having conditions
+   of having to specify globals and packages, not having conditions
    and standard output relayed, and ignoring random number generation.
 
  * Interrupted futures are now handled and produce an informative error.
