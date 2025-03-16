@@ -372,7 +372,7 @@ If the threshold is exceeded, an informative error is thrown.
 As soon as the value (or an error) has been collected it will be available for all succeeding requests.
 -->
 <ul><li>式の評価は<strong>ローカル環境</strong>（すなわち <code>local({ 式 })</code>）で行われる。したがって、代入文は呼び出し環境に影響を与えない。 これは評価が外部の R プロセスで行われるときはもちろん、現行の R セッションで行われるときにも適用される。</li>
-<li>フューチャの作成時に、<strong>グローバル変数が固定される</strong>。 非同期評価の場合、グローバル変数は、フューチャの式を評価する R プロセスにエクスポートされる。 遅延評価 (<code>lazy = TRUE</code>) を伴う逐次戦略においては、グローバル変数はフリーズ（フューチャのローカル環境にクローン）される。 また、誤って大きすぎるオブジェクトをエクスポートすることを防ぐために、グローバル変数の合計サイズにしきい値を設定できる。このしきい値を超えるとエラーが発生する（<code><a href="reference/future.options.html">help("future.options")</a></code> を参照）。</li>
+<li>フューチャの作成時に、<strong>グローバル変数が固定される</strong>。 非同期評価の場合、グローバル変数は、フューチャの式を評価する R プロセスにエクスポートされる。 遅延評価 (<code>lazy = TRUE</code>) を伴う逐次戦略においては、グローバル変数はフリーズ（フューチャのローカル環境にクローン）される。 また、誤って大きすぎるオブジェクトをエクスポートすることを防ぐために、グローバル変数の合計サイズにしきい値を設定できる。このしきい値を超えるとエラーが発生する（<code><a href="reference/zzz-future.options.html">help("future.options")</a></code> を参照）。</li>
 <li>フューチャの式の評価は一度だけ実行される。 値が定まった（解決済み状態になった）あとで、同じフューチャをもう一度評価することはできない。</li>
 </ul><!--
 Here is an example illustrating that all assignments are done to a local environment:

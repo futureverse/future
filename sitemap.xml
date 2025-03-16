@@ -29,7 +29,6 @@
 <url><loc>https://future.futureverse.org/reference/clusterExportSticky.html</loc></url>
 <url><loc>https://future.futureverse.org/reference/find_references.html</loc></url>
 <url><loc>https://future.futureverse.org/reference/future.html</loc></url>
-<url><loc>https://future.futureverse.org/reference/future.options.html</loc></url>
 <url><loc>https://future.futureverse.org/reference/futureAssign.html</loc></url>
 <url><loc>https://future.futureverse.org/reference/futureOf.html</loc></url>
 <url><loc>https://future.futureverse.org/reference/futureSessionInfo.html</loc></url>
@@ -61,5 +60,6 @@
 <url><loc>https://future.futureverse.org/reference/sticky_globals.html</loc></url>
 <url><loc>https://future.futureverse.org/reference/usedCores.html</loc></url>
 <url><loc>https://future.futureverse.org/reference/value.html</loc></url>
+<url><loc>https://future.futureverse.org/reference/zzz-future.options.html</loc></url>
 </urlset>
 

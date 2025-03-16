@@ -263,7 +263,7 @@ or a regular RNG seed (a single integer).  If the latter, then a
 L'Ecuyer-CMRG seed will be automatically created based on the given seed.
 Furthermore, if FALSE, then the future will be monitored to make sure it
 does not use random numbers.  If it does and depending on the value of
-option <code><a href="future.options.html">future.rng.onMisuse</a></code>, the check is
+option <a href="zzz-future.options.html">future.rng.onMisuse</a>, the check is
 ignored, an informative warning, or error will be produced.
 If <code>seed</code> is NULL, then the effect is as with <code>seed = FALSE</code>
 but without the RNG check being performed.</p></dd>
@@ -339,7 +339,7 @@ if you sit at home and have set up a future backend with workers running
 remotely at your university or company, then you might want to use this
 protection to avoid transferring giga- or terabytes of data without noticing.
 (Default: \(500 \cdot 1024^2\) bytes = 500 MiB, unless overridden by a
-FutureBackend subclass, or by R option <a href="future.options.html">future.globals.maxSize</a> (sic!))</p></dd>
+FutureBackend subclass, or by R option <a href="zzz-future.options.html">future.globals.maxSize</a> (sic!))</p></dd>
 
 
 <dt id="arg-fun">FUN<a class="anchor" aria-label="anchor" href="#arg-fun"></a></dt>
@@ -359,7 +359,7 @@ FutureBackend subclass, or by R option <a href="future.options.html">future.glob
     <p><code>future()</code> returns <a href="Future-class.html">Future</a> that evaluates expression <code>expr</code>.</p>
 <p><code>futureCall()</code> returns a <a href="Future-class.html">Future</a> that calls function <code>FUN</code> with
 arguments <code>args</code>.</p>
-<p>minifuture(expr)` creates a future with minimal overhead, by disabling
+<p><code>minifuture(expr)</code> creates a future with minimal overhead, by disabling
 user-friendly behaviors, e.g. automatic identification of global
 variables and packages needed, and relaying of output.</p>
     </div>
