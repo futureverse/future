@@ -458,7 +458,7 @@
 <div class="section level3">
 <h3 id="significant-changes-1-22-0">Significant Changes<a class="anchor" aria-label="anchor" href="#significant-changes-1-22-0"></a></h3>
 <ul><li><p>A lazy future remains a generic future until it is launched, which means it is not assigned a future backend class until launched.</p></li>
-<li><p>Argument <code>seed</code> for <code><a href="../reference/future.html">futureAssign()</a></code> and <code><a href="../reference/future.html">futureCall()</a></code> now defaults to FALSE just like for <code><a href="../reference/future.html">future()</a></code>.</p></li>
+<li><p>Argument <code>seed</code> for <code><a href="../reference/futureAssign.html">futureAssign()</a></code> and <code><a href="../reference/future.html">futureCall()</a></code> now defaults to FALSE just like for <code><a href="../reference/future.html">future()</a></code>.</p></li>
 <li><p><code>R_FUTURE_*</code> environment variables are now only read when the <strong>future</strong> package is loaded, where they set the corresponding <code>future.*</code> option. Previously, some of these environment variables were queried by different functions as a fallback to when an option was not set. By only parsing them when the package is loaded, it decrease the overhead in functions, and it clarifies that options can be changed at runtime whereas environment variables should only be set at startup.</p></li>
 </ul></div>
 <div class="section level3">
@@ -1109,8 +1109,8 @@
 <h3 id="new-features-1-3-0">New Features<a class="anchor" aria-label="anchor" href="#new-features-1-3-0"></a></h3>
 <ul><li><p>Renamed ‘eager’ futures to ‘sequential’, e.g. <code>plan(sequential)</code>. The ‘eager’ futures will be deprecated in an upcoming release.</p></li>
 <li><p>Added support for controlling whether a future is resolved eagerly or lazily when creating the future, e.g. <code>future(..., lazy =    TRUE)</code>, <code>futureAssign(..., lazy = TRUE)</code>, and <code>x %&lt;-% { ... }    %lazy% TRUE</code>.</p></li>
-<li><p><code><a href="../reference/future.html">future()</a></code>, <code><a href="../reference/future.html">futureAssign()</a></code> and <code><a href="../reference/future.html">futureCall()</a></code> gained argument <code>seed</code>, which specifies a L’Ecuyer-CMRG random seed to be used by the future. The seed for future assignment can be specified via <code>%seed%</code>.</p></li>
-<li><p><code><a href="../reference/future.html">futureAssign()</a></code> now passes all additional arguments to <code><a href="../reference/future.html">future()</a></code>.</p></li>
+<li><p><code><a href="../reference/future.html">future()</a></code>, <code><a href="../reference/futureAssign.html">futureAssign()</a></code> and <code><a href="../reference/future.html">futureCall()</a></code> gained argument <code>seed</code>, which specifies a L’Ecuyer-CMRG random seed to be used by the future. The seed for future assignment can be specified via <code>%seed%</code>.</p></li>
+<li><p><code><a href="../reference/futureAssign.html">futureAssign()</a></code> now passes all additional arguments to <code><a href="../reference/future.html">future()</a></code>.</p></li>
 <li><p>Added <code>future_lapply()</code> which supports load balancing (“chunking”) and perfect reproducibility (regardless of type of load balancing and how futures are resolved) via initial random seed.</p></li>
 <li><p>Added <code><a href="../reference/re-exports.html">availableWorkers()</a></code>. By default it returns localhost workers according to <code><a href="../reference/re-exports.html">availableCores()</a></code>. In addition, it detects common HPC allocations given in environment variables set by the HPC scheduler.</p></li>
 <li><p>The default for <code>plan(cluster)</code> is now <code>workers =    availableWorkers()</code>.</p></li>

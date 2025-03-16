@@ -231,14 +231,14 @@ this works:</p>
 <span></span>
 <span><span class="va">reset</span> <span class="op">&lt;-</span> <span class="cn">TRUE</span></span>
 <span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fl">1</span></span>
-<span><span class="va">y</span> <span class="op"><a href="../reference/future.html">%&lt;-%</a></span> <span class="op">{</span> <span class="kw">if</span> <span class="op">(</span><span class="va">reset</span><span class="op">)</span> <span class="va">x</span> <span class="op">&lt;-</span> <span class="fl">0</span>; <span class="va">x</span> <span class="op">+</span> <span class="fl">1</span> <span class="op">}</span></span>
+<span><span class="va">y</span> <span class="op"><a href="../reference/futureAssign.html">%&lt;-%</a></span> <span class="op">{</span> <span class="kw">if</span> <span class="op">(</span><span class="va">reset</span><span class="op">)</span> <span class="va">x</span> <span class="op">&lt;-</span> <span class="fl">0</span>; <span class="va">x</span> <span class="op">+</span> <span class="fl">1</span> <span class="op">}</span></span>
 <span><span class="va">y</span></span>
 <span><span class="co">## [1] 1</span></span></code></pre></div>
 <p>the following does <em>not</em> work:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">reset</span> <span class="op">&lt;-</span> <span class="cn">FALSE</span></span>
 <span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fl">1</span></span>
-<span><span class="va">y</span> <span class="op"><a href="../reference/future.html">%&lt;-%</a></span> <span class="op">{</span> <span class="kw">if</span> <span class="op">(</span><span class="va">reset</span><span class="op">)</span> <span class="va">x</span> <span class="op">&lt;-</span> <span class="fl">0</span>; <span class="va">x</span> <span class="op">+</span> <span class="fl">1</span> <span class="op">}</span></span>
+<span><span class="va">y</span> <span class="op"><a href="../reference/futureAssign.html">%&lt;-%</a></span> <span class="op">{</span> <span class="kw">if</span> <span class="op">(</span><span class="va">reset</span><span class="op">)</span> <span class="va">x</span> <span class="op">&lt;-</span> <span class="fl">0</span>; <span class="va">x</span> <span class="op">+</span> <span class="fl">1</span> <span class="op">}</span></span>
 <span><span class="va">y</span></span>
 <span><span class="co">## Error: object 'x' not found</span></span></code></pre></div>
 <p>It is recommended to avoid above constructs where it is ambiguous
@@ -248,7 +248,7 @@ expression, e.g.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">reset</span> <span class="op">&lt;-</span> <span class="cn">FALSE</span></span>
 <span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fl">1</span></span>
-<span><span class="va">y</span> <span class="op"><a href="../reference/future.html">%&lt;-%</a></span> <span class="op">{</span> <span class="va">x</span>; <span class="kw">if</span> <span class="op">(</span><span class="va">reset</span><span class="op">)</span> <span class="va">x</span> <span class="op">&lt;-</span> <span class="fl">0</span>; <span class="va">x</span> <span class="op">+</span> <span class="fl">1</span> <span class="op">}</span></span>
+<span><span class="va">y</span> <span class="op"><a href="../reference/futureAssign.html">%&lt;-%</a></span> <span class="op">{</span> <span class="va">x</span>; <span class="kw">if</span> <span class="op">(</span><span class="va">reset</span><span class="op">)</span> <span class="va">x</span> <span class="op">&lt;-</span> <span class="fl">0</span>; <span class="va">x</span> <span class="op">+</span> <span class="fl">1</span> <span class="op">}</span></span>
 <span><span class="va">y</span></span>
 <span><span class="co">## [1] 2</span></span></code></pre></div>
 <p><em>Comment:</em> The goal is to in a future version of the package
@@ -773,7 +773,7 @@ importing it to the global environment, e.g.</p>
 <span id="cb42-4"><a href="#cb42-4" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">42</span></span></code></pre></div>
 <p>In this case, it does not matter in what order the packages are
 attached because we will always use the copy of
-<code><a href="../reference/future.html">future::`%&lt;-%`</a></code>.</p>
+<code><a href="../reference/futureAssign.html">future::`%&lt;-%`</a></code>.</p>
 </div>
 <div class="section level3">
 <h3 id="syntax-error-non-numeric-argument-to-binary-operator">Syntax error: “non-numeric argument to binary operator”<a class="anchor" aria-label="anchor" href="#syntax-error-non-numeric-argument-to-binary-operator"></a>
@@ -825,7 +825,7 @@ if you for instance use the following code in your package:</p>
 <div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">foo</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">b</span> <span class="op">&lt;-</span> <span class="fl">3.14</span></span>
-<span>  <span class="va">a</span> <span class="op"><a href="../reference/future.html">%&lt;-%</a></span> <span class="op">{</span> <span class="va">b</span> <span class="op">+</span> <span class="fl">1</span> <span class="op">}</span></span>
+<span>  <span class="va">a</span> <span class="op"><a href="../reference/futureAssign.html">%&lt;-%</a></span> <span class="op">{</span> <span class="va">b</span> <span class="op">+</span> <span class="fl">1</span> <span class="op">}</span></span>
 <span>  <span class="va">a</span></span>
 <span><span class="op">}</span></span></code></pre></div>
 <p>then <code>R CMD check</code> will produce a NOTE saying:</p>
@@ -839,7 +839,7 @@ global at the top of the function, i.e.</p>
 <code class="sourceCode R"><span><span class="va">foo</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">a</span> <span class="op">&lt;-</span> <span class="cn">NULL</span> <span class="co">## To please R CMD check</span></span>
 <span>  <span class="va">b</span> <span class="op">&lt;-</span> <span class="fl">3.14</span></span>
-<span>  <span class="va">a</span> <span class="op"><a href="../reference/future.html">%&lt;-%</a></span> <span class="op">{</span> <span class="va">b</span> <span class="op">+</span> <span class="fl">1</span> <span class="op">}</span></span>
+<span>  <span class="va">a</span> <span class="op"><a href="../reference/futureAssign.html">%&lt;-%</a></span> <span class="op">{</span> <span class="va">b</span> <span class="op">+</span> <span class="fl">1</span> <span class="op">}</span></span>
 <span>  <span class="va">a</span></span>
 <span><span class="op">}</span></span></code></pre></div>
 </div>

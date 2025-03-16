@@ -171,13 +171,17 @@
         </td>
         <td><p>Create a cluster future whose value will be resolved asynchronously in a parallel process</p></td>
       </tr><tr><td>
-          <p><code><a href="future.html">future()</a></code> <code><a href="future.html">futureAssign()</a></code> <code><a href="future.html">`%&lt;-%`</a></code> <code><a href="future.html">futureCall()</a></code> </p>
+          <p><code><a href="future.html">future()</a></code> <code><a href="future.html">futureCall()</a></code> </p>
         </td>
         <td><p>Create a future</p></td>
       </tr><tr><td>
           <p><code><a href="future.options.html">future.options</a></code> <code><a href="future.options.html">future.cmdargs</a></code> <code><a href="future.options.html">.future.R</a></code> <code><a href="future.options.html">future.startup.script</a></code> <code><a href="future.options.html">R_FUTURE_STARTUP_SCRIPT</a></code> <code><a href="future.options.html">future.debug</a></code> <code><a href="future.options.html">R_FUTURE_DEBUG</a></code> <code><a href="future.options.html">future.demo.mandelbrot.region</a></code> <code><a href="future.options.html">R_FUTURE_DEMO_MANDELBROT_REGION</a></code> <code><a href="future.options.html">future.demo.mandelbrot.nrow</a></code> <code><a href="future.options.html">R_FUTURE_DEMO_MANDELBROT_NROW</a></code> <code><a href="future.options.html">future.fork.multithreading.enable</a></code> <code><a href="future.options.html">R_FUTURE_FORK_MULTITHREADING_ENABLE</a></code> <code><a href="future.options.html">future.globals.maxSize</a></code> <code><a href="future.options.html">R_FUTURE_GLOBALS_MAXSIZE</a></code> <code><a href="future.options.html">future.globals.method</a></code> <code><a href="future.options.html">R_FUTURE_GLOBALS_METHOD</a></code> <code><a href="future.options.html">future.globals.onMissing</a></code> <code><a href="future.options.html">R_FUTURE_GLOBALS_ONMISSING</a></code> <code><a href="future.options.html">future.globals.resolve</a></code> <code><a href="future.options.html">R_FUTURE_GLOBALS_RESOLVE</a></code> <code><a href="future.options.html">future.globals.onReference</a></code> <code><a href="future.options.html">R_FUTURE_GLOBALS_ONREFERENCE</a></code> <code><a href="future.options.html">future.plan</a></code> <code><a href="future.options.html">R_FUTURE_PLAN</a></code> <code><a href="future.options.html">future.onFutureCondition.keepFuture</a></code> <code><a href="future.options.html">R_FUTURE_ONFUTURECONDITION_KEEPFUTURE</a></code> <code><a href="future.options.html">future.resolve.recursive</a></code> <code><a href="future.options.html">R_FUTURE_RESOLVE_RECURSIVE</a></code> <code><a href="future.options.html">future.globalenv.onMisuse</a></code> <code><a href="future.options.html">R_FUTURE_GLOBALENV_ONMISUSE</a></code> <code><a href="future.options.html">future.rng.onMisuse</a></code> <code><a href="future.options.html">R_FUTURE_RNG_ONMISUSE</a></code> <code><a href="future.options.html">future.wait.alpha</a></code> <code><a href="future.options.html">R_FUTURE_WAIT_ALPHA</a></code> <code><a href="future.options.html">future.wait.interval</a></code> <code><a href="future.options.html">R_FUTURE_WAIT_INTERVAL</a></code> <code><a href="future.options.html">future.wait.timeout</a></code> <code><a href="future.options.html">R_FUTURE_WAIT_TIMEOUT</a></code> <code><a href="future.options.html">R_FUTURE_RESOLVED_TIMEOUT</a></code> <code><a href="future.options.html">future.output.windows.reencode</a></code> <code><a href="future.options.html">R_FUTURE_OUTPUT_WINDOWS_REENCODE</a></code> <code><a href="future.options.html">future.journal</a></code> <code><a href="future.options.html">R_FUTURE_JOURNAL</a></code> <code><a href="future.options.html">R_FUTURE_GLOBALS_OBJECTSIZE_METHOD</a></code> <code><a href="future.options.html">future.globals.objectSize.method</a></code> </p>
         </td>
         <td><p>Options used for futures</p></td>
+      </tr><tr><td>
+          <p><code><a href="futureAssign.html">futureAssign()</a></code> <code><a href="futureAssign.html">`%&lt;-%`</a></code> <code><a href="futureAssign.html">`%globals%`</a></code> <code><a href="futureAssign.html">`%packages%`</a></code> <code><a href="futureAssign.html">`%seed%`</a></code> <code><a href="futureAssign.html">`%stdout%`</a></code> <code><a href="futureAssign.html">`%conditions%`</a></code> <code><a href="futureAssign.html">`%lazy%`</a></code> <code><a href="futureAssign.html">`%label%`</a></code> <code><a href="futureAssign.html">`%plan%`</a></code> <code><a href="futureAssign.html">`%tweak%`</a></code> </p>
+        </td>
+        <td><p>Create a future assignment</p></td>
       </tr><tr><td>
           <p><code><a href="futureOf.html">futureOf()</a></code> </p>
         </td>
@@ -190,38 +194,6 @@
           <p><code><a href="futures.html">futures()</a></code> </p>
         </td>
         <td><p>Get all futures in a container</p></td>
-      </tr><tr><td>
-          <p><code><a href="grapes-conditions-grapes.html">`%conditions%`</a></code> </p>
-        </td>
-        <td><p>Control whether standard output should be captured or not</p></td>
-      </tr><tr><td>
-          <p><code><a href="grapes-globals-grapes.html">`%globals%`</a></code> <code><a href="grapes-globals-grapes.html">`%packages%`</a></code> </p>
-        </td>
-        <td><p>Specify globals and packages for a future assignment</p></td>
-      </tr><tr><td>
-          <p><code><a href="grapes-label-grapes.html">`%label%`</a></code> </p>
-        </td>
-        <td><p>Specify label for a future assignment</p></td>
-      </tr><tr><td>
-          <p><code><a href="grapes-lazy-grapes.html">`%lazy%`</a></code> </p>
-        </td>
-        <td><p>Control lazy / eager evaluation for a future assignment</p></td>
-      </tr><tr><td>
-          <p><code><a href="grapes-plan-grapes.html">`%plan%`</a></code> </p>
-        </td>
-        <td><p>Use a specific plan for a future assignment</p></td>
-      </tr><tr><td>
-          <p><code><a href="grapes-seed-grapes.html">`%seed%`</a></code> </p>
-        </td>
-        <td><p>Set random seed for future assignment</p></td>
-      </tr><tr><td>
-          <p><code><a href="grapes-stdout-grapes.html">`%stdout%`</a></code> </p>
-        </td>
-        <td><p>Control whether standard output should be captured or not</p></td>
-      </tr><tr><td>
-          <p><code><a href="grapes-tweak-grapes.html">`%tweak%`</a></code> </p>
-        </td>
-        <td><p>Temporarily tweaks the arguments of the current strategy</p></td>
       </tr><tr><td>
           <p><code><a href="interrupt.html">interrupt()</a></code> </p>
         </td>

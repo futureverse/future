@@ -165,7 +165,7 @@ switching from, say, sequential to parallel processing."><meta property="og:imag
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Create a future</h1>
-    <small class="dont-index">Source: <a href="https://github.com/futureverse/future/blob/HEAD/R/core_api-future.R" class="external-link"><code>R/core_api-future.R</code></a>, <a href="https://github.com/futureverse/future/blob/HEAD/R/delayed_api-futureAssign.R" class="external-link"><code>R/delayed_api-futureAssign.R</code></a>, <a href="https://github.com/futureverse/future/blob/HEAD/R/infix_api-futureAssign_OP.R" class="external-link"><code>R/infix_api-futureAssign_OP.R</code></a>, and 1 more</small>
+    <small class="dont-index">Source: <a href="https://github.com/futureverse/future/blob/HEAD/R/core_api-future.R" class="external-link"><code>R/core_api-future.R</code></a>, <a href="https://github.com/futureverse/future/blob/HEAD/R/utils_api-futureCall.R" class="external-link"><code>R/utils_api-futureCall.R</code></a></small>
     <div class="hidden name"><code>future.Rd</code></div>
     </div>
 
@@ -200,26 +200,6 @@ switching from, say, sequential to parallel processing.</p>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">futureAssign</span><span class="op">(</span></span>
-<span>  <span class="va">x</span>,</span>
-<span>  <span class="va">value</span>,</span>
-<span>  envir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sys.parent.html" class="external-link">parent.frame</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>  substitute <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  lazy <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  seed <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  globals <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  packages <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  stdout <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  conditions <span class="op">=</span> <span class="st">"condition"</span>,</span>
-<span>  earlySignal <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  label <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  gc <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  <span class="va">...</span>,</span>
-<span>  assign.env <span class="op">=</span> <span class="va">envir</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">x</span> <span class="op">%&lt;-%</span> <span class="va">value</span></span>
-<span></span>
 <span><span class="fu">futureCall</span><span class="op">(</span></span>
 <span>  <span class="va">FUN</span>,</span>
 <span>  args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
@@ -241,7 +221,7 @@ switching from, say, sequential to parallel processing.</p>
     <h2>Arguments</h2>
 
 
-<dl><dt id="arg-expr-value">expr, value<a class="anchor" aria-label="anchor" href="#arg-expr-value"></a></dt>
+<dl><dt id="arg-expr">expr<a class="anchor" aria-label="anchor" href="#arg-expr"></a></dt>
 <dd><p>An <span style="R">R</span> <a href="https://rdrr.io/r/base/expression.html" class="external-link">expression</a>.</p></dd>
 
 
@@ -350,16 +330,6 @@ protection to avoid transferring giga- or terabytes of data without noticing.
 FutureBackend subclass, or by R option <a href="future.options.html">future.globals.maxSize</a> (sic!))</p></dd>
 
 
-<dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
-<dd><p>the name of a future variable, which will hold the value
-of the future expression (as a promise).</p></dd>
-
-
-<dt id="arg-assign-env">assign.env<a class="anchor" aria-label="anchor" href="#arg-assign-env"></a></dt>
-<dd><p>The <a href="https://rdrr.io/r/base/environment.html" class="external-link">environment</a> to which the variable
-should be assigned.</p></dd>
-
-
 <dt id="arg-fun">FUN<a class="anchor" aria-label="anchor" href="#arg-fun"></a></dt>
 <dd><p>A <a href="https://rdrr.io/r/base/function.html" class="external-link">function</a> to be evaluated.</p></dd>
 
@@ -375,18 +345,6 @@ should be assigned.</p></dd>
     <div id="value">
     <h2>Value</h2>
     <p><code>f &lt;- future(expr)</code> creates a <a href="Future-class.html">Future</a> <code>f</code> that evaluates expression <code>expr</code>, the value of the future is retrieved using <code>v &lt;- value(f)</code>.</p>
-<p><code>x %&lt;-% value</code> (a future assignment) and
-<code>futureAssign("x", value)</code> create a <a href="Future-class.html">Future</a> that evaluates
-expression <code>expr</code> and binds its value (as a
-<a href="https://rdrr.io/r/base/delayedAssign.html" class="external-link">promise</a>) to
-a variable <code>x</code>.  The value of the future is automatically retrieved
-when the assigned variable (promise) is queried.
-The future itself is returned invisibly, e.g.
-<code>f &lt;- futureAssign("x", expr)</code> and <code>f &lt;- (x %&lt;-% expr)</code>.
-Alternatively, the future of a future variable <code>x</code> can be retrieved
-without blocking using <code>f &lt;- <a href="futureOf.html">futureOf</a>(x)</code>.
-Both the future and the variable (promise) are assigned to environment
-<code>assign.env</code> where the name of the future is <code>.future_&lt;name&gt;</code>.</p>
 <p><code>f &lt;- futureCall(FUN, args)</code> creates a <a href="Future-class.html">Future</a> <code>f</code> that calls function <code>FUN</code> with arguments <code>args</code>, where the value of the future is retrieved using <code>x &lt;- value(f)</code>.</p>
     </div>
     <div id="details">
@@ -397,22 +355,6 @@ Querying the value of a non-resolved future will <em>block</em> the call
 until the future is resolved.
 It is possible to check whether a future is resolved or not
 without blocking by using <code><a href="resolved.html">resolved</a>(f)</code>.</p>
-<p>For a future created via a future assignment
-(<code>x %&lt;-% value</code> or <code>futureAssign("x", value)</code>), the value
-is bound to a promise, which when queried will internally call
-<code><a href="value.html">value()</a></code>  on the future and which will then be resolved
-into a regular variable bound to that value.  For example, with future
-assignment <code>x %&lt;-% value</code>, the first time variable <code>x</code> is
-queried the call blocks if (and only if) the future is not yet resolved.
-As soon as it is resolved, and any succeeding queries, querying <code>x</code>
-will immediately give the value.</p>
-<p>The future assignment construct <code>x %&lt;-% value</code> is not a formal
-assignment per se, but a binary infix operator on objects <code>x</code>
-and expression <code>value</code>.  However, by using non-standard evaluation,
-this constructs can emulate an assignment operator similar to
-<code>x &lt;- value</code>. Due to <span style="R">R</span>'s precedence rules of operators,
-future expressions often need to be explicitly bracketed, e.g.
-<code>x %&lt;-% { a + b }</code>.</p>
 <p>The <code>futureCall()</code> function works analogously to
 <code><a href="https://rdrr.io/r/base/do.call.html" class="external-link">do.call</a>()</code>, which calls a function with a set of
 arguments.  The difference is that <code><a href="https://rdrr.io/r/base/do.call.html" class="external-link">do.call()</a></code> returns the value of
@@ -430,8 +372,6 @@ evaluation (<code>lazy = TRUE</code>).  This means that the expression
 will only be evaluated when the value of the future is requested.
 <em>Note that this means that the expression may not be evaluated
 at all - it is guaranteed to be evaluated if the value is requested</em>.</p>
-<p>For future assignments, lazy evaluation can be controlled via the
-<code>%lazy%</code> operator, e.g. <code>x %&lt;-% { expr } %lazy% TRUE</code>.</p>
     </div>
     <div id="globals-used-by-future-expressions">
     <h2>Globals used by future expressions</h2>
@@ -510,11 +450,6 @@ false negatives) and <code>ignore</code> (to ignore false positives) on value
 <code>globals = structure(TRUE, ignore = "b", add = "a")</code> any globals
 automatically identified except <code>b</code> will be used in addition to
 global <code>a</code>.</p>
-<p>When using future assignments, globals can be specified analogously
-using the <code><a href="grapes-globals-grapes.html">%globals%</a></code> operator, e.g.</p><div class="sourceCode"><pre><code><span></span>
-<span>  <span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">1000</span><span class="op">)</span></span>
-<span>  <span class="va">y</span> <span class="op"><a href="../reference/future.html">%&lt;-%</a></span> <span class="op">{</span> <span class="fu"><a href="https://rdrr.io/r/stats/median.html" class="external-link">median</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">}</span> <span class="op"><a href="../reference/grapes-globals-grapes.html">%globals%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>, median <span class="op">=</span> <span class="fu">stats</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/r/stats/median.html" class="external-link">median</a></span><span class="op">)</span></span></code></pre></div>
-
     </div>
     <div id="see-also">
     <h2>See also</h2>
@@ -576,9 +511,9 @@ set by the developer, e.g. it must not be called within a package.</p></div>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## EXAMPLE: Future assignments (evaluated in parallel)</span></span></span>
-<span class="r-in"><span><span class="va">fitA</span> <span class="op">%&lt;-%</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">x</span>, weights <span class="op">=</span> <span class="va">w</span><span class="op">)</span>      <span class="co">## with offset</span></span></span>
-<span class="r-in"><span><span class="va">fitB</span> <span class="op">%&lt;-%</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">x</span> <span class="op">-</span> <span class="fl">1</span>, weights <span class="op">=</span> <span class="va">w</span><span class="op">)</span>  <span class="co">## without offset</span></span></span>
-<span class="r-in"><span><span class="va">fitC</span> <span class="op">%&lt;-%</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="va">fitA</span> <span class="op"><a href="futureAssign.html">%&lt;-%</a></span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">x</span>, weights <span class="op">=</span> <span class="va">w</span><span class="op">)</span>      <span class="co">## with offset</span></span></span>
+<span class="r-in"><span><span class="va">fitB</span> <span class="op"><a href="futureAssign.html">%&lt;-%</a></span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">x</span> <span class="op">-</span> <span class="fl">1</span>, weights <span class="op">=</span> <span class="va">w</span><span class="op">)</span>  <span class="co">## without offset</span></span></span>
+<span class="r-in"><span><span class="va">fitC</span> <span class="op"><a href="futureAssign.html">%&lt;-%</a></span> <span class="op">{</span></span></span>
 <span class="r-in"><span>  <span class="va">w</span> <span class="op">&lt;-</span> <span class="fl">1</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">x</span>, weights <span class="op">=</span> <span class="va">w</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
