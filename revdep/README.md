@@ -39,10 +39,10 @@
 |:----------------------------|:-------|:------|:-------|:----|
 |[bigDM](problems.md#bigdm)   |0.5.5   |       |__+2__  |2    |
 |[Certara.RsNLME.ModelExecutor](problems.md#certararsnlmemodelexecutor)|3.0.1   |       |__+1__  |     |
-|[dipsaus](problems.md#dipsaus)|0.3.0   |__+1__ |        |1    |
 |[distantia](problems.md#distantia)|2.0.2   |__+1__ |        |3    |
 |[doFuture](problems.md#dofuture)|1.0.1   |__+1__ |        |     |
 |[future.tests](problems.md#futuretests)|0.7.0   |__+1__ |        |     |
+|[JANE](problems.md#jane)     |0.2.1   |       |__+1__  |1    |
 |[Prostar](problems.md#prostar)|1.38.1  |       |__+1__  |3    |
 |[TKCat](problems.md#tkcat)   |1.1.11  |       |__+1__  |     |
 |[WARDEN](problems.md#warden) |0.99.1  |__+1__ |        |     |
@@ -122,7 +122,7 @@
 |DeclareDesign                |1.0.10    |       |        |     |
 |delayed                      |0.5.0     |       |        |     |
 |[deseats](problems.md#deseats)|1.1.0     |       |        |1    |
-|[dipsaus](problems.md#dipsaus)|0.3.0     |__+1__ |        |1    |
+|[dipsaus](problems.md#dipsaus)|0.3.0     |       |        |1    |
 |[disk.frame](problems.md#diskframe)|0.8.3     |       |        |1    |
 |[dispositionEffect](problems.md#dispositioneffect)|1.0.1     |1      |        |     |
 |[distantia](problems.md#distantia)|2.0.2     |__+1__ |        |3    |
@@ -141,7 +141,7 @@
 |EGAnet                       |2.2.0     |       |        |     |
 |elevatr                      |0.99.0    |       |        |     |
 |[envi](problems.md#envi)     |1.0.0     |       |1       |     |
-|epe4md                       |0.1.4     |       |        |     |
+|epe4md                       |0.1.4     |       |        |-1   |
 |EpiForsk                     |0.1.1     |       |        |     |
 |[EpiNow2](problems.md#epinow2)|1.7.1     |       |        |4    |
 |[epitweetr](problems.md#epitweetr)|2.2.16    |       |        |2    |
@@ -206,7 +206,7 @@
 |[hero](problems.md#hero)     |0.6       |       |        |2    |
 |[heterogen](problems.md#heterogen)|1.2.33    |       |        |1    |
 |hoopR                        |2.1.0     |       |        |     |
-|[httpgd](problems.md#httpgd) |2.0.3     |1      |        |1    |
+|[httpgd](problems.md#httpgd) |2.0.4     |1      |        |1    |
 |[hwep](problems.md#hwep)     |2.0.2     |       |        |3    |
 |hydroloom                    |1.1.0     |       |        |     |
 |idmodelr                     |0.4.0     |       |        |     |
@@ -223,7 +223,7 @@
 |isopam                       |3.2       |       |        |     |
 |ivDiag                       |1.0.6     |       |        |     |
 |[ivmte](problems.md#ivmte)   |1.4.0     |       |        |2    |
-|[JANE](problems.md#jane)     |0.2.1     |       |        |1    |
+|[JANE](problems.md#jane)     |0.2.1     |       |__+1__  |1    |
 |jlmerclusterperm             |1.1.4     |       |        |     |
 |JointAI                      |1.0.6     |       |        |     |
 |jstor                        |0.3.11    |       |        |     |
@@ -264,7 +264,7 @@
 |mice                         |3.17.0    |       |        |     |
 |migraph                      |1.4.5     |       |        |     |
 |[mikropml](problems.md#mikropml)|1.6.1     |       |        |1    |
-|[MineICA](problems.md#mineica)|1.46.0    |1      |3       |4    |
+|[MineICA](problems.md#mineica)|1.46.0    |       |4       |4    |
 |[missSBM](problems.md#misssbm)|1.0.5     |       |        |1    |
 |[mistyR](problems.md#mistyr) |1.14.0    |       |        |2    |
 |[mlr3](problems.md#mlr3)     |0.23.0    |       |        |1    |

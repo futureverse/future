@@ -17,9 +17,6 @@ Issues with CRAN packages are summarised below.
 * Certara.RsNLME.ModelExecutor
   checking whether package ‘Certara.RsNLME.ModelExecutor’ can be installed ... WARNING
 
-* dipsaus
-  checking examples ... ERROR
-
 * distantia
   checking tests ...
 
@@ -28,6 +25,9 @@ Issues with CRAN packages are summarised below.
 
 * future.tests
   checking tests ...
+
+* JANE
+  checking whether package ‘JANE’ can be installed ... WARNING
 
 * TKCat
   checking whether package ‘TKCat’ can be installed ... WARNING
