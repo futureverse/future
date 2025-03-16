@@ -15,6 +15,8 @@ been migrated to \pkg{parallelly}.  The migration started with
 are also useful outside of the \pkg{future} framework.
 }
 \details{
+\emph{If you are using any of these from the \pkg{future} package, please
+switch to use the ones from the \pkg{parallelly} package. Thank you!}
 \itemize{
 \item \code{\link[parallelly:as.cluster]{parallelly::as.cluster()}}
 \item \code{\link[parallelly:autoStopCluster]{parallelly::autoStopCluster()}}   (no longer re-exported)
@@ -37,7 +39,5 @@ can still be accessed as:
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{cl <- future::makeClusterPSOCK(2)
 }\if{html}{\out{</div>}}
 
-Note that the long-term goal is to remove all of them from this package.
-
-For example
+\emph{Note that it is the goal to remove all of the above from this package.}
 }

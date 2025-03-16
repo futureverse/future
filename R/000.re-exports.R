@@ -5,25 +5,28 @@
 #' \pkg{future} 1.20.0 (November 2020).  They were moved because they
 #' are also useful outside of the \pkg{future} framework.
 #'
+#' _If you are using any of these from the \pkg{future} package, please
+#'  switch to use the ones from the \pkg{parallelly} package. Thank you!_
+#'
 #' * [parallelly::as.cluster()]
-#    Used by: googleComputeEngineR(1)
+#    Used by: googleComputeEngineR(2)
 #' * [parallelly::autoStopCluster()]   (no longer re-exported)
 #    Used by: <none>
 #' * [parallelly::availableCores()]
-#    Used by: aroma.affymetrix(1,2), ARPALData, BatchGetSymbols,
+#    Used by: aroma.affymetrix(2,3), ARPALData, BatchGetSymbols,
 #             bistablehistory, codalm, crossmap, cft, CSCNet, deseats,
-#             dipsaus, drimmR, elevatr, foieGras(3), future.BatchJobs(3),
-#             future.callr, GetBCBData, gtfs2emis, heterogen, isoreader,
+#             dipsaus, drimmR, elevatr, foieGras(4), future.BatchJobs(4),
+#             future.callr(2), GetBCBData, gtfs2emis, heterogen, isoreader,
 #             ItemResponseTrees, ldaPrototype, lidR, meedr, microservices,
 #             microsynth, origami, PINstimation, powRICLPM, rBiasCorrection,
 #             readsdr, recforest, rkeops, sigminer, skpr, smoots, sovereign,
 #             TriDimRegression, uci, updog, whitewater, yfR
 #' * [parallelly::availableWorkers()]
-#    Used by: aroma.affymetrix(1,2), wqspt(1)
+#    Used by: aroma.affymetrix(2,3), wqspt(1)
 #' * [parallelly::makeClusterMPI()]    (no longer re-exported)
 #    Used by: <none>
 #' * [parallelly::makeClusterPSOCK()]
-#    Used by: bigDM(1), eatRep, fect, foieGras(3), googleComputeEngineR(1),
+#    Used by: bigDM(1), eatRep, fect, foieGras(4), googleComputeEngineR(2),
 #             gsynth, interflex, ivDiag
 #' * [parallelly::makeNodePSOCK()]     (no longer re-exported)
 #    Used by: <none>
@@ -31,8 +34,9 @@
 #    Used by: crossmap, dhReg, furrr(1), microservices, sctransform
 #
 #  (1) PR sent
-#  (2) Non-breaking; code is never run
-#  (3) No longer on CRAN
+#  (2) In the next release
+#  (3) Non-breaking; code is never run
+#  (4) No longer on CRAN
 #' 
 #' For backward-compatible reasons, _some_ of these functions remain
 #' available as exact copies also from this package (as re-exports), e.g.
@@ -47,9 +51,8 @@
 #' cl <- future::makeClusterPSOCK(2)
 #' ```
 #'
-#' Note that the long-term goal is to remove all of them from this package.
+#' _Note that it is the goal to remove all of the above from this package._
 #'
-#' For example
 #'
 #' @importFrom parallelly as.cluster
 #' @export as.cluster
@@ -72,4 +75,5 @@
 #' @aliases supportsMulticore
 #'
 #' @name re-exports
+#' @keyword internal
 NULL
