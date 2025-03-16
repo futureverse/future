@@ -527,7 +527,7 @@ resolved.ClusterFuture <- function(x, run = TRUE, timeout = NULL, ...) {
       if (!res) break
 
       ## Receive it
-      msg <- receiveMessageFromWorker(future)
+      msg <- receiveMessageFromWorker(future, debug = debug)
 
       ## If the message contains a FutureResult, then the future is resolved
       ## and we are done here
@@ -593,12 +593,12 @@ result.ClusterFuture <- function(future, ...) {
 
 
 
-
-#' @importFrom parallelly isConnectionValid
+#' @importFrom parallel closeNode
+#' @importFrom parallelly isConnectionValid isNodeAlive cloneNode
 receiveMessageFromWorker <- local({
   recvResult <- import_parallel_fcn("recvResult")
 
-  function(future, debug = isTRUE(getOption("future.debug")), ...) {
+  function(future, debug = FALSE, ...) {
     if (debug) {
       mdebug("receiveMessageFromWorker() for ClusterFuture ...")
       on.exit(mdebug("receiveMessageFromWorker() for ClusterFuture ... done"))
@@ -666,9 +666,17 @@ receiveMessageFromWorker <- local({
 
         ## Try to relaunch worker, if it is no longer running
         if (!isNodeAlive(node)) {
+          ## Launch a new cluster node, by cloning the old one
           node2 <- cloneNode(node)
+          
+          ## Add to cluster
           workers[[node_idx]] <- node2
+
+          ## Update backend
           backend[["workers"]] <- workers
+          
+          ## Make sure to close the old cluster node (including any connection)
+          tryCatch(closeNode(node), error = identity)
         }
 
         return(result)
