@@ -386,7 +386,7 @@ resolved.MulticoreFuture <- local({
     ## Record conditions as signaled
     signaled <- c(x[[".signaledConditions"]], conditions)
     x[[".signaledConditions"]] <- signaled
-  
+
     ## Signal conditions early? (happens only iff requested)
     if (res) signalEarly(x, ...)
   
@@ -433,15 +433,19 @@ result.MulticoreFuture <- local({
     ##     https://bugs.r-project.org/bugzilla3/show_bug.cgi?id=17413
     jobs <- if (getRversion() >= "3.6.0") job else list(job)
 
-    ## NOTE: Will produce a "1 parallel job did not deliver a result" warning
-    ## if the parallel worker has been interrupted and terminated
-    result <- mccollect(jobs = jobs, wait = TRUE)[[1L]]
+    ## NOTE: mccollect() produces a "1 parallel job did not deliver a result"
+    ## warning, if the parallel worker has been interrupted and terminated.
+    if (future[["state"]] == "interrupted") {
+      result <- suppressWarnings(mccollect(jobs = jobs, wait = TRUE)[[1L]])
+    } else {
+      result <- mccollect(jobs = jobs, wait = TRUE)[[1L]]
+    }
     
     ## NOTE: In Issue #218 it was suggested that parallel:::rmChild() could
     ## fix this, but there seems to be more to this story, because we still
     ## get some of those warning even after removing children here.
     rmChild(child = job)
-  
+
     ## Sanity checks
     if (!inherits(result, "FutureResult")) {
       if (debug) mdebugf("Detected non-FutureResult result ...")
@@ -454,7 +458,7 @@ result.MulticoreFuture <- local({
       ## AD HOC: Record whether the forked process is alive or not
       job[["alive"]] <- alive
       future[["job"]] <- job
-  
+
       ## SPECIAL: Check for fallback 'fatal error in wrapper code'
       ## try-error from parallel:::mcparallel().  If detected, then
       ## turn into an error with a more informative error message, cf.
@@ -468,6 +472,13 @@ result.MulticoreFuture <- local({
           msg <- sprintf("A future ('%s') of class %s was interrupted, while running on localhost (pid %d)", label, class(future)[1], pid)
           result <- FutureInterruptError(msg, future = future)
           future[["result"]] <- result
+
+          ## Remove from backend
+          backend <- future[["backend"]]
+          reg <- backend[["reg"]]
+          FutureRegistry(reg, action = "remove", future = future, earlySignal = FALSE)
+          if (debug) mdebug("- Erased future from future backend")
+
           stop(result)
         }
 

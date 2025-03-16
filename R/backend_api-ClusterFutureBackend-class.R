@@ -660,6 +660,9 @@ receiveMessageFromWorker <- local({
         result <- FutureInterruptError(msg, future = future)
         future[["result"]] <- result
 
+        ## Remove from backend
+        FutureRegistry(reg, action = "remove", future = future, earlySignal = FALSE)
+        if (debug) mdebug("- Erased future from future backend")
 
         ## Try to relaunch worker, if it is no longer running
         if (!isNodeAlive(node)) {

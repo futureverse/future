@@ -11,8 +11,6 @@
 #' `interrupt()` returns the [Future] flagged as "interrupted",
 #' if the backend supports interrupting futures.
 #'
-#' @example incl/interrupt.R
-#'
 #' @export
 interrupt <- function(x, ...) {
   UseMethod("interrupt")
