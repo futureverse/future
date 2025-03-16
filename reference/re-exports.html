@@ -173,8 +173,8 @@ are also useful outside of the <span class="pkg">future</span> framework.</p>
 
     <div id="details">
     <h2>Details</h2>
-
-<ul><li><p><code><a href="https://parallelly.futureverse.org/reference/as.cluster.html" class="external-link">parallelly::as.cluster()</a></code></p></li>
+    <p><em>If you are using any of these from the <span class="pkg">future</span> package, please
+switch to use the ones from the <span class="pkg">parallelly</span> package. Thank you!</em></p><ul><li><p><code><a href="https://parallelly.futureverse.org/reference/as.cluster.html" class="external-link">parallelly::as.cluster()</a></code></p></li>
 <li><p><code><a href="https://parallelly.futureverse.org/reference/autoStopCluster.html" class="external-link">parallelly::autoStopCluster()</a></code>   (no longer re-exported)</p></li>
 <li><p><code><a href="https://parallelly.futureverse.org/reference/availableCores.html" class="external-link">parallelly::availableCores()</a></code></p></li>
 <li><p><code><a href="https://parallelly.futureverse.org/reference/availableWorkers.html" class="external-link">parallelly::availableWorkers()</a></code></p></li>
@@ -187,8 +187,7 @@ available as exact copies also from this package (as re-exports), e.g.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">cl</span> <span class="op">&lt;-</span> <span class="fu">parallelly</span><span class="fu">::</span><span class="fu"><a href="https://parallelly.futureverse.org/reference/makeClusterPSOCK.html" class="external-link">makeClusterPSOCK</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span></span></code></pre><p></p></div>
 <p>can still be accessed as:</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">cl</span> <span class="op">&lt;-</span> <span class="fu">future</span><span class="fu">::</span><span class="fu"><a href="../reference/re-exports.html">makeClusterPSOCK</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span></span></code></pre><p></p></div>
-<p>Note that the long-term goal is to remove all of them from this package.</p>
-<p>For example</p>
+<p><em>Note that it is the goal to remove all of the above from this package.</em></p>
     </div>
 
   </div>
