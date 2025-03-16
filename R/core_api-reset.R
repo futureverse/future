@@ -19,6 +19,22 @@ reset <- function(x, ...) {
 
 
 #' @export
+reset.list <- function(x, ...) {
+  lapply(x, FUN = reset, ...)
+}
+
+
+#' @export
+reset.environment <- function(x, ...) {
+  fs <- futures(x)
+  names <- names(fs)
+  fs <- as.list(fs)
+  names(fs) <- names
+  reset(fs, ...)
+}
+
+
+#' @export
 reset.Future <- function(x, ...) {
   future <- x
 

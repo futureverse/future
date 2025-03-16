@@ -18,6 +18,22 @@ interrupt <- function(x, ...) {
 
 
 #' @export
+interrupt.list <- function(x, ...) {
+  lapply(x, FUN = interrupt, ...)
+}
+
+
+#' @export
+interrupt.environment <- function(x, ...) {
+  fs <- futures(x)
+  names <- names(fs)
+  fs <- as.list(fs)
+  names(fs) <- names
+  interrupt(fs, ...)
+}
+
+
+#' @export
 interrupt.Future <- function(x, ...) {
   future <- x
 
