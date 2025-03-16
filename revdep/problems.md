@@ -1134,33 +1134,6 @@ Run `revdepcheck::revdep_details(, "distantia")` for more info
 
 </details>
 
-## Newly broken
-
-*   checking tests ...
-    ```
-      Running ‘spelling.R’
-      Running ‘testthat.R’
-     ERROR
-    Running the tests in ‘tests/testthat.R’ failed.
-    Complete output:
-      > # This file is part of the standard setup for testthat.
-      > # It is recommended that you do not modify it.
-      > #
-      > # Where should you do additional test configuration?
-      > # Learn more about the roles of various files in:
-    ...
-      ══ Failed tests ════════════════════════════════════════════════════════════════
-      ── Failure ('test-zoo_permute.R:11:3'): `zoo_permute()` works ──────────────────
-      nrow(x) (`actual`) not equal to nrow(x_free[[1]]) (`expected`).
-      
-      `actual` is an integer vector (100)
-      `expected` is NULL
-      
-      [ FAIL 1 | WARN 0 | SKIP 0 | PASS 251 ]
-      Error: Test failures
-      Execution halted
-    ```
-
 ## In both
 
 *   checking installed package size ... NOTE
@@ -1178,47 +1151,6 @@ Run `revdepcheck::revdep_details(, "distantia")` for more info
 *   checking data for non-ASCII characters ... NOTE
     ```
       Note: found 844 marked UTF-8 strings
-    ```
-
-# doFuture
-
-<details>
-
-* Version: 1.0.1
-* GitHub: https://github.com/HenrikBengtsson/doFuture
-* Source code: https://github.com/cran/doFuture
-* Date/Publication: 2023-12-20 12:30:02 UTC
-* Number of recursive dependencies: 19
-
-Run `revdepcheck::revdep_details(, "doFuture")` for more info
-
-</details>
-
-## Newly broken
-
-*   checking tests ...
-    ```
-      Running ‘foreach_dofuture,cluster-missing-doFuture-pkg.R’
-      Running ‘foreach_dofuture,errors.R’
-      Running ‘foreach_dofuture,globals.R’
-     ERROR
-    Running the tests in ‘tests/foreach_dofuture,globals.R’ failed.
-    Last 50 lines of output:
-      [14:51:52.389]  $ x             : int [1:3] 1 2 3
-      [14:51:52.389]  $ ...future.x_ii: num 42
-      [14:51:52.389]  - attr(*, "where")=List of 2
-      [14:51:52.389]   ..$ x             :<environment: R_EmptyEnv> 
-    ...
-      [14:51:52.398]   ..$ message: chr "'...' used in an incorrect context"
-      [14:51:52.398]   ..$ call   : language doTryCatch(return(expr), name, parentenv, handler)
-      [14:51:52.398]   ..- attr(*, "class")= chr [1:3] "simpleError" "error" "condition"
-      [14:51:52.400] - accumulating results
-      List of 2
-       $ message: chr "'...' used in an incorrect context"
-       $ call   : language doTryCatch(return(expr), name, parentenv, handler)
-       - attr(*, "class")= chr [1:3] "simpleError" "error" "condition"
-      Error: (strategy %in% c(c("cluster", "multisession")) && inherits(y,  .... is not TRUE
-      Execution halted
     ```
 
 # DT
@@ -5778,47 +5710,6 @@ Run `revdepcheck::revdep_details(, "vmeasur")` for more info
     Found the following significant warnings:
       Warning: no DISPLAY variable so Tk is not available
     See ‘/c4/home/henrik/futureverse/future/revdep/checks/vmeasur/new/vmeasur.Rcheck/00install.out’ for details.
-    ```
-
-# WARDEN
-
-<details>
-
-* Version: 0.99.1
-* GitHub: NA
-* Source code: https://github.com/cran/WARDEN
-* Date/Publication: 2024-12-13 16:40:13 UTC
-* Number of recursive dependencies: 163
-
-Run `revdepcheck::revdep_details(, "WARDEN")` for more info
-
-</details>
-
-## Newly broken
-
-*   checking examples ... ERROR
-    ```
-    Running examples in ‘WARDEN-Ex.R’ failed
-    The error most likely occurred in:
-    
-    > ### Name: run_sim_parallel
-    > ### Title: Run simulations in parallel mode (at the simulation level)
-    > ### Aliases: run_sim_parallel
-    > 
-    > ### ** Examples
-    > 
-    > library(magrittr)
-    ...
-    + psa_bool = FALSE,
-    + ipd = 1,
-    + ncores = 1)
-    Analysis number: 1
-    Loading required package: foreach
-    Simulation number: 1
-    Error in value[[3L]](cond) : 
-      Error message at analysis 1; simulation: 1. Error message: T used instead of TRUE
-    Calls: run_sim_parallel ... tryCatch -> tryCatchList -> tryCatchOne -> <Anonymous>
-    Execution halted
     ```
 
 # WeightedCluster
