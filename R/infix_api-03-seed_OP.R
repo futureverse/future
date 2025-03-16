@@ -1,20 +1,22 @@
-#' Control whether standard output should be captured or not
+#' Set random seed for future assignment
 #'
-#' @usage fassignment \%stdout\% capture
+#' @usage fassignment \%seed\% seed
 #'
 #' @param fassignment The future assignment, e.g.
 #'        `x %<-% { expr }`.
+#' @inheritParams future
 #'
-#' @param capture If TRUE, the standard output will be captured, otherwise not.
+#' @aliases `%seed%`
+#' @rdname futureAssign
 #'
 #' @export
-`%stdout%` <- function(fassignment, capture) {
+`%seed%` <- function(fassignment, seed) {
   fassignment <- substitute(fassignment)
   envir <- parent.frame(1)
 
-  ## Temporarily set 'lazy' argument
+  ## Temporarily set 'seed' argument
   args <- getOption("future.disposable", list())
-  args["stdout"] <- list(capture)
+  args["seed"] <- list(seed)
   options(future.disposable = args)
   on.exit(options(future.disposable = NULL))
 

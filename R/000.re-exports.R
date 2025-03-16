@@ -75,5 +75,5 @@
 #' @aliases supportsMulticore
 #'
 #' @name re-exports
-#' @keyword internal
+#' @keywords internal
 NULL

@@ -14,7 +14,7 @@
 #'
 #' @inheritParams Future-class
 #' 
-#' @param expr,value An \R \link[base]{expression}.
+#' @param expr An \R \link[base]{expression}.
 #'
 #' @param \ldots Additional arguments passed to [Future()].
 #'
@@ -29,25 +29,6 @@
 #' It is possible to check whether a future is resolved or not
 #' without blocking by using \code{\link{resolved}(f)}.
 #'
-#' For a future created via a future assignment
-#' (`x %<-% value` or `futureAssign("x", value)`), the value
-#' is bound to a promise, which when queried will internally call
-#' [value()]  on the future and which will then be resolved
-#' into a regular variable bound to that value.  For example, with future
-#' assignment `x %<-% value`, the first time variable `x` is
-#' queried the call blocks if (and only if) the future is not yet resolved.
-#' As soon as it is resolved, and any succeeding queries, querying `x`
-#' will immediately give the value.
-#'
-#' The future assignment construct `x %<-% value` is not a formal
-#' assignment per se, but a binary infix operator on objects `x`
-#' and expression `value`.  However, by using non-standard evaluation,
-#' this constructs can emulate an assignment operator similar to
-#' `x <- value`. Due to \R's precedence rules of operators,
-#' future expressions often need to be explicitly bracketed, e.g.
-#' `x %<-% { a + b }`.
-#'
-#'
 #' @section Eager or lazy evaluation:
 #' By default, a future is resolved using _eager_ evaluation
 #' (`lazy = FALSE`).  This means that the expression starts to
@@ -58,9 +39,6 @@
 #' will only be evaluated when the value of the future is requested.
 #' _Note that this means that the expression may not be evaluated
 #' at all - it is guaranteed to be evaluated if the value is requested_.
-#'
-#' For future assignments, lazy evaluation can be controlled via the
-#' `%lazy%` operator, e.g. `x %<-% { expr } %lazy% TRUE`.
 #'
 #'
 #' @section Globals used by future expressions:
@@ -164,13 +142,6 @@
 #' `globals = structure(TRUE, ignore = "b", add = "a")` any globals
 #' automatically identified except `b` will be used in addition to
 #' global `a`.
-#'
-#' When using future assignments, globals can be specified analogously
-#' using the \code{\link{\%globals\%}} operator, e.g.
-#' \preformatted{
-#'   x <- rnorm(1000)
-#'   y \%<-\% { median(x) } \%globals\% list(x = x, median = stats::median)
-#' }
 #'
 #' @example incl/future.R
 #'

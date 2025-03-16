@@ -13,6 +13,8 @@
 #' to be attached in the \R environment evaluating the future.
 #' 
 #' @aliases %packages%
+#' @rdname futureAssign
+#'
 #' @export
 `%globals%` <- function(fassignment, globals) {
   fassignment <- substitute(fassignment)

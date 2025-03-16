@@ -1,19 +1,23 @@
-#' Control lazy / eager evaluation for a future assignment
+#' Control whether standard output should be captured or not
 #'
-#' @usage fassignment \%lazy\% lazy
+#' @usage fassignment \%stdout\% capture
 #'
 #' @param fassignment The future assignment, e.g.
 #'        `x %<-% { expr }`.
-#' @inheritParams future
+#'
+#' @param capture If TRUE, the standard output will be captured, otherwise not.
+#'
+#' @aliases `%stdout%`
+#' @rdname futureAssign
 #'
 #' @export
-`%lazy%` <- function(fassignment, lazy) {
+`%stdout%` <- function(fassignment, capture) {
   fassignment <- substitute(fassignment)
   envir <- parent.frame(1)
 
   ## Temporarily set 'lazy' argument
   args <- getOption("future.disposable", list())
-  args["lazy"] <- list(lazy)
+  args["stdout"] <- list(capture)
   options(future.disposable = args)
   on.exit(options(future.disposable = NULL))
 

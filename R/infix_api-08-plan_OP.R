@@ -7,8 +7,8 @@
 #' @param strategy The mechanism for how the future should be
 #'        resolved. See [plan()] for further details.
 #'
-#' @seealso
-#' The [plan()] function sets the default plan for all futures.
+#' @aliases `%plan%`
+#' @rdname futureAssign
 #'
 #' @export
 `%plan%` <- function(fassignment, strategy) {

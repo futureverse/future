@@ -191,7 +191,7 @@
 #' R_FUTURE_GLOBALS_OBJECTSIZE_METHOD
 #' future.globals.objectSize.method
 #'
-#' @name future.options
+#' @name future.options 
 NULL
 
 

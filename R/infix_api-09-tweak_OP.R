@@ -7,6 +7,9 @@
 #' @param tweaks A named list (or vector) with arguments that
 #' should be changed relative to the current strategy.
 #'
+#' @aliases `%tweak%`
+#' @rdname futureAssign
+#'
 #' @export
 `%tweak%` <- function(fassignment, tweaks) {
   fassignment <- substitute(fassignment)

@@ -41,3 +41,4 @@ can still be accessed as:
 
 \emph{Note that it is the goal to remove all of the above from this package.}
 }
+\keyword{internal}
