@@ -27,6 +27,8 @@ import_parallel_fcn <- function(name, ...) {
 ## * cluster futures:
 ##   - parallel:::defaultCluster()  ## non-critical / not really needed /
 ##                                  ## can be dropped in R (>= 3.5.0)
+##   - parallel:::closeNode()       ## non-critical / 
+##                                  ## can be dropped in R (>= 4.4.0)
 ##   - parallel:::sendCall()        ## run()
 ##   - parallel:::recvResult()      ## value()
 ## * multicore futures:

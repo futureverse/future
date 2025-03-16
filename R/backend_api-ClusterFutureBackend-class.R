@@ -593,11 +593,14 @@ result.ClusterFuture <- function(future, ...) {
 
 
 
-#' @importFrom parallel closeNode
 #' @importFrom parallelly isConnectionValid isNodeAlive cloneNode
 receiveMessageFromWorker <- local({
   recvResult <- import_parallel_fcn("recvResult")
-
+  closeNode <- import_parallel("closeNode", default = function(node) {
+    con <- node[["con"]]
+    if (inherits(con, "connection")) close(con)
+  })
+  
   function(future, debug = FALSE, ...) {
     if (debug) {
       mdebug("receiveMessageFromWorker() for ClusterFuture ...")
