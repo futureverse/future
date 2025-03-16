@@ -163,7 +163,8 @@
 <h2 class="page-header" data-toc-text="development version" id="version-development-version">Version (development version)<a class="anchor" aria-label="anchor" href="#version-development-version"></a></h2>
 <div class="section level3">
 <h3 id="new-features-development-version">New Features<a class="anchor" aria-label="anchor" href="#new-features-development-version"></a></h3>
-<ul><li><p>Add <code>withPlan(&lt;plan&gt;, &lt;expression&gt;)</code> method to evaluate an expression, including futures, using a temporary future plan. Add <code>localPlan(&lt;plan&gt;)</code> to set a future plan temporarily in local environment, e.g. inside a function.</p></li>
+<ul><li><p>Add <code>localPlan(&lt;plan&gt;)</code> and <code>withPlan(&lt;plan&gt;, &lt;expression&gt;)</code> methods to evaluate an expression, including futures, using a temporary future plan.</p></li>
+<li><p>Add <code><a href="../reference/interrupt.html">interrupt()</a></code>, which interrupts a future, if the parallel backend supports it, otherwise it is silently ignored.</p></li>
 <li><p>Add <code><a href="../reference/reset.html">reset()</a></code>, which resets a future that has completed, failed, or been interrupted. The future is reset back to a lazy, vanilla future that can be relaunched.</p></li>
 <li><p>Add <code><a href="../reference/minifuture.html">minifuture()</a></code>, which is like <code><a href="../reference/future.html">future()</a></code>, but with different default arguments resulting in less overhead with the added burden on having to specify globals and packages, not having conditions and standard output relayed, and ignoring random number generation.</p></li>
 <li><p>Interrupted futures are now handled and produce an informative error.</p></li>
