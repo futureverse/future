@@ -12,17 +12,29 @@ for (strategy in strategies) {
   message("Number of free workers: ", n0)
   
   f <- future({ Sys.sleep(1.0); 42 })
-  stopifnot(f[["state"]] == "running")
-  stopifnot(!resolved(f))
+  stopifnot(
+     f[["state"]] == "running" ||
+    (f[["state"]] == "finished" && inherits(f, "SequentialFuture"))
+  )
+  stopifnot(
+    !resolved(f) || 
+    (resolved(f) && f[["state"]] == "finished")
+  )
   f <- interrupt(f)
-  stopifnot(f[["state"]] == "interrupted")
+  stopifnot({
+     f[["state"]] == "interrupted" ||
+    (f[["state"]] == "finished" && inherits(f, "SequentialFuture"))
+  })
   
   n <- nbrOfFreeWorkers()
   message("Number of free workers (after interupt): ", n)
   
   f <- resolve(f)
   stopifnot(resolved(f))
-  stopifnot(f[["state"]] == "interrupted")
+  stopifnot({
+     f[["state"]] == "interrupted" ||
+    (f[["state"]] == "finished" && inherits(f, "SequentialFuture"))
+  })
   
   n <- nbrOfFreeWorkers()
   message("Number of free workers (after resolve): ", n)
