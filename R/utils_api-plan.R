@@ -272,7 +272,7 @@
 #' _loaded_. Because of this, the \file{.future.R} file provides a
 #' convenient place for users to set the `plan()`.
 #' This behavior can be controlled via an \R option---see
-#' \link[future:future.options]{future options} for more details.
+#' [future options][future.options] for more details.
 #'
 #' @importFrom utils capture.output
 #' @export

@@ -75,7 +75,7 @@ or a regular RNG seed (a single integer).  If the latter, then a
 L'Ecuyer-CMRG seed will be automatically created based on the given seed.
 Furthermore, if FALSE, then the future will be monitored to make sure it
 does not use random numbers.  If it does and depending on the value of
-option \code{\link[=future.options]{future.rng.onMisuse}}, the check is
+option \link{future.rng.onMisuse}, the check is
 ignored, an informative warning, or error will be produced.
 If \code{seed} is NULL, then the effect is as with \code{seed = FALSE}
 but without the RNG check being performed.}

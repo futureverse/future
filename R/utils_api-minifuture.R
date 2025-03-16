@@ -1,5 +1,5 @@
 #' @return
-#' minifuture(expr)` creates a future with minimal overhead, by disabling
+#' `minifuture(expr)` creates a future with minimal overhead, by disabling
 #' user-friendly behaviors, e.g. automatic identification of global
 #' variables and packages needed, and relaying of output.
 #'
