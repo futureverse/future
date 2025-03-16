@@ -10,7 +10,7 @@
 |collate  |en_US.UTF-8                                               |
 |ctype    |en_US.UTF-8                                               |
 |tz       |America/Los_Angeles                                       |
-|date     |2025-03-15                                                |
+|date     |2025-03-16                                                |
 |pandoc   |3.6.3 @ /software/c4/cbi/software/pandoc-3.6.3/bin/pandoc |
 |quarto   |NA                                                        |
 
@@ -33,19 +33,16 @@
 |:----------------|:-------|:-----|:-------|:----|
 |[TriDimRegression](failures.md#tridimregression)|1.0.2   |1     |        |     |
 
-## New problems (9)
+## New problems (6)
 
 |package                      |version |error  |warning |note |
 |:----------------------------|:-------|:------|:-------|:----|
 |[bigDM](problems.md#bigdm)   |0.5.5   |       |__+2__  |2    |
 |[Certara.RsNLME.ModelExecutor](problems.md#certararsnlmemodelexecutor)|3.0.1   |       |__+1__  |     |
-|[distantia](problems.md#distantia)|2.0.2   |__+1__ |        |3    |
-|[doFuture](problems.md#dofuture)|1.0.1   |__+1__ |        |     |
 |[future.tests](problems.md#futuretests)|0.7.0   |__+1__ |        |     |
 |[JANE](problems.md#jane)     |0.2.1   |       |__+1__  |1    |
 |[Prostar](problems.md#prostar)|1.38.1  |       |__+1__  |3    |
 |[TKCat](problems.md#tkcat)   |1.1.11  |       |__+1__  |     |
-|[WARDEN](problems.md#warden) |0.99.1  |__+1__ |        |     |
 
 ## All (422)
 
@@ -125,8 +122,8 @@
 |[dipsaus](problems.md#dipsaus)|0.3.0     |       |        |1    |
 |[disk.frame](problems.md#diskframe)|0.8.3     |       |        |1    |
 |[dispositionEffect](problems.md#dispositioneffect)|1.0.1     |1      |        |     |
-|[distantia](problems.md#distantia)|2.0.2     |__+1__ |        |3    |
-|[doFuture](problems.md#dofuture)|1.0.1     |__+1__ |        |     |
+|[distantia](problems.md#distantia)|2.0.2     |       |        |3    |
+|doFuture                     |1.0.2     |       |        |     |
 |DQAstats                     |0.3.7     |       |        |     |
 |drake                        |7.13.11   |       |        |     |
 |drimmR                       |1.0.1     |       |        |     |
@@ -460,7 +457,7 @@
 |[updog](problems.md#updog)   |2.1.5     |       |        |1    |
 |[vital](problems.md#vital)   |1.1.0     |       |        |1    |
 |[vmeasur](problems.md#vmeasur)|0.1.4     |       |1       |     |
-|[WARDEN](problems.md#warden) |0.99.1    |__+1__ |        |     |
+|WARDEN                       |0.99.1    |       |        |     |
 |webdeveloper                 |1.0.5     |       |        |     |
 |[WeightedCluster](problems.md#weightedcluster)|1.8-1     |       |1       |     |
 |whitewater                   |0.1.3     |       |        |     |

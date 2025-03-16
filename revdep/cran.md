@@ -2,7 +2,7 @@
 
 We checked 422 reverse dependencies (400 from CRAN + 22 from Bioconductor), comparing R CMD check results across CRAN and dev versions of this package.
 
- * We saw 8 new problems
+ * We saw 5 new problems
  * We failed to check 1 packages
 
 Issues with CRAN packages are summarised below.
@@ -17,12 +17,6 @@ Issues with CRAN packages are summarised below.
 * Certara.RsNLME.ModelExecutor
   checking whether package ‘Certara.RsNLME.ModelExecutor’ can be installed ... WARNING
 
-* distantia
-  checking tests ...
-
-* doFuture
-  checking tests ...
-
 * future.tests
   checking tests ...
 
@@ -31,9 +25,6 @@ Issues with CRAN packages are summarised below.
 
 * TKCat
   checking whether package ‘TKCat’ can be installed ... WARNING
-
-* WARDEN
-  checking examples ... ERROR
 
 ### Failed to check
 
