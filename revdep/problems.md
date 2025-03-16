@@ -16,10 +16,11 @@ Run `revdepcheck::revdep_details(, "aifeducation")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  6.0Mb
+      installed size is  6.1Mb
       sub-directories of 1Mb or more:
         R      1.5Mb
         data   1.6Mb
+        help   1.0Mb
         libs   1.5Mb
     ```
 
@@ -257,7 +258,7 @@ Run `revdepcheck::revdep_details(, "batchtools")` for more info
 
 *   checking dependencies in R code ... NOTE
     ```
-    [c4-n43:1306383] OPAL ERROR: Not initialized in file ext2x_client.c at line 112
+    [c4-n43:2489156] OPAL ERROR: Not initialized in file ext2x_client.c at line 112
     --------------------------------------------------------------------------
     The application appears to have been direct launched using "srun",
     but OMPI was not built with SLURM's PMI support and therefore cannot
@@ -1024,7 +1025,7 @@ Run `revdepcheck::revdep_details(, "deseats")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  8.6Mb
+      installed size is  8.5Mb
       sub-directories of 1Mb or more:
         libs   7.8Mb
     ```
@@ -1043,40 +1044,12 @@ Run `revdepcheck::revdep_details(, "dipsaus")` for more info
 
 </details>
 
-## Newly broken
-
-*   checking examples ... ERROR
-    ```
-    Running examples in ‘dipsaus-Ex.R’ failed
-    The error most likely occurred in:
-    
-    > ### Name: PersistContainer
-    > ### Title: Wrapper to cache key-value pairs and persist across sessions
-    > ### Aliases: PersistContainer
-    > 
-    > ### ** Examples
-    > 
-    > 
-    ...
-    Error in force(value) : no function to return from, jumping to top level
-    Warning in save_item() : restarting interrupted promise evaluation
-    [1] 123
-    Error in save_item() : no function to return from, jumping to top level
-    Warning in container$cache(key = "a", value = { :
-      restarting interrupted promise evaluation
-    [1] 123
-    Error in container$cache(key = "a", value = { : 
-      no function to return from, jumping to top level
-    Execution halted
-    ```
-
 ## In both
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  6.6Mb
+      installed size is  6.2Mb
       sub-directories of 1Mb or more:
-        R      1.0Mb
         libs   4.2Mb
     ```
 
@@ -1192,9 +1165,8 @@ Run `revdepcheck::revdep_details(, "distantia")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  9.9Mb
+      installed size is  9.5Mb
       sub-directories of 1Mb or more:
-        help   1.0Mb
         libs   7.8Mb
     ```
 
@@ -1232,15 +1204,15 @@ Run `revdepcheck::revdep_details(, "doFuture")` for more info
      ERROR
     Running the tests in ‘tests/foreach_dofuture,globals.R’ failed.
     Last 50 lines of output:
-      [09:02:03.633]  $ x             : int [1:3] 1 2 3
-      [09:02:03.633]  $ ...future.x_ii: num 42
-      [09:02:03.633]  - attr(*, "where")=List of 2
-      [09:02:03.633]   ..$ x             :<environment: R_EmptyEnv> 
+      [14:51:52.389]  $ x             : int [1:3] 1 2 3
+      [14:51:52.389]  $ ...future.x_ii: num 42
+      [14:51:52.389]  - attr(*, "where")=List of 2
+      [14:51:52.389]   ..$ x             :<environment: R_EmptyEnv> 
     ...
-      [09:02:03.642]   ..$ message: chr "'...' used in an incorrect context"
-      [09:02:03.642]   ..$ call   : language doTryCatch(return(expr), name, parentenv, handler)
-      [09:02:03.642]   ..- attr(*, "class")= chr [1:3] "simpleError" "error" "condition"
-      [09:02:03.645] - accumulating results
+      [14:51:52.398]   ..$ message: chr "'...' used in an incorrect context"
+      [14:51:52.398]   ..$ call   : language doTryCatch(return(expr), name, parentenv, handler)
+      [14:51:52.398]   ..- attr(*, "class")= chr [1:3] "simpleError" "error" "condition"
+      [14:51:52.400] - accumulating results
       List of 2
        $ message: chr "'...' used in an incorrect context"
        $ call   : language doTryCatch(return(expr), name, parentenv, handler)
@@ -1290,9 +1262,9 @@ Run `revdepcheck::revdep_details(, "EFAtools")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  7.6Mb
+      installed size is  7.8Mb
       sub-directories of 1Mb or more:
-        libs   6.2Mb
+        libs   6.5Mb
     ```
 
 *   checking dependencies in R code ... NOTE
@@ -1433,11 +1405,11 @@ Run `revdepcheck::revdep_details(, "fdacluster")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 23.8Mb
+      installed size is 23.5Mb
       sub-directories of 1Mb or more:
-        R      2.1Mb
+        R      1.9Mb
         doc    1.5Mb
-        help   2.2Mb
+        help   2.1Mb
         libs  17.5Mb
     ```
 
@@ -1741,14 +1713,14 @@ Run `revdepcheck::revdep_details(, "geohabnet")` for more info
       > # Learn more about the roles of various files in:
       > # * https://r-pkgs.org/tests.html
     ...
-       13.           ├─future::value(fs)
-       14.           └─future:::value.list(fs)
-       15.             ├─future::resolve(...)
-       16.             └─future:::resolve.list(...)
-       17.               └─future (local) signalConditionsASAP(obj, resignal = FALSE, pos = ii)
-       18.                 └─future:::signalConditions(...)
+        7. │     └─rlang::eval_bare(quo_get_expr(.quo), quo_get_env(.quo))
+        8. └─geohabnet::sensitivity_analysis()
+        9.   └─geohabnet::load_parameters()
+       10.     └─config::get(file = filepath)
+       11.       └─yaml::yaml.load_file(...)
+       12.         └─yaml::yaml.load(...)
       
-      [ FAIL 2 | WARN 0 | SKIP 0 | PASS 16 ]
+      [ FAIL 2 | WARN 1 | SKIP 0 | PASS 16 ]
       Error: Test failures
       Execution halted
     ```
@@ -1768,7 +1740,7 @@ Run `revdepcheck::revdep_details(, "geohabnet")` for more info
     ...
     Quitting from lines 108-109 [unnamed-chunk-5] (analysis.Rmd)
     Error: processing vignette 'analysis.Rmd' failed with diagnostics:
-    unable to find an inherited method for function 'wrap' for signature 'x = "NULL"'
+    (/c4/home/henrik/.config/R/geohabnet/parameters.yaml) Duplicate map key: 'default'
     --- failed re-building ‘analysis.Rmd’
     
     SUMMARY: processing the following files failed:
@@ -1796,9 +1768,8 @@ Run `revdepcheck::revdep_details(, "GeoModels")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  6.1Mb
+      installed size is  5.9Mb
       sub-directories of 1Mb or more:
-        R      1.0Mb
         data   1.9Mb
         libs   2.7Mb
     ```
@@ -1897,6 +1868,7 @@ Run `revdepcheck::revdep_details(, "greed")` for more info
     ```
       installed size is 38.4Mb
       sub-directories of 1Mb or more:
+        data   1.0Mb
         libs  36.0Mb
     ```
 
@@ -2098,7 +2070,7 @@ Run `revdepcheck::revdep_details(, "hero")` for more info
 
 *   checking dependencies in R code ... NOTE
     ```
-    [c4-n43:2768933] OPAL ERROR: Not initialized in file ext2x_client.c at line 112
+    [c4-n43:644016] OPAL ERROR: Not initialized in file ext2x_client.c at line 112
     --------------------------------------------------------------------------
     The application appears to have been direct launched using "srun",
     but OMPI was not built with SLURM's PMI support and therefore cannot
@@ -2155,10 +2127,10 @@ Run `revdepcheck::revdep_details(, "heterogen")` for more info
 
 <details>
 
-* Version: 2.0.3
+* Version: 2.0.4
 * GitHub: https://github.com/nx10/httpgd
 * Source code: https://github.com/cran/httpgd
-* Date/Publication: 2025-02-28 09:40:05 UTC
+* Date/Publication: 2025-03-16 00:50:01 UTC
 * Number of recursive dependencies: 59
 
 Run `revdepcheck::revdep_details(, "httpgd")` for more info
@@ -2423,6 +2395,15 @@ Run `revdepcheck::revdep_details(, "JANE")` for more info
 
 </details>
 
+## Newly broken
+
+*   checking whether package ‘JANE’ can be installed ... WARNING
+    ```
+    Found the following significant warnings:
+      Warning: replacing previous import ‘future::interrupt’ by ‘rlang::interrupt’ when loading ‘JANE’
+    See ‘/c4/home/henrik/futureverse/future/revdep/checks/JANE/new/JANE.Rcheck/00install.out’ for details.
+    ```
+
 ## In both
 
 *   checking installed package size ... NOTE
@@ -2450,9 +2431,9 @@ Run `revdepcheck::revdep_details(, "keyATM")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 26.0Mb
+      installed size is 25.4Mb
       sub-directories of 1Mb or more:
-        libs  25.5Mb
+        libs  24.9Mb
     ```
 
 # kmeRtone
@@ -2570,7 +2551,7 @@ Run `revdepcheck::revdep_details(, "lidR")` for more info
 
 *   checking tests ...
     ```
-      Running ‘testthat.R’/software/c4/cbi/software/_rocky8/R-4.4.3-gcc13/lib64/R/bin/BATCH: line 60: 3965160 Aborted                 (core dumped) ${R_HOME}/bin/R -f ${in} ${opts} ${R_BATCH_OPTIONS} > ${out} 2>&1
+      Running ‘testthat.R’/software/c4/cbi/software/_rocky8/R-4.4.3-gcc13/lib64/R/bin/BATCH: line 60: 806497 Aborted                 (core dumped) ${R_HOME}/bin/R -f ${in} ${opts} ${R_BATCH_OPTIONS} > ${out} 2>&1
     
      ERROR
     Running the tests in ‘tests/testthat.R’ failed.
@@ -2593,9 +2574,9 @@ Run `revdepcheck::revdep_details(, "lidR")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 19.6Mb
+      installed size is 19.1Mb
       sub-directories of 1Mb or more:
-        R         1.5Mb
+        R         1.0Mb
         doc       1.0Mb
         extdata   1.2Mb
         libs     15.4Mb
@@ -2765,31 +2746,6 @@ Run `revdepcheck::revdep_details(, "MineICA")` for more info
 
 ## In both
 
-*   checking re-building of vignette outputs ... ERROR
-    ```
-    Error(s) in re-building vignettes:
-    --- re-building ‘MineICA.Rnw’ using Sweave
-    Loading required package: BiocGenerics
-    
-    Attaching package: ‘BiocGenerics’
-    
-    The following objects are masked from ‘package:stats’:
-    
-        IQR, mad, sd, var, xtabs
-    
-    ...
-      task 1 failed - "Query ERROR: caught BioMart::Exception::Database: Could not connect to mysql database ensembl_mart_113: DBI connect('database=ensembl_mart_113;host=127.0.0.1;port=5316','ensro',...) failed: Can't connect to MySQL server on '127.0.0.1' (111) at /nfs/public/ro/ensweb/live/mart/www_113/biomart-perl/lib/BioMart/Configuration/DBLocation.pm line 98.
-    "
-    
-    --- failed re-building ‘MineICA.Rnw’
-    
-    SUMMARY: processing the following file failed:
-      ‘MineICA.Rnw’
-    
-    Error: Vignette re-building failed.
-    Execution halted
-    ```
-
 *   checking dependencies in R code ... WARNING
     ```
     Namespace in Imports field not imported from: ‘lumiHumanAll.db’
@@ -2838,6 +2794,31 @@ Run `revdepcheck::revdep_details(, "MineICA")` for more info
     should have documentation entries.
     See chapter ‘Writing R documentation files’ in the ‘Writing R
     Extensions’ manual.
+    ```
+
+*   checking re-building of vignette outputs ... WARNING
+    ```
+    Error(s) in re-building vignettes:
+    --- re-building ‘MineICA.Rnw’ using Sweave
+    Loading required package: BiocGenerics
+    
+    Attaching package: ‘BiocGenerics’
+    
+    The following objects are masked from ‘package:stats’:
+    
+        IQR, mad, sd, var, xtabs
+    
+    ...
+    l.23 \usepackage
+                    {subfig}^^M
+    !  ==> Fatal error occurred, no output PDF file produced!
+    --- failed re-building ‘MineICA.Rnw’
+    
+    SUMMARY: processing the following file failed:
+      ‘MineICA.Rnw’
+    
+    Error: Vignette re-building failed.
+    Execution halted
     ```
 
 *   checking package dependencies ... NOTE
@@ -2928,8 +2909,9 @@ Run `revdepcheck::revdep_details(, "missSBM")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 10.1Mb
+      installed size is 10.2Mb
       sub-directories of 1Mb or more:
+        R      1.0Mb
         libs   8.0Mb
     ```
 
@@ -3144,9 +3126,9 @@ Run `revdepcheck::revdep_details(, "multitool")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  5.0Mb
+      installed size is  5.9Mb
       sub-directories of 1Mb or more:
-        doc   4.3Mb
+        doc   5.1Mb
     ```
 
 # nebula
@@ -3554,9 +3536,9 @@ Run `revdepcheck::revdep_details(, "pgxRpi")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  5.7Mb
+      installed size is  5.4Mb
       sub-directories of 1Mb or more:
-        doc   5.4Mb
+        doc   5.1Mb
     ```
 
 *   checking R code for possible problems ... NOTE
@@ -3949,8 +3931,9 @@ Run `revdepcheck::revdep_details(, "RAINBOWR")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 42.9Mb
+      installed size is 43.3Mb
       sub-directories of 1Mb or more:
+        R      1.0Mb
         libs  41.5Mb
     ```
 
@@ -4214,9 +4197,9 @@ Run `revdepcheck::revdep_details(, "sdmTMB")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 97.8Mb
+      installed size is 99.0Mb
       sub-directories of 1Mb or more:
-        libs  95.9Mb
+        libs  97.1Mb
     ```
 
 # sentopics
@@ -4237,9 +4220,9 @@ Run `revdepcheck::revdep_details(, "sentopics")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  8.3Mb
+      installed size is  8.6Mb
       sub-directories of 1Mb or more:
-        data   1.2Mb
+        data   1.5Mb
         libs   6.2Mb
     ```
 
@@ -4313,7 +4296,7 @@ Run `revdepcheck::revdep_details(, "SeuratObject")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  5.6Mb
+      installed size is  5.5Mb
       sub-directories of 1Mb or more:
         R      1.5Mb
         libs   3.2Mb
@@ -4450,9 +4433,8 @@ Run `revdepcheck::revdep_details(, "sigminer")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  6.9Mb
+      installed size is  6.7Mb
       sub-directories of 1Mb or more:
-        R         1.0Mb
         extdata   1.0Mb
         help      1.7Mb
         libs      1.6Mb
@@ -4830,10 +4812,9 @@ Run `revdepcheck::revdep_details(, "spatialwarnings")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  8.5Mb
+      installed size is  8.1Mb
       sub-directories of 1Mb or more:
-        data   1.0Mb
-        libs   7.0Mb
+        libs   6.7Mb
     ```
 
 # sperrorest
@@ -5001,7 +4982,7 @@ Run `revdepcheck::revdep_details(, "squat")` for more info
       installed size is 19.9Mb
       sub-directories of 1Mb or more:
         data   1.1Mb
-        help   1.1Mb
+        help   1.2Mb
         libs  17.5Mb
     ```
 
@@ -5076,9 +5057,8 @@ Run `revdepcheck::revdep_details(, "stars")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  7.3Mb
+      installed size is  6.8Mb
       sub-directories of 1Mb or more:
-        R     1.0Mb
         doc   2.9Mb
         nc    1.7Mb
     ```
@@ -5591,9 +5571,9 @@ Run `revdepcheck::revdep_details(, "tsdistributions")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 43.4Mb
+      installed size is 42.9Mb
       sub-directories of 1Mb or more:
-        libs  42.7Mb
+        libs  42.2Mb
     ```
 
 # tsgarch
@@ -5928,10 +5908,10 @@ Run `revdepcheck::revdep_details(, "wru")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  7.7Mb
+      installed size is  7.5Mb
       sub-directories of 1Mb or more:
         data   3.5Mb
-        help   2.1Mb
+        help   2.0Mb
         libs   1.9Mb
     ```
 
