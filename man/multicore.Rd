@@ -9,8 +9,7 @@ multicore(
   workers = availableCores(constraints = "multicore"),
   gc = FALSE,
   earlySignal = FALSE,
-  maxSizeOfObjects = NULL,
-  envir = parent.frame()
+  maxSizeOfObjects = NULL
 )
 }
 \arguments{
@@ -38,9 +37,6 @@ remotely at your university or company, then you might want to use this
 protection to avoid transferring giga- or terabytes of data without noticing.
 (Default: \eqn{500 \cdot 1024^2} bytes = 500 MiB, unless overridden by a
 FutureBackend subclass, or by R option \link{future.globals.maxSize} (sic!))}
-
-\item{envir}{The \link{environment} from where global objects should be
-identified.}
 
 \item{\ldots}{Additional named elements to \code{\link[=Future]{Future()}}.}
 }
