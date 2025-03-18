@@ -270,6 +270,35 @@ resolve.list <- function(x, idxs = NULL, recursive = 0, result = FALSE, stdout =
 } ## resolve() for list
 
 
+
+subset_env <- function(x, idxs = NULL) {
+  if (is.null(idxs)) {
+    ## names(x) is only supported in R (>= 3.2.0)
+    idxs <- ls(envir = x, all.names = TRUE)
+  } else {
+    ## Nothing to do?
+    if (length(idxs) == 0) return(NULL)
+
+    ## names(x) is only supported in R (>= 3.2.0)
+    names <- ls(envir = x, all.names = TRUE)
+
+    ## Sanity check (because nx == 0 returns early above)
+    stop_if_not(length(names) > 0)
+
+    if (length(idxs) > 1L) idxs <- unique(idxs)
+
+    idxs <- as.character(idxs)
+    unknown <- idxs[!is.element(idxs, names)]
+    if (length(unknown) > 0) {
+      stopf("Unknown elements: %s", hpaste(sQuote(unknown)))
+    }
+  }
+  
+  idxs
+} ## subset_env()
+
+
+
 #' @export
 resolve.environment <- function(x, idxs = NULL, recursive = 0, result = FALSE, stdout = FALSE, signal = FALSE, force = FALSE, sleep = getOption("future.wait.interval", 0.01), ...) {
   if (is.logical(recursive)) {
@@ -290,22 +319,9 @@ resolve.environment <- function(x, idxs = NULL, recursive = 0, result = FALSE, s
     ## names(x) is only supported in R (>= 3.2.0)
     idxs <- ls(envir = x, all.names = TRUE)
   } else {
+    idxs <- subset_env(x, idxs = idxs)
     ## Nothing to do?
-    if (length(idxs) == 0) return(x)
-
-    ## names(x) is only supported in R (>= 3.2.0)
-    names <- ls(envir = x, all.names = TRUE)
-
-    ## Sanity check (because nx == 0 returns early above)
-    stop_if_not(length(names) > 0)
-
-    if (length(idxs) > 1L) idxs <- unique(idxs)
-
-    idxs <- as.character(idxs)
-    unknown <- idxs[!is.element(idxs, names)]
-    if (length(unknown) > 0) {
-      stopf("Unknown elements: %s", hpaste(sQuote(unknown)))
-    }
+    if (is.null(idxs)) return(x)
   }
 
   ## Nothing to do?

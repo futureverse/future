@@ -413,35 +413,6 @@ value2.list <- function(x, idxs = NULL, recursive = 0, reduce = NULL, stdout = F
 
 
 
-subset_env <- function(x, idxs = NULL) {
-  if (is.null(idxs)) {
-    ## names(x) is only supported in R (>= 3.2.0)
-    idxs <- ls(envir = x, all.names = TRUE)
-  } else {
-    nidxs <- length(idxs)
-    
-    ## Nothing to do?
-    if (nidxs == 0) return(NULL)
-
-    ## names(x) is only supported in R (>= 3.2.0)
-    names <- ls(envir = x, all.names = TRUE)
-
-    ## Sanity check (because nx == 0 returns early above)
-    stop_if_not(length(names) > 0)
-
-    if (nidxs > 1L) idxs <- unique(idxs)
-
-    idxs <- as.character(idxs)
-    unknown <- idxs[!is.element(idxs, names)]
-    if (length(unknown) > 0) {
-      stopf("Unknown elements: %s", hpaste(sQuote(unknown)))
-    }
-  }
-  
-  idxs
-} ## subset_env()
-
-
 subset_listenv <- function(x, idxs = NULL) {
   if (is.null(idxs)) {
     idxs <- seq_along(x)
