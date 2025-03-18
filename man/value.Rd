@@ -36,7 +36,7 @@ value(...)
   ...
 )
 
-\method{value}{environment}(x, stdout = TRUE, signal = TRUE, ...)
+\method{value}{environment}(x, ...)
 }
 \arguments{
 \item{future, x}{A \link{Future}, an environment, a list, or a list environment.}

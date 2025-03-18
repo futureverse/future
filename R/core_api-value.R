@@ -263,7 +263,11 @@ value.list <- function(x, idxs = NULL, recursive = 0, reduce = NULL, stdout = TR
   
   ## Subset?
   if (!is.null(idxs)) {
-    idxs <- subset_list(x, idxs = idxs)
+    if (inherits(x, "listenv")) {
+      idxs <- subset_list(x, idxs = idxs)
+    } else {
+      idxs <- subset_listenv(x, idxs = idxs)
+    }
     x <- x[idxs]
     idxs <- NULL
   }
@@ -462,17 +466,8 @@ value.listenv <- value.list
 
 
 #' @rdname value
+#' @importFrom listenv as.listenv
 #' @export
-value.environment <- function(x, stdout = TRUE, signal = TRUE, ...) {
-  y <- futures(x)
-  y <- resolve(y, result = TRUE, stdout = stdout, signal = signal, force = TRUE)
-  names <- ls(envir = y, all.names = TRUE)
-  for (key in names) {
-    f <- y[[key]]
-    if (!inherits(f, "Future")) next
-    v <- value(f, stdout = FALSE, signal = FALSE, ...)
-    if (signal && inherits(v, "error")) stop(v)
-    y[[key]] <- v
-  }
-  y
+value.environment <- function(x, ...) {
+  value(as.listenv(x), ...)
 }
