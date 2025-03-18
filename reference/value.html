@@ -177,10 +177,30 @@ queried futures are resolved.</p>
 <span><span class="fu">value</span><span class="op">(</span><span class="va">future</span>, stdout <span class="op">=</span> <span class="cn">TRUE</span>, signal <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'list'</span></span>
-<span><span class="fu">value</span><span class="op">(</span><span class="va">x</span>, stdout <span class="op">=</span> <span class="cn">TRUE</span>, signal <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span>
+<span><span class="fu">value</span><span class="op">(</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  idxs <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  recursive <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  reduce <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  stdout <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  signal <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  force <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  sleep <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"future.wait.interval"</span>, <span class="fl">0.01</span><span class="op">)</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'listenv'</span></span>
-<span><span class="fu">value</span><span class="op">(</span><span class="va">x</span>, stdout <span class="op">=</span> <span class="cn">TRUE</span>, signal <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span>
+<span><span class="fu">value</span><span class="op">(</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  idxs <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  recursive <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  reduce <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  stdout <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  signal <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  force <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  sleep <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"future.wait.interval"</span>, <span class="fl">0.01</span><span class="op">)</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'environment'</span></span>
 <span><span class="fu">value</span><span class="op">(</span><span class="va">x</span>, stdout <span class="op">=</span> <span class="cn">TRUE</span>, signal <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
@@ -202,6 +222,36 @@ is relayed, otherwise not.</p></dd>
 <dt id="arg-signal">signal<a class="anchor" aria-label="anchor" href="#arg-signal"></a></dt>
 <dd><p>If TRUE, <a href="https://rdrr.io/r/base/conditions.html" class="external-link">conditions</a> captured while resolving
 futures are relayed, otherwise not.</p></dd>
+
+
+<dt id="arg-idxs">idxs<a class="anchor" aria-label="anchor" href="#arg-idxs"></a></dt>
+<dd><p>(optional) integer or logical index specifying the subset of
+elements to check.</p></dd>
+
+
+<dt id="arg-recursive">recursive<a class="anchor" aria-label="anchor" href="#arg-recursive"></a></dt>
+<dd><p>A non-negative number specifying how deep of a recursion
+should be done.  If TRUE, an infinite recursion is used.  If FALSE or zero,
+no recursion is performed.</p></dd>
+
+
+<dt id="arg-reduce">reduce<a class="anchor" aria-label="anchor" href="#arg-reduce"></a></dt>
+<dd><p>An optional function for reducing all the values.
+Optional attribute <code>init</code> can be used to set initial value for the
+reduction. If not specified, the first value will be used as the
+initial value.
+Reduction of values is done as soon as possible, but always in the
+same order as <code>x</code>.</p></dd>
+
+
+<dt id="arg-force">force<a class="anchor" aria-label="anchor" href="#arg-force"></a></dt>
+<dd><p>(internal) If TRUE, captured standard output and captured
+<a href="https://rdrr.io/r/base/conditions.html" class="external-link">conditions</a> already relayed is relayed again, otherwise not.</p></dd>
+
+
+<dt id="arg-sleep">sleep<a class="anchor" aria-label="anchor" href="#arg-sleep"></a></dt>
+<dd><p>Number of seconds to wait before checking if futures have been
+resolved since last time.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>

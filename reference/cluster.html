@@ -175,8 +175,7 @@ parallel in another process</em>.</p>
 <span>  workers <span class="op">=</span> <span class="fu"><a href="re-exports.html">availableWorkers</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  gc <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  earlySignal <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  maxSizeOfObjects <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  envir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sys.parent.html" class="external-link">parent.frame</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  maxSizeOfObjects <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -225,11 +224,6 @@ remotely at your university or company, then you might want to use this
 protection to avoid transferring giga- or terabytes of data without noticing.
 (Default: \(500 \cdot 1024^2\) bytes = 500 MiB, unless overridden by a
 FutureBackend subclass, or by R option <a href="zzz-future.options.html">future.globals.maxSize</a> (sic!))</p></dd>
-
-
-<dt id="arg-envir">envir<a class="anchor" aria-label="anchor" href="#arg-envir"></a></dt>
-<dd><p>The <a href="https://rdrr.io/r/base/environment.html" class="external-link">environment</a> from where global objects should be
-identified.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
