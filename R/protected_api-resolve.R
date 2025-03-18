@@ -320,8 +320,6 @@ resolve.environment <- function(x, idxs = NULL, recursive = 0, result = FALSE, s
     idxs <- ls(envir = x, all.names = TRUE)
   } else {
     idxs <- subset_env(x, idxs = idxs)
-    ## Nothing to do?
-    if (is.null(idxs)) return(x)
   }
 
   ## Nothing to do?
@@ -463,9 +461,6 @@ resolve.listenv <- function(x, idxs = NULL, recursive = 0, result = FALSE, stdou
     idxs <- seq_along(x)
   } else {
     idxs <- subset_listenv(x, idxs = idxs)
-
-    ## Nothing to do?
-    if (length(idxs) == 0) return(x)
   }
 
   ## Nothing to do?
