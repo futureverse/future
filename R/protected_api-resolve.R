@@ -77,6 +77,11 @@ resolve.Future <- function(x, idxs = NULL, recursive = 0, result = FALSE, stdout
   ## Nothing to do?
   if (recursive < 0) return(future)
 
+  stop_if_not(
+    length(stdout) == 1L, is.logical(stdout), !is.na(stdout),
+    length(signal) == 1L, is.logical(signal), !is.na(signal),
+    length(result) == 1L, is.logical(result), !is.na(result)
+  )
   relay <- (stdout || signal)
   result <- result || relay
 
@@ -183,6 +188,11 @@ resolve.list <- function(x, idxs = NULL, recursive = 0, result = FALSE, stdout =
   ## Nothing to do?
   if (nx == 0) return(x)
 
+  stop_if_not(
+    length(stdout) == 1L, is.logical(stdout), !is.na(stdout),
+    length(signal) == 1L, is.logical(signal), !is.na(signal),
+    length(result) == 1L, is.logical(result), !is.na(result)
+  )
   relay <- (stdout || signal)
   result <- result || relay
 
@@ -326,6 +336,11 @@ resolve.environment <- function(x, idxs = NULL, recursive = 0, result = FALSE, s
   nx <- length(idxs)
   if (nx == 0) return(x)
 
+  stop_if_not(
+    length(stdout) == 1L, is.logical(stdout), !is.na(stdout),
+    length(signal) == 1L, is.logical(signal), !is.na(signal),
+    length(result) == 1L, is.logical(result), !is.na(result)
+  )
   relay <- (stdout || signal)
   result <- result || relay
 
@@ -467,6 +482,11 @@ resolve.listenv <- function(x, idxs = NULL, recursive = 0, result = FALSE, stdou
   nx <- length(idxs)
   if (nx == 0) return(x)
 
+  stop_if_not(
+    length(stdout) == 1L, is.logical(stdout), !is.na(stdout),
+    length(signal) == 1L, is.logical(signal), !is.na(signal),
+    length(result) == 1L, is.logical(result), !is.na(result)
+  )
   relay <- (stdout || signal)
   result <- result || relay
 
