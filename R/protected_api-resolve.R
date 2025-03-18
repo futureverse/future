@@ -135,6 +135,39 @@ resolve.Future <- function(x, idxs = NULL, recursive = 0, result = FALSE, stdout
 } ## resolve() for Future
 
 
+
+subset_list <- function(x, idxs = NULL) {
+  if (length(idxs) == 0) return(NULL)
+
+  ## Multi-dimensional indices?
+  if (is.matrix(idxs)) {
+    idxs <- whichIndex(idxs, dim = dim(x), dimnames = dimnames(x))
+  }
+  if (length(idxs) > 1L) idxs <- unique(idxs)
+
+  if (is.numeric(idxs)) {
+    idxs <- as.numeric(idxs)
+    nx <- .length(x)
+    if (any(idxs < 1 | idxs > nx)) {
+      stopf("Indices out of range [1,%d]: %s", nx, hpaste(idxs))
+    }
+  } else {
+    names <- names(x)
+    if (is.null(names)) {
+      stop("Named subsetting not possible. Elements are not named")
+    }
+
+    idxs <- as.character(idxs)
+    unknown <- idxs[!is.element(idxs, names)]
+    if (length(unknown) > 0) {
+      stopf("Unknown elements: %s", hpaste(sQuote(unknown)))
+    }
+  }
+
+  idxs
+} ## subset_list()
+
+
 #' @export
 resolve.list <- function(x, idxs = NULL, recursive = 0, result = FALSE, stdout = FALSE, signal = FALSE, force = FALSE, sleep = getOption("future.wait.interval", 0.01), ...) {
   if (is.logical(recursive)) {
@@ -157,37 +190,16 @@ resolve.list <- function(x, idxs = NULL, recursive = 0, result = FALSE, stdout =
 
   ## Subset?
   if (!is.null(idxs)) {
-    ## Nothing to do?
-    if (length(idxs) == 0) return(x)
-
-    ## Multi-dimensional indices?
-    if (is.matrix(idxs)) {
-      idxs <- whichIndex(idxs, dim = dim(x), dimnames = dimnames(x))
-    }
-    if (length(idxs) > 1L) idxs <- unique(idxs)
-
-    if (is.numeric(idxs)) {
-      idxs <- as.numeric(idxs)
-      if (any(idxs < 1 | idxs > nx)) {
-        stopf("Indices out of range [1,%d]: %s", nx, hpaste(idxs))
-      }
-    } else {
-      names <- names(x)
-      if (is.null(names)) {
-        stop("Named subsetting not possible. Elements are not named")
-      }
-
-      idxs <- as.character(idxs)
-      unknown <- idxs[!is.element(idxs, names)]
-      if (length(unknown) > 0) {
-        stopf("Unknown elements: %s", hpaste(sQuote(unknown)))
-      }
-    }
-
+    idxs <- subset_list(x, idxs = idxs)
+    
+    ## Nothing do to?
+    if (is.null(idxs)) return(x)
+    
     x <- x[idxs]
     nx <- .length(x)
+    idxs <- NULL
   }
-
+  
   debug <- isTRUE(getOption("future.debug"))
   if (debug) {
     mdebug("resolve() on list ...")
@@ -295,7 +307,6 @@ resolve.environment <- function(x, idxs = NULL, recursive = 0, result = FALSE, s
       stopf("Unknown elements: %s", hpaste(sQuote(unknown)))
     }
   }
-
 
   ## Nothing to do?
   nx <- length(idxs)
