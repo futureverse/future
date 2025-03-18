@@ -19,6 +19,7 @@ value(...)
   reduce = NULL,
   stdout = TRUE,
   signal = TRUE,
+  interrupt = TRUE,
   force = TRUE,
   sleep = getOption("future.wait.interval", 0.01),
   ...
@@ -31,6 +32,7 @@ value(...)
   reduce = NULL,
   stdout = TRUE,
   signal = TRUE,
+  interrupt = TRUE,
   force = TRUE,
   sleep = getOption("future.wait.interval", 0.01),
   ...
@@ -60,6 +62,10 @@ reduction. If not specified, the first value will be used as the
 initial value.
 Reduction of values is done as soon as possible, but always in the
 same order as \code{x}.}
+
+\item{interrupt}{If TRUE and \code{signal} is TRUE, non-resolved futures are
+interrupted as soon as an error is detected in one of the futures,
+before signaling the error.}
 
 \item{force}{(internal) If TRUE, captured standard output and captured
 \link[base]{conditions} already relayed is relayed again, otherwise not.}

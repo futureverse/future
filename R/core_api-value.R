@@ -226,9 +226,13 @@ value.Future <- function(future, stdout = TRUE, signal = TRUE, ...) {
 #' Reduction of values is done as soon as possible, but always in the
 #' same order as `x`.
 #'
+#' @param interrupt If TRUE and `signal` is TRUE, non-resolved futures are
+#' interrupted as soon as an error is detected in one of the futures,
+#' before signaling the error.
+#'
 #' @rdname value
 #' @export
-value.list <- function(x, idxs = NULL, recursive = 0, reduce = NULL, stdout = TRUE, signal = TRUE, force = TRUE, sleep = getOption("future.wait.interval", 0.01), ...) {
+value.list <- function(x, idxs = NULL, recursive = 0, reduce = NULL, stdout = TRUE, signal = TRUE, interrupt = TRUE, force = TRUE, sleep = getOption("future.wait.interval", 0.01), ...) {
   if (is.logical(recursive)) {
     if (recursive) recursive <- getOption("future.resolve.recursive", 99)
   }
@@ -255,7 +259,8 @@ value.list <- function(x, idxs = NULL, recursive = 0, reduce = NULL, stdout = TR
 
   stop_if_not(
     length(stdout) == 1L, is.logical(stdout), !is.na(stdout),
-    length(signal) == 1L, is.logical(signal), !is.na(signal)
+    length(signal) == 1L, is.logical(signal), !is.na(signal),
+    length(interrupt) == 1L, is.logical(interrupt), !is.na(interrupt)
   )
   relay <- (stdout || signal)
 
@@ -389,6 +394,7 @@ value.list <- function(x, idxs = NULL, recursive = 0, reduce = NULL, stdout = TR
           value <- value(obj, stdout = FALSE, signal = FALSE)
           if (signal && inherits(value, "error")) {
             y <- futures(x)
+            if (interrupt) interrupt(y)
             y <- resolve(y, result = TRUE, stdout = stdout, signal = signal, force = TRUE)
             stop(value)
           }
