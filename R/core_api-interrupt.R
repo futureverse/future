@@ -22,14 +22,14 @@ interrupt.list <- function(x, ...) {
   lapply(x, FUN = interrupt, ...)
 }
 
+#' @export
+interrupt.listenv <- interrupt.list
 
+
+#' @importFrom listenv as.listenv
 #' @export
 interrupt.environment <- function(x, ...) {
-  fs <- futures(x)
-  names <- names(fs)
-  fs <- as.list(fs)
-  names(fs) <- names
-  interrupt(fs, ...)
+  interrupt(as.listenv(x), ...)
 }
 
 
