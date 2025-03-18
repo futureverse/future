@@ -12,6 +12,12 @@
  * Add `reset()`, which resets a future that has completed, failed, or
    been interrupted. The future is reset back to a lazy, vanilla
    future that can be relaunched.
+
+ * `value()` on containers (lists `listenv`:s, and environments)
+   gained optional argument `reduce`, which specifies a function for
+   reducing all values, e.g. ``values(fs, reduce = `+`)``. Attribute
+   `init` can be used to control the initial value, e.e. ``reduce =
+   structure(`+`, init = 42)``.
  
  * Add `minifuture()`, which is like `future()`, but with different
    default arguments resulting in less overhead with the added burden

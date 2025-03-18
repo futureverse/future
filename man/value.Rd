@@ -12,11 +12,31 @@ value(...)
 
 \method{value}{Future}(future, stdout = TRUE, signal = TRUE, ...)
 
-\method{value}{list}(x, stdout = TRUE, signal = TRUE, ...)
+\method{value}{list}(
+  x,
+  idxs = NULL,
+  recursive = 0,
+  reduce = NULL,
+  stdout = TRUE,
+  signal = TRUE,
+  force = TRUE,
+  sleep = getOption("future.wait.interval", 0.01),
+  ...
+)
 
-\method{value}{listenv}(x, stdout = TRUE, signal = TRUE, ...)
+\method{value}{listenv}(
+  x,
+  idxs = NULL,
+  recursive = 0,
+  reduce = NULL,
+  stdout = TRUE,
+  signal = TRUE,
+  force = TRUE,
+  sleep = getOption("future.wait.interval", 0.01),
+  ...
+)
 
-\method{value}{environment}(x, stdout = TRUE, signal = TRUE, ...)
+\method{value}{environment}(x, ...)
 }
 \arguments{
 \item{future, x}{A \link{Future}, an environment, a list, or a list environment.}
@@ -26,6 +46,26 @@ is relayed, otherwise not.}
 
 \item{signal}{If TRUE, \link[base]{conditions} captured while resolving
 futures are relayed, otherwise not.}
+
+\item{idxs}{(optional) integer or logical index specifying the subset of
+elements to check.}
+
+\item{recursive}{A non-negative number specifying how deep of a recursion
+should be done.  If TRUE, an infinite recursion is used.  If FALSE or zero,
+no recursion is performed.}
+
+\item{reduce}{An optional function for reducing all the values.
+Optional attribute \code{init} can be used to set initial value for the
+reduction. If not specified, the first value will be used as the
+initial value.
+Reduction of values is done as soon as possible, but always in the
+same order as \code{x}.}
+
+\item{force}{(internal) If TRUE, captured standard output and captured
+\link[base]{conditions} already relayed is relayed again, otherwise not.}
+
+\item{sleep}{Number of seconds to wait before checking if futures have been
+resolved since last time.}
 
 \item{\ldots}{All arguments used by the S3 methods.}
 }

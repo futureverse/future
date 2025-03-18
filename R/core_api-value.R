@@ -217,25 +217,247 @@ value.Future <- function(future, stdout = TRUE, signal = TRUE, ...) {
 }
 
 
+#' @inheritParams resolve
+#'
+#' @param reduce An optional function for reducing all the values.
+#' Optional attribute `init` can be used to set initial value for the
+#' reduction. If not specified, the first value will be used as the
+#' initial value.
+#' Reduction of values is done as soon as possible, but always in the
+#' same order as `x`.
+#'
 #' @rdname value
 #' @export
-value.list <- function(x, stdout = TRUE, signal = TRUE, ...) {
-  y <- futures(x)
-  y <- resolve(y, result = TRUE, stdout = stdout, signal = signal, force = TRUE)
-  for (ii in seq_along(y)) {
-    f <- y[[ii]]
-    if (!inherits(f, "Future")) next
-    v <- value(f, stdout = FALSE, signal = FALSE, ...)
-    if (signal && inherits(v, "error")) stop(v)
-    if (is.null(v)) {
-      y[ii] <- list(NULL)
+value.list <- function(x, idxs = NULL, recursive = 0, reduce = NULL, stdout = TRUE, signal = TRUE, force = TRUE, sleep = getOption("future.wait.interval", 0.01), ...) {
+  if (is.logical(recursive)) {
+    if (recursive) recursive <- getOption("future.resolve.recursive", 99)
+  }
+  recursive <- as.numeric(recursive)
+
+  ## Validate 'reduce'
+  do_reduce <- !is.null(reduce)
+
+  if (do_reduce) {
+    with_assert({
+      stop_if_not(is.function(reduce))
+      if (!is.primitive(reduce)) {
+        args <- names(formals(reduce))
+        if (length(args) == 0) {
+          stop("The 'reduce' function must take at least one argument")
+        }
+      }
+    })
+    
+    reduced_until <- 0L
+    reduced_init <- ("init" %in% names(attributes(reduce)))
+    reduced_value <- attr(reduce, "init", exact = TRUE)
+  }
+
+  stop_if_not(
+    length(stdout) == 1L, is.logical(stdout), !is.na(stdout),
+    length(signal) == 1L, is.logical(signal), !is.na(signal)
+  )
+  relay <- (stdout || signal)
+
+  x <- futures(x)
+  
+  ## Subset?
+  if (!is.null(idxs)) {
+    if (inherits(x, "listenv")) {
+      idxs <- subset_list(x, idxs = idxs)
     } else {
-      y[[ii]] <- v
-      v <- NULL
+      idxs <- subset_listenv(x, idxs = idxs)
+    }
+    x <- x[idxs]
+    idxs <- NULL
+  }
+
+  if (inherits(x, "listenv")) {
+    ## NOTE: Contrary to other implementations that use .length(x), we here
+    ## do need to use generic length() that dispatches on class.
+    nx <- length(x)
+  } else {
+    nx <- .length(x)
+  }
+  
+  values <- vector("list", length = nx)
+  if (!do_reduce) {
+    dim <- dim(x)
+    if (!is.null(dim)) {
+      dim(values) <- dim
+      ## Preserve dimnames and names
+      dimnames(values) <- dimnames(x)
+    }
+    names(values) <- names(x)
+  }
+  
+  ## Nothing todo?
+  if (nx == 0) {
+    if (do_reduce) return(reduced_value)
+    return(values)
+  }
+
+  debug <- isTRUE(getOption("future.debug"))
+  if (debug) {
+    mdebug("value() on list ...")
+    mdebugf(" - recursive: %s", recursive)
+    on.exit(mdebug("value() on list ... done"))
+  }
+
+  
+  ## NOTE: Everything is considered non-resolved by default
+
+  ## Total number of values to resolve
+  total <- nx
+  remaining <- seq_len(nx)
+  resolved <- logical(length = nx)
+
+  ## Relay?
+  signalConditionsASAP <- make_signalConditionsASAP(nx, stdout = stdout, signal = signal, force = force, debug = debug)
+
+  if (debug) {
+    mdebugf(" length: %d", nx)
+    mdebugf(" elements: %s", hpaste(sQuote(names(x))))
+  }
+
+  if (do_reduce) {
+    reduced <- logical(length = nx)
+  
+    reduce_forward <- function(from) {
+      if (debug) {
+        mdebug("reduce_forward() ...")
+        on.exit({
+          mdebug("reduce_forward() ... done")
+        })
+      }
+      if (reduced_until == nx) return()
+      while (from <= nx) {
+        if (!resolved[from]) return()
+        value <- values[[from]]
+        reduced_value <<- reduce(reduced_value, value)
+        reduced[from] <<- TRUE
+        reduced_until <<- from
+        values[from] <<- list(NULL)
+        if (debug) {
+          mdebug("- reduced: ", paste(reduced, collapse = ", "))
+        }
+        from <- from + 1L
+      }
     }
   }
-  y
-}
+
+  ## Resolve all elements
+  while (length(remaining) > 0) {
+    mdebug(" - Number of remaining objects: ", length(remaining))
+    for (ii in remaining) {
+      mdebugf(" - checking value #%d ...", ii)
+      obj <- x[[ii]]
+
+      if (is.atomic(obj)) {
+        if (relay) signalConditionsASAP(obj, resignal = FALSE, pos = ii)
+        value <- obj
+        resolved[ii] <- TRUE
+        x[ii] <- list(NULL)
+        values[ii] <- list(value)
+        
+        if (do_reduce) {
+          if (ii == reduced_until + 1L) {
+            if (reduced_init || reduced_until > 0L) {
+              reduced_value <- reduce(reduced_value, value)
+            } else {
+              reduced_value <- value
+            }
+            reduced[ii] <- TRUE
+            reduced_until <- ii
+            values[ii] <- list(NULL)
+            reduce_forward(from = ii + 1L)
+          }
+          if (debug) {
+            mdebug(" - reduced: ", paste(reduced, collapse = ", "))
+          }          
+        }
+      } else {
+        ## If an unresolved future, move on to the next object
+        ## so that future can be resolved in the asynchronously
+        if (inherits(obj, "Future")) {
+          ## Lazy future that is not yet launched?
+          if (obj[["state"]] == 'created') obj <- run(obj)
+          if (!resolved(obj)) next
+          if (debug) mdebugf("Future #%d", ii)
+          relay_ok <- relay && signalConditionsASAP(obj, resignal = FALSE, pos = ii)
+          
+          value <- value(obj, stdout = FALSE, signal = FALSE)
+          if (signal && inherits(value, "error")) {
+            y <- futures(x)
+            y <- resolve(y, result = TRUE, stdout = stdout, signal = signal, force = TRUE)
+            stop(value)
+          }
+          
+          resolved[ii] <- TRUE
+          x[ii] <- list(NULL)
+          values[ii] <- list(value)
+          
+          if (do_reduce) {
+            if (ii == reduced_until + 1L) {
+              if (reduced_init || reduced_until > 0L) {
+                reduced_value <- reduce(reduced_value, value)
+              } else {
+                reduced_value <- value
+              }
+              reduced[ii] <- TRUE
+              reduced_until <- ii
+              values[ii] <- list(NULL)
+              resolved[ii] <- TRUE
+              reduce_forward(from = ii + 1L)
+            }
+            if (debug) {
+              mdebug(" - reduced: ", paste(reduced, collapse = ", "))
+            }          
+          }
+        }
+  
+        relay_ok <- relay && signalConditionsASAP(obj, resignal = FALSE, pos = ii)
+        
+        ## In all other cases, try to resolve
+        resolve(
+          obj,
+          recursive = recursive - 1,
+          result = TRUE,
+          stdout = stdout && relay_ok,
+          signal = signal && relay_ok,
+          sleep = sleep, ...
+        )
+      }
+
+      ## Assume resolved at this point
+      remaining <- setdiff(remaining, ii)
+      if (debug) mdebugf(" - length: %d (resolved future %s)", length(remaining), ii)
+      stop_if_not(!anyNA(remaining))
+      mdebugf(" - checking value #%d ... done", ii)
+    } # for (ii ...)
+
+    ## Wait a bit before checking again
+    if (length(remaining) > 0) Sys.sleep(sleep)
+  } # while (...)
+
+  if (relay || force) {
+    if (debug) mdebug("Relaying remaining futures")
+    signalConditionsASAP(resignal = FALSE, pos = 0L)
+  }
+
+  if (do_reduce) {
+    reduce_forward(from = reduced_until)
+    stop_if_not(
+      all(resolved),
+      reduced_until == nx,
+      all(reduced),
+      all(lengths(values) == 0L)
+    )
+    values <- reduced_value
+  }
+
+  values
+} ## value() for list
 
 
 #' @rdname value
@@ -244,17 +466,8 @@ value.listenv <- value.list
 
 
 #' @rdname value
+#' @importFrom listenv as.listenv
 #' @export
-value.environment <- function(x, stdout = TRUE, signal = TRUE, ...) {
-  y <- futures(x)
-  y <- resolve(y, result = TRUE, stdout = stdout, signal = signal, force = TRUE)
-  names <- ls(envir = y, all.names = TRUE)
-  for (key in names) {
-    f <- y[[key]]
-    if (!inherits(f, "Future")) next
-    v <- value(f, stdout = FALSE, signal = FALSE, ...)
-    if (signal && inherits(v, "error")) stop(v)
-    y[[key]] <- v
-  }
-  y
+value.environment <- function(x, ...) {
+  value(as.listenv(x), ...)
 }
