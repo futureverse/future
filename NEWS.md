@@ -2,30 +2,26 @@
 
 ## New Features
 
- * Add `localPlan(<plan>)` and `withPlan(<plan>, <expression>)`
-   methods to evaluate an expression, including futures, using a
-   temporary future plan.
+ * Add `localPlan()` and `withPlan()` functions for evaluating an
+   expression, including futures, using a temporary future plan.
 
  * Add `interrupt()`, which interrupts a future, if the parallel
    backend supports it, otherwise it is silently ignored. It can also
-   be used on a container (e.g. lists, `listenv`:s and environment)
+   be used on a container (i.e. lists, `listenv`:s and environment)
    of futures.
  
  * Add `reset()`, which resets a future that has completed, failed, or
    been interrupted. The future is reset back to a lazy, vanilla
    future that can be relaunched.
 
- * `value()` on containers (lists `listenv`:s, and environments)
-   gained optional argument `reduce`, which specifies a function for
-   reducing all values, e.g. ``values(fs, reduce = `+`)``. Attribute
-   `init` can be used to control the initial value. Note that
-   attributes must not be set on primitive functions. As a workaround,
-   use `reduce = structure("+", init = 42)` and `value()` will
-   workaround the problem internally.
+ * `value()` on containers gained argument `reduce`, which specifies a
+   function for reducing the values, e.g. ``values(fs, reduce =
+   `+`)``. Optional attribute `init` controls the initial value. Note
+   that attributes must not be set on primitive functions. As a
+   workaround, use `reduce = structure("+", init = 42)`.
 
- * `value()` on containers gained optional argument `interrupt`, which
-   interrupts non-resolved futures if an error is detected in one of
-   the futures and `signal` is TRUE.
+ * `value()` on containers interrupts non-resolved futures if an error
+   is detected in one of the futures.
 
  * Add `minifuture()`, which is like `future()`, but with different
    default arguments resulting in less overhead with the added burden
