@@ -217,6 +217,21 @@ value.Future <- function(future, stdout = TRUE, signal = TRUE, ...) {
 }
 
 
+name_of_function <- function(fcn, add_backticks = FALSE) {
+  env <- baseenv()
+  names <- names(env)
+  for (name in names) {
+    obj <- get(name, envir = env, inherits = FALSE)
+    if (is.function(obj) && identical(obj, fcn)) {
+      if (add_backticks && !grepl("^[[:alpha:]]", name)) {
+        name <- sprintf("`%s`", name)
+      }
+      return(name)
+    }
+  }
+  "<unknown function>"
+}
+
 #' @inheritParams resolve
 #'
 #' @param reduce An optional function for reducing all the values.
@@ -242,7 +257,27 @@ value.list <- function(x, idxs = NULL, recursive = 0, reduce = NULL, stdout = TR
   do_reduce <- !is.null(reduce)
 
   if (do_reduce) {
-    with_assert({
+    reduced_until <- 0L
+    reduced_init <- ("init" %in% names(attributes(reduce)))
+    reduce_init <- attr(reduce, "init")
+    reduced_value <- attr(reduce, "init", exact = TRUE)
+
+    if (is.character(reduce)) {
+      ## SPECIAL CASE: User-friendly workaround
+      ## See R-devel thread '[Rd] structure(<primitive function>, ...) is
+      ## sticky: a bug, or should it be an error?' on 2025-03-19
+      ## <https://stat.ethz.ch/pipermail/r-devel/2025-March/083892.html>
+      ## Only allowed for primitive functions
+      if (!exists(reduce, mode = "function", envir = baseenv(), inherits = FALSE)) {
+        stop(sprintf("There exist no such 'reduce' function in the 'base' package: %s()", reduce))
+      }
+      fcn <- get(reduce, mode = "function", envir = baseenv(), inherits = FALSE)
+      if (!is.primitive(fcn)) {
+        name <- name_of_function(fcn)
+       stop(sprintf("The 'reduce' function %s() is not a primitive function. Please use 'reduce = %s' instead", reduce, name))
+      }
+      reduce <- fcn
+    } else if (is.function(reduce)) {
       stop_if_not(is.function(reduce))
       if (!is.primitive(reduce)) {
         args <- names(formals(reduce))
@@ -250,12 +285,22 @@ value.list <- function(x, idxs = NULL, recursive = 0, reduce = NULL, stdout = TR
           stop("The 'reduce' function must take at least one argument")
         }
       }
-    })
+    }
     
-    reduced_until <- 0L
-    reduced_init <- ("init" %in% names(attributes(reduce)))
-    reduced_value <- attr(reduce, "init", exact = TRUE)
-  }
+    ## SPECIAL CASE: Protect against mistakes
+    ## See R-devel thread '[Rd] structure(<primitive function>, ...) is
+    ## sticky: a bug, or should it be an error?' on 2025-03-19
+    ## <https://stat.ethz.ch/pipermail/r-devel/2025-March/083892.html>
+    if (is.primitive(reduce) && !is.null(attr(reduce, "init", exact = TRUE))) {
+      ## FIXME?: At least in R 4.4.3, none of the primitive functions have
+      ## attributes. Because of that, we could do attributes(reduce) <- NULL
+      ## here before throwing the error. But is that a safe assumption?
+      name <- name_of_function(reduce)
+      nameq <- name
+      if (!grepl("^[[:alpha:]]", nameq)) nameq <- sprintf("`%s`", nameq)
+      stop(sprintf("You must not set an 'init' reduce value on 'base' function %s(), because it is a primitive function. You can use 'reduce = structure(\"%s\", init = <value>)' instead", nameq, name))
+    }
+  } ## if (do_reduce)
 
   stop_if_not(
     length(stdout) == 1L, is.logical(stdout), !is.na(stdout),

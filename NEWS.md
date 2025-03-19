@@ -18,8 +18,10 @@
  * `value()` on containers (lists `listenv`:s, and environments)
    gained optional argument `reduce`, which specifies a function for
    reducing all values, e.g. ``values(fs, reduce = `+`)``. Attribute
-   `init` can be used to control the initial value, e.e. ``reduce =
-   structure(`+`, init = 42)``.
+   `init` can be used to control the initial value. Note that
+   attributes must not be set on primitive functions. As a workaround,
+   use `reduce = structure("+", init = 42)` and `value()` will
+   workaround the problem internally.
 
  * `value()` on containers gained optional argument `interrupt`, which
    interrupts non-resolved futures if an error is detected in one of
