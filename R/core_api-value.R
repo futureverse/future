@@ -16,11 +16,16 @@
 #' @param inorder If TRUE, then standard output and conditions are relayed,
 #' and value reduction, is done in the order the futures occur in `x`, but
 #' always as soon as possible. This is achieved by buffering the details
-#' until they can be released. In the worst case scenario, nothing is
-#' released until the first future is resolved, which can result in large,
-#' memory-heavy buffers. By setting `inorder = FALSE`, no buffering takes
-#' place and everything is relayed and reduced as soon as a new future is
-#' resolved.
+#' until they can be released. By setting `inorder = FALSE`, no buffering
+#' takes place and everything is relayed and reduced as soon as a new future
+#' is resolved.
+#'
+#' @param drop If TRUE, resolved futures are minimized in size and invalidated
+#' as soon the as their values have been collected and any output and
+#' conditions have been relayed.
+#' Combining `drop = TRUE` with `inorder = FALSE` reduces the memory use
+#' sooner, especially avoiding the risk of holding on to future values until
+#' the very end.
 #' 
 #' @param \ldots All arguments used by the S3 methods.
 #'
@@ -42,9 +47,29 @@
 value <- function(...) UseMethod("value")
 
 
+drop_future <- function(future) {
+  class <- class(future)[1]
+  label <- future[["label"]]
+  if (is.null(label)) label <- "<none>"
+  msg <- sprintf("Future (%s) of class %s is no longer valid, because its content has been minimized using value(..., drop = TRUE)", label, class)
+  error <- FutureDroppedError(msg, future = future)
+  
+  future <- reset(future)
+  future[["expr"]] <- NULL
+  future[["globals"]] <- NULL
+  future[["packages"]] <- NULL
+  future[["result"]] <- FutureResult(conditions = list(
+    list(condition = error, signaled = FALSE)
+  ))
+  future[["state"]] <- "finished"
+  class(future) <- c("DroppedFuture", "UniprocessFuture", "Future")
+  future
+}
+
+
 #' @rdname value
 #' @export
-value.Future <- function(future, stdout = TRUE, signal = TRUE, ...) {
+value.Future <- function(future, stdout = TRUE, signal = TRUE, drop = FALSE, ...) {
   if (future[["state"]] == "created") {
     future <- run(future)
   }
@@ -221,6 +246,9 @@ value.Future <- function(future, stdout = TRUE, signal = TRUE, ...) {
       }
     }
   }
+
+  ## Minimize and invalidate results?
+  if (drop) future <- drop_future(future)
   
   if (isTRUE(visible)) value else invisible(value)
 }
@@ -242,6 +270,7 @@ name_of_function <- function(fcn, add_backticks = FALSE) {
 }
 
 #' @inheritParams resolve
+#' @inheritParams value
 #'
 #' @param reduce An optional function for reducing all the values.
 #' Optional attribute `init` can be used to set initial value for the
@@ -256,7 +285,7 @@ name_of_function <- function(fcn, add_backticks = FALSE) {
 #'
 #' @rdname value
 #' @export
-value.list <- function(x, idxs = NULL, recursive = 0, reduce = NULL, stdout = TRUE, signal = TRUE, interrupt = TRUE, inorder = TRUE, force = TRUE, sleep = getOption("future.wait.interval", 0.01), ...) {
+value.list <- function(x, idxs = NULL, recursive = 0, reduce = NULL, stdout = TRUE, signal = TRUE, interrupt = TRUE, inorder = TRUE, drop = FALSE, force = TRUE, sleep = getOption("future.wait.interval", 0.01), ...) {
   if (is.logical(recursive)) {
     if (recursive) recursive <- getOption("future.resolve.recursive", 99)
   }
@@ -358,9 +387,9 @@ value.list <- function(x, idxs = NULL, recursive = 0, reduce = NULL, stdout = TR
 
   debug <- isTRUE(getOption("future.debug"))
   if (debug) {
-    mdebug("value() on list ...")
-    mdebugf(" - recursive: %s", recursive)
-    on.exit(mdebug("value() on list ... done"))
+    mdebugf_push("value() on %s ...", class(x)[1])
+    mdebugf("recursive: %s", recursive)
+    on.exit(mdebugf_pop("value() on %s ... done", class(x)[1]))
   }
 
   
@@ -373,14 +402,14 @@ value.list <- function(x, idxs = NULL, recursive = 0, reduce = NULL, stdout = TR
 
   ## Relay, and in order or out of order?
   if (inorder) {
-    signalConditionsASAP <- make_signalConditionsASAP(nx, stdout = stdout, signal = signal, force = force, debug = debug)
+    signalConditionsASAP <- make_signalConditionsASAP(nx, stdout = stdout, signal = signal, force = force && !drop, debug = debug)
   } else {
     signalConditionsASAP <- function(...) TRUE
   }
 
   if (debug) {
-    mdebugf(" length: %d", nx)
-    mdebugf(" elements: %s", hpaste(sQuote(names(x))))
+    mdebugf("length: %d", nx)
+    mdebugf("elements: %s", hpaste(sQuote(names(x))))
   }
 
   if (do_reduce) {
@@ -390,10 +419,8 @@ value.list <- function(x, idxs = NULL, recursive = 0, reduce = NULL, stdout = TR
     if (inorder) {
       reduce_forward <- function(from) {
         if (debug) {
-          mdebug("reduce_forward() ...")
-          on.exit({
-            mdebug("reduce_forward() ... done")
-          })
+          mdebug_push("reduce_forward() ...")
+          on.exit(mdebug_pop("reduce_forward() ... done"))
         }
         if (reduced_until == nx) return()
         while (from <= nx) {
@@ -404,43 +431,49 @@ value.list <- function(x, idxs = NULL, recursive = 0, reduce = NULL, stdout = TR
           reduced_until <<- from
           values[from] <<- list(NULL)
           if (debug) {
-            mdebug("- reduced: ", paste(reduced, collapse = ", "))
+            mdebug("reduced: ", paste(reduced, collapse = ", "))
           }
           from <- from + 1L
         }
       }
     } else {
-      reduce_forward <- function(from) {
-        if (debug) {
-          mdebug("reduce_forward() ...")
-          on.exit({
-            mdebug("reduce_forward() ... done")
-          })
-        }
-        while (from <= nx) {
-          if (!resolved[from]) return()
-          value <- values[[from]]
-          reduced_value <<- reduce(reduced_value, value)
-          reduced[from] <<- TRUE
-          reduced_until <<- from
-          values[from] <<- list(NULL)
+      reduce_forward <- local({
+        first <- TRUE
+        function(from) {
           if (debug) {
-            mdebug("- reduced: ", paste(reduced, collapse = ", "))
+            mdebug_push("reduce_forward() - inorder = FALSE ...")
+            on.exit(mdebug_pop("reduce_forward() - inorder = FALSE... done"))
           }
-          from <- from + 1L
+          while (from <= nx) {
+            if (reduced[from]) return()
+            if (!resolved[from]) return()
+            value <- values[[from]]
+            if (first) {
+              reduced_value <<- value
+              first <<- FALSE
+            } else {
+              reduced_value <<- reduce(reduced_value, value)
+            }
+            reduced[from] <<- TRUE
+            reduced_until <<- from
+            values[from] <<- list(NULL)
+            if (debug) mdebug("reduced: ", paste(reduced, collapse = ", "))
+            from <- from + 1L
+          }
         }
-      }
+      })
     }
   }
 
-  ## Resolve all elements
+  ## Collect values for all remaining elements
   while (length(remaining) > 0) {
-    mdebug(" - Number of remaining objects: ", length(remaining))
+    if (debug) mdebug("Number of remaining objects: ", length(remaining))
     for (ii in remaining) {
-      mdebugf(" - checking value #%d ...", ii)
+      mdebugf_push("checking value #%d ...", ii)
       obj <- x[[ii]]
 
       if (is.atomic(obj)) {
+        if (debug) mdebugf("'obj' is atomic")
         if (relay) signalConditionsASAP(obj, resignal = FALSE, pos = ii)
         value <- obj
         resolved[ii] <- TRUE
@@ -448,38 +481,67 @@ value.list <- function(x, idxs = NULL, recursive = 0, reduce = NULL, stdout = TR
         values[ii] <- list(value)
         
         if (do_reduce) {
-          if (ii == reduced_until + 1L) {
-            if (reduced_init || reduced_until > 0L) {
-              reduced_value <- reduce(reduced_value, value)
-            } else {
-              reduced_value <- value
+          ## Reduce in order or out of order?
+          if (inorder) {
+            if (ii == reduced_until + 1L) {
+              if (reduced_init || reduced_until > 0L) {
+                reduced_value <- reduce(reduced_value, value)
+              } else {
+                reduced_value <- value
+              }
+              reduced[ii] <- TRUE
+              reduced_until <- ii
+              values[ii] <- list(NULL)
+              resolved[ii] <- TRUE
+              reduce_forward(from = ii + 1L)
             }
-            reduced[ii] <- TRUE
-            reduced_until <- ii
-            values[ii] <- list(NULL)
-            reduce_forward(from = ii + 1L)
+          } else {
+            reduce_forward(from = ii)
+            if (debug) mdebugf("reduced value: %s", deparse(reduced_value))
           }
           if (debug) {
-            mdebug(" - reduced: ", paste(reduced, collapse = ", "))
+            mdebug("reduced: ", paste(reduced, collapse = ", "))
           }          
         }
       } else {
+        if (debug) mdebugf("'obj' is %s", class(obj)[1])
+        
         ## If an unresolved future, move on to the next object
         ## so that future can be resolved in the asynchronously
         if (inherits(obj, "Future")) {
           ## Lazy future that is not yet launched?
           if (obj[["state"]] == 'created') obj <- run(obj)
-          if (!resolved(obj)) next
+          
+          if (!resolved(obj)) {
+            if (debug) mdebugf_pop("checking value #%d ... done", ii)
+            next
+          }
+          
           if (debug) mdebugf("Future #%d", ii)
           relay_ok <- relay && signalConditionsASAP(obj, resignal = FALSE, pos = ii)
           
-          value <- value(obj, stdout = !inorder, signal = !inorder)
+          if (debug) mdebug_push("value(obj, ...) ...")
+          value <- value(obj, stdout = !inorder, signal = !inorder, drop = drop)
+          if (debug) mdebugf("value: <%s>", class(value)[1])
+          if (debug) mdebug_pop("value(obj, ...) ... done")
+          
           if (signal && inherits(value, "error")) {
+            if (debug) mdebugf_push("signal %s ...", class(value)[1])
+            if (debug) mdebug_push("futures(x) ...")
             y <- futures(x)
-            if (interrupt) interrupt(y)
-            y <- resolve(y, result = TRUE, stdout = stdout, signal = signal, force = TRUE)
+            if (debug) mdebug_pop("futures(x) ... done")
+            if (interrupt) {
+              if (debug) mdebug_push("interrupt(y) ...")
+              interrupt(y)
+              if (debug) mdebug_pop("interrupt(y) ... done")
+            }
+            if (debug) mdebug_push("resolve(y, ...) ...")
+            y <- resolve(y, result = TRUE, stdout = stdout, signal = signal, force = !drop)
+            if (debug) mdebug_pop("resolve(y, ...) ... done")
+            if (debug) mdebugf("stop(value) in 3, 2, 1 ...")
             stop(value)
-          }
+            if (debug) mdebugf_push("signal %s ... done", class(value)[1])
+          } ## if (signal && inherits(value, "error"))
           
           resolved[ii] <- TRUE
           x[ii] <- list(NULL)
@@ -502,13 +564,14 @@ value.list <- function(x, idxs = NULL, recursive = 0, reduce = NULL, stdout = TR
               }
             } else {
               reduce_forward(from = ii)
+              if (debug) mdebugf("reduced value: %s", deparse(reduced_value))
             }
             if (debug) {
-              mdebug(" - reduced: ", paste(reduced, collapse = ", "))
+              mdebug("reduced: ", paste(reduced, collapse = ", "))
             }          
           }
         }
-  
+
         relay_ok <- relay && signalConditionsASAP(obj, resignal = FALSE, pos = ii)
         
         ## In all other cases, try to resolve
@@ -524,26 +587,30 @@ value.list <- function(x, idxs = NULL, recursive = 0, reduce = NULL, stdout = TR
 
       ## Assume resolved at this point
       remaining <- setdiff(remaining, ii)
-      if (debug) mdebugf(" - length: %d (resolved future %s)", length(remaining), ii)
+      if (debug) mdebugf("length: %d (resolved future %s)", length(remaining), ii)
       stop_if_not(!anyNA(remaining))
-      mdebugf(" - checking value #%d ... done", ii)
+      mdebugf_pop("checking value #%d ... done", ii)
     } # for (ii ...)
 
     ## Wait a bit before checking again
     if (length(remaining) > 0) Sys.sleep(sleep)
   } # while (...)
 
-  if (inorder && (relay || force)) {
-    if (debug) mdebug("Relaying remaining futures")
+  if (inorder && !drop && (relay || force)) {
+    if (debug) mdebugf_push("Relaying remaining futures ...")
     signalConditionsASAP(resignal = FALSE, pos = 0L)
+    if (debug) mdebugf_pop("Relaying remaining futures ... done")
   }
 
   if (do_reduce) {
     ## If reduced in order, reduce remaining non-reduced values
-    if (inorder) reduce_forward(from = reduced_until)
+    if (inorder) {
+      reduce_forward(from = reduced_until)
+    } else {
+      reduce_forward(from = 1L)
+    }
     stop_if_not(
       all(resolved),
-      reduced_until == nx,
       all(reduced),
       all(lengths(values) == 0L)
     )

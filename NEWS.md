@@ -20,6 +20,16 @@
    that attributes must not be set on primitive functions. As a
    workaround, use `reduce = structure("+", init = 42)`.
 
+ * `value(x)` on containers gained argument `inorder`, which can be
+   used control whether standard output and conditions are relayed in
+   order of `x`, or as soon as a future in `x` is resolved. It also
+   controls the order of how values are reduced.
+
+ * `value()` gained argument `drop` to turn resolved futures into
+   minimal, invalid light-weight futures after their values have been
+   returned. This reduces the memory use. This is particularly useful
+   when using `reduce` in combination with `inorder = FALSE`.
+
  * `value()` on containers interrupts non-resolved futures if an error
    is detected in one of the futures.
 

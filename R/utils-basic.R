@@ -198,35 +198,6 @@ assign_globals <- function(envir, globals, exclude = getOption("future.assign_gl
 }
 
 
-now <- function(x = Sys.time(), format = "[%H:%M:%OS3] ") {
-  ## format(x, format = format) ## slower
-  format(as.POSIXlt(x, tz = ""), format = format)
-}
-
-mdebug <- function(..., prefix = now(), debug = isTRUE(getOption("future.debug"))) {
-  if (!debug) return()
-  message(prefix, ...)
-}
-
-mdebugf <- function(..., appendLF = TRUE,
-                    prefix = now(), debug = isTRUE(getOption("future.debug"))) {
-  if (!debug) return()
-  message(prefix, sprintf(...), appendLF = appendLF)
-}
-
-#' @importFrom utils capture.output
-mprint <- function(..., appendLF = TRUE, prefix = now(), debug = isTRUE(getOption("future.debug"))) {
-  if (!debug) return()
-  message(paste(prefix, capture.output(print(...)), sep = "", collapse = "\n"), appendLF = appendLF)
-}
-
-#' @importFrom utils capture.output str
-mstr <- function(..., appendLF = TRUE, prefix = now(), debug = isTRUE(getOption("future.debug"))) {
-  if (!debug) return()
-  message(paste(prefix, capture.output(str(...)), sep = "", collapse = "\n"), appendLF = appendLF)
-}
-
-
 ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 ## Used by run() for ClusterFuture.
 ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
