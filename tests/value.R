@@ -2,9 +2,7 @@ source("incl/start.R")
 library(listenv)
 options(future.debug = FALSE)
 
-sleep <- function(n) {
-  Sys.sleep(0.2*n)
-}
+sleep <- function(n) Sys.sleep(0.2*n)
 
 identical_envs <- function(x, y) {
   if (length(x) > 1) x <- x[order(names(x))]

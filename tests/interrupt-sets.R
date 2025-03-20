@@ -1,0 +1,45 @@
+source("incl/start.R")
+options(future.debug = FALSE)
+
+strategies <- supportedStrategies()
+strategies <- setdiff(strategies, "sequential")
+
+for (strategy in strategies) {
+  message(sprintf("plan('%s') ...", strategy))
+  plan(strategy)
+
+  n0 <- nbrOfFreeWorkers()
+  message("Number of free workers: ", n0)
+
+  message("Create four futures, where one produce an error")
+  fs <- lapply(c(4, 1, 2, 3), function(x) future({
+    Sys.sleep(x)
+    if (x == 1) stop("boom")
+    x
+  }))
+
+  rs <- resolved(fs)
+  print(rs)
+
+  vs <- tryCatch(value(fs), error = identity)
+
+  ## Assert that value() returned the 'boom' error, and not
+  ## a FutureError, e.g. FutureInterruptError
+  print(vs)
+  stopifnot(
+    inherits(vs, "error"),
+    !inherits(vs, "FutureError"),
+    conditionMessage(vs) == "boom"
+  )
+    
+  ## All built-in backends supports interrupting futures, meaning
+  ## all futures should be resolved when queried, because they
+  ## their flagged as interrupted
+  rs <- resolved(fs)
+  print(rs)
+  stopifnot(all(rs))
+
+  message(sprintf("plan('%s') .. done", strategy))
+}
+
+source("incl/end.R")
