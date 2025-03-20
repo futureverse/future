@@ -19,6 +19,11 @@ reset <- function(x, ...) {
 
 
 #' @export
+reset.default <- function(x, ...) {
+  x
+}
+
+#' @export
 reset.list <- function(x, ...) {
   lapply(x, FUN = reset, ...)
 }

@@ -170,6 +170,13 @@ for (strategy in strategies) {
       y <- value(x, reduce = `+`, inorder = FALSE, drop = TRUE)
       stopifnot(equals(y, truth))
 
+      res <- tryCatch(value(x), error = identity)
+      stopifnot(
+        inherits(res, "error"),
+        inherits(res, "FutureError"),
+        inherits(res, "FutureDroppedError")
+      )
+
       message(sprintf("    lazy = %s ... DONE", lazy))
     } ## for (lazy ...)
     message(sprintf("  Container %s ... DONE", container))

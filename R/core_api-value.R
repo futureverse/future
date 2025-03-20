@@ -517,13 +517,13 @@ value.list <- function(x, idxs = NULL, recursive = 0, reduce = NULL, stdout = TR
             next
           }
           
-          if (debug) mdebugf("Future #%d", ii)
+          if (debug) mdebugf("%s #%d", class(obj)[1], ii)
           relay_ok <- relay && signalConditionsASAP(obj, resignal = FALSE, pos = ii)
           
-          if (debug) mdebug_push("value(obj, ...) ...")
+          if (debug) mdebugf_push("value(<%s>, ...) ...", class(obj)[1])
           value <- value(obj, stdout = !inorder, signal = !inorder, drop = drop)
           if (debug) mdebugf("value: <%s>", class(value)[1])
-          if (debug) mdebug_pop("value(obj, ...) ... done")
+          if (debug) mdebugf_pop("value(<%s>, ...) ... done", class(obj)[1])
           
           if (signal && inherits(value, "error")) {
             if (debug) mdebugf_push("signal %s ...", class(value)[1])

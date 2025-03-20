@@ -16,6 +16,10 @@ interrupt <- function(x, ...) {
   UseMethod("interrupt")
 }
 
+#' @export
+interrupt.default <- function(x, ...) {
+  x
+}
 
 #' @export
 interrupt.list <- function(x, ...) {

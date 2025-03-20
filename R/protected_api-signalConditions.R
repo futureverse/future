@@ -181,10 +181,10 @@ make_signalConditionsASAP <- function(nx, stdout = TRUE, signal = TRUE, force = 
         if (relayed[ii]) next
         if (debug) mdebugf("relaying element #%d", ii)
         obj <- queue[[ii]]
-###        if (is.null(obj) || is.atomic(obj)) {
-###          relayed[ii] <- TRUE
-###          next
-###        }
+        if (is.null(obj) || is.atomic(obj)) {
+          relayed[ii] <- TRUE
+          next
+        }
 
         stop_if_not(inherits(obj, "Future"))
         if (stdout) value(obj, stdout = TRUE, signal = FALSE)
