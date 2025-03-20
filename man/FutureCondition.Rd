@@ -14,6 +14,7 @@
 \alias{GlobalEnvFutureWarning}
 \alias{GlobalEnvFutureError}
 \alias{FutureInterruptError}
+\alias{FutureDroppedError}
 \alias{FutureJournalCondition}
 \title{A condition (message, warning, or error) that occurred while orchestrating a future}
 \usage{
@@ -51,6 +52,8 @@ GlobalEnvFutureWarning(...)
 GlobalEnvFutureError(...)
 
 FutureInterruptError(..., future = NULL)
+
+FutureDroppedError(..., future = NULL)
 
 FutureJournalCondition(
   message,

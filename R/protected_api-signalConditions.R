@@ -48,12 +48,12 @@ signalConditions <- function(future, include = "condition", exclude = NULL, resi
   debug <- isTRUE(getOption("future.debug"))
 
   if (debug) {
-    mdebug("signalConditions() ...")
-    mdebug(" - include = ", paste(sQuote(include), collapse = ", "))
-    mdebug(" - exclude = ", paste(sQuote(exclude), collapse = ", "))
-    mdebug(" - resignal = ", resignal)
-    mdebug(" - Number of conditions: ", length(conditions))
-    on.exit(mdebug("signalConditions() ... done"))
+    mdebug_push("signalConditions() ...")
+    mdebug("include = ", paste(sQuote(include), collapse = ", "))
+    mdebug("exclude = ", paste(sQuote(exclude), collapse = ", "))
+    mdebug("resignal = ", resignal)
+    mdebug("Number of conditions: ", length(conditions))
+    on.exit(mdebug_pop("signalConditions() ... done"))
   }
 
 
@@ -73,7 +73,7 @@ signalConditions <- function(future, include = "condition", exclude = NULL, resi
     ## Don't signal condition based on 'include'?
     if (length(include) > 0L && !inherits(condition, include)) next
 
-    if (debug) mdebugf(" - Condition #%d: %s", kk, paste(sQuote(class(condition)), collapse = ", "))
+    if (debug) mdebugf("Condition #%d: %s", kk, paste(sQuote(class(condition)), collapse = ", "))
 
     ## Flag condition as signaled
     cond[["signaled"]] <- cond[["signaled"]] + 1L
@@ -145,7 +145,7 @@ signalImmediateConditions <- function(future, include = NULL, resignal = FALSE, 
 }
 
 
-make_signalConditionsASAP <- function(nx, stdout = TRUE, signal = TRUE, force = FALSE, debug = isTRUE(getOption("future.debug"))) {
+make_signalConditionsASAP <- function(nx, stdout = TRUE, signal = TRUE, force = FALSE, debug = FALSE) {
   relay <- (stdout || signal)
   if (!relay && !force) return(function(...) TRUE)
 
@@ -153,20 +153,22 @@ make_signalConditionsASAP <- function(nx, stdout = TRUE, signal = TRUE, force = 
   queue <- vector("list", length = nx)
     
   function(obj = NULL, ..., resignal = FALSE, pos) {
+    if (inherits(obj, "DroppedFuture")) return(TRUE)
+    
     if (debug) {
-      mdebugf("signalConditionsASAP(%s, pos=%d) ...", class(obj)[1], pos)
-      mdebugf("- nx: %d", nx)
-      mdebugf("- relay: %s", relay)
-      mdebugf("- stdout: %s", stdout)
-      mdebugf("- signal: %s", signal)
-      mdebugf("- resignal: %s", resignal)
-      mdebugf("- force: %s", force)
-      mdebugf("- relayed: [n=%d] %s", length(relayed), paste(relayed, collapse = ", "))
-      mdebugf("- queued futures: [n=%d] %s", length(queue), paste(vapply(queue, FUN = inherits, "Future", FUN.VALUE = FALSE), collapse = ", "))
+      mdebugf_push("signalConditionsASAP(%s, pos=%d) ...", class(obj)[1], pos)
+      mdebugf("nx: %d", nx)
+      mdebugf("relay: %s", relay)
+      mdebugf("stdout: %s", stdout)
+      mdebugf("signal: %s", signal)
+      mdebugf("resignal: %s", resignal)
+      mdebugf("force: %s", force)
+      mdebugf("relayed: [n=%d] %s", length(relayed), paste(relayed, collapse = ", "))
+      mdebugf("queued futures: [n=%d] %s", length(queue), paste(vapply(queue, FUN = inherits, "Future", FUN.VALUE = FALSE), collapse = ", "))
       on.exit({
-        mdebugf("- relayed: [n=%d] %s", length(relayed), paste(relayed, collapse = ", "))
-        mdebugf("- queued futures: [n=%d] %s", length(queue), paste(vapply(queue, FUN = inherits, "Future", FUN.VALUE = FALSE), collapse = ", "))
-        mdebugf("signalConditionsASAP(%s, pos=%d) ... done", class(obj)[1], pos)
+        mdebugf("relayed: [n=%d] %s", length(relayed), paste(relayed, collapse = ", "))
+        mdebugf("queued futures: [n=%d] %s", length(queue), paste(vapply(queue, FUN = inherits, "Future", FUN.VALUE = FALSE), collapse = ", "))
+        mdebugf_pop("signalConditionsASAP(%s, pos=%d) ... done", class(obj)[1], pos)
       })
     }
 
@@ -177,8 +179,13 @@ make_signalConditionsASAP <- function(nx, stdout = TRUE, signal = TRUE, force = 
       if (debug) message(" - flush all")
       for (ii in which(!relayed)) {
         if (relayed[ii]) next
-        if (debug) mdebugf(" - relaying element #%d", ii)
+        if (debug) mdebugf("relaying element #%d", ii)
         obj <- queue[[ii]]
+###        if (is.null(obj) || is.atomic(obj)) {
+###          relayed[ii] <- TRUE
+###          next
+###        }
+
         stop_if_not(inherits(obj, "Future"))
         if (stdout) value(obj, stdout = TRUE, signal = FALSE)
         if (signal) {
@@ -210,7 +217,11 @@ make_signalConditionsASAP <- function(nx, stdout = TRUE, signal = TRUE, force = 
 
     ## Add to queue?
     if (inherits(obj, "Future")) {
-      queue[[pos]] <<- obj
+      if (inherits(obj, "DroppedFuture")) {
+        relayed[pos] <<- TRUE
+      } else {
+        queue[[pos]] <<- obj
+      }
     } else {
       relayed[pos] <<- TRUE
     }
@@ -219,12 +230,12 @@ make_signalConditionsASAP <- function(nx, stdout = TRUE, signal = TRUE, force = 
     until <- which(relayed)
     n <- length(until)
     until <- if (n == 0L) 1L else min(until[n] + 1L, length(queue))
-    if (debug) mdebugf(" - until=%d", until)
+    if (debug) mdebugf("until=%d", until)
     for (ii in seq_len(until)) {
       if (relayed[ii]) next
-      if (debug) mdebugf(" - relaying element #%d", ii)
+      if (debug) mdebugf("relaying element #%d", ii)
       obj <- queue[[ii]]
-      if (inherits(obj, "Future")) {
+      if (inherits(obj, "Future") && !inherits(obj, "DroppedFuture")) {
         if (stdout) value(obj, stdout = TRUE, signal = FALSE)
         if (signal) {
           conditionClasses <- obj[["conditions"]]

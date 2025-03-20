@@ -134,7 +134,8 @@ resolve.Future <- function(x, idxs = NULL, recursive = 0, result = FALSE, stdout
     msg <- sprintf("%s (result was not collected)", msg)
   }
 
-  mdebug(msg)
+  debug <- isTRUE(getOption("future.debug"))
+  if (debug) mdebug(msg)
 
   future
 } ## resolve() for Future
@@ -212,8 +213,9 @@ resolve.list <- function(x, idxs = NULL, recursive = 0, result = FALSE, stdout =
   
   debug <- isTRUE(getOption("future.debug"))
   if (debug) {
-    mdebug("resolve() on list ...")
-    mdebugf(" recursive: %s", recursive)
+    mdebugf_push("resolve() on %s ...", class(x))
+    mdebugf("recursive: %s", recursive)
+    on.exit(mdebugf_pop("resolve() on %s ... done", class(x)))
   }
 
   ## NOTE: Everything is considered non-resolved by default
@@ -226,8 +228,8 @@ resolve.list <- function(x, idxs = NULL, recursive = 0, result = FALSE, stdout =
   signalConditionsASAP <- make_signalConditionsASAP(nx, stdout = stdout, signal = signal, force = force, debug = debug)
 
   if (debug) {
-    mdebugf(" length: %d", nx)
-    mdebugf(" elements: %s", hpaste(sQuote(names(x))))
+    mdebugf("length: %d", nx)
+    mdebugf("elements: %s", hpaste(sQuote(names(x))))
   }
 
   ## Resolve all elements
@@ -236,8 +238,10 @@ resolve.list <- function(x, idxs = NULL, recursive = 0, result = FALSE, stdout =
       obj <- x[[ii]]
 
       if (is.atomic(obj)) {
+        if (debug) mdebug("'obj' is atomic")
         if (relay) signalConditionsASAP(obj, resignal = FALSE, pos = ii)
       } else {
+        if (debug) mdebugf("'obj' is %s", class(obj)[1])      
         ## If an unresolved future, move on to the next object
         ## so that future can be resolved in the asynchronously
         if (inherits(obj, "Future")) {
@@ -245,23 +249,29 @@ resolve.list <- function(x, idxs = NULL, recursive = 0, result = FALSE, stdout =
           if (obj[["state"]] == 'created') obj <- run(obj)
           if (!resolved(obj)) next
           if (debug) mdebugf("Future #%d", ii)
-          if (result) value(obj, stdout = FALSE, signal = FALSE)
+          if (result) {
+            if (debug) mdebug_push("value(obj, ...) ...")
+            value(obj, stdout = FALSE, signal = FALSE)
+            if (debug) mdebug_pop("value(obj, ...) ... done")
+          }
         }
 
         relay_ok <- relay && signalConditionsASAP(obj, resignal = FALSE, pos = ii)
 
         ## In all other cases, try to resolve
+        if (debug) mdebug_push("resolve(obj, ...) ...")
         resolve(obj,
                 recursive = recursive - 1,
                 result = result,
                 stdout = stdout && relay_ok,
                 signal = signal && relay_ok,
                 sleep = sleep, ...)
+        if (debug) mdebug_pop("resolve(obj, ...) ... done")
       }
 
       ## Assume resolved at this point
       remaining <- setdiff(remaining, ii)
-      if (debug) mdebugf(" length: %d (resolved future %s)", length(remaining), ii)
+      if (debug) mdebugf("length: %d (resolved future %s)", length(remaining), ii)
       stop_if_not(!anyNA(remaining))
     } # for (ii ...)
 
@@ -270,12 +280,11 @@ resolve.list <- function(x, idxs = NULL, recursive = 0, result = FALSE, stdout =
   } # while (...)
 
   if (relay || force) {
-    if (debug) mdebug("Relaying remaining futures")
+    if (debug) mdebug_push("Relaying remaining futures ...")
     signalConditionsASAP(resignal = FALSE, pos = 0L)
+    if (debug) mdebug_pop("Relaying remaining futures ... done")
   }
   
-  if (debug) mdebug("resolve() on list ... DONE")
-
   x0
 } ## resolve() for list
 
@@ -346,8 +355,9 @@ resolve.environment <- function(x, idxs = NULL, recursive = 0, result = FALSE, s
 
   debug <- isTRUE(getOption("future.debug"))
   if (debug) {
-    mdebug("resolve() on environment ...")
-    mdebugf(" recursive: %s", recursive)
+    mdebugf_push("resolve() on %s ...", class(x))
+    mdebugf("recursive: %s", recursive)
+    on.exit(mdebugf_pop("resolve() on %s ... done", class(x)))
   }
 
   ## Coerce future promises into Future objects
@@ -363,7 +373,7 @@ resolve.environment <- function(x, idxs = NULL, recursive = 0, result = FALSE, s
   ## Relay?
   signalConditionsASAP <- make_signalConditionsASAP(nx, stdout = stdout, signal = signal, force = force, debug = debug)
 
-  if (debug) mdebugf(" elements: [%d] %s", nx, hpaste(sQuote(idxs)))
+  if (debug) mdebugf("elements: [%d] %s", nx, hpaste(sQuote(idxs)))
 
   ## Resolve all elements
   while (length(remaining) > 0) {
@@ -397,7 +407,7 @@ resolve.environment <- function(x, idxs = NULL, recursive = 0, result = FALSE, s
 
       ## Assume resolved at this point
       remaining <- setdiff(remaining, ii)
-      if (debug) mdebugf(" length: %d (resolved future %s)", length(remaining), ii)
+      if (debug) mdebugf("length: %d (resolved future %s)", length(remaining), ii)
       stop_if_not(!anyNA(remaining))
     } # for (ii ...)
 
@@ -406,12 +416,11 @@ resolve.environment <- function(x, idxs = NULL, recursive = 0, result = FALSE, s
   } # while (...)
 
   if (relay || force) {
-    if (debug) mdebug("Relaying remaining futures")
+    if (debug) mdebug_push("Relaying remaining futures ...")
     signalConditionsASAP(resignal = FALSE, pos = 0L)
+    if (debug) mdebug_push("Relaying remaining futures ... done")
   }
   
-  if (debug) mdebug("resolve() on environment ... DONE")
-
   x0
 } ## resolve() for environment
 
@@ -492,8 +501,9 @@ resolve.listenv <- function(x, idxs = NULL, recursive = 0, result = FALSE, stdou
 
   debug <- isTRUE(getOption("future.debug"))
   if (debug) {
-    mdebug("resolve() on list environment ...")
-    mdebugf(" recursive: %s", recursive)
+    mdebugf_push("resolve() on %s ...", class(x))
+    mdebugf("recursive: %s", recursive)
+    on.exit(mdebugf_pop("resolve() on %s ... done", class(x)))
   }
 
   ## Coerce future promises into Future objects
@@ -508,8 +518,8 @@ resolve.listenv <- function(x, idxs = NULL, recursive = 0, result = FALSE, stdou
   signalConditionsASAP <- make_signalConditionsASAP(nx, stdout = stdout, signal = signal, force = force, debug = debug)
 
   if (debug) {
-    mdebugf(" length: %d", nx)
-    mdebugf(" elements: %s", hpaste(sQuote(names(x))))
+    mdebugf("length: %d", nx)
+    mdebugf("elements: %s", hpaste(sQuote(names(x))))
   }
 
   ## Resolve all elements
@@ -543,7 +553,7 @@ resolve.listenv <- function(x, idxs = NULL, recursive = 0, result = FALSE, stdou
 
       ## Assume resolved at this point
       remaining <- setdiff(remaining, ii)
-      if (debug) mdebugf(" length: %d (resolved future %s)", length(remaining), ii)
+      if (debug) mdebugf("length: %d (resolved future %s)", length(remaining), ii)
       stop_if_not(!anyNA(remaining))
     } # for (ii ...)
 
@@ -555,8 +565,6 @@ resolve.listenv <- function(x, idxs = NULL, recursive = 0, result = FALSE, stdou
     if (debug) mdebug("Relaying remaining futures")
     signalConditionsASAP(resignal = FALSE, pos = 0L)
   }
-
-  if (debug) mdebug("resolve() on list environment ... DONE")
 
   x0
 } ## resolve() for list environment

@@ -10,7 +10,7 @@
 \usage{
 value(...)
 
-\method{value}{Future}(future, stdout = TRUE, signal = TRUE, ...)
+\method{value}{Future}(future, stdout = TRUE, signal = TRUE, drop = FALSE, ...)
 
 \method{value}{list}(
   x,
@@ -20,6 +20,8 @@ value(...)
   stdout = TRUE,
   signal = TRUE,
   interrupt = TRUE,
+  inorder = TRUE,
+  drop = FALSE,
   force = TRUE,
   sleep = getOption("future.wait.interval", 0.01),
   ...
@@ -33,6 +35,8 @@ value(...)
   stdout = TRUE,
   signal = TRUE,
   interrupt = TRUE,
+  inorder = TRUE,
+  drop = FALSE,
   force = TRUE,
   sleep = getOption("future.wait.interval", 0.01),
   ...
@@ -48,6 +52,13 @@ is relayed, otherwise not.}
 
 \item{signal}{If TRUE, \link[base]{conditions} captured while resolving
 futures are relayed, otherwise not.}
+
+\item{drop}{If TRUE, resolved futures are minimized in size and invalidated
+as soon the as their values have been collected and any output and
+conditions have been relayed.
+Combining \code{drop = TRUE} with \code{inorder = FALSE} reduces the memory use
+sooner, especially avoiding the risk of holding on to future values until
+the very end.}
 
 \item{idxs}{(optional) integer or logical index specifying the subset of
 elements to check.}
@@ -66,6 +77,13 @@ same order as \code{x}.}
 \item{interrupt}{If TRUE and \code{signal} is TRUE, non-resolved futures are
 interrupted as soon as an error is detected in one of the futures,
 before signaling the error.}
+
+\item{inorder}{If TRUE, then standard output and conditions are relayed,
+and value reduction, is done in the order the futures occur in \code{x}, but
+always as soon as possible. This is achieved by buffering the details
+until they can be released. By setting \code{inorder = FALSE}, no buffering
+takes place and everything is relayed and reduced as soon as a new future
+is resolved.}
 
 \item{force}{(internal) If TRUE, captured standard output and captured
 \link[base]{conditions} already relayed is relayed again, otherwise not.}
