@@ -134,6 +134,7 @@ ClusterFutureBackend <- local({
 })
 
 
+#' @importFrom parallelly isNodeAlive cloneNode
 #' @export
 launchFuture.ClusterFutureBackend <- function(backend, future, ...) {
   debug <- isTRUE(getOption("future.debug"))
@@ -183,7 +184,25 @@ launchFuture.ClusterFutureBackend <- function(backend, future, ...) {
   }
 
   if (debug) mdebugf(" - cluster node index: %d", node_idx)
+
+  ## If the collected worker is no longer running, restart it
+  cl <- workers[node_idx]
+  stop_if_not(length(cl) == 1L, inherits(cl, "cluster"))
+  node <- cl[[1]]
+  alive <- isNodeAlive(node)
+  if (debug) mdebugf(" - cluster node is alive: %s", alive)
+  ## It is not possible to check if a node is alive on types of clusters.
+  ## If that is the case, the best we can do is to assume it is alive
+  if (is.na(alive)) {
+  } else if (!alive) {
+    if (debug) mdebugf(" - restarting non-alive cluster node: %d", node_idx)
+    node <- cloneNode(node)
+    workers[[node_idx]] <- node
+    backend[["workers"]] <- workers
+    cl[[1]] <- node
+  }
   if (debug) mdebug("requestWorker() ... done")
+
 
   ## (2) Attach packages that needs to be attached
   ##     NOTE: Already take care of by evalFuture().
@@ -203,7 +222,6 @@ launchFuture.ClusterFutureBackend <- function(backend, future, ...) {
       ##      NOTE: Already take care of by evalFuture().
       ##      However, if we need to get an early error about missing packages,
       ##      we can get the error here before launching the future.
-      cl <- workers[node_idx]
       if (debug) mdebug("Attaching packages on worker ...")
       ## Blocking cluster-node call
       cluster_call_blocking(cl, fun = requirePackages, packages, future = future, when = "call requirePackages() on")
@@ -239,7 +257,6 @@ launchFuture.ClusterFutureBackend <- function(backend, future, ...) {
     ##     previous futures are not affecting this one, which
     ##     may happen even if the future is evaluated inside a
     ##     local, e.g. local({ a <<- 1 }).
-    cl <- workers[node_idx]
     ## Blocking cluster-node call
     cluster_call_blocking(cl, fun = grmall, future = future, when = "call grmall() on")
 
