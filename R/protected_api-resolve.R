@@ -269,8 +269,11 @@ resolve.list <- function(x, idxs = NULL, recursive = 0, result = FALSE, stdout =
         if (debug) mdebug_pop("resolve(obj, ...) ... done")
       }
 
-      ## Assume resolved at this point
-      remaining <- setdiff(remaining, ii)
+      ## Check if resolved
+      ## Note, here 'obj' can be anything (e.g. list()), meaning
+      ## resolved() may return a logical vector of any length including
+      ## an empty vector. That's why we wrap it in all()
+      if (all(resolved(obj))) remaining <- setdiff(remaining, ii)
       if (debug) mdebugf("length: %d (resolved future %s)", length(remaining), ii)
       stop_if_not(!anyNA(remaining))
     } # for (ii ...)

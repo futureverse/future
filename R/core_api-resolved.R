@@ -43,14 +43,17 @@ resolved.default <- function(x, ...) TRUE
 #' @export
 resolved.list <- function(x, ...) {
   fs <- futures(x)
-
+  n_fs <- length(fs)
+  
   ## Allocate results. Assume everything
   ## is resolved unless not.
-  res <- rep(TRUE, times = length(fs))
+  res <- rep(TRUE, times = n_fs)
   for (ii in seq_along(fs)) {
     f <- fs[[ii]]
     if (inherits(f, "Future")) res[[ii]] <- resolved(f, ...)
   }
+
+  stop_if_not(length(res) == n_fs)
 
   dim <- dim(fs)
   if (!is.null(dim)) {
@@ -60,14 +63,20 @@ resolved.list <- function(x, ...) {
   }
   names(res) <- names(fs)
 
+  stop_if_not(length(res) == n_fs)
+
   res
 }
 
 #' @export
 resolved.environment <- function(x, ...) {
   fs <- futures(x)
+  n_fs <- length(fs)
   names <- names(fs)
   fs <- as.list(fs)
   names(fs) <- names
-  resolved(fs, ...)
+  stop_if_not(length(fs) == n_fs)
+  fs <- resolved(fs, ...)
+  stop_if_not(length(fs) == n_fs)
+  fs
 }
