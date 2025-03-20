@@ -21,6 +21,7 @@ for (strategy in strategies) {
   rs <- resolved(fs)
   print(rs)
 
+  message("Assert there is an error")
   vs <- tryCatch(value(fs), error = identity)
 
   ## Assert that value() returned the 'boom' error, and not
@@ -32,9 +33,9 @@ for (strategy in strategies) {
     conditionMessage(vs) == "boom"
   )
     
-  ## All built-in backends supports interrupting futures, meaning
-  ## all futures should be resolved when queried, because they
-  ## their flagged as interrupted
+  ## Assert that value(fs) resolves all futures before returning,
+  ## regardless of the backend supporting interrupting futures or not.
+  message("Assert that all futures are resolved by value()")
   rs <- resolved(fs)
   print(rs)
   stopifnot(all(rs))

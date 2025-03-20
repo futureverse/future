@@ -50,6 +50,11 @@ for (strategy in strategies) {
   message("Number of free workers (after result): ", n)
   stopifnot(n == n0)
 
+  message("An interrupt the same future multiple times")
+  for (kk in 1:10) {
+    f <- interrupt(f)
+  }
+
   message("Create another future")
   ## Create another future
   f <- future(42)
