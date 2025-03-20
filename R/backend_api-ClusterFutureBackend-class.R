@@ -191,7 +191,7 @@ launchFuture.ClusterFutureBackend <- function(backend, future, ...) {
   node <- cl[[1]]
   alive <- isNodeAlive(node)
   if (debug) mdebugf(" - cluster node is alive: %s", alive)
-  ## It is not possible to check if a node is alive on types of clusters.
+  ## It is not possible to check if a node is alive on all types of clusters.
   ## If that is the case, the best we can do is to assume it is alive
   if (is.na(alive)) {
   } else if (!alive) {
@@ -580,8 +580,6 @@ resolved.ClusterFuture <- function(x, run = TRUE, timeout = NULL, ...) {
 }
 
 
-
-#' @importFrom parallelly isNodeAlive cloneNode
 #' @export
 result.ClusterFuture <- function(future, ...) {
   debug <- isTRUE(getOption("future.debug"))
@@ -592,9 +590,13 @@ result.ClusterFuture <- function(future, ...) {
 
   ## Has the result already been collected?
   result <- future[["result"]]
-  if (!is.null(result)) {
+  if (!is.null(result)) { 
     if (debug) mdebugf("- result already collected: %s", class(result)[1])
-    if (inherits(result, "FutureError")) stop(result)
+    
+    if (inherits(result, "FutureError")) {
+      stop(result)
+    }
+    
     return(result)
   }
 
@@ -660,46 +662,12 @@ receiveMessageFromWorker <- local({
     if (inherits(ack, "error")) {
       if (debug) mdebugf("- parallel:::recvResult() produced an error: %s", conditionMessage(ack))
 
-      if (future[["state"]] == "interrupted") {
-        if (debug) mdebugf("- Detected interrupted %s whose result cannot be retrieved", sQuote(class(future)[1]))
-  
-        ## Post-mortem details
-        label <- future[["label"]]
-        if (is.null(label)) label <- "<none>"
-        backend <- future[["backend"]]
-        workers <- backend[["workers"]]
-        node_idx <- future[["node"]]
-        cl <- workers[node_idx]
-        node <- cl[[1]]
-        host <- node[["host"]]
-        msg <- sprintf("A future ('%s') of class %s was interrupted, while running on %s", label, class(future)[1], sQuote(host))
-        if (inherits(node, "RichSOCKnode")) {
-          pid <- node[["session_info"]][["process"]][["pid"]]
-          if (!is.null(pid)) msg <- sprintf("%s (pid %s)", msg, pid)
-        }
-        result <- FutureInterruptError(msg, future = future)
-        future[["result"]] <- result
-
-        ## Remove from backend
-        FutureRegistry(reg, action = "remove", future = future, earlySignal = FALSE)
-        if (debug) mdebug("- Erased future from future backend")
-
-        ## Try to relaunch worker, if it is no longer running
-        if (!isNodeAlive(node)) {
-          ## Launch a new cluster node, by cloning the old one
-          node2 <- cloneNode(node)
-          
-          ## Add to cluster
-          workers[[node_idx]] <- node2
-
-          ## Update backend
-          backend[["workers"]] <- workers
-          
-          ## Make sure to close the old cluster node (including any connection)
-          tryCatch(closeNode(node), error = identity)
-        }
-
-        return(result)
+      ## Did it fail, because we interrupted a future, but that resulted in the worker
+      ## also shutting done? If so, turn the error into a run-time FutureInterruptError
+      ## and revive the worker
+      if (future[["state"]] %in% c("interrupted", "running")) {
+        future <- handleInterruptedFuture(backend, future = future)
+        return(future[["result"]])
       }
 
       msg <- post_mortem_cluster_failure(ack, when = "receive message results from", node = node, future = future)
@@ -1163,3 +1131,66 @@ interruptFuture.ClusterFutureBackend <- function(backend, future, ...) {
   future[["state"]] <- "interrupted"
   future
 }
+
+
+
+
+#' @importFrom parallelly cloneNode isNodeAlive
+handleInterruptedFuture <- local({
+  closeNode <- import_parallel("closeNode", default = function(node) {
+    con <- node[["con"]]
+    if (inherits(con, "connection")) close(con)
+  })
+  
+  function(backend, future, ...) {
+    debug <- isTRUE(getOption("future.debug"))
+    if (debug) {
+      mdebug_push("handleInterruptedFuture() for ClusterFutureBackend ...")
+      on.exit(mdebug_pop("handleInterruptedFuture() for ClusterFutureBackend ... done"))
+    }
+  
+    stop_if_not(future[["state"]] %in% c("interrupted", "running"))
+  
+    label <- future[["label"]]
+    if (is.null(label)) label <- "<none>"
+    workers <- backend[["workers"]]
+    node_idx <- future[["node"]]
+    cl <- workers[node_idx]
+    node <- cl[[1]]
+    host <- node[["host"]]
+    msg <- sprintf("A future ('%s') of class %s was interrupted, while running on %s", label, class(future)[1], sQuote(host))
+    if (inherits(node, "RichSOCKnode")) {
+      pid <- node[["session_info"]][["process"]][["pid"]]
+      if (!is.null(pid)) msg <- sprintf("%s (pid %s)", msg, pid)
+    }
+    result <- FutureInterruptError(msg, future = future)
+    future[["result"]] <- result
+    future[["state"]] <- "interrupted"
+  
+    ## Remove from backend
+    reg <- backend[["reg"]]
+    FutureRegistry(reg, action = "remove", future = future, earlySignal = FALSE)
+    if (debug) mdebug("- Erased future from future backend")
+  
+    ## Try to relaunch worker, if it is no longer running
+    alive <- isNodeAlive(node)
+    if (debug) mdebugf(" - cluster node is alive: %s", alive)
+    ## It is not possible to check if a node is alive on all types of clusters.
+    ## If that is the case, the best we can do is to assume it is alive
+    if (!is.na(alive) && !alive) {
+      ## Launch a new cluster node, by cloning the old one
+      node2 <- cloneNode(node)
+      
+      ## Add to cluster
+      workers[[node_idx]] <- node2
+  
+      ## Update backend
+      backend[["workers"]] <- workers
+      
+      ## Make sure to close the old cluster node (including any connection)
+      tryCatch(closeNode(node), error = identity)
+    }
+  
+    future
+  } ## handleInterruptedFuture()
+})

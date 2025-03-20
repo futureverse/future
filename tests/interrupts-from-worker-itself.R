@@ -49,6 +49,14 @@ for (strategy in strategies) {
     # (iii)  ... or have no effect at all
     v == 42
   )
+
+  ## It should always be possible to reset
+  f <- reset(f)
+  print(f)
+  stopifnot(
+    f[["lazy"]],
+    f[["state"]] == "created"
+  )
 }
 
 source("incl/end.R")
