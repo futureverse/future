@@ -519,7 +519,7 @@ value.list <- function(x, idxs = NULL, recursive = 0, reduce = NULL, stdout = TR
           }
           
           if (debug) mdebugf("%s #%d", class(obj)[1], ii)
-          relay_ok <- relay && signalConditionsASAP(obj, resignal = FALSE, pos = ii)
+          relay_ok <- relay && signalConditionsASAP(obj, resignal = FALSE, exclude = "error", pos = ii)
           
           if (debug) mdebugf_push("value(<%s>, ...) ...", class(obj)[1])
           value <- value(obj, stdout = !inorder, signal = !inorder, drop = drop)
@@ -577,7 +577,7 @@ value.list <- function(x, idxs = NULL, recursive = 0, reduce = NULL, stdout = TR
           }
         }
 
-        relay_ok <- relay && signalConditionsASAP(obj, resignal = FALSE, pos = ii)
+        relay_ok <- relay && signalConditionsASAP(obj, resignal = FALSE, exclude = "error", pos = ii)
         
         ## In all other cases, try to resolve
         resolve(
@@ -603,7 +603,7 @@ value.list <- function(x, idxs = NULL, recursive = 0, reduce = NULL, stdout = TR
 
   if (inorder && !drop && (relay || force)) {
     if (debug) mdebugf_push("Relaying remaining futures ...")
-    signalConditionsASAP(resignal = FALSE, pos = 0L)
+    signalConditionsASAP(resignal = FALSE, exclude = "error", pos = 0L)
     if (debug) mdebugf_pop("Relaying remaining futures ... done")
   }
 

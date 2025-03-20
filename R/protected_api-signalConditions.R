@@ -152,7 +152,7 @@ make_signalConditionsASAP <- function(nx, stdout = TRUE, signal = TRUE, force = 
   relayed <- rep(FALSE, times = nx)
   queue <- vector("list", length = nx)
     
-  function(obj = NULL, ..., resignal = FALSE, pos) {
+  function(obj = NULL, ..., exclude = NULL, resignal = FALSE, pos) {
     if (inherits(obj, "DroppedFuture")) return(TRUE)
     
     if (debug) {
@@ -204,7 +204,7 @@ make_signalConditionsASAP <- function(nx, stdout = TRUE, signal = TRUE, force = 
           signalImmediateConditions(obj, include = immediateConditionClasses)
     
           ## Signal all other types of condition
-          signalConditions(obj, exclude = immediateConditionClasses, resignal = resignal, ...)
+          signalConditions(obj, exclude = c(exclude, immediateConditionClasses), resignal = resignal, ...)
         }
         relayed[ii] <<- TRUE
       }
