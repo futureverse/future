@@ -30,9 +30,9 @@
    returned. This reduces the memory use. This is particularly useful
    when using `reduce` in combination with `inorder = FALSE`. For
    instance, if you have a list of futures `fs`, and you know that you
-   will not need to query the futures for their values more than
-   onces, then it is both memory efficient and more performant to use
-   ``v <- value(fs, reduce = `+`, inorder = FALSE, drop = TRUE)``.
+   will not need to query the futures for their values more than once,
+   then it is memory efficient and more performant to use ``v <-
+   value(fs, reduce = `+`, inorder = FALSE, drop = TRUE)``.
 
  * `value()` on containers interrupts non-resolved futures if an error
    is detected in one of the futures.
