@@ -253,7 +253,7 @@ make_signalConditionsASAP <- function(nx, stdout = TRUE, signal = TRUE, force = 
           signalImmediateConditions(obj, include = immediateConditionClasses)
     
           ## Signal all other types of condition
-          signalConditions(obj, exclude = immediateConditionClasses, resignal = resignal, ...)
+          signalConditions(obj, exclude = c(exclude, immediateConditionClasses), resignal = resignal, ...)
         }
         relayed[ii] <<- TRUE
       }

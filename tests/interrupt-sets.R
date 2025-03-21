@@ -11,7 +11,7 @@ for (strategy in strategies) {
   n0 <- nbrOfFreeWorkers()
   message("Number of free workers: ", n0)
 
-  message("Create four futures, where one produce an error")
+  message("Create four futures, where one produces an error")
   fs <- lapply(c(4, 1, 2, 3), function(x) future({
     Sys.sleep(x)
     if (x == 1) stop("boom")
