@@ -14,6 +14,7 @@ on_githubactions <- as.logical(Sys.getenv("GITHUB_ACTIONS", "FALSE"))
 ## Default options
 oopts <- options(
   warn = 1L,
+  showNCalls = 500L,
   mc.cores = 2L,
   future.debug = TRUE,
   ## Reset the following during testing in case

@@ -933,9 +933,9 @@ cluster_call_blocking <- function(cl, ..., when = "call function on", future, ex
       value <- ans[[1]]
       if (length(value) != 1L || !is.character(value) || 
           is.na(value) || value != "future-grmall") {
-         utils::str(list(ans = ans, expected = expected))
-         stop(sprintf("parallel::clusterCall() did not return %s as expected: %s", sQuote(expected), paste(deparse(value), collapse = "; ")))
-       }
+        utils::str(list(ans = ans, expected = expected))
+        stop(sprintf("parallel::clusterCall() did not return string %s as expected. Received a %s object instead: %s", sQuote(expected), class(value)[1], paste(deparse(value), collapse = "; ")))
+      }
     }
   })
 } ## cluster_call_blocking()
