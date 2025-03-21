@@ -1,0 +1,148 @@
+on:
+  workflow_dispatch:
+    inputs:
+      debug_enabled:
+        type: boolean
+        description: 'Run the build with tmate debugging enabled (https://github.com/marketplace/actions/debugging-with-tmate)'
+        required: false
+        default: false
+        
+name: tmate
+
+jobs:
+  R-CMD-check:
+    timeout-minutes: 120
+
+    runs-on: ${{ matrix.config.os }}
+
+    name: ${{ matrix.config.os }} (${{ matrix.config.r }}) ${{ matrix.config.label }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+#          - {os: windows-latest, r: 'devel'    }
+          - {os: windows-latest, r: 'release', parallelly: 'develop'  }
+#          - {os: windows-latest, r: 'oldrel'   }
+#          - {os: macOS-latest,   r: 'devel'    }
+#          - {os: macOS-latest,   r: 'release'  }
+#          - {os: macOS-latest,   r: 'oldrel'   }
+#          - {os: ubuntu-latest,  r: 'devel'    }
+#          - {os: ubuntu-latest,  r: 'release'  }
+#          - {os: ubuntu-latest,  r: 'oldrel'   }
+#          - {os: ubuntu-latest,  r: 'oldrel-1' }
+#          - {os: ubuntu-latest,  r: 'oldrel-2' }
+#          - {os: ubuntu-latest,  r: '4.0'      }
+#          
+#          - {os: ubuntu-latest,  r: 'release'  , availablecores: 1, label: 'availableCores.system=1' }
+#          - {os: ubuntu-latest,  r: 'release'  , availablecores: 2, label: 'availableCores.system=2' }
+#          - {os: ubuntu-latest,  r: 'release'  , language: ko,    label: ko    }
+#          - {os: ubuntu-latest,  r: 'release'  , language: zh_CN, label: zh_CN }
+#          - {os: ubuntu-latest,  r: 'release'  , language: zh_TW, label: zh_TW }
+#          - {os: ubuntu-latest,  r: 'release'  , globals_keepWhere: true, label: 'keepWhere' }
+#          - {os: ubuntu-latest,  r: 'release'  , globals_keepWhere: false, label: '!keepWhere' }
+#          - {os: ubuntu-latest,  r: 'release'  , plan: multicore, fork_multithreading_enable: false, label: 'multicore, no-multithreading-in-forks' }
+#          - {os: ubuntu-latest,  r: 'release'  , plan: multisession, fork_multithreading_enable: false, label: 'multisession, no-multithreading-in-forks' }
+#          - {os: ubuntu-latest,  r: 'release'  , psock_relay_immediate: false, label: 'no-immediate-relay-in-psock' }
+ 
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      R_KEEP_PKG_SOURCE: yes
+      R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
+      ## Test in other locale (optional)
+      LANGUAGE: ${{ matrix.config.language }}
+      ## R (>= 4.4.0) Note, no trailing underscore (sic!)
+      _R_COMPARE_LANG_OBJECTS: eqonly
+      ## R CMD check
+      _R_CHECK_CRAN_INCOMING_: false
+      _R_CHECK_MATRIX_DATA_: true
+      _R_CHECK_SUGGESTS_ONLY_: true
+      _R_CHECK_THINGS_IN_TEMP_DIR_: true
+      _R_CHECK_TESTS_NLINES_: 300
+      RCMDCHECK_ERROR_ON: note
+      ## Specific to futures
+      R_PARALLELLY_AVAILABLECORES_SYSTEM: ${{ matrix.config.availablecores }}
+      R_FUTURE_RNG_ONMISUSE: error
+      R_FUTURE_GLOBALS_KEEPWHERE: ${{ matrix.config.globals_keepWhere }}
+      R_PARALLELLY_BRANCH: ${{ matrix.config.parallelly }}
+      
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.debug_enabled }}
+
+      - uses: r-lib/actions/setup-pandoc@v2
+
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: ${{ matrix.config.r }}
+          http-user-agent: ${{ matrix.config.http-user-agent }}
+          use-public-rspm: true
+          
+      - uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          extra-packages: |
+            any::rcmdcheck
+            any::remotes
+          needs: check
+
+      - name: Install package itself (special case)
+        run: |
+          install.packages(".", repos = NULL, type = "source")  ## needed by parallel workers
+          pver <- Sys.getenv("R_PARALLELLY_BRANCH")
+          if (nzchar(pver)) {
+            remotes::install_github("futureverse/parallelly", ref = pver)
+          }
+          
+        shell: Rscript {0}
+
+      - name: Session info
+        run: |
+          options(width = 100)
+          parallelly::availableCores(which = "all")
+          sapply(c(physical_cores = FALSE, logical_cores = TRUE), parallel::detectCores)
+          if (require(RhpcBLASctl, quietly=TRUE)) c(get_num_procs = get_num_procs(), get_num_cores = get_num_cores(), blas_get_num_procs = blas_get_num_procs(), omp_get_num_procs = omp_get_num_procs(), omp_get_max_threads = omp_get_max_threads())
+          capabilities()
+          pkgs <- installed.packages()[, "Package"]
+          sessioninfo::session_info(pkgs, include_base = TRUE)
+          ## Verify LANGUAGE settings by generating a translatable error
+          cat(sprintf("LANGUAGE=%s\n", sQuote(Sys.getenv("LANGUAGE"))))
+          cat(sprintf("locales: %s\n", sQuote(Sys.getlocale())))
+          tryCatch(log("a"), error = conditionMessage)
+        shell: Rscript {0}
+
+      - name: Check
+        if: runner.os != 'Windows'
+        env:
+          ## FIXME: Eventually update to 'R_FUTURE_GLOBALS_ONREFERENCE=error'
+          R_FUTURE_GLOBALS_ONREFERENCE: "warning"
+          R_FUTURE_PLAN: ${{ matrix.config.plan }}
+          R_FUTURE_FORK_ENABLE: ${{ matrix.config.fork_enable }}
+          R_FUTURE_FORK_MULTITHREADING_ENABLE: ${{ matrix.config.fork_multithreading_enable }}
+          R_FUTURE_PSOCK_RELAY_IMMEDIATE: ${{ matrix.config.psock_relay_immediate }}
+        run: |
+          if (nzchar(Sys.getenv("R_FUTURE_PLAN")) || getRversion() < "3.5.0") Sys.setenv(RCMDCHECK_ERROR_ON = "error")
+          rcmdcheck::rcmdcheck(
+            build_args = if (getRversion() < "3.5.0") "--no-build-vignettes",
+            args = c("--no-manual", "--as-cran", if (getRversion() < "3.5.0") c("--no-vignettes", "--no-build-vignettes", "--ignore-vignettes")),
+            check_dir = "check"
+          )
+        shell: Rscript {0}
+ 
+      - name: Check (Windows)
+        if: runner.os == 'Windows'
+        run: |
+          rcmdcheck::rcmdcheck(
+            args = c("--no-manual", "--as-cran", if (.Platform$OS.type == "windows" && getRversion() >= "4.2.0") "--no-multiarch"),
+            check_dir = "check"
+          )
+        shell: Rscript {0}
+
+      - name: Upload check results
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ runner.os }}-r${{ matrix.config.r }}-results
+          path: check
