@@ -626,7 +626,8 @@ result.ClusterFuture <- function(future, ...) {
 
 #' @importFrom parallelly isConnectionValid isNodeAlive cloneNode
 receiveMessageFromWorker <- local({
-  recvResult <- import_parallel_fcn("recvResult")
+  recvData <- import_parallel_fcn("recvData")
+  
   closeNode <- import_parallel("closeNode", default = function(node) {
     con <- node[["con"]]
     if (inherits(con, "connection")) close(con)
@@ -666,13 +667,13 @@ receiveMessageFromWorker <- local({
     ## then collect and record the value
     msg <- NULL
     ack <- tryCatch({
-      msg <- recvResult(node)
+      data <- recvData(node)
       TRUE    
     }, error = function(ex) ex)
     if (debug) mprint(ack)
   
     if (inherits(ack, "error")) {
-      if (debug) mdebugf("- parallel:::recvResult() produced an error: %s", conditionMessage(ack))
+      if (debug) mdebugf("- parallel::recvData() produced an error: %s", conditionMessage(ack))
 
       ## Did it fail because we interrupted a future, which resulted in the worker
       ## also shutting done? If so, turn the error into a run-time FutureInterruptError
@@ -686,10 +687,16 @@ receiveMessageFromWorker <- local({
       ex <- FutureError(msg, call = ack[["call"]], future = future)
       future[["result"]] <- ex
       stop(ex)          
-    }
+    } ## if (inherits(ack, "error"))
+    
     stop_if_not(isTRUE(ack))
-    if (debug) mdebug("- received message: ", class(msg)[1])
-  
+    if (debug) {
+      mdebug("- received data:")
+      mstr(data)
+    }
+
+    msg <- data[["value"]]
+
     ## Non-expected message from worker?
     if (!inherits(msg, "FutureResult") && !inherits(msg, "condition")) {
       ## If parallel:::slaveLoop() ends up capturing the error, which should
@@ -700,6 +707,8 @@ receiveMessageFromWorker <- local({
         future[["result"]] <- ex
         stop(ex)
       }
+
+      str(list(data = data, msg = msg))
       
       node_info <- sprintf("%s #%d", sQuote(class(node)[1]), node_idx)
       if (inherits(node, "RichSOCKnode")) {

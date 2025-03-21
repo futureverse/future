@@ -30,7 +30,7 @@ import_parallel_fcn <- function(name, ...) {
 ##   - parallel:::closeNode()       ## non-critical / 
 ##                                  ## can be dropped in R (>= 4.4.0)
 ##   - parallel:::sendCall()        ## run()
-##   - parallel:::recvResult()      ## value()
+##   - parallel:::recvData()        ## can be dropped in R (>= 4.4.0)
 ## * multicore futures:
 ##   - parallel:::selectChildren()  ## resolved()
 ##   - parallel:::rmChild()         ## value()
