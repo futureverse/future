@@ -235,7 +235,7 @@ launchFuture.ClusterFutureBackend <- local({
         ##      we can get the error here before launching the future.
         if (debug) mdebug("Attaching packages on worker ...")
         ## Blocking cluster-node call
-        cluster_call_blocking(cl, fun = requirePackages, packages, future = future, when = "call requirePackages() on")
+        cluster_call_blocking(cl, fun = function(pkgs) { requirePackages(pkgs); "future-requirePackages" }, packages, future = future, when = "call requirePackages() on", expected = "future-requirePackages")
         if (debug) mdebug("Attaching packages on worker ... done")
         
         ## Add event to future journal?
@@ -269,8 +269,8 @@ launchFuture.ClusterFutureBackend <- local({
       ##     may happen even if the future is evaluated inside a
       ##     local, e.g. local({ a <<- 1 }).
       ## Blocking cluster-node call
-      cluster_call_blocking(cl, fun = grmall, future = future, when = "call grmall() on")
-  
+      cluster_call_blocking(cl, fun = grmall, future = future, when = "call grmall() on", expected = "future-grmall")
+
       ## Add event to future journal
       if (inherits(future[[".journal"]], "FutureJournal")) {
         appendToFutureJournal(future,
@@ -289,7 +289,7 @@ launchFuture.ClusterFutureBackend <- local({
     ## FIXME: This is _before_, not _after_ as documented
     ##        Should use gc[1] for before and gc[2] for after
     if (isTRUE(future[["gc"]])) {
-      cluster_call_blocking(cl, fun = gc, future = future, when = "call gc() on")
+      cluster_call_blocking(cl, fun = function() { gc(); "future-gc" }, future = future, when = "call gc() on", expected = "future-gc")
     }
   
   
@@ -772,7 +772,7 @@ receiveMessageFromWorker <- local({
         ## Cleanup global environment while at it
         if (!isTRUE(future[["persistent"]])) {
           ## Blocking cluster-node call
-          cluster_call_blocking(cl[1], fun = grmall, future = future, when = "call grmall() on")
+          cluster_call_blocking(cl[1], fun = grmall, future = future, when = "call grmall() on", expected = "future-grmall")
         }
         
         ## WORKAROUND: Need to clear cluster worker before garbage collection.
@@ -782,10 +782,10 @@ receiveMessageFromWorker <- local({
         ## https://github.com/HenrikBengtsson/Wishlist-for-R/issues/27.
         ## (We return a value identifiable for troubleshooting purposes)
         ## Blocking cluster-node call
-        cluster_call_blocking(cl[1], function() "future-clearing-cluster-worker", future = future, when = "call dummy() on")
+        cluster_call_blocking(cl[1], function() "future-clearing-cluster-worker", future = future, when = "call dummy() on", expected = "future-clearing-cluster-worker")
         
         ## Blocking cluster-node call
-        cluster_call_blocking(cl[1], gc, verbose = FALSE, reset = FALSE, future = future, when = "call gc() on")
+        cluster_call_blocking(cl[1], function() { gc(); "future-gc" }, verbose = FALSE, reset = FALSE, future = future, when = "call gc() on", expected = "future-gc")
         if (debug) mdebug("- Garbage collecting worker ... done")
       }
     } else if (inherits(msg, "condition")) {
@@ -914,17 +914,29 @@ node_call_nonblocking <- local({
 })
 
 #' @importFrom parallel clusterCall
-cluster_call_blocking <- function(cl, ..., when = "call function on", future) {
+cluster_call_blocking <- function(cl, ..., when = "call function on", future, expected = NULL) {
   stop_if_not(inherits(cl, "cluster"), length(cl) == 1L)
   stop_if_not(inherits(future, "Future"))
   
-  tryCatch({
+  ans <- tryCatch({
     clusterCall(cl = cl, ...)
   }, error = function(ex) {
     msg <- post_mortem_cluster_failure(ex, when = when, node = cl[[1]], future = future)
     ex <- FutureError(msg, future = future)
     future[["result"]] <- ex
     stop(ex)          
+  })
+
+  with_assert({
+    stop_if_not(length(ans) == 1L, is.list(ans))
+    if (!is.null(expected)) {
+      value <- ans[[1]]
+      if (length(value) != 1L || !is.character(value) || 
+          is.na(value) || value != "future-grmall") {
+         utils::str(list(ans = ans, expected = expected))
+         stop(sprintf("clusterCall() did not return %s as expected: %s", sQuote(expected)), paste(deparse(value), collapse = "; "))
+       }
+    }
   })
 } ## cluster_call_blocking()
 
