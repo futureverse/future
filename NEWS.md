@@ -44,6 +44,8 @@
 
  * Interrupted futures are now handled and produce an informative error.
 
+ * Timeout errors triggered by `setTimeLimit()` are now relayed.
+ 
  * All parallel backends now prevent nested parallelization, unless
    explicitly allowed, e.g. settings recognized by
    `parallelly::availableCores()` or set by the future
@@ -71,6 +73,9 @@
    resulting in a regular `FutureError`. Previously, interrupts would
    result in un-determistic behavior and errors depending of future
    backend.
+
+ * Timeout errors triggered by `setTimeLimit()` was likely to render
+   the future and the corresponding worker invalid.
 
 ## Documentation
 

@@ -704,95 +704,107 @@ evalFuture <- function(
   ## If this was mandatory, we could.  Instead we use
   ## a tryCatch() statement. /HB 2016-03-14
   ...future.result <- tryCatch({
-    withCallingHandlers({
-      ...future.value <- withVisible(eval(expr, envir = globalenv()))
-      FutureResult(
-        value = ...future.value[["value"]],
-        visible = ...future.value[["visible"]],
-        conditions = ...future.conditions,
-        rng = !identical(globalenv()[[".Random.seed"]], ...future.rng),
-        globalenv = if (globalenv) list(added = setdiff(names(.GlobalEnv), ...future.globalenv.names)) else NULL,
-        started = ...future.startTime
-      )
-    }, condition = function(cond) {
-        ## Handle immediately?
-        if (length(immediateConditionHandlers) > 0) {
-          ## Handle immediateCondition:s?
-          idxs <- inherits(cond, names(immediateConditionHandlers), which = TRUE)
-          if (length(idxs) > 0 && !identical(idxs, 0L)) {
-            class <- class(cond)[idxs[[1]]]
-            handler <- immediateConditionHandlers[[class]]
-            res <- handler(cond)
-
-            ## Avoid condition from being signaled more than once
-            muffleCondition(cond)
-
+    tryCatch({
+      withCallingHandlers({
+        ...future.value <- withVisible(eval(expr, envir = globalenv()))
+        FutureResult(
+          value = ...future.value[["value"]],
+          visible = ...future.value[["visible"]],
+          conditions = ...future.conditions,
+          rng = !identical(globalenv()[[".Random.seed"]], ...future.rng),
+          globalenv = if (globalenv) list(added = setdiff(names(.GlobalEnv), ...future.globalenv.names)) else NULL,
+          started = ...future.startTime
+        )
+      }, condition = function(cond) {
+          is_error <- inherits(cond, "error")
+          if (is_error) {
+            ## Disable timeouts as soon as possible, in case there is a
+            ## timeout set by the future expression, which triggered
+            ## this error
+            setTimeLimit(cpu = Inf, elapsed = Inf, transient = FALSE)
+          }
+          
+          ## Handle immediately?
+          if (length(immediateConditionHandlers) > 0) {
+            ## Handle immediateCondition:s?
+            idxs <- inherits(cond, names(immediateConditionHandlers), which = TRUE)
+            if (length(idxs) > 0 && !identical(idxs, 0L)) {
+              class <- class(cond)[idxs[[1]]]
+              handler <- immediateConditionHandlers[[class]]
+              res <- handler(cond)
+  
+              ## Avoid condition from being signaled more than once
+              muffleCondition(cond)
+  
+              ## Record condition
+              ...future.conditions[[length(...future.conditions) + 1L]] <<- list(
+                condition = cond,
+                signaled = 1L
+              )
+  
+              return()
+            }
+          }
+  
+          ## Ignore condition?
+          ignore <- !is_error &&
+                    !is.null(conditionClassesExclude) && 
+                    inherits(cond, conditionClassesExclude)
+          
+          ## Handle error:s specially
+          if (is_error) {
+            sessionInformation <- function() {
+              list(
+                r          = R.Version(),
+                locale     = Sys.getlocale(),
+                rngkind    = RNGkind(),
+                namespaces = loadedNamespaces(),
+                search     = search(),
+                system     = Sys.info()
+              )
+            }
+  
+            sysCalls <- getSysCalls()
+  
             ## Record condition
             ...future.conditions[[length(...future.conditions) + 1L]] <<- list(
               condition = cond,
-              signaled = 1L
+              calls     = c(sysCalls(from = ...future.frame), cond[["call"]]),
+              session   = sessionInformation(),
+              timestamp = Sys.time(),
+              signaled  = 0L
             )
-
-            return()
-          }
-        }
-
-        is_error <- inherits(cond, "error")
-          
-        ## Ignore condition?
-        ignore <- !is_error &&
-                  !is.null(conditionClassesExclude) && 
-                  inherits(cond, conditionClassesExclude)
         
-        ## Handle error:s specially
-        if (is_error) {
-          sessionInformation <- function() {
-            list(
-              r          = R.Version(),
-              locale     = Sys.getlocale(),
-              rngkind    = RNGkind(),
-              namespaces = loadedNamespaces(),
-              search     = search(),
-              system     = Sys.info()
+            signalCondition(cond)
+          } else if (!ignore &&
+                     !is.null(conditionClasses) &&
+                     inherits(cond, conditionClasses)
+                    ) {
+            ## Relay 'immediateCondition' conditions immediately?
+            ## If so, then do not muffle it and flag it as signalled
+            ## already here.
+            signal <- inherits(cond, immediateConditionClasses)
+            ## Record condition
+            ...future.conditions[[length(...future.conditions) + 1L]] <<- list(
+              condition = cond,
+              signaled = as.integer(signal)
             )
+            if (length(immediateConditionClasses) > 0 && !split && !signal) {
+              muffleCondition(cond, pattern = muffleInclude)
+            }
+          } else {
+            if (!split && !is.null(conditionClasses)) {
+              ## Muffle all non-captured conditions
+              muffleCondition(cond, pattern = muffleInclude)
+            }
           }
-
-          sysCalls <- getSysCalls()
-
-          ## Record condition
-          ...future.conditions[[length(...future.conditions) + 1L]] <<- list(
-            condition = cond,
-            calls     = c(sysCalls(from = ...future.frame), cond[["call"]]),
-            session   = sessionInformation(),
-            timestamp = Sys.time(),
-            signaled  = 0L
-          )
-      
-          signalCondition(cond)
-        } else if (!ignore &&
-                   !is.null(conditionClasses) &&
-                   inherits(cond, conditionClasses)
-                  ) {
-          ## Relay 'immediateCondition' conditions immediately?
-          ## If so, then do not muffle it and flag it as signalled
-          ## already here.
-          signal <- inherits(cond, immediateConditionClasses)
-          ## Record condition
-          ...future.conditions[[length(...future.conditions) + 1L]] <<- list(
-            condition = cond,
-            signaled = as.integer(signal)
-          )
-          if (length(immediateConditionClasses) > 0 && !split && !signal) {
-            muffleCondition(cond, pattern = muffleInclude)
-          }
-        } else {
-          if (!split && !is.null(conditionClasses)) {
-            ## Muffle all non-captured conditions
-            muffleCondition(cond, pattern = muffleInclude)
-          }
-        }
-      } ## function(cond)
-    ) ## withCallingHandlers()
+        } ## function(cond)
+      ) ## withCallingHandlers()
+    }, finally = {
+      ## Disable timeouts as soon as possible, in case there is a
+      ## timeout set by the future expression
+      setTimeLimit(cpu = Inf, elapsed = Inf, transient = FALSE)
+    }) ## tryCatch() for future evaluation 
   }, interrupt = function(ex) {
     FutureResult(
       conditions = ...future.conditions,
@@ -807,7 +819,7 @@ evalFuture <- function(
       globalenv = if (globalenv) list(added = setdiff(names(.GlobalEnv), ...future.globalenv.names)) else NULL,
       started = ...future.startTime
     )
-  }) ## tryCatch()
+  }) ## output tryCatch()
   
 
   ## -----------------------------------------------------------------
