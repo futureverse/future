@@ -3,7 +3,7 @@
 #' @param envir The environment where the future plan should be set and the expression evaluated.
 #'
 #' @return
-#' `withPlan()` returns the value of the expression evaluated.
+#' `withPlan()` returns the value of the expression evaluated invisibly.
 #'
 #' @rdname plan
 #' @export
@@ -20,7 +20,7 @@ withPlan <- function(strategy = NULL, expr, envir = parent.frame(), .cleanup = N
   ## Set the new, temporary plan, without cleaning up the current one
   plan(strategy, substitute = FALSE, .cleanup = FALSE, ...)
   
-  eval(expr, envir = envir)
+  invisible(eval(expr, envir = envir))
 }
 
 

@@ -68,7 +68,7 @@ is chosen, otherwise it returns the current one visibly.
 
 a future function.
 
-\code{withPlan()} returns the value of the expression evaluated.
+\code{withPlan()} returns the value of the expression evaluated invisibly.
 
 \code{localPlan()} returns the current future plan before applying the temporary one.
 }
