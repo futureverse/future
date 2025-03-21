@@ -16,7 +16,7 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          - {os: windows-latest, r: 'devel'    }
+          - {os: windows-latest, r: 'devel', parallelly: 'develop'    }
           - {os: windows-latest, r: 'release'  }
           - {os: windows-latest, r: 'oldrel'   }
 #          - {os: macOS-latest,   r: 'devel'    }
@@ -59,6 +59,7 @@ jobs:
       R_PARALLELLY_AVAILABLECORES_SYSTEM: ${{ matrix.config.availablecores }}
       R_FUTURE_RNG_ONMISUSE: error
       R_FUTURE_GLOBALS_KEEPWHERE: ${{ matrix.config.globals_keepWhere }}
+      R_PARALLELLY_BRANCH: ${{ matrix.config.parallelly }}
       
     steps:
       - uses: actions/checkout@v4
@@ -79,6 +80,11 @@ jobs:
       - name: Install package itself (special case)
         run: |
           install.packages(".", repos = NULL, type = "source")  ## needed by parallel workers
+          pver <- Sys.getenv("R_PARALLELLY_BRANCH")
+          if (nzchar(pver)) {
+            remotes::install_github("futureverse/parallelly", ref = pver)
+          }
+          
         shell: Rscript {0}
 
       - name: Session info
