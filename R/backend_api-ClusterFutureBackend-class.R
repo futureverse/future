@@ -704,8 +704,8 @@ receiveMessageFromWorker <- local({
       node_info <- sprintf("%s #%d", sQuote(class(node)[1]), node_idx)
       if (inherits(node, "RichSOCKnode")) {
         specs <- summary(node)
-        node_info <- sprintf("%s on host %s (%s, platform %s)",
-                             node_info, sQuote(specs[["host"]]),
+        node_info <- sprintf("%s (PID %s) on host %s (%s, platform %s)",
+                             node_info, specs[["pid"]], sQuote(specs[["host"]]),
                              specs[["r_version"]], specs[["platform"]])
       }
       
