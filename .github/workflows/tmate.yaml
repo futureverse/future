@@ -139,7 +139,9 @@ jobs:
       - name: Setup and launch tmate session
         uses: mxschmitt/action-tmate@v3
         if: ${{ github.event_name == 'workflow_dispatch' && inputs.debug_enabled }}
-
+        with:
+          limit-access-to-actor: true
+        
       - name: Upload check results
         if: failure()
         uses: actions/upload-artifact@v4
