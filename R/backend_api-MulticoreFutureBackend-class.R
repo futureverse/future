@@ -522,7 +522,9 @@ result.MulticoreFuture <- local({
         ex <- FutureError(msg, future = future)
   
       } else {
-        ex <- UnexpectedFutureResultError(future)
+        ## FIXME: Add more details
+        hint <- sprintf("parallel::mccollect() did not return a FutureResult object as expected. Received a %s object instead: %s", sQuote(class(result)[1]), paste(deparse(result), collapse = "; "))
+        ex <- UnexpectedFutureResultError(future, hint = hint)
         alive <- NA  ## For now, don't remove future when there's an unexpected error /HB 2023-04-19
       }
       future[["result"]] <- ex
