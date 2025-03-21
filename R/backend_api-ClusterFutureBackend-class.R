@@ -674,7 +674,7 @@ receiveMessageFromWorker <- local({
     if (inherits(ack, "error")) {
       if (debug) mdebugf("- parallel:::recvResult() produced an error: %s", conditionMessage(ack))
 
-      ## Did it fail, because we interrupted a future, but that resulted in the worker
+      ## Did it fail because we interrupted a future, which resulted in the worker
       ## also shutting done? If so, turn the error into a run-time FutureInterruptError
       ## and revive the worker
       if (future[["state"]] %in% c("interrupted", "running")) {
@@ -704,8 +704,17 @@ receiveMessageFromWorker <- local({
       node_info <- sprintf("%s #%d", sQuote(class(node)[1]), node_idx)
       if (inherits(node, "RichSOCKnode")) {
         specs <- summary(node)
-        node_info <- sprintf("%s (PID %s) on host %s (%s, platform %s)",
-                             node_info, specs[["pid"]], sQuote(specs[["host"]]),
+        alive <- isNodeAlive(node)
+        if (is.na(alive)) {
+          alive <- "unknown if it is alive"
+        } else if (alive) {
+          alive <- "alive"
+        } else {
+          alive <- "not alive"
+        }
+        node_info <- sprintf("%s (PID %s; %s) on host %s (%s, platform %s)",
+                             node_info,
+                             specs[["pid"]], alive, sQuote(specs[["host"]]),
                              specs[["r_version"]], specs[["platform"]])
       }
       
