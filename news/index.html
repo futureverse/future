@@ -23,7 +23,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">future</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.34.0-9315</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.34.0-9317</span>
       </span>
     </div>
 
@@ -172,6 +172,7 @@
 <li><p><code><a href="../reference/value.html">value()</a></code> on containers interrupts non-resolved futures if an error is detected in one of the futures.</p></li>
 <li><p>Add <code><a href="../reference/future.html">minifuture()</a></code>, which is like <code><a href="../reference/future.html">future()</a></code>, but with different default arguments resulting in less overhead with the added burden of having to specify globals and packages, not having conditions and standard output relayed, and ignoring random number generation.</p></li>
 <li><p>Interrupted futures are now handled and produce an informative error.</p></li>
+<li><p>Timeout errors triggered by <code><a href="https://rdrr.io/r/base/setTimeLimit.html" class="external-link">setTimeLimit()</a></code> are now relayed.</p></li>
 <li><p>All parallel backends now prevent nested parallelization, unless explicitly allowed, e.g. settings recognized by <code><a href="https://parallelly.futureverse.org/reference/availableCores.html" class="external-link">parallelly::availableCores()</a></code> or set by the future <code><a href="../reference/plan.html">plan()</a></code>. Previously, this had to be implemented by each backend, but now it’s handled automatically by the future framework.</p></li>
 <li><p>Add new FutureBackend API for writing future backends.</p></li>
 <li><p>Added argument <code>maxSizeOfObjects</code> to <code><a href="../reference/future.html">future()</a></code>, which controls the maximum total size of objects send to and from the worker. The default value can be controlled when setting up the future backend, e.g. <code>plan(multisession, maxSizeOfObjects = 1000^3)</code>.</p></li>
@@ -179,7 +180,8 @@
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-development-version">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h3>
-<ul><li>Now ‘interrupt’ conditions are captured during the evaluation of the future, and results in the evaluation being terminated with a <code>FutureInterruptError</code>. Not all backends manage to catch interrupts, leading to the parallel R workers to terminate, resulting in a regular <code>FutureError</code>. Previously, interrupts would result in un-determistic behavior and errors depending of future backend.</li>
+<ul><li><p>Now ‘interrupt’ conditions are captured during the evaluation of the future, and results in the evaluation being terminated with a <code>FutureInterruptError</code>. Not all backends manage to catch interrupts, leading to the parallel R workers to terminate, resulting in a regular <code>FutureError</code>. Previously, interrupts would result in un-determistic behavior and errors depending of future backend.</p></li>
+<li><p>Timeout errors triggered by <code><a href="https://rdrr.io/r/base/setTimeLimit.html" class="external-link">setTimeLimit()</a></code> was likely to render the future and the corresponding worker invalid.</p></li>
 </ul></div>
 <div class="section level3">
 <h3 id="documentation-development-version">Documentation<a class="anchor" aria-label="anchor" href="#documentation-development-version"></a></h3>
