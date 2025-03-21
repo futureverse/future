@@ -23,7 +23,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">future</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.34.0-9310</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.34.0-9315</span>
       </span>
     </div>
 
@@ -168,7 +168,7 @@
 <li><p>Add <code><a href="../reference/reset.html">reset()</a></code>, which resets a future that has completed, failed, or been interrupted. The future is reset back to a lazy, vanilla future that can be relaunched.</p></li>
 <li><p><code><a href="../reference/value.html">value()</a></code> on containers gained argument <code>reduce</code>, which specifies a function for reducing the values, e.g. <code>values(fs, reduce =    `+`)</code>. Optional attribute <code>init</code> controls the initial value. Note that attributes must not be set on primitive functions. As a workaround, use <code>reduce = structure("+", init = 42)</code>.</p></li>
 <li><p><code>value(x)</code> on containers gained argument <code>inorder</code>, which can be used control whether standard output and conditions are relayed in order of <code>x</code>, or as soon as a future in <code>x</code> is resolved. It also controls the order of how values are reduced.</p></li>
-<li><p><code><a href="../reference/value.html">value()</a></code> gained argument <code>drop</code> to turn resolved futures into minimal, invalid light-weight futures after their values have been returned. This reduces the memory use. This is particularly useful when using <code>reduce</code> in combination with <code>inorder = FALSE</code>. For instance, if you have a list of futures <code>fs</code>, and you know that you will not need to query the futures for their values more than onces, then it is both memory efficient and more performant to use <code>v &lt;- value(fs, reduce = `+`, inorder = FALSE, drop = TRUE)</code>.</p></li>
+<li><p><code><a href="../reference/value.html">value()</a></code> gained argument <code>drop</code> to turn resolved futures into minimal, invalid light-weight futures after their values have been returned. This reduces the memory use. This is particularly useful when using <code>reduce</code> in combination with <code>inorder = FALSE</code>. For instance, if you have a list of futures <code>fs</code>, and you know that you will not need to query the futures for their values more than once, then it is memory efficient and more performant to use <code>v &lt;-    value(fs, reduce = `+`, inorder = FALSE, drop = TRUE)</code>.</p></li>
 <li><p><code><a href="../reference/value.html">value()</a></code> on containers interrupts non-resolved futures if an error is detected in one of the futures.</p></li>
 <li><p>Add <code><a href="../reference/future.html">minifuture()</a></code>, which is like <code><a href="../reference/future.html">future()</a></code>, but with different default arguments resulting in less overhead with the added burden of having to specify globals and packages, not having conditions and standard output relayed, and ignoring random number generation.</p></li>
 <li><p>Interrupted futures are now handled and produce an informative error.</p></li>
