@@ -218,6 +218,30 @@ evalFuture <- function(
         forwardOptions = NULL
       )
     )) {
+  tryCatch({
+    evalFutureInternal(data)
+  }, error = function(ex) {
+    ## Wrap up in a FutureError
+    msg <- sprintf("future::evalFuture() failed on %s (pid %s) at %s", Sys.info()[["nodename"]], Sys.getpid(), format(Sys.time(), "%FT%T"))
+    if (!requireNamespace("future")) {
+      msg <- sprintf("%s. Package 'future' is not available", msg)
+    }
+    msg <- sprintf("%s. Possible other reasons: %s", msg, conditionMessage(ex))
+    ex <- simpleError(msg)
+    class(ex) <- c("FutureLaunchError", "FutureError", class(ex))
+#    structure(list(
+#      value = ex,
+#      visible = FALSE,
+#      rng = FALSE,
+#      started = Sys.time(),
+#      finished = Sys.time()
+#    ), class = c("FutureResult"))
+    ex
+  })
+} ## evalFuture()
+
+
+evalFutureInternal <- function(data) {
   debug <- FALSE
 
   core <- data[["core"]]

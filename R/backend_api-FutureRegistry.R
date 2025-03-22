@@ -24,9 +24,20 @@ FutureRegistry <- local({
         ##     FutureRegistry(..., action = "remove").
         tryCatch({
           value(future, stdout = FALSE, signal = FALSE)
+        }, FutureLaunchError = function(ex) {
+          message("********************************************")
+          message("***  HAPPEN IF FUTURE FAILED TO LAUNCH   ***")
+          message(sprintf("*** Caught %s:", class(ex)[1]))
+          message(sprintf("*** %s", conditionMessage(ex)))
+          message("********************************************")
+          stop(ex)
         }, FutureError = function(ex) {
-          mdebugf("Detected a %s while FutureRegistry collecting results:", class(ex)[1])
-          mprint(ex)
+          message("********************************************")
+          message("***         SHOULD NOT HAPPEN            ***")
+          message(sprintf("*** Caught %s:", class(ex)[1]))
+          message(sprintf("*** %s", conditionMessage(ex)))
+          message("********************************************")
+          stop(ex)
         })
 
         ## (b) Make sure future is removed from registry, unless

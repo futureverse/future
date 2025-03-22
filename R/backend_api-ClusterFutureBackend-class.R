@@ -618,6 +618,13 @@ result.ClusterFuture <- function(future, ...) {
       return(result)
     } else if (inherits(result, "FutureInterruptError")) {
       stop(result)
+    } else if (inherits(result, "FutureLaunchError")) {
+      future[["result"]] <- result
+      ## Remove future from registry
+      backend <- future[["backend"]]
+      reg <- backend[["reg"]]
+      FutureRegistry(reg, action = "remove", future = future, earlySignal = FALSE)
+      stop(result)
     }
   })
 }
@@ -788,6 +795,7 @@ receiveMessageFromWorker <- local({
         cluster_call_blocking(cl[1], function() { gc(); "future-gc" }, verbose = FALSE, reset = FALSE, future = future, when = "call gc() on", expected = "future-gc")
         if (debug) mdebug("- Garbage collecting worker ... done")
       }
+    } else if (inherits(msg, "FutureLaunchError")) {
     } else if (inherits(msg, "condition")) {
       condition <- msg
       
