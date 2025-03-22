@@ -63,6 +63,9 @@
    and if not set there, by R option `future.globals.maxSize` (sic!).
    Backends `sequential` and `multicore` has no such limit, i.e.
    `maxSizeOfObjects = +Inf`.
+   
+ * Failures to launch a future is not detected, handled, and relayed
+   as an error with details on why it failed.
 
 ## Bug Fixes
 
