@@ -162,11 +162,6 @@
     <div class="section level2">
 <h2 class="page-header" data-toc-text="development version" id="version-development-version">Version (development version)<a class="anchor" aria-label="anchor" href="#version-development-version"></a></h2>
 <div class="section level3">
-<h3 id="significant-changes-development-version">Significant Changes<a class="anchor" aria-label="anchor" href="#significant-changes-development-version"></a></h3>
-<ul><li>
-<code><a href="../reference/plan.html">plan()</a></code> skips setting a new strategy if the exact same has already been set. Previously, the default was not to skip.</li>
-</ul></div>
-<div class="section level3">
 <h3 id="new-features-development-version">New Features<a class="anchor" aria-label="anchor" href="#new-features-development-version"></a></h3>
 <ul><li><p>Add <code><a href="../reference/plan.html">localPlan()</a></code> and <code><a href="../reference/plan.html">withPlan()</a></code> functions for evaluating an expression, including futures, using a temporary future plan.</p></li>
 <li><p>Add <code><a href="../reference/interrupt.html">interrupt()</a></code>, which interrupts a future, if the parallel backend supports it, otherwise it is silently ignored. It can also be used on a container (i.e. lists, <code>listenv</code>:s and environment) of futures.</p></li>
