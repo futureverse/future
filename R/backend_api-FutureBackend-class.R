@@ -111,11 +111,17 @@ interruptFuture.FutureBackend <- function(backend, future, ...) {
 }
 
 
-makeFutureBackend <- function(evaluator, ...) {
+makeFutureBackend <- function(evaluator, ..., debug = FALSE) {
   backend <- attr(evaluator, "backend")
 
   ## Old future strategies do not implement a FutureBackend
   if (is.null(backend)) return(NULL)
+
+  if (debug) {
+    mdebugf_push("makeFutureBackend(<%s>) ...", class(evaluator)[1])
+    mdebugf("Backend function: <%s>", commaq(class(backend)))
+    on.exit(mdebugf_pop("makeFutureBackend(<%s>) ... done", class(evaluator)[1]))
+  }
   
   stop_if_not(is.function(backend))
 
@@ -137,6 +143,8 @@ makeFutureBackend <- function(evaluator, ...) {
 
   backend <- do.call(backend, args = args)
   stop_if_not(inherits(backend, "FutureBackend"))
+
+  mdebugf("Backend: <%s>", commaq(class(backend)))
 
   backend
 }

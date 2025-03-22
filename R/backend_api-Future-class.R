@@ -449,7 +449,7 @@ run.Future <- function(future, ...) {
   if (debug) mdebug("Future backend: ", commaq(class(evaluator)))
 
   ## Implements a FutureBackend?
-  backend <- makeFutureBackend(evaluator)
+  backend <- makeFutureBackend(evaluator, debug = debug)
   if (!is.null(backend)) {
     if (debug) mdebug_push("Using FutureBackend ...")
     

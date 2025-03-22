@@ -164,8 +164,8 @@ launchFuture.ClusterFutureBackend <- local({
     stop_if_not(is.character(reg), length(reg) == 1L)
     
     if (debug) {
-      mdebug("Workers:")
-      mstr(workers)
+      mdebugf("Workers: [n=%d]", length(workers))
+      mprint(workers)
       mdebug("FutureRegistry: ", sQuote(reg))
     }
     
