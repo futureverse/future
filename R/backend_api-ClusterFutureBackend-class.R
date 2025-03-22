@@ -56,7 +56,7 @@ cluster <- function(..., persistent = FALSE, workers = availableWorkers(), gc = 
 class(cluster) <- c("cluster", "multiprocess", "future", "function")
 attr(cluster, "init") <- TRUE
 attr(cluster, "cleanup") <- function() {
-  ClusterRegistry(action = "stop")
+  ClusterRegistry(action = "stop", debug = isTRUE(getOption("future.debug")))
 }
 attr(cluster, "tweakable") <- quote(c(makeClusterPSOCK_args(), "persistent"))
 
@@ -96,7 +96,7 @@ ClusterFutureBackend <- local({
     } else if (is.character(workers) || is.numeric(workers)) {
       ## Which '...' arguments should be passed to Future() and 
       ## which should be passed to makeClusterPSOCK()?
-      workers <- ClusterRegistry("start", workers = workers, ...)
+      workers <- ClusterRegistry("start", workers = workers, ..., debug = debug)
     } else {
       workers <- as.cluster(workers)
       workers <- addCovrLibPath(workers)
@@ -364,11 +364,18 @@ ClusterRegistry <- local({
   last <- NULL
   cluster <- NULL
 
-  function(action = c("get", "start", "stop"), workers = NULL, makeCluster = .makeCluster, ...) {
+  function(action = c("get", "start", "stop"), workers = NULL, makeCluster = .makeCluster, ..., debug = FALSE) {
     action <- match.arg(action, choices = c("get", "start", "stop"))
-
+    
+    if (debug) {
+      mdebugf_push("ClusterRegistry('%s', ...) ...", action)
+      on.exit(mdebugf_pop("ClusterRegistry('%s', ...) ...", action))
+    }
+    
     if (is.null(workers)) {
+      if (debug) mdebug("workers: NULL")
     } else if (is.numeric(workers)) {
+      if (debug) mdebugf("workers: %g", workers)
       ## Preserve class attributes, especially "AsIs"
       clazz <- class(workers)
       workers <- as.integer(workers)
@@ -377,28 +384,52 @@ ClusterRegistry <- local({
     } else if (is.character(workers)) {
       stop_if_not(length(workers) >= 1, !anyNA(workers))
       workers <- sort(workers)
+      if (debug) mdebugf("workers: [n=%d] %s", length(workers), commaq(workers))
     } else {
       stopf("Unknown mode of argument 'workers': %s", mode(workers))
     }
 
     if (length(cluster) == 0L && action != "stop") {
+      if (debug) mdebug_push("makeCluster(workers, ...) ...")
       cluster <<- makeCluster(workers, ...)
       last <<- workers
+      if (debug) {
+        mprint(cluster)
+        mdebug_pop("makeCluster(workers, ...) ... done")
+      }
     }
 
     if (action == "get") {
+      if (debug) mdebug("Getting current cluster")
       return(cluster)
     } else if (action == "start") {
+      if (debug) mdebug_push("Starting cluster ...")
       ## Already setup?
       if (!identical(workers, last)) {
-        ClusterRegistry(action = "stop")
+        ClusterRegistry(action = "stop", debug = debug)
+        if (debug) mdebug_push("makeCluster(workers, ...) ...")
         cluster <<- makeCluster(workers, ...)
         last <<- workers
+        if (debug) {
+          mprint(cluster)
+          mdebug_pop("makeCluster(workers, ...) ... done")
+        }
+      } else {
+        if (debug) mdebug("Already started")
       }
+      if (debug) mdebug_pop("Starting cluster ... done")
     } else if (action == "stop") {
-      if (length(cluster) > 0L) try(stopCluster(cluster), silent = TRUE)
+      if (debug) mdebug_push("Stopping cluster ...")
+      if (length(cluster) > 0L) {
+        if (debug) mprint(cluster)
+        res <- tryCatch({ stopCluster(cluster); TRUE }, error = identity)
+        if (debug) mdebugf("Stopped cluster: %s", commaq(deparse(res)))
+      } else {
+        if (debug) mdebug("No cluster to stop")
+      }
       cluster <<- NULL
       last <<- NULL
+      if (debug) mdebug_pop("Stopping cluster ... done")
     }
 
     cluster
@@ -511,7 +542,7 @@ resolved.ClusterFuture <- function(x, run = TRUE, timeout = NULL, ...) {
       futures <- FutureRegistry(reg, action = "list", earlySignal = FALSE, debug = debug)
       nodes <- unlist(lapply(futures, FUN = function(f) f[["node"]]), use.names = FALSE)
       avail[nodes] <- FALSE
-      if (debug) mdebug("avail: [n=%d] %s", length(avail), commaq(avail))
+      if (debug) mdebugf("avail: [n=%d] %s", length(avail), commaq(avail))
       
       ## If at least one is available, then launch this lazy future
       if (any(avail)) future <- run(future)
@@ -675,7 +706,7 @@ receiveMessageFromWorker <- local({
     reg <- backend[["reg"]]
   
     node_idx <- future[["node"]]
-    if (debug) mdebug("cluster node index: %d", node_idx)
+    if (debug) mdebugf("cluster node index: %d", node_idx)
     cl <- workers[node_idx]
     node <- cl[[1]]
   
