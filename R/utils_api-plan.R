@@ -74,8 +74,8 @@
 
   plan_cleanup <- function(evaluator, cleanup = NA, debug = FALSE) {
     if (debug) {
-      mdebugf_push("plan(): plan_cleanup(%s, cleanup = %s) ...", commaq(class(evaluator)). cleanup)
-      on.exit(mdebugf_push("plan(): plan_cleanup(%s, cleanup = %s) ... done", commaq(class(evaluator)). cleanup))
+      mdebugf_push("plan(): plan_cleanup(%s, cleanup = %s) ...", commaq(class(evaluator)), cleanup)
+      on.exit(mdebugf_push("plan(): plan_cleanup(%s, cleanup = %s) ... done", commaq(class(evaluator)), cleanup))
     }
     
     ## Nothing to do?
