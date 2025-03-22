@@ -72,7 +72,12 @@
   }) ## plan_default_stack()
 
 
-  plan_cleanup <- function(evaluator, cleanup = NA) {
+  plan_cleanup <- function(evaluator, cleanup = NA, debug = FALSE) {
+    if (debug) {
+      mdebugf_push("plan(): plan_cleanup(%s, cleanup = %s) ...", commaq(class(evaluator)). cleanup)
+      on.exit(mdebugf_push("plan(): plan_cleanup(%s, cleanup = %s) ... done", commaq(class(evaluator)). cleanup))
+    }
+    
     ## Nothing to do?
     if (identical(cleanup, FALSE)) return()
     
@@ -96,14 +101,16 @@
   } ## plan_cleanup()
 
 
-  plan_init <- function(evaluator) {
+  plan_init <- function(evaluator, debug = FALSE) {
+    if (debug) {
+      mdebugf_push("plan(): plan_init() of %s ...", commaq(class(evaluator)))
+      on.exit(mdebugf_pop("plan(): plan_init() of %s ... done", commaq(class(evaluator))))
+    }
+    
     init <- attr(evaluator, "init", exact = TRUE)
+    if (debug) mdebugf("init: %s", deparse(init))
+    
     if (identical(init, TRUE)) {
-      debug <- isTRUE(getOption("future.debug"))
-      if (debug) {
-        mdebugf_push("plan(): plan_init() of %s ...", commaq(class(evaluator)))
-        mprint(evaluator)
-      }
 
       ## IMPORANT: Initiate only once.  This avoids an infinite
       ## recursive loop caused by other plan() calls.
@@ -121,8 +128,7 @@
           value(f)
         }, FutureError = identity)
         if (inherits(res, "FutureError")) {
-          res[["message"]] <- paste0(
-            "Initialization of plan() failed, because the test future used for validation failed. The reason was: ", conditionMessage(res))
+          res[["message"]] <- paste0("Initialization of plan() failed, because the test future used for validation failed. The reason was: ", conditionMessage(res))
           stop(res)
         }
   
@@ -135,8 +141,6 @@
           stop(FutureError(sprintf("Initialization of plan() failed, because the value of the test future is not NA as expected: %s", res)))
         }
       }
-      
-      if (debug) mdebugf_pop("plan(): plan_init() of %s ... DONE", commaq(class(evaluator)))
     }
     
     evaluator
@@ -276,8 +280,13 @@ plan <- local({
   ## Stack of type of futures to use
   stack <- NULL
 
-  plan_set <- function(newStack, skip = TRUE, cleanup = NA, init = TRUE) {
+  plan_set <- function(newStack, skip = TRUE, cleanup = NA, init = TRUE, debug = FALSE) {
     stop_if_not(!is.null(newStack), is.list(newStack), length(newStack) >= 1L)
+
+    if (debug) {
+      mdebugf_push("plan(): plan_set(<%d strategies>, skip = %s, cleanup = %s, init = %s) ...", length(newStack), skip, cleanup, init)
+      on.exit(mdebugf_pop("plan(): plan_set(<%d strategies>, skip = %s, cleanup = %s, init = %s) ... done", length(newStack), skip, cleanup, init))
+    }
 
     oldStack <- stack
 
@@ -286,14 +295,14 @@ plan <- local({
 
     ## Skip if already set?
     if (skip && equal_strategy_stacks(newStack, oldStack)) {
-      if (isTRUE(getOption("future.debug"))) {
+      if (debug) {
         mdebug("plan(): Skip setting new future strategy stack because it is the same as the current one:")
         mprint(newStack)
       }
       return(oldStack)
     }
 
-    if (isTRUE(getOption("future.debug"))) {
+    if (debug) {
       mdebug("plan(): Setting new future strategy stack:")
       mprint(newStack)
     }
@@ -304,19 +313,17 @@ plan <- local({
     warn_about_multicore(newStack)
 
     ## Stop/cleanup any previously registered backends?
-    plan_cleanup(stack[[1L]], cleanup = cleanup)
+    plan_cleanup(stack[[1L]], cleanup = cleanup, debug = debug)
 
     stack <<- newStack
 
     ## Initiate future workers?
-    if (init) stack[[1]] <<- plan_init(stack[[1]])
+    if (init) stack[[1]] <<- plan_init(stack[[1]], debug = debug)
 
     ## Sanity checks
     with_assert({
       nbrOfWorkers <- nbrOfWorkers()
-      if (isTRUE(getOption("future.debug"))) {
-        mdebugf(sprintf("plan(): nbrOfWorkers() = %.0f", nbrOfWorkers))
-      }
+      if (debug) mdebugf(sprintf("plan(): nbrOfWorkers() = %.0f", nbrOfWorkers))
 
       stop_if_not(
         is.numeric(nbrOfWorkers), length(nbrOfWorkers) == 1L, 
@@ -335,8 +342,17 @@ plan <- local({
     if (is.logical(.skip)) stop_if_not(length(.skip) == 1L, !is.na(.skip))
     if (is.logical(.call)) stop_if_not(length(.call) == 1L, !is.na(.call))
 
+    debug <- isTRUE(getOption("future.debug"))
+    if (debug) {
+      mdebugf_push("plan(<%s>, .skip = %s, .cleanup = %s, .init = %s) ...", class(strategy)[1], .skip, .cleanup, .init)
+      on.exit(mdebugf_pop("plan(<%s>, .skip = %s, .cleanup = %s, .init = %s) ... done", class(strategy)[1], .skip, .cleanup, .init))
+    }
+    
     ## Once per session
-    if (is.null(stack)) stack <<- plan_default_stack()
+    if (is.null(stack)) {
+      stack <<- plan_default_stack()
+      if (debug) mdebug("Created default stack")
+    }
     
     ## Predefined "actions":
     if (is.null(strategy) || identical(strategy, "next")) {
@@ -346,29 +362,37 @@ plan <- local({
         class(strategy) <- c("FutureStrategy", class(strategy))
       }
       stop_if_not(is.function(strategy))
+      if (debug) mdebugf("Getting current (\"next\") strategy: %s", commaq(class(strategy)))
       return(strategy)
     } else if (identical(strategy, "default")) {
       strategy <- getOption("future.plan")
       if (is.null(strategy)) strategy <- sequential
+      if (debug) mdebugf("Getting default stack: %s", commaq(class(strategy)))
     } else if (identical(strategy, "list")) {
+      if (debug) mdebugf("Getting full stack: [n=%d] %s", length(stack), commaq(sapply(stack, FUN = class)))
       ## List stack of future strategies?
       return(stack)
     } else if (identical(strategy, "tail")) {
       ## List stack of future strategies except the first
       stack <- stack[-1]
+      if (debug) mdebugf("Getting stack without first strategy: [n=%d] %s", length(stack), commaq(sapply(stack, FUN = class)))
       return(stack)
     } else if (identical(strategy, "reset")) {
+      if (debug) mdebug_push("Resetting stack ...")
       ## Stop/cleanup any previously registered backends?
-      plan_cleanup(stack[[1]], cleanup = .cleanup)
+      plan_cleanup(stack[[1]], cleanup = .cleanup, debug = debug)
       ## Reset stack of future strategies?
       stack <<- plan_default_stack()
+      if (debug) mdebug_pop("Resetting stack ... done")
       return(stack)
     } else if (identical(strategy, "pop")) {
+      if (debug) mdebug_push("Popping stack ...")
       ## Pop strategy stack and return old stack
       ## (so it can be pushed back later)
       oldStack <- stack
       stack <<- stack[-1L]
       if (length(stack) == 0L) stack <<- plan_default_stack()
+      if (debug) mdebug_pop("Popping stack ... done")
       return(oldStack)
     }
 
@@ -390,7 +414,7 @@ plan <- local({
     }
 
     if (is.list(strategy)) {
-      oldStack <- plan_set(strategy, skip = .skip, cleanup = .cleanup, init = .init)
+      oldStack <- plan_set(strategy, skip = .skip, cleanup = .cleanup, init = .init, debug = debug)
       return(invisible(oldStack))
     }
 
@@ -496,7 +520,7 @@ plan <- local({
     }
 
     ## Set new strategy for futures
-    oldStack <- plan_set(newStack, skip = .skip, cleanup = .cleanup, init = .init)
+    oldStack <- plan_set(newStack, skip = .skip, cleanup = .cleanup, init = .init, debug = debug)
     invisible(oldStack)
   } # function()
 }) # plan()
