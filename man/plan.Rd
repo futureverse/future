@@ -12,7 +12,7 @@ plan(
   strategy = NULL,
   ...,
   substitute = TRUE,
-  .skip = TRUE,
+  .skip = FALSE,
   .call = TRUE,
   .cleanup = NA,
   .init = TRUE

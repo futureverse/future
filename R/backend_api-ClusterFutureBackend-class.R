@@ -77,6 +77,9 @@ attr(cluster, "tweakable") <- quote(c(makeClusterPSOCK_args(), "persistent"))
 #'
 #' @keywords internal
 #' @rdname FutureBackend
+#'
+#' @importFrom parallelly as.cluster availableWorkers
+#' @importFrom digest digest
 #' @export
 ClusterFutureBackend <- local({
   getDefaultCluster <- import_parallel_fcn("getDefaultCluster")
@@ -359,12 +362,38 @@ nbrOfFreeWorkers.ClusterFutureBackend <- function(evaluator, ...) {
 }
 
 
+#' @importFrom digest digest
 #' @importFrom parallel stopCluster
 ClusterRegistry <- local({
   last <- NULL
   cluster <- NULL
 
-  function(action = c("get", "start", "stop"), workers = NULL, makeCluster = .makeCluster, ..., debug = FALSE) {
+  startCluster <- function(workers, makeCluster, ..., debug = debug) {
+    if (debug) {
+      mdebug_push("makeCluster(workers, ...) ...")
+      mdebug_pop("makeCluster(workers, ...) ... done")
+    }
+    
+    cl <- makeCluster(workers, ...)
+    
+    ## Attach name to cluster?
+    name <- attr(cl, "name", exact = TRUE)
+    if (is.null(name)) {
+      name <- digest(cl)
+      stop_if_not(length(name) > 0, nzchar(name))
+      attr(cl, "name") <- name
+      if (debug) mdebug("Generated cluster UUID")
+    }
+    if (debug) {
+      mdebugf("Cluster UUID: %s", sQuote(name))
+      mprint(cl)
+    }
+    
+    cl
+  } ## startCluster()
+
+
+  function(action = c("get", "start", "stop"), workers = NULL, makeCluster = .makeCluster, ..., debug = isTRUE(getOption("future.debug"))) {
     action <- match.arg(action, choices = c("get", "start", "stop"))
     
     if (debug) {
@@ -389,14 +418,10 @@ ClusterRegistry <- local({
       stopf("Unknown mode of argument 'workers': %s", mode(workers))
     }
 
-    if (length(cluster) == 0L && action != "stop") {
-      if (debug) mdebug_push("makeCluster(workers, ...) ...")
-      cluster <<- makeCluster(workers, ...)
+    if (!is.null(workers) && length(cluster) == 0L && action != "stop") {
+      if (debug) mdebug("No existing cluster found")
+      cluster <<- startCluster(workers, makeCluster = makeCluster, ..., debug = debug)
       last <<- workers
-      if (debug) {
-        mprint(cluster)
-        mdebug_pop("makeCluster(workers, ...) ... done")
-      }
     }
 
     if (action == "get") {
@@ -406,14 +431,11 @@ ClusterRegistry <- local({
       if (debug) mdebug_push("Starting cluster ...")
       ## Already setup?
       if (!identical(workers, last)) {
+        if (debug) mdebug("Stopping current cluster")
         ClusterRegistry(action = "stop", debug = debug)
-        if (debug) mdebug_push("makeCluster(workers, ...) ...")
-        cluster <<- makeCluster(workers, ...)
+        if (debug) mdebug("Starting new cluster")
+        cluster <<- startCluster(workers, makeCluster = makeCluster, ..., debug = debug)
         last <<- workers
-        if (debug) {
-          mprint(cluster)
-          mdebug_pop("makeCluster(workers, ...) ... done")
-        }
       } else {
         if (debug) mdebug("Already started")
       }
