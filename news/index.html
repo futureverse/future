@@ -23,7 +23,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">future</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.34.0-9317</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.34.0-9318</span>
       </span>
     </div>
 
@@ -162,6 +162,11 @@
     <div class="section level2">
 <h2 class="page-header" data-toc-text="development version" id="version-development-version">Version (development version)<a class="anchor" aria-label="anchor" href="#version-development-version"></a></h2>
 <div class="section level3">
+<h3 id="significant-changes-development-version">Significant Changes<a class="anchor" aria-label="anchor" href="#significant-changes-development-version"></a></h3>
+<ul><li>
+<code><a href="../reference/plan.html">plan()</a></code> skips setting a new strategy if the exact same has already been set. Previously, the default was not to skip.</li>
+</ul></div>
+<div class="section level3">
 <h3 id="new-features-development-version">New Features<a class="anchor" aria-label="anchor" href="#new-features-development-version"></a></h3>
 <ul><li><p>Add <code><a href="../reference/plan.html">localPlan()</a></code> and <code><a href="../reference/plan.html">withPlan()</a></code> functions for evaluating an expression, including futures, using a temporary future plan.</p></li>
 <li><p>Add <code><a href="../reference/interrupt.html">interrupt()</a></code>, which interrupts a future, if the parallel backend supports it, otherwise it is silently ignored. It can also be used on a container (i.e. lists, <code>listenv</code>:s and environment) of futures.</p></li>
@@ -173,11 +178,11 @@
 <li><p>Add <code><a href="../reference/future.html">minifuture()</a></code>, which is like <code><a href="../reference/future.html">future()</a></code>, but with different default arguments resulting in less overhead with the added burden of having to specify globals and packages, not having conditions and standard output relayed, and ignoring random number generation.</p></li>
 <li><p>Interrupted futures are now handled and produce an informative error.</p></li>
 <li><p>Timeout errors triggered by <code><a href="https://rdrr.io/r/base/setTimeLimit.html" class="external-link">setTimeLimit()</a></code> are now relayed.</p></li>
+<li><p>Failures to launch a future is not detected, handled, and relayed as an error with details on why it failed.</p></li>
 <li><p>All parallel backends now prevent nested parallelization, unless explicitly allowed, e.g. settings recognized by <code><a href="https://parallelly.futureverse.org/reference/availableCores.html" class="external-link">parallelly::availableCores()</a></code> or set by the future <code><a href="../reference/plan.html">plan()</a></code>. Previously, this had to be implemented by each backend, but now it’s handled automatically by the future framework.</p></li>
 <li><p>Add new FutureBackend API for writing future backends.</p></li>
 <li><p>Added argument <code>maxSizeOfObjects</code> to <code><a href="../reference/future.html">future()</a></code>, which controls the maximum total size of objects send to and from the worker. The default value can be controlled when setting up the future backend, e.g. <code>plan(multisession, maxSizeOfObjects = 1000^3)</code>.</p></li>
 <li><p>The default value <code>maxSizeOfObjects</code> is now configured per backend, and if not set there, by R option <code>future.globals.maxSize</code> (sic!). Backends <code>sequential</code> and <code>multicore</code> has no such limit, i.e. <code>maxSizeOfObjects = +Inf</code>.</p></li>
-<li><p>Failures to launch a future is not detected, handled, and relayed as an error with details on why it failed.</p></li>
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-development-version">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h3>
