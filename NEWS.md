@@ -1,5 +1,10 @@
 # Version (development version)
 
+## Significant Changes
+
+ * `plan()` skips setting a new strategy if the exact same has already
+   been set. Previously, the default was not to skip.
+
 ## New Features
 
  * Add `localPlan()` and `withPlan()` functions for evaluating an
@@ -46,6 +51,9 @@
 
  * Timeout errors triggered by `setTimeLimit()` are now relayed.
  
+ * Failures to launch a future is not detected, handled, and relayed
+   as an error with details on why it failed.
+
  * All parallel backends now prevent nested parallelization, unless
    explicitly allowed, e.g. settings recognized by
    `parallelly::availableCores()` or set by the future
@@ -64,9 +72,6 @@
    Backends `sequential` and `multicore` has no such limit, i.e.
    `maxSizeOfObjects = +Inf`.
    
- * Failures to launch a future is not detected, handled, and relayed
-   as an error with details on why it failed.
-
 ## Bug Fixes
 
  * Now 'interrupt' conditions are captured during the evaluation of

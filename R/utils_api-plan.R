@@ -75,7 +75,7 @@
   plan_cleanup <- function(evaluator, cleanup = NA, debug = FALSE) {
     if (debug) {
       mdebugf_push("plan(): plan_cleanup(%s, cleanup = %s) ...", commaq(class(evaluator)), cleanup)
-      on.exit(mdebugf_push("plan(): plan_cleanup(%s, cleanup = %s) ... done", commaq(class(evaluator)), cleanup))
+      on.exit(mdebugf_pop("plan(): plan_cleanup(%s, cleanup = %s) ... done", commaq(class(evaluator)), cleanup))
     }
     
     ## Nothing to do?
@@ -94,7 +94,7 @@
       cleanup_fcn()
     } else if (is.null(cleanup_fcn)) {
       ## Backward compatibility for future (<= 1.33.2)
-      ClusterRegistry(action = "stop")
+      ClusterRegistry(action = "stop", debug = isTRUE(getOption("future.debug")))
     } else {
       stop(FutureError(sprintf("Unknown type of 'cleanup' attribute on current future strategy: %s", commaq(class(cleanup_fcn)))))
     }
@@ -336,7 +336,7 @@ plan <- local({
 
 
   ## Main function
-  function(strategy = NULL, ..., substitute = TRUE, .skip = FALSE, .call = TRUE,
+  function(strategy = NULL, ..., substitute = TRUE, .skip = TRUE, .call = TRUE,
            .cleanup = NA, .init = TRUE) {
     if (substitute) strategy <- substitute(strategy)
     if (is.logical(.skip)) stop_if_not(length(.skip) == 1L, !is.na(.skip))
