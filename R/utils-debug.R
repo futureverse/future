@@ -14,8 +14,13 @@ debug_indent <- local({
       depth <<- depth + 1L
     } else if (delta < 0) {
       depth <<- depth - 1L
+      if (depth < 0L) {
+        calls <- paste(vapply(sys.calls(), FUN = deparse, FUN.VALUE = NA_character_), collapse = " -> ")
+        warning(sprintf("[INTERNAL WARNING]: There appears to be one mdebug_pop() too many: %s", calls), call. = TRUE, immediate. = TRUE)
+        depth <- 0L
+      }
     }
-    prefix <<- paste(paste(symbols[seq_len(depth)], " "), collapse = "")
+    prefix <<- if (depth == 0) "" else paste(paste(symbols[seq_len(depth)], " "), collapse = "")
   }
 })
 
@@ -39,7 +44,7 @@ mdebugf_push <- function(..., debug = isTRUE(getOption("future.debug"))) {
 
 mdebugf_pop <- function(..., debug = isTRUE(getOption("future.debug"))) {
   if (!debug) return()
-  debug_indent(-1)
+  prefix <- debug_indent(-1)
   mdebugf(..., debug = debug)
 }
 

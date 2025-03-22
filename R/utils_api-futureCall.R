@@ -21,7 +21,7 @@ futureCall <- function(FUN, args = list(), envir = parent.frame(), lazy = FALSE,
   stop_if_not(is.list(args))
 
   debug <- isTRUE(getOption("future.debug"))  
-  if (debug) mdebug("futureCall() ...")
+  if (debug) mdebug_push("futureCall() ...")
   
   ## NOTE TO SELF: We'd ideally have an 'envir' argument also for
   ## futureCall(), cf. future().  However, it's not yet clear to me how
@@ -41,7 +41,7 @@ futureCall <- function(FUN, args = list(), envir = parent.frame(), lazy = FALSE,
   if (is.logical(globals)) {
     ## Gather all globals?
     if (globals) {
-      if (debug) mdebug("Finding globals ...")
+      if (debug) mdebug_push("Finding globals ...")
       onReference <- getOption("future.globals.onReference")
       if (is.null(onReference)) onReference <- "ignore"
 #      expr <- do.call(call, args = c(list("FUN"), list(...)))
@@ -51,9 +51,9 @@ futureCall <- function(FUN, args = list(), envir = parent.frame(), lazy = FALSE,
       gp <- NULL
       
       if (debug) {
-        mdebugf(" - globals found: [%d] %s", length(globals), hpaste(sQuote(names(globals))))
-        mdebugf(" - needed namespaces: [%d] %s", length(packages), hpaste(sQuote(packages)))
-        mdebug("Finding globals ... DONE")
+        mdebugf("globals found: [%d] %s", length(globals), hpaste(sQuote(names(globals))))
+        mdebugf("needed namespaces: [%d] %s", length(packages), hpaste(sQuote(packages)))
+        mdebug_pop("Finding globals ... DONE")
       }
     } else {
       ## globals = FALSE
@@ -98,7 +98,7 @@ futureCall <- function(FUN, args = list(), envir = parent.frame(), lazy = FALSE,
 
   f <- future(expr, substitute = FALSE, envir = envir, lazy = lazy, seed = seed, globals = globals, packages = packages, stdout = stdout, conditions = conditions, earlySignal = earlySignal, label = label, gc = gc, ...)
 
-  if (debug) mdebug("futureCall() ... DONE")
+  if (debug) mdebug_pop("futureCall() ... DONE")
   
   f
 }

@@ -101,8 +101,7 @@
     if (identical(init, TRUE)) {
       debug <- isTRUE(getOption("future.debug"))
       if (debug) {
-        mdebugf("plan(): plan_init() of %s ...",
-                commaq(class(evaluator)))
+        mdebugf_push("plan(): plan_init() of %s ...", commaq(class(evaluator)))
         mprint(evaluator)
       }
 
@@ -137,10 +136,7 @@
         }
       }
       
-      if (debug) {
-        mdebugf("plan(): plan_init() of %s ... DONE",
-                commaq(class(evaluator)))
-      }
+      if (debug) mdebugf_pop("plan(): plan_init() of %s ... DONE", commaq(class(evaluator)))
     }
     
     evaluator

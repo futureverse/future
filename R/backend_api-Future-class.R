@@ -416,9 +416,9 @@ assertOwner <- local({
 run.Future <- function(future, ...) {
   debug <- isTRUE(getOption("future.debug"))
   if (debug) {
-    mdebugf("run() for Future (%s) ...", sQuote(class(future)[1]))
-    mdebug("- state: ", sQuote(future[["state"]]))
-    on.exit(mdebugf("run() for Future (%s) ... done", sQuote(class(future)[1])), add = TRUE)
+    mdebugf_push("run() for Future (%s) ...", sQuote(class(future)[1]))
+    mdebug("state: ", sQuote(future[["state"]]))
+    on.exit(mdebugf_pop("run() for Future (%s) ... done", sQuote(class(future)[1])), add = TRUE)
   }
 
   if (future[["state"]] != "created") {
@@ -446,11 +446,13 @@ run.Future <- function(future, ...) {
 
   ## Create temporary future for a specific backend, but don't launch it
   evaluator <- plan("next")
-  if (debug) mdebug("- Future backend: ", commaq(class(evaluator)))
+  if (debug) mdebug("Future backend: ", commaq(class(evaluator)))
 
   ## Implements a FutureBackend?
   backend <- makeFutureBackend(evaluator)
   if (!is.null(backend)) {
+    if (debug) mdebug_push("Using FutureBackend ...")
+    
     ## Assert that the process that created the future is
     ## also the one that evaluates/resolves/queries it.
     assertOwner(future)
@@ -469,12 +471,12 @@ run.Future <- function(future, ...) {
     ## Protect against  exporting too large objects
     globals <- future[["globals"]]
     if (length(globals) > 0) {
-      if (debug) mdebug(" - Checking size limitations of globals ...")
+      if (debug) mdebug_push("Checking size limitations of globals ...")
       
       ## (i) Maximum allowed total size of globals
       maxSizeOfObjects <- future[["maxSizeOfObjects"]]
 
-      if (debug) mdebugf("   - Total size of globals allowed: %.2g bytes", maxSizeOfObjects)
+      if (debug) mdebugf("Total size of globals allowed: %.2g bytes", maxSizeOfObjects)
       
       ## (ii) Calculate the total size of globals, if needed
       total_size <- attr(globals, "total_size")
@@ -490,9 +492,9 @@ run.Future <- function(future, ...) {
 
       if (debug) {
         if (is.finite(total_size)) {
-          mdebugf("   - Total size of globals: %s", asIEC(total_size))
+          mdebugf("Total size of globals: %s", asIEC(total_size))
         } else {
-          mdebug("   - Total size of globals: <skipped per backend>")
+          mdebug("Total size of globals: <skipped per backend>")
         }
       }
 
@@ -510,17 +512,17 @@ run.Future <- function(future, ...) {
         if (debug) mdebug(msg)
         if (total_size > maxSizeOfObjects) stop(FutureError(msg, future = future))
       }          
-      if (debug) mdebug(" - Checking size limitations of globals ... DONE")
+      if (debug) mdebug_pop("Checking size limitations of globals ... done")
     } ## if (length(globals) > 0)
 
 
-    if (debug) mdebug(" - Launching futures ...")
+    if (debug) mdebug_push("Launching futures ...")
     future[["backend"]] <- backend
     future2 <- launchFuture(backend, future = future)
-    if (debug) mdebug(" - Launching futures ... done")
-    if (debug) mdebug(" - Future launched: ", commaq(class(future2)))
+    if (debug) mdebug_pop("Launching futures ... done")
+    if (debug) mdebug("Future launched: ", commaq(class(future2)))
     stop_if_not(inherits(future2, "Future"))
-    if (debug) mdebug("Using FutureBackend ... DONE")
+    if (debug) mdebug_pop("Using FutureBackend ... done")
     
     return(future2)
   }
@@ -558,7 +560,7 @@ run.Future <- function(future, ...) {
     }
   }
 
-  if (debug) mdebug("- Future class: ", commaq(class(tmpFuture)))
+  if (debug) mdebug("Future class: ", commaq(class(tmpFuture)))
 
   ## AD HOC/SPECIAL:
   ## If 'earlySignal=TRUE' was set explicitly when creating the future,
@@ -573,13 +575,13 @@ run.Future <- function(future, ...) {
   ## This can be done because Future:s are environments and we can even
   ## assign attributes such as the class to existing environments
   
-  if (debug) mdebugf("- Copy elements of temporary %s to final %s object ...", sQuote(class(tmpFuture)[1]), sQuote(class(future)[1]))
+  if (debug) mdebugf_push("Copy elements of temporary %s to final %s object ...", sQuote(class(tmpFuture)[1]), sQuote(class(future)[1]))
   ## (a) Copy all elements
   for (name in names(tmpFuture)) {
-    if (debug) mdebug("  - Field: ", sQuote(name))
+    if (debug) mdebug("Field: ", sQuote(name))
     future[[name]] <- tmpFuture[[name]]
   }
-  if (debug) mdebugf("- Copy elements of temporary %s to final %s object ... done", sQuote(class(tmpFuture)[1]), sQuote(class(future)[1]))
+  if (debug) mdebugf_pop("Copy elements of temporary %s to final %s object ... done", sQuote(class(tmpFuture)[1]), sQuote(class(future)[1]))
   ## (b) Copy all attributes
   attributes(future) <- attributes(tmpFuture)
 
@@ -588,9 +590,9 @@ run.Future <- function(future, ...) {
 
   ## Launch the future?
   if (future[["lazy"]]) {
-    if (debug) mdebug("- Launch lazy future ...")
+    if (debug) mdebug_push("Launch lazy future ...")
     future <- run(future)
-    if (debug) mdebug("- Launch lazy future ... done")
+    if (debug) mdebug_pop("Launch lazy future ... done")
   }
 
   ## Set FutureBackend, if it exists
@@ -725,25 +727,25 @@ result.Future <- function(future, ...) {
 resolved.Future <- function(x, run = TRUE, ...) {
   debug <- isTRUE(getOption("future.debug"))
   if (debug) {
-    mdebug("resolved() for ", sQuote(class(x)[1]), " ...")
-    on.exit(mdebug("resolved() for ", sQuote(class(x)[1]), " ... done"), add = TRUE)
-    mdebug("- state: ", sQuote(x[["state"]]))
-    mdebug("- run: ", run)
+    mdebug_push("resolved() for ", sQuote(class(x)[1]), " ...")
+    on.exit(mdebug_pop("resolved() for ", sQuote(class(x)[1]), " ... done"))
+    mdebug("state: ", sQuote(x[["state"]]))
+    mdebug("run: ", run)
   }
   
   ## A lazy future not even launched?
   if (x[["state"]] == "created") {
     if (!run) return(FALSE)
-    if (debug) mdebug("- run() ...")
+    if (debug) mdebug_push("run() ...")
     x <- run(x)
     if (debug) {
-      mdebug("- run() ... done")
-      mdebug("- resolved() ...")
+      mdebug_pop("run() ... done")
+      mdebug_push("resolved() ...")
     }
     res <- resolved(x, ...)
     if (debug) {
-      mdebug("- resolved: ", res)
-      mdebug("- resolved() ... done")
+      mdebug("resolved: ", res)
+      mdebug_pop("resolved() ... done")
     }
     return(res)
   }
@@ -752,12 +754,12 @@ resolved.Future <- function(x, run = TRUE, ...) {
   ## Note, collect = TRUE will block here, which is intentional
   signalEarly(x, collect = TRUE, ...)
 
-  if (debug) mdebug("- result: ", sQuote(class(x[["result"]])[1]))
+  if (debug) mdebug("result: ", sQuote(class(x[["result"]])[1]))
   if (inherits(x[["result"]], "FutureResult")) return(TRUE)
   
   res <- (x[["state"]] %in% c("finished", "failed", "interrupted"))
 
-  if (debug) mdebug("- resolved: ", res)
+  if (debug) mdebug("resolved: ", res)
 
   res
 }
@@ -768,8 +770,8 @@ resolved.Future <- function(x, run = TRUE, ...) {
 getFutureCore <- function(future, ..., debug = isTRUE(getOption("future.debug"))) {
   stop_if_not(inherits(future, "Future"))
   if (debug) {
-    mdebug("getFutureCore() ...")
-    on.exit(mdebug("getFutureCore() ... DONE"))
+    mdebug_push("getFutureCore() ...")
+    on.exit(mdebug_pop("getFutureCore() ... done"))
   }
 
   ## Globals used by the future
@@ -798,8 +800,8 @@ getFutureCore <- function(future, ..., debug = isTRUE(getOption("future.debug"))
 getFutureCapture <- function(future, ..., debug = isTRUE(getOption("future.debug"))) {
   stop_if_not(inherits(future, "Future"))
   if (debug) {
-    mdebug("getFutureCapture() ...")
-    on.exit(mdebug("getFutureCapture() ... DONE"))
+    mdebug_push("getFutureCapture() ...")
+    on.exit(mdebug_pop("getFutureCapture() ... done"))
   }
 
   split <- future[["split"]]
@@ -837,8 +839,8 @@ getFutureCapture <- function(future, ..., debug = isTRUE(getOption("future.debug
 getFutureContext <- function(future, mc.cores = NULL, local = TRUE, ..., debug = isTRUE(getOption("future.debug"))) {
   stop_if_not(inherits(future, "Future"))
   if (debug) {
-    mdebug("getFutureContext() ...")
-    on.exit(mdebug("getFutureContext() ... DONE"))
+    mdebug_push("getFutureContext() ...")
+    on.exit(mdebug_pop("getFutureContext() ... done"))
   }
 
   backend <- future[["backend"]]
@@ -925,8 +927,8 @@ getFutureBackendConfigs <- function(future, ...) {
 
 getFutureData <- function(future, ..., debug = isTRUE(getOption("future.debug"))) {
   if (debug) {
-    mdebug("getFutureData() ...")
-    on.exit(mdebug("getFutureData() ..."))
+    mdebug_push("getFutureData() ...")
+    on.exit(mdebug_pop("getFutureData() ... done"))
   }
 
   args <- list(...)

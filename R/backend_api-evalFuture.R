@@ -8,9 +8,9 @@ FutureEvalError <- function(...) {
 attachPackages <- function(packages) {
   debug <- isTRUE(getOption("future.debug"))
   if (debug) {
-    mdebug("attachPackages() ...")
-    mdebugf(" - packages: [n=%d] %s", length(packages), commaq(packages))
-    on.exit(mdebug("attachPackages() ... DONE"))
+    mdebug_push("attachPackages() ...")
+    mdebugf("packages: [n=%d] %s", length(packages), commaq(packages))
+    on.exit(mdebug_pop("attachPackages() ... DONE"))
   }
   
   ## Nothing to do?
@@ -82,12 +82,12 @@ canForceSingleThreading <- local({
   function() {
     debug <- isTRUE(getOption("future.debug"))
     if (debug) {
-      mdebug("canForceSingleThreading() ...")
-      on.exit(mdebug("canForceSingleThreading() ... DONE"))
+      mdebug_push("canForceSingleThreading() ...")
+      on.exit(mdebug_pop("canForceSingleThreading() ... DONE"))
     }
     
     if (!is.null(.cache)) {
-      if (debug) mdebugf(" - results: %s (memoized)", .cache)
+      if (debug) mdebugf("results: %s (memoized)", .cache)
       return(.cache)
     }
 
@@ -103,7 +103,7 @@ canForceSingleThreading <- local({
       }
     }
 
-    if (debug) mdebugf(" - results: %s", ans)
+    if (debug) mdebugf("results: %s", ans)
 
     .cache <<- ans
     ans
@@ -114,8 +114,8 @@ canForceSingleThreading <- local({
 setNumberOfThreads <- function(openmp = NA_integer_, rcpp = openmp) {
   debug <- isTRUE(getOption("future.debug"))
   if (debug) {
-    mdebug("setNumberOfThreads() ...")
-    on.exit(mdebug("setNumberOfThreads() ... DONE"))
+    mdebug_push("setNumberOfThreads() ...")
+    on.exit(mdebug_pop("setNumberOfThreads() ... DONE"))
   }
   
   if (is.list(openmp)) {
@@ -132,7 +132,7 @@ setNumberOfThreads <- function(openmp = NA_integer_, rcpp = openmp) {
     args <- unlist(new_threads)
     args <- sprintf("%s=%s", names(args), args)
     args <- paste(args, collapse = ", ")
-    mdebug(" - arguments: ", args)
+    mdebug("arguments: ", args)
   }
 
   old_threads <- list(
@@ -184,12 +184,12 @@ setNumberOfThreads <- function(openmp = NA_integer_, rcpp = openmp) {
     args <- unlist(old_threads)
     args <- sprintf("%s=%s", names(args), args)
     args <- paste(args, collapse = ", ")
-    mdebug(" - previous settings: ", args)
+    mdebug("previous settings: ", args)
     
     args <- unlist(curr_threads)
     args <- sprintf("%s=%s", names(args), args)
     args <- paste(args, collapse = ", ")
-    mdebug(" - new settings: ", args)
+    mdebug("new settings: ", args)
   }
 
   invisible(old_threads)

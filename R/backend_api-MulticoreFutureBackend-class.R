@@ -156,7 +156,10 @@ requestCore <- function(await, workers = availableCores(), timeout = getOption("
   stop_if_not(is.finite(alpha), alpha > 0)
 
   debug <- isTRUE(getOption("future.debug"))
-  if (debug) mdebugf("requestCore(): workers = %d", workers)
+  if (debug) {
+    mdebugf_push("requestCore(..., workers = %d) ...", workers)
+    on.exit(mdebugf_pop("requestCore(..., workers = %d) ...", workers))
+  }
 
   ## No additional cores available?
   if (workers == 0L) {
@@ -249,6 +252,12 @@ launchFuture.MulticoreFutureBackend <- local({
   
   function(backend, future, ...) {
     debug <- isTRUE(getOption("future.debug"))
+
+    debug <- isTRUE(getOption("future.debug"))
+    if (debug) {
+      mdebug_push("launchFuture() for MulticoreFutureBackend ...")
+      on.exit(mdebug_pop("launchFuture() for MulticoreFutureBackend ..."))
+    }
 
     hooks <- backend[["hooks"]]
     if (hooks) {
@@ -404,8 +413,8 @@ result.MulticoreFuture <- local({
   function(future, ...) {
     debug <- isTRUE(getOption("future.debug"))
     if (debug) {
-      mdebugf("result() for %s ...", class(future)[1])
-      on.exit(mdebugf("result() for %s ... done", class(future)[1]))
+      mdebugf_push("result() for %s ...", class(future)[1])
+      on.exit(mdebugf_pop("result() for %s ... done", class(future)[1]))
     }
   
     ## Has the result already been collected?
@@ -448,7 +457,8 @@ result.MulticoreFuture <- local({
 
     ## Sanity checks
     if (!inherits(result, "FutureResult")) {
-      if (debug) mdebugf("Detected non-FutureResult result ...")
+      if (debug) mdebugf_push("Detected non-FutureResult result ...")
+
       alive <- NA
       pid <- job[["pid"]]
       if (is.numeric(pid)) {
@@ -468,7 +478,7 @@ result.MulticoreFuture <- local({
         if (is.null(label)) label <- "<none>"
 
         if (future[["state"]] == "interrupted") {
-          if (debug) mdebugf("- Detected interrupted %s whose result cannot be retrieved", sQuote(class(future)[1]))
+          if (debug) mdebugf("Detected interrupted %s whose result cannot be retrieved", sQuote(class(future)[1]))
           msg <- sprintf("A future ('%s') of class %s was interrupted, while running on localhost (pid %d)", label, class(future)[1], pid)
           result <- FutureInterruptError(msg, future = future)
           future[["result"]] <- result
@@ -477,8 +487,10 @@ result.MulticoreFuture <- local({
           backend <- future[["backend"]]
           reg <- backend[["reg"]]
           FutureRegistry(reg, action = "remove", future = future, earlySignal = FALSE)
-          if (debug) mdebug("- Erased future from future backend")
-
+          if (debug) {
+            mdebug("Erased future from future backend")
+            mdebugf_pop("Detected non-FutureResult result ... done")
+          }
           stop(result)
         }
 
@@ -519,8 +531,7 @@ result.MulticoreFuture <- local({
         }
         msg <- paste(msg, collapse = ". ")
         
-        ex <- FutureError(msg, future = future)
-  
+        ex <- FutureError(msg, future = future) 
       } else {
         ## FIXME: Add more details
         hint <- sprintf("parallel::mccollect() did not return a FutureResult object as expected. Received a %s object instead: %s", sQuote(class(result)[1]), paste(deparse(result), collapse = "; "))
@@ -538,8 +549,8 @@ result.MulticoreFuture <- local({
           FutureRegistry(reg, action = "remove", future = future, earlySignal = TRUE)
         }
       }
-  
-      if (debug) mdebugf("Detected non-FutureResult result ... done")
+      
+      if (debug) mdebugf_pop("Detected non-FutureResult result ... done")
   
       stop(ex)
     }
@@ -593,7 +604,7 @@ getFutureBackendConfigs.MulticoreFuture <- function(future, ..., debug = isTRUE(
   if (isFALSE(multithreading)) {
     if (supports_omp_threads(assert = TRUE, debug = debug)) {
       threads <- 1L
-      if (debug) mdebugf("- Force single-threaded (OpenMP and RcppParallel) processing in %s", class(future)[1])
+      if (debug) mdebugf("Force single-threaded (OpenMP and RcppParallel) processing in %s", class(future)[1])
     } else {
       warning(FutureWarning("It is not possible to disable OpenMP multi-threading on this systems", future = future))
     }

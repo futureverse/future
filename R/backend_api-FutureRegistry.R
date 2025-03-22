@@ -8,17 +8,26 @@ FutureRegistry <- local({
     NA_integer_
   }
 
-  collectValues <- function(where, futures, firstOnly = TRUE) {
+  collectValues <- function(where, futures, firstOnly = TRUE, debug = FALSE) {
+    if (debug) {
+      mdebugf_push("collectValues('%s', firstOnly = %s) ...", where, firstOnly)
+      on.exit(mdebugf_pop("collectValues('%s', firstOnly = %s) ... done", where, firstOnly))
+    }
+
     for (ii in seq_along(futures)) {
       future <- futures[[ii]]
 
       ## Is future even launched?
-      if (future[["state"]] == "created") next
+      if (future[["state"]] == "created") {
+        if (debug) mdebugf("Skipping non-launched future at position #%d", ii)
+        next
+      }
 
       ## NOTE: It is when calling resolved() on a future with
       ##       early signaling is enabled that conditioned
       ##       may be signaled.
       if (resolved(future, run = FALSE, .signalEarly = FALSE)) {
+        if (debug) mdebugf_push("Future at position #%d is resolved ...", ii)
         ## (a) Let future cleanup after itself, iff needed.
         ##     This, this may result in a call to
         ##     FutureRegistry(..., action = "remove").
@@ -30,6 +39,7 @@ FutureRegistry <- local({
           message(sprintf("*** Caught %s:", class(ex)[1]))
           message(sprintf("*** %s", conditionMessage(ex)))
           message("********************************************")
+          if (debug) mdebugf_pop("Future at position #%d is resolved ... done", ii)
           stop(ex)
         }, FutureError = function(ex) {
           message("********************************************")
@@ -37,6 +47,7 @@ FutureRegistry <- local({
           message(sprintf("*** Caught %s:", class(ex)[1]))
           message(sprintf("*** %s", conditionMessage(ex)))
           message("********************************************")
+          if (debug) mdebugf_pop("Future at position #%d is resolved ... done", ii)
           stop(ex)
         })
 
@@ -50,7 +61,13 @@ FutureRegistry <- local({
         }
 
         ## (c) Collect only the first resolved future?
-        if (firstOnly) break
+        if (firstOnly) {
+          if (debug) mdebugf_pop("Future at position #%d is resolved ... done", ii)
+          break
+        }
+        if (debug) mdebugf_pop("Future at position #%d is resolved ... done", ii)
+      } else {
+        if (debug) mdebugf("Future at position #%d is not resolved", ii)
       }
     } ## for (ii ...)
 
@@ -58,55 +75,76 @@ FutureRegistry <- local({
   } ## collectValues()
 
 
-  function(where, action = c("add", "remove", "list", "contains", "collect-first", "collect-all", "reset"), future = NULL, earlySignal = TRUE, ...) {
+  function(where, action = c("add", "remove", "list", "contains", "collect-first", "collect-all", "reset"), future = NULL, earlySignal = TRUE, ..., debug = FALSE) {
     stop_if_not(length(where) == 1, nzchar(where))
+
+    if (debug) {
+      mdebugf_push("FutureRegistry('%s', action = '%s', earlySignal = %d) ...", where, action, earlySignal)
+      on.exit(mdebugf_pop("FutureRegistry('%s', action = '%s', earlySignal = %d) ... done", where, action, earlySignal))
+    }
+
     futures <- db[[where]]
 
     ## Automatically create?
     if (is.null(futures)) {
       futures <- list()
       db[[where]] <<- futures
+      if (debug) mdebugf("Created empty registry %s", sQuote(where))
     }
 
     if (action == "add") {
       idx <- indexOf(futures, future = future)
       if (!is.na(idx)) {
-        msg <- sprintf("Cannot add to %s registry. %s is already registered.", sQuote(where), class(future)[1])
-        mdebug("ERROR: ", msg)
+        msg <- sprintf("INTERNAL ERROR: Cannot add to %s registry. %s is already registered.", sQuote(where), class(future)[1])
+        if (debug) mdebug(msg)
         stop(FutureError(msg, future = future))
       }
       futures[[length(futures)+1L]] <- future
       db[[where]] <<- futures
+      if (debug) mdebugf("Appended future to position #%d", length(futures))
     } else if (action == "contains") {
       idx <- indexOf(futures, future = future)
+      if (debug) {
+        if (is.na(idxs)) {
+          mdebug("Future does not exist")
+        } else {
+          mdebug("Future exists at position #%d", idx)
+        }
+      }
       return(!is.na(idx))
     } else if (action == "remove") {
       idx <- indexOf(futures, future = future)
       if (is.na(idx)) {
-        msg <- sprintf("Cannot remove from %s registry. %s not registered.", sQuote(where), class(future)[1])
-        mdebug("ERROR: ", msg)
+        msg <- sprintf("INTERNAL ERROR: Cannot remove from %s registry. %s not registered.", sQuote(where), class(future)[1])
+        if (debug) mdebug(msg)
         stop(FutureError(msg, future = future))
       }
       futures[[idx]] <- NULL
       db[[where]] <<- futures
+      if (debug) mdebugf("Removed future from position #%d", idx)
     } else if (action == "collect-first") {
-      collectValues(where, futures = futures, firstOnly = TRUE)
+      collectValues(where, futures = futures, firstOnly = TRUE, debug = debug)
     } else if (action == "collect-all") {
-      collectValues(where, futures = futures, firstOnly = FALSE)
+      collectValues(where, futures = futures, firstOnly = FALSE, debug = debug)
     } else if (action == "reset") {
       db[[where]] <<- list()
+      if (debug) mdebug("Erased registry")
     } else if (action == "list") {
+      if (debug) mdebug("Listing all futures")
     } else {
       msg <- sprintf("INTERNAL ERROR: Unknown action to %s registry: %s", sQuote(where), action)
-      mdebug(msg)
+      if (debug) mdebug(msg)
       stop(FutureError(msg, future = future))
     }
 
     ## Early signaling of conditions?
     if (earlySignal && length(futures) > 0L) {
+      if (debug) mdebugf("Early signalling of %d future candidates ...", length(futures))
       ## Which futures have early signaling enabled?
       idxs <- lapply(futures, FUN = function(f) f[["earlySignal"]])
       idxs <- which(unlist(idxs, use.names = FALSE))
+
+      if (debug) mdebugf("Number of futures with early signalling requested: %d", length(idxs))
 
       ## Any futures to be scanned for early signaling?
       if (length(idxs) > 0) {
@@ -114,8 +152,10 @@ FutureRegistry <- local({
         ## calls to resolved().
         collectValues(where, futures = futures[idxs], firstOnly = FALSE)
       }
+      if (debug) mdebugf("Early signalling of %d future candidates ... done", length(futures))
     }
 
+    if (debug) mdebugf("Number of registered futures: %d", length(futures))
     futures
   }
 })
