@@ -1,10 +1,5 @@
 # Version (development version)
 
-## Significant Changes
-
- * `plan()` skips setting a new strategy if the exact same has already
-   been set. Previously, the default was not to skip.
-
 ## New Features
 
  * Add `localPlan()` and `withPlan()` functions for evaluating an
