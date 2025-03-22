@@ -82,6 +82,13 @@ ClusterFutureBackend <- local({
   getDefaultCluster <- import_parallel_fcn("getDefaultCluster")
   
     function(workers = availableWorkers(), persistent = FALSE, gc = TRUE, earlySignal = TRUE, ...) {
+    debug <- isTRUE(getOption("future.debug"))
+
+    if (debug) {
+      mdebugf_push("ClusterFutureBackend(..., persistent = %s, gc = %s, earlySignal = %s) ...", persistent, gc, earlySignal)
+      on.exit(mdebugf_pop("ClusterFutureBackend(..., persistent = %s, gc = %s, earlySignal = %s) ... done", persistent, gc, earlySignal))
+    }
+    
     if (is.function(workers)) workers <- workers()
     if (is.null(workers)) {
       workers <- getDefaultCluster()
@@ -97,6 +104,7 @@ ClusterFutureBackend <- local({
     if (!inherits(workers, "cluster")) {
       stopf("Argument 'workers' is not of class 'cluster': %s", commaq(class(workers)))
     }
+    if (debug) mdebugf("Number of workers: %d", length(workers))
     stop_if_not(length(workers) > 0)
   
     ## Attached workers' session information, unless already done.
@@ -112,7 +120,9 @@ ClusterFutureBackend <- local({
       name <- digest(workers)
       stop_if_not(length(name) > 0, nzchar(name))
       attr(workers, "name") <- name
+      if (debug) mdebug("Generated workers UUID")
     }
+    if (debug) mdebugf("Workers UUID: %s", sQuote(name))
   
     ## Name of the FutureRegistry
     reg <- sprintf("workers-%s", name)
