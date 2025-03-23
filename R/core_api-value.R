@@ -575,6 +575,36 @@ value.list <- function(x, idxs = NULL, recursive = 0, reduce = NULL, stdout = TR
               mdebug("reduced: ", paste(reduced, collapse = ", "))
             }          
           }
+        } else {
+          if (relay) signalConditionsASAP(obj, resignal = FALSE, pos = ii)
+          value <- obj
+          resolved[ii] <- TRUE
+          x[ii] <- list(NULL)
+          values[ii] <- list(value)
+          
+          if (do_reduce) {
+            ## Reduce in order or out of order?
+            if (inorder) {
+              if (ii == reduced_until + 1L) {
+                if (reduced_init || reduced_until > 0L) {
+                  reduced_value <- reduce(reduced_value, value)
+                } else {
+                  reduced_value <- value
+                }
+                reduced[ii] <- TRUE
+                reduced_until <- ii
+                values[ii] <- list(NULL)
+                resolved[ii] <- TRUE
+                reduce_forward(from = ii + 1L)
+              }
+            } else {
+              reduce_forward(from = ii)
+              if (debug) mdebugf("reduced value: %s", deparse(reduced_value))
+            }
+            if (debug) {
+              mdebug("reduced: ", paste(reduced, collapse = ", "))
+            }          
+          }
         }
 
         relay_ok <- relay && signalConditionsASAP(obj, resignal = FALSE, exclude = "error", pos = ii)

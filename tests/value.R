@@ -129,12 +129,12 @@ for (strategy in strategies) {
       stopifnot(equals(y, truth))
 
       message(sprintf("      Containers: a named %s mixed with values and futures out of order", container))
-      truth <- list(a = 3, b = 2, c = 1, d = 3, e = 42)
+      truth <- list(a = 3, b = 2, c = 1, d = data.frame(a = 1, b = 2), e = 42)
       x <- list(
         a = future({ sleep(2); 3 }, lazy = lazy),
         b = future({ sleep(1); 2 }, lazy = lazy),
         c = future({                 1 }, lazy = lazy),
-        d = 3,
+        d = data.frame(a = 1, b = 2),
         e = 42
       )
       x <- coerce(x)
@@ -142,12 +142,12 @@ for (strategy in strategies) {
       stopifnot(equals(y, truth))
 
       message(sprintf("      Containers: a named %s mixed with values and futures dropped", container))
-      truth <- list(a = 3, b = 2, c = 1, d = 3, e = 42)
+      truth <- list(a = 3, b = 2, c = 1, d = data.frame(a = 1, b = 2), e = 42)
       x <- list(
         a = future({ sleep(2); 3 }, lazy = lazy),
         b = future({ sleep(1); 2 }, lazy = lazy),
         c = future({                 1 }, lazy = lazy),
-        d = 3,
+        d = data.frame(a = 1, b = 2),
         e = 42
       )
       x <- coerce(x)
