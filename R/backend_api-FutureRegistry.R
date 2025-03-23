@@ -34,21 +34,16 @@ FutureRegistry <- local({
         tryCatch({
           value(future, stdout = FALSE, signal = FALSE)
         }, FutureLaunchError = function(ex) {
-          message("********************************************")
-          message("***  HAPPEN IF FUTURE FAILED TO LAUNCH   ***")
-          message(sprintf("*** Caught %s:", class(ex)[1]))
-          message(sprintf("*** %s", conditionMessage(ex)))
-          message("********************************************")
           if (debug) mdebugf_pop("Future at position #%d is resolved ... done", ii)
           stop(ex)
         }, FutureError = function(ex) {
-          message("********************************************")
-          message("***         SHOULD NOT HAPPEN            ***")
-          message(sprintf("*** Caught %s:", class(ex)[1]))
-          message(sprintf("*** %s", conditionMessage(ex)))
-          message("********************************************")
           if (debug) mdebugf_pop("Future at position #%d is resolved ... done", ii)
-          stop(ex)
+          ## It is not always possible to detect when a future fails to
+          ## launch, e.g. there might be a broken Rprofile file that
+          ## produces an error. Here we take a liberal approach an assume
+          ## we can just drop the future with a warning.
+          msg <- sprintf("[FUTURE BACKEND FAILURE]: Caught %s with error message %s", class(ex)[1], conditionMessage(ex))
+          warning(msg, call. = TRUE, immediate. = TRUE)
         })
 
         ## (b) Make sure future is removed from registry, unless
