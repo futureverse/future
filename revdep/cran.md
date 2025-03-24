@@ -1,8 +1,8 @@
 ## revdepcheck results
 
-We checked 422 reverse dependencies (400 from CRAN + 22 from Bioconductor), comparing R CMD check results across CRAN and dev versions of this package.
+We checked 424 reverse dependencies (402 from CRAN + 22 from Bioconductor), comparing R CMD check results across CRAN and dev versions of this package.
 
- * We saw 5 new problems
+ * We saw 7 new problems
  * We failed to check 1 packages
 
 Issues with CRAN packages are summarised below.
@@ -14,17 +14,23 @@ Issues with CRAN packages are summarised below.
   checking whether package ‘bigDM’ can be installed ... WARNING
   checking Rd files ... WARNING
 
-* Certara.RsNLME.ModelExecutor
-  checking whether package ‘Certara.RsNLME.ModelExecutor’ can be installed ... WARNING
+* civis
+  checking installed package size ... NOTE
+
+* fmeffects
+  checking installed package size ... NOTE
 
 * future.tests
   checking tests ...
 
-* JANE
-  checking whether package ‘JANE’ can be installed ... WARNING
+* RTransferEntropy
+  checking installed package size ... NOTE
 
-* TKCat
-  checking whether package ‘TKCat’ can be installed ... WARNING
+* simtrial
+  checking installed package size ... NOTE
+
+* stacks
+  checking installed package size ... NOTE
 
 ### Failed to check
 
