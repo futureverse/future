@@ -26,7 +26,7 @@ queried futures are resolved."><meta property="og:image" content="https://future
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">future</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.34.0-9321</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.34.0-9322</span>
       </span>
     </div>
 
@@ -256,7 +256,7 @@ Optional attribute <code>init</code> can be used to set initial value for the
 reduction. If not specified, the first value will be used as the
 initial value.
 Reduction of values is done as soon as possible, but always in the
-same order as <code>x</code>.</p></dd>
+same order as <code>x</code>, unless <code>inorder</code> is FALSE.</p></dd>
 
 
 <dt id="arg-interrupt">interrupt<a class="anchor" aria-label="anchor" href="#arg-interrupt"></a></dt>
@@ -271,7 +271,8 @@ and value reduction, is done in the order the futures occur in <code>x</code>, b
 always as soon as possible. This is achieved by buffering the details
 until they can be released. By setting <code>inorder = FALSE</code>, no buffering
 takes place and everything is relayed and reduced as soon as a new future
-is resolved.</p></dd>
+is resolved. Regardlessly, the values are always returned in the same
+order as <code>x</code>.</p></dd>
 
 
 <dt id="arg-force">force<a class="anchor" aria-label="anchor" href="#arg-force"></a></dt>
@@ -298,9 +299,62 @@ Names and dimension attributes are preserved, if available.
 All future elements are replaced by their corresponding <code>value()</code> values.
 For all other elements, the existing object is kept as-is.</p>
 <p>If <code>signal</code> is TRUE and one of the futures produces an error, then
-that error is produced.</p>
+that error is relayed.</p>
     </div>
 
+    <div id="ref-examples">
+    <h2>Examples</h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">## ------------------------------------------------------</span></span></span>
+<span class="r-in"><span><span class="co">## A single future</span></span></span>
+<span class="r-in"><span><span class="co">## ------------------------------------------------------</span></span></span>
+<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fl">100</span>, size <span class="op">=</span> <span class="fl">50</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">f</span> <span class="op">&lt;-</span> <span class="fu"><a href="future.html">future</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">v</span> <span class="op">&lt;-</span> <span class="fu">value</span><span class="op">(</span><span class="va">f</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">message</a></span><span class="op">(</span><span class="st">"The average of 50 random numbers in [1,100] is: "</span>, <span class="va">v</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> The average of 50 random numbers in [1,100] is: 50</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## ------------------------------------------------------</span></span></span>
+<span class="r-in"><span><span class="co">## Ten futures</span></span></span>
+<span class="r-in"><span><span class="co">## ------------------------------------------------------</span></span></span>
+<span class="r-in"><span><span class="va">xs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">replicate</a></span><span class="op">(</span><span class="fl">10</span>, <span class="op">{</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fl">100</span>, size <span class="op">=</span> <span class="fl">50</span><span class="op">)</span><span class="op">)</span> <span class="op">}</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">fs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">xs</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span> <span class="fu"><a href="future.html">future</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span> <span class="op">}</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## The 10 values as a list (because 'fs' is a list)</span></span></span>
+<span class="r-in"><span><span class="va">vs</span> <span class="op">&lt;-</span> <span class="fu">value</span><span class="op">(</span><span class="va">fs</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">message</a></span><span class="op">(</span><span class="st">"The ten averages are:"</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> The ten averages are:</span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">vs</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> List of 10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ : num 48.8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ : num 50.7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ : num 48.6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ : num 54.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ : num 49.1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ : num 46.5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ : num 48.4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ : num 49.8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ : num 47.1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ : num 50.2</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## The 10 values as a vector (by manually unlisting)</span></span></span>
+<span class="r-in"><span><span class="va">vs</span> <span class="op">&lt;-</span> <span class="fu">value</span><span class="op">(</span><span class="va">fs</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">vs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="va">vs</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">message</a></span><span class="op">(</span><span class="st">"The ten averages are: "</span>, <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">vs</span>, collapse <span class="op">=</span> <span class="st">", "</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> The ten averages are: 48.84, 50.68, 48.56, 54.3, 49.1, 46.52, 48.42, 49.76, 47.12, 50.24</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## The values as a vector (by reducing)</span></span></span>
+<span class="r-in"><span><span class="va">vs</span> <span class="op">&lt;-</span> <span class="fu">value</span><span class="op">(</span><span class="va">fs</span>, reduce <span class="op">=</span> <span class="va">`c`</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">message</a></span><span class="op">(</span><span class="st">"The ten averages are: "</span>, <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">vs</span>, collapse <span class="op">=</span> <span class="st">", "</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> The ten averages are: 48.84, 50.68, 48.56, 54.3, 49.1, 46.52, 48.42, 49.76, 47.12, 50.24</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Calculate the sum of the averages (by reducing)</span></span></span>
+<span class="r-in"><span><span class="va">total</span> <span class="op">&lt;-</span> <span class="fu">value</span><span class="op">(</span><span class="va">fs</span>, reduce <span class="op">=</span> <span class="va">`sum`</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">message</a></span><span class="op">(</span><span class="st">"The sum of the ten averages is: "</span>, <span class="va">total</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> The sum of the ten averages is: 493.54</span>
+</code></pre></div>
+    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>
