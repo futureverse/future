@@ -20,7 +20,7 @@
    that attributes must not be set on primitive functions. As a
    workaround, use `reduce = structure("+", init = 42)`.
 
- * `value(x)` on containers gained argument `inorder`, which can be
+ * `value()` on containers gained argument `inorder`, which can be
    used control whether standard output and conditions are relayed in
    order of `x`, or as soon as a future in `x` is resolved. It also
    controls the order of how values are reduced.
@@ -79,6 +79,14 @@
 
  * Timeout errors triggered by `setTimeLimit()` was likely to render
    the future and the corresponding worker invalid.
+   
+ * Identified and fixed one reason for why `cluster` and
+   `multisession` futures could result in errors on "Unexpected result
+   (of class 'NULL' != 'FutureResult') retrieved for
+   MultisessionFuture future ... This suggests that the communication
+   with 'RichSOCKnode' #1 on host 'localhost' (R Under development
+   (unstable) (2025-03-23 r88038), platform x86_64-pc-linux-gnu) is
+   out of sync."
 
 ## Documentation
 

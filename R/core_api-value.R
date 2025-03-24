@@ -42,7 +42,8 @@
 #' For all other elements, the existing object is kept as-is.
 #' 
 #' If `signal` is TRUE and one of the futures produces an error, then
-#' that error is relayed.
+#' that error is relayed. Any remaining, non-resolved futures in `x` are
+#' interrupted, prior to signalling such an error.
 #'
 #' @example incl/value.R
 #'
