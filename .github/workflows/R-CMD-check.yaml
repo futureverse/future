@@ -1,9 +1,4 @@
-on:
-  push:
-    branches: '*'
-    
-  pull_request:
-    branches: develop
+on: [push, pull_request]
   
 name: R-CMD-check
 
