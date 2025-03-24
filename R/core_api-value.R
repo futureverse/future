@@ -19,7 +19,8 @@
 #' always as soon as possible. This is achieved by buffering the details
 #' until they can be released. By setting `inorder = FALSE`, no buffering
 #' takes place and everything is relayed and reduced as soon as a new future
-#' is resolved.
+#' is resolved. Regardlessly, the values are always returned in the same
+#' order as `x`.
 #'
 #' @param drop If TRUE, resolved futures are minimized in size and invalidated
 #' as soon the as their values have been collected and any output and
@@ -41,7 +42,9 @@
 #' For all other elements, the existing object is kept as-is.
 #' 
 #' If `signal` is TRUE and one of the futures produces an error, then
-#' that error is produced.
+#' that error is relayed.
+#'
+#' @example incl/value.R
 #'
 #' @rdname value
 #' @export
@@ -278,7 +281,7 @@ name_of_function <- function(fcn, add_backticks = FALSE) {
 #' reduction. If not specified, the first value will be used as the
 #' initial value.
 #' Reduction of values is done as soon as possible, but always in the
-#' same order as `x`.
+#' same order as `x`, unless `inorder` is FALSE.
 #'
 #' @param interrupt If TRUE and `signal` is TRUE, non-resolved futures are
 #' interrupted as soon as an error is detected in one of the futures,

@@ -72,7 +72,7 @@ Optional attribute \code{init} can be used to set initial value for the
 reduction. If not specified, the first value will be used as the
 initial value.
 Reduction of values is done as soon as possible, but always in the
-same order as \code{x}.}
+same order as \code{x}, unless \code{inorder} is FALSE.}
 
 \item{interrupt}{If TRUE and \code{signal} is TRUE, non-resolved futures are
 interrupted as soon as an error is detected in one of the futures,
@@ -83,7 +83,8 @@ and value reduction, is done in the order the futures occur in \code{x}, but
 always as soon as possible. This is achieved by buffering the details
 until they can be released. By setting \code{inorder = FALSE}, no buffering
 takes place and everything is relayed and reduced as soon as a new future
-is resolved.}
+is resolved. Regardlessly, the values are always returned in the same
+order as \code{x}.}
 
 \item{force}{(internal) If TRUE, captured standard output and captured
 \link[base]{conditions} already relayed is relayed again, otherwise not.}
@@ -104,11 +105,46 @@ All future elements are replaced by their corresponding \code{value()} values.
 For all other elements, the existing object is kept as-is.
 
 If \code{signal} is TRUE and one of the futures produces an error, then
-that error is produced.
+that error is relayed.
 }
 \description{
 Gets the value of a future or the values of all elements (including futures)
 in a container such as a list, an environment, or a list environment.
 If one or more futures is unresolved, then this function blocks until all
 queried futures are resolved.
+}
+\examples{
+## ------------------------------------------------------
+## A single future
+## ------------------------------------------------------
+x <- sample(100, size = 50)
+f <- future(mean(x))
+v <- value(f)
+message("The average of 50 random numbers in [1,100] is: ", v)
+
+
+
+## ------------------------------------------------------
+## Ten futures
+## ------------------------------------------------------
+xs <- replicate(10, { list(sample(100, size = 50)) })
+fs <- lapply(xs, function(x) { future(mean(x)) })
+
+## The 10 values as a list (because 'fs' is a list)
+vs <- value(fs)
+message("The ten averages are:")
+str(vs)
+
+## The 10 values as a vector (by manually unlisting)
+vs <- value(fs)
+vs <- unlist(vs)
+message("The ten averages are: ", paste(vs, collapse = ", "))
+
+## The values as a vector (by reducing)
+vs <- value(fs, reduce = `c`)
+message("The ten averages are: ", paste(vs, collapse = ", "))
+
+## Calculate the sum of the averages (by reducing)
+total <- value(fs, reduce = `sum`)
+message("The sum of the ten averages is: ", total)
 }

@@ -2,21 +2,22 @@
 % Please edit documentation in R/core_api-reset.R
 \name{reset}
 \alias{reset}
-\title{Reset an finished future to a lazy future}
+\title{Reset a finished, failed, or interrupted future to a lazy future}
 \usage{
 reset(x, ...)
 }
 \arguments{
 \item{x}{A Future.}
 
-\item{\ldots}{All arguments used by the S3 methods.}
+\item{\ldots}{Not used.}
 }
 \value{
 \code{reset()} returns a lazy, vanilla \link{Future} that can be relaunched.
+Resetting a running future results in a \link{FutureError}.
 }
 \description{
 A future that has successfully completed, has been interrupted, or
-failed due to an error, can be relaunched by first resetting it.
+failed due to an error, can be relaunched after resetting it.
 }
 \examples{
 ## Like mean(), but fails 90\% of the time

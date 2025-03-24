@@ -1,14 +1,15 @@
-#' Reset an finished future to a lazy future
+#' Reset a finished, failed, or interrupted future to a lazy future
 #'
 #' A future that has successfully completed, has been interrupted, or
-#' failed due to an error, can be relaunched by first resetting it.
+#' failed due to an error, can be relaunched after resetting it.
 #'
 #' @param x A Future.
 #'
-#' @param \ldots All arguments used by the S3 methods.
+#' @param \ldots Not used.
 #'
 #' @return
 #' `reset()` returns a lazy, vanilla [Future] that can be relaunched.
+#' Resetting a running future results in a [FutureError].
 #'
 #' @example incl/reset.R
 #'
@@ -80,4 +81,3 @@ reset.Future <- function(x, ...) {
   
   future
 } ## reset() for Future
-
