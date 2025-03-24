@@ -1,10 +1,7 @@
-testme_name <- Sys.getenv("R_TESTME_NAME", NA_character_)
-if (is.na(testme_name)) {
-  stop("testme: Environment variable 'R_TESTME_NAME' is not set")
+testme_package <- Sys.getenv("R_TESTME_PACKAGE", NA_character_)
+if (is.na(testme_package)) {
+  stop("testme: Environment variable 'R_TESTME_PACKAGE' is not set")
 }
-
-testme_package <- Sys.getenv("_R_CHECK_PACKAGE_NAME_", NA_character_)
-if (is.na(testme_package)) testme_package <- "future"
 
 path <- Sys.getenv("R_TESTME_PATH", NA_character_)
 if (is.na(path)) {
@@ -14,10 +11,15 @@ if (is.na(path)) {
 }
 Sys.setenv(R_TESTME_PATH = path)
 
-filename <- sprintf("test-%s.R", testme_name)
-file <- file.path(path, filename)
-if (!utils::file_test("-f", file)) {
-  stop("There exist no such 'testme' file: ", sQuote(file))
+
+testme_name <- Sys.getenv("R_TESTME_NAME", NA_character_)
+if (is.na(testme_name)) {
+  stop("testme: Environment variable 'R_TESTME_NAME' is not set")
+}
+
+testme_file <- file.path(path, sprintf("test-%s.R", testme_name))
+if (!utils::file_test("-f", testme_file)) {
+  stop("There exist no such 'testme' file: ", sQuote(testme_file))
 }
 
 ## -----------------------------------------------------------------
@@ -25,7 +27,7 @@ if (!utils::file_test("-f", file)) {
 ## -----------------------------------------------------------------
 ## Get test script tags
 tags <- local({
-  lines <- readLines(file.path(path, filename), warn = FALSE)
+  lines <- readLines(testme_file, warn = FALSE)
   pattern <- "^#'[[:blank:]]+@tags[[:blank:]]+"
   lines <- grep(pattern, lines, value = TRUE)
   tags <- sub(pattern, "", lines)
@@ -41,19 +43,21 @@ if (length(tags) > 0) {
 
 ## Create 'testme' environment on the search() path
 if ("testme" %in% search()) detach(name = "testme")
-envir <- attach(list(
+testme <- attach(list(
   package = testme_package,
      name = testme_name,
      tags = tags,
    status = "created",
     start = proc.time(),
+   script = testme_file,
     debug = isTRUE(as.logical(Sys.getenv("R_TESTME_DEBUG")))
 ), name = "testme", warn.conflicts = FALSE)
-rm(list = c("tags", "testme_package", "testme_name"))
+rm(list = c("tags", "testme_package", "testme_name", "testme_file"))
+
 
 ## -----------------------------------------------------------------
 ## Filters
-## -----------------------------------------------------------------
+## -----------------------------------------------------------------x
 code <- Sys.getenv("R_TESTME_FILTER_NAME", NA_character_)
 if (!is.na(code)) {
   expr <- tryCatch(parse(text = code), error = identity)
@@ -61,7 +65,7 @@ if (!is.na(code)) {
     stop("Syntax error in R_TESTME_FILTER_NAME: ", sQuote(code))
   }
   
-  keep <- tryCatch(eval(expr, envir = envir), error = identity)
+  keep <- tryCatch(eval(expr, envir = testme), error = identity)
   if (inherits(keep, "error")) {
     stop("Evaluation of R_TESTME_FILTER_NAME=%s produced an error: %s",
          sQuote(code), conditionMessage(keep))
@@ -75,42 +79,42 @@ if (!is.na(code)) {
   if (inherits(expr, "error")) {
     stop("Syntax error in R_TESTME_FILTER_TAGS: ", sQuote(code))
   }
-  keep <- tryCatch(eval(expr, envir = envir), error = identity)
+  keep <- tryCatch(eval(expr, envir = testme), error = identity)
   if (inherits(keep, "error")) {
     stop("Evaluation of R_TESTME_FILTER_TAGS=%s produced an error: %s",
          sQuote(code), conditionMessage(keep))
   }
-  if (!isTRUE(keep)) envir[["status"]] <- "skipped"
+  if (!isTRUE(keep)) testme[["status"]] <- "skipped"
 }
 
-message(sprintf("Test %s ...", sQuote(envir[["name"]])))
+message(sprintf("Test %s ...", sQuote(testme[["name"]])))
 
 ## Process prologue scripts
-if (envir[["status"]] != "skipped") {
-  envir[["status"]] <- "prologue"
+if (testme[["status"]] != "skipped") {
+  testme[["status"]] <- "prologue"
   source(file.path(path, "_prologue.R"))
 }
 
 ## Run test script
 ## Note, prologue scripts may trigger test to be skipped
-if (envir[["status"]] != "skipped") {
-  message("Running test script: ", sQuote(filename))
-  envir[["status"]] <- "failed"
-  source(file.path(path, filename), echo = TRUE)
-  envir[["status"]] <- "success"
+if (testme[["status"]] != "skipped") {
+  message("Running test script: ", sQuote(testme[["script"]]))
+  testme[["status"]] <- "failed"
+  source(testme[["script"]], echo = TRUE)
+  testme[["status"]] <- "success"
 
   ## Process epilogue scripts
   ## Note, epilogue scripts may change status or produce check errors
-  envir[["status"]] <- "epilogue"
+  testme[["status"]] <- "epilogue"
   source(file.path(path, "_epilogue.R"))
-  envir[["status"]] <- "success"
+  testme[["status"]] <- "success"
 }
 
-envir[["stop"]] <- proc.time()
-dt <- envir[["stop"]] - envir[["start"]]
+testme[["stop"]] <- proc.time()
+dt <- testme[["stop"]] - testme[["start"]]
 dt_str <- sprintf("%s=%.1gs", names(dt), dt)
 message("Test time: ", paste(dt_str, collapse = ", "))
 
-message(sprintf("Test %s ... %s", sQuote(envir[["name"]]), envir[["status"]]))
+message(sprintf("Test %s ... %s", sQuote(testme[["name"]]), testme[["status"]]))
 
 if ("testme" %in% search()) detach(name = "testme")
