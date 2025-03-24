@@ -89,11 +89,32 @@ if (!is.na(code)) {
 
 message(sprintf("Test %s ...", sQuote(testme[["name"]])))
 
-## Process prologue scripts
-if (testme[["status"]] != "skipped") {
+## Process prologue scripts, if they exist
+if (testme[["status"]] != "skipped" &&
+    utils::file_test("-d", file.path(path, "_prologue"))) {
   testme[["status"]] <- "prologue"
-  source(file.path(path, "_prologue.R"))
+  local({
+    ## Find all prologue scripts
+    files <- dir(file.path(path, "_prologue"), pattern = "*[.]R$", full.names = TRUE)
+    files <- sort(files)
+    testme[["prologue_scripts"]] <- files
+  
+    ## Source all prologue scripts inside the 'testme' environment
+    expr <- quote({
+      files <- prologue_scripts
+      message(sprintf("Sourcing %d prologue scripts ...", length(files)))
+      for (kk in seq_along(files)) {
+        file <- files[kk]
+        message(sprintf("%02d/%02d prologue script %s", kk, length(files), sQuote(file)))
+        source(file, local = TRUE)
+      }
+      message(sprintf("Sourcing %d prologue scripts ... done", length(files)))
+      rm(list = c("kk", "file", "files"))
+    })
+    eval(expr, envir = testme)
+  })
 }
+
 
 ## Run test script
 ## Note, prologue scripts may trigger test to be skipped
@@ -102,11 +123,34 @@ if (testme[["status"]] != "skipped") {
   testme[["status"]] <- "failed"
   source(testme[["script"]], echo = TRUE)
   testme[["status"]] <- "success"
+}
 
-  ## Process epilogue scripts
-  ## Note, epilogue scripts may change status or produce check errors
+
+## Process epilogue scripts, if they exist
+## Note, epilogue scripts may change status or produce check errors
+if (testme[["status"]] == "success" &&
+    utils::file_test("-d", file.path(path, "_epilogue"))) {
   testme[["status"]] <- "epilogue"
-  source(file.path(path, "_epilogue.R"))
+  local({
+    ## Find all epilogue scripts
+    files <- dir(file.path(path, "_epilogue"), pattern = "*[.]R$", full.names = TRUE)
+    files <- sort(files)
+    testme[["epilogue_scripts"]] <- files
+  
+    ## Source all epilogue scripts inside the 'testme' environment
+    expr <- quote({
+      files <- epilogue_scripts
+      message(sprintf("Sourcing %d epilogue scripts ...", length(files)))
+      for (kk in seq_along(files)) {
+        file <- files[kk]
+        message(sprintf("%02d/%02d epilogue script %s", kk, length(files), sQuote(file)))
+        source(file, local = TRUE)
+      }
+      message(sprintf("Sourcing %d epilogue scripts ... done", length(files)))
+      rm(list = c("kk", "file", "files"))
+    })
+    eval(expr, envir = testme)
+  })
   testme[["status"]] <- "success"
 }
 
