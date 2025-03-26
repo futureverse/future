@@ -27,7 +27,7 @@ message("*** requestNode() - exceptions ... DONE")
 message("*** requestNode() - timeout ...")
 
 plan(cluster, workers = "localhost")
-f <- future({ Sys.sleep(5); 1 })
+f <- future({ Sys.sleep(0.2); 1 })
 
 res <- tryCatch({
   requestNode(function() { }, workers = f$workers, timeout = 0.5, delta = 0.1)

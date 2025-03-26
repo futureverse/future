@@ -8,7 +8,7 @@ capture_journals <- future:::capture_journals
 message("*** capture_journals() ...")
 
 slow_fcn <- function(x) {
-  Sys.sleep(0.5 + 1/x)
+  Sys.sleep(0.01 * (1 + 1/x))
 }
 
 plan(multisession, workers = 2)

@@ -17,7 +17,7 @@ for (strategy in strategies) {
 
   message("Create four futures, where one produces an error")
   fs <- lapply(c(4, 1, 2, 3), function(x) future({
-    Sys.sleep(x)
+    Sys.sleep(x/4)
     if (x == 1) stop("boom")
     x
   }))

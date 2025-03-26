@@ -142,7 +142,7 @@ for (ss in seq_along(strategies)) {
   message("- list of two futures")
   fs <- list()
   relay <- recordRelay({
-    fs[[1]] <- future({ cat("O1\n"); Sys.sleep(1); message("M1"); 1L })
+    fs[[1]] <- future({ cat("O1\n"); Sys.sleep(0.1); message("M1"); 1L })
     fs[[2]] <- future({ cat("O2\n"); message("M2"); 2L })
   })
   message("  class: ", commaq(class(fs[[1]])))

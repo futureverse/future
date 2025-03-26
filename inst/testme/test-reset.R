@@ -27,7 +27,6 @@ for (strategy in supportedStrategies()) {
     if (!inherits(v, "error")) break
     message("Resetting failed future, and retry in 0.1 seconds")
     f <- reset(f)
-    Sys.sleep(0.1)
   })
   cat("mean:", v, "\n")
 

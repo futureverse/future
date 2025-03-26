@@ -66,7 +66,7 @@ if (availableCores() >= 2L) {
   message("- Non-resolved future ...")
   plan(multisession, workers = 2L)
   message("- plan set")
-  f <- future({ Sys.sleep(3); 42L; stop("Woops") })
+  f <- future({ Sys.sleep(0.3); 42L; stop("Woops") })
   res <- tryCatch(backtrace(f), error = identity)
   print(res)
   stopifnot(inherits(res, "error"))

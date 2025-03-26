@@ -21,7 +21,7 @@ attr_on_primitive_is_error <- local({
   }
 })
         
-sleep <- function(n) Sys.sleep(0.2*n)
+sleep <- function(n) Sys.sleep(0.1*n)
 
 identical_envs <- function(x, y) {
   if (length(x) > 1) x <- x[order(names(x))]
