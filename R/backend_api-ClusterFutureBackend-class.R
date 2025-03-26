@@ -79,7 +79,6 @@ attr(cluster, "tweakable") <- quote(c(makeClusterPSOCK_args(), "persistent"))
 #' @rdname FutureBackend
 #'
 #' @importFrom parallelly as.cluster availableWorkers
-#' @importFrom digest digest
 #' @export
 ClusterFutureBackend <- local({
   getDefaultCluster <- import_parallel_fcn("getDefaultCluster")
@@ -120,7 +119,7 @@ ClusterFutureBackend <- local({
     ## Attach name to cluster?
     name <- attr(workers, "name", exact = TRUE)
     if (is.null(name)) {
-      name <- digest(workers)
+      name <- uuid(workers)
       stop_if_not(length(name) > 0, nzchar(name))
       attr(workers, "name") <- name
       if (debug) mdebug("Generated workers UUID")
@@ -362,7 +361,6 @@ nbrOfFreeWorkers.ClusterFutureBackend <- function(evaluator, ...) {
 }
 
 
-#' @importFrom digest digest
 #' @importFrom parallel stopCluster
 ClusterRegistry <- local({
   last <- NULL
@@ -379,7 +377,7 @@ ClusterRegistry <- local({
     ## Attach name to cluster?
     name <- attr(cl, "name", exact = TRUE)
     if (is.null(name)) {
-      name <- digest(cl)
+      name <- uuid(cl)
       stop_if_not(length(name) > 0, nzchar(name))
       attr(cl, "name") <- name
       if (debug) mdebug("Generated cluster UUID")

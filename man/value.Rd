@@ -105,7 +105,8 @@ All future elements are replaced by their corresponding \code{value()} values.
 For all other elements, the existing object is kept as-is.
 
 If \code{signal} is TRUE and one of the futures produces an error, then
-that error is relayed.
+that error is relayed. Any remaining, non-resolved futures in \code{x} are
+interrupted, prior to signalling such an error.
 }
 \description{
 Gets the value of a future or the values of all elements (including futures)
