@@ -133,9 +133,8 @@ Run `revdepcheck::revdep_details(, "apsimx")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  7.2Mb
+      installed size is  7.0Mb
       sub-directories of 1Mb or more:
-        R         1.0Mb
         extdata   5.4Mb
     ```
 
@@ -281,7 +280,7 @@ Run `revdepcheck::revdep_details(, "batchtools")` for more info
 
 *   checking dependencies in R code ... NOTE
     ```
-    [c4-n31:1935783] OPAL ERROR: Not initialized in file ext2x_client.c at line 112
+    [c4-n43:3560534] OPAL ERROR: Not initialized in file ext2x_client.c at line 112
     --------------------------------------------------------------------------
     The application appears to have been direct launched using "srun",
     but OMPI was not built with SLURM's PMI support and therefore cannot
@@ -308,6 +307,29 @@ Run `revdepcheck::revdep_details(, "batchtools")` for more info
     checkRd: (-1) addAlgorithm.Rd:31: Lost braces
         31 | Algorithms are functions which get the code{data} part as well as the problem instance (the return value of the
            |                                            ^
+    ```
+
+# BayesianMCPMod
+
+<details>
+
+* Version: 1.1.0
+* GitHub: https://github.com/Boehringer-Ingelheim/BayesianMCPMod
+* Source code: https://github.com/cran/BayesianMCPMod
+* Date/Publication: 2025-03-07 19:00:07 UTC
+* Number of recursive dependencies: 148
+
+Run `revdepcheck::revdep_details(, "BayesianMCPMod")` for more info
+
+</details>
+
+## In both
+
+*   checking installed package size ... NOTE
+    ```
+      installed size is  8.8Mb
+      sub-directories of 1Mb or more:
+        doc   8.2Mb
     ```
 
 # bayesmove
@@ -357,30 +379,6 @@ Run `revdepcheck::revdep_details(, "bbknnR")` for more info
         libs   1.6Mb
     ```
 
-# bcmaps
-
-<details>
-
-* Version: 2.2.1
-* GitHub: https://github.com/bcgov/bcmaps
-* Source code: https://github.com/cran/bcmaps
-* Date/Publication: 2024-12-21 00:00:08 UTC
-* Number of recursive dependencies: 125
-
-Run `revdepcheck::revdep_details(, "bcmaps")` for more info
-
-</details>
-
-## Newly broken
-
-*   checking installed package size ... NOTE
-    ```
-      installed size is  6.2Mb
-      sub-directories of 1Mb or more:
-        R     1.4Mb
-        doc   4.5Mb
-    ```
-
 # BEKKs
 
 <details>
@@ -408,29 +406,15 @@ Run `revdepcheck::revdep_details(, "BEKKs")` for more info
 
 <details>
 
-* Version: 0.5.5
+* Version: 0.5.6
 * GitHub: https://github.com/spatialstatisticsupna/bigDM
 * Source code: https://github.com/cran/bigDM
-* Date/Publication: 2024-08-19 12:00:10 UTC
+* Date/Publication: 2025-03-25 09:30:06 UTC
 * Number of recursive dependencies: 135
 
 Run `revdepcheck::revdep_details(, "bigDM")` for more info
 
 </details>
-
-## Newly broken
-
-*   checking whether package ‘bigDM’ can be installed ... WARNING
-    ```
-    Found the following significant warnings:
-      Warning: replacing previous import ‘crayon::reset’ by ‘future::reset’ when loading ‘bigDM’
-    See ‘/c4/home/henrik/futureverse/future/revdep/checks/bigDM/new/bigDM.Rcheck/00install.out’ for details.
-    ```
-
-*   checking Rd files ... WARNING
-    ```
-    prepare_Rd: replacing previous import ‘crayon::reset’ by ‘future::reset’ when loading ‘bigDM’
-    ```
 
 ## In both
 
@@ -495,10 +479,10 @@ Run `revdepcheck::revdep_details(, "blavaan")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 186.6Mb
+      installed size is 399.0Mb
       sub-directories of 1Mb or more:
         R           1.2Mb
-        libs      183.6Mb
+        libs      396.0Mb
         testdata    1.4Mb
     ```
 
@@ -530,9 +514,9 @@ Run `revdepcheck::revdep_details(, "brms")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  9.0Mb
+      installed size is  8.8Mb
       sub-directories of 1Mb or more:
-        R     4.0Mb
+        R     3.8Mb
         doc   3.6Mb
     ```
 
@@ -589,10 +573,10 @@ Run `revdepcheck::revdep_details(, "bslib")` for more info
 
 <details>
 
-* Version: 0.2.0
+* Version: 0.2.1
 * GitHub: https://github.com/XiaoZhangryy/CAESAR.Suite
 * Source code: https://github.com/cran/CAESAR.Suite
-* Date/Publication: 2025-03-03 10:10:01 UTC
+* Date/Publication: 2025-03-25 12:30:02 UTC
 * Number of recursive dependencies: 255
 
 Run `revdepcheck::revdep_details(, "CAESAR.Suite")` for more info
@@ -600,31 +584,6 @@ Run `revdepcheck::revdep_details(, "CAESAR.Suite")` for more info
 </details>
 
 ## In both
-
-*   checking re-building of vignette outputs ... ERROR
-    ```
-    Error(s) in re-building vignettes:
-    --- re-building ‘STMOB.Rmd’ using rmarkdown
-    trying URL 'https://github.com/XiaoZhangryy/CAESAR.Suite/blob/master/vignettes_data/MOB_ST.rda?raw=true'
-    Content type 'application/octet-stream' length 5988380 bytes (5.7 MB)
-    ==================================================
-    downloaded 5.7 MB
-    
-    trying URL 'https://github.com/XiaoZhangryy/CAESAR.Suite/blob/master/vignettes_data/MOB_scRNA.rda?raw=true'
-    Content type 'application/octet-stream' length 48066404 bytes (45.8 MB)
-    ==================================================
-    ...
-    
-    Error: processing vignette 'XeniumBC.Rmd' failed with diagnostics:
-    attempt to set 'colnames' on an object with less than two dimensions
-    --- failed re-building ‘XeniumBC.Rmd’
-    
-    SUMMARY: processing the following file failed:
-      ‘XeniumBC.Rmd’
-    
-    Error: Vignette re-building failed.
-    Execution halted
-    ```
 
 *   checking installed package size ... NOTE
     ```
@@ -933,6 +892,13 @@ Run `revdepcheck::revdep_details(, "collinear")` for more info
 
 ## In both
 
+*   checking installed package size ... NOTE
+    ```
+      installed size is  7.4Mb
+      sub-directories of 1Mb or more:
+        data   7.0Mb
+    ```
+
 *   checking data for non-ASCII characters ... NOTE
     ```
       Note: found 89 marked Latin-1 strings
@@ -957,9 +923,8 @@ Run `revdepcheck::revdep_details(, "Coxmos")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  5.9Mb
+      installed size is  5.8Mb
       sub-directories of 1Mb or more:
-        R      1.0Mb
         data   1.2Mb
         doc    3.1Mb
     ```
@@ -1050,7 +1015,7 @@ Run `revdepcheck::revdep_details(, "deseats")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  9.0Mb
+      installed size is  9.1Mb
       sub-directories of 1Mb or more:
         libs   8.3Mb
     ```
@@ -1163,9 +1128,8 @@ Run `revdepcheck::revdep_details(, "distantia")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 15.2Mb
+      installed size is 14.7Mb
       sub-directories of 1Mb or more:
-        help   1.0Mb
         libs  13.0Mb
     ```
 
@@ -1197,7 +1161,7 @@ Run `revdepcheck::revdep_details(, "DT")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  6.4Mb
+      installed size is  6.5Mb
       sub-directories of 1Mb or more:
         htmlwidgets   5.6Mb
     ```
@@ -1252,30 +1216,6 @@ Run `revdepcheck::revdep_details(, "envi")` for more info
     Found the following significant warnings:
       Warning: no DISPLAY variable so Tk is not available
     See ‘/c4/home/henrik/futureverse/future/revdep/checks/envi/new/envi.Rcheck/00install.out’ for details.
-    ```
-
-# epe4md
-
-<details>
-
-* Version: 0.1.4
-* GitHub: NA
-* Source code: https://github.com/cran/epe4md
-* Date/Publication: 2023-07-05 14:23:07 UTC
-* Number of recursive dependencies: 140
-
-Run `revdepcheck::revdep_details(, "epe4md")` for more info
-
-</details>
-
-## In both
-
-*   checking installed package size ... NOTE
-    ```
-      installed size is  6.4Mb
-      sub-directories of 1Mb or more:
-        dados_premissas   5.0Mb
-        metodologia       1.1Mb
     ```
 
 # EpiNow2
@@ -1597,6 +1537,30 @@ Run `revdepcheck::revdep_details(, "flowGraph")` for more info
     Package unavailable to check Rd xrefs: ‘doParallel’
     ```
 
+# fmeffects
+
+<details>
+
+* Version: 0.1.4
+* GitHub: https://github.com/holgstr/fmeffects
+* Source code: https://github.com/cran/fmeffects
+* Date/Publication: 2024-11-05 18:50:02 UTC
+* Number of recursive dependencies: 183
+
+Run `revdepcheck::revdep_details(, "fmeffects")` for more info
+
+</details>
+
+## In both
+
+*   checking installed package size ... NOTE
+    ```
+      installed size is  5.9Mb
+      sub-directories of 1Mb or more:
+        R      1.0Mb
+        help   4.1Mb
+    ```
+
 # forecastML
 
 <details>
@@ -1763,7 +1727,7 @@ Run `revdepcheck::revdep_details(, "geohabnet")` for more info
     ...
     
     Error: processing vignette 'analysis.Rmd' failed with diagnostics:
-    unable to find an inherited method for function 'wrap' for signature 'x = "NULL"'
+    (/c4/home/henrik/.config/R/geohabnet/parameters.yaml) Duplicate map key: 'default'
     --- failed re-building ‘analysis.Rmd’
     
     SUMMARY: processing the following files failed:
@@ -2071,9 +2035,9 @@ Run `revdepcheck::revdep_details(, "hbamr")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 92.1Mb
+      installed size is 125.4Mb
       sub-directories of 1Mb or more:
-        libs  90.7Mb
+        libs  124.0Mb
     ```
 
 *   checking for GNU extensions in Makefiles ... NOTE
@@ -2099,7 +2063,7 @@ Run `revdepcheck::revdep_details(, "hero")` for more info
 
 *   checking dependencies in R code ... NOTE
     ```
-    [c4-n31:2841458] OPAL ERROR: Not initialized in file ext2x_client.c at line 112
+    [c4-n43:618177] OPAL ERROR: Not initialized in file ext2x_client.c at line 112
     --------------------------------------------------------------------------
     The application appears to have been direct launched using "srun",
     but OMPI was not built with SLURM's PMI support and therefore cannot
@@ -2167,31 +2131,6 @@ Run `revdepcheck::revdep_details(, "httpgd")` for more info
 </details>
 
 ## In both
-
-*   checking tests ...
-    ```
-      Running ‘testthat.R’/software/c4/cbi/software/_rocky8/R-4.4.3-gcc13/lib64/R/bin/BATCH: line 60: 2864832 Segmentation fault      (core dumped) ${R_HOME}/bin/R -f ${in} ${opts} ${R_BATCH_OPTIONS} > ${out} 2>&1
-    
-     ERROR
-    Running the tests in ‘tests/testthat.R’ failed.
-    Last 50 lines of output:
-       1. └─jsonlite::fromJSON(httr::content(res, as = "text")) at test-server.R:62:3
-       2.   └─jsonlite:::parse_and_simplify(...)
-       3.     └─jsonlite:::parseJSON(txt, bigint_as_char)
-       4.       └─jsonlite:::parse_string(txt, bigint_as_char)
-      ── Error ('test-server.R:83:5'): Clear plots ───────────────────────────────────
-    ...
-      1/1 mismatches
-      [1] 503 - 404 == 99
-      
-      [ FAIL 16 | WARN 0 | SKIP 0 | PASS 2 ]
-      Error: Test failures
-      Execution halted
-      
-       *** caught segfault ***
-      address 0xf44f58, cause 'invalid permissions'
-      An irrecoverable exception occurred. R is aborting now ...
-    ```
 
 *   checking installed package size ... NOTE
     ```
@@ -2428,7 +2367,7 @@ Run `revdepcheck::revdep_details(, "JANE")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 16.4Mb
+      installed size is 16.5Mb
       sub-directories of 1Mb or more:
         libs  16.2Mb
     ```
@@ -2554,7 +2493,7 @@ Run `revdepcheck::revdep_details(, "ldsr")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  5.5Mb
+      installed size is  5.4Mb
       sub-directories of 1Mb or more:
         libs   4.9Mb
     ```
@@ -2577,7 +2516,7 @@ Run `revdepcheck::revdep_details(, "lidR")` for more info
 
 *   checking tests ...
     ```
-      Running ‘testthat.R’/software/c4/cbi/software/_rocky8/R-4.4.3-gcc13/lib64/R/bin/BATCH: line 60: 3495048 Aborted                 (core dumped) ${R_HOME}/bin/R -f ${in} ${opts} ${R_BATCH_OPTIONS} > ${out} 2>&1
+      Running ‘testthat.R’/software/c4/cbi/software/_rocky8/R-4.4.3-gcc13/lib64/R/bin/BATCH: line 60: 1338097 Aborted                 (core dumped) ${R_HOME}/bin/R -f ${in} ${opts} ${R_BATCH_OPTIONS} > ${out} 2>&1
     
      ERROR
     Running the tests in ‘tests/testthat.R’ failed.
@@ -2589,7 +2528,7 @@ Run `revdepcheck::revdep_details(, "lidR")` for more info
       > test_check("lidR")
       Tests using raster: terra 
       Tests using future: TRUE 
-      Tests using OpenMP thread: 32 
+      Tests using OpenMP thread: 48 
       Tests using rlas: 1.8.0 
       OGR: Unsupported geometry type
       OGR: Unsupported geometry type
@@ -2956,6 +2895,14 @@ Run `revdepcheck::revdep_details(, "mistyR")` for more info
 
 ## In both
 
+*   checking installed package size ... NOTE
+    ```
+      installed size is  6.1Mb
+      sub-directories of 1Mb or more:
+        data   2.3Mb
+        doc    3.5Mb
+    ```
+
 *   checking R code for possible problems ... NOTE
     ```
     aggregate_results: no visible binding for global variable ‘measure’
@@ -3030,6 +2977,30 @@ Run `revdepcheck::revdep_details(, "mlr3tuning")` for more info
     Package suggested but not available for checking: ‘mlflow’
     ```
 
+# modelsummary
+
+<details>
+
+* Version: 2.3.0
+* GitHub: https://github.com/vincentarelbundock/modelsummary
+* Source code: https://github.com/cran/modelsummary
+* Date/Publication: 2025-02-02 12:50:02 UTC
+* Number of recursive dependencies: 322
+
+Run `revdepcheck::revdep_details(, "modelsummary")` for more info
+
+</details>
+
+## In both
+
+*   checking installed package size ... NOTE
+    ```
+      installed size is  6.4Mb
+      sub-directories of 1Mb or more:
+        help       4.3Mb
+        tinytest   1.7Mb
+    ```
+
 # momentuHMM
 
 <details>
@@ -3070,6 +3041,13 @@ Run `revdepcheck::revdep_details(, "MOSS")` for more info
 </details>
 
 ## In both
+
+*   checking installed package size ... NOTE
+    ```
+      installed size is  8.1Mb
+      sub-directories of 1Mb or more:
+        doc   3.0Mb
+    ```
 
 *   checking Rd files ... NOTE
     ```
@@ -3174,35 +3152,6 @@ Run `revdepcheck::revdep_details(, "nflfastR")` for more info
 *   checking data for non-ASCII characters ... NOTE
     ```
       Note: found 1 marked UTF-8 string
-    ```
-
-# nflseedR
-
-<details>
-
-* Version: 1.2.0
-* GitHub: https://github.com/nflverse/nflseedR
-* Source code: https://github.com/cran/nflseedR
-* Date/Publication: 2023-01-05 21:50:31 UTC
-* Number of recursive dependencies: 87
-
-Run `revdepcheck::revdep_details(, "nflseedR")` for more info
-
-</details>
-
-## In both
-
-*   checking Rd files ... NOTE
-    ```
-    checkRd: (-1) load_schedules.Rd:27: Lost braces in \itemize; \value handles \item{}{} directly
-    checkRd: (-1) load_schedules.Rd:28: Lost braces in \itemize; \value handles \item{}{} directly
-    checkRd: (-1) load_schedules.Rd:29: Lost braces in \itemize; \value handles \item{}{} directly
-    checkRd: (-1) load_schedules.Rd:30: Lost braces in \itemize; \value handles \item{}{} directly
-    checkRd: (-1) load_schedules.Rd:31: Lost braces in \itemize; \value handles \item{}{} directly
-    checkRd: (-1) load_schedules.Rd:60: Lost braces in \itemize; \value handles \item{}{} directly
-    checkRd: (-1) load_schedules.Rd:61: Lost braces in \itemize; \value handles \item{}{} directly
-    checkRd: (-1) load_schedules.Rd:62: Lost braces in \itemize; \value handles \item{}{} directly
-    checkRd: (-1) load_schedules.Rd:63: Lost braces in \itemize; \value handles \item{}{} directly
     ```
 
 # nhdplusTools
@@ -3714,9 +3663,9 @@ Run `revdepcheck::revdep_details(, "portvine")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 53.7Mb
+      installed size is 53.8Mb
       sub-directories of 1Mb or more:
-        libs  52.5Mb
+        libs  52.7Mb
     ```
 
 # ProFAST
@@ -3843,9 +3792,8 @@ Run `revdepcheck::revdep_details(, "psborrow2")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  5.8Mb
+      installed size is  5.4Mb
       sub-directories of 1Mb or more:
-        R     1.0Mb
         doc   3.9Mb
     ```
 
@@ -3952,8 +3900,9 @@ Run `revdepcheck::revdep_details(, "RAINBOWR")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 42.9Mb
+      installed size is 43.3Mb
       sub-directories of 1Mb or more:
+        R      1.0Mb
         libs  41.5Mb
     ```
 
@@ -4222,9 +4171,9 @@ Run `revdepcheck::revdep_details(, "sdmTMB")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 98.2Mb
+      installed size is 97.9Mb
       sub-directories of 1Mb or more:
-        libs  96.2Mb
+        libs  95.9Mb
     ```
 
 # sentopics
@@ -4242,6 +4191,53 @@ Run `revdepcheck::revdep_details(, "sentopics")` for more info
 </details>
 
 ## In both
+
+*   checking examples ... ERROR
+    ```
+    Running examples in ‘sentopics-Ex.R’ failed
+    The error most likely occurred in:
+    
+    > ### Name: LDAvis
+    > ### Title: Visualize a LDA model using 'LDAvis'
+    > ### Aliases: LDAvis
+    > 
+    > ### ** Examples
+    > 
+    > lda <- LDA(ECB_press_conferences_tokens)
+    > lda <- fit(lda, 100)
+    0%   10   20   30   40   50   60   70   80   90   100%
+    [----|----|----|----|----|----|----|----|----|----|
+    **************************************************|
+    > LDAvis(lda)
+    Error in loadNamespace(x) : there is no package called ‘RJSONIO’
+    Calls: LDAvis ... loadNamespace -> withRestarts -> withOneRestart -> doWithOneRestart
+    Execution halted
+    ```
+
+*   checking tests ...
+    ```
+      Running ‘testthat.R’
+     ERROR
+    Running the tests in ‘tests/testthat.R’ failed.
+    Last 50 lines of output:
+      > 
+      > library("testthat")
+      > library("sentopics")
+      > 
+      > if (Sys.getenv("R_COVR") != "true") {
+      +   test_check("sentopics")
+    ...
+        9. ├─sentopics::LDAvis(lda)
+       10. │ └─LDAvis::createJSON(...)
+       11. └─base::loadNamespace(x)
+       12.   └─base::withRestarts(stop(cond), retry_loadNamespace = function() NULL)
+       13.     └─base (local) withOneRestart(expr, restarts[[1L]])
+       14.       └─base (local) doWithOneRestart(return(expr), restart)
+      
+      [ FAIL 1 | WARN 0 | SKIP 1 | PASS 344 ]
+      Error: Test failures
+      Execution halted
+    ```
 
 *   checking installed package size ... NOTE
     ```
@@ -4288,7 +4284,7 @@ Run `revdepcheck::revdep_details(, "Seurat")` for more info
       installed size is 16.1Mb
       sub-directories of 1Mb or more:
         R      1.7Mb
-        libs  13.5Mb
+        libs  13.4Mb
     ```
 
 *   checking Rd cross-references ... NOTE
@@ -4405,9 +4401,9 @@ Run `revdepcheck::revdep_details(, "shiny")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 14.2Mb
+      installed size is 13.7Mb
       sub-directories of 1Mb or more:
-        R     2.0Mb
+        R     1.5Mb
         www  10.4Mb
     ```
 
@@ -4457,8 +4453,9 @@ Run `revdepcheck::revdep_details(, "sigminer")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  6.7Mb
+      installed size is  6.9Mb
       sub-directories of 1Mb or more:
+        R         1.0Mb
         extdata   1.0Mb
         help      1.7Mb
         libs      1.6Mb
@@ -4785,7 +4782,7 @@ Run `revdepcheck::revdep_details(, "spaMM")` for more info
 
 *   checking package dependencies ... NOTE
     ```
-    Package suggested but not available for checking: ‘IsoriX’
+    Packages suggested but not available for checking: 'IsoriX', 'RSpectra'
     
     Packages which this enhances but not available for checking:
       'multcomp', 'RLRsim', 'lmerTest'
@@ -4843,6 +4840,30 @@ Run `revdepcheck::revdep_details(, "SPARSEMODr")` for more info
     Namespaces in Imports field not imported from:
       ‘future’ ‘geosphere’ ‘lubridate’ ‘tidyverse’ ‘viridis’
       All declared Imports should be used.
+    ```
+
+# spatialTIME
+
+<details>
+
+* Version: 1.3.4-5
+* GitHub: https://github.com/FridleyLab/spatialTIME
+* Source code: https://github.com/cran/spatialTIME
+* Date/Publication: 2024-06-04 15:30:11 UTC
+* Number of recursive dependencies: 141
+
+Run `revdepcheck::revdep_details(, "spatialTIME")` for more info
+
+</details>
+
+## In both
+
+*   checking installed package size ... NOTE
+    ```
+      installed size is  6.3Mb
+      sub-directories of 1Mb or more:
+        data   1.5Mb
+        doc    3.5Mb
     ```
 
 # spatialwarnings
@@ -5030,7 +5051,7 @@ Run `revdepcheck::revdep_details(, "squat")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 20.0Mb
+      installed size is 19.9Mb
       sub-directories of 1Mb or more:
         data   1.1Mb
         help   1.1Mb
@@ -5058,31 +5079,6 @@ Run `revdepcheck::revdep_details(, "ssdtools")` for more info
       installed size is 38.5Mb
       sub-directories of 1Mb or more:
         libs  37.3Mb
-    ```
-
-# stacks
-
-<details>
-
-* Version: 1.0.5
-* GitHub: https://github.com/tidymodels/stacks
-* Source code: https://github.com/cran/stacks
-* Date/Publication: 2024-07-22 21:50:02 UTC
-* Number of recursive dependencies: 140
-
-Run `revdepcheck::revdep_details(, "stacks")` for more info
-
-</details>
-
-## Newly broken
-
-*   checking installed package size ... NOTE
-    ```
-      installed size is  6.0Mb
-      sub-directories of 1Mb or more:
-        data   1.0Mb
-        doc    3.7Mb
-        help   1.1Mb
     ```
 
 # stars
@@ -5133,7 +5129,7 @@ Run `revdepcheck::revdep_details(, "stars")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  6.9Mb
+      installed size is  6.8Mb
       sub-directories of 1Mb or more:
         doc   2.9Mb
         nc    1.7Mb
@@ -5223,7 +5219,7 @@ Run `revdepcheck::revdep_details(, "synergyfinder")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  6.2Mb
+      installed size is  6.3Mb
       sub-directories of 1Mb or more:
         doc   5.8Mb
     ```
@@ -5382,7 +5378,7 @@ Run `revdepcheck::revdep_details(, "tenm")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  6.0Mb
+      installed size is  5.9Mb
       sub-directories of 1Mb or more:
         extdata   5.0Mb
     ```
@@ -5626,7 +5622,7 @@ Run `revdepcheck::revdep_details(, "tsdistributions")` for more info
     ```
       installed size is 42.9Mb
       sub-directories of 1Mb or more:
-        libs  42.3Mb
+        libs  42.2Mb
     ```
 
 # tsgarch
@@ -5647,9 +5643,9 @@ Run `revdepcheck::revdep_details(, "tsgarch")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 144.3Mb
+      installed size is 144.4Mb
       sub-directories of 1Mb or more:
-        libs  143.2Mb
+        libs  143.3Mb
     ```
 
 # tsmarch
@@ -5920,9 +5916,9 @@ Run `revdepcheck::revdep_details(, "wru")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  7.5Mb
+      installed size is 11.5Mb
       sub-directories of 1Mb or more:
-        data   3.5Mb
+        data   7.5Mb
         help   1.9Mb
         libs   1.9Mb
     ```
