@@ -16,7 +16,7 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          - {os: windows-latest, r: 'devel'    }
+          - {os: windows-latest, r: 'devel', strict: true, label: 'strict' }
           - {os: windows-latest, r: 'release'  }
           - {os: windows-latest, r: 'oldrel'   }
 #          - {os: macOS-latest,   r: 'devel'    }
@@ -28,7 +28,9 @@ jobs:
           - {os: ubuntu-latest,  r: 'oldrel-1' }
           - {os: ubuntu-latest,  r: 'oldrel-2' }
           - {os: ubuntu-latest,  r: '4.0'      }
-          
+
+          - {os: ubuntu-latest,  r: 'release', strict: true, label: 'strict' }
+
           - {os: ubuntu-latest,  r: 'release'  , availablecores: 1, label: 'availableCores.system=1' }
           - {os: ubuntu-latest,  r: 'release'  , availablecores: 2, label: 'availableCores.system=2' }
           - {os: ubuntu-latest,  r: 'release'  , language: ko,    label: ko    }
@@ -114,6 +116,11 @@ jobs:
           R_FUTURE_FORK_MULTITHREADING_ENABLE: ${{ matrix.config.fork_multithreading_enable }}
           R_FUTURE_PSOCK_RELAY_IMMEDIATE: ${{ matrix.config.psock_relay_immediate }}
         run: |
+          if ("${{ matrix.config.strict }}" == "true") {
+            Sys.setenv(R_FUTURE_CONNECTIONS_ONMISUSE = "error")
+            Sys.setenv(R_FUTURE_GLOBALENV_ONMISUSE = "error")
+            Sys.setenv(R_FUTURE_RNG_ONMISUSE = "error")
+          }
           if (nzchar(Sys.getenv("R_FUTURE_PLAN")) || getRversion() < "3.5.0") Sys.setenv(RCMDCHECK_ERROR_ON = "error")
           rcmdcheck::rcmdcheck(
             build_args = if (getRversion() < "3.5.0") "--no-build-vignettes",
@@ -125,6 +132,11 @@ jobs:
       - name: Check (Windows)
         if: runner.os == 'Windows'
         run: |
+          if ("${{ matrix.config.strict }}" == "true") {
+            Sys.setenv(R_FUTURE_CONNECTIONS_ONMISUSE = "error")
+            Sys.setenv(R_FUTURE_GLOBALENV_ONMISUSE = "error")
+            Sys.setenv(R_FUTURE_RNG_ONMISUSE = "error")
+          }
           rcmdcheck::rcmdcheck(
             args = c("--no-manual", "--as-cran", if (.Platform$OS.type == "windows" && getRversion() >= "4.2.0") "--no-multiarch"),
             check_dir = "check"
