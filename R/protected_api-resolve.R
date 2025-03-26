@@ -45,13 +45,13 @@
 #' `resolve(futureOf(x))`.
 #'
 #' @export
-resolve <- function(x, idxs = NULL, recursive = 0, result = FALSE, stdout = FALSE, signal = FALSE, force = FALSE, sleep = getOption("future.wait.interval", 0.001), ...) UseMethod("resolve")
+resolve <- function(x, idxs = NULL, recursive = 0, result = FALSE, stdout = FALSE, signal = FALSE, force = FALSE, sleep = getOption("future.wait.interval", 0.005), ...) UseMethod("resolve")
 
 #' @export
 resolve.default <- function(x, ...) x
 
 #' @export
-resolve.Future <- function(x, idxs = NULL, recursive = 0, result = FALSE, stdout = FALSE, signal = FALSE, force = FALSE, sleep = getOption("future.wait.interval", 0.001), ...) {
+resolve.Future <- function(x, idxs = NULL, recursive = 0, result = FALSE, stdout = FALSE, signal = FALSE, force = FALSE, sleep = getOption("future.wait.interval", 0.005), ...) {
   future <- x
   
   ## Automatically update journal entries for Future object
@@ -175,7 +175,7 @@ subset_list <- function(x, idxs = NULL) {
 
 
 #' @export
-resolve.list <- function(x, idxs = NULL, recursive = 0, result = FALSE, stdout = FALSE, signal = FALSE, force = FALSE, sleep = getOption("future.wait.interval", 0.001), ...) {
+resolve.list <- function(x, idxs = NULL, recursive = 0, result = FALSE, stdout = FALSE, signal = FALSE, force = FALSE, sleep = getOption("future.wait.interval", 0.005), ...) {
   if (is.logical(recursive)) {
     if (recursive) recursive <- getOption("future.resolve.recursive", 99)
   }
@@ -322,7 +322,7 @@ subset_env <- function(x, idxs = NULL) {
 
 
 #' @export
-resolve.environment <- function(x, idxs = NULL, recursive = 0, result = FALSE, stdout = FALSE, signal = FALSE, force = FALSE, sleep = getOption("future.wait.interval", 0.001), ...) {
+resolve.environment <- function(x, idxs = NULL, recursive = 0, result = FALSE, stdout = FALSE, signal = FALSE, force = FALSE, sleep = getOption("future.wait.interval", 0.005), ...) {
   if (is.logical(recursive)) {
     if (recursive) recursive <- getOption("future.resolve.recursive", 99)
   }
@@ -467,7 +467,7 @@ subset_listenv <- function(x, idxs = NULL) {
 
 
 #' @export
-resolve.listenv <- function(x, idxs = NULL, recursive = 0, result = FALSE, stdout = FALSE, signal = FALSE, force = FALSE, sleep = getOption("future.wait.interval", 0.001), ...) {
+resolve.listenv <- function(x, idxs = NULL, recursive = 0, result = FALSE, stdout = FALSE, signal = FALSE, force = FALSE, sleep = getOption("future.wait.interval", 0.005), ...) {
   if (is.logical(recursive)) {
     if (recursive) recursive <- getOption("future.resolve.recursive", 99)
   }

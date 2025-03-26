@@ -65,14 +65,14 @@
 #'
 #'  \item{\option{future.onFutureCondition.keepFuture}:}{(logical) If `TRUE`, a `FutureCondition` keeps a copy of the `Future` object that triggered the condition. If `FALSE`, it is dropped. (Default: `TRUE`)}
 #'
-#'  \item{\option{future.wait.timeout}:}{(numeric) Maximum waiting time (in seconds) for a free worker before a timeout error is generated. (Default: `24 * 60 * 60` (= 24 hours))}
+#'  \item{\option{future.wait.timeout}:}{(numeric) Maximum waiting time (in seconds) for a future to resolve or for a free worker to become available before a timeout error is generated. (Default: `30 * 24 * 60 * 60` (= 30 days))}
 #'
 #'  \item{\option{future.wait.interval}:}{(numeric) Initial interval (in
 #'  seconds) between polls. This controls the polling frequency for finding
 #'  an available worker when all workers are currently busy. It also controls
-#'  the polling frequency of `resolve()`. (Default: `0.001` = 1 ms)}
+#'  the polling frequency of `resolve()`. (Default: `0.005` = 1 ms)}
 #'
-#'  \item{\option{future.wait.alpha}:}{(numeric) Positive scale factor used to increase the interval after each poll. (Default: `1.001`)}
+#'  \item{\option{future.wait.alpha}:}{(numeric) Positive scale factor used to increase the interval after each poll. (Default: `1.005`)}
 #' }
 #'
 #' @section Options for debugging futures:

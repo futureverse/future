@@ -135,8 +135,8 @@ ClusterFutureBackend <- local({
       reg = reg,
       earlySignal = earlySignal,
       future.wait.timeout = getOption("future.wait.timeout", 24 * 60 * 60),
-      future.wait.interval = getOption("future.wait.interval", 0.001),
-      future.wait.alpha = getOption("future.wait.alpha", 1.001),
+      future.wait.interval = getOption("future.wait.interval", 0.005),
+      future.wait.alpha = getOption("future.wait.alpha", 1.005),
       ...
     )
     core[["futureClasses"]] <- c("ClusterFuture", core[["futureClasses"]])
