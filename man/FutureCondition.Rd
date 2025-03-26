@@ -13,6 +13,9 @@
 \alias{GlobalEnvFutureCondition}
 \alias{GlobalEnvFutureWarning}
 \alias{GlobalEnvFutureError}
+\alias{ConnectionsMisuseFutureCondition}
+\alias{ConnectionsMisuseFutureWarning}
+\alias{ConnectionsMisuseFutureError}
 \alias{FutureInterruptError}
 \alias{FutureDroppedError}
 \alias{FutureJournalCondition}
@@ -50,6 +53,18 @@ GlobalEnvFutureCondition(
 GlobalEnvFutureWarning(...)
 
 GlobalEnvFutureError(...)
+
+ConnectionsMisuseFutureCondition(
+  message = NULL,
+  call = NULL,
+  differences = NULL,
+  uuid = future[["uuid"]],
+  future = NULL
+)
+
+ConnectionsMisuseFutureWarning(...)
+
+ConnectionsMisuseFutureError(...)
 
 FutureInterruptError(..., future = NULL)
 

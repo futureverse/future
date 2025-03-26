@@ -46,9 +46,14 @@
 
  * Timeout errors triggered by `setTimeLimit()` are now relayed.
  
- * Failures to launch a future is not detected, handled, and relayed
+ * Failures to launch a future is now detected, handled, and relayed
    as an error with details on why it failed.
 
+ * A future must close any connections it opens, and must never close
+   connections it did not open. Now `value()` produces a warning if
+   such misuse is detected. This may be upgrade to an error in future
+   releases. The default behavior can be controlled via an R option.
+ 
  * All parallel backends now prevent nested parallelization, unless
    explicitly allowed, e.g. settings recognized by
    `parallelly::availableCores()` or set by the future

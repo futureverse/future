@@ -111,6 +111,9 @@ value.Future <- function(future, stdout = TRUE, signal = TRUE, drop = FALSE, ...
   }
 
 
+  ## ------------------------------------------------------------------
+  ## Report on misuse of the global environment
+  ## ------------------------------------------------------------------
   ## Were there any variables added to the global enviroment?
   if (length(result[["globalenv"]][["added"]]) > 0L) {
     onMisuse <- getOption("future.globalenv.onMisuse")
@@ -147,6 +150,48 @@ value.Future <- function(future, stdout = TRUE, signal = TRUE, drop = FALSE, ...
   }
 
 
+  ## ------------------------------------------------------------------
+  ## Report on misuse of the connections
+  ## ------------------------------------------------------------------
+  ## Were there any connections added, removed, or changed?
+  if (any(result[["misuse_connections"]] > 0L)) {
+    onMisuse <- getOption("future.connections.onMisuse")
+    if (is.null(onMisuse)) onMisuse <- "warning"
+    if (onMisuse != "ignore") {
+      if (onMisuse == "error") {
+        cond <- ConnectionsMisuseFutureError(differences = result[["misuse_connections"]], future = future)
+      } else if (onMisuse == "warning") {
+        cond <- ConnectionsMisuseFutureWarning(differences = result[["misuse_connections"]], future = future)
+      } else {
+        cond <- NULL
+        warnf("Unknown value on option 'future.onMisuse.connections': %s",
+              sQuote(onMisuse))
+      }
+
+      if (!is.null(cond)) {
+        ## FutureCondition to stack of captured conditions
+        new <- list(condition = cond, signaled = FALSE)
+        conditions <- result[["conditions"]]
+        n <- length(conditions)
+      
+        ## An existing run-time error takes precedence
+        if (n > 0L && inherits(conditions[[n]][["condition"]], "error")) {
+          conditions[[n + 1L]] <- conditions[[n]]
+          conditions[[n]] <- new
+        } else {
+          conditions[[n + 1L]] <- new
+        }
+        
+        result[["conditions"]] <- conditions
+        future[["result"]] <- result
+      }
+    }
+  }
+
+
+  ## ------------------------------------------------------------------
+  ## Report on misuse of the RNG
+  ## ------------------------------------------------------------------
   ## Was RNG used without requesting RNG seeds?
   if (!isTRUE(future[[".rng_checked"]]) && isFALSE(future[["seed"]]) && isTRUE(result[["rng"]])) {
     ## BACKWARD COMPATIBILITY: Until higher-level APIs set future()

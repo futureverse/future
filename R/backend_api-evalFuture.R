@@ -196,6 +196,45 @@ setNumberOfThreads <- function(openmp = NA_integer_, rcpp = openmp) {
 } ## setNumberOfThreads()
 
 
+get_connections <- function() {
+  lapply(getAllConnections()[-(1:3)], FUN = getConnection)
+}
+
+diff_connections <- function(after, before) {
+  ## Expand
+  before_idxs <- vapply(before, FUN = as.integer, FUN.VALUE = NA_integer_)
+  after_idxs <- vapply(after, FUN = as.integer, FUN.VALUE = NA_integer_)
+  max <- max(before_idxs, after_idxs, na.rm = TRUE)
+  if (is.infinite(max)) {
+    return(c(added = 0L, removed = 0L, replaced = 0L))
+  }
+  
+  before2 <- as.list(rep(NA_character_, length.out = max))
+  names(before2) <- as.character(seq_len(max))
+  after2 <- before2
+  for (kk in seq_along(before)) {
+    con <- before[[kk]]
+    before2[[as.integer(con)]] <- con
+  }
+  for (kk in seq_along(after)) {
+    con <- after[[kk]]
+    after2[[as.integer(con)]] <- con
+  }
+
+  ## Drop unchanged connections
+  for (kk in seq_len(max)) {
+    if (identical(after2[[kk]], before2[[kk]])) {
+      before2[[kk]] <- after2[[kk]] <- NA_integer_
+    }
+  }
+  before2 <- before2[!vapply(before2, FUN = is.na, FUN.VALUE = FALSE)]
+  after2 <- after2[!vapply(after2, FUN = is.na, FUN.VALUE = FALSE)]
+  replaced <- intersect(names(after2), names(before2))
+  added <- setdiff(names(after2), names(before2))
+  removed <- setdiff(names(before2), names(after2))
+  c(added = length(added), removed = length(removed), replaced = length(replaced))
+}
+
 evalFuture <- function(
     data = list(
       core = list(
@@ -623,7 +662,8 @@ evalFutureInternal <- function(data) {
       ans
     })
   }
-  
+
+
   ## Use the next-level-down ("popped") future strategy
   plan(strategiesR, .cleanup = FALSE, .init = FALSE)
 
@@ -658,11 +698,34 @@ evalFutureInternal <- function(data) {
     genv[[".Random.seed"]] <- seed
   }
 
-  globalenv <- (getOption("future.globalenv.onMisuse", "ignore") != "ignore")
-  if (globalenv) {
-    ## Record names of variables in the global environment
-    ...future.globalenv.names <- c(names(.GlobalEnv), "...future.value", "...future.globalenv.names", ".Random.seed")
+
+  ## -----------------------------------------------------------------
+  ## Record state to report on:
+  ##  1. assignments to the global environment
+  ##  2. add or removed connections
+  ## -----------------------------------------------------------------
+  globalenv <- getOption("future.globalenv.onMisuse")
+  if (is.null(globalenv)) {
+    globalenv <- FALSE
+  } else {
+    globalenv <- (globalenv != "ignore")
+    if (globalenv) {
+      ## Record names of variables in the global environment
+      ...future.globalenv.names <- c(names(.GlobalEnv), "...future.value", "...future.globalenv.names", ".Random.seed")
+    }
   }
+
+
+  checkConnections <- getOption("future.connections.onMisuse")
+  if (is.null(checkConnections)) {
+    checkConnections <- TRUE
+  } else {
+    checkConnections <- (checkConnections != "ignore")
+  }
+  if (checkConnections) {
+    ...future.connections <- get_connections()
+  }
+
 
   ## Attach globals to the global environment
   ## Undo changes on exit
@@ -737,6 +800,7 @@ evalFutureInternal <- function(data) {
           conditions = ...future.conditions,
           rng = !identical(globalenv()[[".Random.seed"]], ...future.rng),
           globalenv = if (globalenv) list(added = setdiff(names(.GlobalEnv), ...future.globalenv.names)) else NULL,
+          misuse_connections = if (checkConnections) diff_connections(get_connections(), ...future.connections) else NULL,
           started = ...future.startTime
         )
       }, condition = function(cond) {
@@ -834,6 +898,7 @@ evalFutureInternal <- function(data) {
       conditions = ...future.conditions,
       rng = !identical(globalenv()[[".Random.seed"]], ...future.rng),
       globalenv = if (globalenv) list(added = setdiff(names(.GlobalEnv), ...future.globalenv.names)) else NULL,
+      misuse_connections = diff_connections(get_connections(), ...future.connections),
       started = ...future.startTime
     )
   }, error = function(ex) {
@@ -841,6 +906,7 @@ evalFutureInternal <- function(data) {
       conditions = ...future.conditions,
       rng = !identical(globalenv()[[".Random.seed"]], ...future.rng),
       globalenv = if (globalenv) list(added = setdiff(names(.GlobalEnv), ...future.globalenv.names)) else NULL,
+      misuse_connections = diff_connections(get_connections(), ...future.connections),
       started = ...future.startTime
     )
   }) ## output tryCatch()

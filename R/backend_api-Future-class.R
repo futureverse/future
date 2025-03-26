@@ -852,6 +852,8 @@ getFutureContext <- function(future, mc.cores = NULL, local = TRUE, ..., debug =
     future.globals.onMissing          = getOption("future.globals.onMissing"),
   
     ## Pass down other future.* options
+    future.connections.onMisuse       = getOption("future.connections.onMisuse"),
+    future.globalenv.onMisuse         = getOption("future.globalenv.onMisuse"),
     future.globals.maxSize            = future[["maxSizeOfObjects"]],
     future.globals.method             = getOption("future.globals.method"),
     future.globals.onReference        = future[["onReference"]],
