@@ -123,9 +123,9 @@ If \code{"ignore"}, no scan is performed.
 \item{\option{future.wait.interval}:}{(numeric) Initial interval (in
 seconds) between polls. This controls the polling frequency for finding
 an available worker when all workers are currently busy. It also controls
-the polling frequency of \code{resolve()}. (Default: \code{0.005} = 1 ms)}
+the polling frequency of \code{resolve()}. (Default: \code{0.01} = 1 ms)}
 
-\item{\option{future.wait.alpha}:}{(numeric) Positive scale factor used to increase the interval after each poll. (Default: \code{1.005})}
+\item{\option{future.wait.alpha}:}{(numeric) Positive scale factor used to increase the interval after each poll. (Default: \code{1.01})}
 }
 }
 

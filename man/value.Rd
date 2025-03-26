@@ -23,7 +23,7 @@ value(...)
   inorder = TRUE,
   drop = FALSE,
   force = TRUE,
-  sleep = getOption("future.wait.interval", 0.005),
+  sleep = getOption("future.wait.interval", 0.01),
   ...
 )
 
@@ -38,7 +38,7 @@ value(...)
   inorder = TRUE,
   drop = FALSE,
   force = TRUE,
-  sleep = getOption("future.wait.interval", 0.005),
+  sleep = getOption("future.wait.interval", 0.01),
   ...
 )
 

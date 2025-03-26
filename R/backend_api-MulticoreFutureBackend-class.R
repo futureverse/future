@@ -235,8 +235,8 @@ MulticoreFutureBackend <- function(workers = availableCores(constraints = "multi
     workers = workers,
     reg = reg,
     future.wait.timeout = getOption("future.wait.timeout", 24 * 60 * 60),
-    future.wait.interval = getOption("future.wait.interval", 0.005),
-    future.wait.alpha = getOption("future.wait.alpha", 1.005),
+    future.wait.interval = getOption("future.wait.interval", 0.01),
+    future.wait.alpha = getOption("future.wait.alpha", 1.01),
     ...,
     maxSizeOfObjects = maxSizeOfObjects
   )
