@@ -12,8 +12,7 @@ check_connection_details <- function(worker, future) {
   isValid <- isConnectionValid(con)
   if (isValid) return(NULL)
 
-  label <- future[["label"]]
-  if (is.null(label)) label <- "<none>"
+  label <- sQuoteLabel(future[["label"]])
 
   reason <- attr(isValid, "reason", exact = TRUE)
   reason <- gsub("[.]?[[:space:]]*$", "", reason)

@@ -80,7 +80,7 @@
 #' @param earlySignal Specified whether conditions should be signaled as soon
 #' as possible or not.
 #'
-#' @param label An optional character string label attached to the future.
+#' @param label A character string label attached to the future.
 #'
 #' @param \ldots Additional named elements of the future.
 #' 
@@ -101,7 +101,7 @@
 #' @export
 #' @keywords internal
 #' @name Future-class
-Future <- function(expr = NULL, envir = parent.frame(), substitute = TRUE, stdout = TRUE, conditions = "condition", globals = list(), packages = NULL, seed = FALSE, lazy = FALSE, gc = FALSE, earlySignal = FALSE, maxSizeOfObjects = NULL, label = NULL, ...) {
+Future <- function(expr = NULL, envir = parent.frame(), substitute = TRUE, stdout = TRUE, conditions = "condition", globals = list(), packages = NULL, seed = FALSE, lazy = FALSE, gc = FALSE, earlySignal = FALSE, maxSizeOfObjects = NULL, label = NA_character_, ...) {
   if (substitute) expr <- substitute(expr)
   t_start <- Sys.time()
 
@@ -172,7 +172,7 @@ Future <- function(expr = NULL, envir = parent.frame(), substitute = TRUE, stdou
     }
   
     if (!is.null(label)) {
-      stop_if_not(is.character(label))
+      stop_if_not(length(label) == 1, is.character(label))
     }
   })
 
@@ -254,15 +254,24 @@ Future <- function(expr = NULL, envir = parent.frame(), substitute = TRUE, stdou
 }
 
 
+sQuoteLabel <- function(label) {
+  if (is.null(label)) {
+    "NULL"
+  } else if (is.na(label)) {
+    "NA"
+  } else {
+    sQuote(label)
+  }
+}
+
 #' @importFrom utils head capture.output
 #' @export
 print.Future <- function(x, ...) {
   future <- x
   class <- class(future)
   cat(sprintf("%s:\n", class[1]))
-  label <- future[["label"]]
-  if (is.null(label)) label <- "<none>"
-  cat("Label: ", sQuote(label), "\n", sep = "")
+  label <- sQuoteLabel(future[["label"]])
+  cat("Label: ", label, "\n", sep = "")
   cat("Expression:\n")
   print(future[["expr"]])
   cat(sprintf("Lazy evaluation: %s\n", future[["lazy"]]))
@@ -407,9 +416,8 @@ run.Future <- function(future, ...) {
   }
 
   if (future[["state"]] != "created") {
-    label <- future[["label"]]
-    if (is.null(label)) label <- "<none>"
-    msg <- sprintf("A future ('%s') can only be launched once", label)
+    label <- sQuoteLabel(future[["label"]])
+    msg <- sprintf("A future (%s) can only be launched once", label)
     stop(FutureError(msg, future = future))
   }
 
@@ -615,9 +623,8 @@ result <- function(future, ...) {
       ## Signal FutureJournalCondition?
       if (!isTRUE(future[[".journal_signalled"]])) {
         journal <- journal(future)
-        label <- future[["label"]]
-        if (is.null(label)) label <- "<none>"
-        msg <- sprintf("A future ('%s') of class %s was resolved", label, class(future)[1])
+        label <- sQuoteLabel(future[["label"]])
+        msg <- sprintf("A future (%s) of class %s was resolved", label, class(future)[1])
         cond <- FutureJournalCondition(message = msg, journal = journal) 
         signalCondition(cond)
         future[[".journal_signalled"]] <- TRUE
@@ -685,9 +692,8 @@ result.Future <- function(future, ...) {
   ## Sanity check
   if (is.null(result) && version == "1.8") {
     if (inherits(future, "MulticoreFuture")) {
-      label <- future[["label"]]
-      if (is.null(label)) label <- "<none>"
-      msg <- sprintf("A future ('%s') of class %s did not produce a FutureResult object but NULL. This suggests that the R worker terminated (crashed?) before the future expression was resolved.", label, class(future)[1])
+      label <- sQuoteLabel(future[["label"]])
+      msg <- sprintf("A future (%s) of class %s did not produce a FutureResult object but NULL. This suggests that the R worker terminated (crashed?) before the future expression was resolved.", label, class(future)[1])
       stop(FutureError(msg, future = future))
     }
   }

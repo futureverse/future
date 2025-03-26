@@ -127,9 +127,8 @@ FutureError <- function(message, call = NULL, uuid = future[["uuid"]], future = 
 #' @export
 RngFutureCondition <- function(message = NULL, call = NULL, uuid = future[["uuid"]], future = NULL) {
   if (is.null(message)) {
-    label <- future[["label"]]
-    if (is.null(label)) label <- "<none>"
-    message <- sprintf("UNRELIABLE VALUE: Future (%s) unexpectedly generated random numbers without specifying argument 'seed'. There is a risk that those random numbers are not statistically sound and the overall results might be invalid. To fix this, specify 'seed=TRUE'. This ensures that proper, parallel-safe random numbers are produced. To disable this check, use 'seed=NULL', or set option 'future.rng.onMisuse' to \"ignore\".", sQuote(label))
+    label <- sQuoteLabel(future[["label"]])
+    message <- sprintf("UNRELIABLE VALUE: Future (%s) unexpectedly generated random numbers without specifying argument 'seed'. There is a risk that those random numbers are not statistically sound and the overall results might be invalid. To fix this, specify 'seed=TRUE'. This ensures that proper, parallel-safe random numbers are produced. To disable this check, use 'seed=NULL', or set option 'future.rng.onMisuse' to \"ignore\".", label)
   }
   cond <- FutureCondition(message = message, call = call, uuid = uuid, future = future)
   class <- c("RngFutureCondition", class(cond))
@@ -161,8 +160,7 @@ RngFutureError <- function(...) {
 #' @rdname FutureCondition
 #' @export
 UnexpectedFutureResultError <- function(future, hint = NULL) {
-  label <- future[["label"]]
-  if (is.null(label)) label <- "<none>"
+  label <- sQuoteLabel(future[["label"]])
   expr <- hexpr(future[["expr"]])
   result <- future[["result"]]
   result_string <- hpaste(as.character(result))
@@ -180,7 +178,7 @@ UnexpectedFutureResultError <- function(future, hint = NULL) {
   }
   msg <- sprintf("Unexpected result (of class %s != %s) retrieved for %s future (label = %s, expression = %s): %s",
                  sQuote(class(result)[1]), sQuote("FutureResult"),
-                 class(future)[1], sQuote(label), sQuote(expr),
+                 class(future)[1], label, sQuote(expr),
                  result_string)
   cond <- FutureError(msg, future = future)
   class <- c("UnexpectedFutureResultError", class(cond))
@@ -194,8 +192,7 @@ UnexpectedFutureResultError <- function(future, hint = NULL) {
 #' @export
 GlobalEnvFutureCondition <- function(message = NULL, call = NULL, globalenv = globalenv, uuid = future[["uuid"]], future = NULL) {
   if (is.null(message)) {
-    label <- future[["label"]]
-    if (is.null(label)) label <- "<none>"
+    label <- sQuoteLabel(future[["label"]])
     message <- sprintf("Future (%s) added variables to the global environment. A future expression should never assign variables to the global environment - neither by assign() nor by <<-: [n=%d] %s", label, length(globalenv[["added"]]), commaq(globalenv[["added"]]))
   }
   cond <- FutureCondition(message = message, call = call, uuid = uuid, future = future)

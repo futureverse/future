@@ -68,9 +68,8 @@ journal <- function(x, ...) UseMethod("journal")
 journal.Future <- function(x, ...) {
   data <- x[[".journal"]]
   if (is.null(data)) {
-    label <- x[["label"]]
-    if (is.null(label)) label <- "<none>"
-    stopf("No journal is available for future ('%s'). Did you forget to enable journaling?", label)
+    label <- sQuoteLabel(x[["label"]])
+    stopf("No journal is available for future (%s). Did you forget to enable journaling?", label)
   }
   stop_if_not(inherits(data, "FutureJournal"))
   session_uuid <- x[["owner"]]

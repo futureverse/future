@@ -18,7 +18,7 @@ Future(
   gc = FALSE,
   earlySignal = FALSE,
   maxSizeOfObjects = NULL,
-  label = NULL,
+  label = NA_character_,
   ...
 )
 }
@@ -104,7 +104,7 @@ protection to avoid transferring giga- or terabytes of data without noticing.
 (Default: \eqn{500 \cdot 1024^2} bytes = 500 MiB, unless overridden by a
 FutureBackend subclass, or by R option \link{future.globals.maxSize} (sic!))}
 
-\item{label}{An optional character string label attached to the future.}
+\item{label}{A character string label attached to the future.}
 
 \item{\ldots}{Additional named elements of the future.}
 }

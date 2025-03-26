@@ -17,7 +17,7 @@ future(
   packages = NULL,
   stdout = TRUE,
   conditions = "condition",
-  label = NULL,
+  label = NA_character_,
   gc = FALSE,
   earlySignal = FALSE,
   maxSizeOfObjects = NULL,
@@ -35,7 +35,7 @@ futureCall(
   stdout = TRUE,
   conditions = "condition",
   earlySignal = FALSE,
-  label = NULL,
+  label = NA_character_,
   gc = FALSE,
   ...
 )
@@ -113,7 +113,7 @@ Using \code{conditions = NULL} (not recommended) avoids intercepting conditions,
 except from errors; behavior of such unhandled conditions depends on the
 future backend and the environment from which R runs.}
 
-\item{label}{An optional character string label attached to the future.}
+\item{label}{A character string label attached to the future.}
 
 \item{gc}{If TRUE, the garbage collector run (in the process that
 evaluated the future) only after the value of the future is collected.

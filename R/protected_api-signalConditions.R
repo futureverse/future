@@ -95,15 +95,14 @@ signalConditions <- function(future, include = "condition", exclude = NULL, resi
       stop(condition)
     } else if (inherits(condition, "interrupt")) {
       future[["state"]] <- "interrupted"
-      label <- future[["label"]]
-      if (is.null(label)) label <- "<none>"
+      label <- sQuoteLabel(future[["label"]])
       result <- future[["result"]]
       when <- result[["finished"]]
       session_uuid <- result[["session_uuid"]]
       source <- attr(session_uuid, "source")
       host <- source[["host"]]
       pid <- source[["pid"]]
-      msg <- sprintf("A future ('%s') of class %s was interrupted at %s, while running on %s (pid %s)", label, class(future)[1], format(when, format = "%FT%T"), sQuote(host), pid)
+      msg <- sprintf("A future (%s) of class %s was interrupted at %s, while running on %s (pid %s)", label, class(future)[1], format(when, format = "%FT%T"), sQuote(host), pid)
       stop(FutureInterruptError(msg, future = future))
     } else if (inherits(condition, "warning")) {
       warning(condition)

@@ -868,9 +868,8 @@ receiveMessageFromWorker <- local({
   
       ## Sanity check
       if (inherits(condition, "error")) {
-        label <- future[["label"]]
-        if (is.null(label)) label <- "<none>"
-        stop(FutureError(sprintf("Received a %s condition from the %s worker for future ('%s'), which is not possible to relay because that would break the internal state of the future-worker communication. The condition message was: %s", class(condition)[1], class(future)[1], label, sQuote(conditionMessage(condition))), future = future))
+        label <- sQuoteLabel(future[["label"]])
+        stop(FutureError(sprintf("Received a %s condition from the %s worker for future (%s), which is not possible to relay because that would break the internal state of the future-worker communication. The condition message was: %s", class(condition)[1], class(future)[1], label, sQuote(conditionMessage(condition))), future = future))
       }
   
       ## Resignal condition
@@ -1052,9 +1051,7 @@ post_mortem_cluster_failure <- local({
     stop_if_not(length(node_info) == 1L)
     
     ## (3) Information on the future
-    label <- future[["label"]]
-    if (is.null(label)) label <- "<none>"
-    stop_if_not(length(label) == 1L)
+    label <- sQuoteLabel(future[["label"]])
   
     ## (4) POST-MORTEM ANALYSIS:
     postmortem <- list()
@@ -1263,14 +1260,13 @@ handleInterruptedFuture <- local({
   
     stop_if_not(future[["state"]] %in% c("interrupted", "running"))
   
-    label <- future[["label"]]
-    if (is.null(label)) label <- "<none>"
+    label <- sQuoteLabel(future[["label"]])
     workers <- backend[["workers"]]
     node_idx <- future[["node"]]
     cl <- workers[node_idx]
     node <- cl[[1]]
     host <- node[["host"]]
-    msg <- sprintf("A future ('%s') of class %s was interrupted, while running on %s", label, class(future)[1], sQuote(host))
+    msg <- sprintf("A future (%s) of class %s was interrupted, while running on %s", label, class(future)[1], sQuote(host))
     if (inherits(node, "RichSOCKnode")) {
       pid <- node[["session_info"]][["process"]][["pid"]]
       if (!is.null(pid)) msg <- sprintf("%s (pid %s)", msg, pid)

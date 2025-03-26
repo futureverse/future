@@ -158,7 +158,7 @@
 #' @aliases futureCall
 #' @rdname future
 #' @export
-future <- function(expr, envir = parent.frame(), substitute = TRUE, lazy = FALSE, seed = FALSE, globals = TRUE, packages = NULL, stdout = TRUE, conditions = "condition", label = NULL, gc = FALSE, earlySignal = FALSE, maxSizeOfObjects = NULL, ...) {
+future <- function(expr, envir = parent.frame(), substitute = TRUE, lazy = FALSE, seed = FALSE, globals = TRUE, packages = NULL, stdout = TRUE, conditions = "condition", label = NA_character_, gc = FALSE, earlySignal = FALSE, maxSizeOfObjects = NULL, ...) {
   if (substitute) expr <- substitute(expr)
   t_start <- Sys.time()
 

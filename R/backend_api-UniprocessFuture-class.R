@@ -24,9 +24,8 @@ run.UniprocessFuture <- function(future, ...) {
   debug <- isTRUE(getOption("future.debug"))
    
   if (future[["state"]] != 'created') {
-    label <- future[["label"]]
-    if (is.null(label)) label <- "<none>"
-    stop(FutureError(sprintf("A future ('%s') can only be launched once", label), future = future))
+    label <- sQuoteLabel(future[["label"]])
+    stop(FutureError(sprintf("A future (%s) can only be launched once", label), future = future))
   }
 
   ## Assert that the process that created the future is

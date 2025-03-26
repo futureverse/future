@@ -32,7 +32,7 @@ futureAssign(
   stdout = TRUE,
   conditions = "condition",
   earlySignal = FALSE,
-  label = NULL,
+  label = NA_character_,
   gc = FALSE,
   ...,
   assign.env = envir
@@ -124,7 +124,7 @@ future backend and the environment from which R runs.}
 \item{earlySignal}{Specified whether conditions should be signaled as soon
 as possible or not.}
 
-\item{label}{An optional character string label attached to the future.}
+\item{label}{A character string label attached to the future.}
 
 \item{gc}{If TRUE, the garbage collector run (in the process that
 evaluated the future) only after the value of the future is collected.
