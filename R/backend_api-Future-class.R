@@ -174,19 +174,6 @@ Future <- function(expr = NULL, envir = parent.frame(), substitute = TRUE, stdou
     if (!is.null(label)) {
       stop_if_not(is.character(label))
     }
-
-    ## IMPORTANT: Do *not* set 'value' because that field is defunct but
-    ## there might still be legacy code out there that rely on it.  By
-    ## assert it is not set here, it is more likely to be caught.  This
-    ## check will eventually be removed
-    if ("value" %in% args_names) {
-      .Defunct(msg = "Future field 'value' is defunct and must not be set", package = .packageName)
-    }
-  
-    ## 'local' is defunct
-    if ("local" %in% args_names) {
-      .Defunct(msg = "Argument 'local' is defunct as of future 1.31.0 (2023-01-31)", package = .packageName)
-    }
   })
 
   ## FIXME: Deprecate conditions = NULL? (not recommended per help)
@@ -353,8 +340,6 @@ print.Future <- function(x, ...) {
   if (hasResult) {
     if (inherits(result, "FutureResult")) {
       value <- result[["value"]]
-    } else if ("value" %in% names(future)) {
-      .Defunct(msg = sprintf("Detected a %s object that rely on the defunct 'value' field of format version 1.7 or before.", class(future)[1]), package = .packageName)
     } else {
       stop(FutureError(sprintf("The %s object does not have a 'results' field", class(future)[1]), future = future))
     }

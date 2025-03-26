@@ -157,10 +157,6 @@ value.Future <- function(future, stdout = TRUE, signal = TRUE, drop = FALSE, ...
     
     if (any(grepl(".doRNG.stream", deparse(future[["expr"]]), fixed = TRUE))) {
       ## doFuture w/ doRNG, e.g. %dorng%
-    } else if (is_seed(future[["globals"]][["...future.seeds_ii"]][[1]])) {
-      .Defunct(msg = "Please upgrade your 'future.apply' or 'furrr' (type 1)")
-    } else if (is_seed(future[["envir"]][["...future.seeds_ii"]][[1]])) {
-      .Defunct(msg = "Please upgrade your 'future.apply' or 'furrr' (type 2)")
     } else {
       onMisuse <- getOption("future.rng.onMisuse")
       if (is.null(onMisuse)) onMisuse <- "warning"
