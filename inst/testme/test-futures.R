@@ -5,17 +5,6 @@
 library(future)
 library(listenv)
 
-## Backward compatibility
-if (getRversion() < "3.2.0") {
-  names <- function(x) {
-    if (class(x)[1] == "environment") {
-      ls(envir = x, all.names = TRUE)
-    } else {
-      base::names(x)
-    }
-  }
-}
-
 dims <- list(
   NULL,
   c(1, 6),
