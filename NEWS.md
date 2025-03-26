@@ -56,6 +56,9 @@
    but now it's handled automatically by the future framework.
    
  * Add new FutureBackend API for writing future backends.
+
+ * Increase default polling frequencies for checking whether a future
+   is resolved, and for finding available workers.
  
  * Added argument `maxSizeOfObjects` to `future()`, which controls the
    maximum total size of objects send to and from the worker. The

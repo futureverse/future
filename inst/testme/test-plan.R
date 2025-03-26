@@ -39,7 +39,7 @@ future::plan(oplan)
 print(future::plan())
 
 
-library("future")
+library(future)
 
 message("*** plan('unknown strategy')")
 res <- try(plan('unknown strategy'), silent = TRUE)

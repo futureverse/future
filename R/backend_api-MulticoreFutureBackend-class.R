@@ -149,7 +149,7 @@ usedCores <- function() {
 #'         extensive waiting, then a timeout error is thrown.
 #'
 #' @keywords internal
-requestCore <- function(await, workers = availableCores(), timeout = getOption("future.wait.timeout", 30 * 24 * 60 * 60), delta = getOption("future.wait.interval",  0.01), alpha = getOption("future.wait.alpha", 1.01)) {
+requestCore <- function(await, workers = availableCores(), timeout, delta, alpha) {
   stop_if_not(length(workers) == 1L, is.numeric(workers), is.finite(workers), workers >= 1)
   stop_if_not(is.function(await))
   stop_if_not(is.finite(timeout), timeout >= 0)
@@ -234,9 +234,9 @@ MulticoreFutureBackend <- function(workers = availableCores(constraints = "multi
   core <- FutureBackend(
     workers = workers,
     reg = reg,
-    future.wait.timeout = getOption("future.wait.timeout", 30 * 24 * 60 * 60),
-    future.wait.interval = getOption("future.wait.interval", 0.01),
-    future.wait.alpha = getOption("future.wait.alpha", 1.01),
+    future.wait.timeout = getOption("future.wait.timeout", 24 * 60 * 60),
+    future.wait.interval = getOption("future.wait.interval", 0.001),
+    future.wait.alpha = getOption("future.wait.alpha", 1.001),
     ...,
     maxSizeOfObjects = maxSizeOfObjects
   )

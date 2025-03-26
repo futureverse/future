@@ -1,5 +1,5 @@
-library("future")
-library("listenv")
+library(future)
+library(listenv)
 
 ## IMPORTANT:
 ## 1. The below usage of lazy futures will only work when they are

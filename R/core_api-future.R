@@ -113,7 +113,7 @@
 #' \preformatted{
 #'   x <- rnorm(1000)
 #'   f <- future({
-#'     library("stats")
+#'     library(stats)
 #'     median(x)
 #'   })
 #' }
@@ -128,7 +128,7 @@
 #' \preformatted{
 #'   x <- rnorm(1000)
 #'   f <- future({
-#'     library("stats")
+#'     library(stats)
 #'     median(x)
 #'   }, globals = list(x = x))
 #' }

@@ -4,13 +4,7 @@
 \alias{requestCore}
 \title{Request a core for multicore processing}
 \usage{
-requestCore(
-  await,
-  workers = availableCores(),
-  timeout = getOption("future.wait.timeout", 30 * 24 * 60 * 60),
-  delta = getOption("future.wait.interval", 0.01),
-  alpha = getOption("future.wait.alpha", 1.01)
-)
+requestCore(await, workers = availableCores(), timeout, delta, alpha)
 }
 \arguments{
 \item{await}{A function used to try to "collect"

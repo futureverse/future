@@ -263,7 +263,7 @@ Effectively, the above becomes
 \preformatted{
   x <- rnorm(1000)
   f <- future({
-    library("stats")
+    library(stats)
     median(x)
   })
 }
@@ -278,7 +278,7 @@ or
 \preformatted{
   x <- rnorm(1000)
   f <- future({
-    library("stats")
+    library(stats)
     median(x)
   }, globals = list(x = x))
 }

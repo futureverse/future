@@ -134,9 +134,9 @@ ClusterFutureBackend <- local({
       persistent = persistent,
       reg = reg,
       earlySignal = earlySignal,
-      future.wait.timeout = getOption("future.wait.timeout", 30 * 24 * 60 * 60),
-      future.wait.interval = getOption("future.wait.interval", 0.01),
-      future.wait.alpha = getOption("future.wait.alpha", 1.01),
+      future.wait.timeout = getOption("future.wait.timeout", 24 * 60 * 60),
+      future.wait.interval = getOption("future.wait.interval", 0.001),
+      future.wait.alpha = getOption("future.wait.alpha", 1.001),
       ...
     )
     core[["futureClasses"]] <- c("ClusterFuture", core[["futureClasses"]])
@@ -899,7 +899,7 @@ receiveMessageFromWorker <- local({
 }) ## receiveMessageFromWorker()
 
 
-requestNode <- function(await, workers, timeout = getOption("future.wait.timeout", 30 * 24 * 60 * 60), delta = getOption("future.wait.interval", 0.01), alpha = getOption("future.wait.alpha", 1.01)) {
+requestNode <- function(await, workers, timeout, delta, alpha) {
   debug <- isTRUE(getOption("future.debug"))
   
   stop_if_not(inherits(workers, "cluster"))

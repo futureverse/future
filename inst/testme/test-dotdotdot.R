@@ -2,7 +2,7 @@
 #' @tags sequential cluster multisession multicore
 
 library(future)
-library("listenv")
+library(listenv)
 
 for (cores in 1:availCores) {
   message(sprintf("Testing with %d cores ...", cores))

@@ -290,7 +290,7 @@ name_of_function <- function(fcn, add_backticks = FALSE) {
 #'
 #' @rdname value
 #' @export
-value.list <- function(x, idxs = NULL, recursive = 0, reduce = NULL, stdout = TRUE, signal = TRUE, interrupt = TRUE, inorder = TRUE, drop = FALSE, force = TRUE, sleep = getOption("future.wait.interval", 0.01), ...) {
+value.list <- function(x, idxs = NULL, recursive = 0, reduce = NULL, stdout = TRUE, signal = TRUE, interrupt = TRUE, inorder = TRUE, drop = FALSE, force = TRUE, sleep = getOption("future.wait.interval", 0.001), ...) {
   if (is.logical(recursive)) {
     if (recursive) recursive <- getOption("future.resolve.recursive", 99)
   }

@@ -4,6 +4,9 @@
 
 library(future)
 library(listenv)
+options(future.debug = FALSE)
+
+sleep <- function(n) Sys.sleep(0.01*n)
 
 strategies <- supportedStrategies()
 
@@ -30,14 +33,14 @@ for (strategy in strategies) {
         message(sprintf("- result = %s, recursive = %s ...", result, recursive))
       
         f <- future({
-          Sys.sleep(0.2)
+          sleep(2)
           list(a = 1, b = 42L)
         })
         res <- resolve(f, result = result, recursive = recursive)
         stopifnot(identical(res, f))
     
         f <- future({
-          Sys.sleep(0.2)
+          sleep(2)
           list(a = 1, b = 42L)
         }, lazy = TRUE)
         res <- resolve(f, result = result, recursive = recursive)
@@ -100,7 +103,7 @@ for (strategy in strategies) {
 
   x <- list()
   x$a <- future(1)
-  x$b <- future({Sys.sleep(0.2); 2})
+  x$b <- future({sleep(2); 2})
   x[[4]] <- 4
   dim(x) <- c(2, 2)
   y <- resolve(x, idxs = 1)
@@ -120,12 +123,12 @@ for (strategy in strategies) {
   stopifnot(identical(y, x))
 
   x <- list()
-  for (kk in 1:3) x[[kk]] <- future({ Sys.sleep(0.1); kk })
+  for (kk in 1:3) x[[kk]] <- future({ sleep(1); kk })
   y <- resolve(x)
   stopifnot(identical(y, x))
 
   x <- list()
-  for (kk in 1:3) x[[kk]] <- future({ Sys.sleep(0.1); kk }, lazy = TRUE)
+  for (kk in 1:3) x[[kk]] <- future({ sleep(1); kk }, lazy = TRUE)
   y <- resolve(x)
   stopifnot(identical(y, x))
 
@@ -246,7 +249,7 @@ for (strategy in strategies) {
 
   x <- listenv()
   x$a <- future({ 1 })
-  x$b %<-% { Sys.sleep(0.2); 2 }
+  x$b %<-% { sleep(2); 2 }
   x$c %<-% { 3 }
   x$d <- 4
   names <- names(x)

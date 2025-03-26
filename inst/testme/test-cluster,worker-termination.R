@@ -2,7 +2,7 @@
 #' @tags cluster
 
 library(future)
-library("listenv")
+library(listenv)
 options(future.debug = FALSE)
 
 ## IMPORTANT: Since we're killing parallel workers, some of them will not

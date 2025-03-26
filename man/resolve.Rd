@@ -12,7 +12,7 @@ resolve(
   stdout = FALSE,
   signal = FALSE,
   force = FALSE,
-  sleep = getOption("future.wait.interval", 0.01),
+  sleep = getOption("future.wait.interval", 0.001),
   ...
 )
 }

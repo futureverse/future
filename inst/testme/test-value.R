@@ -21,7 +21,7 @@ attr_on_primitive_is_error <- local({
   }
 })
         
-sleep <- function(n) Sys.sleep(0.1*n)
+sleep <- function(n) Sys.sleep(0.01*n)
 
 identical_envs <- function(x, y) {
   if (length(x) > 1) x <- x[order(names(x))]
@@ -153,7 +153,7 @@ for (strategy in strategies) {
       x <- list(
         a = future({ sleep(2); 3 }, lazy = lazy),
         b = future({ sleep(1); 2 }, lazy = lazy),
-        c = future({                 1 }, lazy = lazy),
+        c = future({           1 }, lazy = lazy),
         d = data.frame(a = 1, b = 2),
         e = 42
       )
@@ -166,7 +166,7 @@ for (strategy in strategies) {
       x <- list(
         a = future({ sleep(2); 3 }, lazy = lazy),
         b = future({ sleep(1); 2 }, lazy = lazy),
-        c = future({                 1 }, lazy = lazy),
+        c = future({           1 }, lazy = lazy),
         d = data.frame(a = 1, b = 2),
         e = 42
       )
@@ -179,7 +179,7 @@ for (strategy in strategies) {
       x <- list(
         a = future({ sleep(2); 3 }, lazy = lazy),
         b = future({ sleep(1); 2 }, lazy = lazy),
-        c = future({                 1 }, lazy = lazy),
+        c = future({           1 }, lazy = lazy),
         d = 3,
         e = 42
       )
