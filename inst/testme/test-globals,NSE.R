@@ -44,6 +44,9 @@ for (strategy in supportedStrategies()) {
   stopifnot(identical(v3, v0))
 
   options(future.globals.onMissing = NULL)
+  plan(list(sequential, sequential))
+  void %<-% { void %<-% NULL; void }
+  stopifnot(is.null(void))
 
   message(sprintf("- Strategy: %s ... DONE", strategy))
 }
