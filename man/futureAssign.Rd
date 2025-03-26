@@ -32,7 +32,7 @@ futureAssign(
   stdout = TRUE,
   conditions = "condition",
   earlySignal = FALSE,
-  label = NA_character_,
+  label = NULL,
   gc = FALSE,
   ...,
   assign.env = envir

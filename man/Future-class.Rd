@@ -18,7 +18,7 @@ Future(
   gc = FALSE,
   earlySignal = FALSE,
   maxSizeOfObjects = NULL,
-  label = NA_character_,
+  label = NULL,
   ...
 )
 }

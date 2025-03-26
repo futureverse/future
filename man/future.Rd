@@ -17,7 +17,7 @@ future(
   packages = NULL,
   stdout = TRUE,
   conditions = "condition",
-  label = NA_character_,
+  label = NULL,
   gc = FALSE,
   earlySignal = FALSE,
   maxSizeOfObjects = NULL,
@@ -35,7 +35,7 @@ futureCall(
   stdout = TRUE,
   conditions = "condition",
   earlySignal = FALSE,
-  label = NA_character_,
+  label = NULL,
   gc = FALSE,
   ...
 )
