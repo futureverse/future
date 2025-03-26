@@ -16,7 +16,7 @@
 #'
 #' @rdname future
 #' @export
-futureCall <- function(FUN, args = list(), envir = parent.frame(), lazy = FALSE, seed = FALSE, globals = TRUE, packages = NULL, stdout = TRUE, conditions = "condition", earlySignal = FALSE, label = NA_character_, gc = FALSE, ...) {
+futureCall <- function(FUN, args = list(), envir = parent.frame(), lazy = FALSE, seed = FALSE, globals = TRUE, packages = NULL, stdout = TRUE, conditions = "condition", earlySignal = FALSE, label = NULL, gc = FALSE, ...) {
   stop_if_not(is.function(FUN))
   stop_if_not(is.list(args))
 

@@ -101,7 +101,7 @@
 #' @export
 #' @keywords internal
 #' @name Future-class
-Future <- function(expr = NULL, envir = parent.frame(), substitute = TRUE, stdout = TRUE, conditions = "condition", globals = list(), packages = NULL, seed = FALSE, lazy = FALSE, gc = FALSE, earlySignal = FALSE, maxSizeOfObjects = NULL, label = NA_character_, ...) {
+Future <- function(expr = NULL, envir = parent.frame(), substitute = TRUE, stdout = TRUE, conditions = "condition", globals = list(), packages = NULL, seed = FALSE, lazy = FALSE, gc = FALSE, earlySignal = FALSE, maxSizeOfObjects = NULL, label = NULL, ...) {
   if (substitute) expr <- substitute(expr)
   t_start <- Sys.time()
 

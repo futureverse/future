@@ -185,7 +185,7 @@
 #'
 #' @rdname futureAssign
 #' @export
-futureAssign <- function(x, value, envir = parent.frame(), substitute = TRUE, lazy = FALSE, seed = FALSE, globals = TRUE, packages = NULL, stdout = TRUE, conditions = "condition", earlySignal = FALSE, label = NA_character_, gc = FALSE, ..., assign.env = envir) {
+futureAssign <- function(x, value, envir = parent.frame(), substitute = TRUE, lazy = FALSE, seed = FALSE, globals = TRUE, packages = NULL, stdout = TRUE, conditions = "condition", earlySignal = FALSE, label = NULL, gc = FALSE, ..., assign.env = envir) {
   stop_if_not(is.character(x), !is.na(x), nzchar(x))
   if (substitute) value <- substitute(value)
   
