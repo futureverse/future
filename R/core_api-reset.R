@@ -76,6 +76,10 @@ reset.Future <- function(x, ...) {
     future[[name]] <- NULL
   }
 
+  future[["owner"]] <- session_uuid()
+  counter <- .package[["futureCounter"]] <- .package[["futureCounter"]] + 1L
+  future[["uuid"]] <- future_uuid(owner = future[["owner"]], counter = counter)
+
   future[["state"]] <- "created"
   future[["lazy"]] <- TRUE
   

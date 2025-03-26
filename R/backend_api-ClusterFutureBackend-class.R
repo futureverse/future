@@ -674,6 +674,11 @@ result.ClusterFuture <- function(future, ...) {
     return(result)
   }
 
+  ## Assert that the process that created the future is
+  ## also the one that evaluates/resolves/queries it.
+  assertOwner(future)
+  assertValidConnection(future)
+
   repeat({
     result <- receiveMessageFromWorker(future, debug = debug)
     if (inherits(result, "FutureResult")) {
@@ -712,11 +717,6 @@ receiveMessageFromWorker <- local({
       if (debug) mdebug("starting non-launched future")
       future <- run(future)
     }
-  
-    ## Assert that the process that created the future is
-    ## also the one that evaluates/resolves/queries it.
-    assertOwner(future)
-    assertValidConnection(future)
   
     backend <- future[["backend"]]
     if (!inherits(backend, "FutureBackend") && !is.list(backend)) {

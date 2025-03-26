@@ -428,35 +428,22 @@ run.Future <- function(future, ...) {
     stop(FutureError(msg, future = future))
   }
 
-  ## Sanity check: This method should only called for lazy futures
-#  stop_if_not(future[["lazy"]])
-
-  if (is.null(future[["owner"]])) {
-    future[["owner"]] <- session_uuid()
-  } else {  
-    ## Be conservative for now; don't allow lazy futures created in another R
-    ## session to be launched. This will hopefully change later, but we won't
-    ## open this door until we understand the ramifications. /HB 2020-12-21
-    if (isTRUE(getOption("future.lazy.assertOwner"))) {
-      assertOwner(future)
-    } else {
-      future[["owner"]] <- session_uuid()
-    }
-  }
-
   ## Create temporary future for a specific backend, but don't launch it
   evaluator <- plan("next")
   if (debug) mdebug("Future backend: ", commaq(class(evaluator)))
+
+  ## Be conservative for now; don't allow lazy futures created in another R
+  ## session to be launched. This will hopefully change later, but we won't
+  ## open this door until we understand the ramifications. /HB 2020-12-21
+  if (isTRUE(getOption("future.lazy.assertOwner"))) {
+    assertOwner(future)
+  }
 
   ## Implements a FutureBackend?
   backend <- makeFutureBackend(evaluator, debug = debug)
   if (!is.null(backend)) {
     if (debug) mdebug_push("Using FutureBackend ...")
     
-    ## Assert that the process that created the future is
-    ## also the one that evaluates/resolves/queries it.
-    assertOwner(future)
-
     ## Coerce to target Future class
     class(future) <- backend[["futureClasses"]]
 
@@ -466,6 +453,7 @@ run.Future <- function(future, ...) {
         future[[name]] <- backend[[name]]
       }
     }
+
 
 
     ## Protect against  exporting too large objects
