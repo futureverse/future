@@ -51,21 +51,3 @@ session_uuid <- local({
 future_uuid <- function(owner, counter) {
   c(owner, counter)
 }
-
-uuid_of_connection <- function(con, ..., must_work = TRUE) {
-  stop_if_not(inherits(con, "connection"))
-  if (must_work) {
-    info <- summary(con)
-    info[["opened"]] <- NULL
-    uuid <- uuid(info, ...)
-  } else {
-    uuid <- tryCatch({
-      info <- summary(con)
-      info[["opened"]] <- NULL
-      uuid(info, ...)
-    }, error = function(ex) {
-      attr(con, "uuid", exact = TRUE)
-    })
-  }
-  uuid
-} ## uuid_of_connection()
