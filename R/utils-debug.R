@@ -6,7 +6,7 @@ now <- function(x = Sys.time(), format = "[%H:%M:%OS3] ") {
 debug_indent <- local({
   prefix <- ""
   depth <- 0L
-  symbols <- rep(c("|", ":", "."), times = 3L)
+  symbols <- rep(c("|", ":", "."), times = 10L)
  
   function(delta = 0L) {
     if (delta == 0) return(prefix)

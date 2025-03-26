@@ -27,7 +27,7 @@ for (cores in 1:availCores) {
     xs <- as.list(1:3)
     fs <- lapply(xs, FUN = function(kk) {
       future({
-        Sys.sleep(kk/10)
+        Sys.sleep(kk/2)
         kk
       }, lazy = TRUE)
     })
