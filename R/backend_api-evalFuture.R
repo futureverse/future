@@ -196,59 +196,119 @@ setNumberOfThreads <- function(openmp = NA_integer_, rcpp = openmp) {
 } ## setNumberOfThreads()
 
 
-get_connections <- function() {
-  lapply(getAllConnections()[-(1:3)], FUN = getConnection)
+get_connections <- function(details = FALSE) {
+  if (isTRUE(details)) {
+    cons <- lapply(getAllConnections(), FUN = function(idx) {
+      con <- getConnection(idx)
+      as.data.frame(c(index = idx, summary(con)))
+    })
+    cons <- do.call(rbind, cons)
+  } else {
+    cons <- lapply(getAllConnections()[-(1:3)], FUN = getConnection)
+  }
+  cons
 }
 
 diff_connections <- function(after, before) {
-  ## Expand
-  before_idxs <- vapply(before, FUN = as.integer, FUN.VALUE = NA_integer_)
-  after_idxs <- vapply(after, FUN = as.integer, FUN.VALUE = NA_integer_)
-  max <- max(before_idxs, after_idxs, na.rm = TRUE)
-  if (is.infinite(max)) {
-    return(c(added = list(), removed = list(), replaced = list()))
-  }
+  index <- NULL ## To please R CMD check
   
-  before2 <- as.list(rep(NA_character_, length.out = max))
-  names(before2) <- as.character(seq_len(max))
-  after2 <- before2
-  for (kk in seq_along(before)) {
-    con <- before[[kk]]
-    before2[[as.integer(con)]] <- con
-  }
-  for (kk in seq_along(after)) {
-    con <- after[[kk]]
-    after2[[as.integer(con)]] <- con
+  ## Nothing to do?
+  if (length(before) + length(after) == 0L) {
+    return(c(added = NULL, removed = NULL, replaced = NULL))
   }
 
-  ## Drop unchanged connections
-  for (kk in seq_len(max)) {
-    if (identical(after2[[kk]], before2[[kk]])) {
-      before2[[kk]] <- after2[[kk]] <- NA_integer_
+  if (inherits(after, "data.frame")) {
+    stop_if_not(inherits(before, "data.frame"))
+
+    idxs <- setdiff(after[["index"]], before[["index"]])
+    if (length(idxs) > 0) {
+      added <- subset(after, index %in% idxs)
+      after <- subset(after, ! index %in% idxs)
+    } else {
+      added <- NULL
     }
-  }
-  before2 <- before2[!vapply(before2, FUN = is.na, FUN.VALUE = FALSE)]
-  after2 <- after2[!vapply(after2, FUN = is.na, FUN.VALUE = FALSE)]
-  added_idx <- as.integer(setdiff(names(after2), names(before2)))
-  removed_idx <- as.integer(setdiff(names(before2), names(after2)))
-  replaced_idx <- as.integer(intersect(names(after2), names(before2)))
+    
+    idxs <- setdiff(before[["index"]], after[["index"]])
+    if (length(idxs) > 0) {
+      removed <- subset(before, index %in% idxs)
+      before <- subset(before, ! index %in% idxs)
+    } else {
+      removed <- NULL
+    }
+
+    idxs <- intersect(before[["index"]], after[["index"]])
+    if (length(idxs) > 0) {
+      replaced <- list()
+      for (idx in idxs) {
+        before_idx <- subset(before, index == idx)
+        after_idx <- subset(after, index == idx)
+        if (!identical(before_idx, after_idx)) {
+          for (name in colnames(after_idx)) {
+            value <- after_idx[[name]]
+            if (!identical(before_idx[[name]], value)) {
+              value <- sprintf("%s (was %s)", value, before_idx[[name]])
+              after_idx[[name]] <- value
+            }
+          }
+          replaced <- c(replaced, list(after_idx))
+        }
+      }
+      replaced <- do.call(rbind, replaced)
+    } else {
+      replaced <- NULL
+    }
+  } else {
+    ## Expand
+    before_idxs <- vapply(before, FUN = as.integer, FUN.VALUE = NA_integer_)
+    after_idxs <- vapply(after, FUN = as.integer, FUN.VALUE = NA_integer_)
+    max <- max(before_idxs, after_idxs, na.rm = TRUE)
+    stop_if_not(is.finite(max))
+    
+    before2 <- as.list(rep(NA_character_, length.out = max))
+    names(before2) <- as.character(seq_len(max))
+    after2 <- before2
+    for (kk in seq_along(before)) {
+      con <- before[[kk]]
+      before2[[as.integer(con)]] <- con
+    }
+    for (kk in seq_along(after)) {
+      con <- after[[kk]]
+      after2[[as.integer(con)]] <- con
+    }
   
-  added <- lapply(added_idx, FUN = function(idx) {
-    con <- getConnection(idx)
-    summary(con)
-  })
-  names(added) <- added_idx
+    ## Drop unchanged connections
+    for (kk in seq_len(max)) {
+      if (identical(after2[[kk]], before2[[kk]])) {
+        before2[[kk]] <- after2[[kk]] <- NA_integer_
+      }
+    }
+    before2 <- before2[!vapply(before2, FUN = is.na, FUN.VALUE = FALSE)]
+    after2 <- after2[!vapply(after2, FUN = is.na, FUN.VALUE = FALSE)]
+    added_idx <- as.integer(setdiff(names(after2), names(before2)))
+    removed_idx <- as.integer(setdiff(names(before2), names(after2)))
+    replaced_idx <- as.integer(intersect(names(after2), names(before2)))
+    
+    cons <- lapply(added_idx, FUN = function(idx) {
+      con <- getConnection(idx)
+      as.data.frame(c(index = idx, summary(con)))
+    })
+    added <- do.call(rbind, cons)
+  
+    empty <- summary(getConnection(0L))
+    empty <- lapply(empty, FUN = function(x) NA_character_)
+    empty <- as.data.frame(c(index = 0L, empty))
+    cons <- lapply(removed_idx, FUN = function(idx) {
+      empty[["index"]] <- idx
+      empty
+    })
+    removed <- do.call(rbind, cons)
 
-  removed <- lapply(removed_idx, FUN = function(idx) {
-    list(details = "information not collected")
-  })
-  names(removed) <- removed_idx
-
-  replaced <- lapply(replaced_idx, FUN = function(idx) {
-    con <- getConnection(idx)
-    summary(con)
-  })
-  names(replaced) <- replaced_idx
+    cons <- lapply(replaced_idx, FUN = function(idx) {
+      con <- getConnection(idx)
+      as.data.frame(c(index = idx, summary(con)))
+    })
+    replaced <- do.call(rbind, cons)
+  }
 
   list(added = added, removed = removed, replaced = replaced)
 }
@@ -734,14 +794,16 @@ evalFutureInternal <- function(data) {
   }
 
 
-  checkConnections <- getOption("future.connections.onMisuse")
-  if (is.null(checkConnections)) {
+  value <- getOption("future.connections.onMisuse")
+  if (is.null(value)) {
     checkConnections <- TRUE
   } else {
-    checkConnections <- (checkConnections != "ignore")
+    checkConnections <- (value != "ignore")
+    attr(checkConnections, "details") <- attr(value, "details", exact = TRUE)
+    value <- NULL
   }
   if (checkConnections) {
-    ...future.connections <- get_connections()
+    ...future.connections <- get_connections(details = isTRUE(attr(checkConnections, "details", exact = TRUE)))
   }
 
 
@@ -818,7 +880,7 @@ evalFutureInternal <- function(data) {
           conditions = ...future.conditions,
           rng = !identical(globalenv()[[".Random.seed"]], ...future.rng),
           globalenv = if (globalenv) list(added = setdiff(names(.GlobalEnv), ...future.globalenv.names)) else NULL,
-          misuse_connections = if (checkConnections) diff_connections(get_connections(), ...future.connections) else NULL,
+          misuse_connections = if (checkConnections) diff_connections(get_connections(details = isTRUE(attr(checkConnections, "details", exact = TRUE))), ...future.connections) else NULL,
           started = ...future.startTime
         )
       }, condition = function(cond) {
@@ -916,7 +978,7 @@ evalFutureInternal <- function(data) {
       conditions = ...future.conditions,
       rng = !identical(globalenv()[[".Random.seed"]], ...future.rng),
       globalenv = if (globalenv) list(added = setdiff(names(.GlobalEnv), ...future.globalenv.names)) else NULL,
-      misuse_connections = diff_connections(get_connections(), ...future.connections),
+      misuse_connections = diff_connections(get_connections(details = isTRUE(attr(checkConnections, "details", exact = TRUE))), ...future.connections),
       started = ...future.startTime
     )
   }, error = function(ex) {
@@ -924,7 +986,7 @@ evalFutureInternal <- function(data) {
       conditions = ...future.conditions,
       rng = !identical(globalenv()[[".Random.seed"]], ...future.rng),
       globalenv = if (globalenv) list(added = setdiff(names(.GlobalEnv), ...future.globalenv.names)) else NULL,
-      misuse_connections = diff_connections(get_connections(), ...future.connections),
+      misuse_connections = diff_connections(get_connections(details = isTRUE(attr(checkConnections, "details", exact = TRUE))), ...future.connections),
       started = ...future.startTime
     )
   }) ## output tryCatch()

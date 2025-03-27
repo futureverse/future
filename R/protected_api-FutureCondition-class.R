@@ -229,18 +229,18 @@ ConnectionsMisuseFutureCondition <- function(message = NULL, call = NULL, differ
     message <- sprintf("Future (%s) added, removed, or modified connections. A future expression must close any opened connections and must not close connections it did not open", label)
     if (!is.null(differences)) {
       details <- lapply(differences, FUN = function(diffs) {
-        diffs <- lapply(diffs, FUN = function(diff) {
-          paste(sprintf("%s=%s", names(diff), diff), collapse = ", ")
-        })
-        diffs <- unlist(diffs, use.names = TRUE)
-        diffs <- sprintf("[%s, index %s]", diffs, names(diffs))
-        diffs <- paste(diffs, collapse = "; ")
-        diffs
+        if (is.null(diffs)) {
+          "<none>"
+        } else {
+          diffs <- apply(diffs, MARGIN = 1L, FUN = function(diff) {
+            paste(sprintf("%s=%s", names(diff), diff), collapse = ", ")
+          })
+          paste(sprintf("[%s]", diffs), collapse = "; ")
+        }
       })
       details <- unlist(details, use.names = TRUE)
-      counts <- lengths(differences)
-      details <- sprintf("%d connection %s (%s)", lengths(differences), names(details), details)
-      details[counts == 0] <- sprintf("0 %s", names(counts[counts == 0]))
+      counts <- vapply(differences, FUN = NROW, FUN.VALUE = 0L)
+      details <- sprintf("%d connection %s (%s)", counts, names(details), details)
       details <- paste(details, collapse = ", ")
       message <- sprintf("%s. Details: %s", message, details)
     }

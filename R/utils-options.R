@@ -374,4 +374,13 @@ update_package_options <- function(debug = FALSE) {
 
   ## future (> 1.34.0-9000):
   update_package_option("future.connections.onMisuse", mode = "character", debug = debug)
+  value <- getOption("future.connections.onMisuse")
+  if (!is.null(value)) {
+    pattern <- "[[]details=TRUE[]]$"
+    if (grepl(pattern, value)) {
+      value <- gsub(pattern, "", value)
+      attr(value, "details") <- TRUE
+      options(future.connections.onMisuse = value)
+    }
+  }
 }
