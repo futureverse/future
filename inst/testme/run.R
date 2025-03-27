@@ -70,7 +70,7 @@ if (!is.na(code)) {
     stop("Evaluation of R_TESTME_FILTER_NAME=%s produced an error: %s",
          sQuote(code), conditionMessage(keep))
   }
-  if (!isTRUE(keep)) envir[["status"]] <- "skipped"
+  if (!isTRUE(keep)) testme[["status"]] <- "skipped"
 }
 
 code <- Sys.getenv("R_TESTME_FILTER_TAGS", NA_character_)

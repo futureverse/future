@@ -5,10 +5,12 @@ testme <- as.environment("testme")
 options(oopts0)
 
 ## (b) Remove added
-added <- setdiff(names(options()), names(oopts0))
-opts <- vector("list", length = length(added))
-names(opts) <- added
-options(opts)
+local({
+  added <- setdiff(names(options()), names(oopts0))
+  opts <- vector("list", length = length(added))
+  names(opts) <- added
+  options(opts)
+})
 
 ## (c) Assert that everything was undone
 if (!identical(options(), oopts0)) {
