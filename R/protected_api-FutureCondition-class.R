@@ -226,12 +226,24 @@ GlobalEnvFutureError <- function(...) {
 ConnectionsMisuseFutureCondition <- function(message = NULL, call = NULL, differences = NULL, uuid = future[["uuid"]], future = NULL) {
   if (is.null(message)) {
     label <- sQuoteLabel(future[["label"]])
-    if (is.null(differences)) {
-      info <- "added, removed, or modified connections"
-    } else {
-      info <- sprintf("added (n=%d), removed (n=%d), or replaced (n=%d) connections", differences[["added"]], differences[["removed"]], differences[["replaced"]])
+    message <- sprintf("Future (%s) added, removed, or modified connections. A future expression must close any opened connections and must not close connections it did not open", label)
+    if (!is.null(differences)) {
+      details <- lapply(differences, FUN = function(diffs) {
+        diffs <- lapply(diffs, FUN = function(diff) {
+          paste(sprintf("%s=%s", names(diff), diff), collapse = ", ")
+        })
+        diffs <- unlist(diffs, use.names = TRUE)
+        diffs <- sprintf("[%s, index %s]", diffs, names(diffs))
+        diffs <- paste(diffs, collapse = "; ")
+        diffs
+      })
+      details <- unlist(details, use.names = TRUE)
+      counts <- lengths(differences)
+      details <- sprintf("%d connection %s (%s)", lengths(differences), names(details), details)
+      details[counts == 0] <- sprintf("0 %s", names(counts[counts == 0]))
+      details <- paste(details, collapse = ", ")
+      message <- sprintf("%s. Details: %s", message, details)
     }
-    message <- sprintf("Future (%s) %s. A future expression must close any opened connections and must not close connections it did not open", label, info)
   }
   cond <- FutureCondition(message = message, call = call, uuid = uuid, future = future)
   cond[["differences"]] <- differences

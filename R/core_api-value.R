@@ -154,7 +154,7 @@ value.Future <- function(future, stdout = TRUE, signal = TRUE, drop = FALSE, ...
   ## Report on misuse of the connections
   ## ------------------------------------------------------------------
   ## Were there any connections added, removed, or changed?
-  if (any(result[["misuse_connections"]] > 0L)) {
+  if (any(lengths(result[["misuse_connections"]]) > 0L)) {
     onMisuse <- getOption("future.connections.onMisuse")
     if (is.null(onMisuse)) onMisuse <- "warning"
     if (onMisuse != "ignore") {

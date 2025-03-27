@@ -206,7 +206,7 @@ diff_connections <- function(after, before) {
   after_idxs <- vapply(after, FUN = as.integer, FUN.VALUE = NA_integer_)
   max <- max(before_idxs, after_idxs, na.rm = TRUE)
   if (is.infinite(max)) {
-    return(c(added = 0L, removed = 0L, replaced = 0L))
+    return(c(added = list(), removed = list(), replaced = list()))
   }
   
   before2 <- as.list(rep(NA_character_, length.out = max))
@@ -229,10 +229,29 @@ diff_connections <- function(after, before) {
   }
   before2 <- before2[!vapply(before2, FUN = is.na, FUN.VALUE = FALSE)]
   after2 <- after2[!vapply(after2, FUN = is.na, FUN.VALUE = FALSE)]
-  replaced <- intersect(names(after2), names(before2))
-  added <- setdiff(names(after2), names(before2))
-  removed <- setdiff(names(before2), names(after2))
-  c(added = length(added), removed = length(removed), replaced = length(replaced))
+  added_idx <- as.integer(setdiff(names(after2), names(before2)))
+  removed_idx <- as.integer(setdiff(names(before2), names(after2)))
+  replaced_idx <- as.integer(intersect(names(after2), names(before2)))
+  
+  added <- lapply(added_idx, FUN = function(idx) {
+    con <- getConnection(idx)
+    summary(con)
+  })
+  names(added) <- added_idx
+
+  removed <- lapply(removed_idx, FUN = function(idx) {
+    con <- getConnection(idx)
+    summary(con)
+  })
+  names(removed) <- removed_idx
+
+  replaced <- lapply(replaced_idx, FUN = function(idx) {
+    con <- getConnection(idx)
+    summary(con)
+  })
+  names(replaced) <- replaced_idx
+
+  list(added = added, removed = removed, replaced = replaced)
 }
 
 evalFuture <- function(

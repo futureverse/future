@@ -15,13 +15,16 @@ for (onMisuse in c("ignore", "warning", "error")) {
   })
   r <- result(f)
   diff <- r[["misuse_connections"]]
-  message("Misused connections: ", paste(sprintf("%s: %d", names(diff), diff), collapse = ", "))
+  message("Misused connections:")
   v <- tryCatch(value(f), condition = identity)
   if (onMisuse == "error") {
+    message(conditionMessage(v))
     stopifnot(inherits(v, "FutureError"))
   } else if (onMisuse == "warning") {
+    message(conditionMessage(v))
     stopifnot(inherits(v, "FutureWarning"))
   } else {
+    message("None.")
     stopifnot(
       !inherits(v, "condition"),
       identical(v, 42L)
