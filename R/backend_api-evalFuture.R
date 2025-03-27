@@ -240,8 +240,7 @@ diff_connections <- function(after, before) {
   names(added) <- added_idx
 
   removed <- lapply(removed_idx, FUN = function(idx) {
-    con <- getConnection(idx)
-    summary(con)
+    list(details = "information not collected")
   })
   names(removed) <- removed_idx
 
