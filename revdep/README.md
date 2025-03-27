@@ -10,7 +10,7 @@
 |collate  |en_US.UTF-8                                               |
 |ctype    |en_US.UTF-8                                               |
 |tz       |America/Los_Angeles                                       |
-|date     |2025-03-25                                                |
+|date     |2025-03-26                                                |
 |pandoc   |3.6.3 @ /software/c4/cbi/software/pandoc-3.6.3/bin/pandoc |
 |quarto   |NA                                                        |
 
@@ -18,7 +18,7 @@
 
 |package    |old    |new         |Δ  |
 |:----------|:------|:-----------|:--|
-|future     |1.34.0 |1.34.0-9322 |*  |
+|future     |1.34.0 |1.34.0-9328 |*  |
 |codetools  |0.2-20 |0.2-20      |   |
 |digest     |0.6.37 |0.6.37      |   |
 |globals    |0.16.3 |0.16.3      |   |
@@ -40,7 +40,7 @@
 |[future.tests](problems.md#futuretests)|0.7.0   |__+1__ |        |     |
 |[Prostar](problems.md#prostar)|1.38.1  |       |__+1__  |3    |
 
-## All (425)
+## All (426)
 
 |package                      |version   |error  |warning |note |
 |:----------------------------|:---------|:------|:-------|:----|
@@ -99,7 +99,7 @@
 |[ClustIRR](problems.md#clustirr)|1.4.0     |       |        |2    |
 |[codalm](problems.md#codalm) |0.1.2     |       |        |1    |
 |[codebook](problems.md#codebook)|0.9.6     |       |        |1    |
-|[collinear](problems.md#collinear)|2.0.0     |       |        |2    |
+|[collinear](problems.md#collinear)|2.0.0     |       |        |1    |
 |conformalInference.fd        |1.1.1     |       |        |     |
 |conformalInference.multi     |1.1.1     |       |        |     |
 |[Coxmos](problems.md#coxmos) |1.1.2     |       |        |1    |
@@ -159,7 +159,7 @@
 |flexFitR                     |1.1.0     |       |        |     |
 |[flowGraph](problems.md#flowgraph)|1.14.0    |       |        |3    |
 |flowml                       |0.1.3     |       |        |     |
-|[fmeffects](problems.md#fmeffects)|0.1.4     |       |        |1    |
+|fmeffects                    |0.1.4     |       |        |     |
 |[forecastML](problems.md#forecastml)|0.9.0     |       |        |1    |
 |fst4pg                       |1.0.0     |       |        |     |
 |fundiversity                 |1.1.1     |       |        |     |
@@ -175,10 +175,10 @@
 |[GeDS](problems.md#geds)     |0.2.8     |       |1       |     |
 |genBaRcode                   |1.2.8     |       |        |     |
 |[geocmeans](problems.md#geocmeans)|0.3.4     |       |        |1    |
-|[geohabnet](problems.md#geohabnet)|2.1.3     |2      |        |     |
+|[geohabnet](problems.md#geohabnet)|2.1.3     |3      |        |     |
 |[GeoModels](problems.md#geomodels)|2.1.0     |       |        |1    |
 |GetBCBData                   |0.7.0     |       |        |     |
-|[googleComputeEngineR](problems.md#googlecomputeenginer)|0.3.0     |       |        |2    |
+|[googleComputeEngineR](problems.md#googlecomputeenginer)|0.3.0     |       |        |3    |
 |googlePubsubR                |0.0.4     |       |        |     |
 |[googleTagManageR](problems.md#googletagmanager)|0.2.0     |       |        |1    |
 |GPCsign                      |0.1.1     |       |        |     |
@@ -200,7 +200,7 @@
 |[hero](problems.md#hero)     |0.6       |       |        |2    |
 |[heterogen](problems.md#heterogen)|1.2.33    |       |        |1    |
 |hoopR                        |2.1.0     |       |        |     |
-|[httpgd](problems.md#httpgd) |2.0.4     |       |        |1    |
+|[httpgd](problems.md#httpgd) |2.0.4     |1      |        |1    |
 |[hwep](problems.md#hwep)     |2.0.2     |       |        |3    |
 |hydroloom                    |1.1.0     |       |        |     |
 |idmodelr                     |0.4.0     |       |        |     |
@@ -254,14 +254,14 @@
 |mcp                          |0.3.4     |       |        |     |
 |merTools                     |0.6.2     |       |        |     |
 |[metaGE](problems.md#metage) |1.2.1     |       |        |1    |
-|metasnf                      |2.0.0     |       |        |     |
+|metasnf                      |2.0.6     |       |        |     |
 |MIC                          |1.0.2     |       |        |     |
 |mice                         |3.17.0    |       |        |     |
 |migraph                      |1.4.5     |       |        |     |
 |[mikropml](problems.md#mikropml)|1.6.1     |       |        |1    |
 |[MineICA](problems.md#mineica)|1.46.0    |       |4       |4    |
 |[missSBM](problems.md#misssbm)|1.0.5     |       |        |1    |
-|[mistyR](problems.md#mistyr) |1.14.0    |       |        |3    |
+|[mistyR](problems.md#mistyr) |1.14.0    |       |        |2    |
 |[mlr3](problems.md#mlr3)     |0.23.0    |       |        |1    |
 |mlr3db                       |0.5.2     |       |        |     |
 |mlr3inferr                   |0.1.0     |       |        |     |
@@ -273,7 +273,7 @@
 |[mlr3tuning](problems.md#mlr3tuning)|1.3.0     |       |        |1    |
 |[modelsummary](problems.md#modelsummary)|2.3.0     |       |        |1    |
 |[momentuHMM](problems.md#momentuhmm)|1.5.5     |       |        |1    |
-|[MOSS](problems.md#moss)     |0.2.2     |       |        |2    |
+|[MOSS](problems.md#moss)     |0.2.2     |       |        |1    |
 |mplusParallel.automation     |0.0.1.1   |       |        |     |
 |mrgsim.parallel              |0.2.1     |       |        |     |
 |mslp                         |1.8.0     |       |        |     |
@@ -329,11 +329,11 @@
 |[projpred](problems.md#projpred)|2.8.0     |       |        |2    |
 |promises                     |1.3.2     |       |        |     |
 |[Prostar](problems.md#prostar)|1.38.1    |       |__+1__  |3    |
-|proteus                      |1.1.4     |       |        |     |
+|proteus                      |1.1.5     |       |        |     |
 |protti                       |0.9.1     |       |        |     |
 |[psborrow2](problems.md#psborrow2)|0.0.4.0   |       |        |2    |
 |PSCBS                        |0.67.0    |       |        |     |
-|[pseudohouseholds](problems.md#pseudohouseholds)|0.1.1     |       |        |1    |
+|[pseudohouseholds](problems.md#pseudohouseholds)|0.1.1     |       |        |1 -1 |
 |PUMP                         |1.0.4     |       |        |     |
 |[qape](problems.md#qape)     |2.1       |       |        |1    |
 |QBMS                         |1.5.0     |       |        |     |
@@ -368,6 +368,7 @@
 |[SCArray.sat](problems.md#scarraysat)|1.6.0     |       |        |1    |
 |SCdeconR                     |1.0.0     |       |        |     |
 |scDiffCom                    |1.0.0     |       |        |     |
+|SCGLR                        |3.1.0     |       |        |     |
 |SCtools                      |0.3.3.1   |       |        |     |
 |[sctransform](problems.md#sctransform)|0.4.1     |       |        |1    |
 |[sdmTMB](problems.md#sdmtmb) |0.6.0     |       |        |1    |
@@ -376,10 +377,10 @@
 |semPower                     |2.1.1     |       |        |     |
 |semTests                     |0.5.0     |       |        |     |
 |semtree                      |0.9.20    |       |        |     |
-|[sentopics](problems.md#sentopics)|0.7.4     |2      |        |3    |
+|[sentopics](problems.md#sentopics)|0.7.4     |       |        |3    |
 |[Seurat](problems.md#seurat) |5.2.1     |       |        |3    |
 |[SeuratObject](problems.md#seuratobject)|5.0.2     |       |        |3    |
-|[shapr](problems.md#shapr)   |1.0.2     |       |        |2    |
+|[shapr](problems.md#shapr)   |1.0.3     |       |        |2    |
 |[sharp](problems.md#sharp)   |1.4.6     |       |        |2    |
 |[shiny](problems.md#shiny)   |1.10.0    |       |        |1    |
 |[shiny.worker](problems.md#shinyworker)|0.0.1     |       |        |2    |
@@ -388,7 +389,7 @@
 |[sigminer](problems.md#sigminer)|2.3.1     |       |        |1    |
 |[Signac](problems.md#signac) |1.14.0    |       |        |1    |
 |[signeR](problems.md#signer) |2.8.0     |       |        |4    |
-|[SimDesign](problems.md#simdesign)|2.19.1    |-1     |        |1    |
+|[SimDesign](problems.md#simdesign)|2.19.1    |       |        |1    |
 |simglm                       |0.8.9     |       |        |     |
 |simhelpers                   |0.3.1     |       |        |     |
 |simIDM                       |0.1.0     |       |        |     |
@@ -405,8 +406,8 @@
 |[spaMM](problems.md#spamm)   |4.5.0     |       |        |2    |
 |spanishoddata                |0.1.0     |       |        |     |
 |[sparrpowR](problems.md#sparrpowr)|0.2.8     |       |1       |     |
-|[SPARSEMODr](problems.md#sparsemodr)|1.2.0     |       |        |1    |
-|[spatialTIME](problems.md#spatialtime)|1.3.4-5   |       |        |1    |
+|[SPARSEMODr](problems.md#sparsemodr)|1.2.0     |       |        |2    |
+|spatialTIME                  |1.3.4-5   |       |        |-1   |
 |[spatialwarnings](problems.md#spatialwarnings)|3.1.0     |       |        |1    |
 |spdesign                     |0.0.5     |       |        |     |
 |specr                        |1.0.0     |       |        |     |

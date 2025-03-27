@@ -280,7 +280,7 @@ Run `revdepcheck::revdep_details(, "batchtools")` for more info
 
 *   checking dependencies in R code ... NOTE
     ```
-    [c4-n43:3560534] OPAL ERROR: Not initialized in file ext2x_client.c at line 112
+    [c4-n43:1290647] OPAL ERROR: Not initialized in file ext2x_client.c at line 112
     --------------------------------------------------------------------------
     The application appears to have been direct launched using "srun",
     but OMPI was not built with SLURM's PMI support and therefore cannot
@@ -327,9 +327,9 @@ Run `revdepcheck::revdep_details(, "BayesianMCPMod")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  8.8Mb
+      installed size is  5.8Mb
       sub-directories of 1Mb or more:
-        doc   8.2Mb
+        doc   5.2Mb
     ```
 
 # bayesmove
@@ -479,10 +479,10 @@ Run `revdepcheck::revdep_details(, "blavaan")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 399.0Mb
+      installed size is 186.6Mb
       sub-directories of 1Mb or more:
         R           1.2Mb
-        libs      396.0Mb
+        libs      183.6Mb
         testdata    1.4Mb
     ```
 
@@ -892,13 +892,6 @@ Run `revdepcheck::revdep_details(, "collinear")` for more info
 
 ## In both
 
-*   checking installed package size ... NOTE
-    ```
-      installed size is  7.4Mb
-      sub-directories of 1Mb or more:
-        data   7.0Mb
-    ```
-
 *   checking data for non-ASCII characters ... NOTE
     ```
       Note: found 89 marked Latin-1 strings
@@ -1128,9 +1121,10 @@ Run `revdepcheck::revdep_details(, "distantia")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 14.7Mb
+      installed size is  9.9Mb
       sub-directories of 1Mb or more:
-        libs  13.0Mb
+        help   1.0Mb
+        libs   7.8Mb
     ```
 
 *   checking Rd cross-references ... NOTE
@@ -1161,7 +1155,7 @@ Run `revdepcheck::revdep_details(, "DT")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  6.5Mb
+      installed size is  6.4Mb
       sub-directories of 1Mb or more:
         htmlwidgets   5.6Mb
     ```
@@ -1184,7 +1178,7 @@ Run `revdepcheck::revdep_details(, "EFAtools")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  7.6Mb
+      installed size is  7.7Mb
       sub-directories of 1Mb or more:
         libs   6.3Mb
     ```
@@ -1368,10 +1362,10 @@ Run `revdepcheck::revdep_details(, "fdacluster")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 23.7Mb
+      installed size is 25.1Mb
       sub-directories of 1Mb or more:
-        R      1.9Mb
-        doc    1.5Mb
+        R      2.6Mb
+        doc    2.1Mb
         help   2.1Mb
         libs  17.7Mb
     ```
@@ -1537,30 +1531,6 @@ Run `revdepcheck::revdep_details(, "flowGraph")` for more info
     Package unavailable to check Rd xrefs: ‘doParallel’
     ```
 
-# fmeffects
-
-<details>
-
-* Version: 0.1.4
-* GitHub: https://github.com/holgstr/fmeffects
-* Source code: https://github.com/cran/fmeffects
-* Date/Publication: 2024-11-05 18:50:02 UTC
-* Number of recursive dependencies: 183
-
-Run `revdepcheck::revdep_details(, "fmeffects")` for more info
-
-</details>
-
-## In both
-
-*   checking installed package size ... NOTE
-    ```
-      installed size is  5.9Mb
-      sub-directories of 1Mb or more:
-        R      1.0Mb
-        help   4.1Mb
-    ```
-
 # forecastML
 
 <details>
@@ -1687,6 +1657,25 @@ Run `revdepcheck::revdep_details(, "geohabnet")` for more info
 
 ## In both
 
+*   checking examples ... ERROR
+    ```
+    Running examples in ‘geohabnet-Ex.R’ failed
+    The error most likely occurred in:
+    
+    > ### Name: load_parameters
+    > ### Title: Load Parameters from YAML File
+    > ### Aliases: load_parameters
+    > 
+    > ### ** Examples
+    > 
+    > # Load parameters from default file
+    > load_parameters()
+    Error in yaml.load(readLines(con, warn = readLines.warn), error.label = error.label,  : 
+      (/c4/home/henrik/.config/R/geohabnet/parameters.yaml) Duplicate map key: 'default'
+    Calls: load_parameters -> <Anonymous> -> <Anonymous> -> yaml.load
+    Execution halted
+    ```
+
 *   checking tests ...
     ```
       Running ‘testthat.R’
@@ -1707,7 +1696,7 @@ Run `revdepcheck::revdep_details(, "geohabnet")` for more info
        13.           ├─future::value(fs)
        14.           └─future:::value.list(fs)
       
-      [ FAIL 2 | WARN 0 | SKIP 0 | PASS 16 ]
+      [ FAIL 2 | WARN 1 | SKIP 0 | PASS 16 ]
       Error: Test failures
       Execution halted
     ```
@@ -1776,6 +1765,13 @@ Run `revdepcheck::revdep_details(, "googleComputeEngineR")` for more info
 </details>
 
 ## In both
+
+*   checking installed package size ... NOTE
+    ```
+      installed size is  5.2Mb
+      sub-directories of 1Mb or more:
+        doc   4.6Mb
+    ```
 
 *   checking Rd files ... NOTE
     ```
@@ -2035,9 +2031,9 @@ Run `revdepcheck::revdep_details(, "hbamr")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 125.4Mb
+      installed size is 92.1Mb
       sub-directories of 1Mb or more:
-        libs  124.0Mb
+        libs  90.7Mb
     ```
 
 *   checking for GNU extensions in Makefiles ... NOTE
@@ -2063,7 +2059,7 @@ Run `revdepcheck::revdep_details(, "hero")` for more info
 
 *   checking dependencies in R code ... NOTE
     ```
-    [c4-n43:618177] OPAL ERROR: Not initialized in file ext2x_client.c at line 112
+    [c4-n43:2324211] OPAL ERROR: Not initialized in file ext2x_client.c at line 112
     --------------------------------------------------------------------------
     The application appears to have been direct launched using "srun",
     but OMPI was not built with SLURM's PMI support and therefore cannot
@@ -2131,6 +2127,31 @@ Run `revdepcheck::revdep_details(, "httpgd")` for more info
 </details>
 
 ## In both
+
+*   checking tests ...
+    ```
+      Running ‘testthat.R’/software/c4/cbi/software/_rocky8/R-4.4.3-gcc13/lib64/R/bin/BATCH: line 60: 1491812 Segmentation fault      (core dumped) ${R_HOME}/bin/R -f ${in} ${opts} ${R_BATCH_OPTIONS} > ${out} 2>&1
+    
+     ERROR
+    Running the tests in ‘tests/testthat.R’ failed.
+    Last 50 lines of output:
+       1. └─jsonlite::fromJSON(httr::content(res, as = "text")) at test-server.R:62:3
+       2.   └─jsonlite:::parse_and_simplify(...)
+       3.     └─jsonlite:::parseJSON(txt, bigint_as_char)
+       4.       └─jsonlite:::parse_string(txt, bigint_as_char)
+      ── Error ('test-server.R:83:5'): Clear plots ───────────────────────────────────
+    ...
+      1/1 mismatches
+      [1] 503 - 404 == 99
+      
+      [ FAIL 16 | WARN 0 | SKIP 0 | PASS 2 ]
+      Error: Test failures
+      Execution halted
+      
+       *** caught segfault ***
+      address (nil), cause 'unknown'
+      An irrecoverable exception occurred. R is aborting now ...
+    ```
 
 *   checking installed package size ... NOTE
     ```
@@ -2493,7 +2514,7 @@ Run `revdepcheck::revdep_details(, "ldsr")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  5.4Mb
+      installed size is  5.5Mb
       sub-directories of 1Mb or more:
         libs   4.9Mb
     ```
@@ -2516,7 +2537,7 @@ Run `revdepcheck::revdep_details(, "lidR")` for more info
 
 *   checking tests ...
     ```
-      Running ‘testthat.R’/software/c4/cbi/software/_rocky8/R-4.4.3-gcc13/lib64/R/bin/BATCH: line 60: 1338097 Aborted                 (core dumped) ${R_HOME}/bin/R -f ${in} ${opts} ${R_BATCH_OPTIONS} > ${out} 2>&1
+      Running ‘testthat.R’/software/c4/cbi/software/_rocky8/R-4.4.3-gcc13/lib64/R/bin/BATCH: line 60: 3256738 Aborted                 (core dumped) ${R_HOME}/bin/R -f ${in} ${opts} ${R_BATCH_OPTIONS} > ${out} 2>&1
     
      ERROR
     Running the tests in ‘tests/testthat.R’ failed.
@@ -2874,8 +2895,9 @@ Run `revdepcheck::revdep_details(, "missSBM")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 10.2Mb
+      installed size is 10.3Mb
       sub-directories of 1Mb or more:
+        R      1.0Mb
         libs   8.0Mb
     ```
 
@@ -2894,14 +2916,6 @@ Run `revdepcheck::revdep_details(, "mistyR")` for more info
 </details>
 
 ## In both
-
-*   checking installed package size ... NOTE
-    ```
-      installed size is  6.1Mb
-      sub-directories of 1Mb or more:
-        data   2.3Mb
-        doc    3.5Mb
-    ```
 
 *   checking R code for possible problems ... NOTE
     ```
@@ -2995,9 +3009,9 @@ Run `revdepcheck::revdep_details(, "modelsummary")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  6.4Mb
+      installed size is  5.9Mb
       sub-directories of 1Mb or more:
-        help       4.3Mb
+        help       3.8Mb
         tinytest   1.7Mb
     ```
 
@@ -3041,13 +3055,6 @@ Run `revdepcheck::revdep_details(, "MOSS")` for more info
 </details>
 
 ## In both
-
-*   checking installed package size ... NOTE
-    ```
-      installed size is  8.1Mb
-      sub-directories of 1Mb or more:
-        doc   3.0Mb
-    ```
 
 *   checking Rd files ... NOTE
     ```
@@ -3105,7 +3112,7 @@ Run `revdepcheck::revdep_details(, "multitool")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  5.0Mb
+      installed size is  5.1Mb
       sub-directories of 1Mb or more:
         doc   4.3Mb
     ```
@@ -3640,9 +3647,9 @@ Run `revdepcheck::revdep_details(, "polykde")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 11.1Mb
+      installed size is 15.4Mb
       sub-directories of 1Mb or more:
-        libs  10.8Mb
+        libs  15.0Mb
     ```
 
 # portvine
@@ -3792,8 +3799,9 @@ Run `revdepcheck::revdep_details(, "psborrow2")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  5.4Mb
+      installed size is  5.9Mb
       sub-directories of 1Mb or more:
+        R     1.0Mb
         doc   3.9Mb
     ```
 
@@ -3810,6 +3818,15 @@ Run `revdepcheck::revdep_details(, "psborrow2")` for more info
 Run `revdepcheck::revdep_details(, "pseudohouseholds")` for more info
 
 </details>
+
+## Newly fixed
+
+*   checking installed package size ... NOTE
+    ```
+      installed size is  5.3Mb
+      sub-directories of 1Mb or more:
+        data   5.0Mb
+    ```
 
 ## In both
 
@@ -4171,7 +4188,7 @@ Run `revdepcheck::revdep_details(, "sdmTMB")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 97.9Mb
+      installed size is 97.8Mb
       sub-directories of 1Mb or more:
         libs  95.9Mb
     ```
@@ -4192,56 +4209,9 @@ Run `revdepcheck::revdep_details(, "sentopics")` for more info
 
 ## In both
 
-*   checking examples ... ERROR
-    ```
-    Running examples in ‘sentopics-Ex.R’ failed
-    The error most likely occurred in:
-    
-    > ### Name: LDAvis
-    > ### Title: Visualize a LDA model using 'LDAvis'
-    > ### Aliases: LDAvis
-    > 
-    > ### ** Examples
-    > 
-    > lda <- LDA(ECB_press_conferences_tokens)
-    > lda <- fit(lda, 100)
-    0%   10   20   30   40   50   60   70   80   90   100%
-    [----|----|----|----|----|----|----|----|----|----|
-    **************************************************|
-    > LDAvis(lda)
-    Error in loadNamespace(x) : there is no package called ‘RJSONIO’
-    Calls: LDAvis ... loadNamespace -> withRestarts -> withOneRestart -> doWithOneRestart
-    Execution halted
-    ```
-
-*   checking tests ...
-    ```
-      Running ‘testthat.R’
-     ERROR
-    Running the tests in ‘tests/testthat.R’ failed.
-    Last 50 lines of output:
-      > 
-      > library("testthat")
-      > library("sentopics")
-      > 
-      > if (Sys.getenv("R_COVR") != "true") {
-      +   test_check("sentopics")
-    ...
-        9. ├─sentopics::LDAvis(lda)
-       10. │ └─LDAvis::createJSON(...)
-       11. └─base::loadNamespace(x)
-       12.   └─base::withRestarts(stop(cond), retry_loadNamespace = function() NULL)
-       13.     └─base (local) withOneRestart(expr, restarts[[1L]])
-       14.       └─base (local) doWithOneRestart(return(expr), restart)
-      
-      [ FAIL 1 | WARN 0 | SKIP 1 | PASS 344 ]
-      Error: Test failures
-      Execution halted
-    ```
-
 *   checking installed package size ... NOTE
     ```
-      installed size is  8.3Mb
+      installed size is  8.4Mb
       sub-directories of 1Mb or more:
         data   1.2Mb
         libs   6.2Mb
@@ -4332,10 +4302,10 @@ Run `revdepcheck::revdep_details(, "SeuratObject")` for more info
 
 <details>
 
-* Version: 1.0.2
+* Version: 1.0.3
 * GitHub: https://github.com/NorskRegnesentral/shapr
 * Source code: https://github.com/cran/shapr
-* Date/Publication: 2025-02-07 00:40:02 UTC
+* Date/Publication: 2025-03-26 17:10:02 UTC
 * Number of recursive dependencies: 167
 
 Run `revdepcheck::revdep_details(, "shapr")` for more info
@@ -4346,9 +4316,9 @@ Run `revdepcheck::revdep_details(, "shapr")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 13.3Mb
+      installed size is 13.4Mb
       sub-directories of 1Mb or more:
-        doc    4.2Mb
+        doc    4.3Mb
         libs   7.8Mb
     ```
 
@@ -4401,10 +4371,11 @@ Run `revdepcheck::revdep_details(, "shiny")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 13.7Mb
+      installed size is 14.0Mb
       sub-directories of 1Mb or more:
-        R     1.5Mb
-        www  10.4Mb
+        R      1.5Mb
+        help   1.2Mb
+        www   10.4Mb
     ```
 
 # shiny.worker
@@ -4568,33 +4539,6 @@ Run `revdepcheck::revdep_details(, "SimDesign")` for more info
 
 </details>
 
-## Newly fixed
-
-*   checking re-building of vignette outputs ... ERROR
-    ```
-    Error(s) in re-building vignettes:
-    --- re-building ‘Catch_errors.Rmd’ using rmarkdown
-    --- finished re-building ‘Catch_errors.Rmd’
-    
-    --- re-building ‘Fixed_obj_fun.Rmd’ using rmarkdown
-    
-    Quitting from Fixed_obj_fun.Rmd:64-69 [unnamed-chunk-5]
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    <error/rlang_error>
-    Error in `serverSocket()`:
-    ...
-    --- finished re-building ‘Saving-results.Rmd’
-    
-    --- re-building ‘SimDesign-intro.Rmd’ using rmarkdown
-    --- finished re-building ‘SimDesign-intro.Rmd’
-    
-    SUMMARY: processing the following file failed:
-      ‘Fixed_obj_fun.Rmd’
-    
-    Error: Vignette re-building failed.
-    Execution halted
-    ```
-
 ## In both
 
 *   checking installed package size ... NOTE
@@ -4644,7 +4588,7 @@ Run `revdepcheck::revdep_details(, "skpr")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 59.6Mb
+      installed size is 59.7Mb
       sub-directories of 1Mb or more:
         libs  59.0Mb
     ```
@@ -4782,7 +4726,7 @@ Run `revdepcheck::revdep_details(, "spaMM")` for more info
 
 *   checking package dependencies ... NOTE
     ```
-    Packages suggested but not available for checking: 'IsoriX', 'RSpectra'
+    Package suggested but not available for checking: ‘IsoriX’
     
     Packages which this enhances but not available for checking:
       'multcomp', 'RLRsim', 'lmerTest'
@@ -4835,35 +4779,19 @@ Run `revdepcheck::revdep_details(, "SPARSEMODr")` for more info
 
 ## In both
 
+*   checking installed package size ... NOTE
+    ```
+      installed size is  5.4Mb
+      sub-directories of 1Mb or more:
+        doc    1.2Mb
+        libs   4.0Mb
+    ```
+
 *   checking dependencies in R code ... NOTE
     ```
     Namespaces in Imports field not imported from:
       ‘future’ ‘geosphere’ ‘lubridate’ ‘tidyverse’ ‘viridis’
       All declared Imports should be used.
-    ```
-
-# spatialTIME
-
-<details>
-
-* Version: 1.3.4-5
-* GitHub: https://github.com/FridleyLab/spatialTIME
-* Source code: https://github.com/cran/spatialTIME
-* Date/Publication: 2024-06-04 15:30:11 UTC
-* Number of recursive dependencies: 141
-
-Run `revdepcheck::revdep_details(, "spatialTIME")` for more info
-
-</details>
-
-## In both
-
-*   checking installed package size ... NOTE
-    ```
-      installed size is  6.3Mb
-      sub-directories of 1Mb or more:
-        data   1.5Mb
-        doc    3.5Mb
     ```
 
 # spatialwarnings
@@ -5051,11 +4979,11 @@ Run `revdepcheck::revdep_details(, "squat")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 19.9Mb
+      installed size is 22.8Mb
       sub-directories of 1Mb or more:
-        data   1.1Mb
+        data   1.5Mb
         help   1.1Mb
-        libs  17.5Mb
+        libs  20.0Mb
     ```
 
 # ssdtools
@@ -5129,8 +5057,9 @@ Run `revdepcheck::revdep_details(, "stars")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  6.8Mb
+      installed size is  7.3Mb
       sub-directories of 1Mb or more:
+        R     1.0Mb
         doc   2.9Mb
         nc    1.7Mb
     ```
@@ -5219,7 +5148,7 @@ Run `revdepcheck::revdep_details(, "synergyfinder")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  6.3Mb
+      installed size is  6.2Mb
       sub-directories of 1Mb or more:
         doc   5.8Mb
     ```
@@ -5378,7 +5307,7 @@ Run `revdepcheck::revdep_details(, "tenm")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  5.9Mb
+      installed size is  6.0Mb
       sub-directories of 1Mb or more:
         extdata   5.0Mb
     ```
@@ -5667,7 +5596,6 @@ Run `revdepcheck::revdep_details(, "tsmarch")` for more info
 *   checking re-building of vignette outputs ... ERROR
     ```
     Error(s) in re-building vignettes:
-      ...
     --- re-building ‘feasible_multivariate_garch.Rmd’ using rmarkdown
     ! Undefined control sequence.
     l.97 \NewDocumentCommand
@@ -5677,11 +5605,14 @@ Run `revdepcheck::revdep_details(, "tsmarch")` for more info
     LaTeX failed to compile /c4/home/henrik/futureverse/future/revdep/checks/tsmarch/new/tsmarch.Rcheck/vign_test/tsmarch/vignettes/feasible_multivariate_garch.tex. See https://yihui.org/tinytex/r/#debugging for debugging tips. See feasible_multivariate_garch.log for more info.
     --- failed re-building ‘feasible_multivariate_garch.Rmd’
     
-    --- re-building ‘tsmarch_demo.Rmd’ using rmarkdown
-    --- finished re-building ‘tsmarch_demo.Rmd’
-    
-    SUMMARY: processing the following file failed:
-      ‘feasible_multivariate_garch.Rmd’
+    ...
+    36: tryCatchOne(expr, names, parentenv, handlers[[1L]])
+    37: tryCatchList(expr, classes, parentenv, handlers)
+    38: tryCatch({    engine$weave(file, quiet = quiet, encoding = enc)    setwd(startdir)    output <- find_vignette_product(name, by = "weave", engine = engine)    if (!have.makefile && vignette_is_tex(output)) {        texi2pdf(file = output, clean = FALSE, quiet = quiet)        output <- find_vignette_product(name, by = "texi2pdf",             engine = engine)    }}, error = function(e) {    OK <<- FALSE    message(gettextf("Error: processing vignette '%s' failed with diagnostics:\n%s",         file, conditionMessage(e)))})
+    39: tools:::.buildOneVignette("tsmarch_demo.Rmd", "/c4/home/henrik/futureverse/future/revdep/checks/tsmarch/new/tsmarch.Rcheck/vign_test/tsmarch",     TRUE, FALSE, "tsmarch_demo", "UTF-8", "/scratch/henrik/574174/Rtmp2je7Fd/filee9fd97252ea79.rds")
+    An irrecoverable exception occurred. R is aborting now ...
+    SUMMARY: processing the following files failed:
+      ‘feasible_multivariate_garch.Rmd’ ‘tsmarch_demo.Rmd’
     
     Error: Vignette re-building failed.
     Execution halted
@@ -5916,9 +5847,9 @@ Run `revdepcheck::revdep_details(, "wru")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 11.5Mb
+      installed size is  7.5Mb
       sub-directories of 1Mb or more:
-        data   7.5Mb
+        data   3.5Mb
         help   1.9Mb
         libs   1.9Mb
     ```
