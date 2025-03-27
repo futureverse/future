@@ -24,7 +24,7 @@ blocks until a core is available."><meta property="og:image" content="https://fu
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">future</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.34.0-9322</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.34.0-9328</span>
       </span>
     </div>
 
@@ -167,13 +167,7 @@ blocks until a core is available.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">requestCore</span><span class="op">(</span></span>
-<span>  <span class="va">await</span>,</span>
-<span>  workers <span class="op">=</span> <span class="fu"><a href="re-exports.html">availableCores</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>  timeout <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"future.wait.timeout"</span>, <span class="fl">30</span> <span class="op">*</span> <span class="fl">24</span> <span class="op">*</span> <span class="fl">60</span> <span class="op">*</span> <span class="fl">60</span><span class="op">)</span>,</span>
-<span>  delta <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"future.wait.interval"</span>, <span class="fl">0.01</span><span class="op">)</span>,</span>
-<span>  alpha <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"future.wait.alpha"</span>, <span class="fl">1.01</span><span class="op">)</span></span>
-<span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">requestCore</span><span class="op">(</span><span class="va">await</span>, workers <span class="op">=</span> <span class="fu"><a href="re-exports.html">availableCores</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">timeout</span>, <span class="va">delta</span>, <span class="va">alpha</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">

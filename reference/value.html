@@ -26,7 +26,7 @@ queried futures are resolved."><meta property="og:image" content="https://future
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">future</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.34.0-9322</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.34.0-9328</span>
       </span>
     </div>
 
@@ -299,7 +299,8 @@ Names and dimension attributes are preserved, if available.
 All future elements are replaced by their corresponding <code>value()</code> values.
 For all other elements, the existing object is kept as-is.</p>
 <p>If <code>signal</code> is TRUE and one of the futures produces an error, then
-that error is relayed.</p>
+that error is relayed. Any remaining, non-resolved futures in <code>x</code> are
+interrupted, prior to signalling such an error.</p>
     </div>
 
     <div id="ref-examples">
