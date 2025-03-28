@@ -64,15 +64,16 @@
    
  * Add new FutureBackend API for writing future backends.
 
- * Added argument `maxSizeOfObjects` to `future()`, which controls the
-   maximum total size of objects send to and from the worker. The
-   default value can be controlled when setting up the future backend,
-   e.g. `plan(multisession, maxSizeOfObjects = 1000^3)`.
+ * The maximum total size of objects send to and from the worker can
+   now be configured per backend, e.g. `plan(multisession,
+   maxSizeOfObjects = 10e6)` will produce an error if the total size
+   of globals exceeds 10 MB.  
 
- * The default value `maxSizeOfObjects` is now configured per backend,
-   and if not set there, by R option `future.globals.maxSize` (sic!).
-   Backends `sequential` and `multicore` has no such limit, i.e.
-   `maxSizeOfObjects = +Inf`.
+ * Backends `sequential` and `multicore` no longer has a limit on the
+   maximum size of globals, i.e. they now default to `maxSizeOfObjects
+   = +Inf`. Backends `cluster` and `multisession` also defaults to
+   `maxSizeOfObjects = +Inf`, unless R option `future.globals.maxSize`
+   (sic!) is set.
    
 ## Bug Fixes
 

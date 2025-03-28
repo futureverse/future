@@ -20,7 +20,6 @@ future(
   label = NULL,
   gc = FALSE,
   earlySignal = FALSE,
-  maxSizeOfObjects = NULL,
   ...
 )
 
@@ -124,17 +123,6 @@ frequently) or FALSE (less frequently).
 
 \item{earlySignal}{Specified whether conditions should be signaled as soon
 as possible or not.}
-
-\item{maxSizeOfObjects}{The maximum allowed total size, in bytes, of all
-objects to and from the parallel worker allows.
-This can help to protect against unexpectedly large data transfers between
-the parent process and the parallel workers - data that is often transferred
-over the network, which sometimes also includes the internet. For instance,
-if you sit at home and have set up a future backend with workers running
-remotely at your university or company, then you might want to use this
-protection to avoid transferring giga- or terabytes of data without noticing.
-(Default: \eqn{500 \cdot 1024^2} bytes = 500 MiB, unless overridden by a
-FutureBackend subclass, or by R option \link{future.globals.maxSize} (sic!))}
 
 \item{FUN}{A \link[base]{function} to be evaluated.}
 

@@ -101,7 +101,7 @@
 #' @export
 #' @keywords internal
 #' @name Future-class
-Future <- function(expr = NULL, envir = parent.frame(), substitute = TRUE, stdout = TRUE, conditions = "condition", globals = list(), packages = NULL, seed = FALSE, lazy = FALSE, gc = FALSE, earlySignal = FALSE, maxSizeOfObjects = NULL, label = NULL, ...) {
+Future <- function(expr = NULL, envir = parent.frame(), substitute = TRUE, stdout = TRUE, conditions = "condition", globals = list(), packages = NULL, seed = FALSE, lazy = FALSE, gc = FALSE, earlySignal = FALSE, label = NULL, ...) {
   if (substitute) expr <- substitute(expr)
   t_start <- Sys.time()
 
@@ -189,14 +189,6 @@ Future <- function(expr = NULL, envir = parent.frame(), substitute = TRUE, stdou
     }
   }
 
-  ## Backward compatibility; there might be code out there that sets
-  ## option 'future.globals.maxSize' just before created the future.
-  ## FIXME: The plan is to eventually remove this, and only query
-  ## the option when setting up the backend.
-  if (is.null(maxSizeOfObjects)) {
-    maxSizeOfObjects <- getOption("future.globals.maxSize")
-  }
-
   if ("reset" %in% args_names) {
     reset <- args[["reset"]]
     stop_if_not(is.character(reset), !anyNA(reset))
@@ -235,7 +227,6 @@ Future <- function(expr = NULL, envir = parent.frame(), substitute = TRUE, stdou
   core[["label"]] <- label
   core[["earlySignal"]] <- earlySignal
   core[["gc"]] <- gc
-  core[["maxSizeOfObjects"]] <- maxSizeOfObjects
   
   core[["onReference"]] <- onReference
   core[["owner"]] <- session_uuid()
@@ -431,68 +422,23 @@ run.Future <- function(future, ...) {
   backend <- plan("backend")
   if (!is.null(backend)) {
     if (debug) mdebugf_push("Using %s ...", class(backend)[1])
-    
+
+    ## Protect against exporting too large objects
+    future <- validateFutureGlobals(backend, future)
+
     ## Coerce to target Future class
     class(future) <- backend[["futureClasses"]]
 
     ## Add future settings with defaults from the backend
-    for (name in c("earlySignal", "gc", "maxSizeOfObjects")) {
+    for (name in c("earlySignal", "gc")) {
       if (is.null(future[[name]])) {
         future[[name]] <- backend[[name]]
       }
     }
 
-
-    ## Protect against  exporting too large objects
-    globals <- future[["globals"]]
-    if (length(globals) > 0) {
-      if (debug) mdebug_push("Checking size limitations of globals ...")
-      
-      ## (i) Maximum allowed total size of globals
-      maxSizeOfObjects <- future[["maxSizeOfObjects"]]
-
-      if (debug) mdebugf("Total size of globals allowed: %.2g bytes", maxSizeOfObjects)
-      
-      ## (ii) Calculate the total size of globals, if needed
-      total_size <- attr(globals, "total_size")
-      if (is.na(total_size)) {
-        if (is.finite(maxSizeOfObjects)) {
-          sizes <- lapply(globals, FUN = objectSize)
-          sizes <- unlist(sizes, use.names = TRUE)
-          total_size <- sum(sizes, na.rm = TRUE)
-          attr(globals, "total_size") <- total_size
-          future[["globals"]] <- globals
-        }
-      }
-
-      if (debug) {
-        if (is.finite(total_size)) {
-          mdebugf("Total size of globals: %s", asIEC(total_size))
-        } else {
-          mdebug("Total size of globals: <skipped per backend>")
-        }
-      }
-
-      ## (iii) Assert that the total size is within limits
-      if (!is.na(total_size) && total_size > maxSizeOfObjects) {
-        sizes <- lapply(globals, FUN = objectSize)
-        sizes <- unlist(sizes, use.names = TRUE)
-        total_size <- sum(sizes, na.rm = TRUE)
-        msg <- summarize_size_of_globals(globals,
-                                         sizes = sizes,
-                                         maxSize = maxSizeOfObjects,
-                                         exprOrg = future[["expr"]],
-                                         debug = debug)
-        msg <- sprintf("Will not launch future due to the size of the globals %s exceeds %s. %s", asIEC(total_size), asIEC(maxSizeOfObjects), msg)
-        if (debug) mdebug(msg)
-        if (total_size > maxSizeOfObjects) stop(FutureError(msg, future = future))
-      }          
-      if (debug) mdebug_pop("Checking size limitations of globals ... done")
-    } ## if (length(globals) > 0)
-
-
     if (debug) mdebug_push("Launching futures ...")
     future[["backend"]] <- backend
+
     future2 <- launchFuture(backend, future = future)
     if (debug) mdebug_pop("Launching futures ... done")
     if (debug) mdebug("Future launched: ", commaq(class(future2)))
@@ -856,7 +802,7 @@ getFutureContext <- function(future, mc.cores = NULL, local = TRUE, ..., debug =
     ## Pass down other future.* options
     future.connections.onMisuse       = getOption("future.connections.onMisuse"),
     future.globalenv.onMisuse         = getOption("future.globalenv.onMisuse"),
-    future.globals.maxSize            = future[["maxSizeOfObjects"]],
+    future.globals.maxSize            = backend[["maxSizeOfObjects"]],
     future.globals.method             = getOption("future.globals.method"),
     future.globals.onReference        = future[["onReference"]],
     future.globals.resolve            = getOption("future.globals.resolve"),

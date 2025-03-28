@@ -37,7 +37,7 @@
 #'
 #' @keywords internal
 #' @export
-FutureBackend <- function(..., earlySignal = FALSE, gc = FALSE, maxSizeOfObjects = getOption("future.globals.maxSize", 500 * 1024 ^ 2), hooks = FALSE) {
+FutureBackend <- function(..., earlySignal = FALSE, gc = FALSE, maxSizeOfObjects = getOption("future.globals.maxSize", +Inf), hooks = FALSE) {
   core <- new.env(parent = emptyenv())
 
   if (!is.logical(gc)) {
@@ -73,6 +73,15 @@ print.FutureBackend <- function(x, ...) {
   s <- c(s, sprintf("Number of workers: %d", nbrOfWorkers(backend)))
   s <- c(s, sprintf("Number of free workers: %d", nbrOfFreeWorkers(backend)))
   s <- c(s, sprintf("Available cores: %d", availableCores()))
+  s <- c(s, sprintf("Automatic garbage collection: %s", backend[["gc"]]))
+  s <- c(s, sprintf("Early signalling: %s", backend[["earlySignal"]]))
+  max <- backend[["maxSizeOfObjects"]]
+  max <- rep(max, length.out = 2L)
+  max <- vapply(max, FUN.VALUE = NA_character_, FUN = function(x) {
+    if (is.finite(x)) asIEC(x) else "+Inf"
+  })
+  s <- c(s, sprintf("Maximum total size of globals: %s", max[1]))
+  s <- c(s, sprintf("Maximum total size of value: %s", max[2]))
   cat(s, sep = "\n")
   invisible(x)
 }
@@ -175,6 +184,73 @@ makeFutureBackend <- function(evaluator, ..., debug = FALSE) {
 
   backend
 }
+
+
+
+#' @rdname FutureBackend
+#' @export
+validateFutureGlobals <- function(backend, future, ...) {
+  UseMethod("validateFutureGlobals")
+}
+
+#' @export
+validateFutureGlobals.FutureBackend <- function(backend, future, ..., debug = FALSE) {
+  if (debug) {
+    mdebugf_push("validateFutureGlobals(<%s>) ...", class(backend)[1])
+    on.exit(mdebugf_pop("validateFutureGlobals(<%s>) ... done", class(backend)[1]))
+  }
+
+  ## Maximum allowed total size of globals
+  maxSizeOfObjects <- backend[["maxSizeOfObjects"]]
+  if (debug) mdebugf("Total size of globals allowed: %.2g bytes", maxSizeOfObjects)
+  if (is.infinite(maxSizeOfObjects)) {
+    if (debug) mdebug("There is no upper size limit. Skipping")
+    return(future)
+  }
+
+  globals <- future[["globals"]]
+  ## Nothing to do?
+  if (length(globals) == 0) {
+    if (debug) mdebug("There are no globals. Skipping")
+    return(future)
+  }
+  
+  if (debug) {
+    mdebug_push("Checking size limitations of globals ...")
+    on.exit(mdebug_pop("Checking size limitations of globals ... done"), add = TRUE)
+  }
+      
+  ## Calculate the total size of globals, unless already done
+  total_size <- attr(globals, "total_size")
+  if (is.na(total_size)) {
+    sizes <- lapply(globals, FUN = objectSize)
+    sizes <- unlist(sizes, use.names = TRUE)
+    total_size <- sum(sizes, na.rm = TRUE)
+    attr(globals, "total_size") <- total_size
+    future[["globals"]] <- globals
+  }
+  if (debug) mdebugf("Total size of globals: %s", asIEC(total_size))
+
+  ## Assert that the total size is within limits
+  if (is.na(total_size) || total_size <= maxSizeOfObjects) {
+    return(Future)
+  }
+  
+  sizes <- lapply(globals, FUN = objectSize)
+  sizes <- unlist(sizes, use.names = TRUE)
+  total_size <- sum(sizes, na.rm = TRUE)
+  msg <- summarize_size_of_globals(globals,
+                                   sizes = sizes,
+                                   maxSize = maxSizeOfObjects,
+                                   exprOrg = future[["expr"]],
+                                   debug = debug)
+  msg <- sprintf("Will not launch future due to the size of the globals %s exceeds %s. %s", asIEC(total_size), asIEC(maxSizeOfObjects), msg)
+  if (debug) mdebug(msg)
+  stop(FutureError(msg, future = future))
+
+  future
+} ## validateFutureGlobals()
+
 
 
 #' @export

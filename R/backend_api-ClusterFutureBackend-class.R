@@ -1302,7 +1302,7 @@ handleInterruptedFuture <- local({
 #' @example incl/cluster.R
 #'
 #' @export
-cluster <- function(..., persistent = FALSE, workers = availableWorkers(), gc = FALSE, earlySignal = FALSE, maxSizeOfObjects = NULL) {
+cluster <- function(..., persistent = FALSE, workers = availableWorkers(), gc = FALSE, earlySignal = FALSE) {
   stop("INTERNAL ERROR: The future::cluster() function implements the FutureBackend and should never be called directly")
 }
 class(cluster) <- c("cluster", "multiprocess", "future", "function")

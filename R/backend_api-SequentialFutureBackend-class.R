@@ -135,7 +135,7 @@ getFutureBackendConfigs.UniprocessFuture <- function(future, ...) {
 #'
 #' @aliases uniprocess
 #' @export
-sequential <- function(..., gc = FALSE, earlySignal = FALSE, maxSizeOfObjects = NULL, envir = parent.frame()) {
+sequential <- function(..., gc = FALSE, earlySignal = FALSE, envir = parent.frame()) {
   if (! "fiery" %in% loadedNamespaces()) {
     stop("The future::sequential() function implements the FutureBackend and should never be called directly")
   }

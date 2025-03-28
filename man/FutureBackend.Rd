@@ -9,6 +9,7 @@
 \alias{FutureBackend}
 \alias{launchFuture}
 \alias{interruptFuture}
+\alias{validateFutureGlobals}
 \alias{stopWorkers}
 \alias{MulticoreFutureBackend}
 \alias{MultisessionFutureBackend}
@@ -27,13 +28,15 @@ FutureBackend(
   ...,
   earlySignal = FALSE,
   gc = FALSE,
-  maxSizeOfObjects = getOption("future.globals.maxSize", 500 * 1024^2),
+  maxSizeOfObjects = getOption("future.globals.maxSize", +Inf),
   hooks = FALSE
 )
 
 launchFuture(backend, future, ...)
 
 interruptFuture(backend, future, ...)
+
+validateFutureGlobals(backend, future, ...)
 
 stopWorkers(backend, ...)
 
