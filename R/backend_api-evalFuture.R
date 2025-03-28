@@ -791,36 +791,6 @@ evalFutureInternal <- function(data) {
   }
 
 
-  ## -----------------------------------------------------------------
-  ## Record state to report on:
-  ##  1. assignments to the global environment
-  ##  2. add or removed connections
-  ## -----------------------------------------------------------------
-  globalenv <- getOption("future.globalenv.onMisuse")
-  if (is.null(globalenv)) {
-    globalenv <- FALSE
-  } else {
-    globalenv <- (globalenv != "ignore")
-    if (globalenv) {
-      ## Record names of variables in the global environment
-      ...future.globalenv.names <- c(names(.GlobalEnv), "...future.value", "...future.globalenv.names", ".Random.seed")
-    }
-  }
-
-
-  value <- getOption("future.connections.onMisuse")
-  if (is.null(value)) {
-    checkConnections <- TRUE
-  } else {
-    checkConnections <- (value != "ignore")
-    attr(checkConnections, "details") <- attr(value, "details", exact = TRUE)
-    value <- NULL
-  }
-  if (checkConnections) {
-    ...future.connections <- get_connections(details = isTRUE(attr(checkConnections, "details", exact = TRUE)))
-  }
-
-
   ## Attach globals to the global environment
   ## Undo changes on exit
   if (length(globals) > 0) {
@@ -872,6 +842,37 @@ evalFutureInternal <- function(data) {
     
     assign_globals(globalenv(), globals = globals)
   }
+
+
+  ## -----------------------------------------------------------------
+  ## Record state to report on:
+  ##  1. assignments to the global environment
+  ##  2. add or removed connections
+  ## -----------------------------------------------------------------
+  globalenv <- getOption("future.globalenv.onMisuse")
+  if (is.null(globalenv)) {
+    globalenv <- FALSE
+  } else {
+    globalenv <- (globalenv != "ignore")
+    if (globalenv) {
+      ## Record names of variables in the global environment
+      ...future.globalenv.names <- c(names(.GlobalEnv), "...future.value", "...future.globalenv.names", ".Random.seed")
+    }
+  }
+
+
+  value <- getOption("future.connections.onMisuse")
+  if (is.null(value)) {
+    checkConnections <- TRUE
+  } else {
+    checkConnections <- (value != "ignore")
+    attr(checkConnections, "details") <- attr(value, "details", exact = TRUE)
+    value <- NULL
+  }
+  if (checkConnections) {
+    ...future.connections <- get_connections(details = isTRUE(attr(checkConnections, "details", exact = TRUE)))
+  }
+
 
   conditionClassesExclude <- attr(conditionClasses, "exclude", exact = TRUE)
   muffleInclude <- attr(conditionClasses, "muffleInclude", exact = TRUE)
