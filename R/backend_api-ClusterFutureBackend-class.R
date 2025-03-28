@@ -266,6 +266,41 @@ launchFuture.ClusterFutureBackend <- local({
 })
 
 
+#' @export
+listFutures.ClusterFutureBackend <- function(backend, ..., debug = FALSE) {
+  if (debug) {
+    mdebugf_push("listFutures() for %s ...", class(backend)[1])
+    on.exit(mdebugf_pop("listFutures() for %s ... done", class(backend)[1]))
+  }
+  
+  futures <- FutureRegistry(backend[["reg"]], "list")
+  if (debug) mdebug("Number of futures: ", length(futures))
+
+  if (length(futures) == 0) {
+    data <- data.frame(
+      counter = integer(0L),
+      start = proc.time()[[3]][integer(0L)],
+      label = character(0L),
+      resolved = logical(0L),
+      future = list()[integer(0L)]
+    )
+  } else {
+    data <- lapply(futures, FUN = function(future) {
+      label <- future[["label"]]
+      if (is.null(label)) label <- NA_character_
+      data.frame(
+        counter = as.integer(future[["uuid"]][2]),
+        start = future[["start"]],
+        label = label,
+        resolved = resolved(future, run = FALSE)
+      )
+    })
+    data <- do.call(rbind, data)
+    data[["future"]] <- lapply(futures, FUN = list)
+  }
+  data
+}
+
 
 #' @importFrom parallelly killNode
 #' @export

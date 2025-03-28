@@ -69,6 +69,19 @@ launchFuture.SequentialFutureBackend <- function(backend, future, ...) {
 
 
 #' @export
+listFutures.SequentialFutureBackend <- function(backend, ...) {
+  data.frame(
+    counter = integer(0L),
+    start = proc.time()[[3]][integer(0L)],
+    label = character(0L),
+    resolved = logical(0L),
+    future = list()[integer(0L)]
+  )
+}
+
+
+
+#' @export
 stopWorkers.SequentialFutureBackend <- function(backend, ...) {
   TRUE
 }

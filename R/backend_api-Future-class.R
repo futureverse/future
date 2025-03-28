@@ -439,7 +439,7 @@ run.Future <- function(future, ...) {
 
     if (debug) mdebug_push("Launching futures ...")
     future[["backend"]] <- backend
-
+    future[["start"]] <- proc.time()[[3]]
     future2 <- launchFuture(backend, future = future)
     if (debug) mdebug_pop("Launching futures ... done")
     if (debug) mdebug("Future launched: ", commaq(class(future2)))

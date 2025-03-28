@@ -8,6 +8,7 @@
 \alias{ClusterFutureBackend}
 \alias{FutureBackend}
 \alias{launchFuture}
+\alias{listFutures}
 \alias{interruptFuture}
 \alias{validateFutureGlobals}
 \alias{stopWorkers}
@@ -35,6 +36,8 @@ FutureBackend(
 )
 
 launchFuture(backend, future, ...)
+
+listFutures(backend, ...)
 
 interruptFuture(backend, future, ...)
 

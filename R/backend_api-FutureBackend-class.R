@@ -74,9 +74,13 @@ print.FutureBackend <- function(x, ...) {
   classes <- setdiff(class(backend), "environment")
   s <- sprintf("%s:", classes[1])
   s <- c(s, sprintf("Inherits: %s", classes[-1]))
+
+  ## Summary of workers
   s <- c(s, sprintf("Number of workers: %d", nbrOfWorkers(backend)))
   s <- c(s, sprintf("Number of free workers: %d", nbrOfFreeWorkers(backend)))
   s <- c(s, sprintf("Available cores: %d", availableCores()))
+
+  ## Settings
   s <- c(s, sprintf("Automatic garbage collection: %s", backend[["gc"]]))
   s <- c(s, sprintf("Early signalling: %s", backend[["earlySignal"]]))
   s <- c(s, sprintf("Interrupts are enabled: %s", backend[["interrupts"]]))
@@ -87,6 +91,26 @@ print.FutureBackend <- function(x, ...) {
   })
   s <- c(s, sprintf("Maximum total size of globals: %s", max[1]))
   s <- c(s, sprintf("Maximum total size of value: %s", max[2]))
+
+  ## Active futures
+  resolved <- NULL ## To please R CMD check
+  data <- listFutures(backend)
+  stop_if_not(is.data.frame(data))
+  if (nrow(data) == 0L) {
+    s <- c(s, "Number of futures: 0")
+  } else {
+    resolved <- data[["resolved"]]
+    s <- c(s, sprintf("Number of active futures: %d (%d resolved, %d unresolved)", length(resolved), sum(resolved), sum(!resolved)))
+    if (!all(resolved)) {
+      ## Current processing times for the non-resolved futures
+      duration <- proc.time()[[3]] - data[!resolved, "start"]
+      stats <- summary(duration)
+      names(stats) <- c("min", "25%", "50%", "mean", "75%", "max")
+      stats <- sprintf("%s: %.1gs", names(stats), stats)
+      stats <- paste(stats, collapse = ", ")
+      s <- c(s, sprintf("Non-resolved future running times: %s", stats))
+    }
+  }
   cat(s, sep = "\n")
   invisible(x)
 }
@@ -112,6 +136,19 @@ launchFuture <- function(backend, future, ...) {
 #' @export
 launchFuture.FutureBackend <- function(backend, future, ...) {
   stop(sprintf("No launchFuture() method implemented for %s", sQuote(class(backend)[1])))
+}
+
+
+#'
+#' @rdname FutureBackend
+#' @export
+listFutures <- function(backend, ...) {
+  UseMethod("listFutures")
+}
+
+#' @export
+listFutures.FutureBackend <- function(backend, ...) {
+  stop(sprintf("No listFutures() method implemented for %s", sQuote(class(backend)[1])))
 }
 
 
