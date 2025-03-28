@@ -6,6 +6,7 @@
 
 library(future)
 library(listenv)
+options(future.debug = FALSE)
 
 message("*** Globals w/ non-standard evaluation (NSE) ...")
 
@@ -43,11 +44,14 @@ for (strategy in supportedStrategies()) {
   } %lazy% TRUE
   stopifnot(identical(v3, v0))
 
+  options(future.globals.onMissing = NULL)
+
+  
   ## Shut down nested backend
   local({
     ## FIXME: plan() should do this for us /HB 2025-03-28a
-    oopts <- options(future.connections.misUse = "warning")
-    options(oopts)
+    oopts <- options(future.connections.onMisuse = "warning")
+    on.exit(options(oopts))
     void %<-% { plan(sequential); TRUE }
     stopifnot(isTRUE(void))
   })
@@ -58,4 +62,3 @@ for (strategy in supportedStrategies()) {
 
 
 message("*** Globals w/ non-standard evaluation (NSE) ... DONE")
-
