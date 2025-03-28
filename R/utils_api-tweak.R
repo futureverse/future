@@ -92,6 +92,9 @@ tweak.future <- function(strategy, ..., penvir = parent.frame()) {
   attrs <- attributes(strategy)
   class <- class(strategy)
 
+  ## Reset 'backend', if set
+  attrs[["backend"]] <- NULL
+
   ## Tweak arguments
   formals <- names(formals(strategy))
 
@@ -138,7 +141,7 @@ tweak.future <- function(strategy, ..., penvir = parent.frame()) {
   ## Append whatever tweaks were made
   args <- c(attr(strategy, "tweaks"), args)
   attr(strategy2, "tweaks") <- args
-  
+
   ## Flag that it is tweaked
   class(strategy2) <- c("tweaked", class)
 
