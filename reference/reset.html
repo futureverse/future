@@ -24,7 +24,7 @@ failed due to an error, can be relaunched after resetting it."><meta property="o
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">future</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.34.0-9330</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.34.0-9334</span>
       </span>
     </div>
 
@@ -187,6 +187,21 @@ failed due to an error, can be relaunched after resetting it.</p>
     <p><code>reset()</code> returns a lazy, vanilla <a href="Future-class.html">Future</a> that can be relaunched.
 Resetting a running future results in a <a href="FutureCondition.html">FutureError</a>.</p>
     </div>
+    <div id="details">
+    <h2>Details</h2>
+    <p>A lazy, vanilla <a href="Future-class.html">Future</a> can be reused in another R session. For
+instance, if we do:</p>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(future)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="dv">2</span></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="fu">future</span>(<span class="dv">42</span> <span class="sc">*</span> a, <span class="at">lazy =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="fu">saveRDS</span>(f, <span class="st">"myfuture.rds"</span>)</span></code></pre><p></p></div>
+<p>Then we can read and evaluate the future in another R session using:</p>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(future)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"myfuture.rds"</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>v <span class="ot">&lt;-</span> <span class="fu">value</span>(f)</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="fu">print</span>(v)</span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="co">#&gt; [1] 84</span></span></code></pre><p></p></div>
+    </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
@@ -209,6 +224,9 @@ Resetting a running future results in a <a href="FutureCondition.html">FutureErr
 <span class="r-in"><span>  <span class="va">f</span> <span class="op">&lt;-</span> <span class="fu">reset</span><span class="op">(</span><span class="va">f</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/Sys.sleep.html" class="external-link">Sys.sleep</a></span><span class="op">(</span><span class="fl">0.1</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Resetting failed future, and retry in 0.1 seconds</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Resetting failed future, and retry in 0.1 seconds</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Resetting failed future, and retry in 0.1 seconds</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Resetting failed future, and retry in 0.1 seconds</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Resetting failed future, and retry in 0.1 seconds</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"mean:"</span>, <span class="va">v</span>, <span class="st">"\n"</span><span class="op">)</span></span></span>

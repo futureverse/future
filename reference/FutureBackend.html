@@ -3,6 +3,7 @@
 Configure a backend that controls how and where futures are evaluated
 launchFuture() runs a future on the backend.
 interruptFuture() interrupts a future on the backend.
+stopWorkers() stops backend workers
 A MulticoreFutureBackend resolves futures in parallel using forked processing on the current machine
 A MultisessionFutureBackend resolves futures in parallel using a PSOCK cluster on the current machine
 A SequentialFutureBackend resolves futures sequentially in the current R session"><meta property="og:image" content="https://future.futureverse.org/logo.png"><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -29,7 +30,7 @@ A SequentialFutureBackend resolves futures sequentially in the current R session
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">future</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.34.0-9330</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.34.0-9334</span>
       </span>
     </div>
 
@@ -171,6 +172,7 @@ A SequentialFutureBackend resolves futures sequentially in the current R session
 <p>Configure a backend that controls how and where futures are evaluated</p>
 <p><code>launchFuture()</code> runs a future on the backend.</p>
 <p><code>interruptFuture()</code> interrupts a future on the backend.</p>
+<p><code>stopWorkers()</code> stops backend workers</p>
 <p>A MulticoreFutureBackend resolves futures in parallel using forked processing on the current machine</p>
 <p>A MultisessionFutureBackend resolves futures in parallel using a PSOCK cluster on the current machine</p>
 <p>A SequentialFutureBackend resolves futures sequentially in the current R session</p>
@@ -189,13 +191,17 @@ A SequentialFutureBackend resolves futures sequentially in the current R session
 <span>  <span class="va">...</span>,</span>
 <span>  earlySignal <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  gc <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  maxSizeOfObjects <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"future.globals.maxSize"</span>, <span class="fl">500</span> <span class="op">*</span> <span class="fl">1024</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span>,</span>
+<span>  maxSizeOfObjects <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"future.globals.maxSize"</span>, <span class="op">+</span><span class="cn">Inf</span><span class="op">)</span>,</span>
 <span>  hooks <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">launchFuture</span><span class="op">(</span><span class="va">backend</span>, <span class="va">future</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">interruptFuture</span><span class="op">(</span><span class="va">backend</span>, <span class="va">future</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">validateFutureGlobals</span><span class="op">(</span><span class="va">backend</span>, <span class="va">future</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">stopWorkers</span><span class="op">(</span><span class="va">backend</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">MulticoreFutureBackend</span><span class="op">(</span></span>
 <span>  workers <span class="op">=</span> <span class="fu"><a href="re-exports.html">availableCores</a></span><span class="op">(</span>constraints <span class="op">=</span> <span class="st">"multicore"</span><span class="op">)</span>,</span>
@@ -270,6 +276,8 @@ implementing the FutureBackend API.</p>
 <p><code>launchFuture()</code> returns the launched <code>Future</code> object.</p>
 <p><code>interruptFuture()</code> returns the interrupted <code>Future</code> object,
 if supported, other the unmodified future.</p>
+<p><code>stopWorkers()</code> returns TRUE if the workers were shut down,
+otherwise FALSE.</p>
     </div>
     <div id="details">
     <h2>Details</h2>
