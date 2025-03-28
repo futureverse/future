@@ -186,7 +186,7 @@ if (testme[["status"]] == "success" &&
       message(sprintf("Sourcing %d epilogue scripts ... done", length(files)))
       rm(list = c("kk", "file", "files"))
     })
-    eval(expr, envir = testme)
+    eval(expr)
   })
   testme[["status"]] <- "success"
 }

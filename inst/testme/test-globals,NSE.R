@@ -43,10 +43,15 @@ for (strategy in supportedStrategies()) {
   } %lazy% TRUE
   stopifnot(identical(v3, v0))
 
-  options(future.globals.onMissing = NULL)
-  plan(list(sequential, sequential))
-  void %<-% { void %<-% NULL; void }
-  stopifnot(is.null(void))
+  ## Shut down nested backend
+  local({
+    ## FIXME: plan() should do this for us /HB 2025-03-28a
+    oopts <- options(future.connections.misUse = "warning")
+    options(oopts)
+    void %<-% { plan(sequential); TRUE }
+    stopifnot(isTRUE(void))
+  })
+  plan(sequential)
 
   message(sprintf("- Strategy: %s ... DONE", strategy))
 }
