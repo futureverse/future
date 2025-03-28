@@ -62,6 +62,20 @@ FutureBackend <- function(..., earlySignal = FALSE, gc = FALSE, maxSizeOfObjects
 }
 
 
+#' @importFrom parallelly availableCores
+#' @export
+print.FutureBackend <- function(x, ...) {
+  backend <- x
+  
+  s <- sprintf("%s:", class(backend)[1])
+  s <- c(s, sprintf("Inherits: %s", commaq(class(backend)[-1])))
+  s <- c(s, sprintf("Number of workers: %d", nbrOfWorkers(backend)))
+  s <- c(s, sprintf("Number of free workers: %d", nbrOfFreeWorkers(backend)))
+  s <- c(s, sprintf("Available cores: %d", availableCores()))
+  cat(s, sep = "\n")
+  invisible(x)
+}
+
 
 #' `launchFuture()` runs a future on the backend.
 #'
@@ -112,18 +126,28 @@ interruptFuture.FutureBackend <- function(backend, future, ...) {
 
 
 makeFutureBackend <- function(evaluator, ..., debug = FALSE) {
-  backend <- attr(evaluator, "backend")
-
-  ## Old future strategies do not implement a FutureBackend
-  if (is.null(backend)) return(NULL)
-
   if (debug) {
     mdebugf_push("makeFutureBackend(<%s>) ...", class(evaluator)[1])
-    mdebugf("Backend function: <%s>", commaq(class(backend)))
     on.exit(mdebugf_pop("makeFutureBackend(<%s>) ... done", class(evaluator)[1]))
   }
   
-  stop_if_not(is.function(backend))
+  ## Already created?
+  backend <- attr(evaluator, "backend")
+  if (!is.null(backend)) {
+    if (debug) mdebugf("Already created: <%s>", commaq(class(backend)))
+    return(backend)
+  }
+  
+    mdebugf("Backend function: <%s>", commaq(class(backend)))
+  
+  constructor <- attr(evaluator, "constructor")
+  if (is.null(constructor)) {
+    ## Old future strategies do not implement a FutureBackend
+    if (debug) mdebugf("A legacy non-FutureBackend backend: <%s>", commaq(class(evaluator)))
+    return(NULL)
+  }
+
+  stop_if_not(is.function(constructor))
 
   ## Apply future plan tweaks
   args <- attr(evaluator, "tweaks")
@@ -141,10 +165,12 @@ makeFutureBackend <- function(evaluator, ..., debug = FALSE) {
     args[[name]] <- args2[[name]]
   }
 
-  backend <- do.call(backend, args = args)
-  stop_if_not(inherits(backend, "FutureBackend"))
-
+  backend <- do.call(constructor, args = args)
   mdebugf("Backend: <%s>", commaq(class(backend)))
+  stop_if_not(inherits(backend, "FutureBackend"))
+  
+  ## Record constructor function as an attribute; needed by tweak()
+  attr(backend, "constructor") <- constructor
 
   backend
 }
@@ -153,4 +179,27 @@ makeFutureBackend <- function(evaluator, ..., debug = FALSE) {
 #' @export
 getFutureBackendConfigs.Future <- function(future, ...) {
   list()
+}
+
+
+
+#' `stopWorkers()` stops backend workers
+#'
+#' @param backend a [FutureBackend].
+#'
+#' @param \ldots (optional) not used.
+#'
+#' @return
+#' `stopWorkers()` returns TRUE if the workers were shut down,
+#' otherwise FALSE.
+#'
+#' @rdname FutureBackend
+#' @export
+stopWorkers <- function(backend, ...) {
+  UseMethod("stopWorkers")
+}
+
+#' @export
+stopWorkers.FutureBackend <- function(backend, ...) {
+  stop(FutureWarning("%s does not implement stopWorkers()", sQuote(class(backend)[1])))
 }

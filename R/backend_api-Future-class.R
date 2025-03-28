@@ -421,10 +421,6 @@ run.Future <- function(future, ...) {
     stop(FutureError(msg, future = future))
   }
 
-  ## Create temporary future for a specific backend, but don't launch it
-  evaluator <- plan("next")
-  if (debug) mdebug("Future backend: ", commaq(class(evaluator)))
-
   ## Be conservative for now; don't allow lazy futures created in another R
   ## session to be launched. This will hopefully change later, but we won't
   ## open this door until we understand the ramifications. /HB 2020-12-21
@@ -432,10 +428,9 @@ run.Future <- function(future, ...) {
     assertOwner(future)
   }
 
-  ## Implements a FutureBackend?
-  backend <- makeFutureBackend(evaluator, debug = debug)
+  backend <- plan("backend")
   if (!is.null(backend)) {
-    if (debug) mdebug_push("Using FutureBackend ...")
+    if (debug) mdebugf_push("Using %s ...", class(backend)[1])
     
     ## Coerce to target Future class
     class(future) <- backend[["futureClasses"]]
@@ -446,7 +441,6 @@ run.Future <- function(future, ...) {
         future[[name]] <- backend[[name]]
       }
     }
-
 
 
     ## Protect against  exporting too large objects
@@ -503,12 +497,20 @@ run.Future <- function(future, ...) {
     if (debug) mdebug_pop("Launching futures ... done")
     if (debug) mdebug("Future launched: ", commaq(class(future2)))
     stop_if_not(inherits(future2, "Future"))
-    if (debug) mdebug_pop("Using FutureBackend ... done")
+    
+    if (debug) mdebugf_pop("Using %s ... done", class(backend)[1])
     
     return(future2)
   }
 
 
+  ## --------------------------------------------------------------------
+  ## Legacy, non-FutureBackend backends
+  ## --------------------------------------------------------------------
+  evaluator <- plan("next")
+  if (debug) mdebug("Future backend: ", commaq(class(evaluator)))
+
+  ## Create temporary future for a specific backend, but don't launch it
   ## AD HOC/WORKAROUND: /HB 2020-12-21
   args <- list(
     quote(future[["expr"]]),

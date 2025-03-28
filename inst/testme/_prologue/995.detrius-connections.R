@@ -1,7 +1,11 @@
 get_connections <- function() {
   cons <- lapply(getAllConnections(), FUN = function(idx) {
-    con <- getConnection(idx)
-    as.data.frame(c(index = idx, summary(con)))
+    tryCatch({
+      con <- getConnection(idx)
+      as.data.frame(c(index = idx, summary(con)))
+    }, error = function(e) {
+      NULL
+    })
   })
   do.call(rbind, cons)
 }

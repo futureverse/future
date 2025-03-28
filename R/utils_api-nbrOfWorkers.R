@@ -19,11 +19,13 @@ nbrOfWorkers <- function(evaluator = NULL) {
 #' @export
 nbrOfWorkers.multiprocess <- function(evaluator) {
   assert_no_positional_args_but_first()
+  
   backend <- makeFutureBackend(evaluator)
   if (inherits(backend, "FutureBackend")) {
     return(nbrOfWorkers(backend))
   }  
-  
+
+  ## Legacy, non-FutureBackend backends
   expr <- formals(evaluator)[["workers"]]
   workers <- eval(expr, enclos = baseenv())
   if (is.function(workers)) workers <- workers()

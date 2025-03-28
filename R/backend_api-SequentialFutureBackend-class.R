@@ -1,44 +1,3 @@
-#' Create a sequential future whose value will be in the current \R session
-#'
-#' A sequential future is a future that is evaluated sequentially in the
-#' current \R session similarly to how \R expressions are evaluated in \R.
-#' The only difference to \R itself is that globals are validated
-#' by default just as for all other types of futures in this package.
-#'
-#' @details
-#' This function is _not_ meant to be called directly.  Instead, the
-#' typical usages are:
-#'
-#' ```r
-#' # Evaluate futures sequentially in the current R process
-#' plan(sequential)
-#' ```
-#'
-#' @inheritParams future
-#' @inheritParams Future-class
-#' 
-#' @param \ldots Additional named elements to [Future()].
-#'
-#' @return
-#' A [Future].
-#'
-#' @example incl/sequential.R
-#'
-#' @aliases uniprocess
-#' @export
-sequential <- function(..., gc = FALSE, earlySignal = FALSE, maxSizeOfObjects = NULL, envir = parent.frame()) {
-  if (! "fiery" %in% loadedNamespaces()) {
-    stop("The future::sequential() function implements the FutureBackend and should never be called directly")
-  }
-  f <- Future(..., envir = envir)
-  class(f) <- c("SequentialFuture", "UniprocessFuture", "Future")
-  f  
-}
-class(sequential) <- c("sequential", "uniprocess", "future", "function")
-
-
-
-
 #' A SequentialFutureBackend resolves futures sequentially in the current R session
 #'
 #' @inheritParams FutureBackend
@@ -108,6 +67,13 @@ launchFuture.SequentialFutureBackend <- function(backend, future, ...) {
 }
 
 
+
+#' @export
+stopWorkers.SequentialFutureBackend <- function(backend, ...) {
+  TRUE
+}
+
+
 #' @export
 nbrOfWorkers.SequentialFutureBackend <- function(evaluator) {
   1L
@@ -138,3 +104,44 @@ getFutureBackendConfigs.UniprocessFuture <- function(future, ...) {
     capture = capture
   )
 }
+
+
+
+#' Create a sequential future whose value will be in the current \R session
+#'
+#' A sequential future is a future that is evaluated sequentially in the
+#' current \R session similarly to how \R expressions are evaluated in \R.
+#' The only difference to \R itself is that globals are validated
+#' by default just as for all other types of futures in this package.
+#'
+#' @details
+#' This function is _not_ meant to be called directly.  Instead, the
+#' typical usages are:
+#'
+#' ```r
+#' # Evaluate futures sequentially in the current R process
+#' plan(sequential)
+#' ```
+#'
+#' @inheritParams future
+#' @inheritParams Future-class
+#' 
+#' @param \ldots Additional named elements to [Future()].
+#'
+#' @return
+#' A [Future].
+#'
+#' @example incl/sequential.R
+#'
+#' @aliases uniprocess
+#' @export
+sequential <- function(..., gc = FALSE, earlySignal = FALSE, maxSizeOfObjects = NULL, envir = parent.frame()) {
+  if (! "fiery" %in% loadedNamespaces()) {
+    stop("The future::sequential() function implements the FutureBackend and should never be called directly")
+  }
+  f <- Future(..., envir = envir)
+  class(f) <- c("SequentialFuture", "UniprocessFuture", "Future")
+  f  
+}
+class(sequential) <- c("sequential", "uniprocess", "future", "function")
+attr(sequential, "constructor") <- SequentialFutureBackend

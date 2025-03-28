@@ -6,7 +6,5 @@ delta <- diff_connections(get_connections(), testme[["testme_connections"]])
 if (any(lengths(delta) > 0)) {
   message("Detected detritus connections:")
   print(delta)
-} else {
-  message("No detritus connections")
 }
 

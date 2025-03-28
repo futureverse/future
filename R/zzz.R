@@ -1,12 +1,5 @@
 .package <- new.env()
 
-## Update FutureBackend:s
-attr(sequential, "backend") <- SequentialFutureBackend
-attr(cluster, "backend") <- ClusterFutureBackend
-attr(multisession, "backend") <- MultisessionFutureBackend
-attr(multicore, "backend") <- MulticoreFutureBackend
-
-
 ## covr: skip=all
 #' @importFrom utils packageVersion
 .onLoad <- function(libname, pkgname) {

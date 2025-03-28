@@ -199,12 +199,18 @@ setNumberOfThreads <- function(openmp = NA_integer_, rcpp = openmp) {
 get_connections <- function(details = FALSE) {
   if (isTRUE(details)) {
     cons <- lapply(getAllConnections(), FUN = function(idx) {
-      con <- getConnection(idx)
-      as.data.frame(c(index = idx, summary(con)))
+      tryCatch({
+        con <- getConnection(idx)
+        as.data.frame(c(index = idx, summary(con)))
+      }, error = function(e) {
+        NULL
+      })
     })
     cons <- do.call(rbind, cons)
   } else {
-    cons <- lapply(getAllConnections()[-(1:3)], FUN = getConnection)
+    cons <- lapply(getAllConnections()[-(1:3)], FUN = function(idx) {
+      tryCatch(getConnection(idx), error = function(e) NULL)
+    })
   }
   cons
 }
@@ -289,8 +295,12 @@ diff_connections <- function(after, before) {
     replaced_idx <- as.integer(intersect(names(after2), names(before2)))
     
     cons <- lapply(added_idx, FUN = function(idx) {
-      con <- getConnection(idx)
-      as.data.frame(c(index = idx, summary(con)))
+      tryCatch({
+        con <- getConnection(idx)
+        as.data.frame(c(index = idx, summary(con)))
+      }, error = function(e) {
+        NULL
+      })
     })
     added <- do.call(rbind, cons)
   
@@ -304,8 +314,12 @@ diff_connections <- function(after, before) {
     removed <- do.call(rbind, cons)
 
     cons <- lapply(replaced_idx, FUN = function(idx) {
-      con <- getConnection(idx)
-      as.data.frame(c(index = idx, summary(con)))
+      tryCatch({
+        con <- getConnection(idx)
+        as.data.frame(c(index = idx, summary(con)))
+      }, error = function(e) {
+        NULL
+      })
     })
     replaced <- do.call(rbind, cons)
   }

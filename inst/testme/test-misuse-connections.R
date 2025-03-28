@@ -17,6 +17,7 @@ for (onMisuse in c("ignore", "warning", "error")) {
   diff <- r[["misuse_connections"]]
   message("Misused connections:")
   v <- tryCatch(value(f), condition = identity)
+  str(v)
   if (onMisuse == "error") {
     message(conditionMessage(v))
     stopifnot(inherits(v, "FutureError"))

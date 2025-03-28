@@ -9,6 +9,7 @@
 \alias{FutureBackend}
 \alias{launchFuture}
 \alias{interruptFuture}
+\alias{stopWorkers}
 \alias{MulticoreFutureBackend}
 \alias{MultisessionFutureBackend}
 \alias{SequentialFutureBackend}
@@ -33,6 +34,8 @@ FutureBackend(
 launchFuture(backend, future, ...)
 
 interruptFuture(backend, future, ...)
+
+stopWorkers(backend, ...)
 
 MulticoreFutureBackend(
   workers = availableCores(constraints = "multicore"),
@@ -88,6 +91,9 @@ implementing the FutureBackend API.
 
 \code{interruptFuture()} returns the interrupted \code{Future} object,
 if supported, other the unmodified future.
+
+\code{stopWorkers()} returns TRUE if the workers were shut down,
+otherwise FALSE.
 }
 \description{
 A ClusterFutureBackend resolves futures in parallel using any PSOCK cluster
@@ -97,6 +103,8 @@ Configure a backend that controls how and where futures are evaluated
 \code{launchFuture()} runs a future on the backend.
 
 \code{interruptFuture()} interrupts a future on the backend.
+
+\code{stopWorkers()} stops backend workers
 
 A MulticoreFutureBackend resolves futures in parallel using forked processing on the current machine
 

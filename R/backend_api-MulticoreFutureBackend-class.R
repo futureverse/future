@@ -1,80 +1,3 @@
-#' Create a multicore future whose value will be resolved asynchronously in a forked parallel process
-#'
-#' A multicore future is a future that uses multicore evaluation,
-#' which means that its _value is computed and resolved in
-#' parallel in another process_.
-#'
-#' @details
-#' This function is _not_ meant to be called directly.  Instead, the
-#' typical usages are:
-#'
-#' ```r
-#' # Evaluate futures in parallel on the local machine via as many forked
-#' # processes as available to the current R process
-#' plan(multicore)
-#'
-#' # Evaluate futures in parallel on the local machine via two forked processes
-#' plan(multicore, workers = 2)
-#' ```
-#'
-#' @inheritParams future
-#' @inheritParams Future-class
-#'
-#' @param workers The number of parallel processes to use.
-#' If a function, it is called without arguments _when the future
-#' is created_ and its value is used to configure the workers.
-#'
-#' @param \ldots Additional named elements to [Future()].
-#'
-#' @return
-#' A [Future].
-#' If `workers == 1`, then all processing using done in the
-#' current/main \R session and we therefore fall back to using a
-#' sequential future. To override this fallback, use `workers = I(1)`.
-#' This is also the case whenever multicore processing is not supported,
-#' e.g. on Windows.
-#'
-#' @example incl/multicore.R
-#'
-#' @section Support for forked ("multicore") processing:
-#' Not all operating systems support process forking and thereby not multicore
-#' futures.  For instance, forking is not supported on Microsoft Windows.
-#' Moreover, process forking may break some R environments such as RStudio.
-#' Because of this, the future package disables process forking also in
-#' such cases.  See [parallelly::supportsMulticore()] for details.
-#' Trying to create multicore futures on non-supported systems or when
-#' forking is disabled will result in multicore futures falling back to
-#' becoming [sequential] futures.  If used in RStudio, there will be an
-#' informative warning:
-#'
-#' ```r
-#' > plan(multicore)
-#' Warning message:
-#' In supportsMulticoreAndRStudio(...) :
-#'   [ONE-TIME WARNING] Forked processing ('multicore') is not supported when
-#' running R from RStudio because it is considered unstable. For more details,
-#' how to control forked processing or not, and how to silence this warning in
-#' future R sessions, see ?parallelly::supportsMulticore
-#' ```
-#'
-#' @seealso
-#' For processing in multiple background \R sessions, see
-#' [multisession] futures.
-#'
-#' Use [parallelly::availableCores()] to see the total number of
-#' cores that are available for the current \R session.
-#' Use \code{\link[parallelly:availableCores]{availableCores}("multicore") > 1L} to check
-#' whether multicore futures are supported or not on the current
-#' system.
-#'
-#' @export
-multicore <- function(..., workers = availableCores(constraints = "multicore"), gc = FALSE, earlySignal = FALSE, maxSizeOfObjects = NULL) {
-  stop("INTERNAL ERROR: The future::multicore() function implements the FutureBackend and should never be called directly")
-}
-class(multicore) <- c("multicore", "multiprocess", "future", "function")
-
-
-
 #' Get number of cores currently used
 #'
 #' Get number of children (and don't count the current process)
@@ -307,7 +230,15 @@ launchFuture.MulticoreFutureBackend <- local({
     
     future
   }
-})
+}) ## launchFuture()
+
+
+
+#' @export
+stopWorkers.MulticoreFutureBackend <- function(backend, ...) {
+  TRUE
+}
+
 
 
 #' @export
@@ -631,3 +562,80 @@ interruptFuture.MulticoreFutureBackend <- function(backend, future, ...) {
   future
 }
 
+
+
+#' Create a multicore future whose value will be resolved asynchronously in a forked parallel process
+#'
+#' A multicore future is a future that uses multicore evaluation,
+#' which means that its _value is computed and resolved in
+#' parallel in another process_.
+#'
+#' @details
+#' This function is _not_ meant to be called directly.  Instead, the
+#' typical usages are:
+#'
+#' ```r
+#' # Evaluate futures in parallel on the local machine via as many forked
+#' # processes as available to the current R process
+#' plan(multicore)
+#'
+#' # Evaluate futures in parallel on the local machine via two forked processes
+#' plan(multicore, workers = 2)
+#' ```
+#'
+#' @inheritParams future
+#' @inheritParams Future-class
+#'
+#' @param workers The number of parallel processes to use.
+#' If a function, it is called without arguments _when the future
+#' is created_ and its value is used to configure the workers.
+#'
+#' @param \ldots Additional named elements to [Future()].
+#'
+#' @return
+#' A [Future].
+#' If `workers == 1`, then all processing using done in the
+#' current/main \R session and we therefore fall back to using a
+#' sequential future. To override this fallback, use `workers = I(1)`.
+#' This is also the case whenever multicore processing is not supported,
+#' e.g. on Windows.
+#'
+#' @example incl/multicore.R
+#'
+#' @section Support for forked ("multicore") processing:
+#' Not all operating systems support process forking and thereby not multicore
+#' futures.  For instance, forking is not supported on Microsoft Windows.
+#' Moreover, process forking may break some R environments such as RStudio.
+#' Because of this, the future package disables process forking also in
+#' such cases.  See [parallelly::supportsMulticore()] for details.
+#' Trying to create multicore futures on non-supported systems or when
+#' forking is disabled will result in multicore futures falling back to
+#' becoming [sequential] futures.  If used in RStudio, there will be an
+#' informative warning:
+#'
+#' ```r
+#' > plan(multicore)
+#' Warning message:
+#' In supportsMulticoreAndRStudio(...) :
+#'   [ONE-TIME WARNING] Forked processing ('multicore') is not supported when
+#' running R from RStudio because it is considered unstable. For more details,
+#' how to control forked processing or not, and how to silence this warning in
+#' future R sessions, see ?parallelly::supportsMulticore
+#' ```
+#'
+#' @seealso
+#' For processing in multiple background \R sessions, see
+#' [multisession] futures.
+#'
+#' Use [parallelly::availableCores()] to see the total number of
+#' cores that are available for the current \R session.
+#' Use \code{\link[parallelly:availableCores]{availableCores}("multicore") > 1L} to check
+#' whether multicore futures are supported or not on the current
+#' system.
+#'
+#' @export
+multicore <- function(..., workers = availableCores(constraints = "multicore"), gc = FALSE, earlySignal = FALSE, maxSizeOfObjects = NULL) {
+  stop("INTERNAL ERROR: The future::multicore() function implements the FutureBackend and should never be called directly")
+}
+class(multicore) <- c("multicore", "multiprocess", "future", "function")
+attr(multicore, "constructor") <- MulticoreFutureBackend

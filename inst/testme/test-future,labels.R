@@ -15,25 +15,16 @@ for (strategy in strategies) {
     fcn <- get(strategy, mode = "function")
     stopifnot(inherits(fcn, strategy))
 
-    ## Non-FutureBackend:s 'evaluator' functions can be called directly
-    if (is.null(attr(fcn, "backend"))) {
-      f <- fcn(42, label = label)
-      print(f)
-      stopifnot(identical(f$label, label))
-      v <- value(f)
-      stopifnot(v == 42)
-    }
-    
     f <- future(42, label = label)
     print(f)
-    stopifnot(identical(f$label, label))
+    stopifnot(identical(f[["label"]], label))
     v <- value(f)
     stopifnot(v == 42)
 
     v %<-% { 42 } %label% label
     f <- futureOf(v)
     print(f)
-    stopifnot(identical(f$label, label))
+    stopifnot(identical(f[["label"]], label))
     stopifnot(v == 42)
 
   } ## for (label ...)
