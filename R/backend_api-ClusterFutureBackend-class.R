@@ -18,7 +18,7 @@
 ClusterFutureBackend <- local({
   getDefaultCluster <- import_parallel_fcn("getDefaultCluster")
   
-    function(workers = availableWorkers(), persistent = FALSE, gc = TRUE, earlySignal = TRUE, ...) {
+    function(workers = availableWorkers(), persistent = FALSE, gc = TRUE, earlySignal = TRUE, interrupts = TRUE, ...) {
     debug <- isTRUE(getOption("future.debug"))
 
     if (debug) {
@@ -69,6 +69,7 @@ ClusterFutureBackend <- local({
       persistent = persistent,
       reg = reg,
       earlySignal = earlySignal,
+      interrupts = interrupts,
       future.wait.timeout = getOption("future.wait.timeout", 24 * 60 * 60),
       future.wait.interval = getOption("future.wait.interval", 0.01),
       future.wait.alpha = getOption("future.wait.alpha", 1.01),
@@ -269,11 +270,15 @@ launchFuture.ClusterFutureBackend <- local({
 #' @importFrom parallelly killNode
 #' @export
 interruptFuture.ClusterFutureBackend <- function(backend, future, ...) {
+  ## Has interrupts been disabled by user?
+  if (!backend[["interrupts"]]) return(future)
+  
   workers <- backend[["workers"]]
   node_idx <- future[["node"]]
   node <- workers[[node_idx]]
   void <- suppressWarnings(killNode(node))
   future[["state"]] <- "interrupted"
+  
   future
 }
 

@@ -21,6 +21,7 @@ ClusterFutureBackend(
   persistent = FALSE,
   gc = TRUE,
   earlySignal = TRUE,
+  interrupts = TRUE,
   ...
 )
 
@@ -29,6 +30,7 @@ FutureBackend(
   earlySignal = FALSE,
   gc = FALSE,
   maxSizeOfObjects = getOption("future.globals.maxSize", +Inf),
+  interrupts = TRUE,
   hooks = FALSE
 )
 
@@ -67,6 +69,9 @@ more parallel workers on a machine with limited amount of total memory.
 should resignal ("relay") conditions captured as soon as possible, or
 delayed, for instance, until \code{\link[=value]{value()}} is called on the future.
 (Default: \code{FALSE})}
+
+\item{interrupts}{If FALSE, attempts to interrupt futures will not take
+place on this backend, even if the backend supports it.}
 
 \item{maxSizeOfObjects}{The maximum allowed total size, in bytes, of all
 objects to and from the parallel worker allows.

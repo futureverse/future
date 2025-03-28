@@ -9,6 +9,8 @@ for (onMisuse in c("ignore", "warning", "error")) {
   message("onMisuse = ", sQuote(onMisuse))
   options(future.connections.onMisuse = onMisuse)
 
+  cons_before <- getAllConnections()
+  
   f <- future({
     con <- textConnection("abc")
     42L
@@ -16,8 +18,11 @@ for (onMisuse in c("ignore", "warning", "error")) {
   r <- result(f)
   diff <- r[["misuse_connections"]]
   message("Misused connections:")
-  v <- tryCatch(value(f), condition = identity)
+  v <- tryCatch({
+    value(f)
+  }, condition = identity)
   str(v)
+  
   if (onMisuse == "error") {
     message(conditionMessage(v))
     stopifnot(inherits(v, "FutureError"))
@@ -28,8 +33,15 @@ for (onMisuse in c("ignore", "warning", "error")) {
     message("None.")
     stopifnot(
       !inherits(v, "condition"),
-      identical(v, 42L)
+      v == 42L
     )
   }
+
+  ## Close stray connection?
+  cons_diff <- setdiff(getAllConnections(), cons_before)
+  message("Closing stray connections: ", paste(cons_diff, collapse = ", "))
+  lapply(cons_diff, FUN = function(idx) {
+    tryCatch(close(getConnection(idx)), error = identity)
+  })
 }
 

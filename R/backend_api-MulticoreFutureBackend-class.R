@@ -555,10 +555,14 @@ getFutureBackendConfigs.MulticoreFuture <- function(future, ..., debug = isTRUE(
 #' @importFrom parallelly killNode
 #' @export
 interruptFuture.MulticoreFutureBackend <- function(backend, future, ...) {
+  ## Has interrupts been disabled by user?
+  if (!backend[["interrupts"]]) return(future)
+  
   job <- future[["job"]]
   pid <- job[["pid"]]
   void <- tools::pskill(pid)
   future[["state"]] <- "interrupted"
+  
   future
 }
 

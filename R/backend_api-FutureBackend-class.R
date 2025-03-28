@@ -26,6 +26,9 @@
 #' (Default: \eqn{500 \cdot 1024^2} bytes = 500 MiB, unless overridden by a
 #'  FutureBackend subclass, or by R option [future.globals.maxSize] (sic!))
 #'
+#' @param interrupts If FALSE, attempts to interrupt futures will not take
+#' place on this backend, even if the backend supports it.
+#'
 #' @return
 #' `FutureBackend()` returns a FutureBackend object, which inherits an
 #' environment. Specific future backends are defined by subclasses
@@ -37,7 +40,7 @@
 #'
 #' @keywords internal
 #' @export
-FutureBackend <- function(..., earlySignal = FALSE, gc = FALSE, maxSizeOfObjects = getOption("future.globals.maxSize", +Inf), hooks = FALSE) {
+FutureBackend <- function(..., earlySignal = FALSE, gc = FALSE, maxSizeOfObjects = getOption("future.globals.maxSize", +Inf), interrupts = TRUE, hooks = FALSE) {
   core <- new.env(parent = emptyenv())
 
   if (!is.logical(gc)) {
@@ -48,10 +51,11 @@ FutureBackend <- function(..., earlySignal = FALSE, gc = FALSE, maxSizeOfObjects
   stop_if_not(length(gc) == 1L, is.logical(gc), !is.na(gc))
   stop_if_not(length(maxSizeOfObjects) == 1L, is.numeric(maxSizeOfObjects),
               !is.na(maxSizeOfObjects), maxSizeOfObjects >= 0)
+  stop_if_not(length(interrupts) == 1L, is.logical(interrupts), !is.na(interrupts))
   stop_if_not(length(hooks) == 1L, is.logical(hooks), !is.na(hooks))
   
   ## Record future plan tweaks, if any
-  args <- list(..., earlySignal = earlySignal, maxSizeOfObjects = maxSizeOfObjects, gc = gc, hooks = hooks)
+  args <- list(..., earlySignal = earlySignal, maxSizeOfObjects = maxSizeOfObjects, gc = gc, interrupts = interrupts, hooks = hooks)
   for (name in names(args)) {
     core[[name]] <- args[[name]]
   }
@@ -75,6 +79,7 @@ print.FutureBackend <- function(x, ...) {
   s <- c(s, sprintf("Available cores: %d", availableCores()))
   s <- c(s, sprintf("Automatic garbage collection: %s", backend[["gc"]]))
   s <- c(s, sprintf("Early signalling: %s", backend[["earlySignal"]]))
+  s <- c(s, sprintf("Interrupts are enabled: %s", backend[["interrupts"]]))
   max <- backend[["maxSizeOfObjects"]]
   max <- rep(max, length.out = 2L)
   max <- vapply(max, FUN.VALUE = NA_character_, FUN = function(x) {
