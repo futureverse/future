@@ -1,21 +1,58 @@
-testme_package <- Sys.getenv("R_TESTME_PACKAGE", NA_character_)
-if (is.na(testme_package)) {
-  stop("testme: Environment variable 'R_TESTME_PACKAGE' is not set")
+#' Run a 'testme' Test Script
+#'
+#' R usage:
+#' future::testme("<name>")
+#'
+#' Command-line usage:
+#' Rscript tests/test-<name>.R
+#'
+#' Command-line usage without package re-install:
+#' Rscript inst/testme/run.R --name=<name>
+
+cmd_args <- commandArgs(trailingOnly = TRUE)
+
+pattern <- "--package=([[:alpha:][:alnum:]]+)"
+idx <- grep(pattern, cmd_args)
+if (length(idx) > 0L) {
+  stopifnot(length(idx) == 1L)
+  testme_package <- gsub(pattern, "\\1", cmd_args[idx])
+} else {
+  testme_package <- Sys.getenv("R_TESTME_PACKAGE", NA_character_)
+  if (is.na(testme_package)) {
+    desc <- read.dcf("DESCRIPTION")
+    testme_package <- desc[1, "Package"]
+  }
 }
 
-path <- Sys.getenv("R_TESTME_PATH", NA_character_)
-if (is.na(path)) {
-  path <- system.file(package = testme_package, "testme", mustWork = TRUE)
-} else if (!utils::file_test("-d", path)) {
-  stop("There exist no such 'R_TESTME_PATH' folder: ", sQuote(path))
+pattern <- "--path=([[:alpha:][:alnum:]]+)"
+idx <- grep(pattern, cmd_args)
+if (length(idx) > 0L) {
+  stopifnot(length(idx) == 1L)
+  path <- gsub(pattern, "\\1", cmd_args[idx])
+} else {
+  path <- Sys.getenv("R_TESTME_PATH", NA_character_)
+  if (is.na(path)) {
+    path <- file.path("inst", "testme")
+  }
+  if (!utils::file_test("-d", path)) {
+    stop("There exist no such 'R_TESTME_PATH' folder: ", sQuote(path))
+  }
 }
 Sys.setenv(R_TESTME_PATH = path)
 
 
-testme_name <- Sys.getenv("R_TESTME_NAME", NA_character_)
-if (is.na(testme_name)) {
-  stop("testme: Environment variable 'R_TESTME_NAME' is not set")
-}
+pattern <- "--name=([[:alpha:][:alnum:]]+)"
+idx <- grep(pattern, cmd_args)
+if (length(idx) > 0L) {
+  stopifnot(length(idx) == 1L)
+  testme_name <- gsub(pattern, "\\1", cmd_args[idx])
+} else {
+  testme_name <- Sys.getenv("R_TESTME_NAME", NA_character_)
+  if (is.na(testme_name)) {
+    stop("testme: Environment variable 'R_TESTME_NAME' is not set")
+  }
+}  
+
 
 testme_file <- file.path(path, sprintf("test-%s.R", testme_name))
 if (!utils::file_test("-f", testme_file)) {
