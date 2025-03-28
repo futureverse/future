@@ -66,9 +66,10 @@ FutureBackend <- function(..., earlySignal = FALSE, gc = FALSE, maxSizeOfObjects
 #' @export
 print.FutureBackend <- function(x, ...) {
   backend <- x
-  
-  s <- sprintf("%s:", class(backend)[1])
-  s <- c(s, sprintf("Inherits: %s", commaq(class(backend)[-1])))
+
+  classes <- setdiff(class(backend), "environment")
+  s <- sprintf("%s:", classes[1])
+  s <- c(s, sprintf("Inherits: %s", classes[-1]))
   s <- c(s, sprintf("Number of workers: %d", nbrOfWorkers(backend)))
   s <- c(s, sprintf("Number of free workers: %d", nbrOfFreeWorkers(backend)))
   s <- c(s, sprintf("Available cores: %d", availableCores()))

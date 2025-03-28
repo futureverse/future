@@ -75,7 +75,7 @@ ClusterFutureBackend <- local({
       ...
     )
     core[["futureClasses"]] <- c("ClusterFuture", core[["futureClasses"]])
-    core <- structure(core, class = c("ClusterFutureBackend", "FutureBackend", class(core)))
+    core <- structure(core, class = c("ClusterFutureBackend", class(core)))
     core
   }
 })

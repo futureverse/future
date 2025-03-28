@@ -164,7 +164,7 @@ MulticoreFutureBackend <- function(workers = availableCores(constraints = "multi
     maxSizeOfObjects = maxSizeOfObjects
   )
   core[["futureClasses"]] <- c("MulticoreFuture", "MultiprocessFuture", core[["futureClasses"]])
-  core <- structure(core, class = c("MulticoreFutureBackend", "FutureBackend", class(core)))
+  core <- structure(core, class = c("MulticoreFutureBackend", class(core)))
   core
 }
 
