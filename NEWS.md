@@ -1,5 +1,18 @@
 # Version (development version)
 
+This is the first of three major releases. This one comes with a large
+redesign of how future backends are implemented internally. One goal
+is to lower the threshold for implementing exciting, new features,
+that has been old hold for too long. Some of these features are
+available already in this release, and more to come in near-future
+releases. Another goal is to make it straightforward to implement a
+new backend. 
+
+This update is fully backward compatible with previous
+versions. Developers and end-users can expect business as usual. Like
+all releases, this version has been validated thoroughly via
+reverse-dependency checks, **future.tests** checks, and more.
+
 ## New Features
 
  * Add `localPlan()` and `withPlan()` functions for evaluating an

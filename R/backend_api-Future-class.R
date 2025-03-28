@@ -425,7 +425,8 @@ run.Future <- function(future, ...) {
 
     ## Protect against exporting too large objects
     future <- validateFutureGlobals(backend, future)
-
+    stop_if_not(inherits(future, "Future"))
+    
     ## Coerce to target Future class
     class(future) <- backend[["futureClasses"]]
 

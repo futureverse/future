@@ -233,7 +233,7 @@ validateFutureGlobals.FutureBackend <- function(backend, future, ..., debug = FA
 
   ## Assert that the total size is within limits
   if (is.na(total_size) || total_size <= maxSizeOfObjects) {
-    return(Future)
+    return(future)
   }
   
   sizes <- lapply(globals, FUN = objectSize)

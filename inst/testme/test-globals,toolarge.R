@@ -10,7 +10,8 @@ ooptsT <- options(future.globals.maxSize = object.size(a) - 100L)
 limit <- getOption("future.globals.maxSize")
 cat(sprintf("Max total size of globals: %g bytes\n", limit))
 
-plan(multisession)
+plan(multisession, workers = 2L)
+print(plan("backend"))
 
 exprs <- list(
   A = substitute({ a                 }, env = list()),
