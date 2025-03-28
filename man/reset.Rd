@@ -19,6 +19,25 @@ Resetting a running future results in a \link{FutureError}.
 A future that has successfully completed, has been interrupted, or
 failed due to an error, can be relaunched after resetting it.
 }
+\details{
+A lazy, vanilla \link{Future} can be reused in another R session. For
+instance, if we do:
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{library(future)
+a <- 2
+f <- future(42 * a, lazy = TRUE)
+saveRDS(f, "myfuture.rds")
+}\if{html}{\out{</div>}}
+
+Then we can read and evaluate the future in another R session using:
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{library(future)
+f <- readRDS("myfuture.rds")
+v <- value(f)
+print(v)
+#> [1] 84
+}\if{html}{\out{</div>}}
+}
 \examples{
 ## Like mean(), but fails 90\% of the time
 shaky_mean <- function(x) {

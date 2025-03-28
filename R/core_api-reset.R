@@ -11,6 +11,27 @@
 #' `reset()` returns a lazy, vanilla [Future] that can be relaunched.
 #' Resetting a running future results in a [FutureError].
 #'
+#' @details
+#' A lazy, vanilla [Future] can be reused in another R session. For
+#' instance, if we do:
+#'
+#' ```
+#' library(future)
+#' a <- 2
+#' f <- future(42 * a, lazy = TRUE)
+#' saveRDS(f, "myfuture.rds")
+#' ```
+#'
+#' Then we can read and evaluate the future in another R session using:
+#'
+#' ```
+#' library(future)
+#' f <- readRDS("myfuture.rds")
+#' v <- value(f)
+#' print(v)
+#' #> [1] 84
+#' ```
+#'
 #' @example incl/reset.R
 #'
 #' @export
