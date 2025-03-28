@@ -23,7 +23,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">future</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.34.0-9334</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.34.0-9336</span>
       </span>
     </div>
 
@@ -161,6 +161,8 @@
 
     <div class="section level2">
 <h2 class="page-header" data-toc-text="development version" id="version-development-version">Version (development version)<a class="anchor" aria-label="anchor" href="#version-development-version"></a></h2>
+<p>This is the first rollout out of three major updates. This one comes with a large redesign of how future backends are implemented internally. One goal is to lower the threshold for implementing exciting, new features, that has been old hold for too long. Some of these features are available already in this release, and more are to come in near-future releases. Another goal is to make it straightforward to implement a new backend.</p>
+<p>This update is fully backward compatible with previous versions. Developers and end-users can expect business as usual. Like all releases, this version has been validated thoroughly via reverse-dependency checks, <strong>future.tests</strong> checks, and more.</p>
 <div class="section level3">
 <h3 id="new-features-development-version">New Features<a class="anchor" aria-label="anchor" href="#new-features-development-version"></a></h3>
 <ul><li><p>Add <code><a href="../reference/plan.html">localPlan()</a></code> and <code><a href="../reference/plan.html">withPlan()</a></code> functions for evaluating an expression, including futures, using a temporary future plan.</p></li>
