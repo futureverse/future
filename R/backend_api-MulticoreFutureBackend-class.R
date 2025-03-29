@@ -164,7 +164,7 @@ MulticoreFutureBackend <- function(workers = availableCores(constraints = "multi
     maxSizeOfObjects = maxSizeOfObjects
   )
   core[["futureClasses"]] <- c("MulticoreFuture", "MultiprocessFuture", core[["futureClasses"]])
-  core <- structure(core, class = c("MulticoreFutureBackend", class(core)))
+  core <- structure(core, class = c("MulticoreFutureBackend", "MultiprocessFutureBackend", class(core)))
   core
 }
 
@@ -235,7 +235,17 @@ launchFuture.MulticoreFutureBackend <- local({
 
 
 #' @export
-stopWorkers.MulticoreFutureBackend <- function(backend, ...) {
+stopWorkers.MulticoreFutureBackend <- function(backend, interrupt = TRUE, ...) {
+  ## Interrupt all futures
+  if (interrupt) {
+    futures <- listFutures(backend)
+    futures <- lapply(futures, FUN = interrupt, ...)
+  }
+
+  ## Clear registry
+  reg <- backend[["reg"]]
+  FutureRegistry(reg, action = "reset")
+  
   TRUE
 }
 

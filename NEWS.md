@@ -108,6 +108,12 @@ reverse-dependency checks, **future.tests** checks, and more.
    with 'RichSOCKnode' #1 on host 'localhost' (R Under development
    (unstable) (2025-03-23 r88038), platform x86_64-pc-linux-gnu) is
    out of sync."
+   
+ * Switching plan while having active futures would likely result in
+   the active futures becoming corrupt, resulting in unpredictable
+   errors when querying the future by, for instance, `value()`, but
+   also `resolved()`, which should never produce an error. Now such
+   futures become predictable, interrupted futures.
 
 ## Documentation
 
