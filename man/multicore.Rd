@@ -8,7 +8,8 @@ multicore(
   ...,
   workers = availableCores(constraints = "multicore"),
   gc = FALSE,
-  earlySignal = FALSE
+  earlySignal = FALSE,
+  envir = parent.frame()
 )
 }
 \arguments{
@@ -25,6 +26,9 @@ frequently) or FALSE (less frequently).
 
 \item{earlySignal}{Specified whether conditions should be signaled as soon
 as possible or not.}
+
+\item{envir}{The \link{environment} from where global objects should be
+identified.}
 
 \item{\ldots}{Additional named elements to \code{\link[=Future]{Future()}}.}
 }

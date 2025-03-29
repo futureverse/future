@@ -164,7 +164,7 @@ MulticoreFutureBackend <- function(workers = availableCores(constraints = "multi
     maxSizeOfObjects = maxSizeOfObjects
   )
   core[["futureClasses"]] <- c("MulticoreFuture", "MultiprocessFuture", core[["futureClasses"]])
-  core <- structure(core, class = c("MulticoreFutureBackend", class(core)))
+  core <- structure(core, class = c("MulticoreFutureBackend", "MultiprocessFutureBackend", class(core)))
   core
 }
 
@@ -235,7 +235,17 @@ launchFuture.MulticoreFutureBackend <- local({
 
 
 #' @export
-stopWorkers.MulticoreFutureBackend <- function(backend, ...) {
+stopWorkers.MulticoreFutureBackend <- function(backend, interrupt = TRUE, ...) {
+  ## Interrupt all futures
+  if (interrupt) {
+    futures <- listFutures(backend)
+    futures <- lapply(futures, FUN = interrupt, ...)
+  }
+
+  ## Clear registry
+  reg <- backend[["reg"]]
+  FutureRegistry(reg, action = "reset")
+  
   TRUE
 }
 
@@ -638,7 +648,13 @@ interruptFuture.MulticoreFutureBackend <- function(backend, future, ...) {
 #' system.
 #'
 #' @export
-multicore <- function(..., workers = availableCores(constraints = "multicore"), gc = FALSE, earlySignal = FALSE) {
+multicore <- function(..., workers = availableCores(constraints = "multicore"), gc = FALSE, earlySignal = FALSE, envir = parent.frame()) {
+  ## WORKAROUNDS:
+  ## (1) promises::future_promise() calls the "evaluator" function directly
+  if ("promises" %in% loadedNamespaces()) {
+    return(future(..., gc = gc, earlySignal = earlySignal, envir = envir))
+  }
+  
   stop("INTERNAL ERROR: The future::multicore() function implements the FutureBackend and should never be called directly")
 }
 class(multicore) <- c("multicore", "multiprocess", "future", "function")

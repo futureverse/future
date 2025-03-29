@@ -283,8 +283,20 @@ interruptFuture.ClusterFutureBackend <- function(backend, future, ...) {
 
 
 #' @export
-stopWorkers.ClusterFutureBackend <- function(backend, ...) {
+stopWorkers.ClusterFutureBackend <- function(backend, interrupt = TRUE, ...) {
+  ## Interrupt all futures
+  if (interrupt) {
+    futures <- listFutures(backend)
+    futures <- lapply(futures, FUN = interrupt, ...)
+  }
+
+  ## Clear registry
+  reg <- backend[["reg"]]
+  FutureRegistry(reg, action = "reset")
+  
+  ## Stop workers
   ClusterRegistry(action = "stop", debug = isTRUE(getOption("future.debug")))
+  
   TRUE
 }
 
@@ -547,6 +559,7 @@ resolved.ClusterFuture <- function(x, run = TRUE, timeout = NULL, ...) {
   cl <- workers[node_idx]
   node <- cl[[1]]
 
+  
   ## Check if workers socket connection is available for reading
   if (!is.null(con <- node[["con"]])) {
     ## AD HOC/SPECIAL CASE: Skip if connection has been serialized and lacks
@@ -554,6 +567,16 @@ resolved.ClusterFuture <- function(x, run = TRUE, timeout = NULL, ...) {
     connId <- connectionId(con)
     if (!is.na(connId) && connId < 0L) return(FALSE)
 
+    ## Broken connection due to interruption?
+    isValid <- isConnectionValid(con)
+    if (!isValid && future[["state"]] %in% c("interrupted", "running")) {
+      ## Did it fail because we interrupted a future, which resulted in the
+      ## worker also shutting done? If so, turn the error into a run-time
+      ## FutureInterruptError and revive the worker
+      future <- handleInterruptedFuture(backend, future = future)
+      return(TRUE)
+    }
+    
     assertValidConnection(future)
 
     if (is.null(timeout)) {
@@ -637,7 +660,23 @@ result.ClusterFuture <- function(future, ...) {
   ## Assert that the process that created the future is
   ## also the one that evaluates/resolves/queries it.
   assertOwner(future)
-  assertValidConnection(future)
+
+  backend <- future[["backend"]]  
+  workers <- backend[["workers"]]  
+  worker <- future[["node"]]
+  node <- workers[[worker]]
+  if (!is.null(con <- node[["con"]])) {
+    ## Broken connection due to interruption?
+    isValid <- isConnectionValid(con)
+    if (!isValid && future[["state"]] %in% c("interrupted", "running")) {
+      ## Did it fail because we interrupted a future, which resulted in the
+      ## worker also shutting done? If so, turn the error into a run-time
+      ## FutureInterruptError and revive the worker
+      future <- handleInterruptedFuture(backend, future = future)
+      return(future)
+    }
+    assertValidConnection(future)
+  }
 
   repeat({
     result <- receiveMessageFromWorker(future, debug = debug)
@@ -1200,7 +1239,7 @@ handleInterruptedFuture <- local({
     if (inherits(con, "connection")) close(con)
   })
   
-  function(backend, future, ...) {
+  function(backend, future, relaunchWorker = TRUE, ...) {
     debug <- isTRUE(getOption("future.debug"))
     if (debug) {
       mdebug_push("handleInterruptedFuture() for ClusterFutureBackend ...")
@@ -1226,27 +1265,32 @@ handleInterruptedFuture <- local({
   
     ## Remove from backend
     reg <- backend[["reg"]]
-    FutureRegistry(reg, action = "remove", future = future, earlySignal = FALSE, debug = debug)
-    if (debug) mdebug("Erased future from future backend")
-  
-    ## Try to relaunch worker, if it is no longer running
-    alive <- isNodeAlive(node)
-    if (debug) mdebugf("cluster node is alive: %s", alive)
-    ## It is not possible to check if a node is alive on all types of clusters.
-    ## If that is the case, the best we can do is to assume it is alive
-    if (!is.na(alive) && !alive) {
-      ## Launch a new cluster node, by cloning the old one
-      node2 <- cloneNode(node)
-      
-      ## Add to cluster
-      workers[[node_idx]] <- node2
-  
-      ## Update backend
-      backend[["workers"]] <- workers
-      
-      ## Make sure to close the old cluster node (including any connection)
-      tryCatch(closeNode(node), error = identity)
+    exists <- FutureRegistry(reg, action = "contains", future = future, debug = debug)
+    if (exists) {
+      FutureRegistry(reg, action = "remove", future = future, earlySignal = FALSE, debug = debug)
+      if (debug) mdebug("Erased future from future backend")
     }
+  
+    ## Try to relaunch worker, if it is no longer running?
+    if (relaunchWorker) {
+      alive <- isNodeAlive(node)
+      if (debug) mdebugf("cluster node is alive: %s", alive)
+      ## It is not possible to check if a node is alive on all types of clusters.
+      ## If that is the case, the best we can do is to assume it is alive
+      if (!is.na(alive) && !alive) {
+        ## Launch a new cluster node, by cloning the old one
+        node2 <- cloneNode(node)
+        
+        ## Add to cluster
+        workers[[node_idx]] <- node2
+    
+        ## Update backend
+        backend[["workers"]] <- workers
+        
+        ## Make sure to close the old cluster node (including any connection)
+        tryCatch(closeNode(node), error = identity)
+      }
+    } ## if (relaunchWorker)
   
     future
   } ## handleInterruptedFuture()
@@ -1306,7 +1350,13 @@ handleInterruptedFuture <- local({
 #' @example incl/cluster.R
 #'
 #' @export
-cluster <- function(..., persistent = FALSE, workers = availableWorkers(), gc = FALSE, earlySignal = FALSE) {
+cluster <- function(..., persistent = FALSE, workers = availableWorkers(), gc = FALSE, earlySignal = FALSE, envir = parent.frame()) {
+  ## WORKAROUNDS:
+  ## (1) promises::future_promise() calls the "evaluator" function directly
+  if ("promises" %in% loadedNamespaces()) {
+    return(future(..., gc = gc, earlySignal = earlySignal, envir = envir))
+  }
+  
   stop("INTERNAL ERROR: The future::cluster() function implements the FutureBackend and should never be called directly")
 }
 class(cluster) <- c("cluster", "multiprocess", "future", "function")

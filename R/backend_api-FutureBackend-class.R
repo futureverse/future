@@ -319,6 +319,11 @@ stopWorkers <- function(backend, ...) {
 }
 
 #' @export
-stopWorkers.FutureBackend <- function(backend, ...) {
-  stop(FutureWarning("%s does not implement stopWorkers()", sQuote(class(backend)[1])))
+stopWorkers.FutureBackend <- function(backend, interrupt = TRUE, ...) {
+  ## Interrupt all futures
+  if (interrupt) {
+    futures <- listFutures(backend)
+    void <- lapply(futures, FUN = interrupt, ...)
+  }
+  warning(FutureWarning("%s does not implement stopWorkers()", sQuote(class(backend)[1])))
 }
