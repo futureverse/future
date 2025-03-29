@@ -10,12 +10,12 @@
 \alias{RngFutureWarning}
 \alias{RngFutureError}
 \alias{UnexpectedFutureResultError}
-\alias{GlobalEnvFutureCondition}
-\alias{GlobalEnvFutureWarning}
-\alias{GlobalEnvFutureError}
-\alias{ConnectionsMisuseFutureCondition}
-\alias{ConnectionsMisuseFutureWarning}
-\alias{ConnectionsMisuseFutureError}
+\alias{GlobalEnvMisuseFutureCondition}
+\alias{GlobalEnvMisuseFutureWarning}
+\alias{GlobalEnvMisuseFutureError}
+\alias{ConnectionMisuseFutureCondition}
+\alias{ConnectionMisuseFutureWarning}
+\alias{ConnectionMisuseFutureError}
 \alias{FutureInterruptError}
 \alias{FutureDroppedError}
 \alias{FutureJournalCondition}
@@ -42,7 +42,7 @@ RngFutureError(...)
 
 UnexpectedFutureResultError(future, hint = NULL)
 
-GlobalEnvFutureCondition(
+GlobalEnvMisuseFutureCondition(
   message = NULL,
   call = NULL,
   globalenv = globalenv,
@@ -50,11 +50,11 @@ GlobalEnvFutureCondition(
   future = NULL
 )
 
-GlobalEnvFutureWarning(...)
+GlobalEnvMisuseFutureWarning(...)
 
-GlobalEnvFutureError(...)
+GlobalEnvMisuseFutureError(...)
 
-ConnectionsMisuseFutureCondition(
+ConnectionMisuseFutureCondition(
   message = NULL,
   call = NULL,
   differences = NULL,
@@ -62,9 +62,9 @@ ConnectionsMisuseFutureCondition(
   future = NULL
 )
 
-ConnectionsMisuseFutureWarning(...)
+ConnectionMisuseFutureWarning(...)
 
-ConnectionsMisuseFutureError(...)
+ConnectionMisuseFutureError(...)
 
 FutureInterruptError(..., future = NULL)
 

@@ -120,9 +120,9 @@ value.Future <- function(future, stdout = TRUE, signal = TRUE, drop = FALSE, ...
     if (is.null(onMisuse)) onMisuse <- "ignore"
     if (onMisuse != "ignore") {
       if (onMisuse == "error") {
-        cond <- GlobalEnvFutureError(globalenv = result[["globalenv"]], future = future)
+        cond <- GlobalEnvMisuseFutureError(globalenv = result[["globalenv"]], future = future)
       } else if (onMisuse == "warning") {
-        cond <- GlobalEnvFutureWarning(globalenv = result[["globalenv"]], future = future)
+        cond <- GlobalEnvMisuseFutureWarning(globalenv = result[["globalenv"]], future = future)
       } else {
         cond <- NULL
         warnf("Unknown value on option 'future.globalenv.onMisuse': %s",
