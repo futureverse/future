@@ -26,7 +26,7 @@ home:
 
 navbar:
   structure:
-    right: [futureverse, pkgs, cran, github]
+    right: [futureverse, pkgs, cran, github, lightswitch]
   components:
     futureverse:
       icon: fas fa-home
@@ -49,3 +49,5 @@ template:
       index_name: futureverse
       algoliaOptions: { 'facetFilters': ['project:<%= pkg %>'] }
     ganalytics: G-SB3EQSD9FR
+  bootstrap: 5
+  light-switch: true
