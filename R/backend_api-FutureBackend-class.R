@@ -97,7 +97,7 @@ print.FutureBackend <- function(x, ...) {
   data <- listFutures(backend)
   stop_if_not(is.data.frame(data))
   if (nrow(data) == 0L) {
-    s <- c(s, "Number of futures: 0")
+    s <- c(s, "Number of active futures: 0")
   } else {
     resolved <- data[["resolved"]]
     s <- c(s, sprintf("Number of active futures: %d (%d resolved, %d unresolved)", length(resolved), sum(resolved), sum(!resolved)))

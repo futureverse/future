@@ -13,7 +13,7 @@ listFutures.MultiprocessFutureBackend <- function(backend, ..., debug = FALSE) {
 
   reg <- backend[["reg"]]
   if (is.null(reg)) {
-    stop(FutureError(sprintf("%s does not have a 'reg' element", class(backend)[1])))
+    stop(FutureError(sprintf("%s does not implement listFutures(), and it does not have a 'reg' element, so cannot fallback to the built-in implementation", class(backend)[1])))
   }
   
   futures <- FutureRegistry(reg, "list", earlySignal = FALSE)
