@@ -444,6 +444,9 @@ run.Future <- function(future, ...) {
     if (debug) mdebug_pop("Launching futures ... done")
     if (debug) mdebug("Future launched: ", commaq(class(future2)))
     stop_if_not(inherits(future2, "Future"))
+
+    ## Increment counter
+    backend[["counter"]] <- backend[["counter"]] + 1L
     
     if (debug) mdebugf_pop("Using %s ... done", class(backend)[1])
     
