@@ -223,7 +223,7 @@ GlobalEnvFutureError <- function(...) {
 
 #' @rdname FutureCondition
 #' @export
-ConnectionsMisuseFutureCondition <- function(message = NULL, call = NULL, differences = NULL, uuid = future[["uuid"]], future = NULL) {
+ConnectionMisuseFutureCondition <- function(message = NULL, call = NULL, differences = NULL, uuid = future[["uuid"]], future = NULL) {
   if (is.null(message)) {
     label <- sQuoteLabel(future[["label"]])
     message <- sprintf("Future (%s) added, removed, or modified connections. A future expression must close any opened connections and must not close connections it did not open", label)
@@ -247,25 +247,25 @@ ConnectionsMisuseFutureCondition <- function(message = NULL, call = NULL, differ
   }
   cond <- FutureCondition(message = message, call = call, uuid = uuid, future = future)
   cond[["differences"]] <- differences
-  class <- c("ConnectionsMisuseFutureCondition", "MisuseFutureCondition", class(cond))
+  class <- c("ConnectionMisuseFutureCondition", "MisuseFutureCondition", class(cond))
   class(cond) <- class[!duplicated(class, fromLast = TRUE)]
   cond
 }
 
 #' @rdname FutureCondition
 #' @export
-ConnectionsMisuseFutureWarning <- function(...) {
-  cond <- ConnectionsMisuseFutureCondition(...)
-  class <- c("ConnectionsMisuseFutureWarning", "MisuseFutureWarning", "FutureWarning", "warning", class(cond))
+ConnectionMisuseFutureWarning <- function(...) {
+  cond <- ConnectionMisuseFutureCondition(...)
+  class <- c("ConnectionMisuseFutureWarning", "MisuseFutureWarning", "FutureWarning", "warning", class(cond))
   class(cond) <- class[!duplicated(class, fromLast = TRUE)]
   cond
 }
 
 #' @rdname FutureCondition
 #' @export
-ConnectionsMisuseFutureError <- function(...) {
-  cond <- ConnectionsMisuseFutureCondition(...)
-  class <- c("ConnectionsMisuseFutureError", "MisuseFutureError", "FutureError", "error", class(cond))
+ConnectionMisuseFutureError <- function(...) {
+  cond <- ConnectionMisuseFutureCondition(...)
+  class <- c("ConnectionMisuseFutureError", "MisuseFutureError", "FutureError", "error", class(cond))
   class(cond) <- class[!duplicated(class, fromLast = TRUE)]
   cond
 }

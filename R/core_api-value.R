@@ -159,9 +159,9 @@ value.Future <- function(future, stdout = TRUE, signal = TRUE, drop = FALSE, ...
     if (is.null(onMisuse)) onMisuse <- "warning"
     if (onMisuse != "ignore") {
       if (onMisuse == "error") {
-        cond <- ConnectionsMisuseFutureError(differences = result[["misuse_connections"]], future = future)
+        cond <- ConnectionMisuseFutureError(differences = result[["misuse_connections"]], future = future)
       } else if (onMisuse == "warning") {
-        cond <- ConnectionsMisuseFutureWarning(differences = result[["misuse_connections"]], future = future)
+        cond <- ConnectionMisuseFutureWarning(differences = result[["misuse_connections"]], future = future)
       } else {
         cond <- NULL
         warnf("Unknown value on option 'future.onMisuse.connections': %s",
