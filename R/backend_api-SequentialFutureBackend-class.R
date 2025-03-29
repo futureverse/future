@@ -149,9 +149,18 @@ getFutureBackendConfigs.UniprocessFuture <- function(future, ...) {
 #' @aliases uniprocess
 #' @export
 sequential <- function(..., gc = FALSE, earlySignal = FALSE, envir = parent.frame()) {
-  if (! "fiery" %in% loadedNamespaces()) {
+  ## WORKAROUNDS:
+  ## (1) promises::future_promise() calls the "evaluator" function directly
+  if ("promises" %in% loadedNamespaces()) {
+    return(future(..., gc = gc, earlySignal = earlySignal, envir = envir))
+  }
+  
+  ## (2) fiery calls sequential() directly
+  ##     https://github.com/thomasp85/fiery/issues/53
+  if (!"fiery" %in% loadedNamespaces()) {
     stop("The future::sequential() function implements the FutureBackend and should never be called directly")
   }
+  
   f <- Future(..., envir = envir)
   class(f) <- c("SequentialFuture", "UniprocessFuture", "Future")
   f  
