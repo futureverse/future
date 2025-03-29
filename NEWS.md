@@ -84,7 +84,7 @@ reverse-dependency checks, **future.tests** checks, and more.
 
  * Backends `sequential` and `multicore` no longer has a limit on the
    maximum size of globals, i.e. they now default to `maxSizeOfObjects
-   = +Inf`. Backends `cluster` and `multisession` also defaults to
+   = +Inf`. Backends `cluster` and `multisession` also default to
    `maxSizeOfObjects = +Inf`, unless R option `future.globals.maxSize`
    (sic!) is set.
    

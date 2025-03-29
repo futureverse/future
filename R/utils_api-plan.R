@@ -121,10 +121,10 @@
       ## recursive loop caused by other plan() calls.
       attr(evaluator, "init") <- "done"
 
-      constructor <- attr(evaluator, "constructor")
+      factory <- attr(evaluator, "factory")
 
       ## Launch FutureBackend?
-      if (!is.null(constructor)) {
+      if (!is.null(factory)) {
         stop_if_not(is.null(attr(evaluator, "backend")))
         backend <- makeFutureBackend(evaluator, debug = debug)
         attr(evaluator, "backend") <- backend

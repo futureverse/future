@@ -108,4 +108,4 @@ attr(multisession, "cleanup") <- function() {
   ClusterRegistry(action = "stop", debug = isTRUE(getOption("future.debug")))
 }
 attr(multisession, "untweakable") <- c("persistent")
-attr(multisession, "constructor") <- MultisessionFutureBackend
+attr(multisession, "factory") <- MultisessionFutureBackend

@@ -157,4 +157,4 @@ sequential <- function(..., gc = FALSE, earlySignal = FALSE, envir = parent.fram
   f  
 }
 class(sequential) <- c("sequential", "uniprocess", "future", "function")
-attr(sequential, "constructor") <- SequentialFutureBackend
+attr(sequential, "factory") <- SequentialFutureBackend

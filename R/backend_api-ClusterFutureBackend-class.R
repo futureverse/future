@@ -1351,4 +1351,4 @@ attr(cluster, "cleanup") <- function() {
   ClusterRegistry(action = "stop", debug = isTRUE(getOption("future.debug")))
 }
 attr(cluster, "tweakable") <- quote(c(makeClusterPSOCK_args(), "persistent"))
-attr(cluster, "constructor") <- ClusterFutureBackend
+attr(cluster, "factory") <- ClusterFutureBackend

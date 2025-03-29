@@ -192,14 +192,14 @@ makeFutureBackend <- function(evaluator, ..., debug = FALSE) {
   
     mdebugf("Backend function: <%s>", commaq(class(backend)))
   
-  constructor <- attr(evaluator, "constructor")
-  if (is.null(constructor)) {
+  factory <- attr(evaluator, "factory")
+  if (is.null(factory)) {
     ## Old future strategies do not implement a FutureBackend
     if (debug) mdebugf("A legacy non-FutureBackend backend: <%s>", commaq(class(evaluator)))
     return(NULL)
   }
 
-  stop_if_not(is.function(constructor))
+  stop_if_not(is.function(factory))
 
   ## Apply future plan tweaks
   args <- attr(evaluator, "tweaks")
@@ -217,12 +217,12 @@ makeFutureBackend <- function(evaluator, ..., debug = FALSE) {
     args[[name]] <- args2[[name]]
   }
 
-  backend <- do.call(constructor, args = args)
+  backend <- do.call(factory, args = args)
   mdebugf("Backend: <%s>", commaq(class(backend)))
   stop_if_not(inherits(backend, "FutureBackend"))
   
-  ## Record constructor function as an attribute; needed by tweak()
-  attr(backend, "constructor") <- constructor
+  ## Record factory function as an attribute; needed by tweak()
+  attr(backend, "factory") <- factory
 
   backend
 }
