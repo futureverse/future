@@ -10,7 +10,7 @@
 |collate  |en_US.UTF-8                                               |
 |ctype    |en_US.UTF-8                                               |
 |tz       |America/Los_Angeles                                       |
-|date     |2025-03-26                                                |
+|date     |2025-03-29                                                |
 |pandoc   |3.6.3 @ /software/c4/cbi/software/pandoc-3.6.3/bin/pandoc |
 |quarto   |NA                                                        |
 
@@ -18,7 +18,7 @@
 
 |package    |old    |new         |Δ  |
 |:----------|:------|:-----------|:--|
-|future     |1.34.0 |1.34.0-9328 |*  |
+|future     |1.34.0 |1.34.0-9340 |*  |
 |codetools  |0.2-20 |0.2-20      |   |
 |digest     |0.6.37 |0.6.37      |   |
 |globals    |0.16.3 |0.16.3      |   |
@@ -40,7 +40,7 @@
 |[future.tests](problems.md#futuretests)|0.7.0   |__+1__ |        |     |
 |[Prostar](problems.md#prostar)|1.38.1  |       |__+1__  |3    |
 
-## All (426)
+## All (427)
 
 |package                      |version   |error  |warning |note |
 |:----------------------------|:---------|:------|:-------|:----|
@@ -68,7 +68,7 @@
 |BatchGetSymbols              |2.6.4     |       |        |     |
 |[batchtools](problems.md#batchtools)|0.9.17    |       |        |2    |
 |bayesian                     |1.0.1     |       |        |     |
-|[BayesianMCPMod](problems.md#bayesianmcpmod)|1.1.0     |       |        |1    |
+|BayesianMCPMod               |1.1.0     |       |        |     |
 |[bayesmove](problems.md#bayesmove)|0.2.1     |       |        |1    |
 |[bbknnR](problems.md#bbknnr) |1.1.1     |       |        |1    |
 |bcmaps                       |2.2.1     |       |        |     |
@@ -120,7 +120,7 @@
 |[dispositionEffect](problems.md#dispositioneffect)|1.0.1     |1      |        |     |
 |[distantia](problems.md#distantia)|2.0.2     |       |        |3    |
 |doFuture                     |1.0.2     |       |        |     |
-|DQAstats                     |0.3.7     |       |        |     |
+|DQAstats                     |0.3.8     |       |        |     |
 |drake                        |7.13.11   |       |        |     |
 |drimmR                       |1.0.1     |       |        |     |
 |drtmle                       |1.1.2     |       |        |     |
@@ -146,7 +146,7 @@
 |fabletools                   |0.5.0     |       |        |     |
 |FAMoS                        |0.3.0     |       |        |     |
 |fastml                       |0.5.0     |       |        |     |
-|FastRet                      |1.1.4     |       |        |     |
+|FastRet                      |1.1.4     |       |-1      |     |
 |[fastRhockey](problems.md#fastrhockey)|0.4.0     |       |        |1    |
 |[fdacluster](problems.md#fdacluster)|0.4.1     |       |        |1    |
 |fdWasserstein                |1.0       |       |        |     |
@@ -172,13 +172,13 @@
 |[future.tests](problems.md#futuretests)|0.7.0     |__+1__ |        |     |
 |futureverse                  |0.1.0     |       |        |     |
 |fxTWAPLS                     |0.1.3     |       |        |     |
-|[GeDS](problems.md#geds)     |0.2.8     |       |1       |     |
+|[GeDS](problems.md#geds)     |0.2.9     |       |1       |     |
 |genBaRcode                   |1.2.8     |       |        |     |
 |[geocmeans](problems.md#geocmeans)|0.3.4     |       |        |1    |
-|[geohabnet](problems.md#geohabnet)|2.1.3     |3      |        |     |
+|[geohabnet](problems.md#geohabnet)|2.1.3     |2      |        |     |
 |[GeoModels](problems.md#geomodels)|2.1.0     |       |        |1    |
 |GetBCBData                   |0.7.0     |       |        |     |
-|[googleComputeEngineR](problems.md#googlecomputeenginer)|0.3.0     |       |        |3    |
+|[googleComputeEngineR](problems.md#googlecomputeenginer)|0.3.0     |       |        |2    |
 |googlePubsubR                |0.0.4     |       |        |     |
 |[googleTagManageR](problems.md#googletagmanager)|0.2.0     |       |        |1    |
 |GPCsign                      |0.1.1     |       |        |     |
@@ -186,7 +186,7 @@
 |[greed](problems.md#greed)   |0.6.1     |       |        |3    |
 |greta                        |0.5.0     |       |        |     |
 |gstat                        |2.1-3     |       |        |     |
-|GSVA                         |2.0.6     |       |        |     |
+|GSVA                         |2.0.7     |       |        |     |
 |[gsynth](problems.md#gsynth) |1.2.1     |       |        |2    |
 |gtfs2emis                    |0.1.1     |       |        |     |
 |[gtfs2gps](problems.md#gtfs2gps)|2.1-2     |1      |        |     |
@@ -271,7 +271,7 @@
 |mlr3summary                  |0.1.0     |       |        |     |
 |mlr3torch                    |0.2.1     |       |        |     |
 |[mlr3tuning](problems.md#mlr3tuning)|1.3.0     |       |        |1    |
-|[modelsummary](problems.md#modelsummary)|2.3.0     |       |        |1    |
+|modelsummary                 |2.3.0     |       |        |     |
 |[momentuHMM](problems.md#momentuhmm)|1.5.5     |       |        |1    |
 |[MOSS](problems.md#moss)     |0.2.2     |       |        |1    |
 |mplusParallel.automation     |0.0.1.1   |       |        |     |
@@ -307,6 +307,7 @@
 |[partR2](problems.md#partr2) |0.9.2     |       |        |1    |
 |[pavo](problems.md#pavo)     |2.9.0     |       |1       |     |
 |pbapply                      |1.7-2     |       |        |     |
+|pcpr                         |1.0.0     |       |        |     |
 |PeakSegDisk                  |2024.10.1 |       |        |     |
 |penaltyLearning              |2024.9.3  |       |        |     |
 |pGRN                         |0.3.5     |       |        |     |
@@ -324,7 +325,7 @@
 |POMADE                       |0.2.0     |       |        |     |
 |[portvine](problems.md#portvine)|1.0.3     |       |        |1    |
 |powRICLPM                    |0.2.1     |       |        |     |
-|[ProFAST](problems.md#profast)|1.5       |       |        |1    |
+|[ProFAST](problems.md#profast)|1.6       |       |        |1    |
 |progressr                    |0.15.1    |       |        |     |
 |[projpred](problems.md#projpred)|2.8.0     |       |        |2    |
 |promises                     |1.3.2     |       |        |     |
@@ -333,12 +334,12 @@
 |protti                       |0.9.1     |       |        |     |
 |[psborrow2](problems.md#psborrow2)|0.0.4.0   |       |        |2    |
 |PSCBS                        |0.67.0    |       |        |     |
-|[pseudohouseholds](problems.md#pseudohouseholds)|0.1.1     |       |        |1 -1 |
+|[pseudohouseholds](problems.md#pseudohouseholds)|0.1.1     |       |        |1    |
 |PUMP                         |1.0.4     |       |        |     |
 |[qape](problems.md#qape)     |2.1       |       |        |1    |
 |QBMS                         |1.5.0     |       |        |     |
 |[QDNAseq](problems.md#qdnaseq)|1.42.0    |       |1       |     |
-|qgcomp                       |2.17.4    |       |        |     |
+|qgcomp                       |2.18.4    |       |        |     |
 |qgcompint                    |1.0.0     |       |        |     |
 |[RAINBOWR](problems.md#rainbowr)|0.1.35    |       |        |1    |
 |rangeMapper                  |2.0.3     |       |        |     |
@@ -389,7 +390,7 @@
 |[sigminer](problems.md#sigminer)|2.3.1     |       |        |1    |
 |[Signac](problems.md#signac) |1.14.0    |       |        |1    |
 |[signeR](problems.md#signer) |2.8.0     |       |        |4    |
-|[SimDesign](problems.md#simdesign)|2.19.1    |       |        |1    |
+|[SimDesign](problems.md#simdesign)|2.19.2    |       |        |1    |
 |simglm                       |0.8.9     |       |        |     |
 |simhelpers                   |0.3.1     |       |        |     |
 |simIDM                       |0.1.0     |       |        |     |
@@ -406,8 +407,8 @@
 |[spaMM](problems.md#spamm)   |4.5.0     |       |        |2    |
 |spanishoddata                |0.1.0     |       |        |     |
 |[sparrpowR](problems.md#sparrpowr)|0.2.8     |       |1       |     |
-|[SPARSEMODr](problems.md#sparsemodr)|1.2.0     |       |        |2    |
-|spatialTIME                  |1.3.4-5   |       |        |-1   |
+|[SPARSEMODr](problems.md#sparsemodr)|1.2.0     |       |        |1    |
+|spatialTIME                  |1.3.4-5   |       |        |     |
 |[spatialwarnings](problems.md#spatialwarnings)|3.1.0     |       |        |1    |
 |spdesign                     |0.0.5     |       |        |     |
 |specr                        |1.0.0     |       |        |     |
@@ -457,7 +458,7 @@
 |[vital](problems.md#vital)   |1.1.0     |       |        |1    |
 |[vmeasur](problems.md#vmeasur)|0.1.4     |       |1       |     |
 |WARDEN                       |0.99.1    |       |        |     |
-|webdeveloper                 |1.0.5     |       |        |     |
+|webdeveloper                 |1.0.5     |-1     |        |     |
 |[WeightedCluster](problems.md#weightedcluster)|1.8-1     |       |1       |     |
 |whitewater                   |0.1.3     |       |        |     |
 |wildmeta                     |0.3.2     |       |        |     |
