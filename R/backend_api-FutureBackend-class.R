@@ -73,7 +73,7 @@ print.FutureBackend <- function(x, ...) {
 
   classes <- setdiff(class(backend), "environment")
   s <- sprintf("%s:", classes[1])
-  s <- c(s, sprintf("Inherits: %s", classes[-1]))
+  s <- c(s, sprintf("Inherits: %s", paste(classes[-1], collapse = ", ")))
 
   ## Summary of workers
   s <- c(s, sprintf("Number of workers: %d", nbrOfWorkers(backend)))

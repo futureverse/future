@@ -591,6 +591,17 @@ print.future <- function(x, ...) {
   s <- c(s, specs)
   s <- paste(s, collapse = "\n")
   cat(s, "\n", sep = "")
+
+  ## FutureBackend?
+  if (!is.null(attr(x, "factory", exact = FALSE))) {
+    backend <- attr(x, "backend", exact = FALSE)
+    if (is.null(backend)) {
+      cat("FutureBackend to be launched\n")
+    } else {
+      print(backend)
+    }
+  }
+  
   invisible(x)
 }
 

@@ -55,6 +55,10 @@ reverse-dependency checks, **future.tests** checks, and more.
    of having to specify globals and packages, not having conditions
    and standard output relayed, and ignoring random number generation.
 
+ * Printing `plan()` will output details on the future backend, e.g.
+   number of workers, number of free workers, backend settings, and
+   summary of resolved and non-resolved, active futures.
+ 
  * Interrupted futures are now handled and produce an informative error.
 
  * Timeout errors triggered by `setTimeLimit()` are now relayed.
