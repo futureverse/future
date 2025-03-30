@@ -370,7 +370,6 @@ update_package_options <- function(debug = FALSE) {
 
   ## future 1.34.0:
   update_package_option("future.globals.objectSize.method", mode = "character", debug = debug)
-  update_package_option("future.plan.cleanup.legacy", mode = "logical", debug = debug)
 
   ## future (> 1.34.0-9000):
   update_package_option("future.connections.onMisuse", mode = "character", debug = debug)

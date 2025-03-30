@@ -88,19 +88,12 @@
 
     ## Legacy, non-FutureBackend backends, and other fallbacks
     cleanup_fcn <- attr(evaluator, "cleanup", exact = TRUE)
-
-    ## Nothing to do?
-    if (is.null(cleanup_fcn) &&
-        !isTRUE(getOption("future.plan.cleanup.legacy"))) {
-      return()
-    }
-
-    ## Clean up
-    if (is.function(cleanup_fcn)) {
-      cleanup_fcn()
-    } else if (is.null(cleanup_fcn)) {
-    } else {
-      stop(FutureError(sprintf("Unknown type of 'cleanup' attribute on current future strategy: %s", commaq(class(cleanup_fcn)))))
+    if (!is.null(cleanup_fcn)) {
+      if (is.function(cleanup_fcn)) {
+        cleanup_fcn()
+      } else {
+        stop(FutureError(sprintf("Unknown type of 'cleanup' attribute on current future strategy: %s", commaq(class(cleanup_fcn)))))
+      }
     }
   } ## plan_cleanup()
 
