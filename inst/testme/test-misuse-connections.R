@@ -13,7 +13,9 @@ for (onMisuse in c("ignore", "warning", "error")) {
   
   f <- future({
     con <- textConnection("abc")
-    42L
+    ## Return connection, to avoid it being
+    ## garbage collected before we return
+    structure(42L, con = con)
   })
   r <- result(f)
   diff <- r[["misuse_connections"]]
@@ -24,13 +26,14 @@ for (onMisuse in c("ignore", "warning", "error")) {
   str(v)
   
   if (onMisuse == "error") {
-    message(conditionMessage(v))
+    if (inherits(v, "condition")) message(conditionMessage(v))
     stopifnot(inherits(v, "FutureError"))
   } else if (onMisuse == "warning") {
-    message(conditionMessage(v))
+    if (inherits(v, "condition")) message(conditionMessage(v))
     stopifnot(inherits(v, "FutureWarning"))
   } else {
-    message("None.")
+    message("None")
+    if (inherits(v, "condition")) message(conditionMessage(v))
     stopifnot(
       !inherits(v, "condition"),
       v == 42L

@@ -7,16 +7,6 @@ library(future)
 ## on R (< 4.1.0)
 if (getRversion() < "4.1") options(future.debug = FALSE)
 
-message("*** Demos ...")
-
-message("*** Fibonacci demo of the 'future' package ...")
-# Temporarily protect against non-default R_FUTURE_PLAN
-oopts <- options(future.plan = NULL)
-demo("fibonacci", package = "future", ask = FALSE)
-options(oopts)
-message("*** Fibonacci demo of the 'future' package ... DONE")
-
-
 message("*** Mandelbrot demo of the 'future' package ...")
 options(future.demo.mandelbrot.nrow = 2L)
 options(future.demo.mandelbrot.resolution = 50L)
@@ -36,6 +26,4 @@ for (cores in 1:availCores) {
   message(sprintf("Testing with %d cores ... DONE", cores))
 } ## for (cores ...)
 message("*** Mandelbrot demo of the 'future' package ... DONE")
-
-message("*** Demos ... DONE")
 
