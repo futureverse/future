@@ -79,8 +79,7 @@ if (length(tags) > 0) {
 }
 
 ## Create 'testme' environment on the search() path
-if ("testme" %in% search()) detach(name = "testme")
-testme <- attach(list(
+testme_config <- list(
   package = testme_package,
      name = testme_name,
      tags = tags,
@@ -88,7 +87,9 @@ testme <- attach(list(
     start = proc.time(),
    script = testme_file,
     debug = isTRUE(as.logical(Sys.getenv("R_TESTME_DEBUG")))
-), name = "testme", warn.conflicts = FALSE)
+)
+if ("testme" %in% search()) detach(name = "testme")
+testme <- attach(testme_config, name = "testme", warn.conflicts = FALSE)
 rm(list = c("tags", "testme_package", "testme_name", "testme_file"))
 
 
@@ -150,6 +151,11 @@ if (testme[["status"]] != "skipped" &&
     })
     eval(expr, envir = testme)
   })
+
+  ## In case prologue scripts overwrote some elements in 'testme'
+  for (name in names(testme_config)) {
+    testme[[name]] <- testme_config[[name]]
+  }
 }
 
 
@@ -160,6 +166,11 @@ if (testme[["status"]] != "skipped") {
   testme[["status"]] <- "failed"
   source(testme[["script"]], echo = TRUE)
   testme[["status"]] <- "success"
+  
+  ## In case test script overwrote some elements in 'testme'
+  for (name in names(testme_config)) {
+    testme[[name]] <- testme_config[[name]]
+  }
 }
 
 
