@@ -15,64 +15,10 @@
 #' @keywords internal
 #' @rdname FutureBackend
 #'
-#' @importFrom parallel stopCluster
 #' @importFrom parallelly as.cluster availableWorkers
 #' @export
 ClusterFutureBackend <- local({
   getDefaultCluster <- import_parallel_fcn("getDefaultCluster")
-
-  startInternalCluster <- function(workers, makeCluster, ..., debug = FALSE) {
-    if (debug) {
-      mdebug_push("makeCluster(workers, ...) ...")
-      mdebug_pop("makeCluster(workers, ...) ... done")
-    }
-    
-    cl <- makeCluster(workers, ...)
-    
-    ## Attach name to cluster?
-    name <- attr(cl, "name", exact = TRUE)
-    if (is.null(name)) {
-      name <- uuid(cl)
-      stop_if_not(length(name) > 0, nzchar(name))
-      attr(cl, "name") <- name
-      if (debug) mdebug("Generated cluster UUID")
-    }
-    if (debug) {
-      mdebugf("Cluster UUID: %s", sQuote(name))
-      mprint(cl)
-    }
-
-    ## Memoize
-    cluster <<- cl
-
-    cluster
-  } ## startInternalCluster()
-
-  stopInternalCluster <- function(debug = FALSE) {
-    if (debug) {
-      mdebug_push("Stopping existing cluster ...")
-      on.exit(mdebug_pop("Stopping existing cluster ... done"))
-    }
-    ## Nothing to do?
-    if (is.null(cluster)) {
-      if (debug) mdebug("No pre-existing cluster. Skipping")
-      return(cluster)
-    }
-    
-    if (debug) {
-      mdebug("Cluster to shut down:")
-      mprint(cluster)
-    }
-   
-    res <- tryCatch({ stopCluster(cluster); TRUE }, error = identity)
-    if (debug) mdebugf("Stopped cluster: %s", commaq(deparse(res)))
-
-    ## Clear memoization
-    cluster <<- NULL
-  } ## stopInternalCluster()
-  
-  ## We only allow one parallel 'cluster' per session
-  cluster <- NULL
 
   ## Most recent 'workers' set up
   last <- NULL
@@ -87,7 +33,7 @@ ClusterFutureBackend <- local({
     
     if (is.function(workers)) workers <- workers()
     if (is.null(workers)) {
-      stopInternalCluster(debug = debug)
+      clusterRegistry$stopCluster(debug = debug)
       last <<- NULL
       workers <- getDefaultCluster()
       workers <- addCovrLibPath(workers)
@@ -107,9 +53,9 @@ ClusterFutureBackend <- local({
 
       ## Already setup?
       if (is.null(cluster) || !identical(workers, last)) {
-        stopInternalCluster(debug = debug)
+        clusterRegistry$stopCluster(debug = debug)
         if (debug) mdebug_push("Starting new cluster ...")
-        cluster <<- startInternalCluster(workers, makeCluster = .makeCluster, ..., debug = debug)
+        workers <- clusterRegistry$startCluster(workers, makeCluster = .makeCluster, ..., debug = debug)
         if (debug) {
           mprint(cluster)
           mdebug_push("Starting new cluster ... done")
@@ -121,9 +67,8 @@ ClusterFutureBackend <- local({
           mdebug("Cluster already existed")
         }
       }
-      workers <- cluster
     } else {
-      stopInternalCluster(debug = debug)
+      clusterRegistry$stopCluster(debug = debug)
       last <<- NULL
       workers <- as.cluster(workers)
       workers <- addCovrLibPath(workers)
@@ -385,8 +330,7 @@ stopWorkers.ClusterFutureBackend <- function(backend, interrupt = TRUE, ...) {
   
   ## Stop workers
   mdebugf_push("Stop cluster workers ...")
-  stopInternalCluster <- environment(ClusterFutureBackend)[["stopInternalCluster"]]
-  if (is.function(stopInternalCluster)) stopInternalCluster(debug = debug)
+  clusterRegistry$stopCluster(debug = debug)
   mdebugf_pop("Stop cluster workers ... done")
   
   TRUE
@@ -1359,3 +1303,70 @@ class(cluster) <- c("cluster", "multiprocess", "future", "function")
 attr(cluster, "init") <- TRUE
 attr(cluster, "tweakable") <- quote(c(makeClusterPSOCK_args(), "persistent"))
 attr(cluster, "factory") <- ClusterFutureBackend
+
+
+
+
+## NOTE, we must not memoize the cluster as part of the ClusterFutureBackend
+## function, because that function is set as attribute "factory" of the
+## 'cluster' function, which will be passed along to parallel workers
+## as part of plan("tail").
+#' @importFrom parallel stopCluster
+clusterRegistry <- local({
+  ## We only allow one parallel 'cluster' per session
+  cluster <- NULL
+  
+  startCluster <- function(workers, makeCluster, ..., debug = FALSE) {
+    if (debug) {
+      mdebug_push("makeCluster(workers, ...) ...")
+      mdebug_pop("makeCluster(workers, ...) ... done")
+    }
+    
+    cl <- makeCluster(workers, ...)
+    
+    ## Attach name to cluster?
+    name <- attr(cl, "name", exact = TRUE)
+    if (is.null(name)) {
+      name <- uuid(cl)
+      stop_if_not(length(name) > 0, nzchar(name))
+      attr(cl, "name") <- name
+      if (debug) mdebug("Generated cluster UUID")
+    }
+    if (debug) {
+      mdebugf("Cluster UUID: %s", sQuote(name))
+      mprint(cl)
+    }
+
+    ## Memoize
+    cluster <<- cl
+
+    cluster
+  } ## startCluster()
+
+  stopCluster <- function(debug = FALSE) {
+    if (debug) {
+      mdebug_push("Stopping existing cluster ...")
+      on.exit(mdebug_pop("Stopping existing cluster ... done"))
+    }
+    ## Nothing to do?
+    if (is.null(cluster)) {
+      if (debug) mdebug("No pre-existing cluster. Skipping")
+      return(cluster)
+    }
+    
+    if (debug) {
+      mdebug("Cluster to shut down:")
+      mprint(cluster)
+    }
+   
+    res <- tryCatch({
+      parallel::stopCluster(cluster); TRUE
+    }, error = identity)
+    if (debug) mdebugf("Stopped cluster: %s", commaq(deparse(res)))
+
+    ## Clear memoization
+    cluster <<- NULL
+  } ## stopCluster()
+
+  list(startCluster = startCluster, stopCluster = stopCluster)
+}) ## clusterRegistry()

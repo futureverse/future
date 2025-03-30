@@ -95,11 +95,10 @@
         stop(FutureError(sprintf("Unknown type of 'cleanup' attribute on current future strategy: %s", commaq(class(cleanup_fcn)))))
       }
     } else {
-      if (debug) mdebugf_push("Legacy shutdow of cluster workers ...")
+      if (debug) mdebugf_push("Legacy shutdown of cluster workers ...")
       ## Legacy shutdown of cluster workers
-      stopCluster <- environment(ClusterFutureBackend)[["stopCluster"]]
-      if (is.function(stopCluster)) stopCluster(debug = debug)
-      if (debug) mdebugf_pop("Legacy shutdow of cluster workers ... done")
+      clusterRegistry$stopCluster(debug = debug)
+      if (debug) mdebugf_pop("Legacy shutdown of cluster workers ... done")
     }
   } ## plan_cleanup()
 
