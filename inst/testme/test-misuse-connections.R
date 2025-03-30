@@ -3,7 +3,10 @@
 #' @tags sequential multisession multicore
 
 library(future)
-options(future.debug = FALSE)
+options(
+  future.debug = FALSE,
+  future.globals.onReference = "ignore" ## because we return a connection
+)
 
 for (onMisuse in c("ignore", "warning", "error")) {
   message("onMisuse = ", sQuote(onMisuse))
