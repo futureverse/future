@@ -13,12 +13,43 @@
 #' @keywords internal
 #' @rdname FutureBackend
 #'
+#' @importFrom parallel stopCluster
 #' @importFrom parallelly as.cluster availableWorkers
 #' @export
 ClusterFutureBackend <- local({
   getDefaultCluster <- import_parallel_fcn("getDefaultCluster")
-  
-    function(workers = availableWorkers(), persistent = FALSE, gc = TRUE, earlySignal = TRUE, interrupts = TRUE, ...) {
+
+  startCluster <- function(workers, makeCluster, ..., debug = FALSE) {
+    if (debug) {
+      mdebug_push("makeCluster(workers, ...) ...")
+      mdebug_pop("makeCluster(workers, ...) ... done")
+    }
+    
+    cl <- makeCluster(workers, ...)
+    
+    ## Attach name to cluster?
+    name <- attr(cl, "name", exact = TRUE)
+    if (is.null(name)) {
+      name <- uuid(cl)
+      stop_if_not(length(name) > 0, nzchar(name))
+      attr(cl, "name") <- name
+      if (debug) mdebug("Generated cluster UUID")
+    }
+    if (debug) {
+      mdebugf("Cluster UUID: %s", sQuote(name))
+      mprint(cl)
+    }
+    
+    cl
+  } ## startCluster()
+
+  ## We only allow one parallel 'cluster' per session
+  cluster <- NULL
+
+  ## Most recent 'workers' set up
+  last <- NULL
+
+  function(workers = availableWorkers(), persistent = FALSE, gc = TRUE, earlySignal = TRUE, interrupts = TRUE, ...) {
     debug <- isTRUE(getOption("future.debug"))
 
     if (debug) {
@@ -30,10 +61,49 @@ ClusterFutureBackend <- local({
     if (is.null(workers)) {
       workers <- getDefaultCluster()
       workers <- addCovrLibPath(workers)
-    } else if (is.character(workers) || is.numeric(workers)) {
-      ## Which '...' arguments should be passed to Future() and 
-      ## which should be passed to makeClusterPSOCK()?
-      workers <- ClusterRegistry("start", workers = workers, ..., debug = debug)
+    } else if (is.numeric(workers) || is.character(workers)) {
+      if (is.numeric(workers)) {
+        if (debug) mdebugf("workers: %g", workers)
+        ## Preserve class attributes, especially "AsIs"
+        clazz <- class(workers)
+        workers <- as.integer(workers)
+        class(workers) <- clazz
+        stop_if_not(length(workers) == 1, is.finite(workers))
+      } else {
+        stop_if_not(length(workers) >= 1, !anyNA(workers))
+        workers <- sort(workers)
+        if (debug) mdebugf("workers: [n=%d] %s", length(workers), commaq(workers))
+      }
+
+      ## Already setup?
+      if (is.null(cluster) || !identical(workers, last)) {
+        if (length(cluster) > 0L) {
+          if (debug) {
+            mdebug_push("Stopping existing cluster ...")
+            mprint(cluster)
+          }
+          res <- tryCatch({ stopCluster(cluster); TRUE }, error = identity)
+          cluster <<- NULL
+          if (debug) {
+            mdebugf("Stopped cluster: %s", commaq(deparse(res)))
+            mdebug_push("Stopping existing cluster ...done ")
+          }
+        }
+        if (debug) mdebug_push("Starting new cluster ...")
+        cluster <<- startCluster(workers, makeCluster = .makeCluster, ..., debug = debug)
+        last <<- workers
+        
+        if (debug) {
+          mprint(cluster)
+          mdebug_push("Starting new cluster ... done")
+        }
+      } else {
+        if (debug) {
+          mprint(cluster)
+          mdebug("Cluster already existed")
+        }
+      }
+      workers <- cluster
     } else {
       workers <- as.cluster(workers)
       workers <- addCovrLibPath(workers)
@@ -43,7 +113,8 @@ ClusterFutureBackend <- local({
     }
     if (debug) mdebugf("Number of workers: %d", length(workers))
     stop_if_not(length(workers) > 0)
-  
+
+
     ## Attached workers' session information, unless already done.
     ## FIXME: We cannot do this here, because it introduces a race condition
     ## where multiple similar requests may appear at the same time bringing
@@ -281,21 +352,47 @@ interruptFuture.ClusterFutureBackend <- function(backend, future, ...) {
   future
 }
 
-
 #' @export
 stopWorkers.ClusterFutureBackend <- function(backend, interrupt = TRUE, ...) {
+  debug <- isTRUE(getOption("future.debug"))
+  if (debug) {
+    mdebugf_push("stopWorkers() for %s ...", class(backend)[1])
+    on.exit(mdebugf_pop("stopWorkers() for %s ... done", class(backend)[1]))
+  }  
+  
   ## Interrupt all futures
   if (interrupt) {
+    mdebugf_push("Interrupt active futures ...")
     futures <- listFutures(backend)
+    mdebugf("Number of futures: %d", length(futures))
     futures <- lapply(futures, FUN = interrupt, ...)
+    mdebugf_pop("Interrupt active futures ... done")
   }
 
   ## Clear registry
+  mdebugf_push("Clear future registry ...")
   reg <- backend[["reg"]]
   FutureRegistry(reg, action = "reset")
+  mdebugf_pop("Clear future registry ... done")
   
   ## Stop workers
-  ClusterRegistry(action = "stop", debug = isTRUE(getOption("future.debug")))
+  mdebugf_push("Stop cluster workers ...")
+  env <- environment(ClusterFutureBackend)
+  cluster <- env[["cluster"]]
+  if (length(cluster) > 0L) {
+    if (debug) {
+      mdebug("Cluster to shut down:")
+      mprint(cluster)
+    }
+
+    res <- tryCatch({ stopCluster(cluster); TRUE }, error = identity)
+    env[["cluster"]] <- NULL
+    env[["last"]] <- NULL
+    if (debug) mdebugf("Stopped cluster: %s", commaq(deparse(res)))
+  } else {
+    mdebug("No active workers. Skipping")
+  }
+  mdebugf_pop("Stop cluster workers ... done")
   
   TRUE
 }
@@ -331,102 +428,6 @@ nbrOfFreeWorkers.ClusterFutureBackend <- function(evaluator, ...) {
   
   workers
 }
-
-
-#' @importFrom parallel stopCluster
-ClusterRegistry <- local({
-  last <- NULL
-  cluster <- NULL
-
-  startCluster <- function(workers, makeCluster, ..., debug = debug) {
-    if (debug) {
-      mdebug_push("makeCluster(workers, ...) ...")
-      mdebug_pop("makeCluster(workers, ...) ... done")
-    }
-    
-    cl <- makeCluster(workers, ...)
-    
-    ## Attach name to cluster?
-    name <- attr(cl, "name", exact = TRUE)
-    if (is.null(name)) {
-      name <- uuid(cl)
-      stop_if_not(length(name) > 0, nzchar(name))
-      attr(cl, "name") <- name
-      if (debug) mdebug("Generated cluster UUID")
-    }
-    if (debug) {
-      mdebugf("Cluster UUID: %s", sQuote(name))
-      mprint(cl)
-    }
-    
-    cl
-  } ## startCluster()
-
-
-  function(action = c("get", "start", "stop"), workers = NULL, makeCluster = .makeCluster, ..., debug = isTRUE(getOption("future.debug"))) {
-    action <- match.arg(action, choices = c("get", "start", "stop"))
-    
-    if (debug) {
-      mdebugf_push("ClusterRegistry('%s', ...) ...", action)
-      on.exit(mdebugf_pop("ClusterRegistry('%s', ...) ...", action))
-    }
-    
-    if (is.null(workers)) {
-      if (debug) mdebug("workers: NULL")
-    } else if (is.numeric(workers)) {
-      if (debug) mdebugf("workers: %g", workers)
-      ## Preserve class attributes, especially "AsIs"
-      clazz <- class(workers)
-      workers <- as.integer(workers)
-      class(workers) <- clazz
-      stop_if_not(length(workers) == 1, is.finite(workers))
-    } else if (is.character(workers)) {
-      stop_if_not(length(workers) >= 1, !anyNA(workers))
-      workers <- sort(workers)
-      if (debug) mdebugf("workers: [n=%d] %s", length(workers), commaq(workers))
-    } else {
-      stopf("Unknown mode of argument 'workers': %s", mode(workers))
-    }
-
-    if (!is.null(workers) && length(cluster) == 0L && action != "stop") {
-      if (debug) mdebug("No existing cluster found")
-      cluster <<- startCluster(workers, makeCluster = makeCluster, ..., debug = debug)
-      last <<- workers
-    }
-
-    if (action == "get") {
-      if (debug) mdebug("Getting current cluster")
-      return(cluster)
-    } else if (action == "start") {
-      if (debug) mdebug_push("Starting cluster ...")
-      ## Already setup?
-      if (!identical(workers, last)) {
-        if (debug) mdebug("Stopping current cluster")
-        ClusterRegistry(action = "stop", debug = debug)
-        if (debug) mdebug("Starting new cluster")
-        cluster <<- startCluster(workers, makeCluster = makeCluster, ..., debug = debug)
-        last <<- workers
-      } else {
-        if (debug) mdebug("Already started")
-      }
-      if (debug) mdebug_pop("Starting cluster ... done")
-    } else if (action == "stop") {
-      if (debug) mdebug_push("Stopping cluster ...")
-      if (length(cluster) > 0L) {
-        if (debug) mprint(cluster)
-        res <- tryCatch({ stopCluster(cluster); TRUE }, error = identity)
-        if (debug) mdebugf("Stopped cluster: %s", commaq(deparse(res)))
-      } else {
-        if (debug) mdebug("No cluster to stop")
-      }
-      cluster <<- NULL
-      last <<- NULL
-      if (debug) mdebug_pop("Stopping cluster ... done")
-    }
-
-    cluster
-  }
-}) ## ClusterRegistry()
 
 
 .makeCluster <- function(workers, ...) {

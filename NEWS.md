@@ -1,12 +1,14 @@
 # Version (development version)
 
-This is the first rollout out of three major updates. This one comes
-with a large redesign of how future backends are implemented
-internally. One goal is to lower the threshold for implementing
-exciting, new features, that has been old hold for too long. Some of
-these features are available already in this release, and more are to
-come in near-future releases. Another goal is to make it
-straightforward to implement a new backend.
+This is the first rollout out of three major updates, which is now
+possible due to a multi-year effort of internal re-designs, work with
+package maintainers, release, and repeat. This release comes with a
+large redesign of how future backends are implemented internally. One
+goal is to lower the threshold for implementing exciting, new
+features, that has been old hold for too long. Some of these features
+are available already in this release, and more are to come in
+near-future releases. Another goal is to make it straightforward to
+implement a new backend.
 
 This update is fully backward compatible with previous versions.
 Developers and end-users can expect business as usual. Like all

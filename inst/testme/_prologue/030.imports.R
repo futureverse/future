@@ -2,7 +2,6 @@
 .onLoad <- future:::.onLoad
 .onAttach <- future:::.onAttach
 asIEC <- future:::asIEC
-ClusterRegistry <- future:::ClusterRegistry
 FutureRegistry <- future:::FutureRegistry
 gassign <- future:::gassign
 get_future <- future:::get_future

@@ -326,5 +326,5 @@ stopWorkers.FutureBackend <- function(backend, interrupt = TRUE, ...) {
     futures <- listFutures(backend)
     void <- lapply(futures, FUN = interrupt, ...)
   }
-  warning(FutureWarning("%s does not implement stopWorkers()", sQuote(class(backend)[1])))
+  warning(FutureWarning(sprintf("%s does not implement stopWorkers()", sQuote(class(backend)[1]))))
 }

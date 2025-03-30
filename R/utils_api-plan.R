@@ -99,8 +99,6 @@
     if (is.function(cleanup_fcn)) {
       cleanup_fcn()
     } else if (is.null(cleanup_fcn)) {
-      ## Backward compatibility for future (<= 1.33.2)
-      ClusterRegistry(action = "stop", debug = isTRUE(getOption("future.debug")))
     } else {
       stop(FutureError(sprintf("Unknown type of 'cleanup' attribute on current future strategy: %s", commaq(class(cleanup_fcn)))))
     }
