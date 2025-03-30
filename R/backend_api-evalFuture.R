@@ -327,6 +327,18 @@ diff_connections <- function(after, before) {
   list(added = added, removed = removed, replaced = replaced)
 }
 
+
+diff_globalenv <- function(before, after = names(.GlobalEnv)) {
+  added <- setdiff(after, before)
+  if (length(added) > 0 && "methods" %in% loadedNamespaces()) {
+    ## setGeneric() and setMethod() of 'methods' package adds variables
+    ## to global environment
+    added <- setdiff(added, c(".MTable", ".SigLength", ".AllMTable", ".SigArgs"))
+  }
+  added
+}
+
+
 evalFuture <- function(
     data = list(
       core = list(
@@ -894,7 +906,7 @@ evalFutureInternal <- function(data) {
           visible = ...future.value[["visible"]],
           conditions = ...future.conditions,
           rng = !identical(globalenv()[[".Random.seed"]], ...future.rng),
-          globalenv = if (globalenv) list(added = setdiff(names(.GlobalEnv), ...future.globalenv.names)) else NULL,
+          globalenv = if (globalenv) list(added = diff_globalenv(...future.globalenv.names)) else NULL,
           misuse_connections = if (checkConnections) diff_connections(get_connections(details = isTRUE(attr(checkConnections, "details", exact = TRUE))), ...future.connections) else NULL,
           started = ...future.startTime
         )
@@ -992,7 +1004,7 @@ evalFutureInternal <- function(data) {
     FutureResult(
       conditions = ...future.conditions,
       rng = !identical(globalenv()[[".Random.seed"]], ...future.rng),
-      globalenv = if (globalenv) list(added = setdiff(names(.GlobalEnv), ...future.globalenv.names)) else NULL,
+      globalenv = if (globalenv) list(added = diff_globalenv(...future.globalenv.names)) else NULL,
       misuse_connections = diff_connections(get_connections(details = isTRUE(attr(checkConnections, "details", exact = TRUE))), ...future.connections),
       started = ...future.startTime
     )
@@ -1000,7 +1012,7 @@ evalFutureInternal <- function(data) {
     FutureResult(
       conditions = ...future.conditions,
       rng = !identical(globalenv()[[".Random.seed"]], ...future.rng),
-      globalenv = if (globalenv) list(added = setdiff(names(.GlobalEnv), ...future.globalenv.names)) else NULL,
+      globalenv = if (globalenv) list(added = diff_globalenv(...future.globalenv.names)) else NULL,
       misuse_connections = diff_connections(get_connections(details = isTRUE(attr(checkConnections, "details", exact = TRUE))), ...future.connections),
       started = ...future.startTime
     )
