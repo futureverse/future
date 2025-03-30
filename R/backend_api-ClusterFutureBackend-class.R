@@ -21,7 +21,7 @@
 ClusterFutureBackend <- local({
   getDefaultCluster <- import_parallel_fcn("getDefaultCluster")
 
-  startCluster <- function(workers, makeCluster, ..., debug = FALSE) {
+  startInternalCluster <- function(workers, makeCluster, ..., debug = FALSE) {
     if (debug) {
       mdebug_push("makeCluster(workers, ...) ...")
       mdebug_pop("makeCluster(workers, ...) ... done")
@@ -46,9 +46,9 @@ ClusterFutureBackend <- local({
     cluster <<- cl
 
     cluster
-  } ## startCluster()
+  } ## startInternalCluster()
 
-  stopCluster <- function(debug = FALSE) {
+  stopInternalCluster <- function(debug = FALSE) {
     if (debug) {
       mdebug_push("Stopping existing cluster ...")
       on.exit(mdebug_pop("Stopping existing cluster ... done"))
@@ -69,7 +69,7 @@ ClusterFutureBackend <- local({
 
     ## Clear memoization
     cluster <<- NULL
-  } ## stopCluster()
+  } ## stopInternalCluster()
   
   ## We only allow one parallel 'cluster' per session
   cluster <- NULL
@@ -87,7 +87,7 @@ ClusterFutureBackend <- local({
     
     if (is.function(workers)) workers <- workers()
     if (is.null(workers)) {
-      stopCluster(debug = debug)
+      stopInternalCluster(debug = debug)
       last <<- NULL
       workers <- getDefaultCluster()
       workers <- addCovrLibPath(workers)
@@ -107,9 +107,9 @@ ClusterFutureBackend <- local({
 
       ## Already setup?
       if (is.null(cluster) || !identical(workers, last)) {
-        stopCluster(debug = debug)
+        stopInternalCluster(debug = debug)
         if (debug) mdebug_push("Starting new cluster ...")
-        cluster <<- startCluster(workers, makeCluster = .makeCluster, ..., debug = debug)
+        cluster <<- startInternalCluster(workers, makeCluster = .makeCluster, ..., debug = debug)
         if (debug) {
           mprint(cluster)
           mdebug_push("Starting new cluster ... done")
@@ -123,7 +123,7 @@ ClusterFutureBackend <- local({
       }
       workers <- cluster
     } else {
-      stopCluster(debug = debug)
+      stopInternalCluster(debug = debug)
       last <<- NULL
       workers <- as.cluster(workers)
       workers <- addCovrLibPath(workers)
@@ -385,21 +385,8 @@ stopWorkers.ClusterFutureBackend <- function(backend, interrupt = TRUE, ...) {
   
   ## Stop workers
   mdebugf_push("Stop cluster workers ...")
-  env <- environment(ClusterFutureBackend)
-  cluster <- env[["cluster"]]
-  if (length(cluster) > 0L) {
-    if (debug) {
-      mdebug("Cluster to shut down:")
-      mprint(cluster)
-    }
-
-    res <- tryCatch({ stopCluster(cluster); TRUE }, error = identity)
-    env[["cluster"]] <- NULL
-    env[["last"]] <- NULL
-    if (debug) mdebugf("Stopped cluster: %s", commaq(deparse(res)))
-  } else {
-    mdebug("No active workers. Skipping")
-  }
+  stopInternalCluster <- environment(ClusterFutureBackend)[["stopInternalCluster"]]
+  if (is.function(stopInternalCluster)) stopInternalCluster(debug = debug)
   mdebugf_pop("Stop cluster workers ... done")
   
   TRUE
