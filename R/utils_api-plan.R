@@ -117,6 +117,9 @@
 
     init <- attr(evaluator, "init", exact = TRUE)
     if (debug) mdebugf("init: %s", deparse(init))
+    if (identical(init, "done")) {
+      if (debug) mdebug("Already inititated. Skipping")
+    }
     
     if (identical(init, TRUE)) {
       ## IMPORANT: Initiate only once.  This avoids an infinite
@@ -323,6 +326,7 @@ plan <- local({
     if (debug) {
       mdebug("plan(): Setting new future strategy stack:")
       mprint(newStack)
+      mstr(newStack)
     }
 
     assert_no_disallowed_strategies(newStack)

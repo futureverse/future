@@ -76,8 +76,8 @@ print.FutureBackend <- function(x, ...) {
   s <- c(s, sprintf("Inherits: %s", paste(classes[-1], collapse = ", ")))
 
   ## Summary of workers
-  s <- c(s, sprintf("Number of workers: %d", nbrOfWorkers(backend)))
-  s <- c(s, sprintf("Number of free workers: %d", nbrOfFreeWorkers(backend)))
+  s <- c(s, sprintf("Number of workers: %g", nbrOfWorkers(backend)))
+  s <- c(s, sprintf("Number of free workers: %g", nbrOfFreeWorkers(backend)))
   s <- c(s, sprintf("Available cores: %d", availableCores()))
 
   ## Settings
