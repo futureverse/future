@@ -112,7 +112,9 @@
       mdebugf_push("plan(): plan_init() of %s ...", commaq(class(evaluator)))
       on.exit(mdebugf_pop("plan(): plan_init() of %s ... done", commaq(class(evaluator))))
     }
-    
+
+    if (debug) mstr(evaluator)
+
     init <- attr(evaluator, "init", exact = TRUE)
     if (debug) mdebugf("init: %s", deparse(init))
     
@@ -125,7 +127,9 @@
 
       ## Launch FutureBackend?
       if (!is.null(factory)) {
-        stop_if_not(is.null(attr(evaluator, "backend")))
+        if (!is.null(attr(evaluator, "backend"))) {
+          stop(FutureError(sprintf("%s did not shut down itself down properly", class(attr(evaluator, "backend"))[1])))
+        }
         backend <- makeFutureBackend(evaluator, debug = debug)
         attr(evaluator, "backend") <- backend
         return(evaluator)
@@ -524,7 +528,6 @@ plan <- local({
       newStack <- list(tstrategy)
       stop_if_not(!is.null(newStack), is.list(newStack), length(newStack) >= 1L)
     }
-
 
     ## Attach call attribute to each strategy in the stack?
     if (!is.null(.call)) {

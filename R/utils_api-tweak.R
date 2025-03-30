@@ -55,7 +55,8 @@ tweak.future <- function(strategy, ..., penvir = parent.frame()) {
   args <- list(...)
 
   ## Nothing to tweak?
-  if (length(args) == 0L) return(strategy)
+  if (length(args) == 0L)
+    return(strategy)
 
   names <- names(args)
   if (is.null(names)) {
