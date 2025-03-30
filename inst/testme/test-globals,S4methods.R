@@ -42,6 +42,8 @@ for (strategy in supportedStrategies()) {
     stopifnot(inherits(v, "error"))
   }
   my_fcn <- org_my_fcn
+
+  plan(sequential)
 }
 
 message("*** Globals - S4 methods ... DONE")
