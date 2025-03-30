@@ -1,5 +1,3 @@
-
-
 #' A ClusterFutureBackend resolves futures in parallel using any PSOCK cluster
 #'
 #' @inheritParams FutureBackend
@@ -52,10 +50,11 @@ ClusterFutureBackend <- local({
       }
 
       ## Already setup?
+      cluster <- clusterRegistry$getCluster(debug = debug)
       if (is.null(cluster) || !identical(workers, last)) {
         clusterRegistry$stopCluster(debug = debug)
         if (debug) mdebug_push("Starting new cluster ...")
-        workers <- clusterRegistry$startCluster(workers, makeCluster = .makeCluster, ..., debug = debug)
+        cluster <- clusterRegistry$startCluster(workers, makeCluster = .makeCluster, ..., debug = debug)
         if (debug) {
           mprint(cluster)
           mdebug_push("Starting new cluster ... done")
@@ -67,6 +66,7 @@ ClusterFutureBackend <- local({
           mdebug("Cluster already existed")
         }
       }
+      workers <- cluster
     } else {
       clusterRegistry$stopCluster(debug = debug)
       last <<- NULL
@@ -156,7 +156,7 @@ launchFuture.ClusterFutureBackend <- function(backend, future, ...) {
     FutureRegistry(reg, action = "collect-first", earlySignal = TRUE, debug = debug)
   }, workers = workers, timeout = timeout, delta = delta, alpha = alpha)
   future[["node"]] <- node_idx
-
+  
   if (inherits(future[[".journal"]], "FutureJournal")) {
     appendToFutureJournal(future,
          event = "getWorker",
@@ -187,6 +187,11 @@ launchFuture.ClusterFutureBackend <- function(backend, future, ...) {
   }
   if (debug) mdebug_pop("requestWorker() ... done")
 
+  ## Does the cluster node communicate with a connection?
+  ## (if not, it's likely via MPI)
+  stop_if_not(inherits(node, c("SOCK0node", "SOCKnode")))
+  future[["nodeHasConnection"]] <- !is.null(node[["con"]])
+  
 
   ## (2) Attach packages that needs to be attached
   ##     NOTE: Already take care of by evalFuture().
@@ -274,7 +279,6 @@ launchFuture.ClusterFutureBackend <- function(backend, future, ...) {
     worker >= 1L, worker <= length(workers)
   ) 
   if (debug) mdebugf("cluster node index: %d", worker)
-  future[["workers"]] <- workers  ## FIXME
   data <- getFutureData(future, debug = debug)
   node <- workers[[worker]]
   ## Non-blocking cluster-node call
@@ -1146,16 +1150,7 @@ getFutureBackendConfigs.ClusterFuture <- function(future, ..., debug = isTRUE(ge
   
   ## Does the cluster node communicate with a connection?
   ## (if not, it's via MPI)
-  workers <- future[["workers"]]
-  stop_if_not(inherits(workers, "cluster"))
-  ## AD HOC/FIXME: Here 'future[["node"]]' is yet not assigned, so we look at
-  ## the first worker and assume the others are the same. /HB 2019-10-23
-  cl <- workers[1L]
-  stop_if_not(inherits(cl, "cluster"))
-  node <- cl[[1L]]
-  stop_if_not(inherits(node, c("SOCK0node", "SOCKnode")))
-  con <- node[["con"]]
-  if (is.null(con)) return(list())
+  if (!future[["nodeHasConnection"]]) return(list())
 
   capture <- list(
     immediateConditionHandlers = list(
@@ -1315,7 +1310,15 @@ attr(cluster, "factory") <- ClusterFutureBackend
 clusterRegistry <- local({
   ## We only allow one parallel 'cluster' per session
   cluster <- NULL
-  
+
+  getCluster <- function(..., debug = FALSE) {
+    if (debug) {
+      mdebug_push("getCluster() ...")
+      mdebug_pop("getCluster() ... done")
+    }
+    cluster
+  }
+
   startCluster <- function(workers, makeCluster, ..., debug = FALSE) {
     if (debug) {
       mdebug_push("makeCluster(workers, ...) ...")
@@ -1368,5 +1371,9 @@ clusterRegistry <- local({
     cluster <<- NULL
   } ## stopCluster()
 
-  list(startCluster = startCluster, stopCluster = stopCluster)
+  list(
+      getCluster = getCluster,
+    startCluster = startCluster,
+     stopCluster = stopCluster
+  )
 }) ## clusterRegistry()

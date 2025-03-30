@@ -193,7 +193,7 @@ UnexpectedFutureResultError <- function(future, hint = NULL) {
 GlobalEnvMisuseFutureCondition <- function(message = NULL, call = NULL, globalenv = globalenv, uuid = future[["uuid"]], future = NULL) {
   if (is.null(message)) {
     label <- sQuoteLabel(future[["label"]])
-    message <- sprintf("Future (%s) added variables to the global environment. A future expression should never assign variables to the global environment - neither by assign() nor by <<-: [n=%d] %s", label, length(globalenv[["added"]]), commaq(globalenv[["added"]]))
+    message <- sprintf("%s (%s) added variables to the global environment. A future expression should never assign variables to the global environment - neither by assign() nor by <<-: [n=%d] %s", class(future)[1], label, length(globalenv[["added"]]), commaq(globalenv[["added"]]))
   }
   cond <- FutureCondition(message = message, call = call, uuid = uuid, future = future)
   cond[["globalenv"]] <- globalenv
@@ -226,7 +226,7 @@ GlobalEnvMisuseFutureError <- function(...) {
 ConnectionMisuseFutureCondition <- function(message = NULL, call = NULL, differences = NULL, uuid = future[["uuid"]], future = NULL) {
   if (is.null(message)) {
     label <- sQuoteLabel(future[["label"]])
-    message <- sprintf("Future (%s) added, removed, or modified connections. A future expression must close any opened connections and must not close connections it did not open", label)
+    message <- sprintf("%s (%s) added, removed, or modified connections. A future expression must close any opened connections and must not close connections it did not open", class(future)[1], label)
     if (!is.null(differences)) {
       details <- lapply(differences, FUN = function(diffs) {
         if (is.null(diffs)) {
