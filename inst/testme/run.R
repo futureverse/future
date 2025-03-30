@@ -152,10 +152,10 @@ if (testme[["status"]] != "skipped" &&
     eval(expr, envir = testme)
   })
 
-  ## In case prologue scripts overwrote some elements in 'testme'
-  for (name in names(testme_config)) {
-    testme[[name]] <- testme_config[[name]]
-  }
+#  ## In case prologue scripts overwrote some elements in 'testme'
+#  for (name in names(testme_config)) {
+#    testme[[name]] <- testme_config[[name]]
+#  }
 }
 
 
@@ -167,10 +167,10 @@ if (testme[["status"]] != "skipped") {
   source(testme[["script"]], echo = TRUE)
   testme[["status"]] <- "success"
   
-  ## In case test script overwrote some elements in 'testme'
-  for (name in names(testme_config)) {
-    testme[[name]] <- testme_config[[name]]
-  }
+#  ## In case test script overwrote some elements in 'testme'
+#  for (name in names(testme_config)) {
+#    testme[[name]] <- testme_config[[name]]
+#  }
 }
 
 
