@@ -24,8 +24,9 @@ if (!identical(options(), oopts0)) {
   missing <- setdiff(names(oopts0), names(oopts))
   message(paste(sprintf(" - Options missing: [n=%d]", length(missing)),
                 hpaste(sQuote(missing))))
-  message("Differences option by option:")                
-  for (name in names(oopts0)) {
+                
+  message("Differences option by option:")
+  void <- lapply(names(oopts0), FUN = function(name) {
     value0 <- oopts0[[name]]
     value  <- oopts[[name]]
     if (!identical(value, value0)) {
@@ -33,7 +34,7 @@ if (!identical(options(), oopts0)) {
         utils::str(list(name = name, expected = value0, actual = value))
       }
     }
-  }
+  })
 }
 
 
@@ -56,7 +57,7 @@ if (!identical(Sys.getenv(), oenvs0)) {
   message(paste(sprintf(" - Environment variables missing: [n=%d]", length(missing)),
                 hpaste(sQuote(missing))))
   message("Differences environment variable by environment variable:")
-  for (name in names(oenvs0)) {
+  void <- lapply(names(oenvs0), FUN = function(name) {
     value0 <- unname(oenvs0[name])
     value  <- unname(oenvs[name])
     if (!identical(value, value0)) {
@@ -64,7 +65,7 @@ if (!identical(Sys.getenv(), oenvs0)) {
         utils::str(list(name = name, expected = value0, actual = value))
       }
     }
-  }
+  })
 }
 
 

@@ -1,3 +1,5 @@
+
+
 #' A ClusterFutureBackend resolves futures in parallel using any PSOCK cluster
 #'
 #' @inheritParams FutureBackend
@@ -86,6 +88,7 @@ ClusterFutureBackend <- local({
     if (is.function(workers)) workers <- workers()
     if (is.null(workers)) {
       stopCluster(debug = debug)
+      last <<- NULL
       workers <- getDefaultCluster()
       workers <- addCovrLibPath(workers)
     } else if (is.numeric(workers) || is.character(workers)) {
@@ -121,6 +124,7 @@ ClusterFutureBackend <- local({
       workers <- cluster
     } else {
       stopCluster(debug = debug)
+      last <<- NULL
       workers <- as.cluster(workers)
       workers <- addCovrLibPath(workers)
     }

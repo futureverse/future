@@ -35,6 +35,9 @@ for (strategy in supportedStrategies()) {
   v2 %<-% subset(data, x < 3)$y
   stopifnot(identical(v2, v0))
 
+  plan(sequential)
+
+
   ## Nested futures (requires option is passed on to future)
   plan(list(sequential, strategy))
   options(future.globals.onMissing = "ignore")
@@ -55,6 +58,7 @@ for (strategy in supportedStrategies()) {
     void %<-% { plan(sequential); TRUE }
     stopifnot(isTRUE(void))
   })
+  
   plan(sequential)
 
   message(sprintf("- Strategy: %s ... DONE", strategy))
