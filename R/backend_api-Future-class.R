@@ -805,6 +805,7 @@ getFutureContext <- function(future, mc.cores = NULL, local = TRUE, ..., debug =
   
     ## Pass down other future.* options
     future.connections.onMisuse       = getOption("future.connections.onMisuse"),
+    future.devices.onMisuse           = getOption("future.devices.onMisuse"),
     future.globalenv.onMisuse         = getOption("future.globalenv.onMisuse"),
     future.globals.maxSize            = backend[["maxSizeOfObjects"]],
     future.globals.method             = getOption("future.globals.method"),

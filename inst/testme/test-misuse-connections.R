@@ -21,7 +21,7 @@ for (onMisuse in c("ignore", "warning", "error")) {
     structure(42L, con = con)
   })
   r <- result(f)
-  diff <- r[["misuse_connections"]]
+  diff <- r[["misuseConnections"]]
   message("Misused connections:")
   v <- tryCatch({
     value(f)

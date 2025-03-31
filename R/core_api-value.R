@@ -115,14 +115,14 @@ value.Future <- function(future, stdout = TRUE, signal = TRUE, drop = FALSE, ...
   ## Report on misuse of the global environment
   ## ------------------------------------------------------------------
   ## Were there any variables added to the global enviroment?
-  if (length(result[["globalenv"]][["added"]]) > 0L) {
+  if (length(result[["misuseGlobalEnv"]][["added"]]) > 0L) {
     onMisuse <- getOption("future.globalenv.onMisuse")
     if (is.null(onMisuse)) onMisuse <- "ignore"
     if (onMisuse != "ignore") {
       if (onMisuse == "error") {
-        cond <- GlobalEnvMisuseFutureError(globalenv = result[["globalenv"]], future = future)
+        cond <- GlobalEnvMisuseFutureError(differences = result[["misuseGlobalEnv"]], future = future)
       } else if (onMisuse == "warning") {
-        cond <- GlobalEnvMisuseFutureWarning(globalenv = result[["globalenv"]], future = future)
+        cond <- GlobalEnvMisuseFutureWarning(differences = result[["misuseGlobalEnv"]], future = future)
       } else {
         cond <- NULL
         warnf("Unknown value on option 'future.globalenv.onMisuse': %s",
@@ -154,17 +154,56 @@ value.Future <- function(future, stdout = TRUE, signal = TRUE, drop = FALSE, ...
   ## Report on misuse of the connections
   ## ------------------------------------------------------------------
   ## Were there any connections added, removed, or changed?
-  if (any(lengths(result[["misuse_connections"]]) > 0L)) {
+  if (any(lengths(result[["misuseConnections"]]) > 0L)) {
     onMisuse <- getOption("future.connections.onMisuse")
     if (is.null(onMisuse)) onMisuse <- "warning"
     if (onMisuse != "ignore") {
       if (onMisuse == "error") {
-        cond <- ConnectionMisuseFutureError(differences = result[["misuse_connections"]], future = future)
+        cond <- ConnectionMisuseFutureError(differences = result[["misuseConnections"]], future = future)
       } else if (onMisuse == "warning") {
-        cond <- ConnectionMisuseFutureWarning(differences = result[["misuse_connections"]], future = future)
+        cond <- ConnectionMisuseFutureWarning(differences = result[["misuseConnections"]], future = future)
       } else {
         cond <- NULL
-        warnf("Unknown value on option 'future.onMisuse.connections': %s",
+        warnf("Unknown value on option 'future.connections.onMisuse': %s",
+              sQuote(onMisuse))
+      }
+
+      if (!is.null(cond)) {
+        ## FutureCondition to stack of captured conditions
+        new <- list(condition = cond, signaled = FALSE)
+        conditions <- result[["conditions"]]
+        n <- length(conditions)
+      
+        ## An existing run-time error takes precedence
+        if (n > 0L && inherits(conditions[[n]][["condition"]], "error")) {
+          conditions[[n + 1L]] <- conditions[[n]]
+          conditions[[n]] <- new
+        } else {
+          conditions[[n + 1L]] <- new
+        }
+        
+        result[["conditions"]] <- conditions
+        future[["result"]] <- result
+      }
+    }
+  }
+
+
+  ## ------------------------------------------------------------------
+  ## Report on misuse of the devices
+  ## ------------------------------------------------------------------
+  ## Were there any devices added, removed, or changed?
+  if (!is.null(result[["misuseDevices"]])) {
+    onMisuse <- getOption("future.devices.onMisuse")
+    if (is.null(onMisuse)) onMisuse <- "warning"
+    if (onMisuse != "ignore") {
+      if (onMisuse == "error") {
+        cond <- DeviceMisuseFutureError(differences = result[["misuseDevices"]], future = future)
+      } else if (onMisuse == "warning") {
+        cond <- DeviceMisuseFutureWarning(differences = result[["misuseDevices"]], future = future)
+      } else {
+        cond <- NULL
+        warnf("Unknown value on option 'future.devices.onMisuse': %s",
               sQuote(onMisuse))
       }
 

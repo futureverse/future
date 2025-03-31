@@ -1356,7 +1356,13 @@ clusterRegistry <- local({
       if (debug) mdebug("No pre-existing cluster. Skipping")
       return(cluster)
     }
-    
+
+    ## ROBUSTNESS:
+    ## Clear memoization of cluster, regardless of success or failure
+    on.exit({
+      cluster <<- NULL
+    }, add = TRUE)
+
     if (debug) {
       mdebug("Cluster to shut down:")
       mprint(cluster)
@@ -1366,9 +1372,6 @@ clusterRegistry <- local({
       parallel::stopCluster(cluster); TRUE
     }, error = identity)
     if (debug) mdebugf("Stopped cluster: %s", commaq(deparse(res)))
-
-    ## Clear memoization
-    cluster <<- NULL
   } ## stopCluster()
 
   list(
