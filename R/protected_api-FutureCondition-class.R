@@ -190,13 +190,13 @@ UnexpectedFutureResultError <- function(future, hint = NULL) {
 
 #' @rdname FutureCondition
 #' @export
-GlobalEnvMisuseFutureCondition <- function(message = NULL, call = NULL, globalenv = globalenv, uuid = future[["uuid"]], future = NULL) {
+GlobalEnvMisuseFutureCondition <- function(message = NULL, call = NULL, differences = NULL, uuid = future[["uuid"]], future = NULL) {
   if (is.null(message)) {
     label <- sQuoteLabel(future[["label"]])
-    message <- sprintf("%s (%s) added variables to the global environment. A future expression should never assign variables to the global environment - neither by assign() nor by <<-: [n=%d] %s", class(future)[1], label, length(globalenv[["added"]]), commaq(globalenv[["added"]]))
+    message <- sprintf("%s (%s) added variables to the global environment. A future expression should never assign variables to the global environment - neither by assign() nor by <<-: [n=%d] %s", class(future)[1], label, length(differences[["added"]]), commaq(differences[["added"]]))
   }
   cond <- FutureCondition(message = message, call = call, uuid = uuid, future = future)
-  cond[["globalenv"]] <- globalenv
+  cond[["differences"]] <- differences
   class <- c("GlobalEnvMisuseFutureCondition", class(cond))
   class(cond) <- class[!duplicated(class, fromLast = TRUE)]
   cond

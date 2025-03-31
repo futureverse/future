@@ -351,7 +351,7 @@ diff_devices <- function(before, after = base::.Devices) {
   }
   data <- do.call(rbind, data)
   data <- data[!data[["identical"]], ]
-  data
+  if (nrow(data) == 0L) NULL else data
 }
 
 
@@ -877,12 +877,12 @@ evalFutureInternal <- function(data) {
   ##  1. assignments to the global environment
   ##  2. add or removed connections
   ## -----------------------------------------------------------------
-  globalenv <- getOption("future.globalenv.onMisuse")
-  if (is.null(globalenv)) {
-    globalenv <- FALSE
+  checkGlobalenv <- getOption("future.globalenv.onMisuse")
+  if (is.null(checkGlobalenv)) {
+    checkGlobalenv <- FALSE
   } else {
-    globalenv <- (globalenv != "ignore")
-    if (globalenv) {
+    checkGlobalenv <- (checkGlobalenv != "ignore")
+    if (checkGlobalenv) {
       ## Record names of variables in the global environment
       ...future.globalenv.names <- c(names(.GlobalEnv), "...future.value", "...future.globalenv.names", ".Random.seed")
     }
@@ -934,9 +934,9 @@ evalFutureInternal <- function(data) {
           visible = ...future.value[["visible"]],
           conditions = ...future.conditions,
           rng = !identical(globalenv()[[".Random.seed"]], ...future.rng),
-          globalenv = if (globalenv) list(added = diff_globalenv(...future.globalenv.names)) else NULL,
-          misuse_connections = if (checkConnections) diff_connections(get_connections(details = isTRUE(attr(checkConnections, "details", exact = TRUE))), ...future.connections) else NULL,
-          misuse_devices = if (checkDevices) diff_devices(...future.devices, base::.Devices) else NULL,
+          misuseGlobalEnv = if (checkGlobalenv) list(added = diff_globalenv(...future.globalenv.names)) else NULL,
+          misuseConnections = if (checkConnections) diff_connections(get_connections(details = isTRUE(attr(checkConnections, "details", exact = TRUE))), ...future.connections) else NULL,
+          misuseDevices = if (checkDevices) diff_devices(...future.devices, base::.Devices) else NULL,
           started = ...future.startTime
         )
       }, condition = function(cond) {
@@ -1033,18 +1033,18 @@ evalFutureInternal <- function(data) {
     FutureResult(
       conditions = ...future.conditions,
       rng = !identical(globalenv()[[".Random.seed"]], ...future.rng),
-      globalenv = if (globalenv) list(added = diff_globalenv(...future.globalenv.names)) else NULL,
-      misuse_connections = diff_connections(get_connections(details = isTRUE(attr(checkConnections, "details", exact = TRUE))), ...future.connections),
-      misuse_devices = if (checkDevices) diff_devices(base::.Devices, ...future.devices) else NULL,
+      misuseGlobalEnv = if (checkGlobalenv) list(added = diff_globalenv(...future.globalenv.names)) else NULL,
+      misuseConnections = diff_connections(get_connections(details = isTRUE(attr(checkConnections, "details", exact = TRUE))), ...future.connections),
+      misuseDevices = if (checkDevices) diff_devices(base::.Devices, ...future.devices) else NULL,
       started = ...future.startTime
     )
   }, error = function(ex) {
     FutureResult(
       conditions = ...future.conditions,
       rng = !identical(globalenv()[[".Random.seed"]], ...future.rng),
-      globalenv = if (globalenv) list(added = diff_globalenv(...future.globalenv.names)) else NULL,
-      misuse_connections = diff_connections(get_connections(details = isTRUE(attr(checkConnections, "details", exact = TRUE))), ...future.connections),
-      misuse_devices = if (checkDevices) diff_devices(base::.Devices, ...future.devices) else NULL,
+      misuseGlobalEnv = if (checkGlobalenv) list(added = diff_globalenv(...future.globalenv.names)) else NULL,
+      misuseConnections = diff_connections(get_connections(details = isTRUE(attr(checkConnections, "details", exact = TRUE))), ...future.connections),
+      misuseDevices = if (checkDevices) diff_devices(base::.Devices, ...future.devices) else NULL,
       started = ...future.startTime
     )
   }) ## output tryCatch()

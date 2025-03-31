@@ -48,7 +48,7 @@ UnexpectedFutureResultError(future, hint = NULL)
 GlobalEnvMisuseFutureCondition(
   message = NULL,
   call = NULL,
-  globalenv = globalenv,
+  differences = NULL,
   uuid = future[["uuid"]],
   future = NULL
 )
