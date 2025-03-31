@@ -202,8 +202,8 @@ launchFuture.ClusterFutureBackend <- function(backend, future, ...) {
   delta <- backend[["future.wait.interval"]]
   alpha <- backend[["future.wait.alpha"]]
 
-  ## Get the index of a free cluster node, which has been validated
-  ## to be alive, and if it wasn't, it was re-started
+  ## Get the index of a free cluster node, which has been validated to
+  ## be alive and has a working connection. If not, it was re-started
   node_idx <- requestNode(await = function() {
     FutureRegistry(reg, action = "collect-first", earlySignal = TRUE, debug = debug)
   }, backend = backend, timeout = timeout, delta = delta, alpha = alpha)
@@ -902,7 +902,7 @@ receiveMessageFromWorker <- local({
 }) ## receiveMessageFromWorker()
 
 
-#' @importFrom parallelly isNodeAlive cloneNode
+#' @importFrom parallelly isConnectionValid isNodeAlive cloneNode
 requestNode <- function(await, backend, timeout, delta, alpha) {
   debug <- isTRUE(getOption("future.debug"))
   if (debug) {
@@ -981,30 +981,45 @@ requestNode <- function(await, backend, timeout, delta, alpha) {
   if (debug) mdebugf("Index of first available worker: %d", node_idx)
   
 
-  ## Validate that the cluster node is still alive
-  if (debug) mdebug_push("Validate that the worker is still alive ...")
-  
+  ## Validate that the cluster node has a valid connection and is still alive
+  if (debug) mdebug_push("Validate that the worker has a valid connection and is still alive ...")
   cl <- workers[node_idx]
   stop_if_not(length(cl) == 1L, inherits(cl, "cluster"))
   node <- cl[[1]]
-  alive <- isNodeAlive(node)
-  if (debug) mdebugf("Cluster node is alive: %s", alive)
-  ## It is not possible to check if a node is alive on all types of clusters.
-  ## If that is the case, the best we can do is to assume it is alive
-  if (is.na(alive)) {
-    if (debug) mdebug("Cannot infer whether node is alive. Will assume it is")
-  } else if (!alive) {
-    if (debug) mdebugf_push("restarting non-alive cluster node %d ...", node_idx)
+  okay <- TRUE
+  con <- node[["con"]]
+  if (inherits(con, "connection")) {
+    okay <- okay && isConnectionValid(con)
+    if (debug) mdebug("Connection is valid: ", okay)
+  }
+
+  if (okay) {
+    alive <- isNodeAlive(node)
+    if (debug) mdebugf("Cluster node is alive: %s", alive)
+    ## It is not possible to check if a node is alive on all types of clusters.
+    ## If that is the case, the best we can do is to assume it is alive
+    if (is.na(alive)) {
+      if (debug) mdebug("Cannot infer whether node is alive - assuming it is")
+      okay <- TRUE
+    } else if (!alive) {
+      okay <- FALSE
+    }
+  }
+  if (debug) mdebug_pop("Validate that the worker has a valid connection and is still alive ... done")
+  
+  ## Relaunch worker?
+  if (!okay) {
+    if (debug) mdebugf_push("Restarting non-alive cluster node %d ...", node_idx)
     node <- cloneNode(node)
     workers[[node_idx]] <- node
     backend[["workers"]] <- workers
+    
     if (debug) {
       mdebug("Re-launched cluster node:")
       mprint(node)
-      mdebugf_pop("restarting non-alive cluster node %d ... done", node_idx)
+      mdebugf_pop("Restarting non-alive cluster node %d ... done", node_idx)
     }
   }
-  if (debug) mdebug_pop("Validate that the worker is still alive ... done")
   
   node_idx
 } ## requestNode()
