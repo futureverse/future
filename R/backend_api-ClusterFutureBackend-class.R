@@ -21,7 +21,7 @@ ClusterFutureBackend <- local({
   ## Most recent 'workers' set up
   last <- NULL
 
-  function(workers = availableWorkers(), persistent = FALSE, gc = TRUE, earlySignal = TRUE, interrupts = TRUE, ...) {
+  function(workers = availableWorkers(), persistent = FALSE, gc = TRUE, earlySignal = TRUE, interrupts = TRUE, assertAlive = FALSE, ...) {
     debug <- isTRUE(getOption("future.debug"))
 
     if (debug) {
@@ -59,7 +59,7 @@ ClusterFutureBackend <- local({
         cluster <- clusterRegistry$startCluster(workers, makeCluster = .makeCluster, ..., debug = debug)
         if (debug) {
           mprint(cluster)
-          mdebug_push("Starting new cluster ... done")
+          mdebug_pop("Starting new cluster ... done")
         }
         last <<- workers
       } else {
@@ -111,6 +111,7 @@ ClusterFutureBackend <- local({
       future.wait.timeout = getOption("future.wait.timeout", 24 * 60 * 60),
       future.wait.interval = getOption("future.wait.interval", 0.01),
       future.wait.alpha = getOption("future.wait.alpha", 1.01),
+      assertAlive = isTRUE(assertAlive),
       ...
     )
     core[["futureClasses"]] <- c("ClusterFuture", core[["futureClasses"]])
@@ -229,19 +230,7 @@ launchFuture.ClusterFutureBackend <- function(backend, future, ...) {
   ## (if not, it's likely via MPI)
   stop_if_not(inherits(node, c("SOCK0node", "SOCKnode")))
   con <- node[["con"]]
-  nodeHasConnection <- !is.null(con)
-  future[["nodeHasConnection"]] <- nodeHasConnection
-
-  ## Check if workers socket connection is available for reading
-  if (nodeHasConnection) {
-    ## Broken connection due to interruption?
-    isValid <- isConnectionValid(con)
-    if (!isValid) {
-      ex <- simpleError("Connection to the worker is corrupt")
-      msg <- post_mortem_cluster_failure(ex, when = "launch future on", node = node, future = future)
-      stop(FutureError(msg, future = future))
-    }
-  }
+  future[["nodeHasConnection"]] <- !is.null(con)
 
   if (debug) mdebug_pop("requestWorker() ... done")
 
@@ -993,7 +982,7 @@ requestNode <- function(await, backend, timeout, delta, alpha) {
     if (debug) mdebug("Connection is valid: ", okay)
   }
 
-  if (okay) {
+  if (okay && isTRUE(backend[["assertAlive"]])) {
     alive <- isNodeAlive(node)
     if (debug) mdebugf("Cluster node is alive: %s", alive)
     ## It is not possible to check if a node is alive on all types of clusters.
@@ -1437,7 +1426,7 @@ clusterRegistry <- local({
   startCluster <- function(workers, makeCluster, ..., debug = FALSE) {
     if (debug) {
       mdebug_push("makeCluster(workers, ...) ...")
-      mdebug_pop("makeCluster(workers, ...) ... done")
+      on.exit(mdebug_pop("makeCluster(workers, ...) ... done"))
     }
     
     cl <- makeCluster(workers, ...)
