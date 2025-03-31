@@ -134,6 +134,7 @@ jobs:
         run: |
           if ("${{ matrix.config.strict }}" == "true") {
             Sys.setenv(R_FUTURE_CONNECTIONS_ONMISUSE = "error[details=TRUE]")
+            Sys.setenv(R_FUTURE_DEVICES_ONMISUSE = "error")
             Sys.setenv(R_FUTURE_GLOBALENV_ONMISUSE = "error")
             Sys.setenv(R_FUTURE_RNG_ONMISUSE = "error")
           }

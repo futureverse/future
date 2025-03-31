@@ -17,6 +17,7 @@
 \alias{future.onFutureCondition.keepFuture}
 \alias{future.resolve.recursive}
 \alias{future.connections.onMisuse}
+\alias{future.devices.onMisuse}
 \alias{future.globalenv.onMisuse}
 \alias{future.rng.onMisuse}
 \alias{future.wait.alpha}
@@ -39,6 +40,7 @@
 \alias{R_FUTURE_ONFUTURECONDITION_KEEPFUTURE}
 \alias{R_FUTURE_RESOLVE_RECURSIVE}
 \alias{R_FUTURE_CONNECTIONS_ONMISUSE}
+\alias{R_FUTURE_DEVICES_ONMISUSE}
 \alias{R_FUTURE_GLOBALENV_ONMISUSE}
 \alias{R_FUTURE_RNG_ONMISUSE}
 \alias{R_FUTURE_WAIT_ALPHA}

@@ -16,6 +16,9 @@
 \alias{ConnectionMisuseFutureCondition}
 \alias{ConnectionMisuseFutureWarning}
 \alias{ConnectionMisuseFutureError}
+\alias{DeviceMisuseFutureCondition}
+\alias{DeviceMisuseFutureWarning}
+\alias{DeviceMisuseFutureError}
 \alias{FutureInterruptError}
 \alias{FutureDroppedError}
 \alias{FutureJournalCondition}
@@ -65,6 +68,18 @@ ConnectionMisuseFutureCondition(
 ConnectionMisuseFutureWarning(...)
 
 ConnectionMisuseFutureError(...)
+
+DeviceMisuseFutureCondition(
+  message = NULL,
+  call = NULL,
+  differences = NULL,
+  uuid = future[["uuid"]],
+  future = NULL
+)
+
+DeviceMisuseFutureWarning(...)
+
+DeviceMisuseFutureError(...)
 
 FutureInterruptError(..., future = NULL)
 

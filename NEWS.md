@@ -68,12 +68,12 @@ reverse-dependency checks, **future.tests** checks, and more.
  * Failures to launch a future is now detected, handled, and relayed
    as an error with details on why it failed.
 
- * A future must close any connections it opens, and must never close
-   connections it did not open. Now `value()` produces a warning if
-   such misuse is detected. This may be upgrade to an error in future
-   releases. The default behavior can be controlled via an R option.
-   Reverse dependency checks spotted one CRAN package, out of 426,
-   with this problem.
+ * A future must close any connections or graphical devices it opens,
+   and must never close ones that it did not open. Now `value()`
+   produces a warning if such misuse is detected. This may be upgrade
+   to an error in future releases. The default behavior can be
+   controlled via an R option.  Reverse dependency checks spotted one
+   CRAN package, out of 426, that left stray connections behind.
  
  * All parallel backends now prevent nested parallelization, unless
    explicitly allowed, e.g. settings recognized by

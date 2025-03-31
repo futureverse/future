@@ -164,6 +164,7 @@
 #' future.onFutureCondition.keepFuture
 #' future.resolve.recursive
 #' future.connections.onMisuse
+#' future.devices.onMisuse
 #' future.globalenv.onMisuse
 #' future.rng.onMisuse
 #' future.wait.alpha
@@ -187,6 +188,7 @@
 #' R_FUTURE_ONFUTURECONDITION_KEEPFUTURE
 #' R_FUTURE_RESOLVE_RECURSIVE
 #' R_FUTURE_CONNECTIONS_ONMISUSE
+#' R_FUTURE_DEVICES_ONMISUSE
 #' R_FUTURE_GLOBALENV_ONMISUSE
 #' R_FUTURE_RNG_ONMISUSE
 #' R_FUTURE_WAIT_ALPHA
@@ -382,4 +384,7 @@ update_package_options <- function(debug = FALSE) {
       options(future.connections.onMisuse = value)
     }
   }
+
+  update_package_option("future.devices.onMisuse", mode = "character", debug = debug)
 }
+

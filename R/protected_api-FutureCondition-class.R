@@ -271,6 +271,50 @@ ConnectionMisuseFutureError <- function(...) {
 }
 
 
+
+#' @rdname FutureCondition
+#' @export
+DeviceMisuseFutureCondition <- function(message = NULL, call = NULL, differences = NULL, uuid = future[["uuid"]], future = NULL) {
+  if (is.null(message)) {
+    label <- sQuoteLabel(future[["label"]])
+    message <- sprintf("%s (%s) added, removed, or modified devices. A future expression must close any opened devices and must not close devices it did not open", class(future)[1], label)
+    if (!is.null(differences)) {
+      details <- character(0L)
+      for (kk in seq_len(nrow(differences))) {
+        data <- differences[kk, ]
+        details[[kk]] <- sprintf("index=%d, before=%s, after=%s", data[["index"]], sQuote(data[["before"]]), sQuote(data[["after"]]))
+      }
+      details <- unlist(details, use.names = FALSE)
+      details <- sprintf("%d devices differ: %s", length(details), paste(details, collapse = "; "))
+      message <- sprintf("%s. Details: %s", message, details)
+    }
+  }
+  cond <- FutureCondition(message = message, call = call, uuid = uuid, future = future)
+  cond[["differences"]] <- differences
+  class <- c("DeviceMisuseFutureCondition", "MisuseFutureCondition", class(cond))
+  class(cond) <- class[!duplicated(class, fromLast = TRUE)]
+  cond
+}
+
+#' @rdname FutureCondition
+#' @export
+DeviceMisuseFutureWarning <- function(...) {
+  cond <- DeviceMisuseFutureCondition(...)
+  class <- c("DeviceMisuseFutureWarning", "MisuseFutureWarning", "FutureWarning", "warning", class(cond))
+  class(cond) <- class[!duplicated(class, fromLast = TRUE)]
+  cond
+}
+
+#' @rdname FutureCondition
+#' @export
+DeviceMisuseFutureError <- function(...) {
+  cond <- DeviceMisuseFutureCondition(...)
+  class <- c("DeviceMisuseFutureError", "MisuseFutureError", "FutureError", "error", class(cond))
+  class(cond) <- class[!duplicated(class, fromLast = TRUE)]
+  cond
+}
+
+
 #' @rdname FutureCondition
 #' @export
 FutureInterruptError <- function(..., future = NULL) {

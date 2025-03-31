@@ -339,6 +339,22 @@ diff_globalenv <- function(before, after = names(.GlobalEnv)) {
 }
 
 
+diff_devices <- function(before, after = base::.Devices) {
+  n_before <- length(before)
+  n_after <- length(after)
+  n <- max(n_before, n_after)
+  data <- list()
+  for (kk in seq_len(n)) {
+    before_kk <- if (kk <= n_before) before[[kk]] else NA_character_
+    after_kk <- if (kk <= n_after) after[[kk]] else NA_character_
+    data[[kk]] <- data.frame(index = kk, before = before_kk, after = after_kk, identical = identical(after_kk, before_kk))
+  }
+  data <- do.call(rbind, data)
+  data <- data[!data[["identical"]], ]
+  data
+}
+
+
 evalFuture <- function(
     data = list(
       core = list(
@@ -886,6 +902,18 @@ evalFutureInternal <- function(data) {
   }
 
 
+  checkDevices <- getOption("future.devices.onMisuse")
+  if (is.null(checkDevices)) {
+    checkDevices <- TRUE
+  } else {
+    checkDevices <- (checkDevices != "ignore")
+  }
+  if (checkDevices) {
+    ## IMPORTANT: Need to use as.list() - if not, it's a reference variable/alias (sic!)
+    ...future.devices <- as.list(base::.Devices)
+  }
+
+
   conditionClassesExclude <- attr(conditionClasses, "exclude", exact = TRUE)
   muffleInclude <- attr(conditionClasses, "muffleInclude", exact = TRUE)
   if (is.null(muffleInclude)) muffleInclude <- "^muffle"
@@ -908,6 +936,7 @@ evalFutureInternal <- function(data) {
           rng = !identical(globalenv()[[".Random.seed"]], ...future.rng),
           globalenv = if (globalenv) list(added = diff_globalenv(...future.globalenv.names)) else NULL,
           misuse_connections = if (checkConnections) diff_connections(get_connections(details = isTRUE(attr(checkConnections, "details", exact = TRUE))), ...future.connections) else NULL,
+          misuse_devices = if (checkDevices) diff_devices(...future.devices, base::.Devices) else NULL,
           started = ...future.startTime
         )
       }, condition = function(cond) {
@@ -1006,6 +1035,7 @@ evalFutureInternal <- function(data) {
       rng = !identical(globalenv()[[".Random.seed"]], ...future.rng),
       globalenv = if (globalenv) list(added = diff_globalenv(...future.globalenv.names)) else NULL,
       misuse_connections = diff_connections(get_connections(details = isTRUE(attr(checkConnections, "details", exact = TRUE))), ...future.connections),
+      misuse_devices = if (checkDevices) diff_devices(base::.Devices, ...future.devices) else NULL,
       started = ...future.startTime
     )
   }, error = function(ex) {
@@ -1014,6 +1044,7 @@ evalFutureInternal <- function(data) {
       rng = !identical(globalenv()[[".Random.seed"]], ...future.rng),
       globalenv = if (globalenv) list(added = diff_globalenv(...future.globalenv.names)) else NULL,
       misuse_connections = diff_connections(get_connections(details = isTRUE(attr(checkConnections, "details", exact = TRUE))), ...future.connections),
+      misuse_devices = if (checkDevices) diff_devices(base::.Devices, ...future.devices) else NULL,
       started = ...future.startTime
     )
   }) ## output tryCatch()
