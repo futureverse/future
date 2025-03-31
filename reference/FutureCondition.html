@@ -21,7 +21,7 @@ evaluation of the future."><meta property="og:image" content="https://future.fut
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.34.0-9356</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.34.0-9357</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -117,7 +117,7 @@ class to help distinguish them from conditions that occur due to the
 <span><span class="fu">GlobalEnvMisuseFutureCondition</span><span class="op">(</span></span>
 <span>  message <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  call <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  globalenv <span class="op">=</span> <span class="va">globalenv</span>,</span>
+<span>  differences <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  uuid <span class="op">=</span> <span class="va">future</span><span class="op">[[</span><span class="st">"uuid"</span><span class="op">]</span><span class="op">]</span>,</span>
 <span>  future <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span>
@@ -137,6 +137,18 @@ class to help distinguish them from conditions that occur due to the
 <span><span class="fu">ConnectionMisuseFutureWarning</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">ConnectionMisuseFutureError</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">DeviceMisuseFutureCondition</span><span class="op">(</span></span>
+<span>  message <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  call <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  differences <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  uuid <span class="op">=</span> <span class="va">future</span><span class="op">[[</span><span class="st">"uuid"</span><span class="op">]</span><span class="op">]</span>,</span>
+<span>  future <span class="op">=</span> <span class="cn">NULL</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">DeviceMisuseFutureWarning</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">DeviceMisuseFutureError</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">FutureInterruptError</span><span class="op">(</span><span class="va">...</span>, future <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
 <span></span>
