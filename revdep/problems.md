@@ -185,30 +185,6 @@ Run `revdepcheck::revdep_details(, "aroma.core")` for more info
       'sfit', 'expectile', 'HaarSeg', 'mpcbs'
     ```
 
-# ARPALData
-
-<details>
-
-* Version: 1.6.1
-* GitHub: NA
-* Source code: https://github.com/cran/ARPALData
-* Date/Publication: 2025-01-10 14:00:10 UTC
-* Number of recursive dependencies: 140
-
-Run `revdepcheck::revdep_details(, "ARPALData")` for more info
-
-</details>
-
-## In both
-
-*   checking package dependencies ... ERROR
-    ```
-    Package required but not available: ‘archive’
-    
-    See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
-    manual.
-    ```
-
 # BAMBI
 
 <details>
@@ -280,7 +256,7 @@ Run `revdepcheck::revdep_details(, "batchtools")` for more info
 
 *   checking dependencies in R code ... NOTE
     ```
-    [c4-n20:1913800] OPAL ERROR: Not initialized in file ext2x_client.c at line 112
+    [c4-n43:2669798] OPAL ERROR: Not initialized in file ext2x_client.c at line 112
     --------------------------------------------------------------------------
     The application appears to have been direct launched using "srun",
     but OMPI was not built with SLURM's PMI support and therefore cannot
@@ -515,9 +491,9 @@ Run `revdepcheck::revdep_details(, "bsitar")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  7.7Mb
+      installed size is  7.9Mb
       sub-directories of 1Mb or more:
-        R      1.3Mb
+        R      1.5Mb
         data   5.3Mb
     ```
 
@@ -985,7 +961,7 @@ Run `revdepcheck::revdep_details(, "deseats")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  9.0Mb
+      installed size is  9.1Mb
       sub-directories of 1Mb or more:
         libs   8.3Mb
     ```
@@ -1099,8 +1075,9 @@ Run `revdepcheck::revdep_details(, "distantia")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  9.5Mb
+      installed size is 10.0Mb
       sub-directories of 1Mb or more:
+        help   1.0Mb
         libs   7.8Mb
     ```
 
@@ -1132,9 +1109,9 @@ Run `revdepcheck::revdep_details(, "DT")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  6.8Mb
+      installed size is  6.4Mb
       sub-directories of 1Mb or more:
-        htmlwidgets   6.0Mb
+        htmlwidgets   5.6Mb
     ```
 
 # EFAtools
@@ -1189,6 +1166,30 @@ Run `revdepcheck::revdep_details(, "envi")` for more info
     See ‘/c4/home/henrik/futureverse/future/revdep/checks/envi/new/envi.Rcheck/00install.out’ for details.
     ```
 
+# epe4md
+
+<details>
+
+* Version: 0.1.4
+* GitHub: NA
+* Source code: https://github.com/cran/epe4md
+* Date/Publication: 2023-07-05 14:23:07 UTC
+* Number of recursive dependencies: 140
+
+Run `revdepcheck::revdep_details(, "epe4md")` for more info
+
+</details>
+
+## Newly broken
+
+*   checking installed package size ... NOTE
+    ```
+      installed size is  5.4Mb
+      sub-directories of 1Mb or more:
+        dados_premissas   3.5Mb
+        metodologia       1.5Mb
+    ```
+
 # EpiNow2
 
 <details>
@@ -1212,10 +1213,10 @@ Run `revdepcheck::revdep_details(, "EpiNow2")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 265.0Mb
+      installed size is 271.1Mb
       sub-directories of 1Mb or more:
         doc     1.5Mb
-        libs  261.1Mb
+        libs  267.2Mb
     ```
 
 *   checking Rd cross-references ... NOTE
@@ -1339,11 +1340,11 @@ Run `revdepcheck::revdep_details(, "fdacluster")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 23.7Mb
+      installed size is 23.8Mb
       sub-directories of 1Mb or more:
         R      1.9Mb
         doc    1.5Mb
-        help   2.1Mb
+        help   2.2Mb
         libs  17.7Mb
     ```
 
@@ -2010,7 +2011,7 @@ Run `revdepcheck::revdep_details(, "hero")` for more info
 
 *   checking dependencies in R code ... NOTE
     ```
-    [c4-n20:2646228] OPAL ERROR: Not initialized in file ext2x_client.c at line 112
+    [c4-n43:589861] OPAL ERROR: Not initialized in file ext2x_client.c at line 112
     --------------------------------------------------------------------------
     The application appears to have been direct launched using "srun",
     but OMPI was not built with SLURM's PMI support and therefore cannot
@@ -2081,27 +2082,17 @@ Run `revdepcheck::revdep_details(, "httpgd")` for more info
 
 *   checking tests ...
     ```
-      Running ‘testthat.R’/software/c4/cbi/software/_rocky8/R-4.4.3-gcc13/lib64/R/bin/BATCH: line 60: 2681434 Segmentation fault      (core dumped) ${R_HOME}/bin/R -f ${in} ${opts} ${R_BATCH_OPTIONS} > ${out} 2>&1
+      Running ‘testthat.R’/software/c4/cbi/software/_rocky8/R-4.4.3-gcc13/lib64/R/bin/BATCH: line 60: 3017487 Aborted                 (core dumped) ${R_HOME}/bin/R -f ${in} ${opts} ${R_BATCH_OPTIONS} > ${out} 2>&1
     
      ERROR
     Running the tests in ‘tests/testthat.R’ failed.
-    Last 50 lines of output:
-       1. └─jsonlite::fromJSON(httr::content(res, as = "text")) at test-server.R:62:3
-       2.   └─jsonlite:::parse_and_simplify(...)
-       3.     └─jsonlite:::parseJSON(txt, bigint_as_char)
-       4.       └─jsonlite:::parse_string(txt, bigint_as_char)
-      ── Error ('test-server.R:83:5'): Clear plots ───────────────────────────────────
-    ...
-      1/1 mismatches
-      [1] 503 - 404 == 99
-      
-      [ FAIL 16 | WARN 0 | SKIP 0 | PASS 2 ]
-      Error: Test failures
-      Execution halted
-      
-       *** caught segfault ***
-      address 0x1c0000002c, cause 'memory not mapped'
-      An irrecoverable exception occurred. R is aborting now ...
+    Complete output:
+      > library(testthat)
+      > library(httpgd)
+      > 
+      > test_check("httpgd")
+      terminate called after throwing an instance of 'std::system_error'
+        what():  epoll: Too many open files
     ```
 
 *   checking installed package size ... NOTE
@@ -2339,7 +2330,7 @@ Run `revdepcheck::revdep_details(, "JANE")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 16.4Mb
+      installed size is 16.5Mb
       sub-directories of 1Mb or more:
         libs  16.2Mb
     ```
@@ -2354,10 +2345,10 @@ Run `revdepcheck::revdep_details(, "JANE")` for more info
 
 <details>
 
-* Version: 0.5.2
+* Version: 0.5.3
 * GitHub: https://github.com/keyATM/keyATM
 * Source code: https://github.com/cran/keyATM
-* Date/Publication: 2024-04-24 14:50:06 UTC
+* Date/Publication: 2025-03-30 12:20:02 UTC
 * Number of recursive dependencies: 100
 
 Run `revdepcheck::revdep_details(, "keyATM")` for more info
@@ -2488,7 +2479,8 @@ Run `revdepcheck::revdep_details(, "lidR")` for more info
 
 *   checking tests ...
     ```
-      Running ‘testthat.R’
+      Running ‘testthat.R’/software/c4/cbi/software/_rocky8/R-4.4.3-gcc13/lib64/R/bin/BATCH: line 60: 3784479 Aborted                 (core dumped) ${R_HOME}/bin/R -f ${in} ${opts} ${R_BATCH_OPTIONS} > ${out} 2>&1
+    
      ERROR
     Running the tests in ‘tests/testthat.R’ failed.
     Complete output:
@@ -2498,17 +2490,14 @@ Run `revdepcheck::revdep_details(, "lidR")` for more info
       > library(lidR)
       > test_check("lidR")
       Tests using raster: terra 
-    ...
-      
-      ══ Failed tests ════════════════════════════════════════════════════════════════
-      ── Failure ('test-rasterize_canopy.R:132:3'): rasterize_canopy pit-free works both with LAS and LAScatalog ──
-      lidR:::raster_values(x) not equal to lidR:::raster_values(y).
-      1/7744 mismatches
-      [4990] 0.048 - 0.047 == 0.001
-      
-      [ FAIL 1 | WARN 0 | SKIP 43 | PASS 1303 ]
-      Error: Test failures
-      Execution halted
+      Tests using future: TRUE 
+      Tests using OpenMP thread: 48 
+      Tests using rlas: 1.8.0 
+      OGR: Unsupported geometry type
+      OGR: Unsupported geometry type
+      Chunk 1 of 1 (100%): state ✓
+      terminate called after throwing an instance of 'std::length_error'
+        what():  basic_string::_M_create
     ```
 
 *   checking installed package size ... NOTE
@@ -2848,8 +2837,9 @@ Run `revdepcheck::revdep_details(, "missSBM")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 10.2Mb
+      installed size is 10.3Mb
       sub-directories of 1Mb or more:
+        R      1.0Mb
         libs   8.0Mb
     ```
 
@@ -2941,6 +2931,30 @@ Run `revdepcheck::revdep_details(, "mlr3tuning")` for more info
 *   checking package dependencies ... NOTE
     ```
     Package suggested but not available for checking: ‘mlflow’
+    ```
+
+# modelsummary
+
+<details>
+
+* Version: 2.3.0
+* GitHub: https://github.com/vincentarelbundock/modelsummary
+* Source code: https://github.com/cran/modelsummary
+* Date/Publication: 2025-02-02 12:50:02 UTC
+* Number of recursive dependencies: 322
+
+Run `revdepcheck::revdep_details(, "modelsummary")` for more info
+
+</details>
+
+## Newly broken
+
+*   checking installed package size ... NOTE
+    ```
+      installed size is  5.4Mb
+      sub-directories of 1Mb or more:
+        help       3.3Mb
+        tinytest   1.7Mb
     ```
 
 # momentuHMM
@@ -3066,6 +3080,29 @@ Run `revdepcheck::revdep_details(, "nebula")` for more info
       installed size is 35.4Mb
       sub-directories of 1Mb or more:
         libs  33.7Mb
+    ```
+
+# nestedcv
+
+<details>
+
+* Version: 0.8.0
+* GitHub: https://github.com/myles-lewis/nestedcv
+* Source code: https://github.com/cran/nestedcv
+* Date/Publication: 2025-03-10 17:40:02 UTC
+* Number of recursive dependencies: 178
+
+Run `revdepcheck::revdep_details(, "nestedcv")` for more info
+
+</details>
+
+## Newly broken
+
+*   checking installed package size ... NOTE
+    ```
+      installed size is  5.1Mb
+      sub-directories of 1Mb or more:
+        doc   4.6Mb
     ```
 
 # nflfastR
@@ -3203,6 +3240,58 @@ Run `revdepcheck::revdep_details(, "PAMpal")` for more info
 
 </details>
 
+## Newly fixed
+
+*   checking examples ... ERROR
+    ```
+    Running examples in ‘PAMpal-Ex.R’ failed
+    The error most likely occurred in:
+    
+    > ### Name: addGps
+    > ### Title: Add GPS Locations to an AcousticStudy
+    > ### Aliases: addGps addGps,data.frame-method addGps,AcousticEvent-method
+    > ###   addGps,list-method addGps,AcousticStudy-method addGps,ANY-method
+    > 
+    > ### ** Examples
+    > 
+    ...
+    > data(exStudy)
+    > # need to update database file to local directory
+    > db <- system.file('extdata', 'Example.sqlite3', package='PAMpal')
+    > exStudy <- updateFiles(exStudy, db=db, bin=NA, verbose=FALSE)
+    > exStudy <- addGps(exStudy)
+    No "gpsData" table found in database Example.sqlite3 
+    Error in menu(title = "Would you like to add gps data to this database?",  : 
+      menu() cannot be used non-interactively
+    Calls: addGps ... addGps -> rbindlist -> lapply -> FUN -> gpsFromDb -> menu
+    Execution halted
+    ```
+
+*   checking tests ...
+    ```
+      Running ‘testthat.R’
+     ERROR
+    Running the tests in ‘tests/testthat.R’ failed.
+    Last 50 lines of output:
+       1. └─PAMpal::processPgDetections(...) at test-processPps.R:18:5
+       2.   └─PAMpal::checkStudy(result)
+       3.     └─PAMpal::events(x)
+       4.       └─methods (local) `<fn>`(`<list>`, `<stndrdGn>`, `<env>`)
+      ── Error ('test-processPps.R:92:5'): Test process recording ────────────────────
+      Error: unable to find an inherited method for function 'detectors' for signature 'x = "NULL"'
+    ...
+      Backtrace:
+          ▆
+       1. └─PAMpal::processPgDetections(...) at test-workStudy.R:272:5
+       2.   └─PAMpal::checkStudy(result)
+       3.     └─PAMpal::events(x)
+       4.       └─methods (local) `<fn>`(`<list>`, `<stndrdGn>`, `<env>`)
+      
+      [ FAIL 6 | WARN 11 | SKIP 0 | PASS 134 ]
+      Error: Test failures
+      Execution halted
+    ```
+
 ## In both
 
 *   checking whether package ‘PAMpal’ can be installed ... WARNING
@@ -3264,15 +3353,15 @@ Run `revdepcheck::revdep_details(, "pareg")` for more info
     > 
     > df_genes <- data.frame(
     ...
-    + )
-    > fit <- pareg(df_genes, df_terms, max_iterations = 10)
-    Error in py_module_import(module, convert = convert) : 
-      ModuleNotFoundError: No module named 'tensorflow'
-    Run `reticulate::py_last_error()` for details.
-    Error in .activate_fallback(proc, testload, env = env, envpath = envpath,  : 
-      ModuleNotFoundError: No module named 'tensorflow'
-    Run `reticulate::py_last_error()` for details.
-    Calls: pareg -> basiliskStart -> .activate_fallback
+       │     └─ openssl >=1.1.1q,<1.1.2a , which conflicts with any installable versions previously reported;
+       ├─ tensorflow 2.10.0 would require
+       │  └─ tensorflow-base [2.10.0 eigen_py38h1969d1f_0|2.10.0 gpu_py38h6559e04_0|2.10.0 mkl_py38hb9daa73_0], which requires
+       │     └─ python >=3.8,<3.9.0a0 , which conflicts with any installable versions previously reported;
+       └─ tensorflow 2.10.0 would require
+          └─ tensorflow-base [2.10.0 eigen_py39h1969d1f_0|2.10.0 gpu_py39h6559e04_0|2.10.0 mkl_py39hb9daa73_0], which requires
+             └─ python >=3.9,<3.10.0a0 , which conflicts with any installable versions previously reported.
+    
+    Error: one or more Python packages failed to install [error code 1]
     Execution halted
     ```
 
@@ -3281,23 +3370,23 @@ Run `revdepcheck::revdep_details(, "pareg")` for more info
       Running ‘testthat.R’
      ERROR
     Running the tests in ‘tests/testthat.R’ failed.
-    Complete output:
-      > library(testthat)
-      > library(pareg)
-      Loading required package: tensorflow
-      Loading required package: tfprobability
+    Last 50 lines of output:
       
       
+      Preparing transaction: ...working... done
+      Verifying transaction: ...working... done
+      Executing transaction: ...working... done
+      + /c4/home/henrik/.cache/R/basilisk/1.18.0/0/bin/conda install --yes --prefix /c4/home/henrik/.cache/R/basilisk/1.18.0/pareg/1.8.0/pareg 'python=3.10.14' -c anaconda --override-channels
     ...
-      +   testload = c("tensorflow", "tensorflow_probability")
-      + )
-      Error in py_module_import(module, convert = convert) : 
-        ModuleNotFoundError: No module named 'tensorflow'
-      Run `reticulate::py_last_error()` for details.
-      Error in .activate_fallback(proc, testload, env = env, envpath = envpath,  : 
-        ModuleNotFoundError: No module named 'tensorflow'
-      Run `reticulate::py_last_error()` for details.
-      Calls: <Anonymous> -> .activate_fallback
+            └─ tensorflow-base [2.10.0 eigen_py39h1969d1f_0|2.10.0 gpu_py39h6559e04_0|2.10.0 mkl_py39hb9daa73_0], which requires
+               └─ python >=3.9,<3.10.0a0 , which conflicts with any installable versions previously reported.
+      
+      Error: one or more Python packages failed to install [error code 1]
+      In addition: Warning messages:
+      1: In check_forbidden_install("Python packages") :
+        cannot install Python packages during R CMD check
+      2: In check_forbidden_install("Conda Environments") :
+        cannot install Conda Environments during R CMD check
       Execution halted
     ```
 
@@ -3307,12 +3396,12 @@ Run `revdepcheck::revdep_details(, "pareg")` for more info
     --- re-building ‘pareg.Rmd’ using rmarkdown
     The magick package is required to crop "/c4/home/henrik/futureverse/future/revdep/checks/pareg/new/pareg.Rcheck/vign_test/pareg/vignettes/pareg_files/figure-html/unnamed-chunk-4-1.png" but not available.
     The magick package is required to crop "/c4/home/henrik/futureverse/future/revdep/checks/pareg/new/pareg.Rcheck/vign_test/pareg/vignettes/pareg_files/figure-html/unnamed-chunk-5-1.png" but not available.
+    Channels:
+     - anaconda
+    Platform: linux-64
+    Collecting package metadata (repodata.json): ...working... done
+    Solving environment: ...working... done
     
-    Quitting from pareg.Rmd:144-150 [unnamed-chunk-9]
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    <error/rlang_error>
-    Error in `.activate_fallback()`:
-    ! ModuleNotFoundError: No module named 'tensorflow'
     ...
     --- re-building ‘pathway_similarities.Rmd’ using rmarkdown
     The magick package is required to crop "/c4/home/henrik/futureverse/future/revdep/checks/pareg/new/pareg.Rcheck/vign_test/pareg/vignettes/pathway_similarities_files/figure-html/unnamed-chunk-2-1.png" but not available.
@@ -3727,9 +3816,8 @@ Run `revdepcheck::revdep_details(, "psborrow2")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  5.8Mb
+      installed size is  5.4Mb
       sub-directories of 1Mb or more:
-        R     1.0Mb
         doc   3.9Mb
     ```
 
@@ -3836,8 +3924,9 @@ Run `revdepcheck::revdep_details(, "RAINBOWR")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 42.9Mb
+      installed size is 43.3Mb
       sub-directories of 1Mb or more:
+        R      1.0Mb
         libs  41.5Mb
     ```
 
@@ -3943,11 +4032,6 @@ Run `revdepcheck::revdep_details(, "reproducible")` for more info
       [ FAIL 2 | WARN 0 | SKIP 90 | PASS 390 ]
       Error: Test failures
       Execution halted
-    ```
-
-*   checking package dependencies ... NOTE
-    ```
-    Package suggested but not available for checking: ‘archive’
     ```
 
 # rgee
@@ -4106,9 +4190,9 @@ Run `revdepcheck::revdep_details(, "sdmTMB")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 98.1Mb
+      installed size is 97.8Mb
       sub-directories of 1Mb or more:
-        libs  96.2Mb
+        libs  95.9Mb
     ```
 
 # sentopics
@@ -4169,10 +4253,10 @@ Run `revdepcheck::revdep_details(, "Seurat")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 16.1Mb
+      installed size is 16.4Mb
       sub-directories of 1Mb or more:
-        R      1.7Mb
-        libs  13.5Mb
+        R      2.0Mb
+        libs  13.4Mb
     ```
 
 *   checking Rd cross-references ... NOTE
@@ -4205,7 +4289,7 @@ Run `revdepcheck::revdep_details(, "SeuratObject")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  5.5Mb
+      installed size is  5.6Mb
       sub-directories of 1Mb or more:
         R      1.5Mb
         libs   3.2Mb
@@ -4234,7 +4318,7 @@ Run `revdepcheck::revdep_details(, "shapr")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 13.3Mb
+      installed size is 13.4Mb
       sub-directories of 1Mb or more:
         doc    4.3Mb
         libs   7.8Mb
@@ -4289,10 +4373,11 @@ Run `revdepcheck::revdep_details(, "shiny")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 13.7Mb
+      installed size is 14.5Mb
       sub-directories of 1Mb or more:
-        R     1.5Mb
-        www  10.4Mb
+        R      2.0Mb
+        help   1.2Mb
+        www   10.4Mb
     ```
 
 # shiny.worker
@@ -4455,6 +4540,33 @@ Run `revdepcheck::revdep_details(, "SimDesign")` for more info
 
 </details>
 
+## Newly fixed
+
+*   checking re-building of vignette outputs ... ERROR
+    ```
+    Error(s) in re-building vignettes:
+    --- re-building ‘Catch_errors.Rmd’ using rmarkdown
+    --- finished re-building ‘Catch_errors.Rmd’
+    
+    --- re-building ‘Fixed_obj_fun.Rmd’ using rmarkdown
+    
+    Quitting from Fixed_obj_fun.Rmd:64-69 [unnamed-chunk-5]
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    <error/rlang_error>
+    Error in `serverSocket()`:
+    ...
+    --- finished re-building ‘Saving-results.Rmd’
+    
+    --- re-building ‘SimDesign-intro.Rmd’ using rmarkdown
+    --- finished re-building ‘SimDesign-intro.Rmd’
+    
+    SUMMARY: processing the following file failed:
+      ‘Fixed_obj_fun.Rmd’
+    
+    Error: Vignette re-building failed.
+    Execution halted
+    ```
+
 ## In both
 
 *   checking installed package size ... NOTE
@@ -4504,7 +4616,7 @@ Run `revdepcheck::revdep_details(, "skpr")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 59.6Mb
+      installed size is 59.7Mb
       sub-directories of 1Mb or more:
         libs  59.0Mb
     ```
@@ -4614,7 +4726,7 @@ Run `revdepcheck::revdep_details(, "SpaDES.core")` for more info
 
 *   checking package dependencies ... NOTE
     ```
-    Packages suggested but not available for checking: 'archive', 'NLMR'
+    Package suggested but not available for checking: ‘NLMR’
     ```
 
 *   checking installed package size ... NOTE
@@ -4650,9 +4762,10 @@ Run `revdepcheck::revdep_details(, "spaMM")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 54.4Mb
+      installed size is 55.0Mb
       sub-directories of 1Mb or more:
-        R      2.8Mb
+        R      3.1Mb
+        help   1.0Mb
         libs  50.2Mb
     ```
 
@@ -4798,10 +4911,10 @@ Run `revdepcheck::revdep_details(, "sphunif")` for more info
 
 <details>
 
-* Version: 0.4.4.5
+* Version: 0.4.4.6
 * GitHub: https://github.com/JeremyGelb/spNetwork
 * Source code: https://github.com/cran/spNetwork
-* Date/Publication: 2025-01-20 11:30:03 UTC
+* Date/Publication: 2025-03-29 16:00:02 UTC
 * Number of recursive dependencies: 152
 
 Run `revdepcheck::revdep_details(, "spNetwork")` for more info
@@ -4887,10 +5000,10 @@ Run `revdepcheck::revdep_details(, "squat")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 19.9Mb
+      installed size is 20.0Mb
       sub-directories of 1Mb or more:
         data   1.1Mb
-        help   1.1Mb
+        help   1.2Mb
         libs  17.5Mb
     ```
 
@@ -5055,7 +5168,7 @@ Run `revdepcheck::revdep_details(, "synergyfinder")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  6.2Mb
+      installed size is  6.3Mb
       sub-directories of 1Mb or more:
         doc   5.8Mb
     ```
@@ -5214,7 +5327,7 @@ Run `revdepcheck::revdep_details(, "tenm")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  5.9Mb
+      installed size is  6.0Mb
       sub-directories of 1Mb or more:
         extdata   5.0Mb
     ```
@@ -5258,9 +5371,9 @@ Run `revdepcheck::revdep_details(, "tglkmeans")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  5.3Mb
+      installed size is  5.8Mb
       sub-directories of 1Mb or more:
-        libs   5.0Mb
+        libs   5.5Mb
     ```
 
 *   checking dependencies in R code ... NOTE
@@ -5456,9 +5569,9 @@ Run `revdepcheck::revdep_details(, "tsdistributions")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 42.9Mb
+      installed size is 43.2Mb
       sub-directories of 1Mb or more:
-        libs  42.3Mb
+        libs  42.6Mb
     ```
 
 # tsgarch
@@ -5479,9 +5592,9 @@ Run `revdepcheck::revdep_details(, "tsgarch")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 144.3Mb
+      installed size is 144.4Mb
       sub-directories of 1Mb or more:
-        libs  143.2Mb
+        libs  143.3Mb
     ```
 
 # tsmarch
@@ -5752,10 +5865,10 @@ Run `revdepcheck::revdep_details(, "wru")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  7.5Mb
+      installed size is  7.6Mb
       sub-directories of 1Mb or more:
         data   3.5Mb
-        help   1.9Mb
+        help   2.0Mb
         libs   1.9Mb
     ```
 
