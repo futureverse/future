@@ -81,7 +81,9 @@ reverse-dependency checks, **future.tests** checks, and more.
    `plan()`. Previously, this had to be implemented by each backend,
    but now it's handled automatically by the future framework.
    
- * Add new FutureBackend API for writing future backends.
+ * Add new FutureBackend API for writing future backends. Please use
+   with care, because there will be further updates in the next few
+   release cycles.
 
  * The maximum total size of objects send to and from the worker can
    now be configured per backend, e.g. `plan(multisession,

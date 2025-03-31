@@ -24,8 +24,7 @@ listFutures.MultiprocessFutureBackend <- function(backend, ..., debug = FALSE) {
       counter = integer(0L),
       start = proc.time()[[3]][integer(0L)],
       label = character(0L),
-      resolved = logical(0L),
-      future = list()[integer(0L)]
+      resolved = logical(0L)
     )
   } else {
     data <- lapply(futures, FUN = function(future) {
@@ -39,8 +38,8 @@ listFutures.MultiprocessFutureBackend <- function(backend, ..., debug = FALSE) {
       )
     })
     data <- do.call(rbind, data)
-    data[["future"]] <- lapply(futures, FUN = list)
   }
+  data[["future"]] <- lapply(futures, FUN = list)
   data
 }
 
