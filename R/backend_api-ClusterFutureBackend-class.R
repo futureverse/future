@@ -975,62 +975,79 @@ requestNode <- function(await, backend, timeout, delta, alpha) {
   stop_if_not(is.numeric(node_idx), is.finite(node_idx), node_idx >= 1)
   if (debug) mdebugf("Index of first available worker: %d", node_idx)
   
-
   ## Validate that the cluster node is working
   if (debug) mdebug_push("Validate that the worker is functional ...")
   cl <- workers[node_idx]
   stop_if_not(length(cl) == 1L, inherits(cl, "cluster"))
+
+  maxTries <- 3L
+  for (kk in maxTries:1) {
+    okay <- TRUE
+    truth <- "future:::requestNode() validation call"
+    res <- tryCatch({
+      clusterCall(cl = cl, function(x) x, truth)[[1]]
+    }, error = identity)
+    ## If not working, investigate why, and relaunch a new worker
+    if (inherits(res, "error") || !identical(res, truth)) {
+      if (debug) {
+        mdebug("Worker is non-functional")
+        if (inherits(res, "error")) {
+          mdebug("Error received: ", conditionMessage(res))
+        } else {
+          mdebug("Result received: ", sQuote(res))
+        }
+      }
+      okay <- FALSE
   
-  okay <- TRUE
-  res <- tryCatch({
-    clusterCall(cl = cl, function() TRUE)
-  }, error = identity)
-
-  ## If not working, investigate why, and relaunch a new worker
-  if (inherits(res, "error")) {
-    if (debug) mdebug("Worker is non-functional")
-    okay <- FALSE
-
-    ## Is the connection working?
-    node <- cl[[1]]
-    con <- node[["con"]]
-    connectionOkay <- NA
-    if (inherits(con, "connection")) {
-      connectionOkay <- isConnectionValid(con)
-      if (debug) mdebug("Connection is valid: ", connectionOkay)
-    }
-
-    if (is.na(connectionOkay) || connectionOkay) {
-      ## If the node does not use a connection, or the  connection is working,
-      ## we can only assume the worker is also alive.  If so, we should try to
-      ## kill the worker.
-      res <- suppressWarnings(killNode(node))
-      if (debug) mdebugf("Killed %s: %s", class(node)[1], res)
+      ## Is the connection working?
+      node <- cl[[1]]
+      con <- node[["con"]]
+      connectionOkay <- NA
+      if (inherits(con, "connection")) {
+        connectionOkay <- isConnectionValid(con)
+        if (debug) mdebug("Connection is valid: ", connectionOkay)
+      }
+  
+      if (is.na(connectionOkay) || connectionOkay) {
+        ## If the node does not use a connection, or the  connection is working,
+        ## we can only assume the worker is also alive.  If so, we should try to
+        ## kill the worker.
+        res <- suppressWarnings(killNode(node))
+        if (debug) mdebugf("Killed %s: %s", class(node)[1], res)
+      } else {
+        ## If connection is not working, we could assume the worker is no longer
+        ## alive, but it could also be a network issues. In either case, we
+        ## should try to kill it, just in case.
+        res <- suppressWarnings(killNode(node))
+        if (debug) mdebugf("Killed %s: %s", class(node)[1], res)
+      }
+      if (kk == 1L) {
+        stop(FutureError(sprintf("Failed to find a functional cluster workers, after attempting to relaunch the parallel worker %d times", maxTries)))
+      }
     } else {
-      ## If connection is not working, we could assume the worker is no longer
-      ## alive, but it could also be a network issues. In either case, we
-      ## should try to kill it, just in case.
-      res <- suppressWarnings(killNode(node))
-      if (debug) mdebugf("Killed %s: %s", class(node)[1], res)
+      if (debug) mdebug("Worker is functional")
+      break
     }
-  } else {
-    if (debug) mdebug("Worker is functional")
-  }
-  if (debug) mdebug_pop("Validate that the worker is functional ... done")
-  
-  ## Relaunch worker?
-  if (!okay) {
-    if (debug) mdebugf_push("Restarting non-alive cluster node %d ...", node_idx)
-    node <- cloneNode(node)
-    workers[[node_idx]] <- node
-    backend[["workers"]] <- workers
+    if (debug) mdebug_pop("Validate that the worker is functional ... done")
     
-    if (debug) {
-      mdebug("Re-launched cluster node:")
-      mprint(node)
-      mdebugf_pop("Restarting non-alive cluster node %d ... done", node_idx)
+    ## Relaunch worker?
+    if (!okay) {
+      if (debug) mdebugf_push("Restarting non-alive cluster node %d ...", node_idx)
+      node <- cloneNode(node)
+      cl[[1]] <- node
+      
+      workers[[node_idx]] <- node
+      backend[["workers"]] <- workers
+      
+      if (debug) {
+        mdebug("Re-launched cluster node:")
+        mprint(node)
+        mdebugf_pop("Restarting non-alive cluster node %d ... done", node_idx)
+      }
     }
-  }
+    
+    Sys.sleep(0.1)
+  } ##  for (kk in maxTries:1)
   
   node_idx
 } ## requestNode()
