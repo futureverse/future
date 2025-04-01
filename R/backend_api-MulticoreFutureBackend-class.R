@@ -188,7 +188,7 @@ launchFuture.MulticoreFutureBackend <- local({
        hook(backend, future = future, ...)
     }
 
-    data <- getFutureData(future, debug = debug)
+    data <- getFutureData(future, mc.cores = 1L, debug = debug)
   
     t_start <- Sys.time()
   

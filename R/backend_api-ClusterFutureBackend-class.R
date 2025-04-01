@@ -327,7 +327,7 @@ launchFuture.ClusterFutureBackend <- function(backend, future, ...) {
     worker >= 1L, worker <= length(workers)
   ) 
   if (debug) mdebugf("cluster node index: %d", worker)
-  data <- getFutureData(future, debug = debug)
+  data <- getFutureData(future, mc.cores = 1L, debug = debug)
   node <- workers[[worker]]
   ## Non-blocking cluster-node call
   node_call_nonblocking(node, fun = evalFuture, args = list(data), future = future, when = "launch future on")
