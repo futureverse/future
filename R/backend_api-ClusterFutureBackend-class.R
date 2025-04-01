@@ -21,7 +21,7 @@ ClusterFutureBackend <- local({
   ## Most recent 'workers' set up
   last <- NULL
 
-  function(workers = availableWorkers(), persistent = FALSE, gc = TRUE, earlySignal = TRUE, interrupts = FALSE, ...) {
+  function(workers = availableWorkers(), gc = TRUE, earlySignal = TRUE, interrupts = FALSE, passthrough = FALSE, persistent = FALSE, ...) {
     debug <- isTRUE(getOption("future.debug"))
 
     if (debug) {
@@ -104,10 +104,11 @@ ClusterFutureBackend <- local({
   
     core <- FutureBackend(
       workers = workers,
-      persistent = persistent,
       reg = reg,
       earlySignal = earlySignal,
       interrupts = interrupts,
+      passthrough = passthrough,
+      persistent = persistent,
       future.wait.timeout = getOption("future.wait.timeout", 24 * 60 * 60),
       future.wait.interval = getOption("future.wait.interval", 0.01),
       future.wait.alpha = getOption("future.wait.alpha", 1.01),
@@ -1412,6 +1413,7 @@ handleInterruptedFuture <- local({
 #'
 #' @inheritParams Future-class
 #' @inheritParams future
+#' @inheritParams FutureBackend-class
 #'
 #' @param workers A \code{\link[parallel:makeCluster]{cluster}} object,
 #' a character vector of host names, a positive numeric scalar,
@@ -1433,7 +1435,7 @@ handleInterruptedFuture <- local({
 #' @example incl/cluster.R
 #'
 #' @export
-cluster <- function(..., persistent = FALSE, workers = availableWorkers(), gc = FALSE, earlySignal = FALSE, envir = parent.frame()) {
+cluster <- function(..., workers = availableWorkers(), gc = FALSE, earlySignal = FALSE, passthrough = FALSE, persistent = FALSE, envir = parent.frame()) {
   ## WORKAROUNDS:
   ## (1) promises::future_promise() calls the "evaluator" function directly
   if ("promises" %in% loadedNamespaces()) {
@@ -1444,7 +1446,7 @@ cluster <- function(..., persistent = FALSE, workers = availableWorkers(), gc = 
 }
 class(cluster) <- c("cluster", "multiprocess", "future", "function")
 attr(cluster, "init") <- TRUE
-attr(cluster, "tweakable") <- quote(c(makeClusterPSOCK_args(), "persistent"))
+attr(cluster, "tweakable") <- quote(c(makeClusterPSOCK_args(), "persistent", "passthrough"))
 attr(cluster, "factory") <- ClusterFutureBackend
 
 
@@ -1471,6 +1473,8 @@ clusterRegistry <- local({
     if (debug) {
       mdebug_push("makeCluster(workers, ...) ...")
       on.exit(mdebug_pop("makeCluster(workers, ...) ... done"))
+      mdebug("Arguments:")
+      mstr(list(workers, ...))
     }
     
     cl <- makeCluster(workers, ...)

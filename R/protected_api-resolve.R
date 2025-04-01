@@ -421,7 +421,7 @@ resolve.environment <- function(x, idxs = NULL, recursive = 0, result = FALSE, s
   if (relay || force) {
     if (debug) mdebug_push("Relaying remaining futures ...")
     signalConditionsASAP(resignal = FALSE, pos = 0L)
-    if (debug) mdebug_push("Relaying remaining futures ... done")
+    if (debug) mdebug_pop("Relaying remaining futures ... done")
   }
   
   x0

@@ -32,6 +32,7 @@ FutureBackend(
   gc = FALSE,
   maxSizeOfObjects = getOption("future.globals.maxSize", +Inf),
   interrupts = TRUE,
+  passthrough = FALSE,
   hooks = FALSE
 )
 
@@ -87,6 +88,9 @@ remotely at your university or company, then you might want to use this
 protection to avoid transferring giga- or terabytes of data without noticing.
 (Default: \eqn{500 \cdot 1024^2} bytes = 500 MiB, unless overridden by a
 FutureBackend subclass, or by R option \link{future.globals.maxSize} (sic!))}
+
+\item{passthrough}{If TRUE, futures are resolved on the next, nested
+future backend.}
 
 \item{backend}{a \link{FutureBackend}.}
 

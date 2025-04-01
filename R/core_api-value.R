@@ -628,7 +628,7 @@ value.list <- function(x, idxs = NULL, recursive = 0, reduce = NULL, stdout = TR
             if (debug) mdebug_pop("resolve(y, ...) ... done")
             if (debug) mdebugf("stop(value) in 3, 2, 1 ...")
             stop(value)
-            if (debug) mdebugf_push("signal %s ... done", class(value)[1])
+            if (debug) mdebugf_pop("signal %s ... done", class(value)[1])
           } ## if (signal && inherits(value, "error"))
           
           resolved[ii] <- TRUE

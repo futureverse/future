@@ -10,6 +10,7 @@ cluster(
   workers = availableWorkers(),
   gc = FALSE,
   earlySignal = FALSE,
+  passthrough = FALSE,
   envir = parent.frame()
 )
 }

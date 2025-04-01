@@ -437,6 +437,14 @@ run.Future <- function(future, ...) {
       }
     }
 
+    if (backend[["passthrough"]]) {
+      if (debug) mdebug_push("Adjusting future expression for passthrough ...")
+      expr <- future[["expr"]]
+      expr <- bquote({ future::value(future::future( .(expr) )) })
+      future[["expr"]] <- expr
+      if (debug) mdebug_pop("Adjusting future expression for passthrough ... done")
+    }
+
     if (debug) mdebug_push("Launching futures ...")
     future[["backend"]] <- backend
     future[["start"]] <- proc.time()[[3]]

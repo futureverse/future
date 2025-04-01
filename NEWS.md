@@ -63,6 +63,12 @@ reverse-dependency checks, **future.tests** checks, and more.
    of having to specify globals and packages, not having conditions
    and standard output relayed, and ignoring random number generation.
 
+ * Make it possible to "pass through" a future to the next nested
+   layer. For example, `plan(list(tweak(cluster, workers =
+   "remote.example.org", passthrough = TRUE), multisession))` will cause
+   `f <- future({ ... })` to be resolved in parallel on the
+   `remote.example.org` host.
+ 
  * Printing `plan()` will output details on the future backend, e.g.
    number of workers, number of free workers, backend settings, and
    summary of resolved and non-resolved, active futures.
