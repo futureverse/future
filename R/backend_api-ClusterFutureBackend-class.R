@@ -122,7 +122,7 @@ ClusterFutureBackend <- local({
 
 #' @importFrom utils capture.output
 #' @export
-print.ClusterFutureBackend <- function(x, details = c("workers"), ...) {
+print.ClusterFutureBackend <- function(x, details = c("workers"), validate = FALSE, ...) {
   backend <- NextMethod()
   workers <- backend[["workers"]]
 
@@ -144,13 +144,7 @@ print.ClusterFutureBackend <- function(x, details = c("workers"), ...) {
       info <- paste(info, collapse = "; ")
       status <- " OK "
       details <- c()
-      alive <- isNodeAlive(node)
-      if (alive) {
-        details <- c(details, "alive")
-      } else {
-        details <- c(details, "not alive")
-        status <- "FAIL"
-      }
+      
       if (!is.null(con)) {
         isValid <- isConnectionValid(con)
         if (isValid) {
@@ -160,6 +154,17 @@ print.ClusterFutureBackend <- function(x, details = c("workers"), ...) {
           status <- "FAIL"
         }
       }
+
+      if (validate) {
+        alive <- isNodeAlive(node)
+        if (alive) {
+          details <- c(details, "alive")
+        } else {
+          details <- c(details, "not alive")
+          status <- "FAIL"
+        }
+      }
+
       details <- paste(details, collapse = ", ")    
       cat(sprintf("  [%s] Node %d/%d: %s [%s]\n", status, kk, length(workers), details, info))
     }

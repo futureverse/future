@@ -601,7 +601,7 @@ print.future <- function(x, ...) {
     if (is.null(backend)) {
       cat("FutureBackend to be launched\n")
     } else {
-      print(backend)
+      print(backend, ...)
     }
   }
   
