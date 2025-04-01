@@ -1003,7 +1003,7 @@ evalFutureInternal <- function(data) {
                      inherits(cond, conditionClasses)
                     ) {
             ## Relay 'immediateCondition' conditions immediately?
-            ## If so, then do not muffle it and flag it as signalled
+            ## If so, then do not muffle it and flag it as signaled
             ## already here.
             signal <- inherits(cond, immediateConditionClasses)
             ## Record condition

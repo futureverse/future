@@ -43,7 +43,7 @@
 #' 
 #' If `signal` is TRUE and one of the futures produces an error, then
 #' that error is relayed. Any remaining, non-resolved futures in `x` are
-#' interrupted, prior to signalling such an error.
+#' interrupted, prior to signaling such an error.
 #'
 #' @example incl/value.R
 #'
@@ -621,7 +621,7 @@ value.list <- function(x, idxs = NULL, recursive = 0, reduce = NULL, stdout = TR
             }
             if (debug) mdebug_push("resolve(y, ...) ...")
             ## Resolve remaining futures, while relaying output and
-            ## conditions, but without signalling any errors
+            ## conditions, but without signaling any errors
             for (kk in seq_along(y)) {
               tryCatch(resolve(y[[kk]], result = TRUE, stdout = stdout, signal = signal, force = !drop), error = identity)
             }

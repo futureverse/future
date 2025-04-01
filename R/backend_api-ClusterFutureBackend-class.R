@@ -1413,7 +1413,7 @@ handleInterruptedFuture <- local({
 #'
 #' @inheritParams Future-class
 #' @inheritParams future
-#' @inheritParams FutureBackend-class
+#' @inheritParams FutureBackend
 #'
 #' @param workers A \code{\link[parallel:makeCluster]{cluster}} object,
 #' a character vector of host names, a positive numeric scalar,

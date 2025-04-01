@@ -134,12 +134,12 @@ FutureRegistry <- local({
 
     ## Early signaling of conditions?
     if (earlySignal && length(futures) > 0L) {
-      if (debug) mdebugf("Early signalling of %d future candidates ...", length(futures))
+      if (debug) mdebugf("Early signaling of %d future candidates ...", length(futures))
       ## Which futures have early signaling enabled?
       idxs <- lapply(futures, FUN = function(f) f[["earlySignal"]])
       idxs <- which(unlist(idxs, use.names = FALSE))
 
-      if (debug) mdebugf("Number of futures with early signalling requested: %d", length(idxs))
+      if (debug) mdebugf("Number of futures with early signaling requested: %d", length(idxs))
 
       ## Any futures to be scanned for early signaling?
       if (length(idxs) > 0) {
@@ -147,7 +147,7 @@ FutureRegistry <- local({
         ## calls to resolved().
         collectValues(where, futures = futures[idxs], firstOnly = FALSE)
       }
-      if (debug) mdebugf("Early signalling of %d future candidates ... done", length(futures))
+      if (debug) mdebugf("Early signaling of %d future candidates ... done", length(futures))
     }
 
     if (debug) mdebugf("Number of registered futures: %d", length(futures))

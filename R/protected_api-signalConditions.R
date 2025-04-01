@@ -116,7 +116,7 @@ signalConditions <- function(future, include = "condition", exclude = NULL, resi
     signaled[kk] <- TRUE
   }
 
-  ## Drop captured and signalled conditions to save memory?
+  ## Drop captured and signaled conditions to save memory?
   if (isTRUE(attr(future[["conditions"]], "drop"))) {
     conditions <- conditions[!signaled]
   }

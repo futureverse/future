@@ -120,7 +120,7 @@ reverse-dependency checks, **future.tests** checks, and more.
    `FutureInterruptError`. Not all backends manage to catch
    interrupts, leading to the parallel R workers to terminate,
    resulting in a regular `FutureError`. Previously, interrupts would
-   result in un-determistic behavior and errors depending of future
+   result in non-deterministic behavior and errors depending of future
    backend.
 
  * Timeout errors triggered by `setTimeLimit()` was likely to render

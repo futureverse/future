@@ -113,7 +113,7 @@ Note that As-Is `I(.)` specification for the inner layer, i.e. `workers = I(4)`.
 > a
 Error in checkNumberOfLocalWorkers(workers) : 
   Attempting to set up 4 localhost parallel workers with only 1 CPU
-cores available for this R process (per ‘mc.cores’), which could
+cores available for this R process (per 'mc.cores'), which could
 result in a 400% load. The hard limit is set to 300%. Overusing the
 CPUs has negative impact on the current R process, but also on all
 other processes of yours and others running on the same machine. See

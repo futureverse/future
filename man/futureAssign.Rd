@@ -182,7 +182,7 @@ e.g. \code{x \%<-\% { a + b }}.
 \section{Adjust future arguments of a future assignment}{
 
 
-\code{\link[=future]{future()}} and \code{\link[=futureAssign]{futureAssign()}} take serveral arguments that can be used
+\code{\link[=future]{future()}} and \code{\link[=futureAssign]{futureAssign()}} take several arguments that can be used
 to explicitly specify what global variables and packages the future should
 use. They can also be used to override default behaviors of the future,
 e.g. whether output should be relayed or not. When using a future
@@ -193,7 +193,7 @@ a several examples.
 
 To explicitly specify variables and functions that a future assignment
 should use, use \verb{\%globals\%}. To explicitly specify which packages need
-to be attacheed for the evaluate to success, use \verb{\%packages\%}. For
+to be attached for the evaluate to success, use \verb{\%packages\%}. For
 example,
 
 \if{html}{\out{<div class="sourceCode">}}\preformatted{> x <- rnorm(1000)

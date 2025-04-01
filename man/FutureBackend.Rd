@@ -19,10 +19,11 @@
 \usage{
 ClusterFutureBackend(
   workers = availableWorkers(),
-  persistent = FALSE,
   gc = TRUE,
   earlySignal = TRUE,
   interrupts = FALSE,
+  passthrough = FALSE,
+  persistent = FALSE,
   ...
 )
 
@@ -59,8 +60,6 @@ SequentialFutureBackend(..., maxSizeOfObjects = +Inf)
 \arguments{
 \item{workers}{...}
 
-\item{persistent}{(deprecated) ...}
-
 \item{gc}{Overrides the default behavior of whether futures should trigger
 garbage collection via \code{\link[=gc]{gc()}} on the parallel worker after the value has
 been collected from the worker.
@@ -78,6 +77,11 @@ delayed, for instance, until \code{\link[=value]{value()}} is called on the futu
 place on this backend, even if the backend supports it. This is useful
 when, for instance, it takes a long time to interrupt a future.}
 
+\item{passthrough}{If TRUE, futures are resolved on the next, nested
+future backend.}
+
+\item{persistent}{(deprecated) ...}
+
 \item{maxSizeOfObjects}{The maximum allowed total size, in bytes, of all
 objects to and from the parallel worker allows.
 This can help to protect against unexpectedly large data transfers between
@@ -88,9 +92,6 @@ remotely at your university or company, then you might want to use this
 protection to avoid transferring giga- or terabytes of data without noticing.
 (Default: \eqn{500 \cdot 1024^2} bytes = 500 MiB, unless overridden by a
 FutureBackend subclass, or by R option \link{future.globals.maxSize} (sic!))}
-
-\item{passthrough}{If TRUE, futures are resolved on the next, nested
-future backend.}
 
 \item{backend}{a \link{FutureBackend}.}
 

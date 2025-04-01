@@ -46,7 +46,7 @@
 #'
 #' @section Adjust future arguments of a future assignment:
 #'
-#' [future()] and [futureAssign()] take serveral arguments that can be used
+#' [future()] and [futureAssign()] take several arguments that can be used
 #' to explicitly specify what global variables and packages the future should
 #' use. They can also be used to override default behaviors of the future,
 #' e.g. whether output should be relayed or not. When using a future
@@ -58,7 +58,7 @@
 #'
 #' To explicitly specify variables and functions that a future assignment
 #' should use, use `%globals%`. To explicitly specify which packages need
-#' to be attacheed for the evaluate to success, use `%packages%`. For
+#' to be attached for the evaluate to success, use `%packages%`. For
 #' example,
 #'
 #' ```

@@ -87,7 +87,7 @@ print.FutureBackend <- function(x, ...) {
 
   ## Settings
   s <- c(s, sprintf("Automatic garbage collection: %s", backend[["gc"]]))
-  s <- c(s, sprintf("Early signalling: %s", backend[["earlySignal"]]))
+  s <- c(s, sprintf("Early signaling: %s", backend[["earlySignal"]]))
   s <- c(s, sprintf("Interrupts are enabled: %s", backend[["interrupts"]]))
   max <- backend[["maxSizeOfObjects"]]
   max <- rep(max, length.out = 2L)
