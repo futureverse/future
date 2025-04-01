@@ -33,6 +33,12 @@ MultisessionFutureBackend <- function(workers = availableCores(), interrupts = T
 }
 
 
+#' @export
+print.MultisessionFutureBackend <- function(x, validate = TRUE, ...) {
+  backend <- NextMethod(validate = validate)
+}
+
+
 #' Create a multisession future whose value will be resolved asynchronously in a parallel \R session
 #'
 #' A multisession future is a future that uses multisession evaluation,
