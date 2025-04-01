@@ -17,7 +17,7 @@ parallel in another process."><meta property="og:image" content="https://future.
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.34.0-9357</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.34.0-9366</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -89,10 +89,11 @@ parallel in another process</em>.</p>
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">cluster</span><span class="op">(</span></span>
 <span>  <span class="va">...</span>,</span>
-<span>  persistent <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  workers <span class="op">=</span> <span class="fu"><a href="re-exports.html">availableWorkers</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  gc <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  earlySignal <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  passthrough <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  persistent <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  envir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sys.parent.html" class="external-link">parent.frame</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -101,12 +102,7 @@ parallel in another process</em>.</p>
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
 
 
-<dl><dt id="arg-persistent">persistent<a class="anchor" aria-label="anchor" href="#arg-persistent"></a></dt>
-<dd><p>If FALSE, the evaluation environment is cleared
-from objects prior to the evaluation of the future.</p></dd>
-
-
-<dt id="arg-workers">workers<a class="anchor" aria-label="anchor" href="#arg-workers"></a></dt>
+<dl><dt id="arg-workers">workers<a class="anchor" aria-label="anchor" href="#arg-workers"></a></dt>
 <dd><p>A <code><a href="https://rdrr.io/r/parallel/makeCluster.html" class="external-link">cluster</a></code> object,
 a character vector of host names, a positive numeric scalar,
 or a function.
@@ -129,6 +125,16 @@ frequently) or FALSE (less frequently).
 <dt id="arg-earlysignal">earlySignal<a class="anchor" aria-label="anchor" href="#arg-earlysignal"></a></dt>
 <dd><p>Specified whether conditions should be signaled as soon
 as possible or not.</p></dd>
+
+
+<dt id="arg-passthrough">passthrough<a class="anchor" aria-label="anchor" href="#arg-passthrough"></a></dt>
+<dd><p>If TRUE, futures are resolved on the next, nested
+future backend.</p></dd>
+
+
+<dt id="arg-persistent">persistent<a class="anchor" aria-label="anchor" href="#arg-persistent"></a></dt>
+<dd><p>If FALSE, the evaluation environment is cleared
+from objects prior to the evaluation of the future.</p></dd>
 
 
 <dt id="arg-envir">envir<a class="anchor" aria-label="anchor" href="#arg-envir"></a></dt>
