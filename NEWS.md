@@ -22,9 +22,15 @@ reverse-dependency checks, **future.tests** checks, and more.
 
  * Add `interrupt()`, which interrupts a future, if the parallel
    backend supports it, otherwise it is silently ignored. It can also
-   be used on a container (i.e. lists, `listenv`:s and environment)
-   of futures.
- 
+   be used on a container (i.e. lists, `listenv`:s and environment) of
+   futures. Interrupts are enabled by default for `multicore` and
+   `multisession` futures. Interrupts are disabled by default for
+   `cluster` futures, because there parallel workers may be running on
+   remote machines where the overhead of interrupting such workers
+   might be too large. To override the defaults, specify `plan()`
+   argument `interrupts`, e.g. `plan(cluster, workers = hosts,
+   interrupts = TRUE)`.
+   
  * Add `reset()`, which resets a future that has completed, failed, or
    been interrupted. The future is reset back to a lazy, vanilla
    future that can be relaunched.
@@ -67,6 +73,11 @@ reverse-dependency checks, **future.tests** checks, and more.
  
  * Failures to launch a future is now detected, handled, and relayed
    as an error with details on why it failed.
+   
+ * Failed workers are automatically detected and relaunched, if
+   supported by the parallel backend. For instance, if a `cluster`
+   workers is interrupted, or crashes for other reasons, it will be
+   relaunched. This works for both local and remote workers.
 
  * A future must close any connections or graphical devices it opens,
    and must never close ones that it did not open. Now `value()`

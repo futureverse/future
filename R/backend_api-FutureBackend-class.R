@@ -27,7 +27,8 @@
 #'  FutureBackend subclass, or by R option [future.globals.maxSize] (sic!))
 #'
 #' @param interrupts If FALSE, attempts to interrupt futures will not take
-#' place on this backend, even if the backend supports it.
+#' place on this backend, even if the backend supports it. This is useful
+#' when, for instance, it takes a long time to interrupt a future.
 #'
 #' @return
 #' `FutureBackend()` returns a FutureBackend object, which inherits an

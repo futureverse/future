@@ -22,7 +22,7 @@ ClusterFutureBackend(
   persistent = FALSE,
   gc = TRUE,
   earlySignal = TRUE,
-  interrupts = TRUE,
+  interrupts = FALSE,
   ...
 )
 
@@ -51,7 +51,7 @@ MulticoreFutureBackend(
   ...
 )
 
-MultisessionFutureBackend(workers = availableCores(), ...)
+MultisessionFutureBackend(workers = availableCores(), interrupts = TRUE, ...)
 
 SequentialFutureBackend(..., maxSizeOfObjects = +Inf)
 }
@@ -74,7 +74,8 @@ delayed, for instance, until \code{\link[=value]{value()}} is called on the futu
 (Default: \code{FALSE})}
 
 \item{interrupts}{If FALSE, attempts to interrupt futures will not take
-place on this backend, even if the backend supports it.}
+place on this backend, even if the backend supports it. This is useful
+when, for instance, it takes a long time to interrupt a future.}
 
 \item{maxSizeOfObjects}{The maximum allowed total size, in bytes, of all
 objects to and from the parallel worker allows.

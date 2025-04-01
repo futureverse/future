@@ -9,7 +9,7 @@
 #' @keywords internal
 #' @rdname FutureBackend
 #' @export
-MultisessionFutureBackend <- function(workers = availableCores(), assertAlive = TRUE, ...) {
+MultisessionFutureBackend <- function(workers = availableCores(), interrupts = TRUE, ...) {
   default_workers <- missing(workers)
   if (is.function(workers)) workers <- workers()
   stop_if_not(is.numeric(workers))
@@ -26,7 +26,7 @@ MultisessionFutureBackend <- function(workers = availableCores(), assertAlive = 
     return(SequentialFutureBackend(...))
   }
 
-  core <- ClusterFutureBackend(workers = workers, assertAlive = assertAlive, ...)
+  core <- ClusterFutureBackend(workers = workers, interrupts = interrupts, ...)
   core[["futureClasses"]] <- c("MultisessionFuture", core[["futureClasses"]])
   core <- structure(core, class = c("MultisessionFutureBackend", class(core)))
   core
