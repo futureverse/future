@@ -5,7 +5,7 @@ possible due to a multi-year effort of internal re-designs, work with
 package maintainers, release, and repeat. This release comes with a
 large redesign of how future backends are implemented internally. One
 goal is to lower the threshold for implementing exciting, new
-features, that has been old hold for too long. Some of these features
+features, that has been on hold for too long. Some of these features
 are available already in this release, and more are to come in
 near-future releases. Another goal is to make it straightforward to
 implement a new backend.
