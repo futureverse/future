@@ -54,34 +54,66 @@
 
     stop_if_not(is.list(stack), is.list(other))
 
-    ## Ignore some attributes when comparing stacks
-    ignore <- c("call", "init", "backend")
-    stack <- lapply(stack, FUN = function(s) {
-      for (name in ignore) attr(s, name) <- NULL
-      s
-    })
-    other <- lapply(other, FUN = function(s) {
-      for (name in ignore) attr(s, name) <- NULL
-      s
-    })
+    if (length(stack) != length(other)) {
+      if (debug) mdebug("Different lengths")
+      return(FALSE)
+    }
+
+    if (!identical(names(stack), names(other))) {
+      if (debug) mdebug("Different names")
+      return(FALSE)
+    }
 
     if (debug) {
-      mdebug("New stack (pruned):")
+      mdebug("New stack:")
       mstr(stack)
-      mdebug("Old stack (pruned):")
+      mdebug("Old stack:")
       mstr(other)
     }
 
     if (identical(stack, other)) {
       if (debug) mdebug("Identical")
       return(TRUE)
-    } else if (isTRUE(all.equal(stack, other))) {
-      if (debug) mdebug("Equal")
-      return(TRUE)
     } else {
-      if (debug) mdebug("Different")
+      if (debug) mdebug("Not identical")
     }
-    FALSE
+
+    ## WORKAROUND: all.equal() can result in 'Error: C stack usage ...
+    ## is too close to the limit'. Don't know why. /HB 2025-04-02
+    for (kk in seq_along(stack)) {
+      stack_kk <- stack[[kk]]
+      other_kk <- other[[kk]]
+      
+      ## Compare formals
+      if (!isTRUE(all.equal(formals(stack_kk), formals(other_kk)))) {
+        if (debug) mdebugf("Formals differ at level %d", kk)
+        return(FALSE)
+      }
+      
+      ## Compare attributes
+      stack_attrs_kk <- attributes(stack_kk)
+      other_attrs_kk <- attributes(other_kk)
+      
+      ## Ignore some attributes when comparing stacks
+      ignore <- c("call", "init", "backend", "srcref")
+      stack_names_kk <- setdiff(names(stack_attrs_kk), ignore)
+      other_names_kk <- setdiff(names(other_attrs_kk), ignore)
+
+      ## Same attribute names?
+      if (!identical(stack_names_kk, other_names_kk)) {
+        if (debug) mdebugf("Attribute names differ at level %d", kk)
+        return(FALSE)
+      }
+
+      ## Same attribute values?
+      stack_attrs_kk <- stack_attrs_kk[stack_names_kk]
+      other_attrs_kk <- other_attrs_kk[other_names_kk]
+      if (!isTRUE(all.equal(stack_attrs_kk, other_attrs_kk))) {
+        if (debug) mdebugf("Attribute values differ at level %d", kk)
+        return(FALSE)
+      }
+    }
+    TRUE
   }
 
 
