@@ -16,10 +16,11 @@ Run `revdepcheck::revdep_details(, "aifeducation")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  5.7Mb
+      installed size is  6.1Mb
       sub-directories of 1Mb or more:
-        R      1.2Mb
+        R      1.5Mb
         data   1.6Mb
+        help   1.0Mb
         libs   1.5Mb
     ```
 
@@ -133,8 +134,9 @@ Run `revdepcheck::revdep_details(, "apsimx")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  7.0Mb
+      installed size is  7.2Mb
       sub-directories of 1Mb or more:
+        R         1.0Mb
         extdata   5.4Mb
     ```
 
@@ -256,7 +258,7 @@ Run `revdepcheck::revdep_details(, "batchtools")` for more info
 
 *   checking dependencies in R code ... NOTE
     ```
-    [c4-n43:2669798] OPAL ERROR: Not initialized in file ext2x_client.c at line 112
+    [c4-n43:4169043] OPAL ERROR: Not initialized in file ext2x_client.c at line 112
     --------------------------------------------------------------------------
     The application appears to have been direct launched using "srun",
     but OMPI was not built with SLURM's PMI support and therefore cannot
@@ -491,7 +493,7 @@ Run `revdepcheck::revdep_details(, "bsitar")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  7.9Mb
+      installed size is  8.0Mb
       sub-directories of 1Mb or more:
         R      1.5Mb
         data   5.3Mb
@@ -526,10 +528,10 @@ Run `revdepcheck::revdep_details(, "bslib")` for more info
 
 <details>
 
-* Version: 0.2.1
+* Version: 0.2.2
 * GitHub: https://github.com/XiaoZhangryy/CAESAR.Suite
 * Source code: https://github.com/cran/CAESAR.Suite
-* Date/Publication: 2025-03-25 12:30:02 UTC
+* Date/Publication: 2025-04-01 09:00:07 UTC
 * Number of recursive dependencies: 255
 
 Run `revdepcheck::revdep_details(, "CAESAR.Suite")` for more info
@@ -943,6 +945,37 @@ Run `revdepcheck::revdep_details(, "dar")` for more info
         doc   4.4Mb
     ```
 
+# delimtools
+
+<details>
+
+* Version: 0.2.0
+* GitHub: https://github.com/legalLab/delimtools
+* Source code: https://github.com/cran/delimtools
+* Date/Publication: 2025-03-31 18:00:02 UTC
+* Number of recursive dependencies: 96
+
+Run `revdepcheck::revdep_details(, "delimtools")` for more info
+
+</details>
+
+## In both
+
+*   checking package dependencies ... NOTE
+    ```
+    Packages suggested but not available for checking: 'bGMYC', 'splits'
+    ```
+
+*   checking Rd cross-references ... NOTE
+    ```
+    Packages unavailable to check Rd xrefs: ‘bGMYC’, ‘splits’
+    ```
+
+*   checking data for non-ASCII characters ... NOTE
+    ```
+      Note: found 222 marked UTF-8 strings
+    ```
+
 # deseats
 
 <details>
@@ -984,7 +1017,7 @@ Run `revdepcheck::revdep_details(, "dipsaus")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  6.6Mb
+      installed size is  6.7Mb
       sub-directories of 1Mb or more:
         R      1.0Mb
         libs   4.2Mb
@@ -1075,7 +1108,7 @@ Run `revdepcheck::revdep_details(, "distantia")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 10.0Mb
+      installed size is  9.9Mb
       sub-directories of 1Mb or more:
         help   1.0Mb
         libs   7.8Mb
@@ -1109,7 +1142,7 @@ Run `revdepcheck::revdep_details(, "DT")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  6.4Mb
+      installed size is  6.5Mb
       sub-directories of 1Mb or more:
         htmlwidgets   5.6Mb
     ```
@@ -1166,30 +1199,6 @@ Run `revdepcheck::revdep_details(, "envi")` for more info
     See ‘/c4/home/henrik/futureverse/future/revdep/checks/envi/new/envi.Rcheck/00install.out’ for details.
     ```
 
-# epe4md
-
-<details>
-
-* Version: 0.1.4
-* GitHub: NA
-* Source code: https://github.com/cran/epe4md
-* Date/Publication: 2023-07-05 14:23:07 UTC
-* Number of recursive dependencies: 140
-
-Run `revdepcheck::revdep_details(, "epe4md")` for more info
-
-</details>
-
-## Newly broken
-
-*   checking installed package size ... NOTE
-    ```
-      installed size is  5.4Mb
-      sub-directories of 1Mb or more:
-        dados_premissas   3.5Mb
-        metodologia       1.5Mb
-    ```
-
 # EpiNow2
 
 <details>
@@ -1213,10 +1222,10 @@ Run `revdepcheck::revdep_details(, "EpiNow2")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 271.1Mb
+      installed size is 265.0Mb
       sub-directories of 1Mb or more:
         doc     1.5Mb
-        libs  267.2Mb
+        libs  261.1Mb
     ```
 
 *   checking Rd cross-references ... NOTE
@@ -1242,6 +1251,16 @@ Run `revdepcheck::revdep_details(, "EpiNow2")` for more info
 Run `revdepcheck::revdep_details(, "epitweetr")` for more info
 
 </details>
+
+## Newly fixed
+
+*   checking installed package size ... NOTE
+    ```
+      installed size is  5.0Mb
+      sub-directories of 1Mb or more:
+        doc    2.6Mb
+        java   1.5Mb
+    ```
 
 ## In both
 
@@ -1529,47 +1548,6 @@ Run `revdepcheck::revdep_details(, "forecastML")` for more info
     ```
     Namespace in Imports field not imported from: ‘dtplyr’
       All declared Imports should be used.
-    ```
-
-# future.tests
-
-<details>
-
-* Version: 0.7.0
-* GitHub: https://github.com/HenrikBengtsson/future.tests
-* Source code: https://github.com/cran/future.tests
-* Date/Publication: 2023-05-22 05:30:19 UTC
-* Number of recursive dependencies: 15
-
-Run `revdepcheck::revdep_details(, "future.tests")` for more info
-
-</details>
-
-## Newly broken
-
-*   checking tests ...
-    ```
-      Running ‘Test-class.R’
-      Running ‘check.R’
-      Running ‘cli_fcn.R’
-      Running ‘db_state.R’
-      Running ‘evaluate_expr,ff.R’
-      Running ‘evaluate_expr.R’
-      Running ‘one-test.R’
-      Running ‘progress.R’
-      Running ‘test_db.R’
-      Running ‘test_plans.R’
-    ...
-      plan(multisession, workers = 2L)
-      
-      > stopifnot(length(test_plans) == 4L)
-      > 
-      > res <- along_test_plans({ 42L })
-      Evaluating expression under future plan #1 of 4 ...
-      Error in eval(strategy, envir = parent.frame(), enclos = baseenv()) : 
-        object 'constant' not found
-      Calls: along_test_plans -> eval -> eval -> plan -> eval -> eval
-      Execution halted
     ```
 
 # GeDS
@@ -1875,7 +1853,7 @@ Run `revdepcheck::revdep_details(, "gtfs2gps")` for more info
        8.           └─terra:::messages(x)
        9.             └─terra:::error(f, x@pntr$getError())
       
-      [ FAIL 1 | WARN 0 | SKIP 0 | PASS 119 ]
+      [ FAIL 1 | WARN 28 | SKIP 0 | PASS 119 ]
       Error: Test failures
       Execution halted
     ```
@@ -2011,7 +1989,7 @@ Run `revdepcheck::revdep_details(, "hero")` for more info
 
 *   checking dependencies in R code ... NOTE
     ```
-    [c4-n43:589861] OPAL ERROR: Not initialized in file ext2x_client.c at line 112
+    [c4-n43:1856956] OPAL ERROR: Not initialized in file ext2x_client.c at line 112
     --------------------------------------------------------------------------
     The application appears to have been direct launched using "srun",
     but OMPI was not built with SLURM's PMI support and therefore cannot
@@ -2082,7 +2060,7 @@ Run `revdepcheck::revdep_details(, "httpgd")` for more info
 
 *   checking tests ...
     ```
-      Running ‘testthat.R’/software/c4/cbi/software/_rocky8/R-4.4.3-gcc13/lib64/R/bin/BATCH: line 60: 3017487 Aborted                 (core dumped) ${R_HOME}/bin/R -f ${in} ${opts} ${R_BATCH_OPTIONS} > ${out} 2>&1
+      Running ‘testthat.R’/software/c4/cbi/software/_rocky8/R-4.4.3-gcc13/lib64/R/bin/BATCH: line 60: 1893759 Aborted                 (core dumped) ${R_HOME}/bin/R -f ${in} ${opts} ${R_BATCH_OPTIONS} > ${out} 2>&1
     
      ERROR
     Running the tests in ‘tests/testthat.R’ failed.
@@ -2456,9 +2434,9 @@ Run `revdepcheck::revdep_details(, "ldsr")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  5.5Mb
+      installed size is  6.0Mb
       sub-directories of 1Mb or more:
-        libs   4.9Mb
+        libs   5.5Mb
     ```
 
 # lidR
@@ -2479,7 +2457,7 @@ Run `revdepcheck::revdep_details(, "lidR")` for more info
 
 *   checking tests ...
     ```
-      Running ‘testthat.R’/software/c4/cbi/software/_rocky8/R-4.4.3-gcc13/lib64/R/bin/BATCH: line 60: 3784479 Aborted                 (core dumped) ${R_HOME}/bin/R -f ${in} ${opts} ${R_BATCH_OPTIONS} > ${out} 2>&1
+      Running ‘testthat.R’/software/c4/cbi/software/_rocky8/R-4.4.3-gcc13/lib64/R/bin/BATCH: line 60: 2840573 Aborted                 (core dumped) ${R_HOME}/bin/R -f ${in} ${opts} ${R_BATCH_OPTIONS} > ${out} 2>&1
     
      ERROR
     Running the tests in ‘tests/testthat.R’ failed.
@@ -2674,6 +2652,56 @@ Run `revdepcheck::revdep_details(, "MineICA")` for more info
 
 ## In both
 
+*   checking examples ... ERROR
+    ```
+    Running examples in ‘MineICA-Ex.R’ failed
+    The error most likely occurred in:
+    
+    > ### Name: IcaSet
+    > ### Title: Class to Contain and Describe an ICA decomposition of
+    > ###   High-Throughput Data.
+    > ### Aliases: class:IcaSet IcaSet IcaSet-class [ [,ANY,ANY,IcaSet-method
+    > ###   [,IcaSet,ANY-method [,IcaSet,ANY,ANY-method
+    > ###   [,IcaSet,ANY,ANY,ANY-method [<- [<-,IcaSet,ANY,ANY,ANY,ANY-method
+    > ###   [<-,IcaSet,ANY,ANY,ANY-method [<-,IcaSet,ANY,ANY-method organism
+    ...
+    > ###   Slist,IcaSet-method SlistByGene,IcaSet-method Alist,IcaSet-method
+    > ### Keywords: classes
+    > 
+    > ### ** Examples
+    > 
+    > # create an instance of IcaSet
+    > new("IcaSet")
+    Error: Your query has been redirected to http://status.ensembl.org indicating this Ensembl service is currently unavailable.
+    Look at ?useEnsembl for details on how to try a mirror site.
+    Execution halted
+    ```
+
+*   checking re-building of vignette outputs ... ERROR
+    ```
+    Error(s) in re-building vignettes:
+    --- re-building ‘MineICA.Rnw’ using Sweave
+    Loading required package: BiocGenerics
+    
+    Attaching package: ‘BiocGenerics’
+    
+    The following objects are masked from ‘package:stats’:
+    
+        IQR, mad, sd, var, xtabs
+    
+    ...
+    Error : Your query has been redirected to http://status.ensembl.org indicating this Ensembl service is currently unavailable.
+    Look at ?useEnsembl for details on how to try a mirror site.
+    
+    --- failed re-building ‘MineICA.Rnw’
+    
+    SUMMARY: processing the following file failed:
+      ‘MineICA.Rnw’
+    
+    Error: Vignette re-building failed.
+    Execution halted
+    ```
+
 *   checking dependencies in R code ... WARNING
     ```
     Namespace in Imports field not imported from: ‘lumiHumanAll.db’
@@ -2688,9 +2716,11 @@ Run `revdepcheck::revdep_details(, "MineICA")` for more info
     Missing or unexported object: ‘GOstats::geneIdsByCategory’
     ':::' calls which should be '::':
       ‘Biobase:::annotation<-’ ‘Biobase:::validMsg’ ‘fpc:::pamk’
-      ‘lumi:::getChipInfo’ ‘mclust:::adjustedRandIndex’
+      ‘mclust:::adjustedRandIndex’
       See the note in ?`:::` about the use of this operator.
     Unexported object imported by a ':::' call: ‘Biobase:::isValidVersion’
+      See the note in ?`:::` about the use of this operator.
+    Unavailable namespace imported from by a ':::' call: ‘lumi’
       See the note in ?`:::` about the use of this operator.
     ```
 
@@ -2722,31 +2752,6 @@ Run `revdepcheck::revdep_details(, "MineICA")` for more info
     should have documentation entries.
     See chapter ‘Writing R documentation files’ in the ‘Writing R
     Extensions’ manual.
-    ```
-
-*   checking re-building of vignette outputs ... WARNING
-    ```
-    Error(s) in re-building vignettes:
-    --- re-building ‘MineICA.Rnw’ using Sweave
-    Loading required package: BiocGenerics
-    
-    Attaching package: ‘BiocGenerics’
-    
-    The following objects are masked from ‘package:stats’:
-    
-        IQR, mad, sd, var, xtabs
-    
-    ...
-    l.23 \usepackage
-                    {subfig}^^M
-    !  ==> Fatal error occurred, no output PDF file produced!
-    --- failed re-building ‘MineICA.Rnw’
-    
-    SUMMARY: processing the following file failed:
-      ‘MineICA.Rnw’
-    
-    Error: Vignette re-building failed.
-    Execution halted
     ```
 
 *   checking package dependencies ... NOTE
@@ -2837,9 +2842,8 @@ Run `revdepcheck::revdep_details(, "missSBM")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 10.3Mb
+      installed size is 10.2Mb
       sub-directories of 1Mb or more:
-        R      1.0Mb
         libs   8.0Mb
     ```
 
@@ -2947,7 +2951,7 @@ Run `revdepcheck::revdep_details(, "modelsummary")` for more info
 
 </details>
 
-## Newly broken
+## In both
 
 *   checking installed package size ... NOTE
     ```
@@ -3080,29 +3084,6 @@ Run `revdepcheck::revdep_details(, "nebula")` for more info
       installed size is 35.4Mb
       sub-directories of 1Mb or more:
         libs  33.7Mb
-    ```
-
-# nestedcv
-
-<details>
-
-* Version: 0.8.0
-* GitHub: https://github.com/myles-lewis/nestedcv
-* Source code: https://github.com/cran/nestedcv
-* Date/Publication: 2025-03-10 17:40:02 UTC
-* Number of recursive dependencies: 178
-
-Run `revdepcheck::revdep_details(, "nestedcv")` for more info
-
-</details>
-
-## Newly broken
-
-*   checking installed package size ... NOTE
-    ```
-      installed size is  5.1Mb
-      sub-directories of 1Mb or more:
-        doc   4.6Mb
     ```
 
 # nflfastR
@@ -3240,58 +3221,6 @@ Run `revdepcheck::revdep_details(, "PAMpal")` for more info
 
 </details>
 
-## Newly fixed
-
-*   checking examples ... ERROR
-    ```
-    Running examples in ‘PAMpal-Ex.R’ failed
-    The error most likely occurred in:
-    
-    > ### Name: addGps
-    > ### Title: Add GPS Locations to an AcousticStudy
-    > ### Aliases: addGps addGps,data.frame-method addGps,AcousticEvent-method
-    > ###   addGps,list-method addGps,AcousticStudy-method addGps,ANY-method
-    > 
-    > ### ** Examples
-    > 
-    ...
-    > data(exStudy)
-    > # need to update database file to local directory
-    > db <- system.file('extdata', 'Example.sqlite3', package='PAMpal')
-    > exStudy <- updateFiles(exStudy, db=db, bin=NA, verbose=FALSE)
-    > exStudy <- addGps(exStudy)
-    No "gpsData" table found in database Example.sqlite3 
-    Error in menu(title = "Would you like to add gps data to this database?",  : 
-      menu() cannot be used non-interactively
-    Calls: addGps ... addGps -> rbindlist -> lapply -> FUN -> gpsFromDb -> menu
-    Execution halted
-    ```
-
-*   checking tests ...
-    ```
-      Running ‘testthat.R’
-     ERROR
-    Running the tests in ‘tests/testthat.R’ failed.
-    Last 50 lines of output:
-       1. └─PAMpal::processPgDetections(...) at test-processPps.R:18:5
-       2.   └─PAMpal::checkStudy(result)
-       3.     └─PAMpal::events(x)
-       4.       └─methods (local) `<fn>`(`<list>`, `<stndrdGn>`, `<env>`)
-      ── Error ('test-processPps.R:92:5'): Test process recording ────────────────────
-      Error: unable to find an inherited method for function 'detectors' for signature 'x = "NULL"'
-    ...
-      Backtrace:
-          ▆
-       1. └─PAMpal::processPgDetections(...) at test-workStudy.R:272:5
-       2.   └─PAMpal::checkStudy(result)
-       3.     └─PAMpal::events(x)
-       4.       └─methods (local) `<fn>`(`<list>`, `<stndrdGn>`, `<env>`)
-      
-      [ FAIL 6 | WARN 11 | SKIP 0 | PASS 134 ]
-      Error: Test failures
-      Execution halted
-    ```
-
 ## In both
 
 *   checking whether package ‘PAMpal’ can be installed ... WARNING
@@ -3309,7 +3238,7 @@ Run `revdepcheck::revdep_details(, "PAMpal")` for more info
 * GitHub: NA
 * Source code: https://github.com/cran/PAMscapes
 * Date/Publication: 2025-01-29 06:10:02 UTC
-* Number of recursive dependencies: 122
+* Number of recursive dependencies: 132
 
 Run `revdepcheck::revdep_details(, "PAMscapes")` for more info
 
@@ -3924,9 +3853,8 @@ Run `revdepcheck::revdep_details(, "RAINBOWR")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 43.3Mb
+      installed size is 42.9Mb
       sub-directories of 1Mb or more:
-        R      1.0Mb
         libs  41.5Mb
     ```
 
@@ -4176,11 +4104,11 @@ Run `revdepcheck::revdep_details(, "sctransform")` for more info
 
 <details>
 
-* Version: 0.6.0
+* Version: 0.7.0
 * GitHub: https://github.com/pbs-assess/sdmTMB
 * Source code: https://github.com/cran/sdmTMB
-* Date/Publication: 2024-05-30 00:00:02 UTC
-* Number of recursive dependencies: 150
+* Date/Publication: 2025-04-01 21:30:06 UTC
+* Number of recursive dependencies: 152
 
 Run `revdepcheck::revdep_details(, "sdmTMB")` for more info
 
@@ -4190,9 +4118,9 @@ Run `revdepcheck::revdep_details(, "sdmTMB")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 97.8Mb
+      installed size is 100.5Mb
       sub-directories of 1Mb or more:
-        libs  95.9Mb
+        libs  98.6Mb
     ```
 
 # sentopics
@@ -4213,7 +4141,7 @@ Run `revdepcheck::revdep_details(, "sentopics")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  8.3Mb
+      installed size is  8.4Mb
       sub-directories of 1Mb or more:
         data   1.2Mb
         libs   6.2Mb
@@ -4289,7 +4217,7 @@ Run `revdepcheck::revdep_details(, "SeuratObject")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  5.6Mb
+      installed size is  5.5Mb
       sub-directories of 1Mb or more:
         R      1.5Mb
         libs   3.2Mb
@@ -4373,11 +4301,10 @@ Run `revdepcheck::revdep_details(, "shiny")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 14.5Mb
+      installed size is 13.7Mb
       sub-directories of 1Mb or more:
-        R      2.0Mb
-        help   1.2Mb
-        www   10.4Mb
+        R     1.5Mb
+        www  10.4Mb
     ```
 
 # shiny.worker
@@ -4426,8 +4353,9 @@ Run `revdepcheck::revdep_details(, "sigminer")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  6.7Mb
+      installed size is  6.9Mb
       sub-directories of 1Mb or more:
+        R         1.0Mb
         extdata   1.0Mb
         help      1.7Mb
         libs      1.6Mb
@@ -4540,38 +4468,11 @@ Run `revdepcheck::revdep_details(, "SimDesign")` for more info
 
 </details>
 
-## Newly fixed
-
-*   checking re-building of vignette outputs ... ERROR
-    ```
-    Error(s) in re-building vignettes:
-    --- re-building ‘Catch_errors.Rmd’ using rmarkdown
-    --- finished re-building ‘Catch_errors.Rmd’
-    
-    --- re-building ‘Fixed_obj_fun.Rmd’ using rmarkdown
-    
-    Quitting from Fixed_obj_fun.Rmd:64-69 [unnamed-chunk-5]
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    <error/rlang_error>
-    Error in `serverSocket()`:
-    ...
-    --- finished re-building ‘Saving-results.Rmd’
-    
-    --- re-building ‘SimDesign-intro.Rmd’ using rmarkdown
-    --- finished re-building ‘SimDesign-intro.Rmd’
-    
-    SUMMARY: processing the following file failed:
-      ‘Fixed_obj_fun.Rmd’
-    
-    Error: Vignette re-building failed.
-    Execution halted
-    ```
-
 ## In both
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  7.4Mb
+      installed size is  7.5Mb
       sub-directories of 1Mb or more:
         doc   6.6Mb
     ```
@@ -4616,7 +4517,7 @@ Run `revdepcheck::revdep_details(, "skpr")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 59.7Mb
+      installed size is 59.6Mb
       sub-directories of 1Mb or more:
         libs  59.0Mb
     ```
@@ -4641,14 +4542,14 @@ Run `revdepcheck::revdep_details(, "SmCCNet")` for more info
     ```
     Error(s) in re-building vignettes:
     --- re-building ‘SmCCNet_Vignette_AutoSmCCNet.Rmd’ using rmarkdown
-    ! LaTeX Error: File `ucharcat.sty' not found.
-    
-    ! Emergency stop.
-    <read *> 
-    
-    Error: processing vignette 'SmCCNet_Vignette_AutoSmCCNet.Rmd' failed with diagnostics:
-    LaTeX failed to compile /c4/home/henrik/futureverse/future/revdep/checks/SmCCNet/new/SmCCNet.Rcheck/vign_test/SmCCNet/vignettes/SmCCNet_Vignette_AutoSmCCNet.tex. See https://yihui.org/tinytex/r/#debugging for debugging tips. See SmCCNet_Vignette_AutoSmCCNet.log for more info.
-    --- failed re-building ‘SmCCNet_Vignette_AutoSmCCNet.Rmd’
+    ! kpathsea: Running mktexfmt xelatex.fmt
+    ! mktexfmt: mktexfmt is using the following fmtutil.cnf files (in precedence order):
+    ! mktexfmt:   /usr/share/texlive/texmf-dist/web2c/fmtutil.cnf
+    ! mktexfmt: mktexfmt is using the following fmtutil.cnf file for writing changes:
+    ! mktexfmt:   /c4/home/henrik/.texlive2018/texmf-config/web2c/fmtutil.cnf
+    ! mktexfmt [WARNING]: double mention of mf/mf-nowin in /usr/share/texlive/texmf-dist/web2c/fmtutil.cnf
+    ! mktexfmt [WARNING]: double mention of tex/tex in /usr/share/texlive/texmf-dist/web2c/fmtutil.cnf
+    ! mktexfmt [INFO]: writing formats under /c4/home/henrik/.texlive2018/texmf-var/web2c
     ...
     Error: processing vignette 'SmCCNet_Vignette_SingleOmics.Rmd' failed with diagnostics:
     LaTeX failed to compile /c4/home/henrik/futureverse/future/revdep/checks/SmCCNet/new/SmCCNet.Rcheck/vign_test/SmCCNet/vignettes/SmCCNet_Vignette_SingleOmics.tex. See https://yihui.org/tinytex/r/#debugging for debugging tips. See SmCCNet_Vignette_SingleOmics.log for more info.
@@ -4762,10 +4663,9 @@ Run `revdepcheck::revdep_details(, "spaMM")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 55.0Mb
+      installed size is 54.4Mb
       sub-directories of 1Mb or more:
-        R      3.1Mb
-        help   1.0Mb
+        R      2.8Mb
         libs  50.2Mb
     ```
 
@@ -5000,10 +4900,10 @@ Run `revdepcheck::revdep_details(, "squat")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 20.0Mb
+      installed size is 19.9Mb
       sub-directories of 1Mb or more:
         data   1.1Mb
-        help   1.2Mb
+        help   1.1Mb
         libs  17.5Mb
     ```
 
@@ -5327,7 +5227,7 @@ Run `revdepcheck::revdep_details(, "tenm")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  6.0Mb
+      installed size is  5.9Mb
       sub-directories of 1Mb or more:
         extdata   5.0Mb
     ```
@@ -5371,9 +5271,9 @@ Run `revdepcheck::revdep_details(, "tglkmeans")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  5.8Mb
+      installed size is  5.3Mb
       sub-directories of 1Mb or more:
-        libs   5.5Mb
+        libs   5.0Mb
     ```
 
 *   checking dependencies in R code ... NOTE
@@ -5569,9 +5469,9 @@ Run `revdepcheck::revdep_details(, "tsdistributions")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 43.2Mb
+      installed size is 42.9Mb
       sub-directories of 1Mb or more:
-        libs  42.6Mb
+        libs  42.2Mb
     ```
 
 # tsgarch
@@ -5865,10 +5765,10 @@ Run `revdepcheck::revdep_details(, "wru")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  7.6Mb
+      installed size is  7.5Mb
       sub-directories of 1Mb or more:
         data   3.5Mb
-        help   2.0Mb
+        help   1.9Mb
         libs   1.9Mb
     ```
 
