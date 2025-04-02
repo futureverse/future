@@ -46,13 +46,41 @@
   })
 
 
-  equal_strategy_stacks <- function(stack, other) {
-    stop_if_not(is.list(stack), is.list(other))
-    stack <- lapply(stack, FUN = function(s) { attr(s, "call") <- attr(s, "init") <- NULL; s })
-    other <- lapply(other, FUN = function(s) { attr(s, "call") <- attr(s, "init") <- NULL; s })
+  equal_strategy_stacks <- function(stack, other, debug = FALSE) {
+    if (debug) {
+      mdebug_push("plan(): equal_strategy_stacks() ...")
+      on.exit(mdebug_pop("plan(): equal_strategy_stacks() ... done"))
+    }
 
-    if (identical(stack, other)) return(TRUE)
-    if (isTRUE(all.equal(stack, other))) return(TRUE)
+    stop_if_not(is.list(stack), is.list(other))
+
+    ## Ignore some attributes when comparing stacks
+    ignore <- c("call", "init", "backend")
+    stack <- lapply(stack, FUN = function(s) {
+      for (name in ignore) attr(s, name) <- NULL
+      s
+    })
+    other <- lapply(other, FUN = function(s) {
+      for (name in ignore) attr(s, name) <- NULL
+      s
+    })
+
+    if (debug) {
+      mdebug("New stack (pruned):")
+      mstr(stack)
+      mdebug("Old stack (pruned):")
+      mstr(other)
+    }
+
+    if (identical(stack, other)) {
+      if (debug) mdebug("Identical")
+      return(TRUE)
+    } else if (isTRUE(all.equal(stack, other))) {
+      if (debug) mdebug("Equal")
+      return(TRUE)
+    } else {
+      if (debug) mdebug("Different")
+    }
     FALSE
   }
 
@@ -311,7 +339,7 @@ plan <- local({
     class(newStack) <- unique(c("FutureStrategyList", class(newStack)))
 
     ## Skip if already set?
-    if (skip && equal_strategy_stacks(newStack, oldStack)) {
+    if (skip || equal_strategy_stacks(newStack, oldStack, debug = debug)) {
       if (debug) {
         mdebug("plan(): Skip setting new future strategy stack because it is the same as the current one:")
         mprint(newStack)
