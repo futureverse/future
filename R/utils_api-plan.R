@@ -425,6 +425,24 @@ plan <- local({
       if (debug) mdebugf("Getting default stack: %s", commaq(class(strategy)))
     } else if (identical(strategy, "list")) {
       if (debug) mdebugf("Getting full stack: [n=%d] %s", length(stack), commaq(sapply(stack, FUN = class)))
+      ## WORKAROUND: Was plan("list") called from future.tests::db_state()?
+      if ("future.tests" %in% loadedNamespaces() && packageVersion("future.tests") <= "0.8.0") {
+        calls <- sys.calls()
+        n <- length(calls)
+        patch <- FALSE
+        if (n > 2L && (calls[[n - 2L]][[1]] != "db_state")) {
+          patch <- TRUE
+        } else if (n > 1L && (calls[[n - 1L]][[1]] != "db_state")) {
+          patch <- TRUE
+        }
+        if (patch) {
+          ignore <- c("call", "init", "backend")
+          stack <- lapply(stack, FUN = function(s) {
+            for (name in ignore) attr(s, name) <- NULL
+            s
+          })
+        }
+      }
       ## List stack of future strategies?
       return(stack)
     } else if (identical(strategy, "tail")) {
