@@ -2,44 +2,85 @@
 #' @tags listenv
 #' @tags sequential cluster 
 
+library(future)
+
 options(future.debug=FALSE)
 message("*** plan() ...")
 
-cl <- future::makeClusterPSOCK(1L)
+cl <- parallelly::makeClusterPSOCK(1L)
 print(cl)
 
-message("*** Set strategy via future::plan(future::sequential)")
-oplan <- future::plan(future::sequential)
-print(future::plan())
-future::plan(oplan)
-print(future::plan())
+pid <- Sys.getpid()
+message("R session PID: ", pid)
 
-message("*** Set strategy via future::plan(future::cluster, workers = cl)")
-oplan <- future::plan(future::cluster, workers = cl)
-print(future::plan())
-future::plan(oplan)
-print(future::plan())
+message("*** Set strategy via plan(sequential)")
+oplan <- plan(sequential)
+print(plan())
+plan(oplan)
+print(plan())
+worker_pid <- value(future(Sys.getpid()))
+message("Worker PID: ", worker_pid)
+stopifnot(worker_pid == pid)
 
-message("*** Set strategy via future::plan(future::cluster(workers = cl)")
-oplan <- future::plan(future::cluster(workers = cl))
-print(future::plan())
-future::plan(oplan)
-print(future::plan())
+message("*** Set strategy via plan(cluster, workers = cl)")
+oplan <- plan(cluster, workers = cl)
+print(plan())
+worker_pid_1 <- value(future(Sys.getpid()))
+message("Worker PID: ", worker_pid_1)
+stopifnot(worker_pid_1 != pid)
+plan(oplan)
+print(plan())
 
-message("*** Set strategy via future::plan('sequential')")
-oplan <- future::plan("sequential")
-print(future::plan())
-future::plan(oplan)
-print(future::plan())
+message("*** Set strategy via plan(cluster(workers = cl)")
+oplan <- plan(future::cluster(workers = cl))
+print(plan())
+worker_pid_2 <- value(future(Sys.getpid()))
+message("Worker PID: ", worker_pid_2)
+stopifnot(
+  worker_pid_2 != pid,
+  worker_pid_2 == worker_pid_1  ## assert identical plan as before
+)
+
+plan(oplan)
+print(plan())
+
+message("*** Set strategy via plan('sequential')")
+oplan <- plan("sequential")
+print(plan())
+worker_pid <- value(future(Sys.getpid()))
+message("Worker PID: ", worker_pid)
+stopifnot(worker_pid == pid)
+ 
+plan(oplan)
+print(plan())
 
 message("*** plan('default')")
-oplan <- future::plan("default")
-print(future::plan())
-future::plan(oplan)
-print(future::plan())
+oplan <- plan("default")
+print(plan())
+plan(oplan)
+print(plan())
 
 
-library(future)
+message("*** Stability of plan(cluster, workers = n)")
+
+oplan <- plan(cluster, workers = I(1))
+print(plan())
+worker_pid_1 <- value(future(Sys.getpid()))
+message("Worker PID: ", worker_pid_1)
+stopifnot(worker_pid_1 != pid)
+
+oplan <- plan(cluster, workers = I(1))
+print(plan())
+worker_pid_2 <- value(future(Sys.getpid()))
+message("Worker PID: ", worker_pid_2)
+stopifnot(
+  worker_pid_2 != pid,
+  worker_pid_2 == worker_pid_1
+)
+
+plan(oplan)
+print(plan())
+
 
 message("*** plan('unknown strategy')")
 res <- try(plan('unknown strategy'), silent = TRUE)
@@ -253,7 +294,7 @@ plan(list("sequential", "sequential"))
 a %<-% { b %<-% 42; b }
 stopifnot(a == 42)
 
-plan(list("future::sequential", "sequential"))
+plan(list("sequential", "sequential"))
 a %<-% { b %<-% 42; b }
 stopifnot(a == 42)
 
@@ -291,7 +332,7 @@ stopifnot(
 
 message("*** plan() - odds'n'ends ... DONE")
 
-
 parallel::stopCluster(cl)
+plan(sequential)
 
 message("*** plan() ... DONE")
