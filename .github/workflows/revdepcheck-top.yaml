@@ -18,9 +18,11 @@ jobs:
         config:
           - { r: "release", pkg: "future.batchtools" }
           - { r: "release", pkg: "future.callr"      }
+          - { r: "release", pkg: "future.mirai"      }
           - { r: "release", pkg: "doFuture"          }
           - { r: "release", pkg: "future.apply"      }
           - { r: "release", pkg: "furrr"             }
+          - { r: "release", pkg: "future.tests"      }
           - { r: "release", pkg: "doFuture"          , plan: multisession, label: multisession }
           - { r: "release", pkg: "future.apply"      , plan: multisession, label: multisession }
           - { r: "release", pkg: "furrr"             , plan: multisession, label: multisession }
@@ -29,11 +31,8 @@ jobs:
 
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
-      RSPM: https://packagemanager.rstudio.com/cran/__linux__/jammy/latest
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
       ## R CMD check
-      _R_CHECK_LENGTH_1_CONDITION_: true
-      _R_CHECK_LENGTH_1_LOGIC2_: true
       _R_CHECK_MATRIX_DATA_: true
       _R_CHECK_CRAN_INCOMING_: false
       ## Specific to futures
