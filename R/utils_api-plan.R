@@ -468,11 +468,13 @@ plan <- local({
           patch <- TRUE
         }
         if (patch) {
-          ignore <- c("call", "init", "backend")
+          ignore <- c("init", "backend")
+          class <- class(stack)
           stack <- lapply(stack, FUN = function(s) {
             for (name in ignore) attr(s, name) <- NULL
             s
           })
+          class(stack) <- class
         }
       }
       ## List stack of future strategies?
