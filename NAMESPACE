@@ -3,6 +3,8 @@
 S3method("$<-",Future)
 S3method("[",FutureGlobals)
 S3method("[",sessionDetails)
+S3method(all,equal.FutureStrategyList)
+S3method(all,equal.future)
 S3method(as.FutureGlobals,FutureGlobals)
 S3method(as.FutureGlobals,Globals)
 S3method(as.FutureGlobals,list)

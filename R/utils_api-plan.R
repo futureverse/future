@@ -1,3 +1,82 @@
+#' @export
+all.equal.future <- function(target, current, ...) {
+  ## Compare formals
+  if (!isTRUE(all.equal(formals(target), formals(current)))) {
+    return("Formals differ")
+  }
+
+  ## Prune 'class' attribute
+  class(target) <- setdiff(class(target), "FutureStrategy")
+  class(current) <- setdiff(class(current), "FutureStrategy")
+
+  ## Compare attributes
+  target_attrs <- attributes(target)
+  current_attrs <- attributes(current)
+  
+  ## Ignore some attributes when comparing stacks
+  ignore <- c("call", "init", "backend", "srcref")
+  target_names <- setdiff(names(target_attrs), ignore)
+  current_names <- setdiff(names(current_attrs), ignore)
+
+  ## Same attribute names?
+  if (!identical(target_names, current_names)) {
+    return("Attribute names differ")
+  }
+
+  ## Same attribute values?
+  target_attrs <- target_attrs[target_names]
+  current_attrs <- current_attrs[current_names]
+  if (!isTRUE(all.equal(target_attrs, current_attrs))) {
+    return("Attribute values differ")
+  }
+
+  TRUE
+} ## all.equal() for 'future'
+
+
+#' @export
+all.equal.FutureStrategyList <- function(target, current, ..., debug = FALSE) {
+  if (debug) {
+    mdebug_push("plan(): all.equal() for FutureStrategyList ...")
+    on.exit(mdebug_pop("plan(): all.equal() for FutureStrategyList ... done"))
+  }
+
+  stop_if_not(is.list(target), is.list(current))
+
+  if (length(target) != length(current)) {
+    if (debug) mdebug("Different lengths")
+    return(FALSE)
+  }
+
+  if (!identical(names(target), names(current))) {
+    if (debug) mdebug("Different names")
+    return(FALSE)
+  }
+
+  if (debug) {
+    mdebug("New stack:")
+    mstr(target)
+    mdebug("Old stack:")
+    mstr(current)
+  }
+
+  if (identical(target, current)) {
+    if (debug) mdebug("Identical")
+    return(TRUE)
+  } else {
+    if (debug) mdebug("Not identical")
+  }
+
+  for (kk in seq_along(target)) {
+    if (!isTRUE(all.equal(target[[kk]], current[[kk]]))) {
+      return(sprintf("Future strategies differ at level %d", kk))
+    }
+  }
+  
+  TRUE
+} ## all.equal() for FutureStrategyList
+
+
   assert_no_disallowed_strategies <- function(stack) {
     noplans <- getOption("future.plan.disallow")
     if (length(noplans) == 0L) return()
@@ -44,77 +123,6 @@
       }
     }
   })
-
-
-  equal_strategy_stacks <- function(stack, other, debug = FALSE) {
-    if (debug) {
-      mdebug_push("plan(): equal_strategy_stacks() ...")
-      on.exit(mdebug_pop("plan(): equal_strategy_stacks() ... done"))
-    }
-
-    stop_if_not(is.list(stack), is.list(other))
-
-    if (length(stack) != length(other)) {
-      if (debug) mdebug("Different lengths")
-      return(FALSE)
-    }
-
-    if (!identical(names(stack), names(other))) {
-      if (debug) mdebug("Different names")
-      return(FALSE)
-    }
-
-    if (debug) {
-      mdebug("New stack:")
-      mstr(stack)
-      mdebug("Old stack:")
-      mstr(other)
-    }
-
-    if (identical(stack, other)) {
-      if (debug) mdebug("Identical")
-      return(TRUE)
-    } else {
-      if (debug) mdebug("Not identical")
-    }
-
-    ## WORKAROUND: all.equal() can result in 'Error: C stack usage ...
-    ## is too close to the limit'. Don't know why. /HB 2025-04-02
-    for (kk in seq_along(stack)) {
-      stack_kk <- stack[[kk]]
-      other_kk <- other[[kk]]
-      
-      ## Compare formals
-      if (!isTRUE(all.equal(formals(stack_kk), formals(other_kk)))) {
-        if (debug) mdebugf("Formals differ at level %d", kk)
-        return(FALSE)
-      }
-      
-      ## Compare attributes
-      stack_attrs_kk <- attributes(stack_kk)
-      other_attrs_kk <- attributes(other_kk)
-      
-      ## Ignore some attributes when comparing stacks
-      ignore <- c("call", "init", "backend", "srcref")
-      stack_names_kk <- setdiff(names(stack_attrs_kk), ignore)
-      other_names_kk <- setdiff(names(other_attrs_kk), ignore)
-
-      ## Same attribute names?
-      if (!identical(stack_names_kk, other_names_kk)) {
-        if (debug) mdebugf("Attribute names differ at level %d", kk)
-        return(FALSE)
-      }
-
-      ## Same attribute values?
-      stack_attrs_kk <- stack_attrs_kk[stack_names_kk]
-      other_attrs_kk <- other_attrs_kk[other_names_kk]
-      if (!isTRUE(all.equal(stack_attrs_kk, other_attrs_kk))) {
-        if (debug) mdebugf("Attribute values differ at level %d", kk)
-        return(FALSE)
-      }
-    }
-    TRUE
-  }
 
 
   plan_default_stack <- local({
@@ -371,7 +379,7 @@ plan <- local({
     class(newStack) <- unique(c("FutureStrategyList", class(newStack)))
 
     ## Skip if already set?
-    if (skip || equal_strategy_stacks(newStack, oldStack, debug = debug)) {
+    if (skip || isTRUE(all.equal(newStack, oldStack, debug = debug))) {
       if (debug) {
         mdebug("plan(): Skip setting new future strategy stack because it is the same as the current one:")
         mprint(newStack)
@@ -457,7 +465,8 @@ plan <- local({
       if (debug) mdebugf("Getting default stack: %s", commaq(class(strategy)))
     } else if (identical(strategy, "list")) {
       if (debug) mdebugf("Getting full stack: [n=%d] %s", length(stack), commaq(sapply(stack, FUN = class)))
-      ## WORKAROUND: Was plan("list") called from future.tests::db_state()?
+      
+      ## WORKAROUND 1: Was plan("list") called from future.tests::db_state()?
       if ("future.tests" %in% loadedNamespaces() && packageVersion("future.tests") <= "0.8.0") {
         calls <- sys.calls()
         n <- length(calls)
@@ -477,6 +486,7 @@ plan <- local({
           class(stack) <- class
         }
       }
+
       ## List stack of future strategies?
       return(stack)
     } else if (identical(strategy, "tail")) {
