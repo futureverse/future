@@ -22,7 +22,6 @@ ClusterFutureBackend(
   gc = TRUE,
   earlySignal = TRUE,
   interrupts = FALSE,
-  passthrough = FALSE,
   persistent = FALSE,
   ...
 )
@@ -77,9 +76,6 @@ delayed, for instance, until \code{\link[=value]{value()}} is called on the futu
 place on this backend, even if the backend supports it. This is useful
 when, for instance, it takes a long time to interrupt a future.}
 
-\item{passthrough}{If TRUE, futures are resolved on the next, nested
-future backend.}
-
 \item{persistent}{(deprecated) ...}
 
 \item{maxSizeOfObjects}{The maximum allowed total size, in bytes, of all
@@ -92,6 +88,9 @@ remotely at your university or company, then you might want to use this
 protection to avoid transferring giga- or terabytes of data without noticing.
 (Default: \eqn{500 \cdot 1024^2} bytes = 500 MiB, unless overridden by a
 FutureBackend subclass, or by R option \link{future.globals.maxSize} (sic!))}
+
+\item{passthrough}{If TRUE, futures are resolved on the next, nested
+future backend.}
 
 \item{backend}{a \link{FutureBackend}.}
 

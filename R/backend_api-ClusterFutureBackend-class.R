@@ -21,7 +21,7 @@ ClusterFutureBackend <- local({
   ## Most recent 'workers' set up
   last <- NULL
 
-  function(workers = availableWorkers(), gc = TRUE, earlySignal = TRUE, interrupts = FALSE, passthrough = FALSE, persistent = FALSE, ...) {
+  function(workers = availableWorkers(), gc = TRUE, earlySignal = TRUE, interrupts = FALSE, persistent = FALSE, ...) {
     debug <- isTRUE(getOption("future.debug"))
 
     if (debug) {
@@ -107,7 +107,6 @@ ClusterFutureBackend <- local({
       reg = reg,
       earlySignal = earlySignal,
       interrupts = interrupts,
-      passthrough = passthrough,
       persistent = persistent,
       future.wait.timeout = getOption("future.wait.timeout", 24 * 60 * 60),
       future.wait.interval = getOption("future.wait.interval", 0.01),
@@ -436,7 +435,15 @@ nbrOfFreeWorkers.ClusterFutureBackend <- function(evaluator, ...) {
   on.exit({
     if (!is.na(oenv)) Sys.setenv(R_FUTURE_PLAN = oenv)
   })
-  cl <- makeClusterPSOCK(workers, ...)
+  
+  args <- list(...)
+  
+  ## Ignore non-recognized arguments
+  keep <- intersect(names(args), makeClusterPSOCK_args())
+  args <- args[keep]
+
+  args <- c(list(workers), args)
+  cl <- do.call(makeClusterPSOCK, args = args, quote = TRUE)
   cl <- addCovrLibPath(cl)
   cl
 } ## .makeCluster()
@@ -1435,7 +1442,7 @@ handleInterruptedFuture <- local({
 #' @example incl/cluster.R
 #'
 #' @export
-cluster <- function(..., workers = availableWorkers(), gc = FALSE, earlySignal = FALSE, passthrough = FALSE, persistent = FALSE, envir = parent.frame()) {
+cluster <- function(..., workers = availableWorkers(), gc = FALSE, earlySignal = FALSE, persistent = FALSE, envir = parent.frame()) {
   ## WORKAROUNDS:
   ## (1) promises::future_promise() calls the "evaluator" function directly
   if ("promises" %in% loadedNamespaces()) {
@@ -1446,7 +1453,7 @@ cluster <- function(..., workers = availableWorkers(), gc = FALSE, earlySignal =
 }
 class(cluster) <- c("cluster", "multiprocess", "future", "function")
 attr(cluster, "init") <- TRUE
-attr(cluster, "tweakable") <- quote(c(makeClusterPSOCK_args(), "persistent", "passthrough"))
+attr(cluster, "tweakable") <- quote(c(makeClusterPSOCK_args(), "persistent", "passthrough", "maxSizeOfObjects"))
 attr(cluster, "factory") <- ClusterFutureBackend
 
 

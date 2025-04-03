@@ -9,7 +9,6 @@ cluster(
   workers = availableWorkers(),
   gc = FALSE,
   earlySignal = FALSE,
-  passthrough = FALSE,
   persistent = FALSE,
   envir = parent.frame()
 )
@@ -33,9 +32,6 @@ frequently) or FALSE (less frequently).
 
 \item{earlySignal}{Specified whether conditions should be signaled as soon
 as possible or not.}
-
-\item{passthrough}{If TRUE, futures are resolved on the next, nested
-future backend.}
 
 \item{persistent}{If FALSE, the evaluation environment is cleared
 from objects prior to the evaluation of the future.}

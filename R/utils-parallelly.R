@@ -1,3 +1,4 @@
+#' @importFrom parallelly makeClusterPSOCK makeNodePSOCK
 makeClusterPSOCK_args <- local({
   .args <- NULL
   

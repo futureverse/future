@@ -147,6 +147,7 @@ message("*** plan(cluster, ..., rscript_startup = \"<code>\")")
 plan(cluster, workers = 1L, rscript_startup = "options(abc = 42L)")
 f <- future(getOption("abc"))
 v <- value(f)
+print(v)
 stopifnot(identical(v, 42L))
 plan(sequential)
 
