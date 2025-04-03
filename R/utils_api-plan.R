@@ -476,10 +476,14 @@ plan <- local({
         } else if (n > 1L && (calls[[n - 1L]][[1]] != "db_state")) {
           patch <- TRUE
         }
+
         if (patch) {
           ignore <- c("init", "backend")
+          ## Prune 'class' attribute
           class <- class(stack)
           stack <- lapply(stack, FUN = function(s) {
+            ## Prune 'class' attribute
+            class(s) <- setdiff(class(s), "FutureStrategy")
             for (name in ignore) attr(s, name) <- NULL
             s
           })
