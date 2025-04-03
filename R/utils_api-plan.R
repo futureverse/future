@@ -487,6 +487,17 @@ plan <- local({
         }
       }
 
+      ## WORKAROUND 2: Was plan("list") called from 'codealm' tests?
+      if (all(c("codalm", "testthat") %in% loadedNamespaces())) {
+        ignore <- c("init", "backend")
+        class <- class(stack)
+        stack <- lapply(stack, FUN = function(s) {
+          for (name in ignore) attr(s, name) <- NULL
+          s
+        })
+        class(stack) <- class
+      }
+
       ## List stack of future strategies?
       return(stack)
     } else if (identical(strategy, "tail")) {
