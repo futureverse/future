@@ -14,6 +14,7 @@ SequentialFutureBackend <- function(..., maxSizeOfObjects = +Inf) {
   core <- structure(core, class = c("SequentialFutureBackend", class(core)))
   core
 }
+tweakable(SequentialFutureBackend) <- FutureBackend
 
 
 #' @export
@@ -167,3 +168,4 @@ sequential <- function(..., gc = FALSE, earlySignal = FALSE, envir = parent.fram
 }
 class(sequential) <- c("sequential", "uniprocess", "future", "function")
 attr(sequential, "factory") <- SequentialFutureBackend
+attr(sequential, "tweakable") <- tweakable(attr(sequential, "factory"))

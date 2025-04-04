@@ -154,19 +154,17 @@ MulticoreFutureBackend <- function(workers = availableCores(constraints = "multi
 
   reg <- sprintf("multicore-%s", session_uuid())
 
-  core <- FutureBackend(
+  core <- MultiprocessFutureBackend(
     workers = workers,
     reg = reg,
-    future.wait.timeout = getOption("future.wait.timeout", 24 * 60 * 60),
-    future.wait.interval = getOption("future.wait.interval", 0.01),
-    future.wait.alpha = getOption("future.wait.alpha", 1.01),
     ...,
     maxSizeOfObjects = maxSizeOfObjects
   )
-  core[["futureClasses"]] <- c("MulticoreFuture", "MultiprocessFuture", core[["futureClasses"]])
-  core <- structure(core, class = c("MulticoreFutureBackend", "MultiprocessFutureBackend", class(core)))
+  core[["futureClasses"]] <- c("MulticoreFuture", core[["futureClasses"]])
+  core <- structure(core, class = c("MulticoreFutureBackend", class(core)))
   core
 }
+tweakable(MulticoreFutureBackend) <- MultiprocessFutureBackend
 
 
 #' @export
@@ -195,9 +193,9 @@ launchFuture.MulticoreFutureBackend <- local({
     workers <- backend[["workers"]]
     reg <- backend[["reg"]]
   
-    timeout <- backend[["future.wait.timeout"]]
-    delta <- backend[["future.wait.interval"]]
-    alpha <- backend[["future.wait.alpha"]]
+    timeout <- backend[["wait.timeout"]]
+    delta <- backend[["wait.interval"]]
+    alpha <- backend[["wait.alpha"]]
   
     ## Get a free worker
     requestCore(await = function() {
@@ -659,3 +657,4 @@ multicore <- function(..., workers = availableCores(constraints = "multicore"), 
 }
 class(multicore) <- c("multicore", "multiprocess", "future", "function")
 attr(multicore, "factory") <- MulticoreFutureBackend
+attr(multicore, "tweakable") <- tweakable(attr(multicore, "factory"))

@@ -31,6 +31,7 @@ MultisessionFutureBackend <- function(workers = availableCores(), interrupts = T
   core <- structure(core, class = c("MultisessionFutureBackend", class(core)))
   core
 }
+tweakable(MultisessionFutureBackend) <- ClusterFutureBackend
 
 
 #' @export
@@ -116,5 +117,6 @@ multisession <- function(..., workers = availableCores(), lazy = FALSE, rscript_
 }
 class(multisession) <- c("multisession", "cluster", "multiprocess", "future", "function")
 attr(multisession, "init") <- TRUE
-attr(multisession, "untweakable") <- c("persistent")
 attr(multisession, "factory") <- MultisessionFutureBackend
+attr(multisession, "tweakable") <- tweakable(attr(multisession, "factory"))
+attr(multisession, "untweakable") <- c("persistent")

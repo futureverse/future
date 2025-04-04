@@ -1,3 +1,30 @@
+#' @inheritParams FutureBackend
+#'
+#' @param wait.timeout Number of seconds before timing out.
+#'
+#' @param wait.interval Baseline number of seconds between retries.
+#'
+#' @param wait.alpha Scale factor increasing waiting interval after each
+#' attempt.
+#'
+#' @keywords internal
+#' @rdname FutureBackend
+#'
+#' @export
+MultiprocessFutureBackend <- function(..., wait.timeout = getOption("future.wait.timeout", 24 * 60 * 60), wait.interval = getOption("future.wait.interval", 0.01), wait.alpha = getOption("future.wait.alpha", 1.01)) {
+  core <- FutureBackend(
+    ...,
+    wait.timeout = wait.timeout,
+    wait.interval = wait.interval,
+    wait.alpha = wait.alpha
+  )
+  core[["futureClasses"]] <- c("MultiprocessFuture", core[["futureClasses"]])
+  core <- structure(core, class = c("MultiprocessFutureBackend", class(core)))
+  core
+}
+tweakable(MultiprocessFutureBackend) <- FutureBackend
+
+
 #' @export
 launchFuture.MultiprocessFutureBackend <- function(backend, future, ...) {
   stopf("launchFuture() is not implemented for this type of future backend (please contacts the maintainer of that backend): %s", commaq(class(backend)))

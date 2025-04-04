@@ -69,6 +69,7 @@ FutureBackend <- function(..., earlySignal = FALSE, gc = FALSE, maxSizeOfObjects
   core <- structure(core, class = c("FutureBackend", class(core)))
   core
 }
+attr(FutureBackend, "tweakable") <- setdiff(names(formals(FutureBackend)), "...")
 
 
 #' @importFrom parallelly availableCores

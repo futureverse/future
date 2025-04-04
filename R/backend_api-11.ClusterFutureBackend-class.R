@@ -102,23 +102,20 @@ ClusterFutureBackend <- local({
     ## Name of the FutureRegistry
     reg <- sprintf("workers-%s", name)
   
-    core <- FutureBackend(
+    core <- MultiprocessFutureBackend(
       workers = workers,
       reg = reg,
       earlySignal = earlySignal,
       interrupts = interrupts,
       persistent = persistent,
-      future.wait.timeout = getOption("future.wait.timeout", 24 * 60 * 60),
-      future.wait.interval = getOption("future.wait.interval", 0.01),
-      future.wait.alpha = getOption("future.wait.alpha", 1.01),
       ...
     )
     core[["futureClasses"]] <- c("ClusterFuture", core[["futureClasses"]])
-    core <- structure(core, class = c("ClusterFutureBackend", "MultiprocessFutureBackend", class(core)))
+    core <- structure(core, class = c("ClusterFutureBackend", class(core)))
     core
   }
 })
-
+tweakable(ClusterFutureBackend) <- list(MultiprocessFutureBackend, makeClusterPSOCK_args())
 
 #' @importFrom utils capture.output
 #' @export
@@ -203,9 +200,9 @@ launchFuture.ClusterFutureBackend <- function(backend, future, ...) {
   ## (1) Get a free worker. This will block until one is available
   if (debug) mdebug_push("requestWorker() ...")
 
-  timeout <- backend[["future.wait.timeout"]]
-  delta <- backend[["future.wait.interval"]]
-  alpha <- backend[["future.wait.alpha"]]
+  timeout <- backend[["wait.timeout"]]
+  delta <- backend[["wait.interval"]]
+  alpha <- backend[["wait.alpha"]]
 
   ## Get the index of a free cluster node, which has been validated to
   ## be functional. If the existing worker was found to be non-functional,
@@ -1453,10 +1450,8 @@ cluster <- function(..., workers = availableWorkers(), gc = FALSE, earlySignal =
 }
 class(cluster) <- c("cluster", "multiprocess", "future", "function")
 attr(cluster, "init") <- TRUE
-attr(cluster, "tweakable") <- quote(c(makeClusterPSOCK_args(), "persistent", "passthrough", "maxSizeOfObjects"))
 attr(cluster, "factory") <- ClusterFutureBackend
-
-
+attr(cluster, "tweakable") <- tweakable(attr(cluster, "factory"))
 
 
 ## NOTE, we must not memoize the cluster as part of the ClusterFutureBackend

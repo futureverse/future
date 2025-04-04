@@ -64,10 +64,10 @@ tweak.future <- function(strategy, ..., penvir = parent.frame()) {
   }
 
   ## Identify arguments that must not be tweaked
-  
+
   ## (i) All future strategies inherits from the 'future' class
-  untweakable <- attr(future, "untweakable")
-  tweakable <- eval(attr(future, "tweakable"))
+  untweakable <- attr(future, "untweakable", exact = TRUE)
+  tweakable <- eval(attr(future, "tweakable", exact = TRUE))
 
   ## (ii) Others that are specific to this future strategy, if any
   for (class in class(strategy)) {
@@ -75,8 +75,8 @@ tweak.future <- function(strategy, ..., penvir = parent.frame()) {
     if (!exists(class, mode = "function")) next
     fcn <- get(class, mode = "function")
     if (!inherits(fcn, "future")) next
-    untweakable <- c(attr(fcn, "untweakable"), untweakable)
-    tweakable <- c(eval(attr(fcn, "tweakable")), tweakable)
+    untweakable <- c(attr(fcn, "untweakable", exact = TRUE), untweakable)
+    tweakable <- c(eval(attr(fcn, "tweakable", exact = TRUE)), tweakable)
   }
   
   ## Add temporary, secret option for disabling these checks in case to
