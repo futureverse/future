@@ -129,7 +129,7 @@ print.ClusterFutureBackend <- function(x, details = c("workers"), validate = FAL
     s <- c(s, sprintf("Workers of type %s:", class(workers)[1]))
     info <- capture.output(print(workers))
     info <- paste(info, collapse = "; ")
-    s <- c(s, sprintf("  Summary: %s", info))
+    s <- c(s, sprintf("- Summary: %s", info))
     cat(s, sep = "\n")
   
     ## Validate connections
@@ -163,7 +163,7 @@ print.ClusterFutureBackend <- function(x, details = c("workers"), validate = FAL
       }
 
       details <- paste(details, collapse = ", ")    
-      cat(sprintf("  [%s] Node %d/%d: %s [%s]\n", status, kk, length(workers), details, info))
+      cat(sprintf("- [%s] Node %d/%d: %s [%s]\n", status, kk, length(workers), details, info))
     }
   } ## ("workers" %in% details)
 

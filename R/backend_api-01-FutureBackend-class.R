@@ -77,6 +77,8 @@ attr(FutureBackend, "tweakable") <- setdiff(names(formals(FutureBackend)), "..."
 print.FutureBackend <- function(x, ...) {
   backend <- x
 
+  done <- character(0L)
+  
   classes <- setdiff(class(backend), "environment")
   s <- sprintf("%s:", classes[1])
   s <- c(s, sprintf("Inherits: %s", paste(classes[-1], collapse = ", ")))
@@ -85,18 +87,31 @@ print.FutureBackend <- function(x, ...) {
   s <- c(s, sprintf("Number of workers: %g", nbrOfWorkers(backend)))
   s <- c(s, sprintf("Number of free workers: %g", nbrOfFreeWorkers(backend)))
   s <- c(s, sprintf("Available cores: %d", availableCores()))
+  done <- c(done, "workers")
 
   ## Settings
   s <- c(s, sprintf("Automatic garbage collection: %s", backend[["gc"]]))
+  done <- c(done, "gc")
   s <- c(s, sprintf("Early signaling: %s", backend[["earlySignal"]]))
+  done <- c(done, "earlySignal")
   s <- c(s, sprintf("Interrupts are enabled: %s", backend[["interrupts"]]))
+  done <- c(done, "interrupts")
+  s <- c(s, sprintf("Passthrough: %s", backend[["passthrough"]]))
+  done <- c(done, "passthrough")
   max <- backend[["maxSizeOfObjects"]]
+  done <- c(done, "maxSizeOfObjects")
   max <- rep(max, length.out = 2L)
   max <- vapply(max, FUN.VALUE = NA_character_, FUN = function(x) {
     if (is.finite(x)) asIEC(x) else "+Inf"
   })
   s <- c(s, sprintf("Maximum total size of globals: %s", max[1]))
   s <- c(s, sprintf("Maximum total size of value: %s", max[2]))
+
+  fields <- tweakable(attr(backend, "factory"))
+  fields <- setdiff(fields, done)
+  for (name in fields) {
+    s <- c(s, sprintf("Argument %s: %s", sQuote(name), deparse(backend[[name]])))
+  }
 
   ## Active futures
   resolved <- NULL ## To please R CMD check
