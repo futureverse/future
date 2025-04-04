@@ -117,6 +117,7 @@ ClusterFutureBackend <- local({
 })
 tweakable(ClusterFutureBackend) <- list(MultiprocessFutureBackend, makeClusterPSOCK_args())
 
+#' @importFrom parallelly isConnectionValid isNodeAlive
 #' @importFrom utils capture.output
 #' @export
 print.ClusterFutureBackend <- function(x, details = c("workers"), validate = FALSE, ...) {
@@ -170,7 +171,7 @@ print.ClusterFutureBackend <- function(x, details = c("workers"), validate = FAL
   invisible(x)
 }
 
-#' @importFrom parallelly isNodeAlive cloneNode
+
 #' @export
 launchFuture.ClusterFutureBackend <- function(backend, future, ...) {
   debug <- isTRUE(getOption("future.debug"))
@@ -514,7 +515,7 @@ getSocketSelectTimeout <- function(future, timeout = NULL) {
 } ## getSocketSelectTimeout()
 
 
-#' @importFrom parallelly connectionId
+#' @importFrom parallelly connectionId isConnectionValid 
 #' @export
 resolved.ClusterFuture <- function(x, run = TRUE, timeout = NULL, ...) {
   debug <- isTRUE(getOption("future.debug"))
@@ -641,6 +642,7 @@ resolved.ClusterFuture <- function(x, run = TRUE, timeout = NULL, ...) {
 }
 
 
+#' @importFrom parallelly isConnectionValid 
 #' @export
 result.ClusterFuture <- function(future, ...) {
   debug <- isTRUE(getOption("future.debug"))
@@ -701,7 +703,7 @@ result.ClusterFuture <- function(future, ...) {
 
 
 
-#' @importFrom parallelly isConnectionValid isNodeAlive cloneNode
+#' @importFrom parallelly isNodeAlive
 receiveMessageFromWorker <- local({
   recvData <- import_parallel_fcn("recvData")
   
@@ -1043,7 +1045,21 @@ requestNode <- function(await, backend, timeout, delta, alpha) {
     ## Relaunch worker?
     if (!okay) {
       if (debug) mdebugf_push("Restarting non-alive cluster node %d ...", node_idx)
-      node <- cloneNode(node)
+      node2 <- tryCatch({
+        cloneNode(node)
+      }, error = identity)
+      if (inherits(node2, "error")) {
+        msg <- sprintf("One of the future workers of class %s, part of a cluster of class %s, was interrupted and attempts to relaunch it failed", sQuote(class(node)[1]), sQuote(class(cl)[1]))
+        if (inherits(node, c("SOCKnode", "SOCK0node")) &&
+            !inherits(node, c("RichSOCKnode"))) {
+          msg <- sprintf("%s. If you created your cluster with parallel::makeCluster(), try with parallelly::makeClusterPSOCK() instead", msg)
+        }
+        msg <- sprintf("%s. The reported reason was: %s", msg, conditionMessage(node2))
+        stop(FutureError(msg))
+      } else {
+        node <- node2
+      }
+      
       cl[[1]] <- node
       
       workers[[node_idx]] <- node

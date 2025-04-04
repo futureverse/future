@@ -100,7 +100,7 @@ FutureRegistry <- local({
     } else if (action == "contains") {
       idx <- indexOf(futures, future = future)
       if (debug) {
-        if (is.na(idxs)) {
+        if (is.na(idx)) {
           mdebug("Future does not exist")
         } else {
           mdebug("Future exists at position #%d", idx)
