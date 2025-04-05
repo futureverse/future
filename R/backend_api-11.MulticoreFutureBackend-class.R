@@ -470,6 +470,17 @@ result.MulticoreFuture <- local({
         msg <- paste(msg, collapse = ". ")
         
         ex <- FutureError(msg, future = future) 
+      } else if (inherits(result, "FutureInterruptError")) {
+        ex <- result
+        future[["state"]] <- "interrupted"
+      } else if (inherits(result, "FutureLaunchError")) {
+        ex <- result
+        future[["state"]] <- "interrupted"
+      } else if (inherits(result, "FutureError")) {
+        ## FIXME: Add more details
+        hint <- sprintf("parallel::mccollect() did return a FutureResult but a %s object: %s", sQuote(class(result)[1]), paste(deparse(result), collapse = "; "))
+        ex <- UnexpectedFutureResultError(future, hint = hint)
+        alive <- NA  ## For now, don't remove future when there's an unexpected error /HB 2023-04-19
       } else {
         ## FIXME: Add more details
         hint <- sprintf("parallel::mccollect() did not return a FutureResult object as expected. Received a %s object instead: %s", sQuote(class(result)[1]), paste(deparse(result), collapse = "; "))
