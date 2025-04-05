@@ -36,13 +36,19 @@ FutureRegistry <- local({
         }, FutureLaunchError = function(ex) {
           if (debug) mdebugf_pop("Future at position #%d is resolved ... done", ii)
           stop(ex)
+        }, FutureInterruptError = function(ex) {
+          if (debug) mdebugf_pop("Future at position #%d is resolved ... done", ii)
+          ## At a minimum, reset the future
+          future <- reset(future)
+          msg <- sprintf("[FUTURE INTERRUPTED]: Caught %s with error message: %s", class(ex)[1], conditionMessage(ex))
+          warning(msg, call. = TRUE, immediate. = TRUE)
         }, FutureError = function(ex) {
           if (debug) mdebugf_pop("Future at position #%d is resolved ... done", ii)
           ## It is not always possible to detect when a future fails to
           ## launch, e.g. there might be a broken Rprofile file that
           ## produces an error. Here we take a liberal approach an assume
           ## we can just drop the future with a warning.
-          msg <- sprintf("[FUTURE BACKEND FAILURE]: Caught %s with error message %s", class(ex)[1], conditionMessage(ex))
+          msg <- sprintf("[FUTURE BACKEND FAILURE]: Caught %s with error message: %s", class(ex)[1], conditionMessage(ex))
           warning(msg, call. = TRUE, immediate. = TRUE)
         })
 

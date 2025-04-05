@@ -70,6 +70,8 @@ ClusterFutureBackend <- local({
       }
       workers <- cluster
     } else {
+      ## A pre-created cluster?
+      ## FIXME: Don't stop it if already in place, or ...?
       clusterRegistry$stopCluster(debug = debug)
       last <<- NULL
       workers <- as.cluster(workers)
@@ -98,7 +100,7 @@ ClusterFutureBackend <- local({
       if (debug) mdebug("Generated workers UUID")
     }
     if (debug) mdebugf("Workers UUID: %s", sQuote(name))
-  
+      
     ## Name of the FutureRegistry
     reg <- sprintf("workers-%s", name)
   

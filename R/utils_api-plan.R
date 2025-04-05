@@ -1,7 +1,23 @@
+# FIXME: Move all.equal() for connection:s to 'parallelly'
 #' @export
-all.equal.future <- function(target, current, ...) {
+all.equal.connection <- function(target, current, ...) {
+  if (!identical(target, current)) {
+    return("Connections differ")
+  }
+  TRUE
+}
+
+#' @export
+all.equal.future <- function(target, current, ..., debug = FALSE) {
+  if (debug) {
+    mdebug_push("all.equal() for future ...")
+    on.exit(mdebug_pop("all.equal() for future ... done"))
+    mstr(list(target = target, current = current))
+  }
+  
   ## Compare formals
   if (!isTRUE(all.equal(formals(target), formals(current)))) {
+    if (debug) mdebug("Formals differ")
     return("Formals differ")
   }
 
@@ -20,6 +36,7 @@ all.equal.future <- function(target, current, ...) {
 
   ## Same attribute names?
   if (!identical(target_names, current_names)) {
+    if (debug) mdebug("Attribute names differ")
     return("Attribute names differ")
   }
 
@@ -27,6 +44,7 @@ all.equal.future <- function(target, current, ...) {
   target_attrs <- target_attrs[target_names]
   current_attrs <- current_attrs[current_names]
   if (!isTRUE(all.equal(target_attrs, current_attrs))) {
+    if (debug) mdebug("Attribute values differ")
     return("Attribute values differ")
   }
 
@@ -37,8 +55,8 @@ all.equal.future <- function(target, current, ...) {
 #' @export
 all.equal.FutureStrategyList <- function(target, current, ..., debug = FALSE) {
   if (debug) {
-    mdebug_push("plan(): all.equal() for FutureStrategyList ...")
-    on.exit(mdebug_pop("plan(): all.equal() for FutureStrategyList ... done"))
+    mdebug_push("all.equal() for FutureStrategyList ...")
+    on.exit(mdebug_pop("all.equal() for FutureStrategyList ... done"))
   }
 
   stop_if_not(is.list(target), is.list(current))
@@ -68,11 +86,13 @@ all.equal.FutureStrategyList <- function(target, current, ..., debug = FALSE) {
   }
 
   for (kk in seq_along(target)) {
-    if (!isTRUE(all.equal(target[[kk]], current[[kk]]))) {
-      return(sprintf("Future strategies differ at level %d", kk))
+    if (!isTRUE(all.equal(target[[kk]], current[[kk]], debug = debug))) {
+      msg <- sprintf("Future strategies differ at level %d", kk)
+      if (debug) mdebug(msg)
+      return(msg)
     }
   }
-  
+
   TRUE
 } ## all.equal() for FutureStrategyList
 
@@ -379,10 +399,15 @@ plan <- local({
     class(newStack) <- unique(c("FutureStrategyList", class(newStack)))
 
     ## Skip if already set?
-    if (skip || isTRUE(all.equal(newStack, oldStack, debug = debug))) {
+    if (skip) {
+      if (debug) {
+        mdebug("plan(): Skip requested. Using the old stack")
+        mprint(oldStack)
+      }
+    } else if (isTRUE(all.equal(newStack, oldStack, debug = debug))) {
       if (debug) {
         mdebug("plan(): Skip setting new future strategy stack because it is the same as the current one:")
-        mprint(newStack)
+        mprint(oldStack)
       }
       return(oldStack)
     }
