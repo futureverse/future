@@ -57,11 +57,18 @@ listFutures.MultiprocessFutureBackend <- function(backend, ..., debug = FALSE) {
     data <- lapply(futures, FUN = function(future) {
       label <- future[["label"]]
       if (is.null(label)) label <- NA_character_
+      stop_if_not(length(label) == 1)
+      counter <- as.integer(future[["uuid"]][2])
+      stop_if_not(length(counter) == 1)
+      start <- future[["start"]]
+      stop_if_not(length(start) == 1)
+      resolved <- resolved(future, run = FALSE)
+      stop_if_not(length(resolved) == 1)
       data.frame(
-        counter = as.integer(future[["uuid"]][2]),
-        start = future[["start"]],
+        counter = counter,
+        start = start,
         label = label,
-        resolved = resolved(future, run = FALSE)
+        resolved = resolved
       )
     })
     data <- do.call(rbind, data)
