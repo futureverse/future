@@ -388,6 +388,8 @@ evalFuture <- function(
       ns <- getNamespace("future")
       if (!exists("evalFutureInternal", mode = "function", envir = ns, inherits = FALSE)) {
         msg <- sprintf("%s. Package 'future' version %s is too old. Please update and retry", msg, packageVersion("future"))
+      } else {
+        msg <- sprintf("%s. Using package 'future' v%s", msg, packageVersion("future"))
       }
     }
     msg <- sprintf("%s. Possible other reasons: %s", msg, conditionMessage(ex))
