@@ -1,4 +1,4 @@
-#' @export
+#' @exportS3Method all.equal future
 all.equal.future <- function(target, current, ..., debug = FALSE) {
   if (debug) {
     mdebug_push("all.equal() for future ...")
@@ -43,7 +43,7 @@ all.equal.future <- function(target, current, ..., debug = FALSE) {
 } ## all.equal() for 'future'
 
 
-#' @export
+#' @exportS3Method all.equal FutureStrategyList
 all.equal.FutureStrategyList <- function(target, current, ..., debug = FALSE) {
   if (debug) {
     mdebug_push("all.equal() for FutureStrategyList ...")

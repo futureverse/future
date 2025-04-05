@@ -1,5 +1,6 @@
 #' @tags resolved
 #' @tags sequential multisession multicore
+#' @tags skip_on_cran
 
 library(future)
 options(future.debug = FALSE)

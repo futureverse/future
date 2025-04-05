@@ -1,11 +1,15 @@
-# FIXME: Move all.equal() for connection:s to 'parallelly'
-#' @export
-all.equal.connection <- function(target, current, ...) {
-  if (!identical(target, current)) {
-    return("Connections differ")
+#' @rawNamespace if (packageVersion("parallelly") <= "1.43.0") {
+#'   S3method(all.equal,connection)
+#' }
+if (packageVersion("parallelly") <= "1.43.0") {
+  all.equal.connection <- function(target, current, ...) {
+    if (!identical(target, current)) {
+      return("Connections differ")
+    }
+    TRUE
   }
-  TRUE
 }
+
 
 ## This is needed in order to be able to assert that we later
 ## actually work with the same connection.  See R-devel thread

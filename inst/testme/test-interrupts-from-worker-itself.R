@@ -32,7 +32,7 @@ for (strategy in strategies) {
     result(f)
   }, FutureError = identity)
   stopifnot(
-    #  (i) Ideally, regular resuts, but ..
+    #  (i) Ideally, regular results, but ..
     inherits(r, "FutureResult") ||
     #  (ii) SIGINT might crash the R parallel worker
     inherits(r, "FutureError")
