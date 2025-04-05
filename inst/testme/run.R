@@ -59,9 +59,21 @@ if (!utils::file_test("-f", testme_file)) {
   stop("There exist no such 'testme' file: ", sQuote(testme_file))
 }
 
+
 ## -----------------------------------------------------------------
 ## testme environment
 ## -----------------------------------------------------------------
+on_cran <- function() {
+  not_cran <- Sys.getenv("NOT_CRAN", NA_character_)
+  if (is.na(not_cran)) {
+    not_cran <- FALSE
+  } else {
+    not_cran <- isTRUE(as.logical(not_cran))
+  }
+  !interactive() && !not_cran
+} ## on_cran()
+
+
 ## Get test script tags
 tags <- local({
   lines <- readLines(testme_file, warn = FALSE)
@@ -86,6 +98,7 @@ testme_config <- list(
    status = "created",
     start = proc.time(),
    script = testme_file,
+  on_cran = on_cran(),
     debug = isTRUE(as.logical(Sys.getenv("R_TESTME_DEBUG")))
 )
 if ("testme" %in% search()) detach(name = "testme")
@@ -95,7 +108,12 @@ rm(list = c("tags", "testme_package", "testme_name", "testme_file"))
 
 ## -----------------------------------------------------------------
 ## Filters
-## -----------------------------------------------------------------x
+## -----------------------------------------------------------------
+## Skip on CRAN? To run these tests, set env var NOT_CRAN=true
+if ("skip_on_cran" %in% tags && on_cran()) {
+  testme[["status"]] <- "skipped"
+}
+
 code <- Sys.getenv("R_TESTME_FILTER_NAME", NA_character_)
 if (!is.na(code)) {
   expr <- tryCatch(parse(text = code), error = identity)
@@ -124,6 +142,7 @@ if (!is.na(code)) {
   }
   if (!isTRUE(keep)) testme[["status"]] <- "skipped"
 }
+
 
 message(sprintf("Test %s ...", sQuote(testme[["name"]])))
 
