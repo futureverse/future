@@ -1,12 +1,3 @@
-# FIXME: Move all.equal() for connection:s to 'parallelly'
-#' @export
-all.equal.connection <- function(target, current, ...) {
-  if (!identical(target, current)) {
-    return("Connections differ")
-  }
-  TRUE
-}
-
 #' @export
 all.equal.future <- function(target, current, ..., debug = FALSE) {
   if (debug) {
