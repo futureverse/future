@@ -10,7 +10,7 @@
 |collate  |en_US.UTF-8                                               |
 |ctype    |en_US.UTF-8                                               |
 |tz       |America/Los_Angeles                                       |
-|date     |2025-04-02                                                |
+|date     |2025-04-05                                                |
 |pandoc   |3.6.3 @ /software/c4/cbi/software/pandoc-3.6.3/bin/pandoc |
 |quarto   |NA                                                        |
 
@@ -18,7 +18,7 @@
 
 |package    |old    |new         |Δ  |
 |:----------|:------|:-----------|:--|
-|future     |1.34.0 |1.34.0-9367 |*  |
+|future     |1.34.0 |1.34.0-9373 |*  |
 |codetools  |0.2-20 |0.2-20      |   |
 |digest     |0.6.37 |0.6.37      |   |
 |globals    |0.16.3 |0.16.3      |   |
@@ -84,7 +84,7 @@
 |bspcov                       |1.0.1     |      |        |     |
 |[CAESAR.Suite](problems.md#caesarsuite)|0.2.2     |      |        |1    |
 |calmr                        |0.6.1     |      |        |     |
-|campsis                      |1.6.0     |      |        |     |
+|campsis                      |1.7.0     |      |        |     |
 |canaper                      |1.0.1     |      |        |     |
 |cccrm                        |3.0.4     |      |        |     |
 |[ceRNAnetsim](problems.md#cernanetsim)|1.18.0    |      |        |1    |
@@ -115,7 +115,7 @@
 |delayed                      |0.5.0     |      |        |     |
 |[delimtools](problems.md#delimtools)|0.2.0     |      |        |3    |
 |[deseats](problems.md#deseats)|1.1.0     |      |        |1    |
-|[dipsaus](problems.md#dipsaus)|0.3.0     |      |        |1    |
+|[dipsaus](problems.md#dipsaus)|0.3.1     |      |        |1    |
 |[disk.frame](problems.md#diskframe)|0.8.3     |      |        |1    |
 |[dispositionEffect](problems.md#dispositioneffect)|1.0.1     |1     |        |     |
 |[distantia](problems.md#distantia)|2.0.2     |      |        |3    |
@@ -137,7 +137,7 @@
 |epe4md                       |0.1.4     |      |        |     |
 |EpiForsk                     |0.1.1     |      |        |     |
 |[EpiNow2](problems.md#epinow2)|1.7.1     |      |        |4    |
-|[epitweetr](problems.md#epitweetr)|2.2.16    |      |        |2 -1 |
+|[epitweetr](problems.md#epitweetr)|2.2.16    |      |        |2    |
 |epwshiftr                    |0.1.4     |      |        |     |
 |[EQRN](problems.md#eqrn)     |0.1.1     |1     |1       |     |
 |erah                         |2.0.1     |      |        |     |
@@ -259,7 +259,7 @@
 |mice                         |3.17.0    |      |        |     |
 |migraph                      |1.4.5     |      |        |     |
 |[mikropml](problems.md#mikropml)|1.6.1     |      |        |1    |
-|[MineICA](problems.md#mineica)|1.46.0    |2     |3       |4    |
+|[MineICA](problems.md#mineica)|1.46.0    |      |4       |4    |
 |[missSBM](problems.md#misssbm)|1.0.5     |      |        |1    |
 |[mistyR](problems.md#mistyr) |1.14.0    |      |        |2    |
 |[mlr3](problems.md#mlr3)     |0.23.0    |      |        |1    |
@@ -271,7 +271,7 @@
 |mlr3summary                  |0.1.0     |      |        |     |
 |mlr3torch                    |0.2.1     |      |        |     |
 |[mlr3tuning](problems.md#mlr3tuning)|1.3.0     |      |        |1    |
-|[modelsummary](problems.md#modelsummary)|2.3.0     |      |        |1    |
+|modelsummary                 |2.3.0     |      |        |     |
 |[momentuHMM](problems.md#momentuhmm)|1.5.5     |      |        |1    |
 |[MOSS](problems.md#moss)     |0.2.2     |      |        |1    |
 |mplusParallel.automation     |0.0.1.1   |      |        |     |
@@ -300,7 +300,7 @@
 |origami                      |1.0.7     |      |        |     |
 |OutSeekR                     |1.0.0     |      |        |     |
 |[PAMpal](problems.md#pampal) |1.4.4     |      |1       |     |
-|[PAMscapes](problems.md#pamscapes)|0.10.0    |      |1       |     |
+|[PAMscapes](problems.md#pamscapes)|0.11.3    |      |1       |     |
 |paramsim                     |0.1.0     |      |        |     |
 |[pareg](problems.md#pareg)   |1.8.0     |3     |        |2    |
 |parseRPDR                    |1.1.2     |      |        |     |
@@ -457,7 +457,7 @@
 |[updog](problems.md#updog)   |2.1.5     |      |        |1    |
 |[vital](problems.md#vital)   |1.1.0     |      |        |1    |
 |[vmeasur](problems.md#vmeasur)|0.1.4     |      |1       |     |
-|WARDEN                       |0.99.1    |      |        |     |
+|WARDEN                       |0.99.3    |      |        |     |
 |webdeveloper                 |1.0.5     |      |        |     |
 |[WeightedCluster](problems.md#weightedcluster)|1.8-1     |      |1       |     |
 |whitewater                   |0.1.3     |      |        |     |
