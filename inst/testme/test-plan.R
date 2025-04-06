@@ -1,4 +1,4 @@
-#' @tags plan withPlan
+#' @tags plan %plan%
 #' @tags listenv
 #' @tags sequential cluster 
 
