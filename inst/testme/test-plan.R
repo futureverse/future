@@ -224,10 +224,42 @@ stack <- plan("list") ## curr == old
 stopifnot(identical(stack, old))
 stopifnot(identical(stack, truth))
 
+
+message("*** withPlan(sequential)")
+plan(cluster, workers = cl)
+pid <- Sys.getpid()
+withPlan(sequential, {
+  f <- future({ Sys.getpid() })
+  v <- value(f)
+})
+stopifnot(
+  v == pid,
+  inherits(plan("next"), "cluster")
+)
+
+message("*** localPlan(sequential)")
+plan(cluster, workers = cl)
+pid <- Sys.getpid()
+v <- local({
+  localPlan(sequential)
+  f <- future({ Sys.getpid() })
+  v <- value(f)
+})
+stopifnot(
+  v == pid,
+  inherits(plan("next"), "cluster")
+)
+
+
 message("*** %plan% 'sequential'")
 plan(cluster, workers = cl)
-x %<-% { a <- 1 } %plan% "sequential"
-stopifnot(inherits(plan("next"), "cluster"))
+pid <- Sys.getpid()
+x %<-% { Sys.getpid() } %plan% "sequential"
+stopifnot(
+  v == pid,
+  inherits(plan("next"), "cluster")
+)
+
 
 message("*** %plan% sequential")
 plan(cluster, workers = cl)
@@ -236,8 +268,12 @@ plan(cluster, workers = cl)
 ## works just as an withPlan({ ... }, plan = ...)
 fun <- { plan("next") } %plan% sequential
 
-x %<-% { a <- 1 } %plan% sequential
-stopifnot(inherits(plan("next"), "cluster"))
+pid <- Sys.getpid()
+x %<-% { Sys.getpid() } %plan% sequential
+stopifnot(
+  v == pid,
+  inherits(plan("next"), "cluster")
+)
 
 
 message("*** Nested futures with different plans")
