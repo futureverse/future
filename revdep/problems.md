@@ -28,30 +28,6 @@ Run `revdepcheck::revdep_details(, "aifeducation")` for more info
       Note: found 33 marked UTF-8 strings
     ```
 
-# AIPW
-
-<details>
-
-* Version: 0.6.3.2
-* GitHub: https://github.com/yqzhong7/AIPW
-* Source code: https://github.com/cran/AIPW
-* Date/Publication: 2021-06-11 09:30:02 UTC
-* Number of recursive dependencies: 98
-
-Run `revdepcheck::revdep_details(, "AIPW")` for more info
-
-</details>
-
-## In both
-
-*   checking dependencies in R code ... NOTE
-    ```
-    Namespaces in Imports field not imported from:
-      ‘Rsolnp’ ‘SuperLearner’ ‘future.apply’ ‘ggplot2’ ‘progressr’ ‘stats’
-      ‘utils’
-      All declared Imports should be used.
-    ```
-
 # AIscreenR
 
 <details>
@@ -133,8 +109,9 @@ Run `revdepcheck::revdep_details(, "apsimx")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  7.0Mb
+      installed size is  7.2Mb
       sub-directories of 1Mb or more:
+        R         1.0Mb
         extdata   5.4Mb
     ```
 
@@ -156,9 +133,9 @@ Run `revdepcheck::revdep_details(, "aroma.affymetrix")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  5.7Mb
+      installed size is  5.4Mb
       sub-directories of 1Mb or more:
-        R             2.5Mb
+        R             2.3Mb
         help          1.1Mb
         testScripts   1.1Mb
     ```
@@ -256,7 +233,7 @@ Run `revdepcheck::revdep_details(, "batchtools")` for more info
 
 *   checking dependencies in R code ... NOTE
     ```
-    [c4-n20:1123606] OPAL ERROR: Not initialized in file ext2x_client.c at line 112
+    [c4-n20:160037] OPAL ERROR: Not initialized in file ext2x_client.c at line 112
     --------------------------------------------------------------------------
     The application appears to have been direct launched using "srun",
     but OMPI was not built with SLURM's PMI support and therefore cannot
@@ -992,7 +969,7 @@ Run `revdepcheck::revdep_details(, "deseats")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  9.1Mb
+      installed size is  9.0Mb
       sub-directories of 1Mb or more:
         libs   8.3Mb
     ```
@@ -1015,9 +992,8 @@ Run `revdepcheck::revdep_details(, "dipsaus")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  6.8Mb
+      installed size is  6.3Mb
       sub-directories of 1Mb or more:
-        R      1.0Mb
         libs   4.3Mb
     ```
 
@@ -1600,6 +1576,25 @@ Run `revdepcheck::revdep_details(, "geohabnet")` for more info
 
 ## In both
 
+*   checking examples ... ERROR
+    ```
+    Running examples in ‘geohabnet-Ex.R’ failed
+    The error most likely occurred in:
+    
+    > ### Name: set_parameters
+    > ### Title: Set Parameters
+    > ### Aliases: set_parameters
+    > 
+    > ### ** Examples
+    > 
+    > param_fp <- get_parameters()
+    > set_parameters(param_fp)
+    Error in yaml.load(readLines(con, warn = readLines.warn), error.label = error.label,  : 
+      (/scratch/henrik/592033/RtmpTLatxc/parameters.yaml) Duplicate map key: 'default'
+    Calls: set_parameters -> .check_yaml_structure -> <Anonymous> -> yaml.load
+    Execution halted
+    ```
+
 *   checking tests ...
     ```
       Running ‘testthat.R’
@@ -1613,12 +1608,12 @@ Run `revdepcheck::revdep_details(, "geohabnet")` for more info
       > # Learn more about the roles of various files in:
       > # * https://r-pkgs.org/tests.html
     ...
-        9.   └─geohabnet::get_rasters(cparams$`CCRI parameters`$Hosts)
-       10.     └─geohabnet::crops_rast(hosts)
-       11.       └─future.apply::future_lapply(...)
-       12.         └─future.apply:::future_xapply(...)
-       13.           ├─future::value(fs)
-       14.           └─future:::value.list(fs)
+        7. │     └─rlang::eval_bare(quo_get_expr(.quo), quo_get_env(.quo))
+        8. └─geohabnet::sensitivity_analysis()
+        9.   └─geohabnet::load_parameters()
+       10.     └─config::get(file = filepath)
+       11.       └─yaml::yaml.load_file(...)
+       12.         └─yaml::yaml.load(...)
       
       [ FAIL 2 | WARN 0 | SKIP 0 | PASS 16 ]
       Error: Test failures
@@ -1976,7 +1971,7 @@ Run `revdepcheck::revdep_details(, "hero")` for more info
 
 *   checking dependencies in R code ... NOTE
     ```
-    [c4-n20:1939641] OPAL ERROR: Not initialized in file ext2x_client.c at line 112
+    [c4-n20:948571] OPAL ERROR: Not initialized in file ext2x_client.c at line 112
     --------------------------------------------------------------------------
     The application appears to have been direct launched using "srun",
     but OMPI was not built with SLURM's PMI support and therefore cannot
@@ -2047,7 +2042,7 @@ Run `revdepcheck::revdep_details(, "httpgd")` for more info
 
 *   checking tests ...
     ```
-      Running ‘testthat.R’/software/c4/cbi/software/_rocky8/R-4.4.3-gcc13/lib64/R/bin/BATCH: line 60: 3848819 Segmentation fault      (core dumped) ${R_HOME}/bin/R -f ${in} ${opts} ${R_BATCH_OPTIONS} > ${out} 2>&1
+      Running ‘testthat.R’/software/c4/cbi/software/_rocky8/R-4.4.3-gcc13/lib64/R/bin/BATCH: line 60: 967146 Segmentation fault      (core dumped) ${R_HOME}/bin/R -f ${in} ${opts} ${R_BATCH_OPTIONS} > ${out} 2>&1
     
      ERROR
     Running the tests in ‘tests/testthat.R’ failed.
@@ -2066,7 +2061,7 @@ Run `revdepcheck::revdep_details(, "httpgd")` for more info
       Execution halted
       
        *** caught segfault ***
-      address 0x410bb00, cause 'invalid permissions'
+      address 0xa0000001a, cause 'memory not mapped'
       An irrecoverable exception occurred. R is aborting now ...
     ```
 
@@ -2431,7 +2426,7 @@ Run `revdepcheck::revdep_details(, "ldsr")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  5.4Mb
+      installed size is  5.5Mb
       sub-directories of 1Mb or more:
         libs   4.9Mb
     ```
@@ -2465,14 +2460,14 @@ Run `revdepcheck::revdep_details(, "lidR")` for more info
       > test_check("lidR")
       Tests using raster: terra 
     ...
-      1/7744 mismatches
-      [4990] 0.048 - 0.047 == 0.001
-      ── Failure ('test-rasterize_canopy.R:132:3'): rasterize_canopy pit-free works both with LAS and LAScatalog ──
+      
+      ══ Failed tests ════════════════════════════════════════════════════════════════
+      ── Failure ('test-rasterize_canopy.R:114:3'): rasterize_canopy tin works both with LAS and LAScatalog ──
       lidR:::raster_values(x) not equal to lidR:::raster_values(y).
       1/7744 mismatches
       [4990] 0.048 - 0.047 == 0.001
       
-      [ FAIL 2 | WARN 0 | SKIP 43 | PASS 1302 ]
+      [ FAIL 1 | WARN 0 | SKIP 43 | PASS 1303 ]
       Error: Test failures
       Execution halted
     ```
@@ -3006,7 +3001,7 @@ Run `revdepcheck::revdep_details(, "multitool")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  5.1Mb
+      installed size is  5.0Mb
       sub-directories of 1Mb or more:
         doc   4.3Mb
     ```
@@ -3412,9 +3407,9 @@ Run `revdepcheck::revdep_details(, "pgxRpi")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  5.4Mb
+      installed size is  5.6Mb
       sub-directories of 1Mb or more:
-        doc   5.1Mb
+        doc   5.3Mb
     ```
 
 *   checking R code for possible problems ... NOTE
@@ -3541,9 +3536,9 @@ Run `revdepcheck::revdep_details(, "polykde")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 11.1Mb
+      installed size is 11.8Mb
       sub-directories of 1Mb or more:
-        libs  10.8Mb
+        libs  11.5Mb
     ```
 
 # portvine
@@ -3616,7 +3611,7 @@ Run `revdepcheck::revdep_details(, "projpred")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  6.1Mb
+      installed size is  6.0Mb
       sub-directories of 1Mb or more:
         doc    1.4Mb
         libs   3.7Mb
@@ -3693,8 +3688,9 @@ Run `revdepcheck::revdep_details(, "psborrow2")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  5.4Mb
+      installed size is  5.8Mb
       sub-directories of 1Mb or more:
+        R     1.0Mb
         doc   3.9Mb
     ```
 
@@ -4194,7 +4190,7 @@ Run `revdepcheck::revdep_details(, "shapr")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 13.4Mb
+      installed size is 13.3Mb
       sub-directories of 1Mb or more:
         doc    4.3Mb
         libs   7.8Mb
@@ -4249,9 +4245,9 @@ Run `revdepcheck::revdep_details(, "shiny")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 13.7Mb
+      installed size is 14.2Mb
       sub-directories of 1Mb or more:
-        R     1.5Mb
+        R     2.0Mb
         www  10.4Mb
     ```
 
@@ -4301,7 +4297,7 @@ Run `revdepcheck::revdep_details(, "sigminer")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  6.7Mb
+      installed size is  6.8Mb
       sub-directories of 1Mb or more:
         extdata   1.0Mb
         help      1.7Mb
@@ -4419,7 +4415,7 @@ Run `revdepcheck::revdep_details(, "SimDesign")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  7.5Mb
+      installed size is  7.4Mb
       sub-directories of 1Mb or more:
         doc   6.6Mb
     ```
@@ -5279,10 +5275,10 @@ Run `revdepcheck::revdep_details(, "tramvs")` for more info
 
 <details>
 
-* Version: 1.0.2
+* Version: 1.0.3
 * GitHub: https://github.com/entjos/TreeMineR
 * Source code: https://github.com/cran/TreeMineR
-* Date/Publication: 2024-08-27 15:00:11 UTC
+* Date/Publication: 2025-04-05 13:10:02 UTC
 * Number of recursive dependencies: 65
 
 Run `revdepcheck::revdep_details(, "TreeMineR")` for more info

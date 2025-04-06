@@ -10,7 +10,7 @@
 |collate  |en_US.UTF-8                                               |
 |ctype    |en_US.UTF-8                                               |
 |tz       |America/Los_Angeles                                       |
-|date     |2025-04-05                                                |
+|date     |2025-04-06                                                |
 |pandoc   |3.6.3 @ /software/c4/cbi/software/pandoc-3.6.3/bin/pandoc |
 |quarto   |NA                                                        |
 
@@ -18,7 +18,7 @@
 
 |package    |old    |new         |Δ  |
 |:----------|:------|:-----------|:--|
-|future     |1.34.0 |1.34.0-9373 |*  |
+|future     |1.34.0 |1.34.0-9376 |*  |
 |codetools  |0.2-20 |0.2-20      |   |
 |digest     |0.6.37 |0.6.37      |   |
 |globals    |0.16.3 |0.16.3      |   |
@@ -47,7 +47,7 @@
 |AgePopDenom                  |0.4.0     |      |        |     |
 |AICcPermanova                |0.0.2     |      |        |     |
 |[aifeducation](problems.md#aifeducation)|1.0.2     |      |        |2    |
-|[AIPW](problems.md#aipw)     |0.6.3.2   |      |        |1    |
+|AIPW                         |0.6.9.2   |      |        |     |
 |[AIscreenR](problems.md#aiscreenr)|0.1.1     |      |        |1    |
 |ale                          |0.3.1     |      |        |     |
 |alookr                       |0.3.9     |      |        |     |
@@ -144,7 +144,7 @@
 |esemifar                     |2.0.1     |      |        |     |
 |ezcox                        |1.0.4     |      |        |     |
 |fabletools                   |0.5.0     |      |        |     |
-|FAMoS                        |0.3.0     |      |        |     |
+|FAMoS                        |0.3.1     |      |        |     |
 |fastml                       |0.5.0     |      |        |     |
 |FastRet                      |1.1.4     |      |        |     |
 |[fastRhockey](problems.md#fastrhockey)|0.4.0     |      |        |1    |
@@ -175,7 +175,7 @@
 |[GeDS](problems.md#geds)     |0.2.9     |      |1       |     |
 |genBaRcode                   |1.2.8     |      |        |     |
 |[geocmeans](problems.md#geocmeans)|0.3.4     |      |        |1    |
-|[geohabnet](problems.md#geohabnet)|2.1.3     |2     |        |     |
+|[geohabnet](problems.md#geohabnet)|2.1.3     |3     |        |     |
 |[GeoModels](problems.md#geomodels)|2.1.0     |      |        |1    |
 |GetBCBData                   |0.7.0     |      |        |     |
 |[googleComputeEngineR](problems.md#googlecomputeenginer)|0.3.0     |      |        |2    |
@@ -344,7 +344,7 @@
 |[RAINBOWR](problems.md#rainbowr)|0.1.35    |      |        |1    |
 |rangeMapper                  |2.0.3     |      |        |     |
 |ravepipeline                 |0.0.1     |      |        |     |
-|rBiasCorrection              |0.3.4     |      |        |     |
+|rBiasCorrection              |0.3.5     |      |        |     |
 |Rcurvep                      |1.3.1     |      |        |     |
 |readsdr                      |0.3.0     |      |        |     |
 |[receptiviti](problems.md#receptiviti)|0.1.8     |1     |        |     |
@@ -443,7 +443,7 @@
 |tipmap                       |0.5.2     |      |        |     |
 |TKCat                        |1.1.12    |      |        |     |
 |[tramvs](problems.md#tramvs) |0.0-7     |      |1       |     |
-|[TreeMineR](problems.md#treeminer)|1.0.2     |      |        |1    |
+|[TreeMineR](problems.md#treeminer)|1.0.3     |      |        |1    |
 |[TreeSearch](problems.md#treesearch)|1.5.1     |      |        |1    |
 |[TriDimRegression](failures.md#tridimregression)|1.0.2     |1     |        |     |
 |[tsdistributions](problems.md#tsdistributions)|1.0.2     |1     |        |1    |
