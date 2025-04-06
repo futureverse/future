@@ -17,7 +17,7 @@ parallel in another process."><meta property="og:image" content="https://future.
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.34.0-9400</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.34.0-9410</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -75,7 +75,7 @@ parallel in another process."><meta property="og:image" content="https://future.
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Create a cluster future whose value will be resolved asynchronously in a parallel process</h1>
-      <small class="dont-index">Source: <a href="https://github.com/futureverse/future/blob/HEAD/R/backend_api-ClusterFutureBackend-class.R" class="external-link"><code>R/backend_api-ClusterFutureBackend-class.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/futureverse/future/blob/HEAD/R/backend_api-11.ClusterFutureBackend-class.R" class="external-link"><code>R/backend_api-11.ClusterFutureBackend-class.R</code></a></small>
       <div class="d-none name"><code>cluster.Rd</code></div>
     </div>
 
@@ -92,7 +92,6 @@ parallel in another process</em>.</p>
 <span>  workers <span class="op">=</span> <span class="fu"><a href="re-exports.html">availableWorkers</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  gc <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  earlySignal <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  passthrough <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  persistent <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  envir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sys.parent.html" class="external-link">parent.frame</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -125,11 +124,6 @@ frequently) or FALSE (less frequently).
 <dt id="arg-earlysignal">earlySignal<a class="anchor" aria-label="anchor" href="#arg-earlysignal"></a></dt>
 <dd><p>Specified whether conditions should be signaled as soon
 as possible or not.</p></dd>
-
-
-<dt id="arg-passthrough">passthrough<a class="anchor" aria-label="anchor" href="#arg-passthrough"></a></dt>
-<dd><p>If TRUE, futures are resolved on the next, nested
-future backend.</p></dd>
 
 
 <dt id="arg-persistent">persistent<a class="anchor" aria-label="anchor" href="#arg-persistent"></a></dt>
