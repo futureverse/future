@@ -156,30 +156,15 @@ all.equal.FutureStrategyList <- function(target, current, ..., debug = FALSE) {
       mdebugf_push("plan(): plan_cleanup(%s, cleanup = %s) ...", commaq(class(evaluator)), cleanup)
       on.exit(mdebugf_pop("plan(): plan_cleanup(%s, cleanup = %s) ... done", commaq(class(evaluator)), cleanup))
     }
-    
-    ## Nothing to do?
-    if (identical(cleanup, FALSE)) return()
 
     ## Skip clean up for other reasons?
     if (is.na(cleanup)) {
-      ## Skip because this was called via with(plan(...), ...)?
-      calls <- sys.calls()
-      ncalls <- length(calls)
-      if (ncalls > 3L) {
-        for (ii in (ncalls-3L):1) {
-          call <- calls[[ii]]
-          fcn <- call[[1]]
-          if (is.symbol(fcn) && fcn == as.symbol("with")) {
-            return()
-          } else if (is.call(fcn) &&
-                     is.symbol(fcn[[1]]) && fcn[[1]] == as.symbol("::") &&
-                     is.symbol(fcn[[2]]) && fcn[[2]] == as.symbol("base") &&
-                     is.symbol(fcn[[3]]) && fcn[[3]] == as.symbol("with")) {
-            return()
-          }
-        }
-      }
+      temporary <- attr(plan("next"), "with-temporary", exact = TRUE)
+      if (is.logical(temporary)) cleanup <- isTRUE(temporary)
     }
+
+    ## Nothing to do?
+    if (identical(cleanup, FALSE)) return()
 
     backend <- attr(evaluator, "backend", exact = TRUE)
     if (inherits(backend, "FutureBackend")) {
@@ -437,9 +422,31 @@ plan <- local({
 
     ## Stop/cleanup any previously registered backends?
     plan_cleanup(stack[[1L]], cleanup = cleanup, debug = debug)
+#    attr(stack[[1L]], "with-temporary") <- NULL
 
     stack <<- newStack
 
+    if (init) {
+      ## Was plan set from within with()? If so, it should only be set
+      ## temporarily, e.g. with() should use cleanup = TRUE.
+      calls <- sys.calls()
+      ncalls <- length(calls)
+      if (ncalls > 2L) {
+        for (ii in (ncalls-2L):1) {
+          call <- calls[[ii]]
+          fcn <- call[[1]]
+          if (is.symbol(fcn) && fcn == as.symbol("with")) {
+            attr(stack[[1]], "with-temporary") <- TRUE
+          } else if (is.call(fcn) &&
+                     is.symbol(fcn[[1]]) && fcn[[1]] == as.symbol("::") &&
+                     is.symbol(fcn[[2]]) && fcn[[2]] == as.symbol("base") &&
+                     is.symbol(fcn[[3]]) && fcn[[3]] == as.symbol("with")) {
+            attr(stack[[1]], "with-temporary") <- TRUE
+          }
+        }
+      }
+    } ## if (init)
+    
     ## Initiate future workers?
     if (init) stack[[1]] <<- plan_init(stack[[1]], debug = debug)
 

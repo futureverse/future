@@ -7,7 +7,7 @@
 \alias{tweak}
 \title{Evaluate an expression using a temporarily set future plan}
 \usage{
-\method{with}{FutureStrategyList}(data, expr, ..., local = FALSE, envir = parent.frame())
+\method{with}{FutureStrategyList}(data, expr, ..., local = FALSE, envir = parent.frame(), .cleanup = NA)
 
 plan(
   strategy = NULL,
@@ -33,6 +33,8 @@ not be specified if \code{local = TRUE}.}
 \item{envir}{The environment where the future plan should be set and the
 expression evaluated.}
 
+\item{.cleanup}{(internal) Used to stop implicitly started clusters.}
+
 \item{strategy}{An existing future function or the name of one.}
 
 \item{substitute}{If \code{TRUE}, the \code{strategy} expression is
@@ -42,8 +44,6 @@ expression evaluated.}
 that is the same as what is currently in use, will be skipped.}
 
 \item{.call}{(internal) Used for recording the call to this function.}
-
-\item{.cleanup}{(internal) Used to stop implicitly started clusters.}
 
 \item{.init}{(internal) Used to initiate workers.}
 
