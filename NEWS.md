@@ -17,9 +17,13 @@ reverse-dependency checks, **future.tests** checks, and more.
 
 ## New Features
 
- * Add `with(plan(...), { ... })` and `with(plan(...), local = TRUE)`
-   for evaluating an expression, including futures, using a temporary
-   future plan.
+ * Now `with()` can be used to evaluate R expressions, including
+   futures, using a temporary future plan. For example,
+   `with(plan(multisession), { expr })` evaluates `{ expr }` using
+   multisession futures, before reverting back to plan set previously
+   by the user. To do the same inside a function, set
+   `with(plan(multisession), local = TRUE)`, which uses multisession
+   futures until the function exits.
 
  * Add `interrupt()`, which interrupts a future, if the parallel
    backend supports it, otherwise it is silently ignored. It can also
