@@ -225,10 +225,10 @@ stopifnot(identical(stack, old))
 stopifnot(identical(stack, truth))
 
 
-message("*** withPlan(sequential)")
+message("*** with(plan(sequential), ...)")
 plan(cluster, workers = cl)
 pid <- Sys.getpid()
-withPlan(sequential, {
+with(plan(sequential), {
   f <- future({ Sys.getpid() })
   v <- value(f)
 })
@@ -237,11 +237,11 @@ stopifnot(
   inherits(plan("next"), "cluster")
 )
 
-message("*** localPlan(sequential)")
+message("*** with(plan(sequential), local = TRUE)")
 plan(cluster, workers = cl)
 pid <- Sys.getpid()
 v <- local({
-  localPlan(sequential)
+  with(plan(sequential), local = TRUE)
   f <- future({ Sys.getpid() })
   v <- value(f)
 })
@@ -265,7 +265,7 @@ message("*** %plan% sequential")
 plan(cluster, workers = cl)
 
 ## %plan% can operate on any expression, so it
-## works just as an withPlan({ ... }, plan = ...)
+## works just as an with(plan(...), { ... })
 fun <- { plan("next") } %plan% sequential
 
 pid <- Sys.getpid()

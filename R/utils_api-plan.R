@@ -160,6 +160,27 @@ all.equal.FutureStrategyList <- function(target, current, ..., debug = FALSE) {
     ## Nothing to do?
     if (identical(cleanup, FALSE)) return()
 
+    ## Skip clean up for other reasons?
+    if (is.na(cleanup)) {
+      ## Skip because this was called via with(plan(...), ...)?
+      calls <- sys.calls()
+      ncalls <- length(calls)
+      if (ncalls > 3L) {
+        for (ii in (ncalls-3L):1) {
+          call <- calls[[ii]]
+          fcn <- call[[1]]
+          if (is.symbol(fcn) && fcn == as.symbol("with")) {
+            return()
+          } else if (is.call(fcn) &&
+                     is.symbol(fcn[[1]]) && fcn[[1]] == as.symbol("::") &&
+                     is.symbol(fcn[[2]]) && fcn[[2]] == as.symbol("base") &&
+                     is.symbol(fcn[[3]]) && fcn[[3]] == as.symbol("with")) {
+            return()
+          }
+        }
+      }
+    }
+
     backend <- attr(evaluator, "backend", exact = TRUE)
     if (inherits(backend, "FutureBackend")) {
       stopWorkers(backend)
@@ -338,11 +359,11 @@ all.equal.FutureStrategyList <- function(target, current, ..., debug = FALSE) {
 #'
 #' If you think it is necessary to modify the future strategy within a
 #' function, then make sure to undo the changes when exiting the function.
-#' This can be archived by using [localPlan()], e.g.
+#' This can be archived by using `with(plan(...), local = TRUE)`, e.g.
 #'
 #' \preformatted{
 #'   my_fcn <- function(x) {
-#'     localPlan(multisession)
+#'     with(plan(multisession), local = TRUE)
 #'     y <- analyze(x)
 #'     summarize(y)
 #'   }

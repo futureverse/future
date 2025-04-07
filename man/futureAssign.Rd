@@ -274,9 +274,9 @@ Error in eval(quote(\{ : boom
 
 Futures are evaluated on the future backend that the user has specified
 by \code{\link[=plan]{plan()}}. With regular futures, we can temporarily use another future
-backend by wrapping our code in \verb{[withPlan()]}, of temporarily inside a
-function using \verb{[localPlan()]}. To achieve the same for a specific
-future assignment, use \verb{\%plan\%}, e.g.
+backend by wrapping our code in \verb{with(plan(...), \{ ... \}]}, or temporarily
+inside a function using \code{with(plan(...), local = TRUE)}. To achieve the
+same for a specific future assignment, use \verb{\%plan\%}, e.g.
 
 \if{html}{\out{<div class="sourceCode">}}\preformatted{> plan(multisession)
 > x \%<-\% \{ 42 \}

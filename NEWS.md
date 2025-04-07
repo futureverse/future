@@ -17,8 +17,9 @@ reverse-dependency checks, **future.tests** checks, and more.
 
 ## New Features
 
- * Add `localPlan()` and `withPlan()` functions for evaluating an
-   expression, including futures, using a temporary future plan.
+ * Add `with(plan(...), { ... })` and `with(plan(...), local = TRUE)`
+   for evaluating an expression, including futures, using a temporary
+   future plan.
 
  * Add `interrupt()`, which interrupts a future, if the parallel
    backend supports it, otherwise it is silently ignored. It can also

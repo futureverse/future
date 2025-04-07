@@ -145,9 +145,9 @@
 #'
 #' Futures are evaluated on the future backend that the user has specified
 #' by [plan()]. With regular futures, we can temporarily use another future
-#' backend by wrapping our code in `[withPlan()]`, of temporarily inside a
-#' function using `[localPlan()]`. To achieve the same for a specific
-#' future assignment, use `%plan%`, e.g.
+#' backend by wrapping our code in `with(plan(...), { ... }]`, or temporarily
+#' inside a function using `with(plan(...), local = TRUE)`. To achieve the
+#' same for a specific future assignment, use `%plan%`, e.g.
 #'
 #' ```
 #' > plan(multisession)
