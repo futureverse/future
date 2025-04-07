@@ -17,7 +17,7 @@ e.g. sequentially or in parallel."><meta property="og:image" content="https://fu
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.34.0-9410</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.34.0-9377</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -208,19 +208,67 @@ This backend is not supported on Windows.</p></dd>
 <code>plan(cluster, workers = c("n1", "n1", "n2", "server.remote.org"))</code>.</p></dd>
 
 
-</dl><p>Other package provide additional evaluation strategies.
-For example, the <span class="pkg">future.callr</span> package implements an alternative
-to the <code>multisession</code> backend on top of the <span class="pkg">callr</span> package, e.g.
-<code>plan(future.callr::callr, workers = 2)</code>.
-Another example is the <span class="pkg">future.batchtools</span> package, which implements,
-on top of the <span class="pkg">batchtools</span> package, e.g.
-<code>plan(future.batchtools::batchtools_slurm)</code>.
-These types of futures are resolved via job schedulers, which typically
-are available on high-performance compute (HPC) clusters, e.g. LSF,
-Slurm, TORQUE/PBS, Sun Grid Engine, and OpenLava.</p>
-<p>To "close" any background workers (e.g. <code>multisession</code>), change
-the plan to something different; <code>plan(sequential)</code> is recommended
-for this.</p>
+</dl><p>In addition to the built-in ones, additional parallel backends are
+implemented in future-backend packages <span class="pkg">future.callr</span> and
+<span class="pkg">future.mirai</span> that leverage R package <span class="pkg">callr</span> and
+<span class="pkg">mirai</span>:</p>
+<dl><dt><code>callr</code>:</dt>
+<dd><p>Similar to <code>multisession</code>, this resolved futures in parallel in
+background <span style="R">R</span> sessions on the local machine via the <span class="pkg">callr</span>
+package, e.g. <code>plan(future.callr::callr)</code> and
+<code>plan(future.callr::callr, workers = 2)</code>. The difference is that
+each future is processed in a fresh parallel R worker, which is
+automatically shut down as soon as the future is resolved.
+This can help decrease the overall memory. Moreover, contrary
+to <code>multisession</code>, <code>callr</code> does not rely on socket connections,
+which means it is not limited by the number of connections that
+<span style="R">R</span> can have open at any time.</p></dd>
+
+
+<dt><code>mirai_multisession</code>:</dt>
+<dd><p>Similar to <code>multisession</code>, this resolved futures in parallel in
+background <span style="R">R</span> sessions on the local machine via the <span class="pkg">mirai</span>
+package, e.g. <code>plan(future.mirai::mirai_multisession)</code> and
+<code>plan(future.mirai::mirai_multisession, workers = 2)</code>.</p></dd>
+
+
+<dt><code>mirai_cluster</code>:</dt>
+<dd><p>Similar to <code>cluster</code>, this resolved futures in parallel via
+pre-configured <span style="R">R</span> <span class="pkg">mirai</span> daemon processes, e.g.
+<code>plan(future.mirai::mirai_cluster)</code>.</p></dd>
+
+
+</dl><p>Another example is the <span class="pkg">future.batchtools</span> package, which leverages
+<span class="pkg">batchtools</span> package, to resolve futures via high-performance compute
+(HPC) job schedulers, e.g. LSF, Slurm, TORQUE/PBS, Grid Engine, and
+OpenLava;</p>
+<dl><dt><code>batchtools_slurm</code>:</dt>
+<dd><p>The backend resolved futures via the Slurm scheduler, e.g.
+<code>plan(future.batchtools::batchtools_slurm)</code>.</p></dd>
+
+
+<dt><code>batchtools_torque</code>:</dt>
+<dd><p>The backend resolved futures via the TORQUE/PBS scheduler, e.g.
+<code>plan(future.batchtools::batchtools_torque)</code>.</p></dd>
+
+
+<dt><code>batchtools_sge</code>:</dt>
+<dd><p>The backend resolved futures via the Grid Engine (SGE, AGE) scheduler,
+e.g. <code>plan(future.batchtools::batchtools_sge)</code>.</p></dd>
+
+
+<dt><code>batchtools_lsf</code>:</dt>
+<dd><p>The backend resolved futures via the Load Sharing Facility (LSF)
+scheduler, e.g. <code>plan(future.batchtools::batchtools_lsf)</code>.</p></dd>
+
+
+<dt><code>batchtools_openlava</code>:</dt>
+<dd><p>The backend resolved futures via the OpenLava scheduler, e.g.
+<code>plan(future.batchtools::batchtools_openlava)</code>.</p></dd>
+
+
+</dl><p>To "close" any background workers, set <code>plan(sequential)</code>, or change to
+any other plan.</p>
     </div>
     <div class="section level2">
     <h2 id="for-package-developers">For package developers<a class="anchor" aria-label="anchor" href="#for-package-developers"></a></h2>
