@@ -175,10 +175,10 @@ is chosen, otherwise it returns the current one visibly.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>The default strategy is <code><a href="sequential.html">sequential</a></code>, but the default can be
-configured by option <span class="option">future.plan</span> and, if that is not set,
-system environment variable <code class="env">R_FUTURE_PLAN</code>.
-To reset the strategy back to the default, use <code>plan("default")</code>.</p>
+    <p>The default strategy is <code><a href="sequential.html">sequential</a></code>, but another one can be set
+using <code>plan()</code>, e.g. <code>plan(multisession)</code> will launch parallel workers
+running in the background, which then will be used to resolve future.
+To shut down background workers launched this way, call <code>plan(sequential)</code>.</p>
     </div>
     <div class="section level2">
     <h2 id="built-in-evaluation-strategies">Built-in evaluation strategies<a class="anchor" aria-label="anchor" href="#built-in-evaluation-strategies"></a></h2>
@@ -273,11 +273,10 @@ scheduler, e.g. <code>plan(future.batchtools::batchtools_lsf)</code>.</p></dd>
 <code>plan(future.batchtools::batchtools_openlava)</code>.</p></dd>
 
 
-</dl><p>To "close" any background workers, set <code>plan(sequential)</code>, or change to
-any other plan.</p>
-    </div>
+</dl></div>
     <div class="section level2">
     <h2 id="for-package-developers">For package developers<a class="anchor" aria-label="anchor" href="#for-package-developers"></a></h2>
+
 
 
 <p>Please refrain from modifying the future strategy inside your packages /
@@ -307,6 +306,7 @@ others' toes.</em></p>
     </div>
     <div class="section level2">
     <h2 id="using-plan-in-scripts-and-vignettes">Using plan() in scripts and vignettes<a class="anchor" aria-label="anchor" href="#using-plan-in-scripts-and-vignettes"></a></h2>
+
 
 
 <p>When writing scripts or vignettes that use futures, try to place any
