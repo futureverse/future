@@ -78,10 +78,10 @@ it specifies how \code{\link[=future]{future()}}:s are resolved,
 e.g. sequentially or in parallel.
 }
 \details{
-The default strategy is \code{\link{sequential}}, but the default can be
-configured by option \option{future.plan} and, if that is not set,
-system environment variable \env{R_FUTURE_PLAN}.
-To reset the strategy back to the default, use \code{plan("default")}.
+The default strategy is \code{\link{sequential}}, but another one can be set
+using \code{plan()}, e.g. \code{plan(multisession)} will launch parallel workers
+running in the background, which then will be used to resolve future.
+To shut down background workers launched this way, call \code{plan(sequential)}.
 }
 \section{Built-in evaluation strategies}{
 
@@ -111,24 +111,79 @@ Resolves futures asynchronously (in parallel) in separate
 \code{plan(cluster, workers = c("n1", "n1", "n2", "server.remote.org"))}.
 }
 }
+}
 
-Other package provide additional evaluation strategies.
-For example, the \pkg{future.callr} package implements an alternative
-to the \code{multisession} backend on top of the \pkg{callr} package, e.g.
-\code{plan(future.callr::callr, workers = 2)}.
-Another example is the \pkg{future.batchtools} package, which implements,
-on top of the \pkg{batchtools} package, e.g.
+\section{Other evaluation strategies available}{
+
+
+In addition to the built-in ones, additional parallel backends are
+implemented in future-backend packages \pkg{future.callr} and
+\pkg{future.mirai} that leverage R package \pkg{callr} and
+\pkg{mirai}:
+
+\describe{
+\item{\code{callr}:}{
+Similar to \code{multisession}, this resolved futures in parallel in
+background \R sessions on the local machine via the \pkg{callr}
+package, e.g. \code{plan(future.callr::callr)} and
+\code{plan(future.callr::callr, workers = 2)}. The difference is that
+each future is processed in a fresh parallel R worker, which is
+automatically shut down as soon as the future is resolved.
+This can help decrease the overall memory. Moreover, contrary
+to \code{multisession}, \code{callr} does not rely on socket connections,
+which means it is not limited by the number of connections that
+\R can have open at any time.
+}
+
+\item{\code{mirai_multisession}:}{
+Similar to \code{multisession}, this resolved futures in parallel in
+background \R sessions on the local machine via the \pkg{mirai}
+package, e.g. \code{plan(future.mirai::mirai_multisession)} and
+\code{plan(future.mirai::mirai_multisession, workers = 2)}.
+}
+
+\item{\code{mirai_cluster}:}{
+Similar to \code{cluster}, this resolved futures in parallel via
+pre-configured \R \pkg{mirai} daemon processes, e.g.
+\code{plan(future.mirai::mirai_cluster)}.
+}
+}
+
+Another example is the \pkg{future.batchtools} package, which leverages
+\pkg{batchtools} package, to resolve futures via high-performance compute
+(HPC) job schedulers, e.g. LSF, Slurm, TORQUE/PBS, Grid Engine, and
+OpenLava;
+
+\describe{
+\item{\code{batchtools_slurm}:}{
+The backend resolved futures via the Slurm scheduler, e.g.
 \code{plan(future.batchtools::batchtools_slurm)}.
-These types of futures are resolved via job schedulers, which typically
-are available on high-performance compute (HPC) clusters, e.g. LSF,
-Slurm, TORQUE/PBS, Sun Grid Engine, and OpenLava.
+}
 
-To "close" any background workers (e.g. \code{multisession}), change
-the plan to something different; \code{plan(sequential)} is recommended
-for this.
+\item{\code{batchtools_torque}:}{
+The backend resolved futures via the TORQUE/PBS scheduler, e.g.
+\code{plan(future.batchtools::batchtools_torque)}.
+}
+
+\item{\code{batchtools_sge}:}{
+The backend resolved futures via the Grid Engine (SGE, AGE) scheduler,
+e.g. \code{plan(future.batchtools::batchtools_sge)}.
+}
+
+\item{\code{batchtools_lsf}:}{
+The backend resolved futures via the Load Sharing Facility (LSF)
+scheduler, e.g. \code{plan(future.batchtools::batchtools_lsf)}.
+}
+
+\item{\code{batchtools_openlava}:}{
+The backend resolved futures via the OpenLava scheduler, e.g.
+\code{plan(future.batchtools::batchtools_openlava)}.
+}
+}
 }
 
 \section{For package developers}{
+
 
 Please refrain from modifying the future strategy inside your packages /
 functions, i.e. do not call \code{plan()} in your code. Instead, leave
@@ -160,6 +215,7 @@ others' toes.}
 }
 
 \section{Using plan() in scripts and vignettes}{
+
 
 When writing scripts or vignettes that use futures, try to place any
 call to \code{plan()} as far up (i.e. as early on) in the code as possible.

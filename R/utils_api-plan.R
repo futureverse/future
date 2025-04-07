@@ -279,10 +279,11 @@ all.equal.FutureStrategyList <- function(target, current, ..., debug = FALSE) {
 #' @example incl/plan.R
 #'
 #' @details
-#' The default strategy is [`sequential`], but the default can be
-#' configured by option \option{future.plan} and, if that is not set,
-#' system environment variable \env{R_FUTURE_PLAN}.
-#' To reset the strategy back to the default, use `plan("default")`.
+#' The default strategy is [`sequential`], but another one can be set
+#' using `plan()`, e.g. `plan(multisession)` will launch parallel workers
+#' running in the background, which then will be used to resolve future.
+#' To shut down background workers launched this way, call `plan(sequential)`.
+#'
 #'
 #' @section Built-in evaluation strategies:
 #' The \pkg{future} package provides the following built-in backends:
@@ -312,22 +313,77 @@ all.equal.FutureStrategyList <- function(target, current, ..., debug = FALSE) {
 #'  }
 #' }
 #'
-#' Other package provide additional evaluation strategies.
-#' For example, the \pkg{future.callr} package implements an alternative
-#' to the `multisession` backend on top of the \pkg{callr} package, e.g.
-#' `plan(future.callr::callr, workers = 2)`.
-#' Another example is the \pkg{future.batchtools} package, which implements,
-#' on top of the \pkg{batchtools} package, e.g.
-#' `plan(future.batchtools::batchtools_slurm)`.
-#' These types of futures are resolved via job schedulers, which typically
-#' are available on high-performance compute (HPC) clusters, e.g. LSF,
-#' Slurm, TORQUE/PBS, Sun Grid Engine, and OpenLava.
 #'
-#' To "close" any background workers (e.g. `multisession`), change
-#' the plan to something different; `plan(sequential)` is recommended
-#' for this.
+#' @section Other evaluation strategies available:
+#'
+#' In addition to the built-in ones, additional parallel backends are
+#' implemented in future-backend packages \pkg{future.callr} and
+#' \pkg{future.mirai} that leverage R package \pkg{callr} and
+#' \pkg{mirai}:
+#'
+#' \describe{
+#'  \item{`callr`:}{
+#'   Similar to `multisession`, this resolved futures in parallel in
+#'   background \R sessions on the local machine via the \pkg{callr}
+#'   package, e.g. `plan(future.callr::callr)` and
+#'   `plan(future.callr::callr, workers = 2)`. The difference is that
+#'   each future is processed in a fresh parallel R worker, which is
+#'   automatically shut down as soon as the future is resolved.
+#'   This can help decrease the overall memory. Moreover, contrary
+#'   to `multisession`, `callr` does not rely on socket connections,
+#'   which means it is not limited by the number of connections that
+#'   \R can have open at any time.
+#'  }
+#' 
+#'  \item{`mirai_multisession`:}{
+#'   Similar to `multisession`, this resolved futures in parallel in
+#'   background \R sessions on the local machine via the \pkg{mirai}
+#'   package, e.g. `plan(future.mirai::mirai_multisession)` and
+#'   `plan(future.mirai::mirai_multisession, workers = 2)`.
+#'  }
+#' 
+#'  \item{`mirai_cluster`:}{
+#'   Similar to `cluster`, this resolved futures in parallel via
+#'   pre-configured \R \pkg{mirai} daemon processes, e.g.
+#'   `plan(future.mirai::mirai_cluster)`.
+#'  }
+#' }
+#'
+#' Another example is the \pkg{future.batchtools} package, which leverages
+#' \pkg{batchtools} package, to resolve futures via high-performance compute
+#' (HPC) job schedulers, e.g. LSF, Slurm, TORQUE/PBS, Grid Engine, and
+#' OpenLava;
+#'
+#' \describe{
+#'  \item{`batchtools_slurm`:}{
+#'   The backend resolved futures via the Slurm scheduler, e.g.
+#'   `plan(future.batchtools::batchtools_slurm)`.
+#'  }
+#'
+#'  \item{`batchtools_torque`:}{
+#'   The backend resolved futures via the TORQUE/PBS scheduler, e.g.
+#'   `plan(future.batchtools::batchtools_torque)`.
+#'  }
+#'
+#'  \item{`batchtools_sge`:}{
+#'   The backend resolved futures via the Grid Engine (SGE, AGE) scheduler,
+#'   e.g. `plan(future.batchtools::batchtools_sge)`.
+#'  }
+#'
+#'  \item{`batchtools_lsf`:}{
+#'   The backend resolved futures via the Load Sharing Facility (LSF)
+#'   scheduler, e.g. `plan(future.batchtools::batchtools_lsf)`.
+#'  }
+#'
+#'  \item{`batchtools_openlava`:}{
+#'   The backend resolved futures via the OpenLava scheduler, e.g.
+#'  `plan(future.batchtools::batchtools_openlava)`.
+#'  }
+#' }
+#'
 #'
 #' @section For package developers:
+#'
 #' Please refrain from modifying the future strategy inside your packages /
 #' functions, i.e. do not call `plan()` in your code. Instead, leave
 #' the control on what backend to use to the end user. This idea is part of
@@ -356,7 +412,9 @@ all.equal.FutureStrategyList <- function(target, current, ..., debug = FALSE) {
 #' also rely on the future framework, so it is important to avoid stepping on 
 #' others' toes._
 #'
+#'
 #' @section Using plan() in scripts and vignettes:
+#'
 #' When writing scripts or vignettes that use futures, try to place any
 #' call to `plan()` as far up (i.e. as early on) in the code as possible.  
 #' This will help users to quickly identify where the future plan is set up
