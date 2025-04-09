@@ -27,7 +27,7 @@ A MultisessionFutureBackend resolves futures in parallel using a PSOCK cluster o
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.34.0-9420</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.34.0-9430</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -108,7 +108,6 @@ A MultisessionFutureBackend resolves futures in parallel using a PSOCK cluster o
 <span>  gc <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  maxSizeOfObjects <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"future.globals.maxSize"</span>, <span class="op">+</span><span class="cn">Inf</span><span class="op">)</span>,</span>
 <span>  interrupts <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  passthrough <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  hooks <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span>
 <span></span>
@@ -187,11 +186,6 @@ FutureBackend subclass, or by R option <a href="zzz-future.options.html">future.
 <dd><p>If FALSE, attempts to interrupt futures will not take
 place on this backend, even if the backend supports it. This is useful
 when, for instance, it takes a long time to interrupt a future.</p></dd>
-
-
-<dt id="arg-passthrough">passthrough<a class="anchor" aria-label="anchor" href="#arg-passthrough"></a></dt>
-<dd><p>If TRUE, futures are resolved on the next, nested
-future backend.</p></dd>
 
 
 <dt id="arg-backend">backend<a class="anchor" aria-label="anchor" href="#arg-backend"></a></dt>
