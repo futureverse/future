@@ -30,9 +30,6 @@
 #' place on this backend, even if the backend supports it. This is useful
 #' when, for instance, it takes a long time to interrupt a future.
 #'
-#' @param passthrough If TRUE, futures are resolved on the next, nested
-#' future backend.
-#'
 #' @return
 #' `FutureBackend()` returns a FutureBackend object, which inherits an
 #' environment. Specific future backends are defined by subclasses
@@ -44,7 +41,7 @@
 #'
 #' @keywords internal
 #' @export
-FutureBackend <- function(..., earlySignal = FALSE, gc = FALSE, maxSizeOfObjects = getOption("future.globals.maxSize", +Inf), interrupts = TRUE, passthrough = FALSE, hooks = FALSE) {
+FutureBackend <- function(..., earlySignal = FALSE, gc = FALSE, maxSizeOfObjects = getOption("future.globals.maxSize", +Inf), interrupts = TRUE, hooks = FALSE) {
   core <- new.env(parent = emptyenv())
 
   if (!is.logical(gc)) {
@@ -56,11 +53,10 @@ FutureBackend <- function(..., earlySignal = FALSE, gc = FALSE, maxSizeOfObjects
   stop_if_not(length(maxSizeOfObjects) == 1L, is.numeric(maxSizeOfObjects),
               !is.na(maxSizeOfObjects), maxSizeOfObjects >= 0)
   stop_if_not(length(interrupts) == 1L, is.logical(interrupts), !is.na(interrupts))
-  stop_if_not(length(passthrough) == 1L, is.logical(passthrough), !is.na(passthrough))
   stop_if_not(length(hooks) == 1L, is.logical(hooks), !is.na(hooks))
   
   ## Record future plan tweaks, if any
-  args <- list(..., earlySignal = earlySignal, maxSizeOfObjects = maxSizeOfObjects, gc = gc, interrupts = interrupts, passthrough = passthrough, hooks = hooks, counter = 0L)
+  args <- list(..., earlySignal = earlySignal, maxSizeOfObjects = maxSizeOfObjects, gc = gc, interrupts = interrupts, hooks = hooks, counter = 0L)
   for (name in names(args)) {
     core[[name]] <- args[[name]]
   }
@@ -96,8 +92,6 @@ print.FutureBackend <- function(x, ...) {
   done <- c(done, "earlySignal")
   s <- c(s, sprintf("Interrupts are enabled: %s", backend[["interrupts"]]))
   done <- c(done, "interrupts")
-  s <- c(s, sprintf("Passthrough: %s", backend[["passthrough"]]))
-  done <- c(done, "passthrough")
   max <- backend[["maxSizeOfObjects"]]
   done <- c(done, "maxSizeOfObjects")
   max <- rep(max, length.out = 2L)

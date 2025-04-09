@@ -437,32 +437,6 @@ run.Future <- function(future, ...) {
       }
     }
 
-    if (backend[["passthrough"]]) {
-      if (debug) mdebug_push("Adjusting future expression for passthrough ...")
-      expr <- future[["expr"]]
-      stdout <- future[["stdout"]]
-      conditions <- future[["conditions"]]
-      seed <- future[["seed"]]
-      label <- future[["label"]]
-      gc <- future[["gc"]]
-      earlySignal <- future[["earlySignal"]]
-      expr <- bquote({
-        future::value(future::future(
-          .(expr),
-          globals = NULL,
-          packages = NULL,
-          stdout = .(stdout),
-          conditions = .(conditions),
-          seed = .(seed),
-          label = .(label),
-          gc = .(gc),
-          earlySignal = .(earlySignal)
-        ))
-      })
-      future[["expr"]] <- expr
-      if (debug) mdebug_pop("Adjusting future expression for passthrough ... done")
-    }
-
     if (debug) mdebug_push("Launching futures ...")
     future[["backend"]] <- backend
     future[["start"]] <- proc.time()[[3]]

@@ -25,7 +25,6 @@ FutureBackend(
   gc = FALSE,
   maxSizeOfObjects = getOption("future.globals.maxSize", +Inf),
   interrupts = TRUE,
-  passthrough = FALSE,
   hooks = FALSE
 )
 
@@ -93,9 +92,6 @@ FutureBackend subclass, or by R option \link{future.globals.maxSize} (sic!))}
 \item{interrupts}{If FALSE, attempts to interrupt futures will not take
 place on this backend, even if the backend supports it. This is useful
 when, for instance, it takes a long time to interrupt a future.}
-
-\item{passthrough}{If TRUE, futures are resolved on the next, nested
-future backend.}
 
 \item{backend}{a \link{FutureBackend}.}
 
