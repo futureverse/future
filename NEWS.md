@@ -1,4 +1,4 @@
-# Version (development version)
+# Version 1.40.0 [2025-04-10]
 
 This is the first rollout out of three major updates, which is now
 possible due to a multi-year effort of internal re-designs, work with

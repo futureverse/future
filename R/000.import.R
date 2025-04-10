@@ -5,7 +5,7 @@ import_from <- function(name, mode = "function", default = NULL, package) {
   } else if (!is.null(default)) {
     default
   } else {
-    stopf("No such '%s' %s: %s()", package, mode, name)
+    stop(sprintf("No such '%s' %s: %s()", package, mode, name))
   }
 }
 
