@@ -1,5 +1,5 @@
-library("future")
-library("graphics")
+library(future)
+library(graphics)
 
 plot_what_is_done <- function(counts) {
   for (kk in seq_along(counts)) {

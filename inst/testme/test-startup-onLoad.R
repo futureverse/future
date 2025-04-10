@@ -1,0 +1,142 @@
+#' @tags startup onLoad
+
+library(future)
+options(future.debug = FALSE)
+
+maxCores <- min(2L, availableCores(methods = "system"))
+
+plan("default")
+strategy0 <- plan()
+ 
+message("*** .onLoad() ...")
+plan("default")
+pkgname <- "future"
+
+message("- .onLoad() w/out command-line options ...")
+options(future.plan = NULL, future.cmdargs = NULL)
+.onLoad(pkgname, pkgname)
+strategy <- plan("next")
+print(strategy)
+stopifnot(all(class(strategy) == class(strategy0)))
+plan("default")
+message("- .onLoad() w/out command-line options ... DONE")
+
+message("- .onLoad() w/ -p 1 ...")
+options(future.plan = NULL, future.cmdargs = c("-p", 1))
+.onLoad(pkgname, pkgname)
+strategy <- plan("next")
+print(strategy)
+## future.plan can be either a string or a future function
+default <- getOption("future.plan", "sequential")
+if (is.function(default)) default <- class(default)
+stopifnot(inherits(strategy, default))
+plan("default")
+message("- .onLoad() w/ -p 1 ... DONE")
+
+message("- .onLoad() w/ --parallel=1 ...")
+plan("default")
+options(future.plan = NULL, future.cmdargs = "-parallel=1")
+.onLoad(pkgname, pkgname)
+strategy <- plan("next")
+print(strategy)
+## future.plan can be either a string or a future function
+default <- getOption("future.plan", "sequential")
+if (is.function(default)) default <- class(default)
+stopifnot(inherits(strategy, default))
+plan("default")
+message("- .onLoad() w/ --parallel=1 ... DONE")
+
+message("- .onLoad() w/ -p 2 ...")
+options(future.plan = NULL, future.cmdargs = c("-p", 2))
+.onLoad(pkgname, pkgname)
+strategy <- plan("next")
+print(strategy)
+if (maxCores >= 2) {
+  ## Exactly which type of 'multiprocess' future depends on R_FUTURE_PLAN
+  stopifnot(inherits(strategy, "multiprocess"))
+} else {
+  stopifnot(all(class(strategy) == class(strategy0)))
+}
+plan("default")
+message("- .onLoad() w/ -p 2 ... DONE")
+
+message("- .onLoad() w/ -p 0 ...")
+options(future.plan = NULL, future.cmdargs = c("-p", 0))
+.onLoad(pkgname, pkgname)
+strategy <- plan("next")
+print(strategy)
+stopifnot(all(class(strategy) == class(strategy0)))
+plan("default")
+message("- .onLoad() w/ -p 0 ... DONE")
+
+message("- .onLoad() w/ -p -1 ...")
+options(future.plan = NULL, future.cmdargs = c("-p", -1))
+.onLoad(pkgname, pkgname)
+strategy <- plan("next")
+print(strategy)
+stopifnot(all(class(strategy) == class(strategy0)))
+plan("default")
+message("- .onLoad() w/ -p -1 ... DONE")
+
+message("- .onLoad() w/ -p foo ...")
+options(future.plan = NULL, future.cmdargs = c("-p", "foo"))
+.onLoad(pkgname, pkgname)
+strategy <- plan("next")
+print(strategy)
+stopifnot(all(class(strategy) == class(strategy0)))
+plan("default")
+message("- .onLoad() w/ -p foo ... DONE")
+
+message("- .onLoad() w/ R_FUTURE_PLAN = 'multisession' ...")
+Sys.setenv(R_FUTURE_PLAN = "multisession")
+options(future.plan = NULL, future.cmdargs = NULL)
+.onLoad(pkgname, pkgname)
+strategy <- plan("next")
+print(strategy)
+stopifnot(inherits(strategy, "multisession"))
+plan("default")
+Sys.setenv(R_FUTURE_PLAN = "")
+message("- .onLoad() w/ R_FUTURE_PLAN = 'multisession' ... DONE")
+
+message("- .onLoad() w/ future.plan = 'multisession' ...")
+options(future.plan = NULL, future.plan = 'multisession', future.cmdargs = NULL)
+.onLoad(pkgname, pkgname)
+strategy <- plan("next")
+print(strategy)
+stopifnot(inherits(strategy, "multisession"))
+plan("default")
+message("- .onLoad() w/ future.plan = 'multisession' ... DONE")
+
+message("- .onLoad() w/ R_FUTURE_PLAN = 'multisession' & -p 1 ...")
+Sys.setenv(R_FUTURE_PLAN = "multisession")
+options(future.plan = NULL, future.cmdargs = c("-p", 1))
+.onLoad(pkgname, pkgname)
+strategy <- plan("next")
+print(strategy)
+stopifnot(inherits(strategy, "multisession"))
+plan("default")
+Sys.setenv(R_FUTURE_PLAN = "")
+message("- .onLoad() w/ R_FUTURE_PLAN = 'multisession' & -p 1 ... DONE")
+
+message("- .onLoad() w/ future.plan = 'multisession' & -p 1 ...")
+options(future.plan = 'multisession', future.cmdargs = c("-p", "1"))
+.onLoad(pkgname, pkgname)
+strategy <- plan("next")
+print(strategy)
+stopifnot(inherits(strategy, "multisession"))
+plan("default")
+message("- .onLoad() w/ future.plan = 'multisession' & -p 1 ... DONE")
+
+message("- .onLoad() w/ future.plan = 'multisession' & -p 1 ...")
+options(future.plan = multisession, future.cmdargs = c("-p", "1"))
+.onLoad(pkgname, pkgname)
+strategy <- plan("next")
+print(strategy)
+stopifnot(inherits(strategy, "multisession"))
+plan("default")
+message("- .onLoad() w/ future.plan = 'multisession' & -p 1 ... DONE")
+
+options(future.plan = NULL, future.cmdargs = NULL, future.availableCores.system = NULL, future.availableCores.fallback = NULL)
+
+message("*** .onLoad() ... DONE")
+

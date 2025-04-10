@@ -38,13 +38,22 @@ immediateConditionsPath <- local({
 #' @importFrom utils file_test
 #' @keywords internal
 readImmediateConditions <- function(path = immediateConditionsPath(rootPath = rootPath), rootPath = tempdir(), pattern = "[.]rds$", include = getOption("future.relay.immediate", "immediateCondition"), signal = FALSE, remove = TRUE) {
-  stop_if_not(is.character(include), !anyNA(include))
   stop_if_not(is.logical(remove), length(remove) == 1L, !is.na(remove))
+
+  debug <- isTRUE(getOption("future.debug"))
+  if (debug) {
+    mdebug("readImmediateCondition() ...")
+    mdebugf("  - path: %s", sQuote(path))
+    on.exit(mdebug("readImmediateCondition() ... DONE"))
+  }
 
   ## Nothing to do?
   if (!file_test("-d", path)) return(list())
   
   files <- dir(path = path, pattern = "[.]rds$", full.names = TRUE)
+  if (debug) {
+    mdebugf(" - Number of RDS files: %d", length(files))
+  }
 
   ## Nothing to do?
   if (length(files) == 0L) return(list())
@@ -60,6 +69,13 @@ readImmediateConditions <- function(path = immediateConditionsPath(rootPath = ro
   ## Nothing to do?
   if (length(files) == 0L) return(list())
 
+  ## Default for argument 'include'
+  if (missing(include)) {
+    include <- getOption("future.relay.immediate")
+    if (is.null(include)) include <- "immediateCondition"
+  }
+  stop_if_not(is.character(include), !anyNA(include))
+  
   ## Drop the ones that does not contain 'time' and 'condition' of the
   ## required class 'include'
   keep <- vapply(objs, FUN = function(x) {
@@ -82,15 +98,25 @@ readImmediateConditions <- function(path = immediateConditionsPath(rootPath = ro
   conds <- lapply(objs, FUN = .subset2, "condition")
   objs <- NULL
 
+  if (debug) {
+    mdebugf(" - Number of conditions: %d", length(conds))
+    classes <- lapply(conds, FUN = function(x) commaq(class(x)))
+    t <- table(classes)
+    t <- sprintf("%d:%s", t, names(t))
+    mdebugf(" - Condition class sets: %s", paste(t, collapse = "; "))
+  }
+
   ## Resignal conditions
+  mdebugf(" - Resignal conditions ...")
   conds <- lapply(conds, FUN = function(condition) {
     signalCondition(condition)
     ## Increment signal count
-    signaled <- condition$signaled
+    signaled <- condition[["signaled"]]
     if (is.null(signaled)) signaled <- 0L
-    condition$signaled <- signaled + 1L
+    condition[["signaled"]] <- signaled + 1L
     condition
   })
+  mdebugf(" - Resignal conditions ... done")
 
   ## Remove files?
   if (remove && length(files) > 0L) file.remove(files)
@@ -126,7 +152,7 @@ saveImmediateCondition <- function(cond, path = immediateConditionsPath(rootPath
 #'
 #' @param \ldots (optional) Additional arguments passed to [base::saveRDS()].
 #'
-#' @return (invisible) The pathname of the RDS written.
+#' @return The pathname of the RDS written.
 #'
 #' @details
 #' Uses [base::saveRDS] internally but writes the object atomically by first
@@ -147,10 +173,10 @@ save_rds <- function(object, pathname, ...) {
     msg <- conditionMessage(ex)
     fi_tmp <- file.info(pathname_tmp)
     msg <- sprintf("saveRDS() failed to save to temporary file %s (%.0f bytes; last modified on %s). The reason was: %s", sQuote(pathname_tmp), fi_tmp[["size"]], fi_tmp[["mtime"]], msg)
-    ex$message <- msg
+    ex[["message"]] <- msg
     stop(ex)
   })
-  stopifnot(file_test("-f", pathname_tmp))
+  stop_if_not(file_test("-f", pathname_tmp))
 
   res <- file.rename(from = pathname_tmp, to = pathname)
 
@@ -165,30 +191,10 @@ save_rds <- function(object, pathname, ...) {
     stop(msg)
   }
 
-  invisible(pathname)
+  pathname
 }
 
 
-
-tmpl_expr_send_immediateConditions_via_file <- bquote_compile({
-  withCallingHandlers({
-    .(expr)
-  }, immediateCondition = function(cond) {
-    ## saveImmediateCondition <- future:::saveImmediateCondition,
-    ## which in turn uses future:::save_rds
-    save_rds <- .(future:::save_rds)
-    saveImmediateCondition <- .(future:::saveImmediateCondition)
-    saveImmediateCondition(cond, path = .(
-        if (exists("saveImmediateCondition_path", mode = "character")) {
-          get("saveImmediateCondition_path", mode = "character")
-        } else {
-          future:::immediateConditionsPath(rootPath = tempdir())
-        }
-      )
-    )
-    ## Avoid condition from being signaled more than once
-    ## muffleCondition <- future:::muffleCondition
-    muffleCondition <- .(future:::muffleCondition)
-    muffleCondition(cond)
-  })
-})
+fileImmediateConditionHandler <- function(cond, ...) {
+  saveImmediateCondition(cond, ...)
+}

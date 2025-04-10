@@ -3,12 +3,9 @@
 \name{re-exports}
 \alias{re-exports}
 \alias{as.cluster}
-\alias{autoStopCluster}
 \alias{availableCores}
 \alias{availableWorkers}
-\alias{makeClusterMPI}
 \alias{makeClusterPSOCK}
-\alias{makeNodePSOCK}
 \alias{supportsMulticore}
 \title{Functions Moved to 'parallelly'}
 \description{
@@ -18,19 +15,21 @@ been migrated to \pkg{parallelly}.  The migration started with
 are also useful outside of the \pkg{future} framework.
 }
 \details{
+\emph{If you are using any of these from the \pkg{future} package, please
+switch to use the ones from the \pkg{parallelly} package. Thank you!}
 \itemize{
 \item \code{\link[parallelly:as.cluster]{parallelly::as.cluster()}}
-\item \code{\link[parallelly:autoStopCluster]{parallelly::autoStopCluster()}}
+\item \code{\link[parallelly:autoStopCluster]{parallelly::autoStopCluster()}}   (no longer re-exported)
 \item \code{\link[parallelly:availableCores]{parallelly::availableCores()}}
 \item \code{\link[parallelly:availableWorkers]{parallelly::availableWorkers()}}
-\item \code{\link[parallelly:makeClusterMPI]{parallelly::makeClusterMPI()}}
+\item \code{\link[parallelly:makeClusterMPI]{parallelly::makeClusterMPI()}}    (no longer re-exported)
 \item \code{\link[parallelly:makeClusterPSOCK]{parallelly::makeClusterPSOCK()}}
-\item \code{\link[parallelly:makeClusterPSOCK]{parallelly::makeNodePSOCK()}}
+\item \code{\link[parallelly:makeClusterPSOCK]{parallelly::makeNodePSOCK()}}     (no longer re-exported)
 \item \code{\link[parallelly:supportsMulticore]{parallelly::supportsMulticore()}}
 }
 
-For backward-compatible reasons, these functions remain available as
-exact copies also from this package (as re-exports).  For example,
+For backward-compatible reasons, \emph{some} of these functions remain
+available as exact copies also from this package (as re-exports), e.g.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{cl <- parallelly::makeClusterPSOCK(2)
 }\if{html}{\out{</div>}}
@@ -39,4 +38,7 @@ can still be accessed as:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{cl <- future::makeClusterPSOCK(2)
 }\if{html}{\out{</div>}}
+
+\emph{Note that it is the goal to remove all of the above from this package.}
 }
+\keyword{internal}

@@ -64,13 +64,11 @@ Remember, as developers we never know what compute resources the end-user has ac
 
 For reasons like the ones mentioned above, refrain from setting `plan()` in a function.  It is better to leave it to the end-user to decided how they want to parallelize.  One reason for this is that we can never know how and in what context our code will run.  For example, they might use futures to parallelize a function call in some other package and that package code calls your package internally.  If you set `plan(multisession)` internally without undoing, you might mess up the `plan()` that is already set breaking any further parallelization.
 
-If you still think it is necessary to set `plan()`, make sure to undo when the function exits, also on errors.  This can be done by using `on.exit()`, e.g.
+If you still think it is necessary to set `plan()`, make sure to undo when the function exits, also on errors.  This can be done by using `localPlan()`, e.g.
 
 ```r
 my_fcn <- function(x) {
-  oplan <- plan(multisession)
-  on.exit(plan(oplan))
-
+  localPlan(multisession)
   y <- analyze(x)
   summarize(y)
 }
@@ -82,8 +80,7 @@ The need for setting the future strategy within a function often comes from deve
 ```r
 my_fcn <- function(x, parallel = FALSE) {
   if (parallel) {
-    oplan <- plan(multisession)
-    on.exit(plan(oplan))
+    localPlan(multisession)
     y <- future_lapply(x, FUN = analyze) ## from future.apply package
   } else {
     y <- lapply(x, FUN = analyze)

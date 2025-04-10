@@ -1,7 +1,7 @@
-_This is a translation of [README.md](https://github.com/HenrikBengtsson/future/blob/develop/README.md) as of [2023-06-17](https://github.com/HenrikBengtsson/future/blob/2a675abff2e3a729e6108d40710d0dcb22cc705b/README.md) done by [hoxo_m](https://github.com/hoxo-m)._
+_This is a translation of [README.md](https://github.com/futureverse/future/blob/develop/README.md) as of [2023-06-17](https://github.com/futureverse/future/blob/2a675abff2e3a729e6108d40710d0dcb22cc705b/README.md) done by [hoxo_m](https://github.com/hoxo-m)._
 
 <div id="badges"><!-- pkgdown markup -->
-<a href="https://CRAN.R-project.org/web/checks/check_results_future.html"><img border="0" src="https://www.r-pkg.org/badges/version/future" alt="CRAN check status"/></a> <a href="https://github.com/HenrikBengtsson/future/actions?query=workflow%3AR-CMD-check"><img border="0" src="https://github.com/HenrikBengtsson/future/actions/workflows/R-CMD-check.yaml/badge.svg?branch=develop" alt="R CMD check status"/></a> <a href="https://github.com/HenrikBengtsson/future/actions?query=workflow%3Arevdepcheck-top"><img border="0" src="https://github.com/HenrikBengtsson/future/actions/workflows/revdepcheck-top.yaml/badge.svg?branch=develop" alt="Top reverse-dependency checks status"/></a> <a href="https://github.com/HenrikBengtsson/future/actions?query=workflow%3Afuture_tests"><img border="0" src="https://github.com/HenrikBengtsson/future/actions/workflows/future_tests.yaml/badge.svg?branch=develop" alt="future.tests checks status"/></a>   <a href="https://app.codecov.io/gh/HenrikBengtsson/future"><img border="0" src="https://codecov.io/gh/HenrikBengtsson/future/branch/develop/graph/badge.svg" alt="Coverage Status"/></a> 
+<a href="https://CRAN.R-project.org/web/checks/check_results_future.html"><img border="0" src="https://www.r-pkg.org/badges/version/future" alt="CRAN check status"/></a> <a href="https://github.com/futureverse/future/actions?query=workflow%3AR-CMD-check"><img border="0" src="https://github.com/futureverse/future/actions/workflows/R-CMD-check.yaml/badge.svg?branch=develop" alt="R CMD check status"/></a> <a href="https://github.com/futureverse/future/actions?query=workflow%3Arevdepcheck-top"><img border="0" src="https://github.com/futureverse/future/actions/workflows/revdepcheck-top.yaml/badge.svg?branch=develop" alt="Top reverse-dependency checks status"/></a> <a href="https://github.com/futureverse/future/actions?query=workflow%3Afuture_tests"><img border="0" src="https://github.com/futureverse/future/actions/workflows/future_tests.yaml/badge.svg?branch=develop" alt="future.tests checks status"/></a>   <a href="https://app.codecov.io/gh/futureverse/future"><img border="0" src="https://codecov.io/gh/futureverse/future/branch/develop/graph/badge.svg" alt="Coverage Status"/></a> 
 </div>
 
 # future: Rにおける統一的な並列分散処理 <img border="0" src="man/figures/logo.png" alt="The 'future' hexlogo" align="right" />
@@ -1130,7 +1130,7 @@ I am also open to contributions and collaborations of any kind.
 このパッケージの目的は、R でフューチャを使うための標準的で統一された API を提供することである。
 現状はこの目的を達成するための初期段階にすぎない。
 future パッケージを改善するアイデアや意見を持っている人がいたらぜひ教えてほしい。 開発者に連絡をとるには [GitHub
-リポジトリ](https://github.com/HenrikBengtsson/future/)経由が好ましいが、どのような手段であっても歓迎する。
+リポジトリ](https://github.com/futureverse/future/)経由が好ましいが、どのような手段であっても歓迎する。
 
 ## インストール
 
@@ -1145,7 +1145,7 @@ install.packages("future")
 プレリリースバージョンは GitHub の `develop` ブランチにあり、インストールするには次のようにする。
 
 ``` r
-remotes::install_github("HenrikBengtsson/future", ref="develop")
+remotes::install_github("futureverse/future", ref="develop")
 ```
 
 これはソースからのインストールとなる。

@@ -22,11 +22,11 @@ home:
   - text: The Futureverse Project
     href: https://www.futureverse.org/
   - text: Futureverse User Forum
-    href: https://github.com/HenrikBengtsson/future/discussions
+    href: https://github.com/futureverse/future/discussions
 
 navbar:
   structure:
-    right: [futureverse, pkgs, cran, github]
+    right: [futureverse, pkgs, cran, github, lightswitch]
   components:
     futureverse:
       icon: fas fa-home
@@ -49,3 +49,5 @@ template:
       index_name: futureverse
       algoliaOptions: { 'facetFilters': ['project:<%= pkg %>'] }
     ganalytics: G-SB3EQSD9FR
+  bootstrap: 5
+  light-switch: true

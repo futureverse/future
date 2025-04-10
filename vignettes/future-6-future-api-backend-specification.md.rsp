@@ -32,7 +32,7 @@ A supplement to the specification herein is the 'Test Suite for Future API Backe
 
 ## Feedback
 
-If you find that something in this document to be missing, unclear, or faulty, please report your feedback using the official issue tracker for the 'future' package at <https://github.com/HenrikBengtsson/future>.  If you have feedback that is specific to the test suite, please use the official issue tracker for the 'future.tests' package at <https://github.com/HenrikBengtsson/future.tests>
+If you find that something in this document to be missing, unclear, or faulty, please report your feedback using the official issue tracker for the 'future' package at <https://github.com/futureverse/future>.  If you have feedback that is specific to the test suite, please use the official issue tracker for the 'future.tests' package at <https://github.com/futureverse/future.tests>
 
 
 

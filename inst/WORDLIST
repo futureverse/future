@@ -9,6 +9,7 @@ CFunc
 CMD
 CMRG
 ClusterFuture
+ClusterFutureBackend
 CppMethod
 Ctrl
 DBIConnection
@@ -22,6 +23,8 @@ FQDN
 FastqFile
 FastqStreamer
 FastqStreamerList
+FutureBackend
+FutureBackend
 FutureCondition
 FutureError
 FutureEvaluationCondition
@@ -34,8 +37,8 @@ FutureRegistry
 FutureResult
 FutureStrategy
 FutureStrategyList
-Futureverse
 FutureWarning
+Futureverse
 Globals
 HB
 HPC
@@ -59,9 +62,11 @@ Maechler
 MiB
 MinGW
 MulticoreFuture
+MulticoreFutureBackend
 Multiprocess
 Multisession
 MultisessionFuture
+MultisessionFutureBackend
 MyMachine
 MyParallelFuture
 NCPUS
@@ -97,6 +102,7 @@ RStudio
 RasterLayer
 Rcpp
 RcppParallel
+Regardlessly
 RegisteredNativeSymbol
 RhpcBLASctl
 RichSOCKcluster
@@ -119,6 +125,7 @@ SOCKnode
 SQLiteConnection
 SUPPORTSMULTICORE
 SequentialFuture
+SequentialFutureBackend
 ShortRead
 Slurm
 SolexaPath
@@ -180,6 +187,7 @@ ccd
 cdd
 ce
 cfunction
+checkNumberOfLocalWorkers
 chr
 ci
 cleanEx
@@ -241,6 +249,7 @@ futureAssign
 futureCall
 futureOf
 futureSessionInfo
+futureverse
 futurized
 gc
 getExpression
@@ -249,6 +258,7 @@ getNodeSet
 getOption
 getcwd
 getpid
+giga
 ging
 github
 glmnet
@@ -294,8 +304,10 @@ libs
 linux
 listenv
 loadNamespace
+localPlan
 lp
 lpdf
+lsf
 macOS
 maechler
 magick
@@ -308,6 +320,7 @@ makePSOCKcluster
 mandelbrot
 maxCores
 maxSize
+maxWorkers
 mc
 mclapply
 md
@@ -317,6 +330,7 @@ memoization
 mget
 mhost
 mingw
+mirai
 mortem
 mpi
 mpid
@@ -328,6 +342,7 @@ myInternalIP
 myip
 myparallel
 mypkg
+na
 nam
 nbrOfFreeWorkers
 nbrOfWorkers
@@ -357,6 +372,7 @@ onMisuse
 onReference
 oo
 oopts
+openlava
 oplan
 os
 packageVersion
@@ -397,6 +413,7 @@ revdepcheck
 rhub
 rng
 rnorm
+rollout
 roundtrip
 rpolars
 rscript
@@ -416,6 +433,7 @@ setTimeLimit
 setalloccol
 setosa
 setwd
+sge
 shp
 sig
 simpleError

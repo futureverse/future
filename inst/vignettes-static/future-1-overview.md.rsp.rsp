@@ -144,18 +144,32 @@ To keep it simple, we will use the implicit style in the rest of this document, 
 
 ## Controlling How Futures are Resolved
 
-The future package implements the following types of futures:
+The future package implements the following built-in future backends:
 
-| Name            | OSes        | Description
-|:----------------|:------------|:-----------------------------------------------------
-| _synchronous:_  |             | _non-parallel:_
-| `sequential`    | all         | sequentially and in the current R process
-| _asynchronous:_ |             | _parallel_:
-| `multisession`  | all         | background R sessions (on current machine)
-| `multicore`     | not Windows/not RStudio | forked R processes (on current machine)
-| `cluster`       | all         | external R sessions on current, local, and/or remote machines
+| Package    | Backend            | OSes        | How futures are evaluated
+|:---------- |:----------------|:------------|:-----------------------------------------------------
+| **future** | `sequential`    | all         | sequentially and in the current R process
+| **future** | `multicore`     | not Windows/not RStudio | parallelly via forked R processes (on current machine)
+| **future** | `multisession`  | all         | parallelly via background R sessions (on current machine)
+| **future** | `cluster`       | all         | parallelly in external R sessions on current, local, and/or remote machines
 
-The future package is designed such that support for additional strategies can be implemented as well.  For instance, the [future.callr] package provides future backends that evaluates futures in a background R process utilizing the [callr] package - they work similarly to `multisession` futures but has a few advantages.  Continuing, the [future.batchtools] package provides futures for all types of _cluster functions_ ("backends") that the [batchtools] package supports.  Specifically, futures for evaluating R expressions via job schedulers such as Slurm, TORQUE/PBS, Oracle/Sun Grid Engine (SGE) and Load Sharing Facility (LSF) are also available.
+In addition to the built-in ones, additional parallel backends are
+implemented in future-backend packages that leverage other R packages
+for parallel and distributed processing, e.g. **[batchtools]**,
+**[callr]**, and **[mirai]**. Currently known ones are:
+
+
+| Package               |Backend                | OSes        | How futures are evaluated
+|:----------------------|:----------------------|:------------|:-----------------------------------------------------
+| **[future.batchtools]** | `batchtools_local`    | all         | sequentially in a background process (on current machine) 
+| **[future.batchtools]** | `batchtools_lsf`      | all         | parallelly via a Load Sharing Facility (LSF) HPC job scheduler
+| **[future.batchtools]** | `batchtools_openlava` | all         | parallelly via an OpenLava HPC job scheduler
+| **[future.batchtools]** | `batchtools_sge`      | all         | parallelly via a Grid Engine (e.g. SGE) HPC job scheduler
+| **[future.batchtools]** | `batchtools_slurm`    | all         | parallelly via a Slurm HPC job scheduler
+| **[future.batchtools]** | `batchtools_torque`   | all         | parallelly via a TORQUE/PBS HPC job scheduler
+| **[future.callr]**      | `callr`               | all         | parallelly via one-time **callr** background R sessions (on current machine)
+| **[future.mirai]**      | `mirai_multisession`  | all         | parallelly via **mirai** background R sessions (on current machine)
+| **[future.mirai]**      | `mirai_cluster`       | all         | parallelly via **mirai** daemons running locally or remotely
 
 By default, future expressions are evaluated eagerly (= instantaneously) and synchronously (in the current R session).  This evaluation strategy is referred to as "sequential".  In this section, we will go through each of these strategies and discuss what they have in common and how they differ.
 
@@ -706,10 +720,12 @@ demo("mandelbrot", package = "future", ask = FALSE)
 
 [batchtools]: https://cran.r-project.org/package=batchtools
 [callr]: https://cran.r-project.org/package=callr
-[future]: https://cran.r-project.org/package=future
-[future.callr]: https://cran.r-project.org/package=future.callr
-[future.batchtools]: https://cran.r-project.org/package=future.batchtools
-[globals]: https://cran.r-project.org/package=globals
-[listenv]: https://cran.r-project.org/package=listenv
+[mirai]: https://cran.r-project.org/package=mirai
+[future]: https://future.futureverse.org
+[future.batchtools]: https://future.batchtools.futureverse.org
+[future.callr]: https://future.callr.futureverse.org
+[future.mirai]: https://future.mirai.futureverse.org
+[globals]: https://globals.futureverse.org
+[listenv]: https://listenv.futureverse.org
 [Futures in R: Common Issues with Solutions]: future-4-issues.html
 [Futures in R: Future Topologies]: future-3-topologies.html

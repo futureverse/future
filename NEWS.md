@@ -1,3 +1,163 @@
+# Version 1.40.0 [2025-04-10]
+
+This is the first rollout out of three major updates, which is now
+possible due to a multi-year effort of internal re-designs, work with
+package maintainers, release, and repeat. This release comes with a
+large redesign of how future backends are implemented internally. One
+goal is to lower the threshold for implementing exciting, new
+features, that has been on hold for too long. Some of these features
+are available already in this release, and more are to come in
+near-future releases. Another goal is to make it straightforward to
+implement a new backend.
+
+This update is fully backward compatible with previous versions.
+Developers and end-users can expect business as usual. Like all
+releases, this version has been validated thoroughly via
+reverse-dependency checks, **future.tests** checks, and more.
+
+## New Features
+
+ * Now `with()` can be used to evaluate R expressions, including
+   futures, using a temporary future plan. For example,
+   `with(plan(multisession), { expr })` evaluates `{ expr }` using
+   multisession futures, before reverting back to plan set previously
+   by the user. To do the same inside a function, set
+   `with(plan(multisession), local = TRUE)`, which uses multisession
+   futures until the function exits.
+
+ * Add `interrupt()`, which interrupts a future, if the parallel
+   backend supports it, otherwise it is silently ignored. It can also
+   be used on a container (i.e. lists, `listenv`:s and environment) of
+   futures. Interrupts are enabled by default for `multicore` and
+   `multisession` futures. Interrupts are disabled by default for
+   `cluster` futures, because there parallel workers may be running on
+   remote machines where the overhead of interrupting such workers
+   might be too large. To override the defaults, specify `plan()`
+   argument `interrupts`, e.g. `plan(cluster, workers = hosts,
+   interrupts = TRUE)`.
+   
+ * Add `reset()`, which resets a future that has completed, failed, or
+   been interrupted. The future is reset back to a lazy, vanilla
+   future that can be relaunched.
+
+ * `value()` on containers gained argument `reduce`, which specifies a
+   function for reducing the values, e.g. ``values(fs, reduce =
+   `+`)``. Optional attribute `init` controls the initial value. Note
+   that attributes must not be set on primitive functions. As a
+   workaround, use `reduce = structure("+", init = 42)`.
+
+ * `value()` on containers gained argument `inorder`, which can be
+   used control whether standard output and conditions are relayed in
+   order of `x`, or as soon as a future in `x` is resolved. It also
+   controls the order of how values are reduced.
+
+ * `value()` gained argument `drop` to turn resolved futures into
+   minimal, invalid light-weight futures after their values have been
+   returned. This reduces the memory use. This is particularly useful
+   when using `reduce` in combination with `inorder = FALSE`. For
+   instance, if you have a list of futures `fs`, and you know that you
+   will not need to query the futures for their values more than once,
+   then it is memory efficient and more performant to use ``v <-
+   value(fs, reduce = `+`, inorder = FALSE, drop = TRUE)``.
+
+ * `value()` on containers interrupts non-resolved futures if an error
+   is detected in one of the futures.
+
+ * Add `minifuture()`, which is like `future()`, but with different
+   default arguments resulting in less overhead with the added burden
+   of having to specify globals and packages, not having conditions
+   and standard output relayed, and ignoring random number generation.
+
+ * Printing `plan()` will output details on the future backend, e.g.
+   number of workers, number of free workers, backend settings, and
+   summary of resolved and non-resolved, active futures.
+ 
+ * Interrupted futures are now handled and produce an informative error.
+
+ * Timeout errors triggered by `setTimeLimit()` are now relayed.
+ 
+ * Failures to launch a future is now detected, handled, and relayed
+   as an error with details on why it failed.
+   
+ * Failed workers are automatically detected and relaunched, if
+   supported by the parallel backend. For instance, if a `cluster`
+   workers is interrupted, or crashes for other reasons, it will be
+   relaunched. This works for both local and remote workers.
+
+ * A future must close any connections or graphical devices it opens,
+   and must never close ones that it did not open. Now `value()`
+   produces a warning if such misuse is detected. This may be upgrade
+   to an error in future releases. The default behavior can be
+   controlled via an R option.  Reverse dependency checks spotted one
+   CRAN package, out of 426, that left stray connections behind.
+ 
+ * All parallel backends now prevent nested parallelization, unless
+   explicitly allowed, e.g. settings recognized by
+   `parallelly::availableCores()` or set by the future
+   `plan()`. Previously, this had to be implemented by each backend,
+   but now it's handled automatically by the future framework.
+   
+ * Add new FutureBackend API for writing future backends. Please use
+   with care, because there will be further updates in the next few
+   release cycles.
+
+ * The maximum total size of objects send to and from the worker can
+   now be configured per backend, e.g. `plan(multisession,
+   maxSizeOfObjects = 10e6)` will produce an error if the total size
+   of globals exceeds 10 MB.  
+
+ * Backends `sequential` and `multicore` no longer has a limit on the
+   maximum size of globals, i.e. they now default to `maxSizeOfObjects
+   = +Inf`. Backends `cluster` and `multisession` also default to
+   `maxSizeOfObjects = +Inf`, unless R option `future.globals.maxSize`
+   (sic!) is set.
+   
+## Bug Fixes
+
+ * Now 'interrupt' conditions are captured during the evaluation of
+   the future, and results in the evaluation being terminated with a
+   `FutureInterruptError`. Not all backends manage to catch
+   interrupts, leading to the parallel R workers to terminate,
+   resulting in a regular `FutureError`. Previously, interrupts would
+   result in non-deterministic behavior and errors depending of future
+   backend.
+
+ * Timeout errors triggered by `setTimeLimit()` was likely to render
+   the future and the corresponding worker invalid.
+   
+ * Identified and fixed one reason for why `cluster` and
+   `multisession` futures could result in errors on "Unexpected result
+   (of class 'NULL' != 'FutureResult') retrieved for
+   MultisessionFuture future ... This suggests that the communication
+   with 'RichSOCKnode' #1 on host 'localhost' (R Under development
+   (unstable) (2025-03-23 r88038), platform x86_64-pc-linux-gnu) is
+   out of sync."
+   
+ * Switching plan while having active futures would likely result in
+   the active futures becoming corrupt, resulting in unpredictable
+   errors when querying the future by, for instance, `value()`, but
+   also `resolved()`, which should never produce an error. Now such
+   futures become predictable, interrupted futures.
+
+## Documentation
+
+ * Updated the future topology vignette with information on the
+   CPU-overuse protection error that may occur when using a nested
+   future plan and how to avoid it.
+
+## Cleanup
+
+ * Starting with **future** 1.20.0 (2020-10-30), several low-level
+   functions for creating and working PSOCK and MPI clusters were
+   moved to the **parallelly** package. For backward-compatibility
+   reasons, those functions were kept in **future** as re-exports,
+   e.g. `future::makeClusterPSOCK()` still works, whereas
+   `parallelly::makeClusterPSOCK()` is the preferred use. The
+   long-term goal is to clean out these re-exports. Starting with this
+   release, the **future** package no longer re-exports
+   `autoStopCluster()`, `makeClusterMPI()`, `makeNodePSOCK()`.
+
+
 # Version 1.34.0 [2024-07-29]
 
 ## New Features

@@ -105,7 +105,26 @@ Now, we could imagine that we process the outer layer with, say, two parallel fu
 plan(list(tweak(multisession, workers = 2), tweak(multisession, workers = I(4))))
 ```
 
-When using this approach, there is a risk of setting up too many concurrent workers. Because Futureverse has a built-in protection, we need to declare nested workers using the As-Is `I(.)` function, which basically tells the parallel framework "trust us, we know what we are doing". To minimize the risk of mistakes and to make sure our setup respects `availableCores()`, use something like:
+Note that As-Is `I(.)` specification for the inner layer, i.e. `workers = I(4)`. If we would just specify `workers = 4`, the future framework would detect this as a potential user mistake. This is because by default it prevents nested parallelization and allots only a single CPU core to the inner layer, i.e. `availableCores()` will return one there. However, the user requests four CPU cores, which could result in an unintended 400% CPU overuse. The future framework detects this discrepancy, and if it is too large, it will produce an error. For example, on an eight core machine, we would get the following error produced at the inner layer:
+
+```sh
+> plan(list(tweak(multisession, workers = 2), tweak(multisession, workers = 4)))
+> a %<-% { b %<-% 1 ; b }
+> a
+Error in checkNumberOfLocalWorkers(workers) : 
+  Attempting to set up 4 localhost parallel workers with only 1 CPU
+cores available for this R process (per 'mc.cores'), which could
+result in a 400% load. The hard limit is set to 300%. Overusing the
+CPUs has negative impact on the current R process, but also on all
+other processes of yours and others running on the same machine. See
+help("parallelly.maxWorkers.localhost", package = "parallelly") for
+further explanations and how to override the hard limit that triggered
+this error
+```
+
+Because Futureverse has this built-in protection, we need to explicitly override it by declaring nested workers using the As-Is `I(.)` function. This basically tells the parallel framework "trust us, we know what we are doing". To minimize the risk of mistakes and to make sure our setup respects `availableCores()`.
+
+To make sure we stay within the limits of the current machine, it's best to use something like:
 
 ```r
 plan(list(

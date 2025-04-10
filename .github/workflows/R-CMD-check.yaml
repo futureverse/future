@@ -1,5 +1,5 @@
 on: [push, pull_request]
-
+  
 name: R-CMD-check
 
 jobs:
@@ -16,18 +16,23 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          - {os: windows-latest, r: 'devel'    }
+          - {os: windows-latest, r: 'devel', strict: true, label: 'strict' }
           - {os: windows-latest, r: 'release'  }
           - {os: windows-latest, r: 'oldrel'   }
-          - {os: macOS-latest,   r: 'devel'    }
+#          - {os: macOS-latest,   r: 'devel'    }
           - {os: macOS-latest,   r: 'release'  }
-          - {os: macOS-latest,   r: 'oldrel'   }
+#          - {os: macOS-latest,   r: 'oldrel'   }
           - {os: ubuntu-latest,  r: 'devel'    }
           - {os: ubuntu-latest,  r: 'release'  }
           - {os: ubuntu-latest,  r: 'oldrel'   }
           - {os: ubuntu-latest,  r: 'oldrel-1' }
           - {os: ubuntu-latest,  r: 'oldrel-2' }
-          - {os: ubuntu-latest,  r: '3.5'      }
+          - {os: ubuntu-latest,  r: '4.0'      }
+
+          - {os: ubuntu-latest,  r: 'release', strict: true, label: 'strict' }
+
+          - {os: ubuntu-latest,  r: 'release'  , availablecores: 1, label: 'availableCores.system=1' }
+          - {os: ubuntu-latest,  r: 'release'  , availablecores: 2, label: 'availableCores.system=2' }
           - {os: ubuntu-latest,  r: 'release'  , language: ko,    label: ko    }
           - {os: ubuntu-latest,  r: 'release'  , language: zh_CN, label: zh_CN }
           - {os: ubuntu-latest,  r: 'release'  , language: zh_TW, label: zh_TW }
@@ -47,16 +52,16 @@ jobs:
       _R_COMPARE_LANG_OBJECTS: eqonly
       ## R CMD check
       _R_CHECK_CRAN_INCOMING_: false
-      _R_CHECK_LENGTH_1_CONDITION_: true
-      _R_CHECK_LENGTH_1_LOGIC2_: true
       _R_CHECK_MATRIX_DATA_: true
       _R_CHECK_SUGGESTS_ONLY_: true
       _R_CHECK_THINGS_IN_TEMP_DIR_: true
       _R_CHECK_TESTS_NLINES_: 300
       RCMDCHECK_ERROR_ON: note
       ## Specific to futures
+      R_PARALLELLY_AVAILABLECORES_SYSTEM: ${{ matrix.config.availablecores }}
       R_FUTURE_RNG_ONMISUSE: error
       R_FUTURE_GLOBALS_KEEPWHERE: ${{ matrix.config.globals_keepWhere }}
+      R_PARALLELLY_BRANCH: ${{ matrix.config.parallelly }}
       
     steps:
       - uses: actions/checkout@v4
@@ -71,12 +76,19 @@ jobs:
           
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          extra-packages: any::rcmdcheck
+          extra-packages: |
+            any::rcmdcheck
+            any::remotes
           needs: check
 
       - name: Install package itself (special case)
         run: |
           install.packages(".", repos = NULL, type = "source")  ## needed by parallel workers
+          pver <- Sys.getenv("R_PARALLELLY_BRANCH")
+          if (nzchar(pver)) {
+            remotes::install_github("futureverse/parallelly", ref = pver)
+          }
+          
         shell: Rscript {0}
 
       - name: Session info
@@ -104,6 +116,11 @@ jobs:
           R_FUTURE_FORK_MULTITHREADING_ENABLE: ${{ matrix.config.fork_multithreading_enable }}
           R_FUTURE_PSOCK_RELAY_IMMEDIATE: ${{ matrix.config.psock_relay_immediate }}
         run: |
+          if ("${{ matrix.config.strict }}" == "true") {
+            Sys.setenv(R_FUTURE_CONNECTIONS_ONMISUSE = "error[details=TRUE]")
+            Sys.setenv(R_FUTURE_GLOBALENV_ONMISUSE = "error")
+            Sys.setenv(R_FUTURE_RNG_ONMISUSE = "error")
+          }
           if (nzchar(Sys.getenv("R_FUTURE_PLAN")) || getRversion() < "3.5.0") Sys.setenv(RCMDCHECK_ERROR_ON = "error")
           rcmdcheck::rcmdcheck(
             build_args = if (getRversion() < "3.5.0") "--no-build-vignettes",
@@ -115,6 +132,12 @@ jobs:
       - name: Check (Windows)
         if: runner.os == 'Windows'
         run: |
+          if ("${{ matrix.config.strict }}" == "true") {
+            Sys.setenv(R_FUTURE_CONNECTIONS_ONMISUSE = "error[details=TRUE]")
+            Sys.setenv(R_FUTURE_DEVICES_ONMISUSE = "error")
+            Sys.setenv(R_FUTURE_GLOBALENV_ONMISUSE = "error")
+            Sys.setenv(R_FUTURE_RNG_ONMISUSE = "error")
+          }
           rcmdcheck::rcmdcheck(
             args = c("--no-manual", "--as-cran", if (.Platform$OS.type == "windows" && getRversion() >= "4.2.0") "--no-multiarch"),
             check_dir = "check"
@@ -123,7 +146,7 @@ jobs:
 
       - name: Upload check results
         if: failure()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ runner.os }}-r${{ matrix.config.r }}-results
           path: check

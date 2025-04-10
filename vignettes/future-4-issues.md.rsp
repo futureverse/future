@@ -15,7 +15,7 @@ In the ideal case, all it takes to start using futures in R is to replace select
 
 However, as show below, there are few cases where you might run into some hurdles, but, as also shown, they are often easy to overcome.  These are often related to global variables.  
 
-_If you identify other cases, please consider [reporting](https://github.com/HenrikBengtsson/future/issues/) them so they can be documented here and possibly even be fixed._
+_If you identify other cases, please consider [reporting](https://github.com/futureverse/future/issues/) them so they can be documented here and possibly even be fixed._
 
 
 ## Issues with globals and packages
@@ -247,6 +247,103 @@ or equivalently
 ```
 
 Note, do _not_ use `library()` or `loadNamespace()` to resolve these problems. It is always better to use the above `packages` approach.
+
+
+## '...' used in an incorrect context
+
+In R, we can use the `...` construct is used to refer to zero or more
+arguments. For example, we can use as in:
+
+```r
+my_mean <- function(x, ...) mean(x, ...)
+
+y <- my_mean(1:10, trim = 0.1, na.rm = FALSE)
+```
+
+This makes sure that the `trim` and the `na.rm` arguments are passed
+down to the `mean()` function.
+
+We can also use it to pass arguments in map-reduce calls to anonymous
+functions as in:
+
+```r
+X <- rnorm(10)
+y <- lapply(X, FUN = function(x, ...) {
+  round(x, ...)
+}, digits = 3)
+```
+
+Note how `digits = 3` is passed to the anonymous function via its `...`
+argument, which is then passed on to `round()`, effectively calling
+`round(X[[1]], digits = 3)`, `round(X[[2]], digits = 3)`, and so on.
+
+If we take this one step further, we might see things like:
+
+```r
+my_fcn <- function(X, ...) {  ## outer '...'
+  y <- lapply(X, FUN = function(x, ...) { ## inner '...'
+    round(x, ...) ## inner '...'
+  }, ...) ## outer '...'
+  y
+}
+
+X <- rnorm(10)
+y <- my_fcn(X, digits = 3)
+```
+
+In this case, we have two levels of `...` arguments; one for
+`my_fcn()` and one for the anonymous function.  Note how the `...`
+arguments for `my_fcn()` are passed down to the anonymous function by
+specifying `...` as an final argument to `lapply()`.
+
+The above is the ideal and proper way to pass down `...`. However, it
+is not uncommon to see that the `...` is used as a global variable in
+anonymous functions. For example, you might find:
+
+```r
+my_fcn <- function(X, ...) {  ## outer '...'
+  y <- lapply(X, FUN = function(x) {
+    round(x, ...) ## outer '...' as global variables
+  })
+  y
+}
+```
+
+This will also work, because `...` becomes a global variable in the
+environment of the anonymous function. Although we know that relying
+on global variables is a bad idea, this one often slips through.
+
+If we attempt to do the same with the future framework, or other
+parallel frameworks, it might not work. For example, using:
+
+```r
+my_fcn <- function(X, ...) {
+  y <- future_lapply(X, FUN = function(x) {
+    round(x, ...)
+  })
+  y
+}
+```
+
+might result in an error on:
+
+```
+Error: '...' used in an incorrect context
+```
+
+Even you do not get this error, it is always a good idea to make sure
+`...` is passed as an argument all the way down to where it is used,
+e.g.
+
+```r
+my_fcn <- function(X, ...) {
+  y <- future.apply::future_lapply(X, FUN = function(x, ...) {
+    round(x, ...)
+  }, ...)
+  y
+}
+```
+
 
 
 ## Non-exportable objects

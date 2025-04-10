@@ -14,7 +14,7 @@ save_rds(object, pathname, ...)
 \item{\ldots}{(optional) Additional arguments passed to \code{\link[base:readRDS]{base::saveRDS()}}.}
 }
 \value{
-(invisible) The pathname of the RDS written.
+The pathname of the RDS written.
 }
 \description{
 Robustly Saves an Object to RDS File Atomically

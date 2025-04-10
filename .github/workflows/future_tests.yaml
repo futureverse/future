@@ -23,12 +23,13 @@ jobs:
           - { plan: 'future.batchtools::batchtools_local' }
           - { plan: 'future.batchtools::batchtools_bash'  }
           - { plan: 'future.callr::callr'                 }
+          - { plan: 'future.mirai::mirai_multisession'    }
+          - { plan: 'future.mirai::mirai_cluster'         }
 
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
       ## R CMD check
-      _R_CHECK_LENGTH_1_LOGIC2_: true
       _R_CHECK_MATRIX_DATA_: true
       _R_CHECK_CRAN_INCOMING_: false
       ## Specific to futures
@@ -87,7 +88,7 @@ jobs:
 
       - name: Upload check results
         if: failure()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ runner.os }}-r${{ matrix.future.plan }}-results
           path: check

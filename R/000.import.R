@@ -13,17 +13,24 @@ import_parallelly <- function(...) {
   import_from(..., package = "parallelly")
 }
 
+import_parallel <- function(...) {
+  import_from(..., package = "parallel")
+}
 
-## Keep until future.batchtools (> 0.11.0) is on CRAN
-inRCmdCheck <- import_parallelly("inRCmdCheck")
-
+import_parallel_fcn <- function(name, ...) {
+  import_from(name, ..., default = function(...) {
+    stop(sprintf("No such function: parallel:::%s()", name))
+  }, package = "parallel")
+}
 
 ## We are currently importing the following non-exported functions:
 ## * cluster futures:
 ##   - parallel:::defaultCluster()  ## non-critical / not really needed /
 ##                                  ## can be dropped in R (>= 3.5.0)
+##   - parallel:::closeNode()       ## non-critical / 
+##                                  ## can be dropped in R (>= 4.4.0)
 ##   - parallel:::sendCall()        ## run()
-##   - parallel:::recvResult()      ## value()
+##   - parallel:::recvData()        ## can be dropped in R (>= 4.4.0)
 ## * multicore futures:
 ##   - parallel:::selectChildren()  ## resolved()
 ##   - parallel:::rmChild()         ## value()
