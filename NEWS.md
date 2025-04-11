@@ -1,6 +1,9 @@
 # Version (development version)
 
- * ...
+## New Features
+
+ * Now `print()` for `Future` reports also on the current state of the
+   future, e.g. 'created', 'running', 'finished', and 'interrupted'.
  
 
 # Version 1.40.0 [2025-04-10]

@@ -316,6 +316,9 @@ print.Future <- function(x, ...) {
     cat("L'Ecuyer-CMRG RNG seed: <none> (seed = ", deparse(future[["seed"]]), ")\n", sep = "")
   }
 
+  state <- future[["state"]]
+  cat(sprintf("State: %s\n", state))
+  
   result <- future[["result"]]
   hasResult <- inherits(result, "FutureResult")
   ## BACKWARD COMPATIBILITY

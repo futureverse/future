@@ -146,6 +146,11 @@ if (!is.na(code)) {
 
 message(sprintf("Test %s ...", sQuote(testme[["name"]])))
 
+if (testme[["debug"]]) {
+  message("testme:")
+  message(paste(utils::capture.output(utils::str(as.list(testme))), collapse = "\n"))
+}
+
 ## Process prologue scripts, if they exist
 if (testme[["status"]] != "skipped" &&
     utils::file_test("-d", file.path(path, "_prologue"))) {
