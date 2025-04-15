@@ -443,7 +443,18 @@ run.Future <- function(future, ...) {
     if (debug) mdebug_push("Launching futures ...")
     future[["backend"]] <- backend
     future[["start"]] <- proc.time()[[3]]
-    future2 <- launchFuture(backend, future = future)
+    future2 <- tryCatch(
+      launchFuture(backend, future = future)
+    , FutureError = function(ex) {
+      ## Known error caught by the future backend
+      stop(ex)
+    }, error = function(ex) {
+      ## Unexpected error
+      msg <- conditionMessage(ex)
+      label <- sQuoteLabel(future[["label"]])
+      msg <- sprintf("Caught an unexpected error of class %s when trying to launch future (%s) on backend of class %s. The reason was: %s", class(ex)[1], label, class(backend)[1], msg)
+      stop(FutureLaunchError(msg, future = future))
+    })
     if (debug) mdebug_pop("Launching futures ... done")
     if (debug) mdebug("Future launched: ", commaq(class(future2)))
     stop_if_not(inherits(future2, "Future"))

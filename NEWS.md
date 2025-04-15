@@ -4,6 +4,16 @@
 
  * Now `print()` for `Future` reports also on the current state of the
    future, e.g. 'created', 'running', 'finished', and 'interrupted'.
+
+## Bug Fixes
+
+ * In rare cases, a future backend might fails to launch a future and
+   at the same time fail to handle such errors. That would result in
+   hard-to-understand, obscure errors. Now these errors are detected
+   by the **future** package and resignaled as informative errors of
+   class `FutureLaunchError`. This also allows the future that failed
+   to be launched to be reset and relaunched again, possible on
+   another future backend.
  
 
 # Version 1.40.0 [2025-04-10]

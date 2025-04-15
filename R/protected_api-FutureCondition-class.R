@@ -315,11 +315,21 @@ DeviceMisuseFutureError <- function(...) {
 }
 
 
+
+#' @rdname FutureCondition
+#' @export
+FutureLaunchError <- function(..., future = NULL) {
+  cond <- FutureError(..., future = future)
+  class <- c("FutureLaunch", class(cond))
+  class(cond) <- class[!duplicated(class, fromLast = TRUE)]
+  cond
+}
+
 #' @rdname FutureCondition
 #' @export
 FutureInterruptError <- function(..., future = NULL) {
   cond <- FutureError(..., future = future)
-  class <- c("FutureInterruptError", "FutureError", class(cond))
+  class <- c("FutureInterruptError", class(cond))
   class(cond) <- class[!duplicated(class, fromLast = TRUE)]
   cond
 }
@@ -329,7 +339,7 @@ FutureInterruptError <- function(..., future = NULL) {
 #' @export
 FutureDroppedError <- function(..., future = NULL) {
   cond <- FutureError(..., future = future)
-  class <- c("FutureDroppedError", "FutureError", class(cond))
+  class <- c("FutureDroppedError", class(cond))
   class(cond) <- class[!duplicated(class, fromLast = TRUE)]
   cond
 }
