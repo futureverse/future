@@ -19,6 +19,7 @@
 \alias{DeviceMisuseFutureCondition}
 \alias{DeviceMisuseFutureWarning}
 \alias{DeviceMisuseFutureError}
+\alias{FutureLaunchError}
 \alias{FutureInterruptError}
 \alias{FutureDroppedError}
 \alias{FutureJournalCondition}
@@ -80,6 +81,8 @@ DeviceMisuseFutureCondition(
 DeviceMisuseFutureWarning(...)
 
 DeviceMisuseFutureError(...)
+
+FutureLaunchError(..., future = NULL)
 
 FutureInterruptError(..., future = NULL)
 
