@@ -568,32 +568,8 @@ plan <- local({
     } else if (identical(strategy, "list")) {
       if (debug) mdebugf("Getting full stack: [n=%d] %s", length(stack), commaq(sapply(stack, FUN = class)))
       
-      ## WORKAROUND 1: Was plan("list") called from future.tests::db_state()?
-      if ("future.tests" %in% loadedNamespaces() && packageVersion("future.tests") <= "0.8.0") {
-        calls <- sys.calls()
-        n <- length(calls)
-        patch <- FALSE
-        if (n > 2L && (calls[[n - 2L]][[1]] != "db_state")) {
-          patch <- TRUE
-        } else if (n > 1L && (calls[[n - 1L]][[1]] != "db_state")) {
-          patch <- TRUE
-        }
-
-        if (patch) {
-          ignore <- c("init", "backend")
-          ## Prune 'class' attribute
-          class <- class(stack)
-          stack <- lapply(stack, FUN = function(s) {
-            ## Prune 'class' attribute
-            class(s) <- setdiff(class(s), "FutureStrategy")
-            for (name in ignore) attr(s, name) <- NULL
-            s
-          })
-          class(stack) <- class
-        }
-      }
-
-      ## WORKAROUND 2: Was plan("list") called from 'codealm' tests?
+      ## WORKAROUND 1: Was plan("list") called from 'codealm' tests?
+      ## https://github.com/jfiksel/codalm/issues/4
       if (all(c("codalm", "testthat") %in% loadedNamespaces())) {
         ignore <- c("init", "backend")
         class <- class(stack)
