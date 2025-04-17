@@ -107,7 +107,7 @@ getGlobalsAndPackages <- function(expr, envir = parent.frame(), tweak = tweakExp
       globals <- globalsOf(
                    ## Passed to globals::findGlobals()
                    expr, envir = envir, substitute = FALSE, tweak = tweak,
-                   ## Requires globals (>= 0.14.0.9004); ignored otherwise
+                   ## Include globals part of a local closure environment?
                    locals = locals,
                    ## Passed to globals::findGlobals() via '...'
                    dotdotdot = "return",
@@ -441,7 +441,7 @@ getGlobalsAndPackages <- function(expr, envir = parent.frame(), tweak = tweakExp
     mdebugf("Packages after dropping non-attached packages: [%d] %s", length(pkgs), commaq(pkgs))
   }
 
-  keepWhere <- getOption("future.globals.keepWhere", FALSE)
+  keepWhere <- getOption("future.globals.keepWhere", TRUE)
   if (!keepWhere) {
     where <- attr(globals, "where")
     for (kk in seq_along(where)) where[[kk]] <- emptyenv()
