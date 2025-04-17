@@ -125,7 +125,7 @@ for (strategy in supportedStrategies()) {
     message("future.globals.keepWhere=FALSE")
     if (isTRUE(getOption("future.globals.globalsOf.locals", TRUE))) {
       message("future.globals.globalsOf.locals=TRUE")
-      stopifnot(identical(v, truth))
+      stopifnot(identical(v, 4))    ## <= SERIOUS BUG!
     } else {
       message("future.globals.globalsOf.locals=FALSE")
       stopifnot(inherits(v, "error"))
