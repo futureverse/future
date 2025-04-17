@@ -118,14 +118,14 @@ for (strategy in supportedStrategies()) {
   
   if (isTRUE(as.logical(Sys.getenv("R_CHECK_IDEAL")))) {
     stopifnot(identical(v, truth))
-  } else if (isTRUE(getOption("future.globals.keepWhere", FALSE))) {
+  } else if (isTRUE(getOption("future.globals.keepWhere", TRUE))) {
     message("future.globals.keepWhere=TRUE")
     stopifnot(identical(v, truth))
   } else {
     message("future.globals.keepWhere=FALSE")
     if (isTRUE(getOption("future.globals.globalsOf.locals", TRUE))) {
       message("future.globals.globalsOf.locals=TRUE")
-      stopifnot(identical(v, 4))    ## <= SERIOUS BUG!
+      stopifnot(identical(v, truth))
     } else {
       message("future.globals.globalsOf.locals=FALSE")
       stopifnot(inherits(v, "error"))

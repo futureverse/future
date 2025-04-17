@@ -142,7 +142,7 @@ for (cores in 1:availCores) {
             } else {
               stopifnot(inherits(v4, "error"))
             }
-          } else if (isTRUE(getOption("future.globals.keepWhere", FALSE))) {
+          } else if (isTRUE(getOption("future.globals.keepWhere", TRUE))) {
             message("future.globals.keepWhere=TRUE")
             if (isTRUE(getOption("future.globals.globalsOf.locals", TRUE))) {
               message("future.globals.globalsOf.locals=TRUE")
