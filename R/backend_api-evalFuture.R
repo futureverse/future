@@ -211,6 +211,9 @@ get_connections <- function(details = FALSE) {
     cons <- lapply(getAllConnections()[-(1:3)], FUN = function(idx) {
       tryCatch(getConnection(idx), error = function(e) NULL)
     })
+    ## Drop entries for which we failed to retrieve a connection
+    keep <- vapply(cons, FUN = inherits, "connection", FUN.VALUE = FALSE)
+    cons <- cons[keep]
   }
   cons
 }
@@ -237,7 +240,7 @@ diff_connections <- function(after, before) {
     idxs <- setdiff(before[["index"]], after[["index"]])
     if (length(idxs) > 0) {
       removed <- subset(before, index %in% idxs)
-      before <- subset(before, ! index %in% idxs)
+      before  <- subset(before, ! index %in% idxs)
     } else {
       removed <- NULL
     }

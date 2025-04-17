@@ -14,6 +14,12 @@
    class `FutureLaunchError`. This also allows the future that failed
    to be launched to be reset and relaunched again, possible on
    another future backend.
+   
+ * The built-in validation of futures not leaving behind stray
+   connections could in some cases result in `Error in vapply(after,
+   FUN = as.integer, FUN.VALUE = NA_integer_): values must be length
+   1, but FUN(X[[9]]) result is length 0` when there are such stray
+   connections.
  
 
 # Version 1.40.0 [2025-04-10]
