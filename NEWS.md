@@ -36,7 +36,8 @@ implement a new backend.
 
 This update is fully backward compatible with previous versions.
 Developers and end-users can expect business as usual. Like all
-releases, this version has been validated thoroughly via
+releases, this version has been [validated
+thoroughly](https://www.futureverse.org/quality.html) via
 reverse-dependency checks, **future.tests** checks, and more.
 
 ## New Features
