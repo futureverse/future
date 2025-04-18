@@ -367,8 +367,8 @@ update_package_options <- function(debug = FALSE) {
   update_package_option("future.journal", mode = "logical", debug = debug)
 
   ## SETTINGS USED FOR DEPRECATING FEATURES
-  ## future 1.22.0:
-  update_package_option("future.globals.keepWhere", mode = "logical", debug = debug)
+  ## future 1.22.0 & future 1.45.0 (new default keepWhere = TRUE)
+  update_package_option("future.globals.keepWhere", mode = "logical", default = TRUE, debug = debug)
 
   ## future 1.34.0:
   update_package_option("future.globals.objectSize.method", mode = "character", debug = debug)
