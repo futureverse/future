@@ -6,9 +6,18 @@ library(future)
 library(listenv)
 
 oopts <- c(oopts, options(
+  future.debug = FALSE,
   future.globals.resolve = TRUE,
   future.globals.onMissing = "error"
 ))
+
+## Muffle warnings on setting R option 'future.globals.method',
+## which are produced by the 'future' package
+if (getRversion() >= "4.0.0") {
+  globalCallingHandlers(deprecatedWarning = function(w) {
+    invokeRestart("muffleWarning")
+  })
+}
 
 message("*** Tricky use cases related to globals ...")
 
@@ -182,7 +191,37 @@ for (cores in 1:availCores) {
     v <- value(f)
     message(sprintf("value(f) = %s", sQuote(v)))
     stopifnot(v == TRUE)
-    
+
+    ## Related to https://github.com/futureverse/future/issues/778
+    f <- function() {
+      value(future({
+        a <- 42L
+        g <- function() {
+          h <- function(a) a
+          h(a)
+        }
+        g()
+      }))
+    }
+    y <- f()
+    stopifnot(y == 42L)
+
+    ## Related to https://github.com/futureverse/future/issues/778
+    ## This one fails to pick up 'a' as a global variable
+    f <- function() {
+      a <- 42L
+      value(future({
+        g <- function() {
+          h <- function(a) a
+          h(a)
+        }
+        g()
+      }))
+    }
+    y <- tryCatch(f(), error = identity)
+    print(y)
+    stopifnot(inherits(y, "error"))
+
     plan(sequential)
   } ## for (strategy ...)
 
