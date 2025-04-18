@@ -7,6 +7,9 @@
 
 ## Bug Fixes
 
+ * Globals in the environment of an anonymous function were lost since
+   v1.40.0 (2025-04-10).
+
  * In rare cases, a future backend might fails to launch a future and
    at the same time fail to handle such errors. That would result in
    hard-to-understand, obscure errors. Now these errors are detected
