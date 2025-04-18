@@ -6,6 +6,7 @@ library(future)
 library(listenv)
 
 oopts <- c(oopts, options(
+  future.debug = FALSE,
   future.globals.resolve = TRUE,
   future.globals.onMissing = "error"
 ))
@@ -182,7 +183,7 @@ for (cores in 1:availCores) {
     v <- value(f)
     message(sprintf("value(f) = %s", sQuote(v)))
     stopifnot(v == TRUE)
-    
+
     plan(sequential)
   } ## for (strategy ...)
 
