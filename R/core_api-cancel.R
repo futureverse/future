@@ -9,7 +9,7 @@
 #' @param \ldots All arguments used by the S3 methods.
 #'
 #' @return
-#' `cancel()` returns the [Future] flagged as "cancelled".
+#' `cancel()` returns the [Future] flagged as "canceled".
 #'
 #' @export
 cancel <- function(x, interrupt = TRUE, ...) {
@@ -44,6 +44,10 @@ cancel.Future <- function(x, interrupt = TRUE, ...) {
   if (interrupt) {
     future <- interrupt(future)
   }
+
+  ## FIXME: For now, use 'interrupted", but should ideally use 'canceled'
+  ## future[["state"]] <- "canceled"
+  future[["state"]] <- "interrupted"
 
   future
 }

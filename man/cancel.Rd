@@ -14,7 +14,7 @@ cancel(x, interrupt = TRUE, ...)
 \item{\ldots}{All arguments used by the S3 methods.}
 }
 \value{
-\code{cancel()} returns the \link{Future} flagged as "cancelled".
+\code{cancel()} returns the \link{Future} flagged as "canceled".
 }
 \description{
 Cancels futures, with the option to interrupt running ones.

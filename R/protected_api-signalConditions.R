@@ -29,7 +29,7 @@ signalConditions <- function(future, include = "condition", exclude = NULL, resi
   if (length(include) == 0L) return(future)
 
   ## Future is not yet launched
-  if (!future[["state"]] %in% c("finished", "failed", "interrupted")) {
+  if (!future[["state"]] %in% c("finished", "failed", "interrupted", "canceled")) {
     stop(FutureError(
       sprintf(
         "Internal error: Cannot resignal future conditions. %s has not yet been resolved (state = %s)",

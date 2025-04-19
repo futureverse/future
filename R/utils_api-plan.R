@@ -568,7 +568,7 @@ plan <- local({
     } else if (identical(strategy, "list")) {
       if (debug) mdebugf("Getting full stack: [n=%d] %s", length(stack), commaq(sapply(stack, FUN = class)))
       
-      ## WORKAROUND 1: Was plan("list") called from 'codealm' tests?
+      ## WORKAROUND 1: Was plan("list") called from 'codalm' tests?
       ## https://github.com/jfiksel/codalm/issues/4
       if (all(c("codalm", "testthat") %in% loadedNamespaces())) {
         ignore <- c("init", "backend")

@@ -43,7 +43,7 @@
 #' 
 #' If `signal` is TRUE and one of the futures produces an error, then
 #' that error is relayed. Any remaining, non-resolved futures in `x` are
-#' interrupted, prior to signaling such an error.
+#' canceled, prior to signaling such an error.
 #'
 #' @example incl/value.R
 #'
@@ -363,13 +363,14 @@ name_of_function <- function(fcn, add_backticks = FALSE) {
 #' Reduction of values is done as soon as possible, but always in the
 #' same order as `x`, unless `inorder` is FALSE.
 #'
-#' @param interrupt If TRUE and `signal` is TRUE, non-resolved futures are
-#' interrupted as soon as an error is detected in one of the futures,
-#' before signaling the error.
+#' @param cancel,interrupt If TRUE and `signal` is TRUE, non-resolved futures
+#' are canceled as soon as an error is detected in one of the futures,
+#' before signaling the error. Argument `interrupt` is passed to `cancel()`
+#' controlling whether non-resolved futures should also be interrupted.
 #'
 #' @rdname value
 #' @export
-value.list <- function(x, idxs = NULL, recursive = 0, reduce = NULL, stdout = TRUE, signal = TRUE, interrupt = TRUE, inorder = TRUE, drop = FALSE, force = TRUE, sleep = getOption("future.wait.interval", 0.01), ...) {
+value.list <- function(x, idxs = NULL, recursive = 0, reduce = NULL, stdout = TRUE, signal = TRUE, cancel = TRUE, interrupt = cancel, inorder = TRUE, drop = FALSE, force = TRUE, sleep = getOption("future.wait.interval", 0.01), ...) {
   if (is.logical(recursive)) {
     if (recursive) recursive <- getOption("future.resolve.recursive", 99)
   }
@@ -427,8 +428,11 @@ value.list <- function(x, idxs = NULL, recursive = 0, reduce = NULL, stdout = TR
   stop_if_not(
     length(stdout) == 1L, is.logical(stdout), !is.na(stdout),
     length(signal) == 1L, is.logical(signal), !is.na(signal),
-    length(interrupt) == 1L, is.logical(interrupt), !is.na(interrupt)
+    length(cancel) == 1L, is.logical(cancel), !is.na(cancel)
   )
+  if (isTRUE(interrupt) && !isTRUE(cancel)) {
+    stop("Argument 'interrupt' must not be TRUE if argument 'cancel' is FALSE")
+  }
   relay <- (stdout || signal)
 
   x <- futures(x)
@@ -614,10 +618,10 @@ value.list <- function(x, idxs = NULL, recursive = 0, reduce = NULL, stdout = TR
             if (debug) mdebug_push("futures(x) ...")
             y <- futures(x)
             if (debug) mdebug_pop("futures(x) ... done")
-            if (interrupt) {
-              if (debug) mdebug_push("interrupt(y) ...")
-              interrupt(y)
-              if (debug) mdebug_pop("interrupt(y) ... done")
+            if (cancel) {
+              if (debug) mdebug_push("cancel(y) ...")
+              cancel(y, interrupt = interrupt)
+              if (debug) mdebug_pop("cancel(y) ... done")
             }
             if (debug) mdebug_push("resolve(y, ...) ...")
             ## Resolve remaining futures, while relaying output and
