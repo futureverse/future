@@ -195,7 +195,7 @@
 |[hero](problems.md#hero)     |0.6       |      |        |2    |
 |[heterogen](problems.md#heterogen)|1.2.33    |      |        |1    |
 |[hoopR](problems.md#hoopr)   |2.1.0     |      |        |1    |
-|[httpgd](problems.md#httpgd) |2.0.4     |1     |        |1    |
+|[httpgd](problems.md#httpgd) |2.0.4     |      |        |1    |
 |[hwep](problems.md#hwep)     |2.0.2     |      |        |3    |
 |hydroloom                    |1.1.0     |      |        |     |
 |idmodelr                     |0.4.0     |      |        |     |

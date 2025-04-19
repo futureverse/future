@@ -2325,27 +2325,6 @@ Run `revdepcheck::revdep_details(, "httpgd")` for more info
 
 ## In both
 
-*   checking tests ...
-    ```
-      Running ‘testthat.R’/software/c4/cbi/software/_rocky8/R-4.4.3-gcc13/lib64/R/bin/BATCH: line 60: 628525 Killed                  ${R_HOME}/bin/R -f ${in} ${opts} ${R_BATCH_OPTIONS} > ${out} 2>&1
-    
-     ERROR
-    Running the tests in ‘tests/testthat.R’ failed.
-    Complete output:
-      > library(testthat)
-      > library(httpgd)
-      > 
-      > test_check("httpgd")
-      [ FAIL 12 | WARN 2 | SKIP 0 | PASS 2 ]
-      
-      Error in gzfile(file, mode) : cannot open the connection
-      Calls: test_check ... o_apply -> lapply -> FUN -> <Anonymous> -> saveRDS -> gzfile
-      In addition: Warning message:
-      In gzfile(file, mode) :
-        cannot open compressed file 'testthat-problems.rds', probable reason 'Too many open files'
-      Execution halted
-    ```
-
 *   checking installed package size ... NOTE
     ```
       installed size is 12.4Mb

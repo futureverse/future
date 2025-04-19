@@ -334,6 +334,14 @@ FutureInterruptError <- function(..., future = NULL) {
   cond
 }
 
+#' @rdname FutureCondition
+#' @export
+FutureCanceledError <- function(..., future = NULL) {
+  cond <- FutureError(..., future = future)
+  class <- c("FutureCanceledError", class(cond))
+  class(cond) <- class[!duplicated(class, fromLast = TRUE)]
+  cond
+}
 
 #' @rdname FutureCondition
 #' @export

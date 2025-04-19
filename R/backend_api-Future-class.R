@@ -235,7 +235,7 @@ Future <- function(expr = NULL, envir = parent.frame(), substitute = TRUE, stdou
   core[["calls"]] <- sys.calls()
 
   ## The current state of the future, e.g.
-  ## 'created', 'running', 'finished', 'failed', 'interrupted'.
+  ## 'created', 'running', 'finished', 'failed', 'canceled', 'interrupted'
   core[["state"]] <- "created"
 
   ## Additional named arguments
@@ -631,7 +631,7 @@ result.Future <- function(future, ...) {
     future <- run(future)
   }
 
-  if (!future[["state"]] %in% c("finished", "failed", "interrupted")) {
+  if (!future[["state"]] %in% c("finished", "failed", "canceled", "interrupted")) {
     ## BACKWARD COMPATIBILITY:
     ## For now, it is value() that collects the results.  Later we want
     ## all future backends to use result() to do it. /HB 2018-02-22
@@ -702,7 +702,7 @@ resolved.Future <- function(x, run = TRUE, ...) {
   if (debug) mdebug("result: ", sQuote(class(x[["result"]])[1]))
   if (inherits(x[["result"]], "FutureResult")) return(TRUE)
   
-  res <- (x[["state"]] %in% c("finished", "failed", "interrupted"))
+  res <- (x[["state"]] %in% c("finished", "failed", "canceled", "interrupted"))
 
   if (debug) mdebug("resolved: ", res)
 
@@ -967,7 +967,7 @@ getExpression.Future <- local({
 #' @export
 `$<-.Future` <- function(x, name, value) {
   if (name == "state") {
-    if (!is.element(value, c("created", "running", "finished", "failed", "interrupted"))) {
+    if (!is.element(value, c("created", "running", "finished", "failed", "canceled", "interrupted"))) {
       action <- getOption("future.state.onInvalid", "warning")
       
       if (action != "ignore") {
