@@ -1,5 +1,6 @@
 #' @tags interrupt
 #' @tags detritus-files
+#' @tags detritus-connections
 #' @tags sequential multisession multicore
 
 library(future)
@@ -72,3 +73,4 @@ for (strategy in strategies) {
 
 message("Shut down future backend")
 plan(sequential)
+gc()

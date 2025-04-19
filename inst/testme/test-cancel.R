@@ -1,12 +1,13 @@
 #' @tags cancel
 #' @tags detritus-files
+#' @tags detritus-connections
 #' @tags sequential multisession multicore
 
 library(future)
 options(future.debug = FALSE)
 
 strategies <- supportedStrategies()
-strategies <- setdiff(strategies, "sequential")
+#strategies <- setdiff(strategies, "sequential")
 
 for (strategy in strategies) {
   message(sprintf("plan('%s') ...", strategy))
@@ -54,7 +55,7 @@ for (strategy in strategies) {
   message("Number of free workers (after result): ", n)
   stopifnot(n == n0)
 
-  message("An cancel the same future multiple times")
+  message("And cancel the same future multiple times")
   for (kk in 1:10) {
     f <- cancel(f)
   }
@@ -72,3 +73,4 @@ for (strategy in strategies) {
 
 message("Shut down future backend")
 plan(sequential)
+gc()
