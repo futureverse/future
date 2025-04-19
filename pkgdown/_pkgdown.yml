@@ -11,7 +11,7 @@ home:
 
 navbar:
   structure:
-    right: [futureverse, pkgs, cran, github, lightswitch]
+    right: [search, futureverse, pkgs, cran, github, lightswitch]
   components:
     futureverse:
       icon: fas fa-home
