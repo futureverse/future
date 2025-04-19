@@ -71,4 +71,4 @@ for (strategy in strategies) {
 }
 
 message("Shut down future backend")
-plan(sequential")
+plan(sequential)
