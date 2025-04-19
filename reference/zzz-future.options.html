@@ -23,7 +23,7 @@ further notice."><meta property="og:image" content="https://future.futureverse.o
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.40.0-9100</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.40.0-9101</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -133,7 +133,7 @@ See the <a href="https://parallelly.futureverse.org/reference/parallelly.options
 
 
 <dl><dt><span class="option">future.plan</span>:</dt>
-<dd><p>(character string or future function) Default future strategy plan used unless otherwise specified via <code><a href="plan.html">plan()</a></code>. This will also be the future plan set when calling <code>plan("default")</code>.  If not specified, this option may be set when the <span class="pkg">future</span> package is <em>loaded</em> if command-line option <code>--parallel=ncores</code> (short <code>-p ncores</code>) is specified; if <code>ncores &gt; 1</code>, then option <span class="option">future.plan</span> is set to <code>multisession</code> otherwise <code>sequential</code> (in addition to option <span class="option">mc.cores</span> being set to <code>ncores</code>, if <code>ncores &gt;= 1</code>). (Default: <code>sequential</code>)</p></dd>
+<dd><p>(character string or future function) Default future backend used unless otherwise specified via <code><a href="plan.html">plan()</a></code>. This will also be the future plan set when calling <code>plan("default")</code>.  If not specified, this option may be set when the <span class="pkg">future</span> package is <em>loaded</em> if command-line option <code>--parallel=ncores</code> (short <code>-p ncores</code>) is specified; if <code>ncores &gt; 1</code>, then option <span class="option">future.plan</span> is set to <code>multisession</code> otherwise <code>sequential</code> (in addition to option <span class="option">mc.cores</span> being set to <code>ncores</code>, if <code>ncores &gt;= 1</code>). (Default: <code>sequential</code>)</p></dd>
 
 
 <dt><span class="option">future.globals.maxSize</span>:</dt>

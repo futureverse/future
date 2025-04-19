@@ -33,7 +33,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.40.0-9100</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.40.0-9101</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -122,8 +122,8 @@ for surprises to the end user.</p>
 <div class="section level2">
 <h2 id="the-future-smell-test">The future smell test<a class="anchor" aria-label="anchor" href="#the-future-smell-test"></a>
 </h2>
-<p>The by far most common and popular future strategy is to parallelize
-on the local machine, i.e. <code>plan(multisession)</code>. This is
+<p>The by far most common and popular future backend is to parallelize
+on the local machine, e.g. <code>plan(multisession)</code>. This is
 often good enough in most situations but note that some end-users have
 access to multiple machines and might want to run your code using all of
 them to speed it up beyond what a single machine can do. Because of
@@ -155,7 +155,7 @@ file system.</p>
 <p>By keeping the future smell test in mind when writing future code, we
 increase the chances that the code can be parallelized in more ways than
 on just the local computer. Properly written future code will work
-regardless of what future strategy the end-user picks, e.g.</p>
+regardless of what future backend the end-user picks, e.g.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plan.html">plan</a></span><span class="op">(</span><span class="va">sequential</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/plan.html">plan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span></span>
@@ -166,7 +166,7 @@ month. Who knows, your code might even end up running on 2,000 cores
 located on The Moon twenty years from now.</p>
 </div>
 <div class="section level2">
-<h2 id="avoid-changing-the-future-strategy">Avoid changing the future strategy<a class="anchor" aria-label="anchor" href="#avoid-changing-the-future-strategy"></a>
+<h2 id="avoid-changing-the-future-backend">Avoid changing the future backend<a class="anchor" aria-label="anchor" href="#avoid-changing-the-future-backend"></a>
 </h2>
 <p>For reasons like the ones mentioned above, refrain from setting
 <code><a href="../reference/plan.html">plan()</a></code> in a function. It is better to leave it to the
@@ -186,9 +186,9 @@ by using <code>with(plan(...), local = TRUE)</code>, e.g.</p>
 <span>  <span class="va">y</span> <span class="op">&lt;-</span> <span class="fu">analyze</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span>  <span class="fu">summarize</span><span class="op">(</span><span class="va">y</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
-<p>The need for setting the future strategy within a function often
-comes from developers wanting to add an argument to their function that
-allows the end-user to specify whether they want to run the function in
+<p>The need for setting the future backend within a function often comes
+from developers wanting to add an argument to their function that allows
+the end-user to specify whether they want to run the function in
 parallel or sequentially. This often result in code like:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">my_fcn</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">parallel</span> <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
@@ -245,8 +245,8 @@ future, use something like the following inside your function:</p>
 <div class="section level2">
 <h2 id="writing-examples">Writing examples<a class="anchor" aria-label="anchor" href="#writing-examples"></a>
 </h2>
-<p>If your example sets the future strategy at the beginning, make sure
-to reset the future strategy to <code>plan(sequential)</code> at the end
+<p>If your example sets the future backend at the beginning, make sure
+to reset the future backend to <code>plan(sequential)</code> at the end
 of the example. The reason for this is that when switching plan, the
 previous one will be cleaned up. This is particularly important for
 multisession and cluster futures where <code>plan(sequential)</code>
@@ -275,7 +275,7 @@ set, will produce an error on</p>
 <span id="cb12-9"><a href="#cb12-9" tabindex="-1"></a>      <span class="ot">&lt;-</span>localhost<span class="sc">:</span><span class="dv">37400</span> (sockconn)</span>
 <span id="cb12-10"><a href="#cb12-10" tabindex="-1"></a>Execution halted</span></code></pre></div>
 <p>If you for some reason do not like to display reset of the future
-strategy in the help documentation, but you still want it run, wrap the
+backend in the help documentation, but you still want it run, wrap the
 statement in an Rd <code>\dontshow{}</code> statement.</p>
 </div>
 <div class="section level2">
@@ -295,9 +295,8 @@ the end of each package test by calling:</p>
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plan.html">plan</a></span><span class="op">(</span><span class="va">sequential</span><span class="op">)</span></span></code></pre></div>
 <p>If not all of your tests are written this way, you can set
 environment variable <code>R_FUTURE_PLAN=multisession</code> before you
-call <code>R CMD check</code>. This will make the default future
-strategy to become ‘multisession’ instead of ‘sequential’. For
-example,</p>
+call <code>R CMD check</code>. This will make the default future backend
+to become ‘multisession’ instead of ‘sequential’. For example,</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="ex">$</span> export R_FUTURE_PLAN=multisession</span>
 <span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a><span class="ex">$</span> R CMD check <span class="at">--as-cran</span> mypkg_1.0.tar.gz</span></code></pre></div>
 </div>

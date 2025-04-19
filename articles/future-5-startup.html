@@ -33,7 +33,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.40.0-9100</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.40.0-9101</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -122,8 +122,8 @@ command-line options as explained below as well as in
 <div class="section level2">
 <h2 id="r-options">R options<a class="anchor" aria-label="anchor" href="#r-options"></a>
 </h2>
-<p>The default strategy for resolving futures can be controlled via R
-option <code>future.plan</code>. For instance, if we add</p>
+<p>The default future backend can be controlled via R option
+<code>future.plan</code>. For instance, if we add</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>future.plan <span class="op">=</span> <span class="st">"multisession"</span><span class="op">)</span></span></code></pre></div>
 <p>to our <code>~/.Rprofile</code> startup script, the future package
@@ -154,7 +154,7 @@ option <code>future.plan</code> or command-line option
 </h2>
 <p>When loaded, the future package checks for the command-line option
 <code>--parallel=ncores</code> (short <code>-p ncores</code>) and sets
-the future strategy (via option <code>future.plan</code>) and the number
+the future backend (via option <code>future.plan</code>) and the number
 of available cores (via option <code>mc.cores</code>) accordingly. This
 provides a convenient mechanism for specifying parallel future
 processing from the command line. For example, if we start R with</p>
