@@ -88,8 +88,8 @@ reverse-dependency checks, **future.tests** checks, and more.
    then it is memory efficient and more performant to use ``v <-
    value(fs, reduce = `+`, inorder = FALSE, drop = TRUE)``.
 
- * `value()` on containers interrupts non-resolved futures if an error
-   is detected in one of the futures.
+ * `value()` on containers cancels non-resolved futures if an error is
+   detected in one of the futures.
 
  * Add `minifuture()`, which is like `future()`, but with different
    default arguments resulting in less overhead with the added burden
@@ -109,7 +109,7 @@ reverse-dependency checks, **future.tests** checks, and more.
    
  * Failed workers are automatically detected and relaunched, if
    supported by the parallel backend. For instance, if a `cluster`
-   workers is interrupted, or crashes for other reasons, it will be
+   worker is interrupted, or crashes for other reasons, it will be
    relaunched. This works for both local and remote workers.
 
  * A future must close any connections or graphical devices it opens,

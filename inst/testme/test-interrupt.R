@@ -66,7 +66,10 @@ for (strategy in strategies) {
   n <- nbrOfFreeWorkers()
   message("Number of free workers (after result): ", n)
   stopifnot(n == n0)
-  
+
   message(sprintf("plan('%s') .. done", strategy))
 }
+
+message("Shut down future backend")
+plan(sequential")
 

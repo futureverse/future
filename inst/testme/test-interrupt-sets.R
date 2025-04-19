@@ -47,3 +47,6 @@ for (strategy in strategies) {
   message(sprintf("plan('%s') .. done", strategy))
 }
 
+message("Shut down future backend")
+plan(sequential")
+
