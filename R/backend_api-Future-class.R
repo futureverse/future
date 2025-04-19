@@ -793,15 +793,15 @@ getFutureContext <- function(future, mc.cores = NULL, local = TRUE, ..., debug =
   ## Future strategies
   strategiesR <- plan("tail")
   stop_if_not(length(strategiesR) >= 0L)
-  ##  mdebugf("Number of tail strategies: %d", length(strategiesR))
+  ##  mdebugf("Number of tail backends: %d", length(strategiesR))
 
-  ## Use default future strategy + identify packages needed by the backend
+  ## Use default future backend + identify packages needed by the backend
   if (length(strategiesR) == 0L) {
-    if (debug) mdebug("Packages needed by future strategies (n = 0): <none>")
+    if (debug) mdebug("Packages needed by future backend (n = 0): <none>")
     strategiesR <- sequential
     backendPackages <- c("future")
   } else {
-    ## Identify package namespaces needed for strategies
+    ## Identify package namespaces needed for backends
     backendPackages <- lapply(strategiesR, FUN = environment)
     backendPackages <- lapply(backendPackages, FUN = environmentName)
     backendPackages <- unlist(backendPackages, use.names = FALSE)
@@ -913,8 +913,8 @@ getFutureData <- function(future, ..., debug = isTRUE(getOption("future.debug"))
 #' type of future to use for nested futures, iff any.
 #'
 #' @details
-#' If no next future strategy is specified, the default is to
-#' use [sequential] futures.  This conservative approach protects
+#' If there is no future backend specified after this one, the default
+#' is to use [sequential] futures.  This conservative approach protects
 #' against spawning off recursive futures by mistake, especially
 #' [multicore] and [multisession] ones.
 #' The default will also set `options(mc.cores = 1L)` (*) so that

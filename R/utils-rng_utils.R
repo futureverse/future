@@ -296,7 +296,7 @@ make_rng_seeds <- function(count, seed = FALSE, rng_config = parallel_rng_kind()
   .seed <- rng_config[["as_seed"]](seed)
 
   ## future_*apply() should return with the same RNG state regardless of
-  ## future strategy used. This is be done such that RNG kind is preserved
+  ## future backend used. This is be done such that RNG kind is preserved
   ## and the seed is "forwarded" one step from what it was when this
   ## function was called. The forwarding is done by generating one random
   ## number. Note that this approach is also independent on the number of

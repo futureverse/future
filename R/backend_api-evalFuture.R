@@ -653,7 +653,7 @@ evalFutureInternal <- function(data) {
       ...future.strategy.old <- plan("list")
 
       on.exit({
-        ## Revert to the original future strategy
+        ## Revert to the original future strategy set
         ## Reset option 'future.plan' and env var 'R_FUTURE_PLAN'
         options(future.plan = ...future.plan.old)
         plan(...future.strategy.old, .cleanup = FALSE, .init = FALSE)
@@ -787,7 +787,7 @@ evalFutureInternal <- function(data) {
   }
 
 
-  ## Use the next-level-down ("popped") future strategy
+  ## Use the next-level-down ("popped") future backend
   plan(strategiesR, .cleanup = FALSE, .init = FALSE)
 
   if (!is.na(...future.ncores)) {

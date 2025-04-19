@@ -4,7 +4,7 @@
 #'
 #' @param fassignment The future assignment, e.g.
 #'        `x %<-% { expr }`.
-#' @param strategy The mechanism for how the future should be
+#' @param strategy The backend controlling how the future is
 #'        resolved. See [plan()] for further details.
 #'
 #' @aliases %plan%

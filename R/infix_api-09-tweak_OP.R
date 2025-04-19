@@ -1,11 +1,11 @@
-#' Temporarily tweaks the arguments of the current strategy
+#' Temporarily tweaks the arguments of the current backend
 #'
 #' @usage fassignment \%tweak\% tweaks
 #'
 #' @param fassignment The future assignment, e.g.
 #'        `x %<-% { expr }`.
 #' @param tweaks A named list (or vector) with arguments that
-#' should be changed relative to the current strategy.
+#' should be changed relative to the current backend.
 #'
 #' @aliases %tweak%
 #' @rdname futureAssign

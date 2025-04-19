@@ -177,7 +177,7 @@ all.equal.FutureStrategyList <- function(target, current, ..., debug = FALSE) {
       if (is.function(cleanup_fcn)) {
         cleanup_fcn()
       } else {
-        stop(FutureError(sprintf("Unknown type of 'cleanup' attribute on current future strategy: %s", commaq(class(cleanup_fcn)))))
+        stop(FutureError(sprintf("Unknown type of 'cleanup' attribute on current future backend: %s", commaq(class(cleanup_fcn)))))
       }
     } else {
       if (debug) mdebugf_push("Legacy shutdown of cluster workers ...")
@@ -257,8 +257,8 @@ all.equal.FutureStrategyList <- function(target, current, ..., debug = FALSE) {
 #' it specifies how [future()]:s are resolved,
 #' e.g. sequentially or in parallel.
 #'
-#' @param strategy The evaluation function (or name of it) to use
-#' for resolving a future. If `NULL`, then the current strategy is returned.
+#' @param strategy The type of future backend (function or name of one) to use
+#' for resolving a future. If `NULL`, then the current backend is returned.
 #'
 #' @param \ldots Additional arguments overriding the default arguments
 #' of the evaluation function.  Which additional arguments are supported
@@ -271,7 +271,7 @@ all.equal.FutureStrategyList <- function(target, current, ..., debug = FALSE) {
 #'
 #' @param .call (internal) Used for recording the call to this function.
 #'
-#' @param .skip (internal) If `TRUE`, then attempts to set a strategy
+#' @param .skip (internal) If `TRUE`, then attempts to set a future backend
 #' that is the same as what is currently in use, will be skipped.
 #'
 #' @param .cleanup (internal) Used to stop implicitly started clusters.
@@ -279,13 +279,13 @@ all.equal.FutureStrategyList <- function(target, current, ..., debug = FALSE) {
 #' @param .init (internal) Used to initiate workers.
 #'
 #' @return
-#' `plan()` returns a the previous plan invisibly if a new strategy
+#' `plan()` returns a the previous plan invisibly if a new future backend
 #' is chosen, otherwise it returns the current one visibly.
 #'
 #' @example incl/plan.R
 #'
 #' @details
-#' The default strategy is [`sequential`], but another one can be set
+#' The default backend is [`sequential`], but another one can be set
 #' using `plan()`, e.g. `plan(multisession)` will launch parallel workers
 #' running in the background, which then will be used to resolve future.
 #' To shut down background workers launched this way, call `plan(sequential)`.
@@ -390,7 +390,7 @@ all.equal.FutureStrategyList <- function(target, current, ..., debug = FALSE) {
 #'
 #' @section For package developers:
 #'
-#' Please refrain from modifying the future strategy inside your packages /
+#' Please refrain from modifying the future backend inside your packages /
 #' functions, i.e. do not call `plan()` in your code. Instead, leave
 #' the control on what backend to use to the end user. This idea is part of
 #' the core philosophy of the future framework---as a developer you can never
@@ -398,7 +398,7 @@ all.equal.FutureStrategyList <- function(target, current, ..., debug = FALSE) {
 #' any assumptions about what backends are available, your code will also work
 #' automatically with any new backends developed after you wrote your code.
 #'
-#' If you think it is necessary to modify the future strategy within a
+#' If you think it is necessary to modify the future backend within a
 #' function, then make sure to undo the changes when exiting the function.
 #' This can be archived by using `with(plan(...), local = TRUE)`, e.g.
 #'
@@ -461,14 +461,14 @@ plan <- local({
       }
     } else if (isTRUE(all.equal(newStack, oldStack, debug = debug))) {
       if (debug) {
-        mdebug("plan(): Skip setting new future strategy stack because it is the same as the current one:")
+        mdebug("plan(): Skip setting new future backend stack because it is the same as the current one:")
         mprint(oldStack)
       }
       return(oldStack)
     }
 
     if (debug) {
-      mdebug("plan(): Setting new future strategy stack:")
+      mdebug("plan(): Setting new future backend stack:")
       mprint(newStack)
       mstr(newStack)
     }
@@ -585,7 +585,7 @@ plan <- local({
     } else if (identical(strategy, "tail")) {
       ## List stack of future strategies except the first
       stack <- stack[-1]
-      if (debug) mdebugf("Getting stack without first strategy: [n=%d] %s", length(stack), commaq(sapply(stack, FUN = class)))
+      if (debug) mdebugf("Getting stack without first backend: [n=%d] %s", length(stack), commaq(sapply(stack, FUN = class)))
       return(stack)
     } else if (identical(strategy, "reset")) {
       if (debug) mdebug_push("Resetting stack ...")
@@ -597,7 +597,7 @@ plan <- local({
       return(stack)
     } else if (identical(strategy, "pop")) {
       if (debug) mdebug_push("Popping stack ...")
-      ## Pop strategy stack and return old stack
+      ## Pop backend stack and return old stack
       ## (so it can be pushed back later)
       oldStack <- stack
       stack <<- stack[-1L]
@@ -678,7 +678,7 @@ plan <- local({
       }
     }
 
-    ## (b) Otherwise, assume a single future strategy
+    ## (b) Otherwise, assume a single future backend
     if (is.null(newStack)) {
       if (is.symbol(strategy)) {
         strategy <- eval(strategy, envir = parent.frame(), enclos = baseenv())
@@ -728,7 +728,7 @@ plan <- local({
       stop_if_not(!is.null(newStack), is.list(newStack), length(newStack) >= 1L)
     }
 
-    ## Set new strategy for futures
+    ## Set new future backend stack for futures
     oldStack <- plan_set(newStack, skip = .skip, cleanup = .cleanup, init = .init, debug = debug)
     invisible(oldStack)
   } # function()

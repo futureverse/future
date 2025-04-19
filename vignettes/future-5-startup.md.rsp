@@ -22,7 +22,7 @@ The default is to use synchronous futures, but this _default_ can be overridden 
 
 ## R options
 
-The default strategy for resolving futures can be controlled via R option `future.plan`.  For instance, if we add
+The default future backend can be controlled via R option `future.plan`.  For instance, if we add
 
 ```r
 options(future.plan = "multisession")
@@ -53,7 +53,7 @@ Environment variable `R_FUTURE_PLAN` is ignored if either option `future.plan` o
 
 ## Command-line options
 
-When loaded, the future package checks for the command-line option `--parallel=ncores` (short `-p ncores`) and sets the future strategy (via option `future.plan`) and the number of available cores (via option `mc.cores`) accordingly.  This provides a convenient mechanism for specifying parallel future processing from the command line.  For example, if we start R with
+When loaded, the future package checks for the command-line option `--parallel=ncores` (short `-p ncores`) and sets the future backend (via option `future.plan`) and the number of available cores (via option `mc.cores`) accordingly.  This provides a convenient mechanism for specifying parallel future processing from the command line.  For example, if we start R with
 
 ```sh
 $ R --quiet --args --parallel=2

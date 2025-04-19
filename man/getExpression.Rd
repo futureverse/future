@@ -20,8 +20,8 @@ type of future to use for nested futures, iff any.
 Inject code for the next type of future to use for nested futures
 }
 \details{
-If no next future strategy is specified, the default is to
-use \link{sequential} futures.  This conservative approach protects
+If there is no future backend specified after this one, the default
+is to use \link{sequential} futures.  This conservative approach protects
 against spawning off recursive futures by mistake, especially
 \link{multicore} and \link{multisession} ones.
 The default will also set \code{options(mc.cores = 1L)} (*) so that

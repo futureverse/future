@@ -150,9 +150,8 @@
 #'
 #' @seealso
 #' How, when and where futures are resolved is given by the
-#' _future strategy_, which can be set by the end user using the
-#' [plan()] function.  The future strategy must not be
-#' set by the developer, e.g. it must not be called within a package.
+#' _future backend_, which can be set by the end user using the
+#' [plan()] function.
 #'
 #' @name future
 #' @aliases futureCall
