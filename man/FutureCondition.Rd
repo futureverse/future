@@ -21,6 +21,7 @@
 \alias{DeviceMisuseFutureError}
 \alias{FutureLaunchError}
 \alias{FutureInterruptError}
+\alias{FutureCanceledError}
 \alias{FutureDroppedError}
 \alias{FutureJournalCondition}
 \title{A condition (message, warning, or error) that occurred while orchestrating a future}
@@ -85,6 +86,8 @@ DeviceMisuseFutureError(...)
 FutureLaunchError(..., future = NULL)
 
 FutureInterruptError(..., future = NULL)
+
+FutureCanceledError(..., future = NULL)
 
 FutureDroppedError(..., future = NULL)
 

@@ -235,7 +235,7 @@ Run `revdepcheck::revdep_details(, "batchtools")` for more info
 
 *   checking dependencies in R code ... NOTE
     ```
-    [c4-n43:1005885] OPAL ERROR: Not initialized in file ext2x_client.c at line 112
+    [c4-n43:3626643] OPAL ERROR: Not initialized in file ext2x_client.c at line 112
     --------------------------------------------------------------------------
     The application appears to have been direct launched using "srun",
     but OMPI was not built with SLURM's PMI support and therefore cannot
@@ -972,15 +972,18 @@ Run `revdepcheck::revdep_details(, "crossmap")` for more info
       > library(crossmap)
       > 
       > test_check("crossmap")
-      [ FAIL 1 | WARN 3 | SKIP 0 | PASS 382 ]
+      [ FAIL 2 | WARN 3 | SKIP 0 | PASS 264 ]
       
-      ══ Failed tests ════════════════════════════════════════════════════════════════
-      ── Failure ('test-errors.R:12:3'): require future ──────────────────────────────
-      `future_xmap(list(1:3, 1:3), paste)` did not throw an error.
+    ...
+        7.           └─future::ClusterFutureBackend(...)
+        8.             └─clusterRegistry$startCluster(...)
+        9.               └─future (local) makeCluster(workers, ...)
+       10.                 ├─base::do.call(makeClusterPSOCK, args = args, quote = TRUE)
+       11.                 └─parallelly (local) `<fn>`(base::quote(256L), rscript_libs = base::quote(`<chr>`))
+       12.                   └─parallelly:::stopf(msg)
       
-      [ FAIL 1 | WARN 3 | SKIP 0 | PASS 382 ]
+      [ FAIL 2 | WARN 3 | SKIP 0 | PASS 264 ]
       Error: Test failures
-      In addition: There were 50 or more warnings (use warnings() to see the first 50)
       Execution halted
     ```
 
@@ -1764,27 +1767,6 @@ Run `revdepcheck::revdep_details(, "forecastML")` for more info
       All declared Imports should be used.
     ```
 
-# future.mirai
-
-<details>
-
-* Version: 0.2.2
-* GitHub: https://github.com/futureverse/future.mirai
-* Source code: https://github.com/cran/future.mirai
-* Date/Publication: 2024-07-03 11:40:02 UTC
-* Number of recursive dependencies: 14
-
-Run `revdepcheck::revdep_details(, "future.mirai")` for more info
-
-</details>
-
-## In both
-
-*   checking package dependencies ... NOTE
-    ```
-    Package suggested but not available for checking: ‘future.tests’
-    ```
-
 # GeDS
 
 <details>
@@ -2161,17 +2143,17 @@ Run `revdepcheck::revdep_details(, "hacksig")` for more info
     Error(s) in re-building vignettes:
     --- re-building ‘hacksig.Rmd’ using rmarkdown
     
-    Quitting from hacksig.Rmd:215-225 [unnamed-chunk-19]
+    Quitting from hacksig.Rmd:203-206 [unnamed-chunk-18]
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     <error/rlang_error>
-    Error in `msigdbr()`:
-    ! Unknown subcollection.
+    Error:
+    ! Cannot create 256 parallel PSOCK nodes. Each node needs one connection, but there are only 123 connections left out of the maximum 128 available on this R installation. To increase this limit in R (>= 4.4.0), use command-line option '--max-connections=N' when launching R.
     ---
     Backtrace:
     ...
     
     Error: processing vignette 'hacksig.Rmd' failed with diagnostics:
-    Unknown subcollection.
+    Cannot create 256 parallel PSOCK nodes. Each node needs one connection, but there are only 123 connections left out of the maximum 128 available on this R installation. To increase this limit in R (>= 4.4.0), use command-line option '--max-connections=N' when launching R.
     --- failed re-building ‘hacksig.Rmd’
     
     SUMMARY: processing the following file failed:
@@ -2250,7 +2232,7 @@ Run `revdepcheck::revdep_details(, "hero")` for more info
 
 *   checking dependencies in R code ... NOTE
     ```
-    [c4-n43:3135739] OPAL ERROR: Not initialized in file ext2x_client.c at line 112
+    [c4-n43:1057183] OPAL ERROR: Not initialized in file ext2x_client.c at line 112
     --------------------------------------------------------------------------
     The application appears to have been direct launched using "srun",
     but OMPI was not built with SLURM's PMI support and therefore cannot
@@ -2403,10 +2385,9 @@ Run `revdepcheck::revdep_details(, "infercnv")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  7.5Mb
+      installed size is  6.1Mb
       sub-directories of 1Mb or more:
         R         1.5Mb
-        data      2.0Mb
         extdata   3.1Mb
     ```
 
@@ -2738,7 +2719,7 @@ Run `revdepcheck::revdep_details(, "lidR")` for more info
 
 *   checking tests ...
     ```
-      Running ‘testthat.R’/software/c4/cbi/software/_rocky8/R-4.4.3-gcc13/lib64/R/bin/BATCH: line 60: 4118891 Aborted                 (core dumped) ${R_HOME}/bin/R -f ${in} ${opts} ${R_BATCH_OPTIONS} > ${out} 2>&1
+      Running ‘testthat.R’/software/c4/cbi/software/_rocky8/R-4.4.3-gcc13/lib64/R/bin/BATCH: line 60: 20146 Aborted                 (core dumped) ${R_HOME}/bin/R -f ${in} ${opts} ${R_BATCH_OPTIONS} > ${out} 2>&1
     
      ERROR
     Running the tests in ‘tests/testthat.R’ failed.
@@ -2750,7 +2731,7 @@ Run `revdepcheck::revdep_details(, "lidR")` for more info
       > test_check("lidR")
       Tests using raster: terra 
       Tests using future: TRUE 
-      Tests using OpenMP thread: 48 
+      Tests using OpenMP thread: 128 
       Tests using rlas: 1.8.0 
       OGR: Unsupported geometry type
       OGR: Unsupported geometry type
@@ -2885,7 +2866,7 @@ Run `revdepcheck::revdep_details(, "marginaleffects")` for more info
 
 *   checking package dependencies ... NOTE
     ```
-    Packages suggested but not available for checking: 'cobalt', 'logistf'
+    Package suggested but not available for checking: ‘logistf’
     ```
 
 *   checking installed package size ... NOTE
@@ -4352,7 +4333,7 @@ Run `revdepcheck::revdep_details(, "psborrow2")` for more info
 
 *   checking package dependencies ... NOTE
     ```
-    Packages suggested but not available for checking: 'cmdstanr', 'cobalt'
+    Package suggested but not available for checking: ‘cmdstanr’
     ```
 
 *   checking installed package size ... NOTE
@@ -4367,10 +4348,10 @@ Run `revdepcheck::revdep_details(, "psborrow2")` for more info
 
 <details>
 
-* Version: 0.67.0
+* Version: 0.68.0
 * GitHub: https://github.com/HenrikBengtsson/PSCBS
 * Source code: https://github.com/cran/PSCBS
-* Date/Publication: 2024-02-17 19:10:02 UTC
+* Date/Publication: 2025-04-18 19:40:02 UTC
 * Number of recursive dependencies: 44
 
 Run `revdepcheck::revdep_details(, "PSCBS")` for more info

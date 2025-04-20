@@ -10,7 +10,7 @@
 |collate  |en_US.UTF-8                                               |
 |ctype    |en_US.UTF-8                                               |
 |tz       |America/Los_Angeles                                       |
-|date     |2025-04-17                                                |
+|date     |2025-04-19                                                |
 |pandoc   |3.6.3 @ /software/c4/cbi/software/pandoc-3.6.3/bin/pandoc |
 |quarto   |NA                                                        |
 
@@ -18,7 +18,7 @@
 
 |package    |old    |new         |Δ  |
 |:----------|:------|:-----------|:--|
-|future     |1.40.0 |1.40.0-9004 |*  |
+|future     |1.40.0 |1.40.0-9102 |*  |
 |codetools  |0.2-20 |0.2-20      |   |
 |digest     |0.6.37 |0.6.37      |   |
 |globals    |0.17.0 |0.17.0      |   |
@@ -101,7 +101,6 @@
 |CSCNet                       |0.1.2     |      |        |     |
 |[cSEM](problems.md#csem)     |0.6.0     |      |        |1    |
 |[CSGo](problems.md#csgo)     |0.6.7     |      |        |1    |
-|ctf                          |0.1.0     |      |        |     |
 |cvasi                        |1.4.0     |      |        |     |
 |cvCovEst                     |1.2.2     |      |        |     |
 |[dar](problems.md#dar)       |1.2.0     |      |        |1    |
@@ -165,7 +164,7 @@
 |future.apply                 |1.11.3    |      |        |     |
 |future.batchtools            |0.12.1    |      |        |     |
 |future.callr                 |0.8.2     |      |        |     |
-|[future.mirai](problems.md#futuremirai)|0.2.2     |      |        |1    |
+|future.mirai                 |0.2.2     |      |        |     |
 |future.tests                 |0.9.0     |      |        |     |
 |futureverse                  |0.1.0     |      |        |     |
 |fxTWAPLS                     |0.1.3     |      |        |     |
@@ -214,6 +213,7 @@
 |ivDiag                       |1.0.6     |      |        |     |
 |[ivmte](problems.md#ivmte)   |1.4.0     |      |        |2    |
 |IVPP                         |1.1.0     |      |        |     |
+|jackknifeR                   |2.0.0     |      |        |     |
 |[JANE](problems.md#jane)     |1.0.0     |      |        |2    |
 |jlmerclusterperm             |1.1.4     |      |        |     |
 |JointAI                      |1.0.6     |      |        |     |
@@ -331,7 +331,7 @@
 |proteus                      |1.1.5     |      |        |     |
 |protti                       |0.9.1     |      |        |     |
 |[psborrow2](problems.md#psborrow2)|0.0.4.0   |      |        |2    |
-|[PSCBS](problems.md#pscbs)   |0.67.0    |      |        |1    |
+|[PSCBS](problems.md#pscbs)   |0.68.0    |      |        |1    |
 |[pseudohouseholds](problems.md#pseudohouseholds)|0.1.1     |      |        |2    |
 |PUMP                         |1.0.4     |      |        |     |
 |[qape](problems.md#qape)     |2.1       |      |        |1    |
@@ -392,7 +392,7 @@
 |simglm                       |0.8.9     |      |        |     |
 |simhelpers                   |0.3.1     |      |        |     |
 |simIDM                       |0.1.0     |      |        |     |
-|sims                         |0.0.4     |-1    |        |     |
+|sims                         |0.0.4     |      |        |     |
 |[simtrial](problems.md#simtrial)|0.4.2     |      |        |1    |
 |skewlmm                      |1.1.2     |      |        |     |
 |[skpr](problems.md#skpr)     |1.7.1     |      |        |1    |

@@ -1,7 +1,7 @@
-#' Reset a finished, failed, or interrupted future to a lazy future
+#' Reset a finished, failed, canceled, or interrupted future to a lazy future
 #'
-#' A future that has successfully completed, has been interrupted, or
-#' failed due to an error, can be relaunched after resetting it.
+#' A future that has successfully completed, canceled, interrupted, or
+#' has failed due to an error, can be relaunched after resetting it.
 #'
 #' @param x A Future.
 #'

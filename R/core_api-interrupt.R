@@ -41,6 +41,8 @@ interrupt.environment <- function(x, ...) {
 interrupt.Future <- function(x, ...) {
   future <- x
 
+  .Deprecated(msg = "interrupt() for futures has been deprecated. Please use cancel() instead, where cancel(..., interrupt = TRUE) is the default", package = .packageName)
+
   ## Nothing to do?
   if (future[["state"]] != "running") {
     return(future)

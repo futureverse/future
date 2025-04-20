@@ -2,6 +2,10 @@
 
 ## New Features
 
+ * Add `cancel()` for cancelling one or more futures. By default, it
+   attempts to interrupt any running futures. This superseeds the
+   `interrupt()` method introduced in the previous version.
+ 
  * Now `print()` for `Future` reports also on the current state of the
    future, e.g. 'created', 'running', 'finished', and 'interrupted'.
 
@@ -18,12 +22,22 @@
    to be launched to be reset and relaunched again, possible on
    another future backend.
    
- * The built-in validation of futures not leaving behind stray
-   connections could in some cases result in `Error in vapply(after,
+ * The built-in validation that futures do not leave behind stray
+   connections could, in some cases, result in `Error in vapply(after,
    FUN = as.integer, FUN.VALUE = NA_integer_): values must be length
-   1, but FUN(X[[9]]) result is length 0` when there are such stray
+   1, but FUN(X[[9]]) result is length 0` when there were such stray
    connections.
- 
+
+## Deprecated and Defunct
+
+ * Use `cancel()` instead of `interrupt()`, which was introduced in
+   the previous version. The default for `cancel()` is to interrupt as
+   well. One reason for the change is that the word "interrupt"
+   conveys the _mechanism_, whereas the "cancel" conveys the _intent_,
+   which is the prefered style. Also, `interrupt()` masks ditto of the
+   popular **rlang** package, and vice versa - the choise `cancel()`
+   is less used.
+
 
 # Version 1.40.0 [2025-04-10]
 
@@ -88,8 +102,8 @@ reverse-dependency checks, **future.tests** checks, and more.
    then it is memory efficient and more performant to use ``v <-
    value(fs, reduce = `+`, inorder = FALSE, drop = TRUE)``.
 
- * `value()` on containers interrupts non-resolved futures if an error
-   is detected in one of the futures.
+ * `value()` on containers cancels non-resolved futures if an error is
+   detected in one of the futures.
 
  * Add `minifuture()`, which is like `future()`, but with different
    default arguments resulting in less overhead with the added burden
@@ -109,7 +123,7 @@ reverse-dependency checks, **future.tests** checks, and more.
    
  * Failed workers are automatically detected and relaunched, if
    supported by the parallel backend. For instance, if a `cluster`
-   workers is interrupted, or crashes for other reasons, it will be
+   worker is interrupted, or crashes for other reasons, it will be
    relaunched. This works for both local and remote workers.
 
  * A future must close any connections or graphical devices it opens,

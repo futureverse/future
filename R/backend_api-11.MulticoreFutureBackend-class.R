@@ -383,7 +383,7 @@ result.MulticoreFuture <- local({
 
     ## NOTE: mccollect() produces a "1 parallel job did not deliver a result"
     ## warning, if the parallel worker has been interrupted and terminated.
-    if (future[["state"]] == "interrupted") {
+    if (future[["state"]] %in% c("canceled", "interrupted")) {
       result <- suppressWarnings(mccollect(jobs = jobs, wait = TRUE)[[1L]])
     } else {
       result <- mccollect(jobs = jobs, wait = TRUE)[[1L]]
@@ -415,7 +415,7 @@ result.MulticoreFuture <- local({
       if (is.null(result) || identical(result, structure("fatal error in wrapper code", class = "try-error"))) {
         label <- sQuoteLabel(future[["label"]])
 
-        if (future[["state"]] == "interrupted") {
+        if (future[["state"]] %in% c("canceled", "interrupted")) {
           if (debug) mdebugf("Detected interrupted %s whose result cannot be retrieved", sQuote(class(future)[1]))
           msg <- sprintf("A future (%s) of class %s was interrupted, while running on localhost (pid %d)", label, class(future)[1], pid)
           result <- FutureInterruptError(msg, future = future)
