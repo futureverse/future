@@ -51,8 +51,8 @@ launchFuture.SequentialFutureBackend <- function(backend, future, ...) {
 
   ## Register run (used to collect statistics)
   reg <- backend[["reg"]]
-  FutureRegistry(reg, action = "add", future = future)
-  FutureRegistry(reg, action = "remove", future = future)
+  FutureRegistry(reg, action = "add", future = future, earlySignal = FALSE)
+  FutureRegistry(reg, action = "remove", future = future, earlySignal = FALSE)
   if (debug) mdebugf("%s started (and completed)", class(future)[1])
 
   ## Always signal immediateCondition:s and as soon as possible.
