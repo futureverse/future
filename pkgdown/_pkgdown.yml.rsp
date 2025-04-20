@@ -41,7 +41,10 @@ navbar:
     cran:
       icon: fab fa-r-project
       href: https://cloud.r-project.org/package=<%= pkg %>
-
+      
+search:
+  exclude: ['README_ja.md']
+  
 template:
   params:
     docsearch:
