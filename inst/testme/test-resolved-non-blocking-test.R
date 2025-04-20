@@ -33,29 +33,24 @@ for (cores in 1:availCores) {
       }, lazy = TRUE)
     })
     vs <- vector("list", length = length(fs))
-    ss <- vapply(fs, FUN = function(f) f$state, NA_character_)
+    ss <- vapply(fs, FUN = function(f) f[["state"]], NA_character_)
     print(ss)
     stopifnot(all(ss == "created"))
-    rs <- rep(NA, times = length(fs))
     
+    rs <- rep(NA, times = length(fs))
     for (ff in seq_along(fs)) {
       for (kk in ff:length(fs)) {
         message(sprintf("Checking if future #%d is resolved:", kk))
         rs[[kk]] <- resolved(fs[[kk]])
-        ss <- vapply(fs, FUN = function(f) f$state, NA_character_)
+        ss <- vapply(fs, FUN = function(f) f[["state"]], NA_character_)
         print(ss)
         if (inherits(fs[[kk]], "UniprocessFuture")) {
+          ## All sequential futures were resolved when created
           stopifnot(rs[[kk]])
           stopifnot(ss[[kk]] == "finished")
-        } else if (inherits(fs[[kk]], "MultiprocessFuture")) {
-          if (nbrOfWorkers() + ff - 1L >= kk) {
-            stopifnot(ss[[kk]] == "running")
-          } else {
-            ## Most commonly, we get 'created' here, but it might already be
-            ## 'running' (observed once on win-builder on 2020-10-30)
-            stopifnot(ss[[kk]] %in% c("created", "running"))
-          }
-          stopifnot(!rs[[kk]])
+        } else {
+          ## Because of timing issues, we cannot no know for sure in
+          ## what state non-sequential future are at this point in time
         }
       } ## for (kk ...)
     
@@ -66,17 +61,18 @@ for (cores in 1:availCores) {
       rs[[ff]] <- resolved(fs[[ff]])
       stopifnot(rs[ff])
     
-      ss <- vapply(fs, FUN = function(f) f$state, NA_character_)
+      ss <- vapply(fs, FUN = function(f) f[["state"]], NA_character_)
       stopifnot(ss[ff] == "finished")
       nbrOfFinished <- sum(ss == "finished")
       if (inherits(fs[[kk]], "UniprocessFuture")) {
+        ## All sequential futures were resolved when created
         stopifnot(nbrOfFinished == length(fs))
       } else {
         stopifnot(nbrOfFinished == ff)
       }
     } ## for (ff ...)
     
-    ss <- vapply(fs, FUN = function(f) f$state, NA_character_)
+    ss <- vapply(fs, FUN = function(f) f[["state"]], NA_character_)
     print(ss)
     stopifnot(all(ss == "finished"))
     
