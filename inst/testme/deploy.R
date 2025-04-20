@@ -1,3 +1,5 @@
+#!/usr/bin/env Rscript
+
 source <- "./inst/testme"
 if (!utils::file_test("-d", source)) {
   stop("Source 'testme' folder not found: ", sQuote(source))
