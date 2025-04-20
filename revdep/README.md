@@ -10,7 +10,7 @@
 |collate  |en_US.UTF-8                                               |
 |ctype    |en_US.UTF-8                                               |
 |tz       |America/Los_Angeles                                       |
-|date     |2025-04-19                                                |
+|date     |2025-04-20                                                |
 |pandoc   |3.6.3 @ /software/c4/cbi/software/pandoc-3.6.3/bin/pandoc |
 |quarto   |NA                                                        |
 
@@ -18,7 +18,7 @@
 
 |package    |old    |new         |Δ  |
 |:----------|:------|:-----------|:--|
-|future     |1.40.0 |1.40.0-9102 |*  |
+|future     |1.40.0 |1.40.0-9109 |*  |
 |codetools  |0.2-20 |0.2-20      |   |
 |digest     |0.6.37 |0.6.37      |   |
 |globals    |0.17.0 |0.17.0      |   |
@@ -233,7 +233,7 @@
 |lemna                        |1.0.2     |      |        |     |
 |LexFindR                     |1.1.0     |      |        |     |
 |lgr                          |0.4.4     |      |        |     |
-|[lidR](problems.md#lidr)     |4.1.2     |1     |        |1    |
+|[lidR](problems.md#lidr)     |4.1.2     |1     |        |2    |
 |lightr                       |1.8.0     |      |        |     |
 |lmtp                         |1.4.0     |      |        |     |
 |LTFHPlus                     |2.1.2     |      |        |     |
@@ -295,7 +295,7 @@
 |[OptimalGoldstandardDesigns](problems.md#optimalgoldstandarddesigns)|1.0.1     |      |        |1    |
 |optimLanduse                 |1.2.1     |      |        |     |
 |origami                      |1.0.7     |      |        |     |
-|[OutSeekR](problems.md#outseekr)|1.0.0     |1     |        |     |
+|OutSeekR                     |1.0.0     |      |        |     |
 |[PAMpal](problems.md#pampal) |1.4.4     |      |1       |     |
 |[PAMscapes](problems.md#pamscapes)|0.11.3    |      |1       |     |
 |paramsim                     |0.1.0     |      |        |     |
@@ -315,7 +315,7 @@
 |phylopath                    |1.3.0     |      |        |     |
 |phylospatial                 |1.1.0     |      |        |     |
 |[PINstimation](problems.md#pinstimation)|0.1.2     |      |        |1    |
-|[pliman](problems.md#pliman) |3.0.0     |      |        |1    |
+|[pliman](problems.md#pliman) |3.0.0     |      |        |4    |
 |[PLNmodels](problems.md#plnmodels)|1.2.2     |      |        |1    |
 |plumber                      |1.3.0     |      |        |     |
 |polle                        |1.5       |      |        |     |

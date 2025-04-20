@@ -235,7 +235,7 @@ Run `revdepcheck::revdep_details(, "batchtools")` for more info
 
 *   checking dependencies in R code ... NOTE
     ```
-    [c4-n43:3626643] OPAL ERROR: Not initialized in file ext2x_client.c at line 112
+    [c4-n43:1354832] OPAL ERROR: Not initialized in file ext2x_client.c at line 112
     --------------------------------------------------------------------------
     The application appears to have been direct launched using "srun",
     but OMPI was not built with SLURM's PMI support and therefore cannot
@@ -972,18 +972,15 @@ Run `revdepcheck::revdep_details(, "crossmap")` for more info
       > library(crossmap)
       > 
       > test_check("crossmap")
-      [ FAIL 2 | WARN 3 | SKIP 0 | PASS 264 ]
+      [ FAIL 1 | WARN 3 | SKIP 0 | PASS 382 ]
       
-    ...
-        7.           └─future::ClusterFutureBackend(...)
-        8.             └─clusterRegistry$startCluster(...)
-        9.               └─future (local) makeCluster(workers, ...)
-       10.                 ├─base::do.call(makeClusterPSOCK, args = args, quote = TRUE)
-       11.                 └─parallelly (local) `<fn>`(base::quote(256L), rscript_libs = base::quote(`<chr>`))
-       12.                   └─parallelly:::stopf(msg)
+      ══ Failed tests ════════════════════════════════════════════════════════════════
+      ── Failure ('test-errors.R:12:3'): require future ──────────────────────────────
+      `future_xmap(list(1:3, 1:3), paste)` did not throw an error.
       
-      [ FAIL 2 | WARN 3 | SKIP 0 | PASS 264 ]
+      [ FAIL 1 | WARN 3 | SKIP 0 | PASS 382 ]
       Error: Test failures
+      In addition: There were 50 or more warnings (use warnings() to see the first 50)
       Execution halted
     ```
 
@@ -2143,17 +2140,17 @@ Run `revdepcheck::revdep_details(, "hacksig")` for more info
     Error(s) in re-building vignettes:
     --- re-building ‘hacksig.Rmd’ using rmarkdown
     
-    Quitting from hacksig.Rmd:203-206 [unnamed-chunk-18]
+    Quitting from hacksig.Rmd:215-225 [unnamed-chunk-19]
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     <error/rlang_error>
-    Error:
-    ! Cannot create 256 parallel PSOCK nodes. Each node needs one connection, but there are only 123 connections left out of the maximum 128 available on this R installation. To increase this limit in R (>= 4.4.0), use command-line option '--max-connections=N' when launching R.
+    Error in `msigdbr()`:
+    ! Unknown subcollection.
     ---
     Backtrace:
     ...
     
     Error: processing vignette 'hacksig.Rmd' failed with diagnostics:
-    Cannot create 256 parallel PSOCK nodes. Each node needs one connection, but there are only 123 connections left out of the maximum 128 available on this R installation. To increase this limit in R (>= 4.4.0), use command-line option '--max-connections=N' when launching R.
+    Unknown subcollection.
     --- failed re-building ‘hacksig.Rmd’
     
     SUMMARY: processing the following file failed:
@@ -2232,7 +2229,7 @@ Run `revdepcheck::revdep_details(, "hero")` for more info
 
 *   checking dependencies in R code ... NOTE
     ```
-    [c4-n43:1057183] OPAL ERROR: Not initialized in file ext2x_client.c at line 112
+    [c4-n43:3011110] OPAL ERROR: Not initialized in file ext2x_client.c at line 112
     --------------------------------------------------------------------------
     The application appears to have been direct launched using "srun",
     but OMPI was not built with SLURM's PMI support and therefore cannot
@@ -2385,9 +2382,10 @@ Run `revdepcheck::revdep_details(, "infercnv")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  6.1Mb
+      installed size is  7.5Mb
       sub-directories of 1Mb or more:
         R         1.5Mb
+        data      2.0Mb
         extdata   3.1Mb
     ```
 
@@ -2709,7 +2707,7 @@ Run `revdepcheck::revdep_details(, "ldsr")` for more info
 * GitHub: https://github.com/r-lidar/lidR
 * Source code: https://github.com/cran/lidR
 * Date/Publication: 2024-07-09 08:40:02 UTC
-* Number of recursive dependencies: 146
+* Number of recursive dependencies: 154
 
 Run `revdepcheck::revdep_details(, "lidR")` for more info
 
@@ -2719,7 +2717,7 @@ Run `revdepcheck::revdep_details(, "lidR")` for more info
 
 *   checking tests ...
     ```
-      Running ‘testthat.R’/software/c4/cbi/software/_rocky8/R-4.4.3-gcc13/lib64/R/bin/BATCH: line 60: 20146 Aborted                 (core dumped) ${R_HOME}/bin/R -f ${in} ${opts} ${R_BATCH_OPTIONS} > ${out} 2>&1
+      Running ‘testthat.R’/software/c4/cbi/software/_rocky8/R-4.4.3-gcc13/lib64/R/bin/BATCH: line 60: 4014933 Aborted                 (core dumped) ${R_HOME}/bin/R -f ${in} ${opts} ${R_BATCH_OPTIONS} > ${out} 2>&1
     
      ERROR
     Running the tests in ‘tests/testthat.R’ failed.
@@ -2731,13 +2729,18 @@ Run `revdepcheck::revdep_details(, "lidR")` for more info
       > test_check("lidR")
       Tests using raster: terra 
       Tests using future: TRUE 
-      Tests using OpenMP thread: 128 
+      Tests using OpenMP thread: 48 
       Tests using rlas: 1.8.0 
       OGR: Unsupported geometry type
       OGR: Unsupported geometry type
       Chunk 1 of 1 (100%): state ✓
       terminate called after throwing an instance of 'std::length_error'
         what():  basic_string::_M_create
+    ```
+
+*   checking package dependencies ... NOTE
+    ```
+    Package suggested but not available for checking: ‘mapedit’
     ```
 
 *   checking installed package size ... NOTE
@@ -3704,47 +3707,6 @@ Run `revdepcheck::revdep_details(, "OptimalGoldstandardDesigns")` for more info
            |                                                ^
     ```
 
-# OutSeekR
-
-<details>
-
-* Version: 1.0.0
-* GitHub: NA
-* Source code: https://github.com/cran/OutSeekR
-* Date/Publication: 2024-11-19 09:10:05 UTC
-* Number of recursive dependencies: 58
-
-Run `revdepcheck::revdep_details(, "OutSeekR")` for more info
-
-</details>
-
-## In both
-
-*   checking re-building of vignette outputs ... ERROR
-    ```
-    Error(s) in re-building vignettes:
-    --- re-building ‘introduction.Rmd’ using rmarkdown
-    
-    Quitting from introduction.Rmd:101-117 [run-1]
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    <error/rlang_error>
-    Error:
-    ! Cannot create 256 parallel PSOCK nodes. Each node needs one connection, but there are only 123 connections left out of the maximum 128 available on this R installation. To increase this limit in R (>= 4.4.0), use command-line option '--max-connections=N' when launching R.
-    ---
-    Backtrace:
-    ...
-    
-    Error: processing vignette 'introduction.Rmd' failed with diagnostics:
-    Cannot create 256 parallel PSOCK nodes. Each node needs one connection, but there are only 123 connections left out of the maximum 128 available on this R installation. To increase this limit in R (>= 4.4.0), use command-line option '--max-connections=N' when launching R.
-    --- failed re-building ‘introduction.Rmd’
-    
-    SUMMARY: processing the following file failed:
-      ‘introduction.Rmd’
-    
-    Error: Vignette re-building failed.
-    Execution halted
-    ```
-
 # PAMpal
 
 <details>
@@ -4096,13 +4058,18 @@ Run `revdepcheck::revdep_details(, "PINstimation")` for more info
 * GitHub: https://github.com/NA/NA
 * Source code: https://github.com/cran/pliman
 * Date/Publication: 2024-11-06 10:30:02 UTC
-* Number of recursive dependencies: 126
+* Number of recursive dependencies: 134
 
 Run `revdepcheck::revdep_details(, "pliman")` for more info
 
 </details>
 
 ## In both
+
+*   checking package dependencies ... NOTE
+    ```
+    Package suggested but not available for checking: ‘mapedit’
+    ```
 
 *   checking installed package size ... NOTE
     ```
@@ -4111,6 +4078,19 @@ Run `revdepcheck::revdep_details(, "pliman")` for more info
         R            1.5Mb
         libs         5.4Mb
         tmp_images   1.9Mb
+    ```
+
+*   checking whether startup messages can be suppressed ... NOTE
+    ```
+    To use viewer = 'mapview', first install the required packages:mapedit
+    
+    It looks like this package (or a package it requires) has a startup
+    message which cannot be suppressed: see ?packageStartupMessage.
+    ```
+
+*   checking Rd cross-references ... NOTE
+    ```
+    Package unavailable to check Rd xrefs: ‘mapedit’
     ```
 
 # PLNmodels
@@ -6566,22 +6546,22 @@ Run `revdepcheck::revdep_details(, "WeightedCluster")` for more info
     ```
     Error(s) in re-building vignettes:
     --- re-building ‘BigDataSA.Rmd’ using rmarkdown
+    --- finished re-building ‘BigDataSA.Rmd’
     
-    Quitting from BigDataSA.Rmd:73-77 [seqclaraex]
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    <error/rlang_error>
-    Error:
-    ! Cannot create 256 parallel PSOCK nodes. Each node needs one connection, but there are only 123 connections left out of the maximum 128 available on this R installation. To increase this limit in R (>= 4.4.0), use command-line option '--max-connections=N' when launching R.
-    ---
-    Backtrace:
+    --- re-building ‘ClusterExternalValidSA.Rmd’ using rmarkdown
+    --- finished re-building ‘ClusterExternalValidSA.Rmd’
+    
+    --- re-building ‘ClusterValidSA.Rmd’ using rmarkdown
+    --- finished re-building ‘ClusterValidSA.Rmd’
+    
     ...
+    l.85 \usepackage
                     {tikz}^^M
     !  ==> Fatal error occurred, no output PDF file produced!
     --- failed re-building ‘WeightedClusterPreview.Rnw’
     
     SUMMARY: processing the following files failed:
-      ‘BigDataSA.Rmd’ ‘ClusterValidSA.Rmd’ ‘WeightedClusterFR.Rnw’
-      ‘WeightedClusterPreview.Rnw’
+      ‘WeightedClusterFR.Rnw’ ‘WeightedClusterPreview.Rnw’
     
     Error: Vignette re-building failed.
     Execution halted
