@@ -60,12 +60,24 @@ FutureRegistry <- local({
           futuresDB[[idx]] <- NULL
           db[[where]] <<- futuresDB
 
-          ## Update counters
           backend <- future[["backend"]]
           if (!is.null(backend)) {
+            ## Update counters
             counters <- backend[["counters"]]
             counters["finished"] <- counters["finished"] + 1L
             backend[["counters"]] <- counters
+            
+            ## Update total runtime 
+            result <- future[["result"]]
+            if (inherits(result, "FutureResult")) {
+              times <- result[c("finished", "started")]
+              if (length(times) == 2L) {
+                dt <- times[["finished"]] - times[["started"]]
+                runtime <- backend[["runtime"]]
+                runtime <- runtime + dt
+                backend[["runtime"]] <- runtime
+              }
+            }
           }
         }
 
@@ -145,6 +157,18 @@ FutureRegistry <- local({
         counters <- backend[["counters"]]
         counters["finished"] <- counters["finished"] + 1L
         backend[["counters"]] <- counters
+
+        ## Update total runtime 
+        result <- future[["result"]]
+        if (inherits(result, "FutureResult")) {
+          times <- result[c("finished", "started")]
+          if (length(times) == 2L) {
+            dt <- times[["finished"]] - times[["started"]]
+            runtime <- backend[["runtime"]]
+            runtime <- runtime + dt
+            backend[["runtime"]] <- runtime
+          }
+        }
       }
     } else if (action == "collect-first") {
       collectValues(where, futures = futures, firstOnly = TRUE, debug = debug)

@@ -57,7 +57,7 @@ FutureBackend <- function(..., earlySignal = FALSE, gc = FALSE, maxSizeOfObjects
   
   ## Record future plan tweaks, if any
   counters <- c(created = 0L, launched = 0L, finished = 0L)
-  args <- list(..., earlySignal = earlySignal, maxSizeOfObjects = maxSizeOfObjects, gc = gc, interrupts = interrupts, hooks = hooks, counters = counters)
+  args <- list(..., earlySignal = earlySignal, maxSizeOfObjects = maxSizeOfObjects, gc = gc, interrupts = interrupts, hooks = hooks, counters = counters, runtime = 0.0)
   for (name in names(args)) {
     core[[name]] <- args[[name]]
   }
@@ -133,6 +133,14 @@ print.FutureBackend <- function(x, ...) {
   info <- sprintf("%s %s", counters, names)
   info <- paste(info, collapse = ", ")
   s <- c(s, sprintf("Number of futures since start: %d (%s)", counters[["created"]], info))
+
+  ## Total runtime in seconds
+  runtime <- backend[["runtime"]]    ## seconds or 'difftime'
+  if (!inherits(runtime, "difftime")) {
+    runtime <- difftime(runtime, 0.0)  ## automatically choose 'units'
+  }
+  s <- c(s, sprintf("Total runtime of futures: %s (%s/finished future)", format(runtime), format(runtime/counters[["finished"]])))
+
   cat(s, sep = "\n")
   invisible(x)
 }

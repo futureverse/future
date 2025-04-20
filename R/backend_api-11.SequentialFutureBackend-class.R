@@ -9,7 +9,7 @@
 #' @rdname FutureBackend
 #' @export
 SequentialFutureBackend <- function(..., maxSizeOfObjects = +Inf) {
-  core <- FutureBackend(..., maxSizeOfObjects = maxSizeOfObjects)
+  core <- FutureBackend(..., maxSizeOfObjects = maxSizeOfObjects, reg = "sequential")
   core[["futureClasses"]] <- c("SequentialFuture", "UniprocessFuture", core[["futureClasses"]])
   core <- structure(core, class = c("SequentialFutureBackend", class(core)))
   core
@@ -49,6 +49,10 @@ launchFuture.SequentialFutureBackend <- function(backend, future, ...) {
   future[["result"]] <- evalFuture(data)
   future[["state"]] <- "finished"
 
+  ## Register run (used to collect statistics)
+  reg <- backend[["reg"]]
+  FutureRegistry(reg, action = "add", future = future)
+  FutureRegistry(reg, action = "remove", future = future)
   if (debug) mdebugf("%s started (and completed)", class(future)[1])
 
   ## Always signal immediateCondition:s and as soon as possible.

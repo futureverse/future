@@ -8,14 +8,19 @@
  
  * Now `print()` for `Future` reports also on the current state of the
    future, e.g. 'created', 'running', 'finished', and 'interrupted'.
-   
+
+ * Now `print(plan())` reports on the number of created, launched, and
+   finished futures since the future backend was set. It also reports
+   on the total and average runtime of all finished futures thus far.
+
  * Now `plan(multisession)` defaults to
- `parallelly::availableCores(constraints = "connections")`
- workers. This is done to make sure to not use more parallel workers
- than the number of connections available in R, because each parallel
- PSOCK worker requires its own R connections. Previously, it would
- attempt to launch even more workers on machines with a large number
- of CPU cores, e.g. 128, 196, and 256 CPU-core machines.
+   `parallelly::availableCores(constraints = "connections")`
+   workers. This is done to make sure to not use more parallel workers
+   than the number of connections available in R, because each
+   parallel PSOCK worker requires its own R connections. Previously,
+   it would attempt to launch even more workers on machines with a
+   large number of CPU cores, e.g. 128, 196, and 256 CPU-core
+   machines.
 
 ## Bug Fixes
 
