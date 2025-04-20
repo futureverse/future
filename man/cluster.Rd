@@ -6,7 +6,7 @@
 \usage{
 cluster(
   ...,
-  workers = availableWorkers(),
+  workers = availableWorkers(constraints = "connections"),
   gc = FALSE,
   earlySignal = FALSE,
   persistent = FALSE,

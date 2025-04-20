@@ -8,6 +8,14 @@
  
  * Now `print()` for `Future` reports also on the current state of the
    future, e.g. 'created', 'running', 'finished', and 'interrupted'.
+   
+ * Now `plan(multisession)` defaults to
+ `parallelly::availableCores(constraints = "connections")`
+ workers. This is done to make sure to not use more parallel workers
+ than the number of connections available in R, because each parallel
+ PSOCK worker requires its own R connections. Previously, it would
+ attempt to launch even more workers on machines with a large number
+ of CPU cores, e.g. 128, 196, and 256 CPU-core machines.
 
 ## Bug Fixes
 

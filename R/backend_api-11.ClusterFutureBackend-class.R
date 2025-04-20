@@ -21,7 +21,7 @@ ClusterFutureBackend <- local({
   ## Most recent 'workers' set up
   last <- NULL
 
-  function(workers = availableWorkers(), gc = TRUE, earlySignal = TRUE, interrupts = FALSE, persistent = FALSE, ...) {
+  function(workers = availableWorkers(constraints = "connections"), gc = TRUE, earlySignal = TRUE, interrupts = FALSE, persistent = FALSE, ...) {
     debug <- isTRUE(getOption("future.debug"))
 
     if (debug) {
@@ -1457,7 +1457,7 @@ handleInterruptedFuture <- local({
 #' @example incl/cluster.R
 #'
 #' @export
-cluster <- function(..., workers = availableWorkers(), gc = FALSE, earlySignal = FALSE, persistent = FALSE, envir = parent.frame()) {
+cluster <- function(..., workers = availableWorkers(constraints = "connections"), gc = FALSE, earlySignal = FALSE, persistent = FALSE, envir = parent.frame()) {
   ## WORKAROUNDS:
   ## (1) promises::future_promise() calls the "evaluator" function directly
   if ("promises" %in% loadedNamespaces()) {

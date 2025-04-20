@@ -72,7 +72,7 @@ usedCores <- function() {
 #'         extensive waiting, then a timeout error is thrown.
 #'
 #' @keywords internal
-requestCore <- function(await, workers = availableCores(), timeout, delta, alpha) {
+requestCore <- function(await, workers = availableCores(constraints = "multicore"), timeout, delta, alpha) {
   stop_if_not(length(workers) == 1L, is.numeric(workers), is.finite(workers), workers >= 1)
   stop_if_not(is.function(await))
   stop_if_not(is.finite(timeout), timeout >= 0)
