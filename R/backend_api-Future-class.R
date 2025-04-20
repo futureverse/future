@@ -317,7 +317,7 @@ print.Future <- function(x, ...) {
   }
 
   state <- future[["state"]]
-  cat(sprintf("State: %s\n", state))
+  cat(sprintf("State: %s\n", commaq(state)))
   
   result <- future[["result"]]
   hasResult <- inherits(result, "FutureResult")

@@ -41,13 +41,17 @@ cancel.environment <- function(x, ...) {
 cancel.Future <- function(x, interrupt = TRUE, ...) {
   future <- x
 
-  if (interrupt) {
-    future <- interrupt(future)
+  if (interrupt && future[["state"]] == "running") {
+    backend <- future[["backend"]]
+    if (is.null(backend)) {
+      stop(FutureError("Interruption of futures require a backend implementing the FutureBackend API: ", sQuote(class(future)[1])))
+    }
+    interruptFuture(backend, future = future, ...)
   }
 
-  ## FIXME: For now, use 'interrupted", but should ideally use 'canceled'
-  ## future[["state"]] <- "canceled"
-  future[["state"]] <- "interrupted"
+  ## FIXME: For now, use 'interrupted", but should ideally also
+  ## be 'canceled'
+  future[["state"]] <- "canceled"
 
   future
 }

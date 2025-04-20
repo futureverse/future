@@ -576,7 +576,7 @@ resolved.ClusterFuture <- function(x, run = TRUE, timeout = NULL, ...) {
 
     ## Broken connection due to interruption?
     isValid <- isConnectionValid(con)
-    if (!isValid && future[["state"]] %in% c("interrupted", "running")) {
+    if (!isValid && future[["state"]] %in% c("canceled", "interrupted", "running")) {
       ## Did it fail because we interrupted a future, which resulted in the
       ## worker also shutting done? If so, turn the error into a run-time
       ## FutureInterruptError and revive the worker
@@ -676,7 +676,7 @@ result.ClusterFuture <- function(future, ...) {
   if (!is.null(con <- node[["con"]])) {
     ## Broken connection due to interruption?
     isValid <- isConnectionValid(con)
-    if (!isValid && future[["state"]] %in% c("interrupted", "running")) {
+    if (!isValid && future[["state"]] %in% c("canceled", "interrupted", "running")) {
       ## Did it fail because we interrupted a future, which resulted in the
       ## worker also shutting done? If so, turn the error into a run-time
       ## FutureInterruptError and revive the worker
@@ -754,7 +754,7 @@ receiveMessageFromWorker <- local({
       ## Did it fail because we interrupted a future, which resulted in the worker
       ## also shutting done? If so, turn the error into a run-time FutureInterruptError
       ## and revive the worker
-      if (future[["state"]] %in% c("interrupted", "running")) {
+      if (future[["state"]] %in% c("canceled", "interrupted", "running")) {
         future <- handleInterruptedFuture(backend, future = future)
         return(future[["result"]])
       }
@@ -1351,8 +1351,8 @@ handleInterruptedFuture <- local({
       mdebug_push("handleInterruptedFuture() for ClusterFutureBackend ...")
       on.exit(mdebug_pop("handleInterruptedFuture() for ClusterFutureBackend ... done"))
     }
-  
-    stop_if_not(future[["state"]] %in% c("interrupted", "running"))
+
+    stop_if_not(future[["state"]] %in% c("canceled", "interrupted", "running"))
   
     label <- sQuoteLabel(future[["label"]])
     workers <- backend[["workers"]]
