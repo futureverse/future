@@ -2,7 +2,7 @@
 
 ## New Features
 
- * Add `cancel()` for cancelling one or more futures. By default, it
+ * Add `cancel()` for canceling one or more futures. By default, it
    attempts to interrupt any running futures. This superseeds the
    `interrupt()` method introduced in the previous version.
  
@@ -19,8 +19,8 @@
    hard-to-understand, obscure errors. Now these errors are detected
    by the **future** package and resignaled as informative errors of
    class `FutureLaunchError`. This also allows the future that failed
-   to be launched to be reset and relaunched again, possible on
-   another future backend.
+   to launch to be reset and relaunched again, possible on another
+   future backend.
    
  * The built-in validation that futures do not leave behind stray
    connections could, in some cases, result in `Error in vapply(after,
@@ -34,9 +34,9 @@
    the previous version. The default for `cancel()` is to interrupt as
    well. One reason for the change is that the word "interrupt"
    conveys the _mechanism_, whereas the "cancel" conveys the _intent_,
-   which is the prefered style. Also, `interrupt()` masks ditto of the
-   popular **rlang** package, and vice versa - the choise `cancel()`
-   is less used.
+   which is the preferred style. Also, `interrupt()` masks ditto of
+   the popular **rlang** package, and vice versa - the choice
+   `cancel()` is less used.
 
 
 # Version 1.40.0 [2025-04-10]

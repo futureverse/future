@@ -271,6 +271,7 @@ gz
 haha
 halfCores
 hardcoded
+hardwiring
 hexcode
 hostname
 hostnames
@@ -411,6 +412,7 @@ resignaled
 reticulate
 revdepcheck
 rhub
+rlang
 rng
 rnorm
 rollout
@@ -460,6 +462,7 @@ subassignments
 subclasses
 suboptimal
 subprocesses
+superseeds
 supportsMulticore
 suppressMessages
 tagnames
