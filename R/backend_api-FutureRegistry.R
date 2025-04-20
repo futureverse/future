@@ -59,6 +59,14 @@ FutureRegistry <- local({
         if (!is.na(idx)) {
           futuresDB[[idx]] <- NULL
           db[[where]] <<- futuresDB
+
+          ## Update counters
+          backend <- future[["backend"]]
+          if (!is.null(backend)) {
+            counters <- backend[["counters"]]
+            counters["finished"] <- counters["finished"] + 1L
+            backend[["counters"]] <- counters
+          }
         }
 
         ## (c) Collect only the first resolved future?
@@ -103,6 +111,14 @@ FutureRegistry <- local({
       futures[[length(futures)+1L]] <- future
       db[[where]] <<- futures
       if (debug) mdebugf("Appended future to position #%d", length(futures))
+
+      ## Update counters
+      backend <- future[["backend"]]
+      if (!is.null(backend)) {
+        counters <- backend[["counters"]]
+        counters["launched"] <- counters["launched"] + 1L
+        backend[["counters"]] <- counters
+      }
     } else if (action == "contains") {
       idx <- indexOf(futures, future = future)
       if (debug) {
@@ -123,6 +139,13 @@ FutureRegistry <- local({
       futures[[idx]] <- NULL
       db[[where]] <<- futures
       if (debug) mdebugf("Removed future from position #%d", idx)
+      ## Update counters
+      backend <- future[["backend"]]
+      if (!is.null(backend)) {
+        counters <- backend[["counters"]]
+        counters["finished"] <- counters["finished"] + 1L
+        backend[["counters"]] <- counters
+      }
     } else if (action == "collect-first") {
       collectValues(where, futures = futures, firstOnly = TRUE, debug = debug)
     } else if (action == "collect-all") {
