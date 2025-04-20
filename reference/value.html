@@ -19,7 +19,7 @@ queried futures are resolved."><meta property="og:image" content="https://future
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.40.0-9101</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.40.0-9109</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -105,7 +105,8 @@ queried futures are resolved.</p>
 <span>  reduce <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  stdout <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  signal <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  interrupt <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  cancel <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  interrupt <span class="op">=</span> <span class="va">cancel</span>,</span>
 <span>  inorder <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  drop <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  force <span class="op">=</span> <span class="cn">TRUE</span>,</span>
@@ -121,7 +122,8 @@ queried futures are resolved.</p>
 <span>  reduce <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  stdout <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  signal <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  interrupt <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  cancel <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  interrupt <span class="op">=</span> <span class="va">cancel</span>,</span>
 <span>  inorder <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  drop <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  force <span class="op">=</span> <span class="cn">TRUE</span>,</span>
@@ -180,10 +182,11 @@ Reduction of values is done as soon as possible, but always in the
 same order as <code>x</code>, unless <code>inorder</code> is FALSE.</p></dd>
 
 
-<dt id="arg-interrupt">interrupt<a class="anchor" aria-label="anchor" href="#arg-interrupt"></a></dt>
-<dd><p>If TRUE and <code>signal</code> is TRUE, non-resolved futures are
-interrupted as soon as an error is detected in one of the futures,
-before signaling the error.</p></dd>
+<dt id="arg-cancel-interrupt">cancel, interrupt<a class="anchor" aria-label="anchor" href="#arg-cancel-interrupt"></a></dt>
+<dd><p>If TRUE and <code>signal</code> is TRUE, non-resolved futures
+are canceled as soon as an error is detected in one of the futures,
+before signaling the error. Argument <code>interrupt</code> is passed to <code><a href="cancel.html">cancel()</a></code>
+controlling whether non-resolved futures should also be interrupted.</p></dd>
 
 
 <dt id="arg-inorder">inorder<a class="anchor" aria-label="anchor" href="#arg-inorder"></a></dt>
@@ -221,7 +224,7 @@ All future elements are replaced by their corresponding <code>value()</code> val
 For all other elements, the existing object is kept as-is.</p>
 <p>If <code>signal</code> is TRUE and one of the futures produces an error, then
 that error is relayed. Any remaining, non-resolved futures in <code>x</code> are
-interrupted, prior to signaling such an error.</p>
+canceled, prior to signaling such an error.</p>
     </div>
 
     <div class="section level2">

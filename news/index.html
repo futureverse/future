@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.40.0-9101</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.40.0-9109</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -80,13 +80,18 @@
 <h2 class="pkg-version" data-toc-text="development version" id="version-development-version">Version (development version)<a class="anchor" aria-label="anchor" href="#version-development-version"></a></h2>
 <div class="section level3">
 <h3 id="new-features-development-version">New Features<a class="anchor" aria-label="anchor" href="#new-features-development-version"></a></h3>
-<ul><li>Now <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> for <code>Future</code> reports also on the current state of the future, e.g. ‘created’, ‘running’, ‘finished’, and ‘interrupted’.</li>
+<ul><li><p>Add <code><a href="../reference/cancel.html">cancel()</a></code> for cancelling one or more futures. By default, it attempts to interrupt any running futures. This superseeds the <code><a href="../reference/interrupt.html">interrupt()</a></code> method introduced in the previous version.</p></li>
+<li><p>Now <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> for <code>Future</code> reports also on the current state of the future, e.g. ‘created’, ‘running’, ‘finished’, and ‘interrupted’.</p></li>
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-development-version">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h3>
 <ul><li><p>Globals in the environment of an anonymous function were lost since v1.40.0 (2025-04-10).</p></li>
 <li><p>In rare cases, a future backend might fails to launch a future and at the same time fail to handle such errors. That would result in hard-to-understand, obscure errors. Now these errors are detected by the <strong>future</strong> package and resignaled as informative errors of class <code>FutureLaunchError</code>. This also allows the future that failed to be launched to be reset and relaunched again, possible on another future backend.</p></li>
-<li><p>The built-in validation of futures not leaving behind stray connections could in some cases result in <code>Error in vapply(after,    FUN = as.integer, FUN.VALUE = NA_integer_): values must be length    1, but FUN(X[[9]]) result is length 0</code> when there are such stray connections.</p></li>
+<li><p>The built-in validation that futures do not leave behind stray connections could, in some cases, result in <code>Error in vapply(after,    FUN = as.integer, FUN.VALUE = NA_integer_): values must be length    1, but FUN(X[[9]]) result is length 0</code> when there were such stray connections.</p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="deprecated-and-defunct-development-version">Deprecated and Defunct<a class="anchor" aria-label="anchor" href="#deprecated-and-defunct-development-version"></a></h3>
+<ul><li>Use <code><a href="../reference/cancel.html">cancel()</a></code> instead of <code><a href="../reference/interrupt.html">interrupt()</a></code>, which was introduced in the previous version. The default for <code><a href="../reference/cancel.html">cancel()</a></code> is to interrupt as well. One reason for the change is that the word “interrupt” conveys the <em>mechanism</em>, whereas the “cancel” conveys the <em>intent</em>, which is the prefered style. Also, <code><a href="../reference/interrupt.html">interrupt()</a></code> masks ditto of the popular <strong>rlang</strong> package, and vice versa - the choise <code><a href="../reference/cancel.html">cancel()</a></code> is less used.</li>
 </ul></div>
 </div>
     <div class="section level2">
@@ -101,13 +106,13 @@
 <li><p><code><a href="../reference/value.html">value()</a></code> on containers gained argument <code>reduce</code>, which specifies a function for reducing the values, e.g. <code>values(fs, reduce =    `+`)</code>. Optional attribute <code>init</code> controls the initial value. Note that attributes must not be set on primitive functions. As a workaround, use <code>reduce = structure("+", init = 42)</code>.</p></li>
 <li><p><code><a href="../reference/value.html">value()</a></code> on containers gained argument <code>inorder</code>, which can be used control whether standard output and conditions are relayed in order of <code>x</code>, or as soon as a future in <code>x</code> is resolved. It also controls the order of how values are reduced.</p></li>
 <li><p><code><a href="../reference/value.html">value()</a></code> gained argument <code>drop</code> to turn resolved futures into minimal, invalid light-weight futures after their values have been returned. This reduces the memory use. This is particularly useful when using <code>reduce</code> in combination with <code>inorder = FALSE</code>. For instance, if you have a list of futures <code>fs</code>, and you know that you will not need to query the futures for their values more than once, then it is memory efficient and more performant to use <code>v &lt;-    value(fs, reduce = `+`, inorder = FALSE, drop = TRUE)</code>.</p></li>
-<li><p><code><a href="../reference/value.html">value()</a></code> on containers interrupts non-resolved futures if an error is detected in one of the futures.</p></li>
+<li><p><code><a href="../reference/value.html">value()</a></code> on containers cancels non-resolved futures if an error is detected in one of the futures.</p></li>
 <li><p>Add <code><a href="../reference/future.html">minifuture()</a></code>, which is like <code><a href="../reference/future.html">future()</a></code>, but with different default arguments resulting in less overhead with the added burden of having to specify globals and packages, not having conditions and standard output relayed, and ignoring random number generation.</p></li>
 <li><p>Printing <code><a href="../reference/plan.html">plan()</a></code> will output details on the future backend, e.g. number of workers, number of free workers, backend settings, and summary of resolved and non-resolved, active futures.</p></li>
 <li><p>Interrupted futures are now handled and produce an informative error.</p></li>
 <li><p>Timeout errors triggered by <code><a href="https://rdrr.io/r/base/setTimeLimit.html" class="external-link">setTimeLimit()</a></code> are now relayed.</p></li>
 <li><p>Failures to launch a future is now detected, handled, and relayed as an error with details on why it failed.</p></li>
-<li><p>Failed workers are automatically detected and relaunched, if supported by the parallel backend. For instance, if a <code>cluster</code> workers is interrupted, or crashes for other reasons, it will be relaunched. This works for both local and remote workers.</p></li>
+<li><p>Failed workers are automatically detected and relaunched, if supported by the parallel backend. For instance, if a <code>cluster</code> worker is interrupted, or crashes for other reasons, it will be relaunched. This works for both local and remote workers.</p></li>
 <li><p>A future must close any connections or graphical devices it opens, and must never close ones that it did not open. Now <code><a href="../reference/value.html">value()</a></code> produces a warning if such misuse is detected. This may be upgrade to an error in future releases. The default behavior can be controlled via an R option. Reverse dependency checks spotted one CRAN package, out of 426, that left stray connections behind.</p></li>
 <li><p>All parallel backends now prevent nested parallelization, unless explicitly allowed, e.g. settings recognized by <code><a href="https://parallelly.futureverse.org/reference/availableCores.html" class="external-link">parallelly::availableCores()</a></code> or set by the future <code><a href="../reference/plan.html">plan()</a></code>. Previously, this had to be implemented by each backend, but now it’s handled automatically by the future framework.</p></li>
 <li><p>Add new FutureBackend API for writing future backends. Please use with care, because there will be further updates in the next few release cycles.</p></li>
