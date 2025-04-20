@@ -80,7 +80,7 @@
 <h2 class="pkg-version" data-toc-text="development version" id="version-development-version">Version (development version)<a class="anchor" aria-label="anchor" href="#version-development-version"></a></h2>
 <div class="section level3">
 <h3 id="new-features-development-version">New Features<a class="anchor" aria-label="anchor" href="#new-features-development-version"></a></h3>
-<ul><li><p>Add <code><a href="../reference/cancel.html">cancel()</a></code> for cancelling one or more futures. By default, it attempts to interrupt any running futures. This superseeds the <code><a href="../reference/interrupt.html">interrupt()</a></code> method introduced in the previous version.</p></li>
+<ul><li><p>Add <code><a href="../reference/cancel.html">cancel()</a></code> for canceling one or more futures. By default, it attempts to interrupt any running futures. This superseeds the <code><a href="../reference/interrupt.html">interrupt()</a></code> method introduced in the previous version.</p></li>
 <li><p>Now <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> for <code>Future</code> reports also on the current state of the future, e.g. ‘created’, ‘running’, ‘finished’, and ‘interrupted’.</p></li>
 </ul></div>
 <div class="section level3">
@@ -91,7 +91,7 @@
 </ul></div>
 <div class="section level3">
 <h3 id="deprecated-and-defunct-development-version">Deprecated and Defunct<a class="anchor" aria-label="anchor" href="#deprecated-and-defunct-development-version"></a></h3>
-<ul><li>Use <code><a href="../reference/cancel.html">cancel()</a></code> instead of <code><a href="../reference/interrupt.html">interrupt()</a></code>, which was introduced in the previous version. The default for <code><a href="../reference/cancel.html">cancel()</a></code> is to interrupt as well. One reason for the change is that the word “interrupt” conveys the <em>mechanism</em>, whereas the “cancel” conveys the <em>intent</em>, which is the prefered style. Also, <code><a href="../reference/interrupt.html">interrupt()</a></code> masks ditto of the popular <strong>rlang</strong> package, and vice versa - the choise <code><a href="../reference/cancel.html">cancel()</a></code> is less used.</li>
+<ul><li>Use <code><a href="../reference/cancel.html">cancel()</a></code> instead of <code><a href="../reference/interrupt.html">interrupt()</a></code>, which was introduced in the previous version. The default for <code><a href="../reference/cancel.html">cancel()</a></code> is to interrupt as well. One reason for the change is that the word “interrupt” conveys the <em>mechanism</em>, whereas the “cancel” conveys the <em>intent</em>, which is the preferred style. Also, <code><a href="../reference/interrupt.html">interrupt()</a></code> masks ditto of the popular <strong>rlang</strong> package, and vice versa - the choice <code><a href="../reference/cancel.html">cancel()</a></code> is less used.</li>
 </ul></div>
 </div>
     <div class="section level2">
