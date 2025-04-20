@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.40.0-9109</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.40.0-9110</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -82,11 +82,12 @@
 <h3 id="new-features-development-version">New Features<a class="anchor" aria-label="anchor" href="#new-features-development-version"></a></h3>
 <ul><li><p>Add <code><a href="../reference/cancel.html">cancel()</a></code> for canceling one or more futures. By default, it attempts to interrupt any running futures. This superseeds the <code><a href="../reference/interrupt.html">interrupt()</a></code> method introduced in the previous version.</p></li>
 <li><p>Now <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> for <code>Future</code> reports also on the current state of the future, e.g. ‘created’, ‘running’, ‘finished’, and ‘interrupted’.</p></li>
+<li><p>Now <code>plan(multisession)</code> defaults to <code>parallelly::availableCores(constraints = "connections")</code> workers. This is done to make sure to not use more parallel workers than the number of connections available in R, because each parallel PSOCK worker requires its own R connections. Previously, it would attempt to launch even more workers on machines with a large number of CPU cores, e.g. 128, 196, and 256 CPU-core machines.</p></li>
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-development-version">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h3>
 <ul><li><p>Globals in the environment of an anonymous function were lost since v1.40.0 (2025-04-10).</p></li>
-<li><p>In rare cases, a future backend might fails to launch a future and at the same time fail to handle such errors. That would result in hard-to-understand, obscure errors. Now these errors are detected by the <strong>future</strong> package and resignaled as informative errors of class <code>FutureLaunchError</code>. This also allows the future that failed to be launched to be reset and relaunched again, possible on another future backend.</p></li>
+<li><p>In rare cases, a future backend might fails to launch a future and at the same time fail to handle such errors. That would result in hard-to-understand, obscure errors. Now these errors are detected by the <strong>future</strong> package and resignaled as informative errors of class <code>FutureLaunchError</code>. This also allows the future that failed to launch to be reset and relaunched again, possible on another future backend.</p></li>
 <li><p>The built-in validation that futures do not leave behind stray connections could, in some cases, result in <code>Error in vapply(after,    FUN = as.integer, FUN.VALUE = NA_integer_): values must be length    1, but FUN(X[[9]]) result is length 0</code> when there were such stray connections.</p></li>
 </ul></div>
 <div class="section level3">
