@@ -11,6 +11,8 @@
 #' @return
 #' `cancel()` returns the [Future] flagged as "canceled".
 #'
+#' Canceling a lazy or a finished future has no effect.
+#'
 #' @export
 cancel <- function(x, interrupt = TRUE, ...) {
   UseMethod("cancel")
@@ -41,7 +43,12 @@ cancel.environment <- function(x, ...) {
 cancel.Future <- function(x, interrupt = TRUE, ...) {
   future <- x
 
-  if (interrupt && future[["state"]] == "running") {
+  ## Only running futures can be canceled, ignore everything else
+  if (future[["state"]] != "running") {
+    return(future)
+  }
+
+  if (interrupt) {
     backend <- future[["backend"]]
     if (is.null(backend)) {
       stop(FutureError("Interruption of futures require a backend implementing the FutureBackend API: ", sQuote(class(future)[1])))

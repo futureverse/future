@@ -15,6 +15,8 @@ cancel(x, interrupt = TRUE, ...)
 }
 \value{
 \code{cancel()} returns the \link{Future} flagged as "canceled".
+
+Canceling a lazy or a finished future has no effect.
 }
 \description{
 Cancels futures, with the option to interrupt running ones.
