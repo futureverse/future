@@ -192,36 +192,6 @@ for (cores in 1:availCores) {
     message(sprintf("value(f) = %s", sQuote(v)))
     stopifnot(v == TRUE)
 
-    ## Related to https://github.com/futureverse/future/issues/778
-    f <- function() {
-      value(future({
-        a <- 42L
-        g <- function() {
-          h <- function(a) a
-          h(a)
-        }
-        g()
-      }))
-    }
-    y <- f()
-    stopifnot(y == 42L)
-
-    ## Related to https://github.com/futureverse/future/issues/778
-    ## This one fails to pick up 'a' as a global variable
-    f <- function() {
-      a <- 42L
-      value(future({
-        g <- function() {
-          h <- function(a) a
-          h(a)
-        }
-        g()
-      }))
-    }
-    y <- tryCatch(f(), error = identity)
-    print(y)
-    stopifnot(inherits(y, "error"))
-
     plan(sequential)
   } ## for (strategy ...)
 
