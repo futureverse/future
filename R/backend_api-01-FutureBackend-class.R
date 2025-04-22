@@ -137,7 +137,8 @@ print.FutureBackend <- function(x, ...) {
   ## Total runtime in seconds
   runtime <- backend[["runtime"]]    ## seconds or 'difftime'
   if (!inherits(runtime, "difftime")) {
-    runtime <- difftime(runtime, 0.0)  ## automatically choose 'units'
+    origin <- as.POSIXct(0.0, origin = "1970-01-01") ## for R (< 4.3.0)
+    runtime <- difftime(runtime, origin)  ## automatically choose 'units'
   }
   s <- c(s, sprintf("Total runtime of futures: %s (%s/finished future)", format(runtime), format(runtime/counters[["finished"]])))
 
