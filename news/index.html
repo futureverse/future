@@ -88,7 +88,7 @@
 <div class="section level3">
 <h3 id="bug-fixes-development-version">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h3>
 <ul><li><p>Globals in the environment of an anonymous function were lost since v1.40.0 (2025-04-10).</p></li>
-<li><p>In rare cases, a future backend might fails to launch a future and at the same time fail to handle such errors. That would result in hard-to-understand, obscure errors. Now these errors are detected by the <strong>future</strong> package and resignaled as informative errors of class <code>FutureLaunchError</code>. This also allows the future that failed to launch to be reset and relaunched again, possible on another future backend.</p></li>
+<li><p>In rare cases, a future backend might fail to launch a future and at the same time fail to handle such errors. That would result in hard-to-understand, obscure errors. In case the future backend does not detect this itself, such errors are now caught by the <strong>future</strong> package and resignaled as informative errors of class <code>FutureLaunchError</code>. By always handling launch errors, we assure that futures failing to launch can always be reset and relaunched again, possible on alternative backend.</p></li>
 <li><p>The built-in validation that futures do not leave behind stray connections could, in some cases, result in <code>Error in vapply(after,    FUN = as.integer, FUN.VALUE = NA_integer_): values must be length    1, but FUN(X[[9]]) result is length 0</code> when there were such stray connections.</p></li>
 </ul></div>
 <div class="section level3">
