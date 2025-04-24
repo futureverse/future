@@ -69,6 +69,7 @@ MultisessionFuture
 MultisessionFutureBackend
 MyMachine
 MyParallelFuture
+MyParallelFutureBackend
 NCPUS
 NMF
 NOTEs
@@ -300,6 +301,7 @@ keras
 kk
 lang
 lapply
+launchFuture
 libPaths
 libs
 linux
