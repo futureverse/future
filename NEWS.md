@@ -27,13 +27,14 @@
  * Globals in the environment of an anonymous function were lost since
    v1.40.0 (2025-04-10).
 
- * In rare cases, a future backend might fails to launch a future and
+ * In rare cases, a future backend might fail to launch a future and
    at the same time fail to handle such errors. That would result in
-   hard-to-understand, obscure errors. Now these errors are detected
-   by the **future** package and resignaled as informative errors of
-   class `FutureLaunchError`. This also allows the future that failed
-   to launch to be reset and relaunched again, possible on another
-   future backend.
+   hard-to-understand, obscure errors. In case the future backend does
+   not detect this itself, such errors are now caught by the
+   **future** package and resignaled as informative errors of class
+   `FutureLaunchError`. By always handling launch errors, we assure
+   that futures failing to launch can always be reset and relaunched
+   again, possible on alternative backend.
    
  * The built-in validation that futures do not leave behind stray
    connections could, in some cases, result in `Error in vapply(after,
