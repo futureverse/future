@@ -51,7 +51,6 @@ for (cores in 1:availCores) {
     message("Case B")
     ## Note that 'a' is a global variable here, but
     ## globals::findGlobals() fails to pick it up
-    ## FIXME
     expr <- quote({
       g <- function() {
         h <- function(a) a
@@ -65,7 +64,8 @@ for (cores in 1:availCores) {
 
 
     ## This one fails to pick up 'a' as a global variable
-    ## FIXME
+    ## Notes: This has always been the case, also before future 1.40.0.
+    ## To solve this, we need to write a smarter globals::findGlobals().
     a <- 42L
     f <- future({
       g <- function() {
