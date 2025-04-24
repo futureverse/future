@@ -1,5 +1,17 @@
-# Version (development version)
+# Version 1.40.0-9000 [2025-04-25]
 
+## Known issues
+
+ * Two regressions
+   ([#778](https://github.com/futureverse/future/issues/778) and
+   [#781](https://github.com/futureverse/future/issues/781)) have been
+   identified since the introduction of future 1.40.0 (2025-04-10),
+   which came with a major internal redesign. I am working on
+   resolving these issues. Until resolved, if you think you are
+   affected, you can roll back to future 1.34.0 by calling:
+
+   `install.packages("https://cran.r-project.org/src/contrib/Archive/future/future_1.34.0.tar.gz")`
+   
 ## New Features
 
  * Add `cancel()` for canceling one or more futures. By default, it
