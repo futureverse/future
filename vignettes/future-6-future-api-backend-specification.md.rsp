@@ -100,7 +100,7 @@ steps.  For simplicity, lets say we call our future backend
 the following components:
 
 * A `myparallel` function that inherits class `future`. This function
-  must never be called - it used as a no-op placeholder for setting
+  must never be called - it is used as a no-op placeholder for setting
   the future backend via `plan()`.
 
 * A `MyParallelFutureBackend` function that returns and an object of
