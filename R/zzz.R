@@ -95,7 +95,7 @@ future_1.40.0_regression_note <- function() {
   ## Source .future.R script, if one exists
   sourceFutureStartupScript()
 
-  future_1.40.0_regression_note()
+##  future_1.40.0_regression_note()
 }
 
 
