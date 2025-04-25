@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.40.0-9115</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.45.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -77,29 +77,29 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="1.40.0-9000" id="version-1400-9000">Version 1.40.0-9000<a class="anchor" aria-label="anchor" href="#version-1400-9000"></a></h2>
+<h2 class="pkg-version" data-toc-text="1.45.0" id="version-1450">Version 1.45.0<a class="anchor" aria-label="anchor" href="#version-1450"></a></h2>
 <div class="section level3">
-<h3 id="known-issues-1-40-0-9000">Known issues<a class="anchor" aria-label="anchor" href="#known-issues-1-40-0-9000"></a></h3>
+<h3 id="known-issues-1-45-0">Known issues<a class="anchor" aria-label="anchor" href="#known-issues-1-45-0"></a></h3>
 <ul><li>
 <p>Two regressions (<a href="https://github.com/futureverse/future/issues/778" class="external-link">#778</a> and <a href="https://github.com/futureverse/future/issues/781" class="external-link">#781</a>) have been identified since the introduction of future 1.40.0 (2025-04-10), which came with a major internal redesign. I am working on resolving these issues. Until resolved, if you think you are affected, you can roll back to future 1.34.0 by calling:</p>
 <p><code>install.packages("https://cran.r-project.org/src/contrib/Archive/future/future_1.34.0.tar.gz")</code></p>
 </li>
 </ul></div>
 <div class="section level3">
-<h3 id="new-features-1-40-0-9000">New Features<a class="anchor" aria-label="anchor" href="#new-features-1-40-0-9000"></a></h3>
+<h3 id="new-features-1-45-0">New Features<a class="anchor" aria-label="anchor" href="#new-features-1-45-0"></a></h3>
 <ul><li><p>Add <code><a href="../reference/cancel.html">cancel()</a></code> for canceling one or more futures. By default, it attempts to interrupt any running futures. This superseeds the <code><a href="../reference/interrupt.html">interrupt()</a></code> method introduced in the previous version.</p></li>
 <li><p>Now <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> for <code>Future</code> reports also on the current state of the future, e.g. ‘created’, ‘running’, ‘finished’, and ‘interrupted’.</p></li>
 <li><p>Now <code>print(plan())</code> reports on the number of created, launched, and finished futures since the future backend was set. It also reports on the total and average runtime of all finished futures thus far.</p></li>
 <li><p>Now <code>plan(multisession)</code> defaults to <code>parallelly::availableCores(constraints = "connections")</code> workers. This is done to make sure to not use more parallel workers than the number of connections available in R, because each parallel PSOCK worker requires its own R connections. Previously, it would attempt to launch even more workers on machines with a large number of CPU cores, e.g. 128, 196, and 256 CPU-core machines.</p></li>
 </ul></div>
 <div class="section level3">
-<h3 id="bug-fixes-1-40-0-9000">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-1-40-0-9000"></a></h3>
+<h3 id="bug-fixes-1-45-0">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-1-45-0"></a></h3>
 <ul><li><p>Globals in the environment of an anonymous function were lost since v1.40.0 (2025-04-10).</p></li>
 <li><p>In rare cases, a future backend might fail to launch a future and at the same time fail to handle such errors. That would result in hard-to-understand, obscure errors. In case the future backend does not detect this itself, such errors are now caught by the <strong>future</strong> package and resignaled as informative errors of class <code>FutureLaunchError</code>. By always handling launch errors, we assure that futures failing to launch can always be reset and relaunched again, possible on alternative backend.</p></li>
 <li><p>The built-in validation that futures do not leave behind stray connections could, in some cases, result in <code>Error in vapply(after,    FUN = as.integer, FUN.VALUE = NA_integer_): values must be length    1, but FUN(X[[9]]) result is length 0</code> when there were such stray connections.</p></li>
 </ul></div>
 <div class="section level3">
-<h3 id="deprecated-and-defunct-1-40-0-9000">Deprecated and Defunct<a class="anchor" aria-label="anchor" href="#deprecated-and-defunct-1-40-0-9000"></a></h3>
+<h3 id="deprecated-and-defunct-1-45-0">Deprecated and Defunct<a class="anchor" aria-label="anchor" href="#deprecated-and-defunct-1-45-0"></a></h3>
 <ul><li>Use <code><a href="../reference/cancel.html">cancel()</a></code> instead of <code><a href="../reference/interrupt.html">interrupt()</a></code>, which was introduced in the previous version. The default for <code><a href="../reference/cancel.html">cancel()</a></code> is to interrupt as well. One reason for the change is that the word “interrupt” conveys the <em>mechanism</em>, whereas the “cancel” conveys the <em>intent</em>, which is the preferred style. Also, <code><a href="../reference/interrupt.html">interrupt()</a></code> masks ditto of the popular <strong>rlang</strong> package, and vice versa - the choice <code><a href="../reference/cancel.html">cancel()</a></code> is less used.</li>
 </ul></div>
 </div>
