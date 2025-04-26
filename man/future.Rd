@@ -138,7 +138,10 @@ arguments \code{args}.
 
 \code{minifuture(expr)} creates a future with minimal overhead, by disabling
 user-friendly behaviors, e.g. automatic identification of global
-variables and packages needed, and relaying of output.
+variables and packages needed, and relaying of output. Unless you have
+good reasons for using this function, please use \code{\link[=future]{future()}} instead.
+This function exists mainly for the purpose of profiling and identifying
+which automatic features of \code{\link[=future]{future()}} introduce extra overhead.
 }
 \description{
 \if{html}{\figure{logo.png}{options: style='float: right;' alt='logo' width='120'}}

@@ -16,6 +16,10 @@ interrupt(x, ...)
 if the backend supports interrupting futures.
 }
 \description{
+\emph{WARNING: This function has been deprecated. Use \code{\link[=cancel]{cancel()}} instead!}
+}
+\details{
 Attempts to interrupt a running future. If the backend does
 not support interrupting futures, nothing is done.
 }
+\keyword{internal}

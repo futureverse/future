@@ -1,5 +1,7 @@
 #' Interrupts a running future
 #'
+#' _WARNING: This function has been deprecated. Use [cancel()] instead!_
+#'
 #' Attempts to interrupt a running future. If the backend does
 #' not support interrupting futures, nothing is done.
 #'
@@ -11,6 +13,7 @@
 #' `interrupt()` returns the [Future] flagged as "interrupted",
 #' if the backend supports interrupting futures.
 #'
+#' @keywords internal
 #' @export
 interrupt <- function(x, ...) {
   UseMethod("interrupt")
