@@ -31,7 +31,7 @@ switching from, say, sequential to parallel processing."><meta property="og:imag
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.45.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.40.0-9116</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -274,7 +274,10 @@ as possible or not.</p></dd>
 arguments <code>args</code>.</p>
 <p><code>minifuture(expr)</code> creates a future with minimal overhead, by disabling
 user-friendly behaviors, e.g. automatic identification of global
-variables and packages needed, and relaying of output.</p>
+variables and packages needed, and relaying of output. Unless you have
+good reasons for using this function, please use <code>future()</code> instead.
+This function exists mainly for the purpose of profiling and identifying
+which automatic features of <code>future()</code> introduce extra overhead.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
