@@ -63,9 +63,8 @@ for (cores in 1:availCores) {
     if (not_cran) stopifnot(gg == c("{", "<-")) ## ideally also 'a'
 
 
-    ## This one fails to pick up 'a' as a global variable
-    ## Notes: This has always been the case, also before future 1.40.0.
-    ## To solve this, we need to write a smarter globals::findGlobals().
+    ## This one fails to pick up 'a' as a global variable with
+    ## globals (<= 0.17.0).
     a <- 42L
     f <- future({
       g <- function() {
@@ -76,10 +75,19 @@ for (cores in 1:availCores) {
     }, lazy = TRUE)
     rm(list = "a")
     globals <- f[["globals"]]
-    if (not_cran) stopifnot(length(globals) == 0) ## ideally 'a' here
-    y <- tryCatch(value(f), error = identity)
-    print(y)
-    stopifnot(inherits(y, "error")) ## object 'a' not found
+    if (not_cran) {
+      if (packageVersion("globals") <= "0.17.0") {
+        stopifnot(length(globals) == 0) ## fails to pick up 'a'
+        y <- tryCatch(value(f), error = identity)
+        print(y)
+        stopifnot(inherits(y, "error")) ## object 'a' not found
+      } else {
+        stopifnot(length(globals) == 1L, names(globals) == "a")
+        y <- value(f)
+        print(y)
+        stopifnot(y == 42L)
+      }
+    }
     
     plan(sequential)
   } ## for (strategy ...)

@@ -99,24 +99,50 @@ getGlobalsAndPackages <- function(expr, envir = parent.frame(), tweak = tweakExp
       ## Algorithm for identifying globals
       globals.method <- getOption("future.globals.method")
       if (is.null(globals.method)) {
-        globals.method <- "ordered"
+        globals.method <- getOption("future.globals.method.default")
+        if (is.null(globals.method)) {
+          globals.method <- c("ordered", "dfs")
+        }
       } else {
         .Deprecated(msg = sprintf("R option %s may only be used for troubleshooting. It must not be used in production since it changes how futures are evaluated and there is a great risk that the results cannot be reproduced elsewhere: %s", sQuote("future.globals.method"), sQuote(globals.method)), package = .packageName)
       }
-      
+
+      ## Combine results from different methods
       globals <- globalsOf(
-                   ## Passed to globals::findGlobals()
-                   expr, envir = envir, substitute = FALSE, tweak = tweak,
-                   ## Include globals part of a local closure environment?
-                   locals = locals,
-                   ## Passed to globals::findGlobals() via '...'
-                   dotdotdot = "return",
-                   method = globals.method,
-                   unlist = TRUE,
-                   ## Passed to globals::globalsByName()
-                   mustExist = mustExist,
-                   recursive = TRUE
-                 )
+        ## Passed to globals::findGlobals()
+        expr, envir = envir, substitute = FALSE, tweak = tweak,
+        ## Include globals part of a local closure environment?
+        locals = locals,
+        ## Passed to globals::findGlobals() via '...'
+        dotdotdot = "return",
+        method = globals.method[1],
+        unlist = TRUE,
+        ## Passed to globals::globalsByName()
+        mustExist = mustExist,
+        recursive = TRUE
+      )
+
+      for (method in globals.method[-1]) {
+        tryCatch({
+          gg <- globalsOf(
+            ## Passed to globals::findGlobals()
+            expr, envir = envir, substitute = FALSE, tweak = tweak,
+            ## Include globals part of a local closure environment?
+            locals = locals,
+            ## Passed to globals::findGlobals() via '...'
+            dotdotdot = "return",
+            method = method,
+            unlist = TRUE,
+            ## Passed to globals::globalsByName()
+            mustExist = mustExist,
+            recursive = TRUE
+          )
+          for (name in setdiff(names(gg), names(globals))) {
+            globals[[name]] <- gg[[name]]
+          }
+        }, error = identity)
+      } ## for (method in ...)
+      
       if (debug) mdebugf("globals found: [%d] %s", length(globals), commaq(names(globals)))
       if (debug) mdebug_pop("Searching for globals ... DONE")
     } else {

@@ -389,6 +389,7 @@ update_package_options <- function(debug = FALSE) {
 
   ## future (> 1.45.0):
   update_package_option("future.regression.note", mode = "logical", default = TRUE, debug = debug)
+  update_package_option("future.globals.method.default", mode = "character", split = ",", debug = debug)
 }
 
 
