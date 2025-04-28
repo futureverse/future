@@ -23,13 +23,13 @@ jobs:
           - { r: "release", pkg: "future.apply"      }
           - { r: "release", pkg: "furrr"             }
           - { r: "release", pkg: "future.tests"      }
-          - { r: "release", pkg: "future.batchtools" , globals: develop }
-          - { r: "release", pkg: "future.callr"      , globals: develop }
-          - { r: "release", pkg: "future.mirai"      , globals: develop }
-          - { r: "release", pkg: "doFuture"          , globals: develop }
-          - { r: "release", pkg: "future.apply"      , globals: develop }
-          - { r: "release", pkg: "furrr"             , globals: develop }
-          - { r: "release", pkg: "future.tests"      , globals: develop }
+          - { r: "release", pkg: "future.batchtools" , globals: develop, label: 'globals develop' }
+          - { r: "release", pkg: "future.callr"      , globals: develop, label: 'globals develop' }
+          - { r: "release", pkg: "future.mirai"      , globals: develop, label: 'globals develop' }
+          - { r: "release", pkg: "doFuture"          , globals: develop, label: 'globals develop' }
+          - { r: "release", pkg: "future.apply"      , globals: develop, label: 'globals develop' }
+          - { r: "release", pkg: "furrr"             , globals: develop, label: 'globals develop' }
+          - { r: "release", pkg: "future.tests"      , globals: develop, label: 'globals develop' }
           - { r: "release", pkg: "doFuture"          , plan: multisession, label: multisession }
           - { r: "release", pkg: "future.apply"      , plan: multisession, label: multisession }
           - { r: "release", pkg: "furrr"             , plan: multisession, label: multisession }
@@ -75,8 +75,8 @@ jobs:
           install.packages(".", repos=NULL, type="source")
           install.packages("${{ matrix.config.pkg }}", dependencies=TRUE)
           gver <- Sys.getenv("R_GLOBALS_BRANCH")
-          if (nzchar(pver)) {
-            remotes::install_github("futureverse/globals", ref = pver)
+          if (nzchar(gver)) {
+            remotes::install_github("futureverse/globals", ref = gver)
           }
         shell: Rscript {0}
 

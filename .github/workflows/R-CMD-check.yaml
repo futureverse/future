@@ -28,8 +28,8 @@ jobs:
           - {os: ubuntu-latest,  r: 'oldrel-1' }
           - {os: ubuntu-latest,  r: 'oldrel-2' }
           - {os: ubuntu-latest,  r: '4.0'      }
-          - {os: ubuntu-latest,  r: 'devel'   , globals: develop }
-          - {os: ubuntu-latest,  r: '4.0'     , globals: develop }
+          - {os: ubuntu-latest,  r: 'devel'   , globals: develop, label: 'globals develop' }
+          - {os: ubuntu-latest,  r: '4.0'     , globals: develop, label: 'globals develop' }
 
           - {os: ubuntu-latest,  r: 'release', strict: true, label: 'strict' }
 
@@ -92,8 +92,8 @@ jobs:
             remotes::install_github("futureverse/parallelly", ref = pver)
           }
           gver <- Sys.getenv("R_GLOBALS_BRANCH")
-          if (nzchar(pver)) {
-            remotes::install_github("futureverse/globals", ref = pver)
+          if (nzchar(gver)) {
+            remotes::install_github("futureverse/globals", ref = gver)
           }
           
         shell: Rscript {0}
