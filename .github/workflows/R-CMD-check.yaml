@@ -28,6 +28,8 @@ jobs:
           - {os: ubuntu-latest,  r: 'oldrel-1' }
           - {os: ubuntu-latest,  r: 'oldrel-2' }
           - {os: ubuntu-latest,  r: '4.0'      }
+          - {os: ubuntu-latest,  r: 'devel'   , globals: develop }
+          - {os: ubuntu-latest,  r: '4.0'     , globals: develop }
 
           - {os: ubuntu-latest,  r: 'release', strict: true, label: 'strict' }
 
@@ -62,6 +64,7 @@ jobs:
       R_FUTURE_RNG_ONMISUSE: error
       R_FUTURE_GLOBALS_KEEPWHERE: ${{ matrix.config.globals_keepWhere }}
       R_PARALLELLY_BRANCH: ${{ matrix.config.parallelly }}
+      R_GLOBALS_BRANCH: ${{ matrix.config.globals }}
       
     steps:
       - uses: actions/checkout@v4
@@ -87,6 +90,10 @@ jobs:
           pver <- Sys.getenv("R_PARALLELLY_BRANCH")
           if (nzchar(pver)) {
             remotes::install_github("futureverse/parallelly", ref = pver)
+          }
+          gver <- Sys.getenv("R_GLOBALS_BRANCH")
+          if (nzchar(pver)) {
+            remotes::install_github("futureverse/globals", ref = pver)
           }
           
         shell: Rscript {0}
