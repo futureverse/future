@@ -101,7 +101,7 @@ getGlobalsAndPackages <- function(expr, envir = parent.frame(), tweak = tweakExp
       if (is.null(globals.method)) {
         globals.method <- getOption("future.globals.method.default")
         if (is.null(globals.method)) {
-          globals.method <- c("ordered", "dfs")
+          stop("Internal R options 'future.globals.method.default' is corrupt: NULL")
         }
       } else {
         .Deprecated(msg = sprintf("R option %s may only be used for troubleshooting. It must not be used in production since it changes how futures are evaluated and there is a great risk that the results cannot be reproduced elsewhere: %s", sQuote("future.globals.method"), sQuote(globals.method)), package = .packageName)
@@ -115,33 +115,12 @@ getGlobalsAndPackages <- function(expr, envir = parent.frame(), tweak = tweakExp
         locals = locals,
         ## Passed to globals::findGlobals() via '...'
         dotdotdot = "return",
-        method = globals.method[1],
+        method = globals.method,
         unlist = TRUE,
         ## Passed to globals::globalsByName()
         mustExist = mustExist,
         recursive = TRUE
       )
-
-      for (method in globals.method[-1]) {
-        tryCatch({
-          gg <- globalsOf(
-            ## Passed to globals::findGlobals()
-            expr, envir = envir, substitute = FALSE, tweak = tweak,
-            ## Include globals part of a local closure environment?
-            locals = locals,
-            ## Passed to globals::findGlobals() via '...'
-            dotdotdot = "return",
-            method = method,
-            unlist = TRUE,
-            ## Passed to globals::globalsByName()
-            mustExist = mustExist,
-            recursive = TRUE
-          )
-          for (name in setdiff(names(gg), names(globals))) {
-            globals[[name]] <- gg[[name]]
-          }
-        }, error = identity)
-      } ## for (method in ...)
       
       if (debug) mdebugf("globals found: [%d] %s", length(globals), commaq(names(globals)))
       if (debug) mdebug_pop("Searching for globals ... DONE")
