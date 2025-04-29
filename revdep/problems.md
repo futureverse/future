@@ -44,10 +44,101 @@ Run `revdepcheck::revdep_details(, "AIscreenR")` for more info
 
 ## In both
 
+*   checking tests ...
+    ```
+      Running ‘testthat.R’
+     ERROR
+    Running the tests in ‘tests/testthat.R’ failed.
+    Complete output:
+      > # This file is part of the standard setup for testthat.
+      > # It is recommended that you do not modify it.
+      > #
+      > # Where should you do additional test configuration?
+      > # Learn more about the roles of various files in:
+      > # * https://r-pkgs.org/tests.html
+    ...
+        7.           └─future::ClusterFutureBackend(...)
+        8.             └─clusterRegistry$startCluster(...)
+        9.               └─future (local) makeCluster(workers, ...)
+       10.                 ├─base::do.call(makeClusterPSOCK, args = args, quote = TRUE)
+       11.                 └─parallelly (local) `<fn>`(base::quote(148L), rscript_libs = base::quote(`<chr>`))
+       12.                   └─parallelly:::stopf(msg)
+      
+      [ FAIL 1 | WARN 0 | SKIP 5 | PASS 9 ]
+      Error: Test failures
+      Execution halted
+    ```
+
 *   checking data for non-ASCII characters ... NOTE
     ```
       Note: found 1 marked Latin-1 string
       Note: found 5 marked UTF-8 strings
+    ```
+
+# ale
+
+<details>
+
+* Version: 0.5.0
+* GitHub: https://github.com/tripartio/ale
+* Source code: https://github.com/cran/ale
+* Date/Publication: 2025-04-09 20:50:02 UTC
+* Number of recursive dependencies: 131
+
+Run `revdepcheck::revdep_details(, "ale")` for more info
+
+</details>
+
+## In both
+
+*   checking tests ...
+    ```
+      Running ‘testthat.R’
+     ERROR
+    Running the tests in ‘tests/testthat.R’ failed.
+    Last 50 lines of output:
+       12.                 └─future::ClusterFutureBackend(...)
+       13.                   └─clusterRegistry$startCluster(...)
+       14.                     └─future (local) makeCluster(workers, ...)
+       15.                       ├─base::do.call(makeClusterPSOCK, args = args, quote = TRUE)
+       16.                       └─parallelly (local) `<fn>`(base::quote(147L))
+       17.                         └─parallelly:::stopf(msg)
+    ...
+       12.                 └─future::ClusterFutureBackend(...)
+       13.                   └─clusterRegistry$startCluster(...)
+       14.                     └─future (local) makeCluster(workers, ...)
+       15.                       ├─base::do.call(makeClusterPSOCK, args = args, quote = TRUE)
+       16.                       └─parallelly (local) `<fn>`(base::quote(147L))
+       17.                         └─parallelly:::stopf(msg)
+      
+      [ FAIL 12 | WARN 2 | SKIP 4 | PASS 74 ]
+      Error: Test failures
+      Execution halted
+    ```
+
+*   checking re-building of vignette outputs ... ERROR
+    ```
+    Error(s) in re-building vignettes:
+    --- re-building ‘ale-intro.Rmd’ using rmarkdown
+    
+    Quitting from ale-intro.Rmd:106-109 [ale_simple]
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    <error/rlang_error>
+    Error:
+    ! Cannot create 148 parallel PSOCK nodes. Each node needs one connection, but there are only 123 connections left out of the maximum 128 available on this R installation. To increase this limit in R (>= 4.4.0), use command-line option '--max-connections=N' when launching R.
+    ---
+    Backtrace:
+    ...
+    
+    Error: processing vignette 'ale-x-datatypes.Rmd' failed with diagnostics:
+    Cannot create 148 parallel PSOCK nodes. Each node needs one connection, but there are only 123 connections left out of the maximum 128 available on this R installation. To increase this limit in R (>= 4.4.0), use command-line option '--max-connections=N' when launching R.
+    --- failed re-building ‘ale-x-datatypes.Rmd’
+    
+    SUMMARY: processing the following files failed:
+      ‘ale-intro.Rmd’ ‘ale-small-datasets.Rmd’ ‘ale-x-datatypes.Rmd’
+    
+    Error: Vignette re-building failed.
+    Execution halted
     ```
 
 # altdoc
@@ -87,47 +178,6 @@ Run `revdepcheck::revdep_details(, "altdoc")` for more info
        7.             └─base::cat(out[[2]])
       
       [ FAIL 8 | WARN 0 | SKIP 8 | PASS 55 ]
-      Error: Test failures
-      Execution halted
-    ```
-
-# ao
-
-<details>
-
-* Version: 1.1.0
-* GitHub: https://github.com/loelschlaeger/ao
-* Source code: https://github.com/cran/ao
-* Date/Publication: 2024-07-13 19:10:02 UTC
-* Number of recursive dependencies: 159
-
-Run `revdepcheck::revdep_details(, "ao")` for more info
-
-</details>
-
-## In both
-
-*   checking tests ...
-    ```
-      Running ‘testthat.R’
-     ERROR
-    Running the tests in ‘tests/testthat.R’ failed.
-    Complete output:
-      > library(testthat)
-      > library(ao)
-      Loading required package: optimizeR
-      Thanks for using {ao} version 1.1.0, happy alternating optimization!
-      Documentation: https://loelschlaeger.de/ao
-      > 
-    ...
-       11. └─ao::ao(...)
-      ── Error ('test-ao.R:74:3'): multiple ao threads work ──────────────────────────
-      Error: 'optimizer_nlm' is not an exported object from 'namespace:optimizeR'
-      Backtrace:
-          ▆
-       1. └─ao::ao(...) at test-ao.R:74:3
-      
-      [ FAIL 2 | WARN 0 | SKIP 0 | PASS 9 ]
       Error: Test failures
       Execution halted
     ```
@@ -273,7 +323,7 @@ Run `revdepcheck::revdep_details(, "batchtools")` for more info
 
 *   checking dependencies in R code ... NOTE
     ```
-    [c4-n43:2999178] OPAL ERROR: Not initialized in file ext2x_client.c at line 112
+    [c4-n43:1222987] OPAL ERROR: Not initialized in file ext2x_client.c at line 112
     --------------------------------------------------------------------------
     The application appears to have been direct launched using "srun",
     but OMPI was not built with SLURM's PMI support and therefore cannot
@@ -300,6 +350,56 @@ Run `revdepcheck::revdep_details(, "batchtools")` for more info
     checkRd: (-1) addAlgorithm.Rd:31: Lost braces
         31 | Algorithms are functions which get the code{data} part as well as the problem instance (the return value of the
            |                                            ^
+    ```
+
+# BayesianMCPMod
+
+<details>
+
+* Version: 1.1.0
+* GitHub: https://github.com/Boehringer-Ingelheim/BayesianMCPMod
+* Source code: https://github.com/cran/BayesianMCPMod
+* Date/Publication: 2025-03-07 19:00:07 UTC
+* Number of recursive dependencies: 146
+
+Run `revdepcheck::revdep_details(, "BayesianMCPMod")` for more info
+
+</details>
+
+## Newly fixed
+
+*   checking installed package size ... NOTE
+    ```
+      installed size is  8.8Mb
+      sub-directories of 1Mb or more:
+        doc   8.2Mb
+    ```
+
+## In both
+
+*   checking re-building of vignette outputs ... ERROR
+    ```
+    Error(s) in re-building vignettes:
+    --- re-building ‘Simulation_Comparison.Rmd’ using rmarkdown
+    
+    Quitting from Simulation_Comparison.Rmd:76-84 [unnamed-chunk-4]
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    <error/rlang_error>
+    Error:
+    ! Cannot create 148 parallel PSOCK nodes. Each node needs one connection, but there are only 123 connections left out of the maximum 128 available on this R installation. To increase this limit in R (>= 4.4.0), use command-line option '--max-connections=N' when launching R.
+    ---
+    Backtrace:
+    ...
+    --- finished re-building ‘Simulation_Example.Rmd’
+    
+    --- re-building ‘analysis_normal.Rmd’ using rmarkdown
+    --- finished re-building ‘analysis_normal.Rmd’
+    
+    SUMMARY: processing the following file failed:
+      ‘Simulation_Comparison.Rmd’
+    
+    Error: Vignette re-building failed.
+    Execution halted
     ```
 
 # bayesmove
@@ -423,7 +523,7 @@ Run `revdepcheck::revdep_details(, "bistablehistory")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 71.8Mb
+      installed size is 71.7Mb
       sub-directories of 1Mb or more:
         libs  70.7Mb
     ```
@@ -431,6 +531,47 @@ Run `revdepcheck::revdep_details(, "bistablehistory")` for more info
 *   checking for GNU extensions in Makefiles ... NOTE
     ```
     GNU make is a SystemRequirements.
+    ```
+
+# bkmrhat
+
+<details>
+
+* Version: 1.1.3
+* GitHub: NA
+* Source code: https://github.com/cran/bkmrhat
+* Date/Publication: 2022-03-29 08:50:05 UTC
+* Number of recursive dependencies: 84
+
+Run `revdepcheck::revdep_details(, "bkmrhat")` for more info
+
+</details>
+
+## In both
+
+*   checking re-building of vignette outputs ... ERROR
+    ```
+    Error(s) in re-building vignettes:
+    --- re-building ‘bkmrhat-vignette.Rmd’ using knitr
+    
+    Quitting from bkmrhat-vignette.Rmd:39-53 [1 vs 1+ chains]
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    <error/rlang_error>
+    Error:
+    ! Cannot create 148 parallel PSOCK nodes. Each node needs one connection, but there are only 123 connections left out of the maximum 128 available on this R installation. To increase this limit in R (>= 4.4.0), use command-line option '--max-connections=N' when launching R.
+    ---
+    Backtrace:
+    ...
+    
+    Error: processing vignette 'bkmrhat-vignette.Rmd' failed with diagnostics:
+    Cannot create 148 parallel PSOCK nodes. Each node needs one connection, but there are only 123 connections left out of the maximum 128 available on this R installation. To increase this limit in R (>= 4.4.0), use command-line option '--max-connections=N' when launching R.
+    --- failed re-building ‘bkmrhat-vignette.Rmd’
+    
+    SUMMARY: processing the following file failed:
+      ‘bkmrhat-vignette.Rmd’
+    
+    Error: Vignette re-building failed.
+    Execution halted
     ```
 
 # blavaan
@@ -456,10 +597,10 @@ Run `revdepcheck::revdep_details(, "blavaan")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 247.0Mb
+      installed size is 186.6Mb
       sub-directories of 1Mb or more:
         R           1.2Mb
-        libs      244.0Mb
+        libs      183.6Mb
         testdata    1.4Mb
     ```
 
@@ -493,7 +634,7 @@ Run `revdepcheck::revdep_details(, "brms")` for more info
 
 *   checking package dependencies ... NOTE
     ```
-    Packages suggested but not available for checking: 'cmdstanr', 'spdep'
+    Package suggested but not available for checking: ‘cmdstanr’
     ```
 
 *   checking installed package size ... NOTE
@@ -522,9 +663,9 @@ Run `revdepcheck::revdep_details(, "bsitar")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  7.7Mb
+      installed size is  7.9Mb
       sub-directories of 1Mb or more:
-        R      1.3Mb
+        R      1.5Mb
         data   5.3Mb
     ```
 
@@ -576,6 +717,72 @@ Run `revdepcheck::revdep_details(, "CAESAR.Suite")` for more info
         data   1.4Mb
         doc    1.2Mb
         libs   7.6Mb
+    ```
+
+# calmr
+
+<details>
+
+* Version: 0.6.1
+* GitHub: https://github.com/victor-navarro/calmr
+* Source code: https://github.com/cran/calmr
+* Date/Publication: 2024-03-14 20:10:05 UTC
+* Number of recursive dependencies: 86
+
+Run `revdepcheck::revdep_details(, "calmr")` for more info
+
+</details>
+
+## In both
+
+*   checking tests ...
+    ```
+      Running ‘spelling.R’
+      Running ‘testthat.R’
+     ERROR
+    Running the tests in ‘tests/testthat.R’ failed.
+    Last 50 lines of output:
+        4.       └─future:::makeFutureBackend(evaluator, debug = debug)
+        5.         ├─base::do.call(factory, args = args)
+        6.         └─future (local) `<fn>`(...)
+        7.           └─future::ClusterFutureBackend(...)
+        8.             └─clusterRegistry$startCluster(...)
+    ...
+        7.           └─future::ClusterFutureBackend(...)
+        8.             └─clusterRegistry$startCluster(...)
+        9.               └─future (local) makeCluster(workers, ...)
+       10.                 ├─base::do.call(makeClusterPSOCK, args = args, quote = TRUE)
+       11.                 └─parallelly (local) `<fn>`(base::quote(148L), rscript_libs = base::quote(`<chr>`))
+       12.                   └─parallelly:::stopf(msg)
+      
+      [ FAIL 3 | WARN 0 | SKIP 0 | PASS 172 ]
+      Error: Test failures
+      Execution halted
+    ```
+
+*   checking re-building of vignette outputs ... ERROR
+    ```
+    Error(s) in re-building vignettes:
+    --- re-building ‘HD2022.Rmd’ using rmarkdown
+    --- finished re-building ‘HD2022.Rmd’
+    
+    --- re-building ‘MAC1975.Rmd’ using rmarkdown
+    --- finished re-building ‘MAC1975.Rmd’
+    
+    --- re-building ‘PKH1982.Rmd’ using rmarkdown
+    --- finished re-building ‘PKH1982.Rmd’
+    
+    ...
+    --- failed re-building ‘parallelism_in_calmr.Rmd’
+    
+    --- re-building ‘using_time_models.Rmd’ using rmarkdown
+    --- finished re-building ‘using_time_models.Rmd’
+    
+    SUMMARY: processing the following file failed:
+      ‘parallelism_in_calmr.Rmd’
+    
+    Error: Vignette re-building failed.
+    Execution halted
     ```
 
 # ceRNAnetsim
@@ -1055,6 +1262,14 @@ Run `revdepcheck::revdep_details(, "delimtools")` for more info
     Packages suggested but not available for checking: 'bGMYC', 'splits'
     ```
 
+*   checking installed package size ... NOTE
+    ```
+      installed size is  7.1Mb
+      sub-directories of 1Mb or more:
+        extdata   1.3Mb
+        help      5.1Mb
+    ```
+
 *   checking Rd cross-references ... NOTE
     ```
     Packages unavailable to check Rd xrefs: ‘bGMYC’, ‘splits’
@@ -1106,8 +1321,9 @@ Run `revdepcheck::revdep_details(, "dipsaus")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  6.3Mb
+      installed size is  6.8Mb
       sub-directories of 1Mb or more:
+        R      1.0Mb
         libs   4.3Mb
     ```
 
@@ -1196,9 +1412,8 @@ Run `revdepcheck::revdep_details(, "distantia")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 10.0Mb
+      installed size is  9.5Mb
       sub-directories of 1Mb or more:
-        help   1.0Mb
         libs   7.8Mb
     ```
 
@@ -1251,7 +1466,7 @@ Run `revdepcheck::revdep_details(, "DT")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  6.5Mb
+      installed size is  6.4Mb
       sub-directories of 1Mb or more:
         htmlwidgets   5.6Mb
     ```
@@ -1274,7 +1489,7 @@ Run `revdepcheck::revdep_details(, "EFAtools")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  7.6Mb
+      installed size is  7.7Mb
       sub-directories of 1Mb or more:
         libs   6.3Mb
     ```
@@ -1306,47 +1521,6 @@ Run `revdepcheck::revdep_details(, "envi")` for more info
     Found the following significant warnings:
       Warning: no DISPLAY variable so Tk is not available
     See ‘/c4/home/henrik/futureverse/future/revdep/checks.global/envi/new/envi.Rcheck/00install.out’ for details.
-    ```
-
-# epe4md
-
-<details>
-
-* Version: 0.1.4
-* GitHub: NA
-* Source code: https://github.com/cran/epe4md
-* Date/Publication: 2023-07-05 14:23:07 UTC
-* Number of recursive dependencies: 138
-
-Run `revdepcheck::revdep_details(, "epe4md")` for more info
-
-</details>
-
-## In both
-
-*   checking tests ...
-    ```
-      Running ‘testthat.R’
-     ERROR
-    Running the tests in ‘tests/testthat.R’ failed.
-    Last 50 lines of output:
-      [ FAIL 2 | WARN 0 | SKIP 1 | PASS 7 ]
-      
-      ══ Skipped tests (1) ═══════════════════════════════════════════════════════════
-      • On CRAN (1): 'test-epe4md_casos_payback.R:27:3'
-      
-      ══ Failed tests ════════════════════════════════════════════════════════════════
-    ...
-       11. │   └─... %>% fabletools::components()
-       12. ├─fabletools::components(.)
-       13. ├─fabletools::model(...)
-       14. └─fabletools:::model.tbl_ts(...)
-       15.   └─fabletools:::require_package("future.apply")
-       16.     └─rlang::abort(...)
-      
-      [ FAIL 2 | WARN 0 | SKIP 1 | PASS 7 ]
-      Error: Test failures
-      Execution halted
     ```
 
 # EpiNow2
@@ -1481,6 +1655,72 @@ Run `revdepcheck::revdep_details(, "EQRN")` for more info
     See ‘/c4/home/henrik/futureverse/future/revdep/checks.global/EQRN/new/EQRN.Rcheck/00install.out’ for details.
     ```
 
+# ezcox
+
+<details>
+
+* Version: 1.0.4
+* GitHub: https://github.com/ShixiangWang/ezcox
+* Source code: https://github.com/cran/ezcox
+* Date/Publication: 2023-05-08 09:50:11 UTC
+* Number of recursive dependencies: 91
+
+Run `revdepcheck::revdep_details(, "ezcox")` for more info
+
+</details>
+
+## In both
+
+*   checking tests ...
+    ```
+      Running ‘testthat.R’
+     ERROR
+    Running the tests in ‘tests/testthat.R’ failed.
+    Complete output:
+      > library(testthat)
+      > library(ezcox)
+      Welcome to 'ezcox' package!
+      =======================================================================
+      You are using ezcox version 1.0.4
+      
+    ...
+        8.             └─future::ClusterFutureBackend(...)
+        9.               └─clusterRegistry$startCluster(...)
+       10.                 └─future (local) makeCluster(workers, ...)
+       11.                   ├─base::do.call(makeClusterPSOCK, args = args, quote = TRUE)
+       12.                   └─parallelly (local) `<fn>`(base::quote(148L), rscript_libs = base::quote(`<chr>`))
+       13.                     └─parallelly:::stopf(msg)
+      
+      [ FAIL 1 | WARN 4 | SKIP 0 | PASS 12 ]
+      Error: Test failures
+      Execution halted
+    ```
+
+*   checking re-building of vignette outputs ... ERROR
+    ```
+    Error(s) in re-building vignettes:
+    --- re-building ‘ezcox.Rmd’ using rmarkdown
+    
+    Quitting from ezcox.Rmd:72-74 [unnamed-chunk-2]
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    <error/rlang_error>
+    Error:
+    ! Cannot create 148 parallel PSOCK nodes. Each node needs one connection, but there are only 123 connections left out of the maximum 128 available on this R installation. To increase this limit in R (>= 4.4.0), use command-line option '--max-connections=N' when launching R.
+    ---
+    Backtrace:
+    ...
+    --- finished re-building ‘ezforest.Rmd’
+    
+    --- re-building ‘ezgroup.Rmd’ using rmarkdown
+    --- finished re-building ‘ezgroup.Rmd’
+    
+    SUMMARY: processing the following file failed:
+      ‘ezcox.Rmd’
+    
+    Error: Vignette re-building failed.
+    Execution halted
+    ```
+
 # fastRhockey
 
 <details>
@@ -1523,11 +1763,11 @@ Run `revdepcheck::revdep_details(, "fdacluster")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 23.8Mb
+      installed size is 23.7Mb
       sub-directories of 1Mb or more:
         R      1.9Mb
         doc    1.5Mb
-        help   2.2Mb
+        help   2.1Mb
         libs  17.7Mb
     ```
 
@@ -1713,6 +1953,47 @@ Run `revdepcheck::revdep_details(, "flowml")` for more info
     Packages suggested but not available for checking: 'rrcov', 'sda'
     ```
 
+# fmeffects
+
+<details>
+
+* Version: 0.1.4
+* GitHub: https://github.com/holgstr/fmeffects
+* Source code: https://github.com/cran/fmeffects
+* Date/Publication: 2024-11-05 18:50:02 UTC
+* Number of recursive dependencies: 181
+
+Run `revdepcheck::revdep_details(, "fmeffects")` for more info
+
+</details>
+
+## In both
+
+*   checking re-building of vignette outputs ... ERROR
+    ```
+    Error(s) in re-building vignettes:
+    --- re-building ‘fme_theory.Rmd’ using rmarkdown
+    --- finished re-building ‘fme_theory.Rmd’
+    
+    --- re-building ‘fmeffects.Rmd’ using rmarkdown
+    
+    Quitting from fmeffects.Rmd:121-127 [unnamed-chunk-11]
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    <error/rlang_error>
+    Error:
+    ...
+    
+    Error: processing vignette 'fmeffects.Rmd' failed with diagnostics:
+    Cannot create 146 parallel PSOCK nodes. Each node needs one connection, but there are only 123 connections left out of the maximum 128 available on this R installation. To increase this limit in R (>= 4.4.0), use command-line option '--max-connections=N' when launching R.
+    --- failed re-building ‘fmeffects.Rmd’
+    
+    SUMMARY: processing the following file failed:
+      ‘fmeffects.Rmd’
+    
+    Error: Vignette re-building failed.
+    Execution halted
+    ```
+
 # forecastML
 
 <details>
@@ -1758,6 +2039,29 @@ Run `revdepcheck::revdep_details(, "GeDS")` for more info
     See ‘/c4/home/henrik/futureverse/future/revdep/checks.global/GeDS/new/GeDS.Rcheck/00install.out’ for details.
     ```
 
+# genBaRcode
+
+<details>
+
+* Version: 1.2.8
+* GitHub: NA
+* Source code: https://github.com/cran/genBaRcode
+* Date/Publication: 2025-03-10 15:00:02 UTC
+* Number of recursive dependencies: 163
+
+Run `revdepcheck::revdep_details(, "genBaRcode")` for more info
+
+</details>
+
+## In both
+
+*   checking installed package size ... NOTE
+    ```
+      installed size is  5.5Mb
+      sub-directories of 1Mb or more:
+        extdata   4.0Mb
+    ```
+
 # geocmeans
 
 <details>
@@ -1774,12 +2078,12 @@ Run `revdepcheck::revdep_details(, "geocmeans")` for more info
 
 ## In both
 
-*   checking package dependencies ... ERROR
+*   checking installed package size ... NOTE
     ```
-    Package required but not available: ‘spdep’
-    
-    See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
-    manual.
+      installed size is 14.4Mb
+      sub-directories of 1Mb or more:
+        extdata   3.0Mb
+        libs      9.1Mb
     ```
 
 # geohabnet
@@ -1861,6 +2165,15 @@ Run `revdepcheck::revdep_details(, "geohabnet")` for more info
 Run `revdepcheck::revdep_details(, "googleComputeEngineR")` for more info
 
 </details>
+
+## Newly fixed
+
+*   checking installed package size ... NOTE
+    ```
+      installed size is  9.1Mb
+      sub-directories of 1Mb or more:
+        doc   8.4Mb
+    ```
 
 ## In both
 
@@ -1950,6 +2263,27 @@ Run `revdepcheck::revdep_details(, "greed")` for more info
       Note: found 989 marked UTF-8 strings
     ```
 
+# gstat
+
+<details>
+
+* Version: 2.1-3
+* GitHub: https://github.com/r-spatial/gstat
+* Source code: https://github.com/cran/gstat
+* Date/Publication: 2025-02-04 16:20:02 UTC
+* Number of recursive dependencies: 62
+
+Run `revdepcheck::revdep_details(, "gstat")` for more info
+
+</details>
+
+## In both
+
+*   checking package dependencies ... NOTE
+    ```
+    Package suggested but not available for checking: ‘geoR’
+    ```
+
 # gsynth
 
 <details>
@@ -1978,6 +2312,47 @@ Run `revdepcheck::revdep_details(, "gsynth")` for more info
         libs   5.3Mb
     ```
 
+# gtfs2emis
+
+<details>
+
+* Version: 0.1.1
+* GitHub: https://github.com/ipeaGIT/gtfs2emis
+* Source code: https://github.com/cran/gtfs2emis
+* Date/Publication: 2024-12-02 15:40:12 UTC
+* Number of recursive dependencies: 92
+
+Run `revdepcheck::revdep_details(, "gtfs2emis")` for more info
+
+</details>
+
+## In both
+
+*   checking re-building of vignette outputs ... ERROR
+    ```
+    Error(s) in re-building vignettes:
+    --- re-building ‘gtfs2emis_emission_factor.Rmd’ using rmarkdown
+    --- finished re-building ‘gtfs2emis_emission_factor.Rmd’
+    
+    --- re-building ‘gtfs2emis_fleet_data.Rmd’ using rmarkdown
+    --- finished re-building ‘gtfs2emis_fleet_data.Rmd’
+    
+    --- re-building ‘gtfs2emis_intro_vignette.Rmd’ using rmarkdown
+    
+    Quitting from gtfs2emis_intro_vignette.Rmd:118-130 [unnamed-chunk-6]
+    ...
+    
+    Error: processing vignette 'gtfs2emis_non_exhaust_ef.Rmd' failed with diagnostics:
+    Cannot create 147 parallel PSOCK nodes. Each node needs one connection, but there are only 123 connections left out of the maximum 128 available on this R installation. To increase this limit in R (>= 4.4.0), use command-line option '--max-connections=N' when launching R.
+    --- failed re-building ‘gtfs2emis_non_exhaust_ef.Rmd’
+    
+    SUMMARY: processing the following files failed:
+      ‘gtfs2emis_intro_vignette.Rmd’ ‘gtfs2emis_non_exhaust_ef.Rmd’
+    
+    Error: Vignette re-building failed.
+    Execution halted
+    ```
+
 # gtfs2gps
 
 <details>
@@ -1999,13 +2374,13 @@ Run `revdepcheck::revdep_details(, "gtfs2gps")` for more info
       Running ‘testthat.R’
      ERROR
     Running the tests in ‘tests/testthat.R’ failed.
-    Complete output:
-      > library(testthat)
-      > library(gtfs2gps)
-      gtfs2gps version 2.1-2 is now loaded
-      NOTE: All filter functions from gtfs2gps were removed
-      Please replace them by similar functions from gtfstools
-      > 
+    Last 50 lines of output:
+        4.       └─furrr:::furrr_template(...)
+        5.         ├─future::nbrOfWorkers()
+        6.         └─future:::nbrOfWorkers.NULL()
+        7.           ├─future::nbrOfWorkers(plan("next"))
+        8.           └─future:::nbrOfWorkers.multiprocess(plan("next"))
+        9.             └─future:::makeFutureBackend(evaluator)
     ...
        4.     └─terra (local) .local(x, ...)
        5.       ├─terra::makeValid(x)
@@ -2014,9 +2389,34 @@ Run `revdepcheck::revdep_details(, "gtfs2gps")` for more info
        8.           └─terra:::messages(x)
        9.             └─terra:::error(f, x@pntr$getError())
       
-      [ FAIL 1 | WARN 0 | SKIP 0 | PASS 119 ]
+      [ FAIL 6 | WARN 0 | SKIP 0 | PASS 62 ]
       Error: Test failures
       Execution halted
+    ```
+
+*   checking re-building of vignette outputs ... ERROR
+    ```
+    Error(s) in re-building vignettes:
+    --- re-building ‘intro_to_gtfs2gps.Rmd’ using rmarkdown
+    
+    Quitting from intro_to_gtfs2gps.Rmd:74-77 [unnamed-chunk-6]
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    <error/rlang_error>
+    Error:
+    ! Cannot create 147 parallel PSOCK nodes. Each node needs one connection, but there are only 123 connections left out of the maximum 128 available on this R installation. To increase this limit in R (>= 4.4.0), use command-line option '--max-connections=N' when launching R.
+    ---
+    Backtrace:
+    ...
+    
+    Error: processing vignette 'intro_to_gtfs2gps.Rmd' failed with diagnostics:
+    Cannot create 147 parallel PSOCK nodes. Each node needs one connection, but there are only 123 connections left out of the maximum 128 available on this R installation. To increase this limit in R (>= 4.4.0), use command-line option '--max-connections=N' when launching R.
+    --- failed re-building ‘intro_to_gtfs2gps.Rmd’
+    
+    SUMMARY: processing the following file failed:
+      ‘intro_to_gtfs2gps.Rmd’
+    
+    Error: Vignette re-building failed.
+    Execution halted
     ```
 
 # hacksig
@@ -2040,17 +2440,17 @@ Run `revdepcheck::revdep_details(, "hacksig")` for more info
     Error(s) in re-building vignettes:
     --- re-building ‘hacksig.Rmd’ using rmarkdown
     
-    Quitting from hacksig.Rmd:215-225 [unnamed-chunk-19]
+    Quitting from hacksig.Rmd:203-206 [unnamed-chunk-18]
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     <error/rlang_error>
-    Error in `msigdbr()`:
-    ! Unknown subcollection.
+    Error:
+    ! Cannot create 148 parallel PSOCK nodes. Each node needs one connection, but there are only 123 connections left out of the maximum 128 available on this R installation. To increase this limit in R (>= 4.4.0), use command-line option '--max-connections=N' when launching R.
     ---
     Backtrace:
     ...
     
     Error: processing vignette 'hacksig.Rmd' failed with diagnostics:
-    Unknown subcollection.
+    Cannot create 148 parallel PSOCK nodes. Each node needs one connection, but there are only 123 connections left out of the maximum 128 available on this R installation. To increase this limit in R (>= 4.4.0), use command-line option '--max-connections=N' when launching R.
     --- failed re-building ‘hacksig.Rmd’
     
     SUMMARY: processing the following file failed:
@@ -2129,7 +2529,7 @@ Run `revdepcheck::revdep_details(, "hero")` for more info
 
 *   checking dependencies in R code ... NOTE
     ```
-    [c4-n43:3882638] OPAL ERROR: Not initialized in file ext2x_client.c at line 112
+    [c4-n43:2076898] OPAL ERROR: Not initialized in file ext2x_client.c at line 112
     --------------------------------------------------------------------------
     The application appears to have been direct launched using "srun",
     but OMPI was not built with SLURM's PMI support and therefore cannot
@@ -2180,6 +2580,32 @@ Run `revdepcheck::revdep_details(, "heterogen")` for more info
       sub-directories of 1Mb or more:
         extdata   2.6Mb
         libs      6.0Mb
+    ```
+
+# httpgd
+
+<details>
+
+* Version: 2.0.4
+* GitHub: https://github.com/nx10/httpgd
+* Source code: https://github.com/cran/httpgd
+* Date/Publication: 2025-03-16 00:50:01 UTC
+* Number of recursive dependencies: 59
+
+Run `revdepcheck::revdep_details(, "httpgd")` for more info
+
+</details>
+
+## In both
+
+*   R CMD check timed out
+    
+
+*   checking installed package size ... NOTE
+    ```
+      installed size is 12.4Mb
+      sub-directories of 1Mb or more:
+        libs  11.8Mb
     ```
 
 # hwep
@@ -2330,6 +2756,47 @@ Run `revdepcheck::revdep_details(, "interflex")` for more info
         libs   5.3Mb
     ```
 
+# ipc
+
+<details>
+
+* Version: 0.1.4
+* GitHub: https://github.com/fellstat/ipc
+* Source code: https://github.com/cran/ipc
+* Date/Publication: 2023-01-26 06:50:02 UTC
+* Number of recursive dependencies: 60
+
+Run `revdepcheck::revdep_details(, "ipc")` for more info
+
+</details>
+
+## In both
+
+*   checking re-building of vignette outputs ... ERROR
+    ```
+    Error(s) in re-building vignettes:
+    --- re-building ‘shinymp.Rmd’ using rmarkdown
+    
+    Quitting from shinymp.Rmd:20-43 [unnamed-chunk-1]
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    <error/rlang_error>
+    Error:
+    ! Cannot create 148 parallel PSOCK nodes. Each node needs one connection, but there are only 123 connections left out of the maximum 128 available on this R installation. To increase this limit in R (>= 4.4.0), use command-line option '--max-connections=N' when launching R.
+    ---
+    Backtrace:
+    ...
+    
+    Error: processing vignette 'shinymp.Rmd' failed with diagnostics:
+    Cannot create 148 parallel PSOCK nodes. Each node needs one connection, but there are only 123 connections left out of the maximum 128 available on this R installation. To increase this limit in R (>= 4.4.0), use command-line option '--max-connections=N' when launching R.
+    --- failed re-building ‘shinymp.Rmd’
+    
+    SUMMARY: processing the following file failed:
+      ‘shinymp.Rmd’
+    
+    Error: Vignette re-building failed.
+    Execution halted
+    ```
+
 # ISAnalytics
 
 <details>
@@ -2419,6 +2886,47 @@ Run `revdepcheck::revdep_details(, "JANE")` for more info
     ```
     Namespace in Imports field not imported from: ‘progress’
       All declared Imports should be used.
+    ```
+
+# jstor
+
+<details>
+
+* Version: 0.3.11
+* GitHub: https://github.com/ropensci/jstor
+* Source code: https://github.com/cran/jstor
+* Date/Publication: 2023-08-16 13:14:39 UTC
+* Number of recursive dependencies: 82
+
+Run `revdepcheck::revdep_details(, "jstor")` for more info
+
+</details>
+
+## In both
+
+*   checking tests ...
+    ```
+      Running ‘testthat.R’
+     ERROR
+    Running the tests in ‘tests/testthat.R’ failed.
+    Last 50 lines of output:
+       25. │                                 └─base::stop(cond)
+       26. └─purrr (local) `<fn>`(`<smplErrr>`)
+       27.   └─cli::cli_abort(...)
+       28.     └─rlang::abort(...)
+      ── Error ('test-writing-to-file.R:125:3'): n_batches works for n > 1 ───────────
+      <purrr_error_indexed/rlang_error/error/condition>
+    ...
+      Error in `map(.x, .f, ..., .progress = .progress)`: i In index: 1.
+      i With name: book_chapter.
+      Caused by error in `pmap()`:
+      i In index: 1.
+      Caused by error:
+      ! Cannot create 148 parallel PSOCK nodes. Each node needs one connection, but there are only 123 connections left out of the maximum 128 available on this R installation. To increase this limit in R (>= 4.4.0), use command-line option '--max-connections=N' when launching R.
+      
+      [ FAIL 8 | WARN 0 | SKIP 6 | PASS 236 ]
+      Error: Test failures
+      Execution halted
     ```
 
 # keyATM
@@ -2529,6 +3037,31 @@ Run `revdepcheck::revdep_details(, "ldaPrototype")` for more info
 
 ## In both
 
+*   checking tests ...
+    ```
+      Running ‘testthat.R’
+     ERROR
+    Running the tests in ‘tests/testthat.R’ failed.
+    Last 50 lines of output:
+      ── Error ('test_jaccardTopics.R:6:1'): (code run outside of `test_that()`) ─────
+      Error in `defaultCluster(cl)`: no cluster 'cl' supplied and none is registered
+      Backtrace:
+          ▆
+       1. ├─ldaPrototype::mergeTopics(...) at test_jaccardTopics.R:6:1
+       2. └─ldaPrototype::LDARep(...)
+    ...
+       4.   │ └─base::withCallingHandlers(...)
+       5.   └─parallelMap::parallelExport("docs", "vocab")
+       6.     └─parallelMap:::exportToSlavePkgParallel(n, get(n, envir = sys.parent()))
+       7.       └─parallel::clusterCall(...)
+       8.         └─parallel:::defaultCluster(cl)
+      
+      [ FAIL 8 | WARN 0 | SKIP 0 | PASS 132 ]
+      Error: Test failures
+      In addition: There were 50 or more warnings (use warnings() to see the first 50)
+      Execution halted
+    ```
+
 *   checking package dependencies ... NOTE
     ```
     Package suggested but not available for checking: ‘tosca’
@@ -2562,9 +3095,9 @@ Run `revdepcheck::revdep_details(, "ldsr")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  5.4Mb
+      installed size is 13.5Mb
       sub-directories of 1Mb or more:
-        libs   4.9Mb
+        libs  13.0Mb
     ```
 
 # lidR
@@ -2585,7 +3118,7 @@ Run `revdepcheck::revdep_details(, "lidR")` for more info
 
 *   checking tests ...
     ```
-      Running ‘testthat.R’/software/c4/cbi/software/_rocky8/R-4.4.3-gcc13/lib64/R/bin/BATCH: line 60: 570560 Aborted                 (core dumped) ${R_HOME}/bin/R -f ${in} ${opts} ${R_BATCH_OPTIONS} > ${out} 2>&1
+      Running ‘testthat.R’/software/c4/cbi/software/_rocky8/R-4.4.3-gcc13/lib64/R/bin/BATCH: line 60: 2522061 Aborted                 (core dumped) ${R_HOME}/bin/R -f ${in} ${opts} ${R_BATCH_OPTIONS} > ${out} 2>&1
     
      ERROR
     Running the tests in ‘tests/testthat.R’ failed.
@@ -2597,7 +3130,7 @@ Run `revdepcheck::revdep_details(, "lidR")` for more info
       > test_check("lidR")
       Tests using raster: terra 
       Tests using future: TRUE 
-      Tests using OpenMP thread: 48 
+      Tests using OpenMP thread: 74 
       Tests using rlas: 1.8.0 
       OGR: Unsupported geometry type
       OGR: Unsupported geometry type
@@ -2669,10 +3202,10 @@ Run `revdepcheck::revdep_details(, "manynet")` for more info
 
 <details>
 
-* Version: 0.9.3
+* Version: 0.9.4
 * GitHub: https://github.com/mapme-initiative/mapme.biodiversity
 * Source code: https://github.com/cran/mapme.biodiversity
-* Date/Publication: 2024-10-21 08:10:02 UTC
+* Date/Publication: 2025-04-28 13:00:08 UTC
 * Number of recursive dependencies: 104
 
 Run `revdepcheck::revdep_details(, "mapme.biodiversity")` for more info
@@ -2701,7 +3234,7 @@ Run `revdepcheck::revdep_details(, "mapme.biodiversity")` for more info
        16.     └─cli::cli_abort(...)
        17.       └─rlang::abort(...)
       
-      [ FAIL 5 | WARN 1 | SKIP 38 | PASS 560 ]
+      [ FAIL 5 | WARN 1 | SKIP 38 | PASS 563 ]
       Error: Test failures
       Execution halted
     ```
@@ -2724,7 +3257,8 @@ Run `revdepcheck::revdep_details(, "marginaleffects")` for more info
 
 *   checking package dependencies ... NOTE
     ```
-    Package suggested but not available for checking: ‘logistf’
+    Packages suggested but not available for checking:
+      'equivalence', 'logistf', 'mlogit'
     ```
 
 # metaGE
@@ -2754,10 +3288,10 @@ Run `revdepcheck::revdep_details(, "metaGE")` for more info
 
 <details>
 
-* Version: 2.0.6
+* Version: 2.1.2
 * GitHub: https://github.com/BRANCHlab/metasnf
 * Source code: https://github.com/cran/metasnf
-* Date/Publication: 2025-03-25 21:20:02 UTC
+* Date/Publication: 2025-04-28 18:20:02 UTC
 * Number of recursive dependencies: 118
 
 Run `revdepcheck::revdep_details(, "metasnf")` for more info
@@ -2821,7 +3355,7 @@ Run `revdepcheck::revdep_details(, "metasnf")` for more info
     Error(s) in re-building vignettes:
     --- re-building ‘a_complete_example.Rmd’ using rmarkdown
     
-    Quitting from a_complete_example.Rmd:288-292 [unnamed-chunk-14]
+    Quitting from a_complete_example.Rmd:949-963 [unnamed-chunk-48]
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     <error/rlang_error>
     Error in `loadNamespace()`:
@@ -2829,16 +3363,47 @@ Run `revdepcheck::revdep_details(, "metasnf")` for more info
     ---
     Backtrace:
     ...
+    --- re-building ‘troubleshooting.Rmd’ using rmarkdown
     --- finished re-building ‘troubleshooting.Rmd’
     
     SUMMARY: processing the following files failed:
       ‘a_complete_example.Rmd’ ‘a_simple_example.Rmd’ ‘alluvial_plots.Rmd’
       ‘clustering_algorithms.Rmd’ ‘confounders.Rmd’ ‘feature_plots.Rmd’
-      ‘label_propagation.Rmd’ ‘nmi_scores.Rmd’
-      ‘similarity_matrix_heatmap.Rmd’
+      ‘nmi_scores.Rmd’ ‘similarity_matrix_heatmap.Rmd’
     
     Error: Vignette re-building failed.
     Execution halted
+    ```
+
+*   checking installed package size ... NOTE
+    ```
+      installed size is  5.6Mb
+      sub-directories of 1Mb or more:
+        data   1.0Mb
+        doc    3.5Mb
+    ```
+
+# MIC
+
+<details>
+
+* Version: 1.0.2
+* GitHub: https://github.com/agerada/MIC
+* Source code: https://github.com/cran/MIC
+* Date/Publication: 2025-02-07 09:40:02 UTC
+* Number of recursive dependencies: 146
+
+Run `revdepcheck::revdep_details(, "MIC")` for more info
+
+</details>
+
+## Newly broken
+
+*   checking installed package size ... NOTE
+    ```
+      installed size is  5.3Mb
+      sub-directories of 1Mb or more:
+        libs   4.0Mb
     ```
 
 # mikropml
@@ -3057,7 +3622,7 @@ Run `revdepcheck::revdep_details(, "missSBM")` for more info
     ```
       installed size is 10.2Mb
       sub-directories of 1Mb or more:
-        libs   8.0Mb
+        libs   8.1Mb
     ```
 
 # mistyR
@@ -3075,6 +3640,14 @@ Run `revdepcheck::revdep_details(, "mistyR")` for more info
 </details>
 
 ## In both
+
+*   checking installed package size ... NOTE
+    ```
+      installed size is  5.7Mb
+      sub-directories of 1Mb or more:
+        data   4.0Mb
+        doc    1.4Mb
+    ```
 
 *   checking R code for possible problems ... NOTE
     ```
@@ -3169,6 +3742,14 @@ Run `revdepcheck::revdep_details(, "modelsummary")` for more info
 *   checking package dependencies ... NOTE
     ```
     Package suggested but not available for checking: ‘webshot2’
+    ```
+
+*   checking installed package size ... NOTE
+    ```
+      installed size is  6.4Mb
+      sub-directories of 1Mb or more:
+        help       4.3Mb
+        tinytest   1.7Mb
     ```
 
 # momentuHMM
@@ -3492,6 +4073,47 @@ Run `revdepcheck::revdep_details(, "OptimalGoldstandardDesigns")` for more info
            |                                                ^
     ```
 
+# OutSeekR
+
+<details>
+
+* Version: 1.0.0
+* GitHub: NA
+* Source code: https://github.com/cran/OutSeekR
+* Date/Publication: 2024-11-19 09:10:05 UTC
+* Number of recursive dependencies: 58
+
+Run `revdepcheck::revdep_details(, "OutSeekR")` for more info
+
+</details>
+
+## In both
+
+*   checking re-building of vignette outputs ... ERROR
+    ```
+    Error(s) in re-building vignettes:
+    --- re-building ‘introduction.Rmd’ using rmarkdown
+    
+    Quitting from introduction.Rmd:101-117 [run-1]
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    <error/rlang_error>
+    Error:
+    ! Cannot create 148 parallel PSOCK nodes. Each node needs one connection, but there are only 123 connections left out of the maximum 128 available on this R installation. To increase this limit in R (>= 4.4.0), use command-line option '--max-connections=N' when launching R.
+    ---
+    Backtrace:
+    ...
+    
+    Error: processing vignette 'introduction.Rmd' failed with diagnostics:
+    Cannot create 148 parallel PSOCK nodes. Each node needs one connection, but there are only 123 connections left out of the maximum 128 available on this R installation. To increase this limit in R (>= 4.4.0), use command-line option '--max-connections=N' when launching R.
+    --- failed re-building ‘introduction.Rmd’
+    
+    SUMMARY: processing the following file failed:
+      ‘introduction.Rmd’
+    
+    Error: Vignette re-building failed.
+    Execution halted
+    ```
+
 # PAMpal
 
 <details>
@@ -3750,21 +4372,21 @@ Run `revdepcheck::revdep_details(, "pgxRpi")` for more info
     ```
     Error(s) in re-building vignettes:
     --- re-building ‘Introduction_1_load_metadata.Rmd’ using rmarkdown
-    The magick package is required to crop "/c4/home/henrik/futureverse/future/revdep/checks.global/pgxRpi/new/pgxRpi.Rcheck/vign_test/pgxRpi/vignettes/Introduction_1_load_metadata_files/figure-html/unnamed-chunk-12-1.png" but not available.
-    --- finished re-building ‘Introduction_1_load_metadata.Rmd’
     
-    --- re-building ‘Introduction_2_query_variants.Rmd’ using rmarkdown
-    
-    Quitting from Introduction_2_query_variants.Rmd:83-86 [unnamed-chunk-4]
+    Quitting from Introduction_1_load_metadata.Rmd:175-180 [unnamed-chunk-12]
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     <error/rlang_error>
+    Error in `pgxmetaLoader()`:
+    ! No data retrieved
+    ---
+    Backtrace:
     ...
-    The magick package is required to crop "/c4/home/henrik/futureverse/future/revdep/checks.global/pgxRpi/new/pgxRpi.Rcheck/vign_test/pgxRpi/vignettes/Introduction_4_process_pgxseg_files/figure-html/unnamed-chunk-14-1.png" but not available.
     The magick package is required to crop "/c4/home/henrik/futureverse/future/revdep/checks.global/pgxRpi/new/pgxRpi.Rcheck/vign_test/pgxRpi/vignettes/Introduction_4_process_pgxseg_files/figure-html/unnamed-chunk-15-1.png" but not available.
     The magick package is required to crop "/c4/home/henrik/futureverse/future/revdep/checks.global/pgxRpi/new/pgxRpi.Rcheck/vign_test/pgxRpi/vignettes/Introduction_4_process_pgxseg_files/figure-html/unnamed-chunk-16-1.png" but not available.
     --- finished re-building ‘Introduction_4_process_pgxseg.Rmd’
     
-    SUMMARY: processing the following file failed:
+    SUMMARY: processing the following files failed:
+      ‘Introduction_1_load_metadata.Rmd’
       ‘Introduction_2_query_variants.Rmd’
     
     Error: Vignette re-building failed.
@@ -3835,29 +4457,6 @@ Run `revdepcheck::revdep_details(, "phylolm")` for more info
     Packages unavailable to check Rd xrefs: ‘geiger’, ‘caper’
     ```
 
-# phylopath
-
-<details>
-
-* Version: 1.3.0
-* GitHub: https://github.com/Ax3man/phylopath
-* Source code: https://github.com/cran/phylopath
-* Date/Publication: 2024-06-11 23:10:02 UTC
-* Number of recursive dependencies: 94
-
-Run `revdepcheck::revdep_details(, "phylopath")` for more info
-
-</details>
-
-## In both
-
-*   checking installed package size ... NOTE
-    ```
-      installed size is  5.6Mb
-      sub-directories of 1Mb or more:
-        doc   4.9Mb
-    ```
-
 # pliman
 
 <details>
@@ -3907,6 +4506,47 @@ Run `revdepcheck::revdep_details(, "PLNmodels")` for more info
         libs  23.4Mb
     ```
 
+# plumber
+
+<details>
+
+* Version: 1.3.0
+* GitHub: https://github.com/rstudio/plumber
+* Source code: https://github.com/cran/plumber
+* Date/Publication: 2025-02-19 05:30:02 UTC
+* Number of recursive dependencies: 110
+
+Run `revdepcheck::revdep_details(, "plumber")` for more info
+
+</details>
+
+## In both
+
+*   checking tests ...
+    ```
+      Running ‘spelling.R’
+      Running ‘testthat.R’
+     ERROR
+    Running the tests in ‘tests/testthat.R’ failed.
+    Complete output:
+      > library(testthat)
+      > library(plumber)
+      > 
+      > test_check("plumber")
+      [ FAIL 1 | WARN 0 | SKIP 15 | PASS 1913 ]
+    ...
+        8.               └─plumber:::evaluateBlock(...)
+        9.                 └─base::tryCatch(...)
+       10.                   └─base (local) tryCatchList(expr, classes, parentenv, handlers)
+       11.                     └─base (local) tryCatchOne(expr, names, parentenv, handlers[[1L]])
+       12.                       └─value[[3L]](cond)
+       13.                         └─plumber:::stopOnLine(lineNum, file[lineNum], e)
+      
+      [ FAIL 1 | WARN 0 | SKIP 15 | PASS 1913 ]
+      Error: Test failures
+      Execution halted
+    ```
+
 # polykde
 
 <details>
@@ -3929,12 +4569,12 @@ Run `revdepcheck::revdep_details(, "polykde")` for more info
      ERROR
     Running the tests in ‘tests/testthat.R’ failed.
     Last 50 lines of output:
-       1. ├─testthat::expect_equal(...) at tests_bwd.R:90:3
-       2. │ └─testthat::quasi_label(enquo(expected), expected.label, arg = "expected")
-       3. │   └─rlang::eval_bare(expr, quo_get_env(quo))
-       4. └─polykde::bw_cv_polysph(...)
-       5.   └─parallel::makeCluster(spec = ncores)
-       6.     └─parallel::makePSOCKcluster(names = spec, ...)
+      
+      ══ Skipped tests (6) ═══════════════════════════════════════════════════════════
+      • No tests for euler ridges, just visualizations (1): 'tests_euler.R:504:1'
+      • Unstable (5): 'tests_kde.R:165:3', 'tests_kre.R:49:3', 'tests_tests.R:115:3',
+        'tests_tests.R:191:3', 'tests_tests.R:200:3'
+      
     ...
        3. │   └─rlang::eval_bare(expr, quo_get_env(quo))
        4. ├─polykde (local) Bessel_asymp(x = c(50:100, 10000, 1e+05), d = d)
@@ -3943,7 +4583,7 @@ Run `revdepcheck::revdep_details(, "polykde")` for more info
        7.     └─base (local) withOneRestart(expr, restarts[[1L]])
        8.       └─base (local) doWithOneRestart(return(expr), restart)
       
-      [ FAIL 4 | WARN 0 | SKIP 6 | PASS 824 ]
+      [ FAIL 3 | WARN 0 | SKIP 6 | PASS 825 ]
       Error: Test failures
       Execution halted
     ```
@@ -3955,10 +4595,10 @@ Run `revdepcheck::revdep_details(, "polykde")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 15.7Mb
+      installed size is 15.5Mb
       sub-directories of 1Mb or more:
-        R      4.6Mb
-        libs  10.8Mb
+        R      2.3Mb
+        libs  13.0Mb
     ```
 
 # portvine
@@ -4002,7 +4642,7 @@ Run `revdepcheck::revdep_details(, "ProFAST")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 24.9Mb
+      installed size is 25.0Mb
       sub-directories of 1Mb or more:
         data   2.2Mb
         libs  22.2Mb
@@ -4127,13 +4767,6 @@ Run `revdepcheck::revdep_details(, "pseudohouseholds")` for more info
 
 ## In both
 
-*   checking installed package size ... NOTE
-    ```
-      installed size is 12.8Mb
-      sub-directories of 1Mb or more:
-        data  12.5Mb
-    ```
-
 *   checking data for non-ASCII characters ... NOTE
     ```
       Note: found 596 marked UTF-8 strings
@@ -4227,6 +4860,47 @@ Run `revdepcheck::revdep_details(, "QDNAseq")` for more info
     Execution halted
     ```
 
+# qgcomp
+
+<details>
+
+* Version: 2.18.4
+* GitHub: https://github.com/alexpkeil1/qgcomp
+* Source code: https://github.com/cran/qgcomp
+* Date/Publication: 2025-03-28 05:50:02 UTC
+* Number of recursive dependencies: 174
+
+Run `revdepcheck::revdep_details(, "qgcomp")` for more info
+
+</details>
+
+## In both
+
+*   checking re-building of vignette outputs ... ERROR
+    ```
+    Error(s) in re-building vignettes:
+    --- re-building ‘qgcomp-advanced-vignette.Rmd’ using knitr
+    
+    Quitting from qgcomp-advanced-vignette.Rmd:78-92 [tm2evnt2]
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    <error/rlang_error>
+    Error:
+    ! Cannot create 148 parallel PSOCK nodes. Each node needs one connection, but there are only 123 connections left out of the maximum 128 available on this R installation. To increase this limit in R (>= 4.4.0), use command-line option '--max-connections=N' when launching R.
+    ---
+    Backtrace:
+    ...
+    --- finished re-building ‘qgcomp-basic-vignette.Rmd’
+    
+    --- re-building ‘qgcomp-vignette.Rmd’ using knitr
+    --- finished re-building ‘qgcomp-vignette.Rmd’
+    
+    SUMMARY: processing the following file failed:
+      ‘qgcomp-advanced-vignette.Rmd’
+    
+    Error: Vignette re-building failed.
+    Execution halted
+    ```
+
 # RAINBOWR
 
 <details>
@@ -4250,25 +4924,86 @@ Run `revdepcheck::revdep_details(, "RAINBOWR")` for more info
         libs  41.5Mb
     ```
 
-# rangeMapper
+# ravepipeline
 
 <details>
 
-* Version: 2.0.3
-* GitHub: https://github.com/mpio-be/rangeMapper
-* Source code: https://github.com/cran/rangeMapper
-* Date/Publication: 2022-10-03 22:20:02 UTC
-* Number of recursive dependencies: 110
+* Version: 0.0.1
+* GitHub: https://github.com/dipterix/ravepipeline
+* Source code: https://github.com/cran/ravepipeline
+* Date/Publication: 2025-03-13 12:00:02 UTC
+* Number of recursive dependencies: 122
 
-Run `revdepcheck::revdep_details(, "rangeMapper")` for more info
+Run `revdepcheck::revdep_details(, "ravepipeline")` for more info
 
 </details>
 
 ## In both
 
-*   checking package dependencies ... NOTE
+*   checking tests ...
     ```
-    Package suggested but not available for checking: ‘spdep’
+      Running ‘testthat.R’
+     ERROR
+    Running the tests in ‘tests/testthat.R’ failed.
+    Complete output:
+      > # This file is part of the standard setup for testthat.
+      > # It is recommended that you do not modify it.
+      > #
+      > # Where should you do additional test configuration?
+      > # Learn more about the roles of various files in:
+      > # * https://r-pkgs.org/testing-design.html#sec-tests-files-overview
+    ...
+       1. └─self$set("b", 11231) at test-rdsmap.R:15:3
+       2.   └─private$exclusive(...)
+       3.     └─private$default_get_locker(...)
+       4.       └─ravepipeline:::simple_lock(name = self$lockfile, timeout = timeout)
+       5.         └─base::writeLines(lkey, con = lock_path)
+       6.           └─base::file(con, "w")
+      
+      [ FAIL 2 | WARN 1 | SKIP 0 | PASS 21 ]
+      Error: Test failures
+      Execution halted
+    ```
+
+# rBiasCorrection
+
+<details>
+
+* Version: 0.3.5
+* GitHub: https://github.com/kapsner/rBiasCorrection
+* Source code: https://github.com/cran/rBiasCorrection
+* Date/Publication: 2025-04-05 13:50:02 UTC
+* Number of recursive dependencies: 121
+
+Run `revdepcheck::revdep_details(, "rBiasCorrection")` for more info
+
+</details>
+
+## In both
+
+*   checking tests ...
+    ```
+      Running ‘testthat.R’
+     ERROR
+    Running the tests in ‘tests/testthat.R’ failed.
+    Last 50 lines of output:
+      Backtrace:
+           ▆
+        1. └─rBiasCorrection::regression_utility(...) at test-algorithm_minmax_TRUE.R:48:5
+        2.   └─rBiasCorrection:::regression_type1(...)
+        3.     └─future.apply::future_sapply(...)
+        4.       └─future.apply::future_lapply(...)
+    ...
+       17.                       └─future (local) makeCluster(workers, ...)
+       18.                         ├─base::do.call(makeClusterPSOCK, args = args, quote = TRUE)
+       19.                         └─parallelly (local) `<fn>`(base::quote(148L), rscript_libs = base::quote(`<chr>`))
+       20.                           └─parallelly:::stopf(msg)
+      
+      [ FAIL 4 | WARN 123 | SKIP 8 | PASS 40 ]
+      Error: Test failures
+      Execution halted
+      Error in deferred_run(env) : could not find function "deferred_run"
+      Calls: <Anonymous>
     ```
 
 # Rcurvep
@@ -4419,9 +5154,9 @@ Run `revdepcheck::revdep_details(, "rgee")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  8.4Mb
+      installed size is 10.9Mb
       sub-directories of 1Mb or more:
-        doc   6.9Mb
+        doc   9.4Mb
     ```
 
 *   checking Rd files ... NOTE
@@ -4469,7 +5204,48 @@ Run `revdepcheck::revdep_details(, "rpm")` for more info
     ```
       installed size is 13.5Mb
       sub-directories of 1Mb or more:
-        libs  12.9Mb
+        libs  13.0Mb
+    ```
+
+# RTransferEntropy
+
+<details>
+
+* Version: 0.2.21
+* GitHub: https://github.com/BZPaper/RTransferEntropy
+* Source code: https://github.com/cran/RTransferEntropy
+* Date/Publication: 2023-02-01 17:30:05 UTC
+* Number of recursive dependencies: 79
+
+Run `revdepcheck::revdep_details(, "RTransferEntropy")` for more info
+
+</details>
+
+## In both
+
+*   checking re-building of vignette outputs ... ERROR
+    ```
+    Error(s) in re-building vignettes:
+    --- re-building ‘transfer-entropy.Rmd’ using rmarkdown
+    
+    Quitting from transfer-entropy.Rmd:254-262 [te_1_lib_actual]
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    <error/rlang_error>
+    Error:
+    ! Cannot create 148 parallel PSOCK nodes. Each node needs one connection, but there are only 123 connections left out of the maximum 128 available on this R installation. To increase this limit in R (>= 4.4.0), use command-line option '--max-connections=N' when launching R.
+    ---
+    Backtrace:
+    ...
+    
+    Error: processing vignette 'transfer-entropy.Rmd' failed with diagnostics:
+    Cannot create 148 parallel PSOCK nodes. Each node needs one connection, but there are only 123 connections left out of the maximum 128 available on this R installation. To increase this limit in R (>= 4.4.0), use command-line option '--max-connections=N' when launching R.
+    --- failed re-building ‘transfer-entropy.Rmd’
+    
+    SUMMARY: processing the following file failed:
+      ‘transfer-entropy.Rmd’
+    
+    Error: Vignette re-building failed.
+    Execution halted
     ```
 
 # sapfluxnetr
@@ -4516,28 +5292,6 @@ Run `revdepcheck::revdep_details(, "SCArray.sat")` for more info
       ‘Seurat:::FastExpMean’ ‘Seurat:::FastLogVMR’ ‘Seurat:::NBResiduals’
       ‘Seurat:::UpdateKey’ ‘Seurat:::ValidateDataForMerge’
       See the note in ?`:::` about the use of this operator.
-    ```
-
-# scRNAseqApp
-
-<details>
-
-* Version: 1.6.1
-* GitHub: https://github.com/jianhong/scRNAseqApp
-* Source code: https://github.com/cran/scRNAseqApp
-* Date/Publication: 2025-01-23
-* Number of recursive dependencies: 240
-
-Run `revdepcheck::revdep_details(, "scRNAseqApp")` for more info
-
-</details>
-
-## In both
-
-*   checking package dependencies ... NOTE
-    ```
-    Packages which this enhances but not available for checking:
-      'celldex', 'SingleR', 'tricycle'
     ```
 
 # sctransform
@@ -4602,7 +5356,7 @@ Run `revdepcheck::revdep_details(, "sentopics")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  8.4Mb
+      installed size is  8.3Mb
       sub-directories of 1Mb or more:
         data   1.2Mb
         libs   6.2Mb
@@ -4691,10 +5445,10 @@ Run `revdepcheck::revdep_details(, "SeuratObject")` for more info
 
 <details>
 
-* Version: 1.0.3
+* Version: 1.0.4
 * GitHub: https://github.com/NorskRegnesentral/shapr
 * Source code: https://github.com/cran/shapr
-* Date/Publication: 2025-03-26 17:10:02 UTC
+* Date/Publication: 2025-04-28 13:00:02 UTC
 * Number of recursive dependencies: 166
 
 Run `revdepcheck::revdep_details(, "shapr")` for more info
@@ -4705,9 +5459,9 @@ Run `revdepcheck::revdep_details(, "shapr")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 13.3Mb
+      installed size is 13.5Mb
       sub-directories of 1Mb or more:
-        doc    4.3Mb
+        doc    4.4Mb
         libs   7.8Mb
     ```
 
@@ -4760,9 +5514,9 @@ Run `revdepcheck::revdep_details(, "shiny")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 14.2Mb
+      installed size is 14.7Mb
       sub-directories of 1Mb or more:
-        R     2.0Mb
+        R     2.5Mb
         www  10.4Mb
     ```
 
@@ -4859,6 +5613,31 @@ Run `revdepcheck::revdep_details(, "signeR")` for more info
 
 ## In both
 
+*   checking re-building of vignette outputs ... ERROR
+    ```
+    Error(s) in re-building vignettes:
+    --- re-building ‘signeRFlow.Rmd’ using rmarkdown
+    --- finished re-building ‘signeRFlow.Rmd’
+    
+    --- re-building ‘signeR-vignette.Rhtml’ using knitr
+    
+    Quitting from signeR-vignette.Rhtml:689-691 [unnamed-chunk-38]
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    <error/rlang_error>
+    Error:
+    ...
+    
+    Error: processing vignette 'signeR-vignette.Rhtml' failed with diagnostics:
+    Cannot create 147 parallel PSOCK nodes. Each node needs one connection, but there are only 123 connections left out of the maximum 128 available on this R installation. To increase this limit in R (>= 4.4.0), use command-line option '--max-connections=N' when launching R.
+    --- failed re-building ‘signeR-vignette.Rhtml’
+    
+    SUMMARY: processing the following file failed:
+      ‘signeR-vignette.Rhtml’
+    
+    Error: Vignette re-building failed.
+    Execution halted
+    ```
+
 *   checking C++ specification ... NOTE
     ```
       Specified C++11: please drop specification unless essential
@@ -4935,9 +5714,91 @@ Run `revdepcheck::revdep_details(, "SimDesign")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  9.8Mb
+      installed size is  7.5Mb
       sub-directories of 1Mb or more:
-        doc   9.0Mb
+        doc   6.6Mb
+    ```
+
+# simIDM
+
+<details>
+
+* Version: 0.1.0
+* GitHub: https://github.com/insightsengineering/simIDM
+* Source code: https://github.com/cran/simIDM
+* Date/Publication: 2023-12-11 10:20:02 UTC
+* Number of recursive dependencies: 85
+
+Run `revdepcheck::revdep_details(, "simIDM")` for more info
+
+</details>
+
+## In both
+
+*   checking re-building of vignette outputs ... ERROR
+    ```
+    Error(s) in re-building vignettes:
+    --- re-building ‘correlation.Rmd’ using rmarkdown
+    
+    Quitting from correlation.Rmd:145-147 [unnamed-chunk-5]
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    <error/rlang_error>
+    Error:
+    ! Cannot create 147 parallel PSOCK nodes. Each node needs one connection, but there are only 123 connections left out of the maximum 128 available on this R installation. To increase this limit in R (>= 4.4.0), use command-line option '--max-connections=N' when launching R.
+    ---
+    Backtrace:
+    ...
+      "numfrom" is not a graphical parameter
+    Warning in doTryCatch(return(expr), name, parentenv, handler) :
+      "numto" is not a graphical parameter
+    --- finished re-building ‘trialplanning.Rmd’
+    
+    SUMMARY: processing the following file failed:
+      ‘correlation.Rmd’
+    
+    Error: Vignette re-building failed.
+    Execution halted
+    ```
+
+# sims
+
+<details>
+
+* Version: 0.0.4
+* GitHub: https://github.com/poissonconsulting/sims
+* Source code: https://github.com/cran/sims
+* Date/Publication: 2024-09-18 16:30:07 UTC
+* Number of recursive dependencies: 79
+
+Run `revdepcheck::revdep_details(, "sims")` for more info
+
+</details>
+
+## In both
+
+*   checking re-building of vignette outputs ... ERROR
+    ```
+    Error(s) in re-building vignettes:
+    --- re-building ‘sims.Rmd’ using rmarkdown
+    
+    Quitting from sims.Rmd:89-92 [unnamed-chunk-10]
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    <error/rlang_error>
+    Error:
+    ! Cannot create 148 parallel PSOCK nodes. Each node needs one connection, but there are only 123 connections left out of the maximum 128 available on this R installation. To increase this limit in R (>= 4.4.0), use command-line option '--max-connections=N' when launching R.
+    ---
+    Backtrace:
+    ...
+    
+    Error: processing vignette 'sims.Rmd' failed with diagnostics:
+    Cannot create 148 parallel PSOCK nodes. Each node needs one connection, but there are only 123 connections left out of the maximum 128 available on this R installation. To increase this limit in R (>= 4.4.0), use command-line option '--max-connections=N' when launching R.
+    --- failed re-building ‘sims.Rmd’
+    
+    SUMMARY: processing the following file failed:
+      ‘sims.Rmd’
+    
+    Error: Vignette re-building failed.
+    Execution halted
     ```
 
 # simtrial
@@ -4966,11 +5827,11 @@ Run `revdepcheck::revdep_details(, "simtrial")` for more info
 
 <details>
 
-* Version: 1.7.1
+* Version: 1.8.2
 * GitHub: https://github.com/tylermorganwall/skpr
 * Source code: https://github.com/cran/skpr
-* Date/Publication: 2024-03-26 01:30:02 UTC
-* Number of recursive dependencies: 155
+* Date/Publication: 2025-04-25 18:40:02 UTC
+* Number of recursive dependencies: 160
 
 Run `revdepcheck::revdep_details(, "skpr")` for more info
 
@@ -4985,7 +5846,7 @@ Run `revdepcheck::revdep_details(, "skpr")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 59.6Mb
+      installed size is 59.7Mb
       sub-directories of 1Mb or more:
         libs  59.0Mb
     ```
@@ -5029,14 +5890,6 @@ Run `revdepcheck::revdep_details(, "SmCCNet")` for more info
     
     Error: Vignette re-building failed.
     Execution halted
-    ```
-
-*   checking installed package size ... NOTE
-    ```
-      installed size is  5.1Mb
-      sub-directories of 1Mb or more:
-        data   3.5Mb
-        doc    1.2Mb
     ```
 
 # smoots
@@ -5139,9 +5992,9 @@ Run `revdepcheck::revdep_details(, "spaMM")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 55.6Mb
+      installed size is 54.4Mb
       sub-directories of 1Mb or more:
-        R      4.1Mb
+        R      2.8Mb
         libs  50.2Mb
     ```
 
@@ -5184,12 +6037,29 @@ Run `revdepcheck::revdep_details(, "SPARSEMODr")` for more info
 
 ## In both
 
-*   checking installed package size ... NOTE
+*   checking tests ...
     ```
-      installed size is  5.4Mb
-      sub-directories of 1Mb or more:
-        doc    1.2Mb
-        libs   4.0Mb
+      Running ‘testthat.R’
+     ERROR
+    Running the tests in ‘tests/testthat.R’ failed.
+    Complete output:
+      > if(require(testthat))test_check("SPARSEMODr")
+      Loading required package: testthat
+      Loading required package: SPARSEMODr
+      [ FAIL 1 | WARN 0 | SKIP 0 | PASS 0 ]
+      
+      ══ Failed tests ════════════════════════════════════════════════════════════════
+    ...
+        7.           └─future::ClusterFutureBackend(...)
+        8.             └─clusterRegistry$startCluster(...)
+        9.               └─future (local) makeCluster(workers, ...)
+       10.                 ├─base::do.call(makeClusterPSOCK, args = args, quote = TRUE)
+       11.                 └─parallelly (local) `<fn>`(base::quote(148L), rscript_libs = base::quote(`<chr>`))
+       12.                   └─parallelly:::stopf(msg)
+      
+      [ FAIL 1 | WARN 0 | SKIP 0 | PASS 0 ]
+      Error: Test failures
+      Execution halted
     ```
 
 *   checking dependencies in R code ... NOTE
@@ -5197,6 +6067,30 @@ Run `revdepcheck::revdep_details(, "SPARSEMODr")` for more info
     Namespaces in Imports field not imported from:
       ‘future’ ‘geosphere’ ‘lubridate’ ‘tidyverse’ ‘viridis’
       All declared Imports should be used.
+    ```
+
+# spatialTIME
+
+<details>
+
+* Version: 1.3.4-5
+* GitHub: https://github.com/FridleyLab/spatialTIME
+* Source code: https://github.com/cran/spatialTIME
+* Date/Publication: 2024-06-04 15:30:11 UTC
+* Number of recursive dependencies: 139
+
+Run `revdepcheck::revdep_details(, "spatialTIME")` for more info
+
+</details>
+
+## In both
+
+*   checking installed package size ... NOTE
+    ```
+      installed size is  6.3Mb
+      sub-directories of 1Mb or more:
+        data   1.5Mb
+        doc    3.5Mb
     ```
 
 # spatialwarnings
@@ -5384,7 +6278,7 @@ Run `revdepcheck::revdep_details(, "squat")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 19.9Mb
+      installed size is 20.0Mb
       sub-directories of 1Mb or more:
         data   1.1Mb
         help   1.1Mb
@@ -5607,7 +6501,7 @@ Run `revdepcheck::revdep_details(, "synergyfinder")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  6.3Mb
+      installed size is  6.2Mb
       sub-directories of 1Mb or more:
         doc   5.8Mb
     ```
@@ -5701,6 +6595,47 @@ Run `revdepcheck::revdep_details(, "tableschema.r")` for more info
 *   checking Rd cross-references ... NOTE
     ```
     Package unavailable to check Rd xrefs: ‘parsedate’
+    ```
+
+# TAD
+
+<details>
+
+* Version: 1.0.0
+* GitHub: NA
+* Source code: https://github.com/cran/TAD
+* Date/Publication: 2024-11-28 12:20:02 UTC
+* Number of recursive dependencies: 160
+
+Run `revdepcheck::revdep_details(, "TAD")` for more info
+
+</details>
+
+## In both
+
+*   checking re-building of vignette outputs ... ERROR
+    ```
+    Error(s) in re-building vignettes:
+    --- re-building ‘best-strategy.Rmd’ using rmarkdown
+    
+    Quitting from best-strategy.Rmd:24-79 [test best strat]
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    <error/rlang_error>
+    Error:
+    ! Cannot create 148 parallel PSOCK nodes. Each node needs one connection, but there are only 123 connections left out of the maximum 128 available on this R installation. To increase this limit in R (>= 4.4.0), use command-line option '--max-connections=N' when launching R.
+    ---
+    Backtrace:
+    ...
+    --- failed re-building ‘graph-outputs.Rmd’
+    
+    --- re-building ‘output-different-formats.Rmd’ using rmarkdown
+    --- finished re-building ‘output-different-formats.Rmd’
+    
+    SUMMARY: processing the following files failed:
+      ‘best-strategy.Rmd’ ‘general-use-of-tad.Rmd’ ‘graph-outputs.Rmd’
+    
+    Error: Vignette re-building failed.
+    Execution halted
     ```
 
 # targeted
@@ -5831,6 +6766,72 @@ Run `revdepcheck::revdep_details(, "tglkmeans")` for more info
     GNU make is a SystemRequirements.
     ```
 
+# tidyMC
+
+<details>
+
+* Version: 1.0.0
+* GitHub: https://github.com/stefanlinner/tidyMC
+* Source code: https://github.com/cran/tidyMC
+* Date/Publication: 2024-01-11 10:00:02 UTC
+* Number of recursive dependencies: 82
+
+Run `revdepcheck::revdep_details(, "tidyMC")` for more info
+
+</details>
+
+## In both
+
+*   checking tests ...
+    ```
+      Running ‘testthat.R’
+     ERROR
+    Running the tests in ‘tests/testthat.R’ failed.
+    Last 50 lines of output:
+        9.             └─future::ClusterFutureBackend(...)
+       10.               └─clusterRegistry$startCluster(...)
+       11.                 └─future (local) makeCluster(workers, ...)
+       12.                   ├─base::do.call(makeClusterPSOCK, args = args, quote = TRUE)
+       13.                   └─parallelly (local) `<fn>`(base::quote(148L), rscript_libs = base::quote(`<chr>`))
+       14.                     └─parallelly:::stopf(msg)
+    ...
+       12.                 └─future::ClusterFutureBackend(...)
+       13.                   └─clusterRegistry$startCluster(...)
+       14.                     └─future (local) makeCluster(workers, ...)
+       15.                       ├─base::do.call(makeClusterPSOCK, args = args, quote = TRUE)
+       16.                       └─parallelly (local) `<fn>`(base::quote(148L), rscript_libs = base::quote(`<chr>`))
+       17.                         └─parallelly:::stopf(msg)
+      
+      [ FAIL 3 | WARN 0 | SKIP 0 | PASS 0 ]
+      Error: Test failures
+      Execution halted
+    ```
+
+*   checking re-building of vignette outputs ... ERROR
+    ```
+    Error(s) in re-building vignettes:
+    --- re-building ‘tidyMC.Rmd’ using rmarkdown
+    
+    Quitting from tidyMC.Rmd:131-145 [unnamed-chunk-8]
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    <error/rlang_error>
+    Error:
+    ! Cannot create 148 parallel PSOCK nodes. Each node needs one connection, but there are only 123 connections left out of the maximum 128 available on this R installation. To increase this limit in R (>= 4.4.0), use command-line option '--max-connections=N' when launching R.
+    ---
+    Backtrace:
+    ...
+    
+    Error: processing vignette 'tidyMC.Rmd' failed with diagnostics:
+    Cannot create 148 parallel PSOCK nodes. Each node needs one connection, but there are only 123 connections left out of the maximum 128 available on this R installation. To increase this limit in R (>= 4.4.0), use command-line option '--max-connections=N' when launching R.
+    --- failed re-building ‘tidyMC.Rmd’
+    
+    SUMMARY: processing the following file failed:
+      ‘tidyMC.Rmd’
+    
+    Error: Vignette re-building failed.
+    Execution halted
+    ```
+
 # tramvs
 
 <details>
@@ -5917,6 +6918,58 @@ Run `revdepcheck::revdep_details(, "TreeSearch")` for more info
     manual.
     ```
 
+# TriDimRegression
+
+<details>
+
+* Version: 1.0.2
+* GitHub: https://github.com/alexander-pastukhov/tridim-regression
+* Source code: https://github.com/cran/TriDimRegression
+* Date/Publication: 2023-09-13 14:10:03 UTC
+* Number of recursive dependencies: 96
+
+Run `revdepcheck::revdep_details(, "TriDimRegression")` for more info
+
+</details>
+
+## In both
+
+*   checking whether package ‘TriDimRegression’ can be installed ... ERROR
+    ```
+    Installation failed.
+    See ‘/c4/home/henrik/futureverse/future/revdep/checks.global/TriDimRegression/new/TriDimRegression.Rcheck/00install.out’ for details.
+    ```
+
+## Installation
+
+### Devel
+
+```
+* installing *source* package ‘TriDimRegression’ ...
+** package ‘TriDimRegression’ successfully unpacked and MD5 sums checked
+** using staged installation
+Error in loadNamespace(x) : there is no package called ‘rstantools’
+Calls: loadNamespace -> withRestarts -> withOneRestart -> doWithOneRestart
+Execution halted
+ERROR: configuration failed for package ‘TriDimRegression’
+* removing ‘/c4/home/henrik/futureverse/future/revdep/checks.global/TriDimRegression/new/TriDimRegression.Rcheck/TriDimRegression’
+
+
+```
+### CRAN
+
+```
+* installing *source* package ‘TriDimRegression’ ...
+** package ‘TriDimRegression’ successfully unpacked and MD5 sums checked
+** using staged installation
+Error in loadNamespace(x) : there is no package called ‘rstantools’
+Calls: loadNamespace -> withRestarts -> withOneRestart -> doWithOneRestart
+Execution halted
+ERROR: configuration failed for package ‘TriDimRegression’
+* removing ‘/c4/home/henrik/futureverse/future/revdep/checks.global/TriDimRegression/old/TriDimRegression.Rcheck/TriDimRegression’
+
+
+```
 # tsdistributions
 
 <details>
@@ -6029,9 +7082,8 @@ Run `revdepcheck::revdep_details(, "tsmarch")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 22.3Mb
+      installed size is 21.9Mb
       sub-directories of 1Mb or more:
-        R      1.0Mb
         doc    1.6Mb
         libs  18.8Mb
     ```
@@ -6091,12 +7143,29 @@ Run `revdepcheck::revdep_details(, "uci")` for more info
 
 ## In both
 
-*   checking package dependencies ... ERROR
+*   checking tests ...
     ```
-    Package required but not available: ‘spdep’
-    
-    See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
-    manual.
+      Running ‘testthat.R’
+     ERROR
+    Running the tests in ‘tests/testthat.R’ failed.
+    Complete output:
+      > library(testthat)
+      > library(uci)
+      > 
+      > test_check("uci")
+      [ FAIL 1 | WARN 0 | SKIP 0 | PASS 9 ]
+      
+    ...
+        9.               └─future::ClusterFutureBackend(...)
+       10.                 └─clusterRegistry$startCluster(...)
+       11.                   └─future (local) makeCluster(workers, ...)
+       12.                     ├─base::do.call(makeClusterPSOCK, args = args, quote = TRUE)
+       13.                     └─parallelly (local) `<fn>`(base::quote(147L))
+       14.                       └─parallelly:::stopf(msg)
+      
+      [ FAIL 1 | WARN 0 | SKIP 0 | PASS 9 ]
+      Error: Test failures
+      Execution halted
     ```
 
 # UCSCXenaShiny
@@ -6117,9 +7186,9 @@ Run `revdepcheck::revdep_details(, "UCSCXenaShiny")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  8.9Mb
+      installed size is  8.0Mb
       sub-directories of 1Mb or more:
-        data       2.0Mb
+        data       1.1Mb
         doc        1.4Mb
         shinyapp   4.9Mb
     ```
@@ -6214,22 +7283,22 @@ Run `revdepcheck::revdep_details(, "WeightedCluster")` for more info
     ```
     Error(s) in re-building vignettes:
     --- re-building ‘BigDataSA.Rmd’ using rmarkdown
-    --- finished re-building ‘BigDataSA.Rmd’
     
-    --- re-building ‘ClusterExternalValidSA.Rmd’ using rmarkdown
-    --- finished re-building ‘ClusterExternalValidSA.Rmd’
-    
-    --- re-building ‘ClusterValidSA.Rmd’ using rmarkdown
-    --- finished re-building ‘ClusterValidSA.Rmd’
-    
+    Quitting from BigDataSA.Rmd:73-77 [seqclaraex]
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    <error/rlang_error>
+    Error:
+    ! Cannot create 148 parallel PSOCK nodes. Each node needs one connection, but there are only 123 connections left out of the maximum 128 available on this R installation. To increase this limit in R (>= 4.4.0), use command-line option '--max-connections=N' when launching R.
+    ---
+    Backtrace:
     ...
-    l.85 \usepackage
                     {tikz}^^M
     !  ==> Fatal error occurred, no output PDF file produced!
     --- failed re-building ‘WeightedClusterPreview.Rnw’
     
     SUMMARY: processing the following files failed:
-      ‘WeightedClusterFR.Rnw’ ‘WeightedClusterPreview.Rnw’
+      ‘BigDataSA.Rmd’ ‘ClusterValidSA.Rmd’ ‘WeightedClusterFR.Rnw’
+      ‘WeightedClusterPreview.Rnw’
     
     Error: Vignette re-building failed.
     Execution halted
@@ -6263,6 +7332,30 @@ Run `revdepcheck::revdep_details(, "winputall")` for more info
     GNU make is a SystemRequirements.
     ```
 
+# wizaRdry
+
+<details>
+
+* Version: 0.2.0
+* GitHub: https://github.com/belieflab/wizaRdry
+* Source code: https://github.com/cran/wizaRdry
+* Date/Publication: 2025-04-25 14:40:02 UTC
+* Number of recursive dependencies: 93
+
+Run `revdepcheck::revdep_details(, "wizaRdry")` for more info
+
+</details>
+
+## In both
+
+*   checking package dependencies ... ERROR
+    ```
+    Package required but not available: ‘qualtRics’
+    
+    See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
+    manual.
+    ```
+
 # wru
 
 <details>
@@ -6281,9 +7374,9 @@ Run `revdepcheck::revdep_details(, "wru")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  9.0Mb
+      installed size is  7.5Mb
       sub-directories of 1Mb or more:
-        data   5.0Mb
+        data   3.5Mb
         help   1.9Mb
         libs   1.9Mb
     ```
