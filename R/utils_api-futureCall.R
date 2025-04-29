@@ -53,7 +53,7 @@ futureCall <- function(FUN, args = list(), envir = parent.frame(), lazy = FALSE,
       if (debug) {
         mdebugf("globals found: [%d] %s", length(globals), hpaste(sQuote(names(globals))))
         mdebugf("needed namespaces: [%d] %s", length(packages), hpaste(sQuote(packages)))
-        mdebug_pop("Finding globals ... DONE")
+        mdebug_pop()
       }
     } else {
       ## globals = FALSE
@@ -98,7 +98,7 @@ futureCall <- function(FUN, args = list(), envir = parent.frame(), lazy = FALSE,
 
   f <- future(expr, substitute = FALSE, envir = envir, lazy = lazy, seed = seed, globals = globals, packages = packages, stdout = stdout, conditions = conditions, earlySignal = earlySignal, label = label, gc = gc, ...)
 
-  if (debug) mdebug_pop("futureCall() ... DONE")
+  if (debug) mdebug_pop()
   
   f
 }

@@ -22,7 +22,7 @@ launchFuture.SequentialFutureBackend <- function(backend, future, ...) {
   debug <- isTRUE(getOption("future.debug"))
   if (debug) {
     mdebugf_push("launchFuture() for %s ...", commaq(class(backend)))
-    on.exit(mdebugf_pop("launchFuture() for %s ... DONE", commaq(class(backend))))
+    on.exit(mdebugf_pop())
   }
 
   hooks <- backend[["hooks"]]

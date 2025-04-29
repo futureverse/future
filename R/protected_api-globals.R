@@ -26,7 +26,7 @@
 #'
 #' @seealso Internally, \code{\link[globals]{globalsOf}()} is used to identify globals and associated packages from the expression.
 #'
-#' @importFrom globals globalsOf globalsByName as.Globals packagesOf cleanup
+#' @importFrom globals findGlobals globalsOf globalsByName as.Globals packagesOf cleanup
 #' @export
 #'
 #' @keywords internal
@@ -41,7 +41,7 @@ getGlobalsAndPackages <- function(expr, envir = parent.frame(), tweak = tweakExp
   debug <- isTRUE(getOption("future.debug"))
   if (debug) {
     mdebug_push("getGlobalsAndPackages() ...")
-    on.exit(mdebug_pop("getGlobalsAndPackages() ... done"))
+    on.exit(mdebug_pop())
   }
   
   ## Assert that all identified globals exists when future is created?
@@ -85,7 +85,7 @@ getGlobalsAndPackages <- function(expr, envir = parent.frame(), tweak = tweakExp
       }
       add <- as.FutureGlobals(add)
       stop_if_not(inherits(add, "FutureGlobals"))
-      if (debug) mdebug_pop("Retrieving 'add' globals ... done")
+      if (debug) mdebug_pop()
     }
     
     ## Any manually dropped/ignored globals?
@@ -107,6 +107,19 @@ getGlobalsAndPackages <- function(expr, envir = parent.frame(), tweak = tweakExp
         .Deprecated(msg = sprintf("R option %s may only be used for troubleshooting. It must not be used in production since it changes how futures are evaluated and there is a great risk that the results cannot be reproduced elsewhere: %s", sQuote("future.globals.method"), sQuote(globals.method)), package = .packageName)
       }
 
+      ## ROBUSTNESS: globals::findGlobals(..., method = "dfs") is under
+      ## development and might give an error on certain types of expression.
+      ## Check if it gives an error. If it does, drop the "dfs" method for
+      ## this future expression.
+      idx <- which(globals.method == "dfs")
+      if (length(idx) > 0L) {
+         res <- tryCatch(findGlobals(expr, method = "dfs"), error = identity)
+         if (inherits(names, "res")) {
+           globals.method <- globals.method[-idx]
+           if (length(globals.method) == 0L) globals.method <- "ordered"
+         }
+      }
+
       ## Combine results from different methods
       globals <- globalsOf(
         ## Passed to globals::findGlobals()
@@ -123,7 +136,7 @@ getGlobalsAndPackages <- function(expr, envir = parent.frame(), tweak = tweakExp
       )
       
       if (debug) mdebugf("globals found: [%d] %s", length(globals), commaq(names(globals)))
-      if (debug) mdebug_pop("Searching for globals ... DONE")
+      if (debug) mdebug_pop()
     } else {
       if (debug) mdebug("Not searching for globals")
       globals <- FutureGlobals()
@@ -145,7 +158,7 @@ getGlobalsAndPackages <- function(expr, envir = parent.frame(), tweak = tweakExp
     if (debug) mdebug_push("Retrieving globals ...")
     globals <- globalsByName(globals, envir = envir, mustExist = mustExist)
     if (debug) mdebugf("globals retrieved: [%d] %s", length(globals), commaq(names(globals)))
-    if (debug) mdebug_pop("Retrieving globals ... DONE")
+    if (debug) mdebug_pop()
   } else if (inherits(globals, "Globals")) {
     if (debug) mdebugf("globals passed as-is: [%d] %s", length(globals), commaq(names(globals)))
   } else if (is.list(globals)) {
@@ -288,7 +301,7 @@ getGlobalsAndPackages <- function(expr, envir = parent.frame(), tweak = tweakExp
       }, list(a = expr))
       if (debug) {
         mprint(expr)
-        mdebug_pop("Tweak future expression to call with '...' arguments ... DONE")
+        mdebug_pop()
       }
     }
   }
@@ -316,7 +329,7 @@ getGlobalsAndPackages <- function(expr, envir = parent.frame(), tweak = tweakExp
 
     if (debug) {
       mdebugf("globals: [%d] %s", length(globals), commaq(names(globals)))
-      mdebug_pop("Resolving any globals that are futures ... DONE")
+      mdebug_pop()
     }
   }
 
@@ -362,7 +375,7 @@ getGlobalsAndPackages <- function(expr, envir = parent.frame(), tweak = tweakExp
   }
   if (debug) {
     mdebugf("Packages: [%d] %s", length(pkgs), commaq(pkgs))
-    mdebugf_pop("Search for packages associated with the globals ... DONE")
+    mdebug_pop()
   }
   
 
@@ -384,7 +397,7 @@ getGlobalsAndPackages <- function(expr, envir = parent.frame(), tweak = tweakExp
     globals <- resolve(globals, result = TRUE, recursive = TRUE)
     if (debug) {
       mdebugf("globals: [%d] %s", length(globals), commaq(names(globals)))
-      mdebug_pop("Resolving futures part of globals (recursively) ... DONE")
+      mdebug_pop()
     }
   }
 
@@ -397,7 +410,7 @@ getGlobalsAndPackages <- function(expr, envir = parent.frame(), tweak = tweakExp
         assert_no_references(globals, action = onReference)
       }, gcFirst = FALSE)
       if (debug) mdebugf("[%.3f s]", t[3])
-      if (debug) mdebugf_pop("Checking for globals with references (future.globals.onReference = \"%s\") ... done", onReference)
+      if (debug) mdebug_pop()
     }
   }
 

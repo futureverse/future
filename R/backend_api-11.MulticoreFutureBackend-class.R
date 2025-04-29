@@ -81,7 +81,7 @@ requestCore <- function(await, workers = availableCores(constraints = "multicore
   debug <- isTRUE(getOption("future.debug"))
   if (debug) {
     mdebugf_push("requestCore(..., workers = %d) ...", workers)
-    on.exit(mdebugf_pop("requestCore(..., workers = %d) ...", workers))
+    on.exit(mdebugf_pop())
   }
 
   ## No additional cores available?
@@ -177,7 +177,7 @@ launchFuture.MulticoreFutureBackend <- local({
     debug <- isTRUE(getOption("future.debug"))
     if (debug) {
       mdebug_push("launchFuture() for MulticoreFutureBackend ...")
-      on.exit(mdebug_pop("launchFuture() for MulticoreFutureBackend ..."))
+      on.exit(mdebug_pop())
     }
 
     hooks <- backend[["hooks"]]
@@ -353,7 +353,7 @@ result.MulticoreFuture <- local({
     debug <- isTRUE(getOption("future.debug"))
     if (debug) {
       mdebugf_push("result() for %s ...", class(future)[1])
-      on.exit(mdebugf_pop("result() for %s ... done", class(future)[1]))
+      on.exit(mdebugf_pop())
     }
   
     ## Has the result already been collected?
@@ -427,7 +427,7 @@ result.MulticoreFuture <- local({
           FutureRegistry(reg, action = "remove", future = future, earlySignal = FALSE)
           if (debug) {
             mdebug("Erased future from future backend")
-            mdebugf_pop("Detected non-FutureResult result ... done")
+            mdebugf_pop()
           }
           stop(result)
         }
@@ -499,7 +499,7 @@ result.MulticoreFuture <- local({
         }
       }
       
-      if (debug) mdebugf_pop("Detected non-FutureResult result ... done")
+      if (debug) mdebugf_pop()
   
       stop(ex)
     }

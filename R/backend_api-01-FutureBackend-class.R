@@ -217,7 +217,7 @@ interruptFuture.FutureBackend <- function(backend, future, ...) {
 makeFutureBackend <- function(evaluator, ..., debug = FALSE) {
   if (debug) {
     mdebugf_push("makeFutureBackend(<%s>) ...", class(evaluator)[1])
-    on.exit(mdebugf_pop("makeFutureBackend(<%s>) ... done", class(evaluator)[1]))
+    on.exit(mdebugf_pop())
   }
   
   ## Already created?
@@ -276,7 +276,7 @@ validateFutureGlobals <- function(backend, future, ...) {
 validateFutureGlobals.FutureBackend <- function(backend, future, ..., debug = FALSE) {
   if (debug) {
     mdebugf_push("validateFutureGlobals(<%s>) ...", class(backend)[1])
-    on.exit(mdebugf_pop("validateFutureGlobals(<%s>) ... done", class(backend)[1]))
+    on.exit(mdebugf_pop())
   }
 
   ## Maximum allowed total size of globals
@@ -296,7 +296,7 @@ validateFutureGlobals.FutureBackend <- function(backend, future, ..., debug = FA
   
   if (debug) {
     mdebug_push("Checking size limitations of globals ...")
-    on.exit(mdebug_pop("Checking size limitations of globals ... done"), add = TRUE)
+    on.exit(mdebug_pop(), add = TRUE)
   }
       
   ## Calculate the total size of globals, unless already done

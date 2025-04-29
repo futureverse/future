@@ -406,7 +406,7 @@ run.Future <- function(future, ...) {
   if (debug) {
     mdebugf_push("run() for Future (%s) ...", sQuote(class(future)[1]))
     mdebug("state: ", sQuote(future[["state"]]))
-    on.exit(mdebugf_pop("run() for Future (%s) ... done", sQuote(class(future)[1])), add = TRUE)
+    on.exit(mdebugf_pop())
   }
 
   if (future[["state"]] != "created") {
@@ -424,7 +424,14 @@ run.Future <- function(future, ...) {
 
   backend <- plan("backend")
   if (!is.null(backend)) {
-    if (debug) mdebugf_push("Using %s ...", class(backend)[1])
+    if (debug) {
+      mdebugf_push("Using %s ...", class(backend)[1])
+      counters <- backend[["counters"]]
+      names <- names(counters)
+      info <- sprintf("%s %s", counters, names)
+      info <- paste(info, collapse = ", ")
+      mdebugf("Number of futures since start: %d (%s)", counters[["created"]], info)
+    }
 
     ## Protect against exporting too large objects
     future <- validateFutureGlobals(backend, future)
@@ -455,7 +462,7 @@ run.Future <- function(future, ...) {
       msg <- sprintf("Caught an unexpected error of class %s when trying to launch future (%s) on backend of class %s. The reason was: %s", class(ex)[1], label, class(backend)[1], msg)
       stop(FutureLaunchError(msg, future = future))
     })
-    if (debug) mdebug_pop("Launching futures ... done")
+    if (debug) mdebug_pop()
     if (debug) mdebug("Future launched: ", commaq(class(future2)))
     stop_if_not(inherits(future2, "Future"))
 
@@ -464,7 +471,7 @@ run.Future <- function(future, ...) {
     counters["created"] <- counters["created"] + 1L
     backend[["counters"]] <- counters
     
-    if (debug) mdebugf_pop("Using %s ... done", class(backend)[1])
+    if (debug) mdebugf_pop()
     
     return(future2)
   }
@@ -530,7 +537,7 @@ run.Future <- function(future, ...) {
     if (debug) mdebug("Field: ", sQuote(name))
     future[[name]] <- tmpFuture[[name]]
   }
-  if (debug) mdebugf_pop("Copy elements of temporary %s to final %s object ... done", sQuote(class(tmpFuture)[1]), sQuote(class(future)[1]))
+  if (debug) mdebugf_pop()
   ## (b) Copy all attributes
   attributes(future) <- attributes(tmpFuture)
 
@@ -541,7 +548,7 @@ run.Future <- function(future, ...) {
   if (future[["lazy"]]) {
     if (debug) mdebug_push("Launch lazy future ...")
     future <- run(future)
-    if (debug) mdebug_pop("Launch lazy future ... done")
+    if (debug) mdebug_pop()
   }
 
   ## Set FutureBackend, if it exists
@@ -686,13 +693,13 @@ resolved.Future <- function(x, run = TRUE, ...) {
     if (debug) mdebug_push("run() ...")
     x <- run(x)
     if (debug) {
-      mdebug_pop("run() ... done")
+      mdebug_pop()
       mdebug_push("resolved() ...")
     }
     res <- resolved(x, ...)
     if (debug) {
       mdebug("resolved: ", res)
-      mdebug_pop("resolved() ... done")
+      mdebug_pop()
     }
     return(res)
   }
@@ -718,7 +725,7 @@ getFutureCore <- function(future, ..., debug = isTRUE(getOption("future.debug"))
   stop_if_not(inherits(future, "Future"))
   if (debug) {
     mdebug_push("getFutureCore() ...")
-    on.exit(mdebug_pop("getFutureCore() ... done"))
+    on.exit(mdebug_pop())
   }
 
   ## Globals used by the future
@@ -748,7 +755,7 @@ getFutureCapture <- function(future, ..., debug = isTRUE(getOption("future.debug
   stop_if_not(inherits(future, "Future"))
   if (debug) {
     mdebug_push("getFutureCapture() ...")
-    on.exit(mdebug_pop("getFutureCapture() ... done"))
+    on.exit(mdebug_pop())
   }
 
   split <- future[["split"]]
@@ -787,7 +794,7 @@ getFutureContext <- function(future, mc.cores = NULL, local = TRUE, ..., debug =
   stop_if_not(inherits(future, "Future"))
   if (debug) {
     mdebug_push("getFutureContext() ...")
-    on.exit(mdebug_pop("getFutureContext() ... done"))
+    on.exit(mdebug_pop())
   }
 
   backend <- future[["backend"]]
@@ -878,7 +885,7 @@ getFutureBackendConfigs <- function(future, ...) {
 getFutureData <- function(future, ..., debug = isTRUE(getOption("future.debug"))) {
   if (debug) {
     mdebug_push("getFutureData() ...")
-    on.exit(mdebug_pop("getFutureData() ... done"))
+    on.exit(mdebug_pop())
   }
 
   args <- list(...)

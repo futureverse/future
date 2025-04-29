@@ -26,7 +26,7 @@ ClusterFutureBackend <- local({
 
     if (debug) {
       mdebugf_push("ClusterFutureBackend(..., persistent = %s, gc = %s, earlySignal = %s) ...", persistent, gc, earlySignal)
-      on.exit(mdebugf_pop("ClusterFutureBackend(..., persistent = %s, gc = %s, earlySignal = %s) ... done", persistent, gc, earlySignal))
+      on.exit(mdebugf_pop())
     }
     
     if (is.function(workers)) workers <- workers()
@@ -59,7 +59,7 @@ ClusterFutureBackend <- local({
         cluster <- clusterRegistry$startCluster(workers, makeCluster = .makeCluster, ..., debug = debug)
         if (debug) {
           mprint(cluster)
-          mdebug_pop("Starting new cluster ... done")
+          mdebug_pop()
         }
         last <<- workers
       } else {
@@ -179,7 +179,7 @@ launchFuture.ClusterFutureBackend <- function(backend, future, ...) {
   debug <- isTRUE(getOption("future.debug"))
   if (debug) {
     mdebug_push("launchFuture() for ClusterFutureBackend ...")
-    on.exit(mdebug_pop("launchFuture() for ClusterFutureBackend ... done"))
+    on.exit(mdebug_pop())
   }
 
   ## Record 'backend' in future for now
@@ -237,7 +237,7 @@ launchFuture.ClusterFutureBackend <- function(backend, future, ...) {
   con <- node[["con"]]
   future[["nodeHasConnection"]] <- !is.null(con)
 
-  if (debug) mdebug_pop("requestWorker() ... done")
+  if (debug) mdebug_pop()
 
 
   ## (2) Attach packages that needs to be attached
@@ -261,7 +261,7 @@ launchFuture.ClusterFutureBackend <- function(backend, future, ...) {
       if (debug) mdebug_push("Attaching packages on worker ...")
       ## Blocking cluster-node call
       cluster_call_blocking(cl, fun = function(pkgs) { requirePackages(pkgs); "future-requirePackages" }, packages, future = future, when = "call requirePackages() on", expected = "future-requirePackages")
-      if (debug) mdebug_pop("Attaching packages on worker ... done")
+      if (debug) mdebug_pop()
       
       ## Add event to future journal?
       if (inherits(future[[".journal"]], "FutureJournal")) {
@@ -275,7 +275,7 @@ launchFuture.ClusterFutureBackend <- function(backend, future, ...) {
       }
     }
     
-    if (debug) mdebug_pop("requirePackages() ... done")
+    if (debug) mdebug_pop()
   }
 
   ## (2) Reset global environment of cluster node such that
@@ -306,7 +306,7 @@ launchFuture.ClusterFutureBackend <- function(backend, future, ...) {
             stop = Sys.time()
       )
     }
-    if (debug) mdebug_pop("eraseGlobalEnvironment() ... done")
+    if (debug) mdebug_pop()
   }
 
 
@@ -331,7 +331,7 @@ launchFuture.ClusterFutureBackend <- function(backend, future, ...) {
   ## Non-blocking cluster-node call
   node_call_nonblocking(node, fun = evalFuture, args = list(data), future = future, when = "launch future on")
   FutureRegistry(reg, action = "add", future = future, earlySignal = FALSE, debug = debug)
-  if (debug) mdebug_pop("launchFuture() ... done")
+  if (debug) mdebug_pop()
 
   future[["state"]] <- "running"
 
@@ -361,7 +361,7 @@ stopWorkers.ClusterFutureBackend <- function(backend, interrupt = TRUE, ...) {
   debug <- isTRUE(getOption("future.debug"))
   if (debug) {
     mdebugf_push("stopWorkers() for %s ...", class(backend)[1])
-    on.exit(mdebugf_pop("stopWorkers() for %s ... done", class(backend)[1]))
+    on.exit(mdebugf_pop())
   }  
   
   ## Interrupt all futures
@@ -370,7 +370,7 @@ stopWorkers.ClusterFutureBackend <- function(backend, interrupt = TRUE, ...) {
     futures <- listFutures(backend)[["future"]]
     mdebugf("Number of futures: %d", length(futures))
     futures <- lapply(futures, FUN = interrupt, ...)
-    mdebugf_pop("Interrupt active futures ... done")
+    mdebugf_pop()
   }
 
   ## Clear registry
@@ -383,14 +383,14 @@ stopWorkers.ClusterFutureBackend <- function(backend, interrupt = TRUE, ...) {
   if (length(futures) > 0L) {
     stop(FutureError(sprintf("Failed to erase futures for %s. There are still %d active futures", class(backend)[1], length(futures))))
   }
-  mdebugf_pop("Clear future registry ... done")
+  mdebugf_pop()
   
   ## Stop workers
   mdebugf_push("Stop cluster workers ...")
   clusterRegistry$stopCluster(debug = debug)
   env <- environment(ClusterFutureBackend)
   env[["last"]] <- NULL
-  mdebugf_pop("Stop cluster workers ... done")
+  mdebugf_pop()
   
   TRUE
 }
@@ -469,7 +469,7 @@ addCovrLibPath <- local({
     if (debug) mdebug_push("covr::package_coverage() workaround ...")
     libPath <- .libPaths()[1]
     clusterCall(cl, fun = function() .libPaths(c(libPath, .libPaths())))
-    if (debug) mdebug_pop("covr::package_coverage() workaround ... DONE")
+    if (debug) mdebug_pop()
   
     cl
   }
@@ -635,7 +635,7 @@ resolved.ClusterFuture <- function(x, run = TRUE, timeout = NULL, ...) {
     res <- TRUE
   }
 
-  if (debug) mdebug_pop("isFutureResolved() ... done")
+  if (debug) mdebug_pop()
 
   ## Signal conditions early? (happens only iff requested)
   if (res) signalEarly(x, ...)
@@ -650,7 +650,7 @@ result.ClusterFuture <- function(future, ...) {
   debug <- isTRUE(getOption("future.debug"))
   if (debug) {
     mdebug_push("result() for ClusterFuture ...")
-    on.exit(mdebug_pop("result() for ClusterFuture ... done"))
+    on.exit(mdebug_pop())
   }
 
   ## Has the result already been collected?
@@ -717,7 +717,7 @@ receiveMessageFromWorker <- local({
   function(future, debug = FALSE, ...) {
     if (debug) {
       mdebug_push("receiveMessageFromWorker() for ClusterFuture ...")
-      on.exit(mdebug_pop("receiveMessageFromWorker() for ClusterFuture ... done"))
+      on.exit(mdebug_pop())
     }
     
     if (future[["state"]] == "created") {
@@ -862,7 +862,7 @@ receiveMessageFromWorker <- local({
         
         ## Blocking cluster-node call
         cluster_call_blocking(cl[1], function() { gc(); "future-gc" }, verbose = FALSE, reset = FALSE, future = future, when = "call gc() on", expected = "future-gc")
-        if (debug) mdebug_pop("Garbage collecting worker ... done")
+        if (debug) mdebug_pop()
       }
     } else if (inherits(msg, "FutureLaunchError")) {
     } else if (inherits(msg, "condition")) {
@@ -916,7 +916,7 @@ requestNode <- function(await, backend, timeout, delta, alpha) {
   debug <- isTRUE(getOption("future.debug"))
   if (debug) {
     mdebug_push("requestNode() ...")
-    on.exit(mdebug_pop("requestNode() ... done"), add = TRUE)
+    on.exit(mdebug_pop(), add = TRUE)
   }
 
   stop_if_not(inherits(backend, "FutureBackend"))
@@ -966,7 +966,7 @@ requestNode <- function(await, backend, timeout, delta, alpha) {
   }
   if (debug) {
     mdebugf("Total time: %s", dt)
-    mdebug_pop("Polling for a free worker ... done")
+    mdebug_pop()
   }
 
   if (!finished) {
@@ -1042,7 +1042,6 @@ requestNode <- function(await, backend, timeout, delta, alpha) {
       if (debug) mdebug("Worker is functional")
       break
     }
-    if (debug) mdebug_pop("Validate that the worker is functional ... done")
     
     ## Relaunch worker?
     if (!okay) {
@@ -1070,12 +1069,14 @@ requestNode <- function(await, backend, timeout, delta, alpha) {
       if (debug) {
         mdebug("Re-launched cluster node:")
         mprint(node)
-        mdebugf_pop("Restarting non-alive cluster node %d ... done", node_idx)
+        mdebugf_pop()
       }
     }
     
     Sys.sleep(0.1)
   } ##  for (kk in maxTries:1)
+  
+  if (debug) mdebug_pop()
   
   node_idx
 } ## requestNode()
@@ -1276,7 +1277,7 @@ assertValidConnection <- function(future) {
   debug <- isTRUE(getOption("future.debug"))
   if (debug) {
     mdebug_push("assertValidConnection() ...")
-    on.exit(mdebug_pop("assertValidConnection() ... done"))
+    on.exit(mdebug_pop())
   }
 
   backend <- future[["backend"]]
@@ -1349,7 +1350,7 @@ handleInterruptedFuture <- local({
     debug <- isTRUE(getOption("future.debug"))
     if (debug) {
       mdebug_push("handleInterruptedFuture() for ClusterFutureBackend ...")
-      on.exit(mdebug_pop("handleInterruptedFuture() for ClusterFutureBackend ... done"))
+      on.exit(mdebug_pop())
     }
 
     stop_if_not(future[["state"]] %in% c("canceled", "interrupted", "running"))
@@ -1484,7 +1485,7 @@ clusterRegistry <- local({
   getCluster <- function(..., debug = FALSE) {
     if (debug) {
       mdebug_push("getCluster() ...")
-      mdebug_pop("getCluster() ... done")
+      mdebug_pop()
     }
     cluster
   }
@@ -1492,7 +1493,7 @@ clusterRegistry <- local({
   startCluster <- function(workers, makeCluster, ..., debug = FALSE) {
     if (debug) {
       mdebug_push("makeCluster(workers, ...) ...")
-      on.exit(mdebug_pop("makeCluster(workers, ...) ... done"))
+      on.exit(mdebug_pop())
       mdebug("Arguments:")
       mstr(list(workers, ...))
     }
@@ -1521,7 +1522,7 @@ clusterRegistry <- local({
   stopCluster <- function(debug = FALSE) {
     if (debug) {
       mdebug_push("Stopping existing cluster ...")
-      on.exit(mdebug_pop("Stopping existing cluster ... done"))
+      on.exit(mdebug_pop())
     }
     ## Nothing to do?
     if (is.null(cluster)) {
