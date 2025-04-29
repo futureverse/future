@@ -10,7 +10,7 @@ attachPackages <- function(packages) {
   if (debug) {
     mdebug_push("attachPackages() ...")
     mdebugf("packages: [n=%d] %s", length(packages), commaq(packages))
-    on.exit(mdebug_pop("attachPackages() ... DONE"))
+    on.exit(mdebug_pop())
   }
   
   ## Nothing to do?
@@ -83,7 +83,7 @@ canForceSingleThreading <- local({
     debug <- isTRUE(getOption("future.debug"))
     if (debug) {
       mdebug_push("canForceSingleThreading() ...")
-      on.exit(mdebug_pop("canForceSingleThreading() ... DONE"))
+      on.exit(mdebug_pop())
     }
     
     if (!is.null(.cache)) {
@@ -115,7 +115,7 @@ setNumberOfThreads <- function(openmp = NA_integer_, rcpp = openmp) {
   debug <- isTRUE(getOption("future.debug"))
   if (debug) {
     mdebug_push("setNumberOfThreads() ...")
-    on.exit(mdebug_pop("setNumberOfThreads() ... DONE"))
+    on.exit(mdebug_pop())
   }
   
   if (is.list(openmp)) {

@@ -2,7 +2,7 @@
 all.equal.future <- function(target, current, ..., debug = FALSE) {
   if (debug) {
     mdebug_push("all.equal() for future ...")
-    on.exit(mdebug_pop("all.equal() for future ... done"))
+    on.exit(mdebug_pop())
     mstr(list(target = target, current = current))
   }
   
@@ -47,7 +47,7 @@ all.equal.future <- function(target, current, ..., debug = FALSE) {
 all.equal.FutureStrategyList <- function(target, current, ..., debug = FALSE) {
   if (debug) {
     mdebug_push("all.equal() for FutureStrategyList ...")
-    on.exit(mdebug_pop("all.equal() for FutureStrategyList ... done"))
+    on.exit(mdebug_pop())
   }
 
   stop_if_not(is.list(target), is.list(current))
@@ -154,7 +154,7 @@ all.equal.FutureStrategyList <- function(target, current, ..., debug = FALSE) {
   plan_cleanup <- function(evaluator, cleanup = NA, debug = FALSE) {
     if (debug) {
       mdebugf_push("plan(): plan_cleanup(%s, cleanup = %s) ...", commaq(class(evaluator)), cleanup)
-      on.exit(mdebugf_pop("plan(): plan_cleanup(%s, cleanup = %s) ... done", commaq(class(evaluator)), cleanup))
+      on.exit(mdebug_pop())
     }
 
     ## Skip clean up for other reasons?
@@ -183,7 +183,7 @@ all.equal.FutureStrategyList <- function(target, current, ..., debug = FALSE) {
       if (debug) mdebugf_push("Legacy shutdown of cluster workers ...")
       ## Legacy shutdown of cluster workers
       clusterRegistry$stopCluster(debug = debug)
-      if (debug) mdebugf_pop("Legacy shutdown of cluster workers ... done")
+      if (debug) mdebug_pop()
     }
   } ## plan_cleanup()
 
@@ -191,7 +191,7 @@ all.equal.FutureStrategyList <- function(target, current, ..., debug = FALSE) {
   plan_init <- function(evaluator, debug = FALSE) {
     if (debug) {
       mdebugf_push("plan(): plan_init() of %s ...", commaq(class(evaluator)))
-      on.exit(mdebugf_pop("plan(): plan_init() of %s ... done", commaq(class(evaluator))))
+      on.exit(mdebug_pop())
     }
 
     if (debug) mstr(evaluator)
@@ -445,7 +445,7 @@ plan <- local({
 
     if (debug) {
       mdebugf_push("plan(): plan_set(<%d strategies>, skip = %s, cleanup = %s, init = %s) ...", length(newStack), skip, cleanup, init)
-      on.exit(mdebugf_pop("plan(): plan_set(<%d strategies>, skip = %s, cleanup = %s, init = %s) ... done", length(newStack), skip, cleanup, init))
+      on.exit(mdebug_pop())
     }
 
     oldStack <- stack
@@ -533,7 +533,7 @@ plan <- local({
     debug <- isTRUE(getOption("future.debug"))
     if (debug) {
       mdebugf_push("plan(<%s>, .skip = %s, .cleanup = %s, .init = %s) ...", class(strategy)[1], .skip, .cleanup, .init)
-      on.exit(mdebugf_pop("plan(<%s>, .skip = %s, .cleanup = %s, .init = %s) ... done", class(strategy)[1], .skip, .cleanup, .init))
+      on.exit(mdebug_pop())
     }
     
     ## Once per session
@@ -593,7 +593,7 @@ plan <- local({
       plan_cleanup(stack[[1]], cleanup = .cleanup, debug = debug)
       ## Reset stack of future strategies?
       stack <<- plan_default_stack()
-      if (debug) mdebug_pop("Resetting stack ... done")
+      if (debug) mdebug_pop()
       return(stack)
     } else if (identical(strategy, "pop")) {
       if (debug) mdebug_push("Popping stack ...")
@@ -602,7 +602,7 @@ plan <- local({
       oldStack <- stack
       stack <<- stack[-1L]
       if (length(stack) == 0L) stack <<- plan_default_stack()
-      if (debug) mdebug_pop("Popping stack ... done")
+      if (debug) mdebug_pop()
       return(oldStack)
     }
 

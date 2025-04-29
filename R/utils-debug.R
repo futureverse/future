@@ -24,41 +24,58 @@ debug_indent <- local({
   }
 })
 
+.debug <- new.env(parent = emptyenv())
+.debug$stack <- list()
+
 mdebug_push <- function(..., debug = isTRUE(getOption("future.debug"))) {
   if (!debug) return()
-  mdebug(..., debug = debug)
+  msg <- mdebug(..., debug = debug)
   debug_indent(+1)
-}
-
-mdebug_pop <- function(..., debug = isTRUE(getOption("future.debug"))) {
-  if (!debug) return()
-  debug_indent(-1)
-  mdebug(..., debug = debug)
+  .debug$stack <- c(.debug$stack, msg)
+  invisible(msg)
 }
 
 mdebugf_push <- function(..., debug = isTRUE(getOption("future.debug"))) {
   if (!debug) return()
-  mdebugf(..., debug = debug)
+  msg <- mdebugf(..., debug = debug)
   debug_indent(+1)
+  .debug$stack <- c(.debug$stack, msg)
+  invisible(msg)
+}
+
+mdebug_pop <- function(..., debug = isTRUE(getOption("future.debug"))) {
+  if (!debug) return()
+  n <- length(.debug$stack)
+  msg <- .debug$stack[n]
+  .debug$stack <- .debug$stack[-n]
+  debug_indent(-1)
+  mdebug(sprintf("%s done", msg), debug = debug)
 }
 
 mdebugf_pop <- function(..., debug = isTRUE(getOption("future.debug"))) {
   if (!debug) return()
-  prefix <- debug_indent(-1)
-  mdebugf(..., debug = debug)
+  n <- length(.debug$stack)
+  msg <- .debug$stack[n]
+  .debug$stack <- .debug$stack[-n]
+  debug_indent(-1)
+  mdebug(sprintf("%s done", msg), debug = debug)
 }
 
 mdebug <- function(..., prefix = now(), debug = isTRUE(getOption("future.debug"))) {
   if (!debug) return()
   prefix <- paste(prefix, debug_indent(), sep = "")
-  message(prefix, ...)
+  msg <- paste(..., sep = "")
+  message(sprintf("%s%s", prefix, msg))
+  invisible(msg)
 }
 
 mdebugf <- function(..., appendLF = TRUE,
                     prefix = now(), debug = isTRUE(getOption("future.debug"))) {
   if (!debug) return()
   prefix <- paste(prefix, debug_indent(), sep = "")
-  message(prefix, sprintf(...), appendLF = appendLF)
+  msg <- sprintf(...)
+  message(sprintf("%s%s", prefix, msg), appendLF = appendLF)
+  invisible(msg)
 }
 
 #' @importFrom utils capture.output

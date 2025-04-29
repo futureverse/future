@@ -53,7 +53,7 @@ signalConditions <- function(future, include = "condition", exclude = NULL, resi
     mdebug("exclude = ", paste(sQuote(exclude), collapse = ", "))
     mdebug("resignal = ", resignal)
     mdebug("Number of conditions: ", length(conditions))
-    on.exit(mdebug_pop("signalConditions() ... done"))
+    on.exit(mdebug_pop())
   }
 
 
@@ -167,7 +167,7 @@ make_signalConditionsASAP <- function(nx, stdout = TRUE, signal = TRUE, force = 
       on.exit({
         mdebugf("relayed: [n=%d] %s", length(relayed), paste(relayed, collapse = ", "))
         mdebugf("queued futures: [n=%d] %s", length(queue), paste(vapply(queue, FUN = inherits, "Future", FUN.VALUE = FALSE), collapse = ", "))
-        mdebugf_pop("signalConditionsASAP(%s, pos=%d) ... done", class(obj)[1], pos)
+        mdebug_pop()
       })
     }
 

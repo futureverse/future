@@ -1,6 +1,5 @@
 #' @tags relaying stdout
 #' @tags sequential multisession multicore
-
 library(future)
 
 message("*** Standard output ...")

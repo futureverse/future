@@ -12,7 +12,7 @@ signalEarly <- function(future, collect = TRUE, .signalEarly = TRUE, ...) {
   if (!collect && !resolved(future, .signalEarly = FALSE)) {
     if (debug) {
       mdebug("Future not resolved and collect = FALSE. Skipping")
-      mdebug_pop("signalEarly() ... DONE")
+      mdebug_pop()
     }
     return(future)
   }
@@ -27,7 +27,7 @@ signalEarly <- function(future, collect = TRUE, .signalEarly = TRUE, ...) {
     if (debug) {
       if (!.signalEarly) mdebug("Skipping because .signalEarly = FALSE")
       if (length(conditions) == 0L) mdebug("No conditions to signal")
-      mdebug_pop("signalEarly() ... DONE")
+      mdebug_pop()
     }
     return(future)
   }
@@ -42,7 +42,7 @@ signalEarly <- function(future, collect = TRUE, .signalEarly = TRUE, ...) {
 
   signalConditions(future, resignal = FALSE)
   
-  if (debug) mdebug_pop("signalEarly() ... DONE")
+  if (debug) mdebug_pop()
 
   future
 }

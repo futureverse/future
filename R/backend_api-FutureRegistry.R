@@ -11,7 +11,7 @@ FutureRegistry <- local({
   collectValues <- function(where, futures, firstOnly = TRUE, debug = FALSE) {
     if (debug) {
       mdebugf_push("collectValues('%s', firstOnly = %s) ...", where, firstOnly)
-      on.exit(mdebugf_pop("collectValues('%s', firstOnly = %s) ... done", where, firstOnly))
+      on.exit(mdebugf_pop())
     }
 
     for (ii in seq_along(futures)) {
@@ -34,16 +34,16 @@ FutureRegistry <- local({
         tryCatch({
           value(future, stdout = FALSE, signal = FALSE)
         }, FutureLaunchError = function(ex) {
-          if (debug) mdebugf_pop("Future at position #%d is resolved ... done", ii)
+          if (debug) mdebugf_pop()
           stop(ex)
         }, FutureInterruptError = function(ex) {
-          if (debug) mdebugf_pop("Future at position #%d is resolved ... done", ii)
+          if (debug) mdebugf_pop()
           ## At a minimum, reset the future
           future <- reset(future)
           msg <- sprintf("[FUTURE INTERRUPTED]: Caught %s with error message: %s", class(ex)[1], conditionMessage(ex))
           warning(msg, call. = TRUE, immediate. = TRUE)
         }, FutureError = function(ex) {
-          if (debug) mdebugf_pop("Future at position #%d is resolved ... done", ii)
+          if (debug) mdebugf_pop()
           ## It is not always possible to detect when a future fails to
           ## launch, e.g. there might be a broken Rprofile file that
           ## produces an error. Here we take a liberal approach an assume
@@ -83,10 +83,10 @@ FutureRegistry <- local({
 
         ## (c) Collect only the first resolved future?
         if (firstOnly) {
-          if (debug) mdebugf_pop("Future at position #%d is resolved ... done", ii)
+          if (debug) mdebugf_pop()
           break
         }
-        if (debug) mdebugf_pop("Future at position #%d is resolved ... done", ii)
+        if (debug) mdebugf_pop()
       } else {
         if (debug) mdebugf("Future at position #%d is not resolved", ii)
       }
@@ -101,7 +101,7 @@ FutureRegistry <- local({
 
     if (debug) {
       mdebugf_push("FutureRegistry('%s', action = '%s', earlySignal = %d) ...", where, action, earlySignal)
-      on.exit(mdebugf_pop("FutureRegistry('%s', action = '%s', earlySignal = %d) ... done", where, action, earlySignal))
+      on.exit(mdebugf_pop())
     }
 
     futures <- db[[where]]
