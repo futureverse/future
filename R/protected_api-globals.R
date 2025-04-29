@@ -26,7 +26,7 @@
 #'
 #' @seealso Internally, \code{\link[globals]{globalsOf}()} is used to identify globals and associated packages from the expression.
 #'
-#' @importFrom globals globalsOf globalsByName as.Globals packagesOf cleanup
+#' @importFrom globals findGlobals globalsOf globalsByName as.Globals packagesOf cleanup
 #' @export
 #'
 #' @keywords internal
@@ -105,6 +105,19 @@ getGlobalsAndPackages <- function(expr, envir = parent.frame(), tweak = tweakExp
         }
       } else {
         .Deprecated(msg = sprintf("R option %s may only be used for troubleshooting. It must not be used in production since it changes how futures are evaluated and there is a great risk that the results cannot be reproduced elsewhere: %s", sQuote("future.globals.method"), sQuote(globals.method)), package = .packageName)
+      }
+
+      ## ROBUSTNESS: globals::findGlobals(..., method = "dfs") is under
+      ## development and might give an error on certain types of expression.
+      ## Check if it gives an error. If it does, drop the "dfs" method for
+      ## this future expression.
+      idx <- which(globals.method == "dfs")
+      if (length(idx) > 0L) {
+         res <- tryCatch(findGlobals(expr, method = "dfs"), error = identity)
+         if (inherits(names, "res")) {
+           globals.method <- globals.method[-idx]
+           if (length(globals.method) == 0L) globals.method <- "ordered"
+         }
       }
 
       ## Combine results from different methods
