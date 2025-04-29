@@ -424,7 +424,14 @@ run.Future <- function(future, ...) {
 
   backend <- plan("backend")
   if (!is.null(backend)) {
-    if (debug) mdebugf_push("Using %s ...", class(backend)[1])
+    if (debug) {
+      mdebugf_push("Using %s ...", class(backend)[1])
+      counters <- backend[["counters"]]
+      names <- names(counters)
+      info <- sprintf("%s %s", counters, names)
+      info <- paste(info, collapse = ", ")
+      mdebugf("Number of futures since start: %d (%s)", counters[["created"]], info)
+    }
 
     ## Protect against exporting too large objects
     future <- validateFutureGlobals(backend, future)
