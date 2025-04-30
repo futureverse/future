@@ -146,7 +146,8 @@ jobs:
             Sys.setenv(R_FUTURE_RNG_ONMISUSE = "error")
           }
           rcmdcheck::rcmdcheck(
-            args = c("--no-manual", "--as-cran", if (.Platform$OS.type == "windows" && getRversion() >= "4.2.0") "--no-multiarch"),
+            args = c("--no-manual", "--as-cran",
+                     if (getRversion() >= "4.2.0") "--no-multiarch"),
             check_dir = "check"
           )
         shell: Rscript {0}
