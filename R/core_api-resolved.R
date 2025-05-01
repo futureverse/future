@@ -42,8 +42,16 @@ resolved.default <- function(x, ...) TRUE
 
 #' @export
 resolved.list <- function(x, ...) {
+  debug <- isTRUE(getOption("future.debug"))
+  if (debug) {
+    mdebugf_push("resolved() for %s ...", class(x)[1])
+    if (debug) mdebugf("Number of elements: %d", length(x))
+    on.exit(mdebugf_pop())
+  }
+  
   fs <- futures(x)
   n_fs <- length(fs)
+  if (debug) mdebugf("Number of futures: %d", n_fs)
   
   ## Allocate results. Assume everything
   ## is resolved unless not.
@@ -70,6 +78,11 @@ resolved.list <- function(x, ...) {
 
 #' @export
 resolved.environment <- function(x, ...) {
+  debug <- isTRUE(getOption("future.debug"))
+  if (debug) {
+    mdebugf_push("resolved() for %s ...", class(x)[1])
+    on.exit(mdebugf_pop())
+  }
   fs <- futures(x)
   n_fs <- length(fs)
   names <- names(fs)

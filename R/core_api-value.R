@@ -74,6 +74,12 @@ drop_future <- function(future) {
 #' @rdname value
 #' @export
 value.Future <- function(future, stdout = TRUE, signal = TRUE, drop = FALSE, ...) {
+  debug <- isTRUE(getOption("future.debug"))
+  if (debug) {
+    mdebugf_push("value() for %s ...", class(future)[1])
+    on.exit(mdebugf_pop())
+  }
+  
   if (future[["state"]] == "created") {
     future <- run(future)
   }
@@ -90,6 +96,8 @@ value.Future <- function(future, stdout = TRUE, signal = TRUE, drop = FALSE, ...
 
   ## Output captured standard output?
   if (stdout) {
+    if (debug) mdebugf_push("relay stdout ...")
+    
     if (length(result[["stdout"]]) > 0 &&
         inherits(result[["stdout"]], "character")) {
       out <- paste(result[["stdout"]], collapse = "\n")
@@ -108,8 +116,12 @@ value.Future <- function(future, stdout = TRUE, signal = TRUE, drop = FALSE, ...
       result[["stdout"]] <- NULL
       future[["result"]] <- result
     }
+    
+    if (debug) mdebug_pop()
   }
 
+
+  if (debug) mdebugf_push("check for misuse ...")
 
   ## ------------------------------------------------------------------
   ## Report on misuse of the global environment
@@ -306,12 +318,18 @@ value.Future <- function(future, stdout = TRUE, signal = TRUE, drop = FALSE, ...
     }
   }
 
+  if (debug) mdebugf_pop()
+
+
 
   ## Signal captured conditions?
   conditions <- result[["conditions"]]
   if (length(conditions) > 0) {
     if (signal) {
-      mdebugf("Future state: %s", sQuote(future[["state"]]))
+      if (debug) {
+        mdebugf_push("relay conditions ...")
+        mdebugf("Future state: %s", sQuote(future[["state"]]))
+      }
       ## Will signal an (eval) error, iff exists
 
       conditionClasses <- future[["conditions"]]
@@ -321,6 +339,7 @@ value.Future <- function(future, stdout = TRUE, signal = TRUE, drop = FALSE, ...
       }
 
       signalConditions(future, exclude = immediateConditionClasses, resignal = TRUE)
+      if (debug) mdebugf_pop()
     } else {
       ## Return 'error' object, iff exists, otherwise NULL
       error <- conditions[[length(conditions)]][["condition"]]
@@ -332,7 +351,11 @@ value.Future <- function(future, stdout = TRUE, signal = TRUE, drop = FALSE, ...
   }
 
   ## Minimize and invalidate results?
-  if (drop) future <- drop_future(future)
+  if (drop) {
+    mdebugf_push("Minimize future object ...")
+    future <- drop_future(future)
+    mdebugf_pop()
+  }
   
   if (isTRUE(visible)) value else invisible(value)
 }
@@ -370,7 +393,7 @@ name_of_function <- function(fcn, add_backticks = FALSE) {
 #'
 #' @rdname value
 #' @export
-value.list <- function(x, idxs = NULL, recursive = 0, reduce = NULL, stdout = TRUE, signal = TRUE, cancel = TRUE, interrupt = cancel, inorder = TRUE, drop = FALSE, force = TRUE, sleep = getOption("future.wait.interval", 0.01), ...) {
+value.list <- function(x, idxs = NULL, recursive = 0, reduce = NULL, stdout = TRUE, signal = TRUE, cancel = TRUE, interrupt = cancel, inorder = TRUE, drop = FALSE, force = TRUE, sleep = getOption("future.wait.interval", 0.01), ...) { 
   if (is.logical(recursive)) {
     if (recursive) recursive <- getOption("future.resolve.recursive", 99)
   }
@@ -378,6 +401,14 @@ value.list <- function(x, idxs = NULL, recursive = 0, reduce = NULL, stdout = TR
 
   ## Validate 'reduce'
   do_reduce <- !is.null(reduce)
+
+  debug <- isTRUE(getOption("future.debug"))
+  if (debug) {
+    mdebugf_push("value() for %s ...", class(x)[1])
+    mdebugf("recursive: %s", recursive)
+    mdebugf("reduce: %s", do_reduce)
+    on.exit(mdebugf_pop())
+  }
 
   if (do_reduce) {
     reduced_until <- 0L
@@ -473,14 +504,7 @@ value.list <- function(x, idxs = NULL, recursive = 0, reduce = NULL, stdout = TR
     return(values)
   }
 
-  debug <- isTRUE(getOption("future.debug"))
-  if (debug) {
-    mdebugf_push("value() on %s ...", class(x)[1])
-    mdebugf("recursive: %s", recursive)
-    on.exit(mdebug_pop())
-  }
 
-  
   ## NOTE: Everything is considered non-resolved by default
 
   ## Total number of values to resolve
