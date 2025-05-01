@@ -400,7 +400,7 @@ all.equal.FutureStrategyList <- function(target, current, ..., debug = FALSE) {
 #'
 #' If you think it is necessary to modify the future backend within a
 #' function, then make sure to undo the changes when exiting the function.
-#' This can be archived by using `with(plan(...), local = TRUE)`, e.g.
+#' This can be achieved by using `with(plan(...), local = TRUE)`, e.g.
 #'
 #' \preformatted{
 #'   my_fcn <- function(x) {
