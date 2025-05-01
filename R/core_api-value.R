@@ -76,7 +76,7 @@ drop_future <- function(future) {
 value.Future <- function(future, stdout = TRUE, signal = TRUE, drop = FALSE, ...) {
   debug <- isTRUE(getOption("future.debug"))
   if (debug) {
-    mdebugf_push("value() for %s ...", class(future)[1])
+    mdebugf_push("value() for %s (%s) ...", class(future)[1], sQuoteLabel(future[["label"]]))
     on.exit(mdebugf_pop())
   }
   

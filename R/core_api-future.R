@@ -158,6 +158,17 @@
 #' @rdname future
 #' @export
 future <- function(expr, envir = parent.frame(), substitute = TRUE, lazy = FALSE, seed = FALSE, globals = TRUE, packages = NULL, stdout = TRUE, conditions = "condition", label = NULL, gc = FALSE, earlySignal = FALSE, ...) {
+  debug <- isTRUE(getOption("future.debug"))
+  if (debug) {
+    mdebugf_push("future(..., label = %s) ...", sQuoteLabel(label))
+    mdebugf("lazy: %s", lazy)
+    mdebugf("stdout: %s", stdout)
+    mdebugf("conditions: [n=%d] %s", length(conditions), commaq(conditions))
+    mdebugf("gc: %s", gc)
+    mdebugf("earlySignal: %s", earlySignal)
+    on.exit(mdebugf_pop())
+  }
+  
   if (substitute) expr <- substitute(expr)
   t_start <- Sys.time()
 

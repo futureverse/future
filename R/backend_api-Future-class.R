@@ -404,7 +404,7 @@ assertOwner <- local({
 run.Future <- function(future, ...) {
   debug <- isTRUE(getOption("future.debug"))
   if (debug) {
-    mdebugf_push("run() for Future (%s) ...", sQuote(class(future)[1]))
+    mdebugf_push("run() for %s (%s) ...", sQuote(class(future)[1]), sQuoteLabel(future[["label"]]))
     mdebug("state: ", sQuote(future[["state"]]))
     on.exit(mdebugf_pop())
   }
@@ -625,6 +625,13 @@ result <- function(future, ...) {
 #' @export
 #' @keywords internal
 result.Future <- function(future, ...) {
+  debug <- isTRUE(getOption("future.debug"))
+  if (debug) {
+    mdebugf_push("result() for %s (%s) ...", sQuote(class(future)[1]), sQuoteLabel(future[["label"]]))
+    mdebug("state: ", sQuote(future[["state"]]))
+    on.exit(mdebugf_pop())
+  }
+  
   ## Has the result already been collected?
   result <- future[["result"]]
   if (!is.null(result)) {
@@ -679,24 +686,25 @@ result.Future <- function(future, ...) {
 
 #' @export
 resolved.Future <- function(x, run = TRUE, ...) {
+  future <- x
   debug <- isTRUE(getOption("future.debug"))
   if (debug) {
-    mdebug_push("resolved() for ", sQuote(class(x)[1]), " ...")
-    on.exit(mdebug_pop("resolved() for ", sQuote(class(x)[1]), " ... done"))
-    mdebug("state: ", sQuote(x[["state"]]))
+    mdebugf_push("resolved() for %s (%s) ...", class(future)[1], sQuoteLabel(future[["label"]]))
+    on.exit(mdebug_pop())
+    mdebug("state: ", sQuote(future[["state"]]))
     mdebug("run: ", run)
   }
   
   ## A lazy future not even launched?
-  if (x[["state"]] == "created") {
+  if (future[["state"]] == "created") {
     if (!run) return(FALSE)
     if (debug) mdebug_push("run() ...")
-    x <- run(x)
+    future <- run(future)
     if (debug) {
       mdebug_pop()
       mdebug_push("resolved() ...")
     }
-    res <- resolved(x, ...)
+    res <- resolved(future, ...)
     if (debug) {
       mdebug("resolved: ", res)
       mdebug_pop()
@@ -706,12 +714,12 @@ resolved.Future <- function(x, run = TRUE, ...) {
 
   ## Signal conditions early, iff specified for the given future
   ## Note, collect = TRUE will block here, which is intentional
-  signalEarly(x, collect = TRUE, ...)
+  signalEarly(future, collect = TRUE, ...)
 
-  if (debug) mdebug("result: ", sQuote(class(x[["result"]])[1]))
-  if (inherits(x[["result"]], "FutureResult")) return(TRUE)
+  if (debug) mdebug("result: ", sQuote(class(future[["result"]])[1]))
+  if (inherits(future[["result"]], "FutureResult")) return(TRUE)
   
-  res <- (x[["state"]] %in% c("finished", "failed", "canceled", "interrupted"))
+  res <- (future[["state"]] %in% c("finished", "failed", "canceled", "interrupted"))
 
   if (debug) mdebug("resolved: ", res)
 
