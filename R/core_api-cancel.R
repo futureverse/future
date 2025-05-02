@@ -4,7 +4,8 @@
 #'
 #' @param x A Future.
 #'
-#' @param interrupt If TRUE, running futures are interrupted, if possible.
+#' @param interrupt If TRUE, running futures are interrupted, if the
+#' future backend supports it.
 #'
 #' @param \ldots All arguments used by the S3 methods.
 #'
@@ -12,6 +13,8 @@
 #' `cancel()` returns the [Future] flagged as "canceled".
 #'
 #' Canceling a lazy or a finished future has no effect.
+#'
+#' @example incl/cancel.R
 #'
 #' @export
 cancel <- function(x, interrupt = TRUE, ...) {
@@ -56,8 +59,6 @@ cancel.Future <- function(x, interrupt = TRUE, ...) {
     interruptFuture(backend, future = future, ...)
   }
 
-  ## FIXME: For now, use 'interrupted", but should ideally also
-  ## be 'canceled'
   future[["state"]] <- "canceled"
 
   future

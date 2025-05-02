@@ -184,7 +184,7 @@ automatically with any new backends developed after you wrote your code.
 
 If you think it is necessary to modify the future backend within a
 function, then make sure to undo the changes when exiting the function.
-This can be archived by using \code{with(plan(...), local = TRUE)}, e.g.
+This can be achieved by using \code{with(plan(...), local = TRUE)}, e.g.
 
 \preformatted{
   my_fcn <- function(x) {

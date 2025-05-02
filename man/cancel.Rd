@@ -9,7 +9,8 @@ cancel(x, interrupt = TRUE, ...)
 \arguments{
 \item{x}{A Future.}
 
-\item{interrupt}{If TRUE, running futures are interrupted, if possible.}
+\item{interrupt}{If TRUE, running futures are interrupted, if the
+future backend supports it.}
 
 \item{\ldots}{All arguments used by the S3 methods.}
 }
@@ -20,4 +21,34 @@ Canceling a lazy or a finished future has no effect.
 }
 \description{
 Cancels futures, with the option to interrupt running ones.
+}
+\examples{
+## Set up two parallel workers
+plan(multisession, workers = 2)
+
+## Launch two long running future
+fs <- lapply(c(1, 40), function(duration) {
+  future({
+    Sys.sleep(duration)
+    42
+  })
+})
+
+## Wait until any future is resolved
+while (!any(resolved(fs))) Sys.sleep(0.1)
+
+## Cancel the future that is not yet resolved
+r <- resolved(fs)
+cancel(fs[!r])
+
+## Get the value of the resolved future
+f <- fs[r]
+v <- value(f)
+message("Result: ", v)
+
+## The value of the canceled future is an error
+try(v <- value(fs[!r]))
+
+## Shut down parallel workers
+plan(sequential)
 }

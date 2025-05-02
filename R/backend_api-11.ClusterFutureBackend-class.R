@@ -1353,7 +1353,8 @@ handleInterruptedFuture <- local({
       on.exit(mdebug_pop())
     }
 
-    stop_if_not(future[["state"]] %in% c("canceled", "interrupted", "running"))
+    state <- future[["state"]]
+    stop_if_not(state %in% c("canceled", "interrupted", "running"))
   
     label <- sQuoteLabel(future[["label"]])
     workers <- backend[["workers"]]
@@ -1361,7 +1362,12 @@ handleInterruptedFuture <- local({
     cl <- workers[node_idx]
     node <- cl[[1]]
     host <- node[["host"]]
-    msg <- sprintf("A future (%s) of class %s was interrupted, while running on %s", label, class(future)[1], sQuote(host))
+    event <- if (state %in% "running") {
+      event <- sprintf("failed for unknown reason while %s", state)
+    } else {
+      event <- sprintf("was %s", state)
+    }
+    msg <- sprintf("Future (%s) of class %s %s, while running on %s", label, class(future)[1], event, sQuote(host))
     if (inherits(node, "RichSOCKnode")) {
       pid <- node[["session_info"]][["process"]][["pid"]]
       if (!is.null(pid)) msg <- sprintf("%s (pid %s)", msg, pid)
