@@ -15,7 +15,7 @@ future backend supports it.}
 \item{\ldots}{All arguments used by the S3 methods.}
 }
 \value{
-\code{cancel()} returns (invisibly) the canceled \href{s}{Future} after
+\code{cancel()} returns (invisibly) the canceled \link{Future}s after
 flagging them as "canceled" and possibly interrupting them as well.
 
 Canceling a lazy or a finished future has no effect.

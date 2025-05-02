@@ -10,7 +10,7 @@
 #' @param \ldots All arguments used by the S3 methods.
 #'
 #' @return
-#' `cancel()` returns (invisibly) the canceled [Future](s) after
+#' `cancel()` returns (invisibly) the canceled [Future]s after
 #' flagging them as "canceled" and possibly interrupting them as well.
 #'
 #' Canceling a lazy or a finished future has no effect.

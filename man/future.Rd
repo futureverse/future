@@ -162,6 +162,9 @@ Querying the value of a non-resolved future will \emph{block} the call
 until the future is resolved.
 It is possible to check whether a future is resolved or not
 without blocking by using \code{\link{resolved}(f)}.
+It is possible to \code{\link[=cancel]{cancel()}} a future that is being resolved.
+Failed, canceled, and interrupted futures can be \code{\link[=reset]{reset()}} to a
+lazy, vanilla future that can be relaunched.
 
 The \code{futureCall()} function works analogously to
 \code{\link[base]{do.call}()}, which calls a function with a set of
