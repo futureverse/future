@@ -105,7 +105,8 @@ future backend supports it.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p><code>cancel()</code> returns the <a href="Future-class.html">Future</a> flagged as "canceled".</p>
+    <p><code>cancel()</code> returns (invisibly) the canceled <a href="s">Future</a> after
+flagging them as "canceled" and possibly interrupting them as well.</p>
 <p>Canceling a lazy or a finished future has no effect.</p>
     </div>
     <div class="section level2">
@@ -133,32 +134,6 @@ such that it can be relaunched, possible on another future backend.</p></div>
 <span class="r-in"><span><span class="co">## Cancel the future that is not yet resolved</span></span></span>
 <span class="r-in"><span><span class="va">r</span> <span class="op">&lt;-</span> <span class="fu"><a href="resolved.html">resolved</a></span><span class="op">(</span><span class="va">fs</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">cancel</span><span class="op">(</span><span class="va">fs</span><span class="op">[</span><span class="op">!</span><span class="va">r</span><span class="op">]</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [[1]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> MultisessionFuture:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Label: NULL</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Expression:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> {</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     Sys.sleep(duration)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     42</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Lazy evaluation: FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Asynchronous evaluation: TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Local evaluation: TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Environment: 0x5e7a80b3fc90</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Capture standard output: TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Capture condition classes: ‘condition’ (excluding ‘&lt;none&gt;’)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Immediate condition classes: ‘immediateCondition’</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Globals: 1 objects totaling 39 bytes (numeric ‘duration’ of 39 bytes)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Packages: &lt;none&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> L'Ecuyer-CMRG RNG seed: &lt;none&gt; (seed = FALSE)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> State: ‘canceled’</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Resolved: TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Value: &lt;not collected&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Conditions captured: &lt;none&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Early signaling: FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Owner process: d818542e4925cde0f8e4b7aa7295ae28</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Class: ‘MultisessionFuture’, ‘ClusterFuture’, ‘MultiprocessFuture’, ‘Future’</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Get the value of the resolved future</span></span></span>
 <span class="r-in"><span><span class="va">f</span> <span class="op">&lt;-</span> <span class="va">fs</span><span class="op">[</span><span class="va">r</span><span class="op">]</span></span></span>
@@ -168,7 +143,7 @@ such that it can be relaunched, possible on another future backend.</p></div>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## The value of the canceled future is an error</span></span></span>
 <span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/try.html" class="external-link">try</a></span><span class="op">(</span><span class="va">v</span> <span class="op">&lt;-</span> <span class="fu"><a href="value.html">value</a></span><span class="op">(</span><span class="va">fs</span><span class="op">[</span><span class="op">!</span><span class="va">r</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Error : Future (NULL) of class MultisessionFuture was canceled, while running on ‘localhost’ (pid 1900278)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Error : Future (NULL) of class MultisessionFuture was canceled, while running on ‘localhost’ (pid 1906755)</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Shut down parallel workers</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="plan.html">plan</a></span><span class="op">(</span><span class="va">sequential</span><span class="op">)</span></span></span>
