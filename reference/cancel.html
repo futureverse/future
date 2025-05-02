@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.40.0-9116</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.40.0-9206</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -95,7 +95,8 @@
 
 
 <dt id="arg-interrupt">interrupt<a class="anchor" aria-label="anchor" href="#arg-interrupt"></a></dt>
-<dd><p>If TRUE, running futures are interrupted, if possible.</p></dd>
+<dd><p>If TRUE, running futures are interrupted, if the
+future backend supports it.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
@@ -108,6 +109,66 @@
 <p>Canceling a lazy or a finished future has no effect.</p>
     </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">## Set up two parallel workers</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="plan.html">plan</a></span><span class="op">(</span><span class="va">multisession</span>, workers <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Launch two long running future</span></span></span>
+<span class="r-in"><span><span class="va">fs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">40</span><span class="op">)</span>, <span class="kw">function</span><span class="op">(</span><span class="va">duration</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="future.html">future</a></span><span class="op">(</span><span class="op">{</span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://rdrr.io/r/base/Sys.sleep.html" class="external-link">Sys.sleep</a></span><span class="op">(</span><span class="va">duration</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    <span class="fl">42</span></span></span>
+<span class="r-in"><span>  <span class="op">}</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Wait until any future is resolved</span></span></span>
+<span class="r-in"><span><span class="kw">while</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/any.html" class="external-link">any</a></span><span class="op">(</span><span class="fu"><a href="resolved.html">resolved</a></span><span class="op">(</span><span class="va">fs</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.sleep.html" class="external-link">Sys.sleep</a></span><span class="op">(</span><span class="fl">0.1</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Cancel the future that is not yet resolved</span></span></span>
+<span class="r-in"><span><span class="va">r</span> <span class="op">&lt;-</span> <span class="fu"><a href="resolved.html">resolved</a></span><span class="op">(</span><span class="va">fs</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">cancel</span><span class="op">(</span><span class="va">fs</span><span class="op">[</span><span class="op">!</span><span class="va">r</span><span class="op">]</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [[1]]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MultisessionFuture:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Label: NULL</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Expression:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     Sys.sleep(duration)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     42</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Lazy evaluation: FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Asynchronous evaluation: TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Local evaluation: TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Environment: 0x5f57ac390a00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Capture standard output: TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Capture condition classes: ‘condition’ (excluding ‘&lt;none&gt;’)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Immediate condition classes: ‘immediateCondition’</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Globals: 1 objects totaling 39 bytes (numeric ‘duration’ of 39 bytes)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Packages: &lt;none&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> L'Ecuyer-CMRG RNG seed: &lt;none&gt; (seed = FALSE)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> State: ‘canceled’</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Resolved: TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Value: &lt;not collected&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Conditions captured: &lt;none&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Early signaling: FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Owner process: 0e4669a56b3247ce693132d391b76a0a</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Class: ‘MultisessionFuture’, ‘ClusterFuture’, ‘MultiprocessFuture’, ‘Future’</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Get the value of the resolved future</span></span></span>
+<span class="r-in"><span><span class="va">f</span> <span class="op">&lt;-</span> <span class="va">fs</span><span class="op">[</span><span class="va">r</span><span class="op">]</span></span></span>
+<span class="r-in"><span><span class="va">v</span> <span class="op">&lt;-</span> <span class="fu"><a href="value.html">value</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">message</a></span><span class="op">(</span><span class="st">"Result: "</span>, <span class="va">v</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Result: 42</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## The value of the canceled future is an error</span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/try.html" class="external-link">try</a></span><span class="op">(</span><span class="va">v</span> <span class="op">&lt;-</span> <span class="fu"><a href="value.html">value</a></span><span class="op">(</span><span class="va">fs</span><span class="op">[</span><span class="op">!</span><span class="va">r</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Error : Future (NULL) of class MultisessionFuture was canceled, while running on ‘localhost’ (pid 1894227)</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Shut down parallel workers</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="plan.html">plan</a></span><span class="op">(</span><span class="va">sequential</span><span class="op">)</span></span></span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
 

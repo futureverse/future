@@ -17,7 +17,7 @@ e.g. sequentially or in parallel."><meta property="og:image" content="https://fu
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.40.0-9116</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.40.0-9206</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -286,7 +286,7 @@ any assumptions about what backends are available, your code will also work
 automatically with any new backends developed after you wrote your code.</p>
 <p>If you think it is necessary to modify the future backend within a
 function, then make sure to undo the changes when exiting the function.
-This can be archived by using <code>with(plan(...), local = TRUE)</code>, e.g.</p>
+This can be achieved by using <code>with(plan(...), local = TRUE)</code>, e.g.</p>
 <div class="sourceCode"><pre><code><span></span>
 <span>  <span class="va">my_fcn</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span><span class="fu"><a href="../reference/plan.html">plan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span>, local <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
@@ -333,10 +333,10 @@ new default strategy.</p></div>
 <span class="r-in"><span>  <span class="va">f</span> <span class="op">&lt;-</span> <span class="fu"><a href="future.html">future</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.getpid.html" class="external-link">Sys.getpid</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="va">w_pid</span> <span class="op">&lt;-</span> <span class="fu"><a href="value.html">value</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 155723</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1895720</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>main <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getpid.html" class="external-link">Sys.getpid</a></span><span class="op">(</span><span class="op">)</span>, worker <span class="op">=</span> <span class="va">w_pid</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   main worker </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 152622 155723 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    main  worker </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1893914 1895720 </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
@@ -348,8 +348,8 @@ new default strategy.</p></div>
 <span class="r-in"><span>  <span class="va">w_pid</span> <span class="op">&lt;-</span> <span class="fu"><a href="value.html">value</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>main <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getpid.html" class="external-link">Sys.getpid</a></span><span class="op">(</span><span class="op">)</span>, worker <span class="op">=</span> <span class="va">w_pid</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   main worker </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 152622 155820 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    main  worker </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1893914 1895818 </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">a</span> <span class="op">&lt;-</span> <span class="va">b</span> <span class="op">&lt;-</span> <span class="va">c</span> <span class="op">&lt;-</span> <span class="cn">NA_real_</span></span></span>
