@@ -15,7 +15,8 @@ future backend supports it.}
 \item{\ldots}{All arguments used by the S3 methods.}
 }
 \value{
-\code{cancel()} returns the \link{Future} flagged as "canceled".
+\code{cancel()} returns (invisibly) the canceled \href{s}{Future} after
+flagging them as "canceled" and possibly interrupting them as well.
 
 Canceling a lazy or a finished future has no effect.
 }
@@ -27,14 +28,14 @@ Cancels futures, with the option to interrupt running ones.
 plan(multisession, workers = 2)
 
 ## Launch two long running future
-fs <- lapply(c(1, 40), function(duration) {
+fs <- lapply(c(1, 4), function(duration) {
   future({
     Sys.sleep(duration)
     42
   })
 })
 
-## Wait until any future is resolved
+## Wait until at least one of the futures is resolved
 while (!any(resolved(fs))) Sys.sleep(0.1)
 
 ## Cancel the future that is not yet resolved
@@ -51,4 +52,8 @@ try(v <- value(fs[!r]))
 
 ## Shut down parallel workers
 plan(sequential)
+}
+\seealso{
+A canceled future can be \code{\link[=reset]{reset()}} to a lazy, vanilla future
+such that it can be relaunched, possible on another future backend.
 }
