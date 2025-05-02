@@ -560,7 +560,7 @@ resolved.ClusterFuture <- function(x, run = TRUE, timeout = NULL, ...) {
   ## also the one that evaluates/resolves/queries it.
   assertOwner(future)
 
-  if (debug) mdebug_push("isFutureResolved() ...")
+  if (debug) mdebugf_push("resolved() for %s (%s) ...", class(future)[1], sQuoteLabel(future[["label"]]))
 
   node_idx <- future[["node"]]
   cl <- workers[node_idx]

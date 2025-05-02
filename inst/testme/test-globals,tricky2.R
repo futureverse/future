@@ -4,6 +4,7 @@
 
 library(future)
 not_cran <- isTRUE(as.logical(Sys.getenv("NOT_CRAN", "FALSE")))
+options(future.debug = FALSE)
 
 message("*** Tricky use cases #2 related to globals ...")
 
@@ -63,6 +64,7 @@ for (cores in 1:availCores) {
     if (not_cran) stopifnot(gg == c("{", "<-")) ## ideally also 'a'
 
 
+    message("Case C")
     ## This one fails to pick up 'a' as a global variable with
     ## globals (<= 0.17.0).
     a <- 42L
@@ -88,7 +90,40 @@ for (cores in 1:availCores) {
         stopifnot(y == 42L)
       }
     }
+    rm(list = "y")
     
+    message("Case D")
+    fcn <- function(x) {
+      y
+    }
+    wrapper <- function(fn) {
+      y <- -1
+      fn(1)
+    }
+    res <- tryCatch({
+      f <- wrapper(fcn)
+      v <- value(f)
+    }, error = identity)
+    print(res)
+    stopifnot(inherits(res, "error"))
+    
+    message("Case D")
+    ## https://github.com/futureverse/future/issues/608#issuecomment-1116855224
+    r0 <- local({
+      mu <- 0
+      function() mu
+    })
+    r1 <- local({
+      mu <- 1
+      function() mu
+    })
+    truth <- r1() - r0()
+    print(truth)
+    f <- future(r1() - r0())
+    y <- value(f)
+    print(y)
+    stopifnot(identical(y, truth))
+
     plan(sequential)
   } ## for (strategy ...)
 
