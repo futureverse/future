@@ -1364,6 +1364,7 @@ handleInterruptedFuture <- local({
     host <- node[["host"]]
     event <- if (state %in% "running") {
       event <- sprintf("failed for unknown reason while %s", state)
+      future[["state"]] <- "interrupted"
     } else {
       event <- sprintf("was %s", state)
     }
@@ -1374,7 +1375,6 @@ handleInterruptedFuture <- local({
     }
     result <- FutureInterruptError(msg, future = future)
     future[["result"]] <- result
-    future[["state"]] <- "interrupted"
   
     ## Remove from backend
     reg <- backend[["reg"]]
