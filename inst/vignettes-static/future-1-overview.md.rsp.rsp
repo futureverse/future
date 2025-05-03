@@ -539,7 +539,7 @@ if (supportsMulticore()) {
 }
 %>
 
-For more details on working with nested futures and different future backends at each level, see Vignette '[Futures in R: Future Topologies]'.
+For more details on working with nested futures and different future backends at each level, see Vignette '[A Future for R: Future Topologies]'.
 
 
 ### Checking A Future without Blocking
@@ -640,7 +640,7 @@ Moreover, if a global is defined in a package, then that global is not exported.
 As mentioned previously, for consistency across future backends, all types of futures collect and validate globals when created. This takes place before the future is sent to the future backend, meaning this validation takes place also for sequential and multicore (forks the calling process "as-is") futures where it would technically not be needed. This done in order for a future be send to any type of backend at any time. It also helps to assure that futures are resolved identically regardless of future backend.
 ---%>
 
-Finally, it should be clarified that identifying globals from static code inspection alone is a challenging problem.  There will always be corner cases where automatic identification of globals fails so that either false globals are identified (less of a concern) or some of the true globals are missing (which will result in a run-time error or possibly the wrong results).  Vignette '[Futures in R: Common Issues with Solutions]' provides examples of common cases and explains how to avoid them as well as how to help the package to identify globals or to ignore falsely identified globals.  If that does not suffice, it is always possible to manually specify the global variables by their names (e.g. `globals = c("a", "slow_sum")`) or as name-value pairs (e.g. `globals = list(a = 42, slow_sum = my_sum)`).
+Finally, it should be clarified that identifying globals from static code inspection alone is a challenging problem.  There will always be corner cases where automatic identification of globals fails so that either false globals are identified (less of a concern) or some of the true globals are missing (which will result in a run-time error or possibly the wrong results).  Vignette '[A Future for R: Common Issues with Solutions]' provides examples of common cases and explains how to avoid them as well as how to help the package to identify globals or to ignore falsely identified globals.  If that does not suffice, it is always possible to manually specify the global variables by their names (e.g. `globals = c("a", "slow_sum")`) or as name-value pairs (e.g. `globals = list(a = 42, slow_sum = my_sum)`).
 
 
 ## Constraints when using Implicit Futures
@@ -727,5 +727,5 @@ demo("mandelbrot", package = "future", ask = FALSE)
 [future.mirai]: https://future.mirai.futureverse.org
 [globals]: https://globals.futureverse.org
 [listenv]: https://listenv.futureverse.org
-[Futures in R: Common Issues with Solutions]: future-4-issues.html
-[Futures in R: Future Topologies]: future-3-topologies.html
+[A Future for R: Common Issues with Solutions]: future-4-issues.html
+[A Future for R: Future Topologies]: future-3-topologies.html
