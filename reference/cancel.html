@@ -105,7 +105,7 @@ future backend supports it.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p><code>cancel()</code> returns (invisibly) the canceled <a href="s">Future</a> after
+    <p><code>cancel()</code> returns (invisibly) the canceled <a href="Future-class.html">Future</a>s after
 flagging them as "canceled" and possibly interrupting them as well.</p>
 <p>Canceling a lazy or a finished future has no effect.</p>
     </div>
@@ -143,7 +143,7 @@ such that it can be relaunched, possible on another future backend.</p></div>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## The value of the canceled future is an error</span></span></span>
 <span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/try.html" class="external-link">try</a></span><span class="op">(</span><span class="va">v</span> <span class="op">&lt;-</span> <span class="fu"><a href="value.html">value</a></span><span class="op">(</span><span class="va">fs</span><span class="op">[</span><span class="op">!</span><span class="va">r</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Error : Future (NULL) of class MultisessionFuture was canceled, while running on ‘localhost’ (pid 1906755)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Error : Future (NULL) of class MultisessionFuture was canceled, while running on ‘localhost’ (pid 1931261)</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Shut down parallel workers</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="plan.html">plan</a></span><span class="op">(</span><span class="va">sequential</span><span class="op">)</span></span></span>

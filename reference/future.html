@@ -286,7 +286,10 @@ The value of a future can be retrieved using <code>v &lt;- <a href="value.html">
 Querying the value of a non-resolved future will <em>block</em> the call
 until the future is resolved.
 It is possible to check whether a future is resolved or not
-without blocking by using <code><a href="resolved.html">resolved</a>(f)</code>.</p>
+without blocking by using <code><a href="resolved.html">resolved</a>(f)</code>.
+It is possible to <code><a href="cancel.html">cancel()</a></code> a future that is being resolved.
+Failed, canceled, and interrupted futures can be <code><a href="reset.html">reset()</a></code> to a
+lazy, vanilla future that can be relaunched.</p>
 <p>The <code>futureCall()</code> function works analogously to
 <code><a href="https://rdrr.io/r/base/do.call.html" class="external-link">do.call</a>()</code>, which calls a function with a set of
 arguments.  The difference is that <code><a href="https://rdrr.io/r/base/do.call.html" class="external-link">do.call()</a></code> returns the value of

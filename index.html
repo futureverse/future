@@ -328,7 +328,7 @@
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">plan</span>(sequential)</span>
 <span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="sc">&gt;</span> pid <span class="ot">&lt;-</span> <span class="fu">Sys.getpid</span>()</span>
 <span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a><span class="sc">&gt;</span> pid</span>
-<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">2952714</span></span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">1920900</span></span>
 <span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a><span class="sc">&gt;</span> a <span class="sc">%&lt;-%</span> {</span>
 <span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a><span class="sc">+</span>     pid <span class="ot">&lt;-</span> <span class="fu">Sys.getpid</span>()</span>
 <span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a><span class="sc">+</span>     <span class="fu">cat</span>(<span class="st">"Future 'a' ...</span><span class="sc">\n</span><span class="st">"</span>)</span>
@@ -346,14 +346,14 @@
 <span id="cb6-19"><a href="#cb6-19" tabindex="-1"></a>Future <span class="st">'a'</span> ...</span>
 <span id="cb6-20"><a href="#cb6-20" tabindex="-1"></a><span class="sc">&gt;</span> b</span>
 <span id="cb6-21"><a href="#cb6-21" tabindex="-1"></a>Future <span class="st">'b'</span> ...</span>
-<span id="cb6-22"><a href="#cb6-22" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">2952714</span></span>
+<span id="cb6-22"><a href="#cb6-22" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">1920900</span></span>
 <span id="cb6-23"><a href="#cb6-23" tabindex="-1"></a><span class="sc">&gt;</span> c</span>
 <span id="cb6-24"><a href="#cb6-24" tabindex="-1"></a>Future <span class="st">'c'</span> ...</span>
 <span id="cb6-25"><a href="#cb6-25" tabindex="-1"></a>[<span class="dv">1</span>] <span class="fl">6.28</span></span>
 <span id="cb6-26"><a href="#cb6-26" tabindex="-1"></a><span class="sc">&gt;</span> a</span>
 <span id="cb6-27"><a href="#cb6-27" tabindex="-1"></a>[<span class="dv">1</span>] <span class="fl">3.14</span></span>
 <span id="cb6-28"><a href="#cb6-28" tabindex="-1"></a><span class="sc">&gt;</span> pid</span>
-<span id="cb6-29"><a href="#cb6-29" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">2952714</span></span></code></pre></div>
+<span id="cb6-29"><a href="#cb6-29" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">1920900</span></span></code></pre></div>
 <p>Since eager sequential evaluation is taking place, each of the three futures is resolved instantaneously in the moment it is created. Note also how <code>pid</code> in the calling environment, which was assigned the process ID of the current process, is neither overwritten nor removed. This is because futures are evaluated in a local environment. Since synchronous (uni-)processing is used, future <code>b</code> is resolved by the main R process (still in a local environment), which is why the value of <code>b</code> and <code>pid</code> are the same.</p>
 </div>
 </div>
@@ -368,7 +368,7 @@
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">plan</span>(multisession)</span>
 <span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a><span class="sc">&gt;</span> pid <span class="ot">&lt;-</span> <span class="fu">Sys.getpid</span>()</span>
 <span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a><span class="sc">&gt;</span> pid</span>
-<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">2952714</span></span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">1920900</span></span>
 <span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a><span class="sc">&gt;</span> a <span class="sc">%&lt;-%</span> {</span>
 <span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a><span class="sc">+</span>     pid <span class="ot">&lt;-</span> <span class="fu">Sys.getpid</span>()</span>
 <span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a><span class="sc">+</span>     <span class="fu">cat</span>(<span class="st">"Future 'a' ...</span><span class="sc">\n</span><span class="st">"</span>)</span>
@@ -386,14 +386,14 @@
 <span id="cb7-19"><a href="#cb7-19" tabindex="-1"></a>Future <span class="st">'a'</span> ...</span>
 <span id="cb7-20"><a href="#cb7-20" tabindex="-1"></a><span class="sc">&gt;</span> b</span>
 <span id="cb7-21"><a href="#cb7-21" tabindex="-1"></a>Future <span class="st">'b'</span> ...</span>
-<span id="cb7-22"><a href="#cb7-22" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">2952767</span></span>
+<span id="cb7-22"><a href="#cb7-22" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">1920953</span></span>
 <span id="cb7-23"><a href="#cb7-23" tabindex="-1"></a><span class="sc">&gt;</span> c</span>
 <span id="cb7-24"><a href="#cb7-24" tabindex="-1"></a>Future <span class="st">'c'</span> ...</span>
 <span id="cb7-25"><a href="#cb7-25" tabindex="-1"></a>[<span class="dv">1</span>] <span class="fl">6.28</span></span>
 <span id="cb7-26"><a href="#cb7-26" tabindex="-1"></a><span class="sc">&gt;</span> a</span>
 <span id="cb7-27"><a href="#cb7-27" tabindex="-1"></a>[<span class="dv">1</span>] <span class="fl">3.14</span></span>
 <span id="cb7-28"><a href="#cb7-28" tabindex="-1"></a><span class="sc">&gt;</span> pid</span>
-<span id="cb7-29"><a href="#cb7-29" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">2952714</span></span></code></pre></div>
+<span id="cb7-29"><a href="#cb7-29" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">1920900</span></span></code></pre></div>
 <p>The first thing we observe is that the values of <code>a</code>, <code>c</code> and <code>pid</code> are the same as previously. However, we notice that <code>b</code> is different from before. This is because future <code>b</code> is evaluated in a different R process and therefore it returns a different process ID.</p>
 <p>When multisession evaluation is used, the package launches a set of R sessions in the background that will serve multisession futures by evaluating their expressions as they are created. If all background sessions are busy serving other futures, the creation of the next multisession future is <em>blocked</em> until a background session becomes available again. The total number of background processes launched is decided by the value of <code><a href="reference/re-exports.html">availableCores()</a></code>, e.g.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">availableCores</span>()</span>
@@ -418,7 +418,7 @@
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">plan</span>(cluster, <span class="at">workers =</span> <span class="fu">c</span>(<span class="st">"n1"</span>, <span class="st">"n2"</span>, <span class="st">"n3"</span>))</span>
 <span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a><span class="sc">&gt;</span> pid <span class="ot">&lt;-</span> <span class="fu">Sys.getpid</span>()</span>
 <span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a><span class="sc">&gt;</span> pid</span>
-<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">2952714</span></span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">1920900</span></span>
 <span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a><span class="sc">&gt;</span> a <span class="sc">%&lt;-%</span> {</span>
 <span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a><span class="sc">+</span>     pid <span class="ot">&lt;-</span> <span class="fu">Sys.getpid</span>()</span>
 <span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a><span class="sc">+</span>     <span class="fu">cat</span>(<span class="st">"Future 'a' ...</span><span class="sc">\n</span><span class="st">"</span>)</span>
@@ -436,14 +436,14 @@
 <span id="cb10-19"><a href="#cb10-19" tabindex="-1"></a>Future <span class="st">'a'</span> ...</span>
 <span id="cb10-20"><a href="#cb10-20" tabindex="-1"></a><span class="sc">&gt;</span> b</span>
 <span id="cb10-21"><a href="#cb10-21" tabindex="-1"></a>Future <span class="st">'b'</span> ...</span>
-<span id="cb10-22"><a href="#cb10-22" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">2952849</span></span>
+<span id="cb10-22"><a href="#cb10-22" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">1921035</span></span>
 <span id="cb10-23"><a href="#cb10-23" tabindex="-1"></a><span class="sc">&gt;</span> c</span>
 <span id="cb10-24"><a href="#cb10-24" tabindex="-1"></a>Future <span class="st">'c'</span> ...</span>
 <span id="cb10-25"><a href="#cb10-25" tabindex="-1"></a>[<span class="dv">1</span>] <span class="fl">6.28</span></span>
 <span id="cb10-26"><a href="#cb10-26" tabindex="-1"></a><span class="sc">&gt;</span> a</span>
 <span id="cb10-27"><a href="#cb10-27" tabindex="-1"></a>[<span class="dv">1</span>] <span class="fl">3.14</span></span>
 <span id="cb10-28"><a href="#cb10-28" tabindex="-1"></a><span class="sc">&gt;</span> pid</span>
-<span id="cb10-29"><a href="#cb10-29" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">2952714</span></span></code></pre></div>
+<span id="cb10-29"><a href="#cb10-29" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">1920900</span></span></code></pre></div>
 <p>Any types of clusters that <code><a href="https://rdrr.io/r/parallel/makeCluster.html" class="external-link">parallel::makeCluster()</a></code> creates can be used for cluster futures. For instance, the above cluster can be explicitly set up as:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">cl</span> <span class="op">&lt;-</span> <span class="fu">parallel</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/parallel/makeCluster.html" class="external-link">makeCluster</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"n1"</span>, <span class="st">"n2"</span>, <span class="st">"n3"</span><span class="op">)</span><span class="op">)</span></span>
@@ -479,17 +479,17 @@
 <span id="cb13-17"><a href="#cb13-17" tabindex="-1"></a><span class="sc">+</span>     <span class="fu">c</span>(<span class="at">b.pid =</span> <span class="fu">Sys.getpid</span>(), <span class="at">b1.pid =</span> b1, <span class="at">b2.pid =</span> b2)</span>
 <span id="cb13-18"><a href="#cb13-18" tabindex="-1"></a><span class="sc">+</span> }</span>
 <span id="cb13-19"><a href="#cb13-19" tabindex="-1"></a><span class="sc">&gt;</span> pid</span>
-<span id="cb13-20"><a href="#cb13-20" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">2952714</span></span>
+<span id="cb13-20"><a href="#cb13-20" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">1920900</span></span>
 <span id="cb13-21"><a href="#cb13-21" tabindex="-1"></a><span class="sc">&gt;</span> a</span>
 <span id="cb13-22"><a href="#cb13-22" tabindex="-1"></a>Future <span class="st">'a'</span> ...</span>
-<span id="cb13-23"><a href="#cb13-23" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">2952945</span></span>
+<span id="cb13-23"><a href="#cb13-23" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">1921131</span></span>
 <span id="cb13-24"><a href="#cb13-24" tabindex="-1"></a><span class="sc">&gt;</span> b</span>
 <span id="cb13-25"><a href="#cb13-25" tabindex="-1"></a>Future <span class="st">'b'</span> ...</span>
 <span id="cb13-26"><a href="#cb13-26" tabindex="-1"></a>Future <span class="st">'b1'</span> ...</span>
 <span id="cb13-27"><a href="#cb13-27" tabindex="-1"></a>Future <span class="st">'b2'</span> ...</span>
 <span id="cb13-28"><a href="#cb13-28" tabindex="-1"></a>  b.pid  b1.pid  b2.pid </span>
-<span id="cb13-29"><a href="#cb13-29" tabindex="-1"></a><span class="dv">2952946</span> <span class="dv">2952946</span> <span class="dv">2952946</span> </span></code></pre></div>
-<p>By inspection the process IDs, we see that there are in total three different processes involved for resolving the futures. There is the main R process (pid 2952714), and there are the two processes used by <code>a</code> (pid 2952945) and <code>b</code> (pid 2952946). However, the two futures (<code>b1</code> and <code>b2</code>) that is nested by <code>b</code> are evaluated by the same R process as <code>b</code>. This is because nested futures use sequential evaluation unless otherwise specified. There are a few reasons for this, but the main reason is that it protects us from spawning off a large number of background processes by mistake, e.g. via recursive calls.</p>
+<span id="cb13-29"><a href="#cb13-29" tabindex="-1"></a><span class="dv">1921132</span> <span class="dv">1921132</span> <span class="dv">1921132</span> </span></code></pre></div>
+<p>By inspection the process IDs, we see that there are in total three different processes involved for resolving the futures. There is the main R process (pid 1920900), and there are the two processes used by <code>a</code> (pid 1921131) and <code>b</code> (pid 1921132). However, the two futures (<code>b1</code> and <code>b2</code>) that is nested by <code>b</code> are evaluated by the same R process as <code>b</code>. This is because nested futures use sequential evaluation unless otherwise specified. There are a few reasons for this, but the main reason is that it protects us from spawning off a large number of background processes by mistake, e.g. via recursive calls.</p>
 <p>To specify a different type of <em>evaluation topology</em>, other than the first level of futures being resolved by multisession evaluation and the second level by sequential evaluation, we can provide a sequence of nested backend by specifying a list to <code><a href="reference/plan.html">plan()</a></code>. To clarify, first, the same sequence of backends as used above can be explicitly specified as:</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/plan.html">plan</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">multisession</span>, <span class="va">sequential</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
@@ -497,49 +497,49 @@
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">plan</span>(<span class="fu">list</span>(multisession, multisession))</span>
 <span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a>[...]</span>
 <span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a><span class="sc">&gt;</span> pid</span>
-<span id="cb15-4"><a href="#cb15-4" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">2952714</span></span>
+<span id="cb15-4"><a href="#cb15-4" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">1920900</span></span>
 <span id="cb15-5"><a href="#cb15-5" tabindex="-1"></a><span class="sc">&gt;</span> a</span>
 <span id="cb15-6"><a href="#cb15-6" tabindex="-1"></a>Future <span class="st">'a'</span> ...</span>
-<span id="cb15-7"><a href="#cb15-7" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">2953029</span></span>
+<span id="cb15-7"><a href="#cb15-7" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">1921213</span></span>
 <span id="cb15-8"><a href="#cb15-8" tabindex="-1"></a><span class="sc">&gt;</span> b</span>
 <span id="cb15-9"><a href="#cb15-9" tabindex="-1"></a>Future <span class="st">'b'</span> ...</span>
 <span id="cb15-10"><a href="#cb15-10" tabindex="-1"></a>Future <span class="st">'b1'</span> ...</span>
 <span id="cb15-11"><a href="#cb15-11" tabindex="-1"></a>Future <span class="st">'b2'</span> ...</span>
 <span id="cb15-12"><a href="#cb15-12" tabindex="-1"></a>  b.pid  b1.pid  b2.pid </span>
-<span id="cb15-13"><a href="#cb15-13" tabindex="-1"></a><span class="dv">2953028</span> <span class="dv">2953028</span> <span class="dv">2953028</span> </span></code></pre></div>
+<span id="cb15-13"><a href="#cb15-13" tabindex="-1"></a><span class="dv">1921212</span> <span class="dv">1921212</span> <span class="dv">1921212</span> </span></code></pre></div>
 <p>The second multisession backend will default to single, sequential processing. The reason for this is, also here, to protect us from launching more processes than what the machine can support. This is the case for both multisession and multicore evaluation.</p>
 <p>Continuing, if we start off with the sequential backend and then use the multisession backend for any nested futures, we get:</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">plan</span>(<span class="fu">list</span>(sequential, multisession))</span>
 <span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a>[...]</span>
 <span id="cb16-3"><a href="#cb16-3" tabindex="-1"></a><span class="sc">&gt;</span> pid</span>
-<span id="cb16-4"><a href="#cb16-4" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">2952714</span></span>
+<span id="cb16-4"><a href="#cb16-4" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">1920900</span></span>
 <span id="cb16-5"><a href="#cb16-5" tabindex="-1"></a><span class="sc">&gt;</span> a</span>
 <span id="cb16-6"><a href="#cb16-6" tabindex="-1"></a>Future <span class="st">'a'</span> ...</span>
-<span id="cb16-7"><a href="#cb16-7" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">2952714</span></span>
+<span id="cb16-7"><a href="#cb16-7" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">1920900</span></span>
 <span id="cb16-8"><a href="#cb16-8" tabindex="-1"></a><span class="sc">&gt;</span> b</span>
 <span id="cb16-9"><a href="#cb16-9" tabindex="-1"></a>Future <span class="st">'b'</span> ...</span>
 <span id="cb16-10"><a href="#cb16-10" tabindex="-1"></a>Future <span class="st">'b1'</span> ...</span>
 <span id="cb16-11"><a href="#cb16-11" tabindex="-1"></a>Future <span class="st">'b2'</span> ...</span>
 <span id="cb16-12"><a href="#cb16-12" tabindex="-1"></a>  b.pid  b1.pid  b2.pid </span>
-<span id="cb16-13"><a href="#cb16-13" tabindex="-1"></a><span class="dv">2952714</span> <span class="dv">2953124</span> <span class="dv">2953123</span> </span></code></pre></div>
-<p>which clearly show that <code>a</code> and <code>b</code> are resolved in the calling process (pid 2952714) whereas the two nested futures (<code>b1</code> and <code>b2</code>) are resolved in two separate R processes (pids 2953124 and 2953123).</p>
+<span id="cb16-13"><a href="#cb16-13" tabindex="-1"></a><span class="dv">1920900</span> <span class="dv">1921309</span> <span class="dv">1921308</span> </span></code></pre></div>
+<p>which clearly show that <code>a</code> and <code>b</code> are resolved in the calling process (pid 1920900) whereas the two nested futures (<code>b1</code> and <code>b2</code>) are resolved in two separate R processes (pids 1921309 and 1921308).</p>
 <p>Having said this, it is indeed possible to use nested multisession backend that are not forced to sequential processing by explicitly specifying (read <em>forcing</em>) the number of workers available at each level. In order to do this we need to “tweak” the default settings, which can be done as follows:</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">plan</span>(<span class="fu">list</span>(<span class="fu">tweak</span>(multisession, <span class="at">workers =</span> <span class="dv">2</span>), <span class="fu">tweak</span>(multisession, </span>
 <span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a><span class="sc">+</span>     <span class="at">workers =</span> <span class="dv">2</span>)))</span>
 <span id="cb17-3"><a href="#cb17-3" tabindex="-1"></a>[...]</span>
 <span id="cb17-4"><a href="#cb17-4" tabindex="-1"></a><span class="sc">&gt;</span> pid</span>
-<span id="cb17-5"><a href="#cb17-5" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">2952714</span></span>
+<span id="cb17-5"><a href="#cb17-5" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">1920900</span></span>
 <span id="cb17-6"><a href="#cb17-6" tabindex="-1"></a><span class="sc">&gt;</span> a</span>
 <span id="cb17-7"><a href="#cb17-7" tabindex="-1"></a>Future <span class="st">'a'</span> ...</span>
-<span id="cb17-8"><a href="#cb17-8" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">2953206</span></span>
+<span id="cb17-8"><a href="#cb17-8" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">1921389</span></span>
 <span id="cb17-9"><a href="#cb17-9" tabindex="-1"></a><span class="sc">&gt;</span> b</span>
 <span id="cb17-10"><a href="#cb17-10" tabindex="-1"></a>Future <span class="st">'b'</span> ...</span>
 <span id="cb17-11"><a href="#cb17-11" tabindex="-1"></a>Future <span class="st">'b1'</span> ...</span>
 <span id="cb17-12"><a href="#cb17-12" tabindex="-1"></a>Future <span class="st">'b2'</span> ...</span>
 <span id="cb17-13"><a href="#cb17-13" tabindex="-1"></a>  b.pid  b1.pid  b2.pid </span>
-<span id="cb17-14"><a href="#cb17-14" tabindex="-1"></a><span class="dv">2953205</span> <span class="dv">2953396</span> <span class="dv">2953397</span> </span></code></pre></div>
-<p>First, we see that both <code>a</code> and <code>b</code> are resolved in different processes (pids 2953206 and 2953205) than the calling process (pid 2952714). Second, the two nested futures (<code>b1</code> and <code>b2</code>) are resolved in yet two other R processes (pids 2953396 and 2953397).</p>
-<p>For more details on working with nested futures and different future backends at each level, see Vignette ‘<a href="https://cran.r-project.org/web/packages/future/vignettes/future-3-topologies.html" class="external-link">Futures in R: Future Topologies</a>’.</p>
+<span id="cb17-14"><a href="#cb17-14" tabindex="-1"></a><span class="dv">1921390</span> <span class="dv">1921580</span> <span class="dv">1921581</span> </span></code></pre></div>
+<p>First, we see that both <code>a</code> and <code>b</code> are resolved in different processes (pids 1921389 and 1921390) than the calling process (pid 1920900). Second, the two nested futures (<code>b1</code> and <code>b2</code>) are resolved in yet two other R processes (pids 1921580 and 1921581).</p>
+<p>For more details on working with nested futures and different future backends at each level, see Vignette ‘<a href="https://cran.r-project.org/web/packages/future/vignettes/future-3-topologies.html" class="external-link">A Future for R: Future Topologies</a>’.</p>
 </div>
 <div class="section level3">
 <h3 id="checking-a-future-without-blocking">Checking A Future without Blocking<a class="anchor" aria-label="anchor" href="#checking-a-future-without-blocking"></a>
@@ -571,11 +571,12 @@
 <span id="cb18-24"><a href="#cb18-24" tabindex="-1"></a><span class="dv">8</span> </span>
 <span id="cb18-25"><a href="#cb18-25" tabindex="-1"></a><span class="dv">9</span> </span>
 <span id="cb18-26"><a href="#cb18-26" tabindex="-1"></a><span class="dv">10</span> </span>
-<span id="cb18-27"><a href="#cb18-27" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">cat</span>(<span class="st">"Waiting for 'a' to be resolved ... DONE</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb18-28"><a href="#cb18-28" tabindex="-1"></a>Waiting <span class="cf">for</span> <span class="st">'a'</span> to be resolved ... DONE</span>
-<span id="cb18-29"><a href="#cb18-29" tabindex="-1"></a><span class="sc">&gt;</span> a</span>
-<span id="cb18-30"><a href="#cb18-30" tabindex="-1"></a>Future <span class="st">'a'</span> ...done</span>
-<span id="cb18-31"><a href="#cb18-31" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">2953470</span></span></code></pre></div>
+<span id="cb18-27"><a href="#cb18-27" tabindex="-1"></a><span class="dv">11</span> </span>
+<span id="cb18-28"><a href="#cb18-28" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">cat</span>(<span class="st">"Waiting for 'a' to be resolved ... DONE</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb18-29"><a href="#cb18-29" tabindex="-1"></a>Waiting <span class="cf">for</span> <span class="st">'a'</span> to be resolved ... DONE</span>
+<span id="cb18-30"><a href="#cb18-30" tabindex="-1"></a><span class="sc">&gt;</span> a</span>
+<span id="cb18-31"><a href="#cb18-31" tabindex="-1"></a>Future <span class="st">'a'</span> ...done</span>
+<span id="cb18-32"><a href="#cb18-32" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">1921654</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -610,7 +611,7 @@
 </h2>
 <p>Whenever an R expression is to be evaluated asynchronously (in parallel) or sequentially via lazy evaluation, global (aka “free”) objects have to be identified and passed to the evaluator. They need to be passed exactly as they were at the time the future was created, because, for lazy evaluation, globals may otherwise change between when it is created and when it is resolved. For asynchronous processing, the reason globals need to be identified is so that they can be exported to the process that evaluates the future.</p>
 <p>The future package tries to automate these tasks as far as possible. It does this with help of the <a href="https://globals.futureverse.org" class="external-link">globals</a> package, which uses static-code inspection to identify global variables. If a global variable is identified, it is captured and made available to the evaluating process. Moreover, if a global is defined in a package, then that global is not exported. Instead, it is made sure that the corresponding package is attached when the future is evaluated. This not only better reflects the setup of the main R session, but it also minimizes the need for exporting globals, which saves not only memory but also time and bandwidth, especially when using remote compute nodes.</p>
-<p>Finally, it should be clarified that identifying globals from static code inspection alone is a challenging problem. There will always be corner cases where automatic identification of globals fails so that either false globals are identified (less of a concern) or some of the true globals are missing (which will result in a run-time error or possibly the wrong results). Vignette ‘<a href="https://cran.r-project.org/web/packages/future/vignettes/future-4-issues.html" class="external-link">Futures in R: Common Issues with Solutions</a>’ provides examples of common cases and explains how to avoid them as well as how to help the package to identify globals or to ignore falsely identified globals. If that does not suffice, it is always possible to manually specify the global variables by their names (e.g. <code>globals = c("a", "slow_sum")</code>) or as name-value pairs (e.g. <code>globals = list(a = 42, slow_sum = my_sum)</code>).</p>
+<p>Finally, it should be clarified that identifying globals from static code inspection alone is a challenging problem. There will always be corner cases where automatic identification of globals fails so that either false globals are identified (less of a concern) or some of the true globals are missing (which will result in a run-time error or possibly the wrong results). Vignette ‘<a href="https://cran.r-project.org/web/packages/future/vignettes/future-4-issues.html" class="external-link">A Future for R: Common Issues with Solutions</a>’ provides examples of common cases and explains how to avoid them as well as how to help the package to identify globals or to ignore falsely identified globals. If that does not suffice, it is always possible to manually specify the global variables by their names (e.g. <code>globals = c("a", "slow_sum")</code>) or as name-value pairs (e.g. <code>globals = list(a = 42, slow_sum = my_sum)</code>).</p>
 </div>
 <div class="section level2">
 <h2 id="constraints-when-using-implicit-futures">Constraints when using Implicit Futures<a class="anchor" aria-label="anchor" href="#constraints-when-using-implicit-futures"></a>
@@ -626,9 +627,9 @@
 <span id="cb22-8"><a href="#cb22-8" tabindex="-1"></a><span class="sc">&gt;</span> v <span class="ot">&lt;-</span> <span class="fu">lapply</span>(f, <span class="at">FUN =</span> value)</span>
 <span id="cb22-9"><a href="#cb22-9" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">str</span>(v)</span>
 <span id="cb22-10"><a href="#cb22-10" tabindex="-1"></a>List of <span class="dv">3</span></span>
-<span id="cb22-11"><a href="#cb22-11" tabindex="-1"></a> <span class="sc">$</span> <span class="er">:</span> int <span class="dv">2953554</span></span>
-<span id="cb22-12"><a href="#cb22-12" tabindex="-1"></a> <span class="sc">$</span> <span class="er">:</span> int <span class="dv">2953553</span></span>
-<span id="cb22-13"><a href="#cb22-13" tabindex="-1"></a> <span class="sc">$</span> <span class="er">:</span> int <span class="dv">2953554</span></span></code></pre></div>
+<span id="cb22-11"><a href="#cb22-11" tabindex="-1"></a> <span class="sc">$</span> <span class="er">:</span> int <span class="dv">1921737</span></span>
+<span id="cb22-12"><a href="#cb22-12" tabindex="-1"></a> <span class="sc">$</span> <span class="er">:</span> int <span class="dv">1921738</span></span>
+<span id="cb22-13"><a href="#cb22-13" tabindex="-1"></a> <span class="sc">$</span> <span class="er">:</span> int <span class="dv">1921737</span></span></code></pre></div>
 <p>This is <em>not</em> possible to do when using implicit futures. This is because the <code>%&lt;-%</code> assignment operator <em>cannot</em> be used in all cases where the regular <code>&lt;-</code> assignment operator can be used. It can only be used to assign future values to <em>environments</em> (including the calling environment) much like how <code>assign(name, value, envir)</code> works. However, we can assign implicit futures to environments using <em>named indices</em>, e.g.</p>
 <div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">plan</span>(multisession)</span>
 <span id="cb23-2"><a href="#cb23-2" tabindex="-1"></a><span class="sc">&gt;</span> v <span class="ot">&lt;-</span> <span class="fu">new.env</span>()</span>
@@ -640,9 +641,9 @@
 <span id="cb23-8"><a href="#cb23-8" tabindex="-1"></a><span class="sc">&gt;</span> v <span class="ot">&lt;-</span> <span class="fu">as.list</span>(v)</span>
 <span id="cb23-9"><a href="#cb23-9" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">str</span>(v)</span>
 <span id="cb23-10"><a href="#cb23-10" tabindex="-1"></a>List of <span class="dv">3</span></span>
-<span id="cb23-11"><a href="#cb23-11" tabindex="-1"></a> <span class="sc">$</span> a<span class="sc">:</span> int <span class="dv">2953554</span></span>
-<span id="cb23-12"><a href="#cb23-12" tabindex="-1"></a> <span class="sc">$</span> b<span class="sc">:</span> int <span class="dv">2953553</span></span>
-<span id="cb23-13"><a href="#cb23-13" tabindex="-1"></a> <span class="sc">$</span> c<span class="sc">:</span> int <span class="dv">2953554</span></span></code></pre></div>
+<span id="cb23-11"><a href="#cb23-11" tabindex="-1"></a> <span class="sc">$</span> a<span class="sc">:</span> int <span class="dv">1921737</span></span>
+<span id="cb23-12"><a href="#cb23-12" tabindex="-1"></a> <span class="sc">$</span> b<span class="sc">:</span> int <span class="dv">1921738</span></span>
+<span id="cb23-13"><a href="#cb23-13" tabindex="-1"></a> <span class="sc">$</span> c<span class="sc">:</span> int <span class="dv">1921737</span></span></code></pre></div>
 <p>Here <code>as.list(v)</code> blocks until all futures in the environment <code>v</code> have been resolved. Then their values are collected and returned as a regular list.</p>
 <p>If <em>numeric indices</em> are required, then <em>list environments</em> can be used. List environments, which are implemented by the <a href="https://listenv.futureverse.org" class="external-link">listenv</a> package, are regular environments with customized subsetting operators making it possible to index them much like how lists can be indexed. By using list environments where we otherwise would use lists, we can also assign implicit futures to list-like objects using numeric indices. For example,</p>
 <div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">library</span>(listenv)</span>
@@ -656,9 +657,9 @@
 <span id="cb24-9"><a href="#cb24-9" tabindex="-1"></a><span class="sc">&gt;</span> v <span class="ot">&lt;-</span> <span class="fu">as.list</span>(v)</span>
 <span id="cb24-10"><a href="#cb24-10" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">str</span>(v)</span>
 <span id="cb24-11"><a href="#cb24-11" tabindex="-1"></a>List of <span class="dv">3</span></span>
-<span id="cb24-12"><a href="#cb24-12" tabindex="-1"></a> <span class="sc">$</span> <span class="er">:</span> int <span class="dv">2953554</span></span>
-<span id="cb24-13"><a href="#cb24-13" tabindex="-1"></a> <span class="sc">$</span> <span class="er">:</span> int <span class="dv">2953553</span></span>
-<span id="cb24-14"><a href="#cb24-14" tabindex="-1"></a> <span class="sc">$</span> <span class="er">:</span> int <span class="dv">2953554</span></span></code></pre></div>
+<span id="cb24-12"><a href="#cb24-12" tabindex="-1"></a> <span class="sc">$</span> <span class="er">:</span> int <span class="dv">1921737</span></span>
+<span id="cb24-13"><a href="#cb24-13" tabindex="-1"></a> <span class="sc">$</span> <span class="er">:</span> int <span class="dv">1921738</span></span>
+<span id="cb24-14"><a href="#cb24-14" tabindex="-1"></a> <span class="sc">$</span> <span class="er">:</span> int <span class="dv">1921737</span></span></code></pre></div>
 <p>As previously, <code>as.list(v)</code> blocks until all futures are resolved.</p>
 </div>
 <div class="section level2">
