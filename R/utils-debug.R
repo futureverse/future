@@ -6,8 +6,8 @@ now <- function(x = Sys.time(), format = "[%H:%M:%OS3] ") {
 debug_indent <- local({
   prefix <- ""
   depth <- 0L
-  symbols <- rep(c("|", ":", "."), times = 10L)
- 
+  symbols <- rep(c("|", ":", ".", "'", ",", ";", "`"), times = 10L)
+
   function(delta = 0L) {
     if (delta == 0) return(prefix)
     if (delta > 0) {
@@ -20,7 +20,13 @@ debug_indent <- local({
         depth <- 0L
       }
     }
-    prefix <<- if (depth == 0) "" else paste(paste(symbols[seq_len(depth)], " "), collapse = "")
+    prefix <<- if (depth == 0) {
+      ""
+    } else {
+      
+      indent <- getOption("future.debug.indent", " ")
+      paste(paste(symbols[seq_len(depth)], indent, sep = ""), collapse = "")
+    }
   }
 })
 
