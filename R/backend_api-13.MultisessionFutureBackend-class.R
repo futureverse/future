@@ -42,12 +42,15 @@ print.MultisessionFutureBackend <- function(x, validate = TRUE, ...) {
 
 #' Create a multisession future whose value will be resolved asynchronously in a parallel \R session
 #'
+#' _WARNING: This function must never be called.
+#'  It may only be used with [future::plan()]_
+#'
 #' A multisession future is a future that uses multisession evaluation,
 #' which means that its _value is computed and resolved in
 #' parallel in another \R session_.
 #'
 #' @details
-#' This function is _not_ meant to be called directly.  Instead, the
+#' This function is must _not_ be called directly.  Instead, the
 #' typical usages are:
 #'
 #' ```r
@@ -113,7 +116,7 @@ multisession <- function(..., workers = availableCores(constraints = "connection
     return(future(..., gc = gc, earlySignal = earlySignal, envir = envir))
   }
   
-  stop("INTERNAL ERROR: The future::multisession() function implements the FutureBackend and should never be called directly")
+  stop("INTERNAL ERROR: The future::multisession() must never be called directly")
 }
 class(multisession) <- c("multisession", "cluster", "multiprocess", "future", "function")
 attr(multisession, "init") <- TRUE

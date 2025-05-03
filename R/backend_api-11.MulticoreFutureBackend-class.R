@@ -589,12 +589,15 @@ interruptFuture.MulticoreFutureBackend <- function(backend, future, ...) {
 
 #' Create a multicore future whose value will be resolved asynchronously in a forked parallel process
 #'
+#' _WARNING: This function must never be called.
+#'  It may only be used with [future::plan()]_
+#'
 #' A multicore future is a future that uses multicore evaluation,
 #' which means that its _value is computed and resolved in
 #' parallel in another process_.
 #'
 #' @details
-#' This function is _not_ meant to be called directly.  Instead, the
+#' This function is must _not_ be called directly.  Instead, the
 #' typical usages are:
 #'
 #' ```r
@@ -664,7 +667,7 @@ multicore <- function(..., workers = availableCores(constraints = "multicore"), 
     return(future(..., gc = gc, earlySignal = earlySignal, envir = envir))
   }
   
-  stop("INTERNAL ERROR: The future::multicore() function implements the FutureBackend and should never be called directly")
+  stop("INTERNAL ERROR: The future::multicore() function must never be called directly")
 }
 class(multicore) <- c("multicore", "multiprocess", "future", "function")
 attr(multicore, "factory") <- MulticoreFutureBackend

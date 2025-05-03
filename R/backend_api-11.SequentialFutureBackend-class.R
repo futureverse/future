@@ -127,13 +127,16 @@ getFutureBackendConfigs.UniprocessFuture <- function(future, ...) {
 
 #' Create a sequential future whose value will be in the current \R session
 #'
+#' _WARNING: This function must never be called.
+#'  It may only be used with [future::plan()]_
+#'
 #' A sequential future is a future that is evaluated sequentially in the
 #' current \R session similarly to how \R expressions are evaluated in \R.
 #' The only difference to \R itself is that globals are validated
 #' by default just as for all other types of futures in this package.
 #'
 #' @details
-#' This function is _not_ meant to be called directly.  Instead, the
+#' This function is must _not_ be called directly.  Instead, the
 #' typical usages are:
 #'
 #' ```r
@@ -163,7 +166,7 @@ sequential <- function(..., gc = FALSE, earlySignal = FALSE, envir = parent.fram
   ## (2) fiery calls sequential() directly
   ##     https://github.com/thomasp85/fiery/issues/53
   if (!"fiery" %in% loadedNamespaces()) {
-    stop("The future::sequential() function implements the FutureBackend and should never be called directly")
+    stop("The future::sequential() function must never be called directly")
   }
   
   f <- Future(..., envir = envir)

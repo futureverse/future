@@ -1413,12 +1413,15 @@ handleInterruptedFuture <- local({
 
 #' Create a cluster future whose value will be resolved asynchronously in a parallel process
 #'
+#' _WARNING: This function must never be called.
+#'  It may only be used with [future::plan()]_
+#'
 #' A cluster future is a future that uses cluster evaluation,
 #' which means that its _value is computed and resolved in
 #' parallel in another process_.
 #'
 #' @details
-#' This function is _not_ meant to be called directly.  Instead, the
+#' This function is must _not_ be called directly.  Instead, the
 #' typical usages are:
 #'
 #' ```r
@@ -1471,7 +1474,7 @@ cluster <- function(..., workers = availableWorkers(constraints = "connections")
     return(future(..., gc = gc, earlySignal = earlySignal, envir = envir))
   }
   
-  stop("INTERNAL ERROR: The future::cluster() function implements the FutureBackend and should never be called directly")
+  stop("INTERNAL ERROR: The future::cluster() function must never be called directly")
 }
 class(cluster) <- c("cluster", "multiprocess", "future", "function")
 attr(cluster, "init") <- TRUE
