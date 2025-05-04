@@ -32,7 +32,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.40.0-9208</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.40.0-9209</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -129,9 +129,9 @@ command-line options as explained below as well as in
 <code>future.plan</code>. For instance, if we add</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>future.plan <span class="op">=</span> <span class="st">"multisession"</span><span class="op">)</span></span></code></pre></div>
-<p>to our <code>~/.Rprofile</code> startup script, the future package
-will resolve futures in parallel (asynchronously using all available
-cores), i.e.</p>
+<p>to our <code>~/.Rprofile</code> startup script, the
+<strong>future</strong> package will resolve futures in parallel
+(asynchronously using all available cores), i.e.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="ex">$</span> Rscript <span class="at">-e</span> <span class="st">"class(future::plan())"</span></span>
 <span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="ex">[1]</span> <span class="st">"multisession"</span> <span class="st">"future"</span>       <span class="st">"function"</span></span></code></pre></div>
 <p>Option <code>future.plan</code> is ignored if command-line option
@@ -155,12 +155,13 @@ option <code>future.plan</code> or command-line option
 <div class="section level2">
 <h2 id="command-line-options">Command-line options<a class="anchor" aria-label="anchor" href="#command-line-options"></a>
 </h2>
-<p>When loaded, the future package checks for the command-line option
-<code>--parallel=ncores</code> (short <code>-p ncores</code>) and sets
-the future backend (via option <code>future.plan</code>) and the number
-of available cores (via option <code>mc.cores</code>) accordingly. This
-provides a convenient mechanism for specifying parallel future
-processing from the command line. For example, if we start R with</p>
+<p>When loaded, the <strong>future</strong> package checks for the
+command-line option <code>--parallel=ncores</code> (short
+<code>-p ncores</code>) and sets the future backend (via option
+<code>future.plan</code>) and the number of available cores (via option
+<code>mc.cores</code>) accordingly. This provides a convenient mechanism
+for specifying parallel future processing from the command line. For
+example, if we start R with</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="ex">$</span> R <span class="at">--quiet</span> <span class="at">--args</span> <span class="at">--parallel</span><span class="op">=</span>2</span></code></pre></div>
 <p>then future will interpret this as we wish to resolve futures in
 parallel using 2 cores. More specifically, we get that</p>
@@ -174,7 +175,7 @@ which provides a convenient mechanism for launching future-enhanced R
 scripts such that they run in parallel, e.g.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="ex">$</span> Rscript analysis.R <span class="at">--parallel</span><span class="op">=</span>4</span></code></pre></div>
 <p>This does, of course, require that the script uses futures and the
-future package.</p>
+<strong>future</strong> package.</p>
 <p>If <code>--parallel=1</code> is specified, or equivalently
 <code>-p 1</code>, then futures are resolved using a single process.</p>
 <p>Specifying these command-line options override any other startup

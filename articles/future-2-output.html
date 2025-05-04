@@ -32,7 +32,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.40.0-9208</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.40.0-9209</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -226,45 +226,73 @@ individual conditions captured. For example,</p>
 <div class="section level2">
 <h2 id="future-frontends">Future frontends<a class="anchor" aria-label="anchor" href="#future-frontends"></a>
 </h2>
-<p>The output is relayed automatically also when using frontends such as
-<a href="https://cran.r-project.org/package=future.apply" class="external-link">future.apply</a>
-or <a href="https://cran.r-project.org/package=foreach" class="external-link">foreach</a> with
-<a href="https://cran.r-project.org/package=doFuture" class="external-link">doFuture</a>.
-Again, it works with any future backend. For example,</p>
+<p>Because relaying of output is handled at the core of the future
+framework, it automatically works the same when using packages such as
+<strong><a href="https://future.apply.futureverse.org/" class="external-link">future.apply</a></strong>,
+<strong><a href="https://furrr.futureverse.org/" class="external-link">furrr</a></strong>, and
+<strong><a href="https://cran.r-project.org/package=foreach" class="external-link">foreach</a></strong>
+with <strong><a href="https://doFuture.futureverse.org/" class="external-link">doFuture</a></strong>. Here are
+some examples how “it just works”:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">library</span>(future.apply)</span>
 <span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">plan</span>(future.callr<span class="sc">::</span>callr)</span>
 <span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a></span>
-<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a><span class="sc">&gt;</span> y <span class="ot">&lt;-</span> <span class="fu">future_lapply</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">FUN =</span> <span class="cf">function</span>(x) { <span class="fu">cat</span>(<span class="st">"x ="</span>, x, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>); <span class="fu">message</span>(<span class="st">"x : "</span>, x); <span class="fu">sqrt</span>(x) })</span>
-<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>x <span class="ot">=</span> <span class="dv">1</span> </span>
-<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a>x <span class="ot">=</span> <span class="dv">2</span> </span>
-<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a>x <span class="ot">=</span> <span class="dv">3</span> </span>
-<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a>x <span class="sc">:</span> <span class="dv">1</span>  <span class="do">## &lt;= 1st message</span></span>
-<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a>x <span class="sc">:</span> <span class="dv">2</span>  <span class="do">## &lt;= 2nd message</span></span>
-<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a>x <span class="sc">:</span> <span class="dv">3</span>  <span class="do">## &lt;= 3rd message</span></span>
-<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a></span>
-<span id="cb7-12"><a href="#cb7-12" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">str</span>(y)</span>
-<span id="cb7-13"><a href="#cb7-13" tabindex="-1"></a>List of <span class="dv">3</span></span>
-<span id="cb7-14"><a href="#cb7-14" tabindex="-1"></a> <span class="sc">$</span> <span class="er">:</span> num <span class="dv">1</span></span>
-<span id="cb7-15"><a href="#cb7-15" tabindex="-1"></a> <span class="sc">$</span> <span class="er">:</span> num <span class="fl">1.41</span></span>
-<span id="cb7-16"><a href="#cb7-16" tabindex="-1"></a> <span class="sc">$</span> <span class="er">:</span> num <span class="fl">1.73</span></span></code></pre></div>
-<p>Equivalently,</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">library</span>(doFuture)</span>
-<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">registerDoFuture</span>()</span>
-<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">plan</span>(future.callr<span class="sc">::</span>callr)</span>
-<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a></span>
-<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a><span class="sc">&gt;</span> y <span class="ot">&lt;-</span> <span class="fu">foreach</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>) <span class="sc">%dopar%</span> { <span class="fu">cat</span>(<span class="st">"x ="</span>, x, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>);  <span class="fu">message</span>(<span class="st">"x : "</span>, x); <span class="fu">sqrt</span>(x) }</span>
-<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a>x <span class="ot">=</span> <span class="dv">1</span> </span>
-<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a>x <span class="ot">=</span> <span class="dv">2</span> </span>
-<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a>x <span class="ot">=</span> <span class="dv">3</span></span>
-<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a>x <span class="sc">:</span> <span class="dv">1</span>  <span class="do">## &lt;= 1st message</span></span>
-<span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a>x <span class="sc">:</span> <span class="dv">2</span>  <span class="do">## &lt;= 2nd message</span></span>
-<span id="cb8-11"><a href="#cb8-11" tabindex="-1"></a>x <span class="sc">:</span> <span class="dv">3</span>  <span class="do">## &lt;= 3rd message</span></span>
-<span id="cb8-12"><a href="#cb8-12" tabindex="-1"></a></span>
-<span id="cb8-13"><a href="#cb8-13" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">str</span>(y)</span>
-<span id="cb8-14"><a href="#cb8-14" tabindex="-1"></a>List of <span class="dv">3</span></span>
-<span id="cb8-15"><a href="#cb8-15" tabindex="-1"></a> <span class="sc">$</span> <span class="er">:</span> num <span class="dv">1</span></span>
-<span id="cb8-16"><a href="#cb8-16" tabindex="-1"></a> <span class="sc">$</span> <span class="er">:</span> num <span class="fl">1.41</span></span>
-<span id="cb8-17"><a href="#cb8-17" tabindex="-1"></a> <span class="sc">$</span> <span class="er">:</span> num <span class="fl">1.73</span></span></code></pre></div>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a><span class="sc">&gt;</span> y <span class="ot">&lt;-</span> <span class="fu">future_lapply</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">FUN =</span> <span class="cf">function</span>(x) {</span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">"x ="</span>, x, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a>    <span class="fu">message</span>(<span class="st">"x : "</span>, x)</span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a>    <span class="fu">sqrt</span>(x)</span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a>  })</span>
+<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a>x <span class="ot">=</span> <span class="dv">1</span> </span>
+<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a>x <span class="ot">=</span> <span class="dv">2</span> </span>
+<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a>x <span class="ot">=</span> <span class="dv">3</span> </span>
+<span id="cb7-12"><a href="#cb7-12" tabindex="-1"></a>x <span class="sc">:</span> <span class="dv">1</span>  <span class="do">## &lt;= 1st message</span></span>
+<span id="cb7-13"><a href="#cb7-13" tabindex="-1"></a>x <span class="sc">:</span> <span class="dv">2</span>  <span class="do">## &lt;= 2nd message</span></span>
+<span id="cb7-14"><a href="#cb7-14" tabindex="-1"></a>x <span class="sc">:</span> <span class="dv">3</span>  <span class="do">## &lt;= 3rd message</span></span>
+<span id="cb7-15"><a href="#cb7-15" tabindex="-1"></a></span>
+<span id="cb7-16"><a href="#cb7-16" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">str</span>(y)</span>
+<span id="cb7-17"><a href="#cb7-17" tabindex="-1"></a>List of <span class="dv">3</span></span>
+<span id="cb7-18"><a href="#cb7-18" tabindex="-1"></a> <span class="sc">$</span> <span class="er">:</span> num <span class="dv">1</span></span>
+<span id="cb7-19"><a href="#cb7-19" tabindex="-1"></a> <span class="sc">$</span> <span class="er">:</span> num <span class="fl">1.41</span></span>
+<span id="cb7-20"><a href="#cb7-20" tabindex="-1"></a> <span class="sc">$</span> <span class="er">:</span> num <span class="fl">1.73</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">library</span>(furrr)</span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">plan</span>(future.callr<span class="sc">::</span>callr)</span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a><span class="sc">&gt;</span> y <span class="ot">&lt;-</span> <span class="fu">future_map</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="cf">function</span>(x) {</span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">"x ="</span>, x, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a>    <span class="fu">message</span>(<span class="st">"x : "</span>, x)</span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a>    <span class="fu">sqrt</span>(x)</span>
+<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a>  })</span>
+<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a>x <span class="ot">=</span> <span class="dv">1</span> </span>
+<span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a>x <span class="ot">=</span> <span class="dv">2</span> </span>
+<span id="cb8-11"><a href="#cb8-11" tabindex="-1"></a>x <span class="ot">=</span> <span class="dv">3</span> </span>
+<span id="cb8-12"><a href="#cb8-12" tabindex="-1"></a>x <span class="sc">:</span> <span class="dv">1</span>  <span class="do">## &lt;= 1st message</span></span>
+<span id="cb8-13"><a href="#cb8-13" tabindex="-1"></a>x <span class="sc">:</span> <span class="dv">2</span>  <span class="do">## &lt;= 2nd message</span></span>
+<span id="cb8-14"><a href="#cb8-14" tabindex="-1"></a>x <span class="sc">:</span> <span class="dv">3</span>  <span class="do">## &lt;= 3rd message</span></span>
+<span id="cb8-15"><a href="#cb8-15" tabindex="-1"></a></span>
+<span id="cb8-16"><a href="#cb8-16" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">str</span>(y)</span>
+<span id="cb8-17"><a href="#cb8-17" tabindex="-1"></a>List of <span class="dv">3</span></span>
+<span id="cb8-18"><a href="#cb8-18" tabindex="-1"></a> <span class="sc">$</span> <span class="er">:</span> num <span class="dv">1</span></span>
+<span id="cb8-19"><a href="#cb8-19" tabindex="-1"></a> <span class="sc">$</span> <span class="er">:</span> num <span class="fl">1.41</span></span>
+<span id="cb8-20"><a href="#cb8-20" tabindex="-1"></a> <span class="sc">$</span> <span class="er">:</span> num <span class="fl">1.73</span></span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">library</span>(doFuture)</span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">plan</span>(future.callr<span class="sc">::</span>callr)</span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a><span class="sc">&gt;</span> y <span class="ot">&lt;-</span> <span class="fu">foreach</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>) <span class="sc">%dofuture%</span> {</span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">"x ="</span>, x, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a>    <span class="fu">message</span>(<span class="st">"x : "</span>, x)</span>
+<span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a>    <span class="fu">sqrt</span>(x)</span>
+<span id="cb9-8"><a href="#cb9-8" tabindex="-1"></a>  }</span>
+<span id="cb9-9"><a href="#cb9-9" tabindex="-1"></a>x <span class="ot">=</span> <span class="dv">1</span> </span>
+<span id="cb9-10"><a href="#cb9-10" tabindex="-1"></a>x <span class="ot">=</span> <span class="dv">2</span> </span>
+<span id="cb9-11"><a href="#cb9-11" tabindex="-1"></a>x <span class="ot">=</span> <span class="dv">3</span></span>
+<span id="cb9-12"><a href="#cb9-12" tabindex="-1"></a>x <span class="sc">:</span> <span class="dv">1</span>  <span class="do">## &lt;= 1st message</span></span>
+<span id="cb9-13"><a href="#cb9-13" tabindex="-1"></a>x <span class="sc">:</span> <span class="dv">2</span>  <span class="do">## &lt;= 2nd message</span></span>
+<span id="cb9-14"><a href="#cb9-14" tabindex="-1"></a>x <span class="sc">:</span> <span class="dv">3</span>  <span class="do">## &lt;= 3rd message</span></span>
+<span id="cb9-15"><a href="#cb9-15" tabindex="-1"></a></span>
+<span id="cb9-16"><a href="#cb9-16" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">str</span>(y)</span>
+<span id="cb9-17"><a href="#cb9-17" tabindex="-1"></a>List of <span class="dv">3</span></span>
+<span id="cb9-18"><a href="#cb9-18" tabindex="-1"></a> <span class="sc">$</span> <span class="er">:</span> num <span class="dv">1</span></span>
+<span id="cb9-19"><a href="#cb9-19" tabindex="-1"></a> <span class="sc">$</span> <span class="er">:</span> num <span class="fl">1.41</span></span>
+<span id="cb9-20"><a href="#cb9-20" tabindex="-1"></a> <span class="sc">$</span> <span class="er">:</span> num <span class="fl">1.73</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="capturing-output">Capturing output<a class="anchor" aria-label="anchor" href="#capturing-output"></a>
@@ -272,25 +300,25 @@ Again, it works with any future backend. For example,</p>
 <p>To capture the output produced by futures, use
 <code><a href="https://rdrr.io/r/utils/capture.output.html" class="external-link">capture.output()</a></code> as you would do when capturing output
 elsewhere in R. For example,</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">library</span>(future)</span>
-<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a><span class="sc">&gt;</span> fa <span class="ot">&lt;-</span> <span class="fu">future</span>({ <span class="fu">cat</span>(<span class="st">"Hello world!</span><span class="sc">\n</span><span class="st">"</span>); <span class="fu">print</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>); <span class="dv">42</span><span class="dt">L</span> })</span>
-<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a><span class="sc">&gt;</span> stdout <span class="ot">&lt;-</span> <span class="fu">capture.output</span>(a <span class="ot">&lt;-</span> <span class="fu">value</span>(fa))</span>
-<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a><span class="sc">&gt;</span> stdout</span>
-<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"Hello world!"</span> <span class="st">"[1] 1 2 3"</span></span>
-<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a><span class="sc">&gt;</span> a</span>
-<span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">42</span></span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">library</span>(future)</span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a><span class="sc">&gt;</span> fa <span class="ot">&lt;-</span> <span class="fu">future</span>({ <span class="fu">cat</span>(<span class="st">"Hello world!</span><span class="sc">\n</span><span class="st">"</span>); <span class="fu">print</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>); <span class="dv">42</span><span class="dt">L</span> })</span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a><span class="sc">&gt;</span> stdout <span class="ot">&lt;-</span> <span class="fu">capture.output</span>(a <span class="ot">&lt;-</span> <span class="fu">value</span>(fa))</span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a><span class="sc">&gt;</span> stdout</span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"Hello world!"</span> <span class="st">"[1] 1 2 3"</span></span>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a><span class="sc">&gt;</span> a</span>
+<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">42</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="suppressing-messages">Suppressing messages<a class="anchor" aria-label="anchor" href="#suppressing-messages"></a>
 </h2>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">library</span>(future)</span>
-<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">plan</span>(multisession)</span>
-<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a><span class="sc">&gt;</span> fa <span class="ot">&lt;-</span> <span class="fu">future</span>({ <span class="fu">message</span>(<span class="st">"Hello"</span>); <span class="fu">print</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>); <span class="fu">message</span>(<span class="st">"world!"</span>); <span class="fu">cat</span>(<span class="st">"ping</span><span class="sc">\n</span><span class="st">"</span>); <span class="dv">42</span><span class="dt">L</span> })</span>
-<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">suppressMessages</span>(a <span class="ot">&lt;-</span> <span class="fu">value</span>(fa))</span>
-<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">1</span> <span class="dv">2</span> <span class="dv">3</span></span>
-<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a>ping</span>
-<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a><span class="sc">&gt;</span> a</span>
-<span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">42</span></span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">library</span>(future)</span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">plan</span>(multisession)</span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a><span class="sc">&gt;</span> fa <span class="ot">&lt;-</span> <span class="fu">future</span>({ <span class="fu">message</span>(<span class="st">"Hello"</span>); <span class="fu">print</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>); <span class="fu">message</span>(<span class="st">"world!"</span>); <span class="fu">cat</span>(<span class="st">"ping</span><span class="sc">\n</span><span class="st">"</span>); <span class="dv">42</span><span class="dt">L</span> })</span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">suppressMessages</span>(a <span class="ot">&lt;-</span> <span class="fu">value</span>(fa))</span>
+<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">1</span> <span class="dv">2</span> <span class="dv">3</span></span>
+<span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a>ping</span>
+<span id="cb11-7"><a href="#cb11-7" tabindex="-1"></a><span class="sc">&gt;</span> a</span>
+<span id="cb11-8"><a href="#cb11-8" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">42</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="known-limitations">Known limitations<a class="anchor" aria-label="anchor" href="#known-limitations"></a>

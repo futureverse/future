@@ -32,7 +32,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.40.0-9208</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.40.0-9209</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -123,24 +123,29 @@ processing, validation is a top priority and part of the design and
 implementation throughout the future ecosystem. Several types of testing
 are performed.</p>
 <p>First, all the essential core packages part of the future framework,
-<strong><a href="https://CRAN.R-Project.org/package=future" class="external-link">future</a></strong>,
-<strong><a href="https://CRAN.R-Project.org/package=globals" class="external-link">globals</a></strong>,
-and <strong><a href="https://CRAN.R-Project.org/package=listenv" class="external-link">listenv</a></strong>,
-implement a rich set of package tests. These are validated regularly
-across the wide-range of operating systems (Linux, Solaris, macOS, and
-MS Windows) and R versions available on CRAN, via continuous integration
-(CI) (<a href="https://github.com/features/actions" class="external-link">GitHub Actions</a>),
-and on <a href="https://r-hub.github.io/rhub/" class="external-link">R-hub</a>.</p>
+<strong><a href="https://future.futureverse.org">future</a></strong>,
+<strong><a href="https://parallelly.futureverse.org" class="external-link">parallelly</a></strong>,
+<strong><a href="https://globals.futureverse.org" class="external-link">globals</a></strong>,
+and <strong><a href="https://listenv.futureverse.org" class="external-link">listenv</a></strong>, implement a
+rich set of package tests. These are validated regularly across the
+wide-range of operating systems (Linux, macOS, and MS Windows) and R
+versions available on CRAN, on continuous integration (CI) services
+(GitHub Actions), an on <a href="https://r-hub.github.io/rhub/" class="external-link">R-hub</a>. The core packages are
+also tested with non-English locale settings, including Korean,
+Simplified Chinese (China) and Traditional Chinese (Taiwan). They are
+also verified to work with single-core and dual-core machines, which may
+be the case for some free, cloud services that provide R.</p>
 <p>Second, for each new release, these packages undergo full
 reverse-package dependency checks using <strong><a href="https://github.com/r-lib/revdepcheck" class="external-link">revdepcheck</a></strong>. As
-of June 2022, the <strong>future</strong> package is tested against 240+
+of May 2025, the <strong>future</strong> package is tested against ~450
 direct reverse-package dependencies available on CRAN and Bioconductor.
 These checks are performed on Linux with both the default settings and
 when forcing tests to use multisession workers (SOCK clusters), which
-further validates that globals and packages are identified
-correctly.</p>
+further validates that globals and packages are identified correctly. We
+also test with <code>NOT_CRAN = true</code>, to further increase the
+test coverage.</p>
 <p>Third, a suite of <em>Future API conformance tests</em> available in
-the <strong><a href="https://CRAN.R-Project.org/package=future" class="external-link">future.tests</a></strong>
+the <strong><a href="https://future.tests.futureverse.org" class="external-link">future.tests</a></strong>
 package validates the correctness of all future backends. Any new future
 backend developed, must pass these tests to comply with the <em>Future
 API</em>. By conforming to this API, the end-user can trust that the
@@ -163,9 +168,9 @@ and popular CRAN packages <strong><a href="https://CRAN.R-Project.org/package=ca
 <strong><a href="https://CRAN.R-Project.org/package=NMF" class="external-link">NMF</a></strong>,
 <strong><a href="https://CRAN.R-Project.org/package=plyr" class="external-link">plyr</a></strong>, and
 <strong><a href="https://CRAN.R-Project.org/package=TSP" class="external-link">TSP</a></strong> to use
-the <strong><a href="https://CRAN.R-Project.org/package=doFuture" class="external-link">doFuture</a></strong>
-adaptor. This allows us to run these examples with a variety of future
-backends to validate that the examples produce no run-time errors, which
+the <strong><a href="https://doFuture.futureverse.org" class="external-link">doFuture</a></strong> adaptor.
+This allows us to run these examples with a variety of future backends
+to validate that the examples produce no run-time errors, which
 indirectly validates the backends as well as the <em>Future API</em>. In
 the past, these types of tests helped to identify and resolve corner
 cases where automatic identification of global variables would fail. As
@@ -173,8 +178,8 @@ a side note, several of these foreach-based examples fail when using a
 parallel foreach adaptor because they do not properly export globals or
 declare package dependencies. The exception is when using the sequential
 <em>doSEQ</em> adaptor (default), fork-based ones such as <strong><a href="https://CRAN.R-Project.org/package=doMC" class="external-link">doMC</a></strong>, or the
-generic <strong><a href="https://CRAN.R-Project.org/package=doFuture" class="external-link">doFuture</a></strong>,
-which supports any future backend and relies on the future framework for
+generic <strong><a href="https://doFuture.futureverse.org" class="external-link">doFuture</a></strong>, which
+supports any future backend and relies on the future framework for
 handling globals and packages(*)</p>
 <p>Lastly, analogously to above reverse-dependency checks of each new
 release, CRAN and Bioconductor continuously run checks on all these
@@ -182,9 +187,9 @@ direct, but also indirect, reverse dependencies, which further increases
 the validation of the <em>Future API</em> and the future ecosystem at
 large.</p>
 <p>(*) There is a plan to update <strong><a href="https://CRAN.R-Project.org/package=foreach" class="external-link">foreach</a></strong>
-to use the exact same static-code-analysis method as the <strong><a href="https://CRAN.R-Project.org/package=future" class="external-link">future</a></strong>
-package use for identifying globals. As the maintainer of the future
-framework, I collaborate with the maintainer of the <strong><a href="https://CRAN.R-Project.org/package=foreach" class="external-link">foreach</a></strong>
+to use the exact same static-code-analysis method as the <strong><a href="https://future.futureverse.org">future</a></strong> package use
+for identifying globals. As the maintainer of the future framework, I
+collaborate with the maintainer of the <strong><a href="https://CRAN.R-Project.org/package=foreach" class="external-link">foreach</a></strong>
 package to implement this.</p>
   </main>
 </div>
