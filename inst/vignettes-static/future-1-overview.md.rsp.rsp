@@ -144,32 +144,22 @@ To keep it simple, we will use the implicit style in the rest of this document, 
 
 ## Controlling How Futures are Resolved
 
-The future package implements the following built-in future backends:
+The **future** package comes with built-in future backends that leverage the **parallel** package part of R itself. In addition to these backends, others exist in package extensions, e.g. **[future.callr]**, **[future.mirai]**, and **[future.batchtools]**. Below is an overview of the most common backends that you as an end-user can chose from.
 
-| Package    | Backend            | OSes        | How futures are evaluated
-|:---------- |:----------------|:------------|:-----------------------------------------------------
-| **future** | `sequential`    | all         | sequentially and in the current R process
-| **future** | `multicore`     | not Windows/not RStudio | parallelly via forked R processes (on current machine)
-| **future** | `multisession`  | all         | parallelly via background R sessions (on current machine)
-| **future** | `cluster`       | all         | parallelly in external R sessions on current, local, and/or remote machines
+| Package / Backend             | Features    | How futures are evaluated
+|:----------------|:------------|:-----------------------------------------------------
+| **future**<br> `sequential`    | 📶<br>♻️<br>         | sequentially and in the current R process; default 
+| **future**<br> `multisession`  | 📶<br>♻️<br>        | parallelly via background R sessions on current machine
+| **future**<br> `cluster`       | 📶<br>♻️*<br>       | parallelly in external R sessions on current, local, and/or remote machines
+| **future**<br> `multicore`     | 📶<br>♻️<br> | (not recommended) parallelly via forked R processes on current machine; not with GUIs like RStudio; not on Windows
+| **[future.callr]**<br> `callr`                    | 📶(next)<br>♻️(next)<br> | parallelly via transient **[callr]** background R sessions on current machine; all memory is returned when as each future is resolved
+| **[future.mirai]**<br> `mirai_multisession`       | 📶(next)<br>♻️(next)<br> | parallelly via **[mirai]** background R sessions on current machine; low latency
+| **[future.mirai]**<br> `mirai_cluster`            |♻️(next)<br> | parallelly via **[mirai]** daemons running locally or remotely
+| **[future.batchtools]**<br> `batchtools_lsf`<br>`batchtools_openlava`<br>`batchtools_sge`<br>`batchtools_slurm`<br>`batchtools_torque` | 📶(soon)<br> ♻️(soon) | parallelly on HPC job schedulers (Load Sharing Facility [LSF], OpenLava, TORQUE/PBS, Son/Sun/Oracle/Univa Grid Engine [SGE], Slurm) via **[batchtools]**; for long-running tasks; high latency |
 
-In addition to the built-in ones, additional parallel backends are
-implemented in future-backend packages that leverage other R packages
-for parallel and distributed processing, e.g. **[batchtools]**,
-**[callr]**, and **[mirai]**. Currently known ones are:
-
-
-| Package               |Backend                | OSes        | How futures are evaluated
-|:----------------------|:----------------------|:------------|:-----------------------------------------------------
-| **[future.batchtools]** | `batchtools_local`    | all         | sequentially in a background process (on current machine) 
-| **[future.batchtools]** | `batchtools_lsf`      | all         | parallelly via a Load Sharing Facility (LSF) HPC job scheduler
-| **[future.batchtools]** | `batchtools_openlava` | all         | parallelly via an OpenLava HPC job scheduler
-| **[future.batchtools]** | `batchtools_sge`      | all         | parallelly via a Grid Engine (e.g. SGE) HPC job scheduler
-| **[future.batchtools]** | `batchtools_slurm`    | all         | parallelly via a Slurm HPC job scheduler
-| **[future.batchtools]** | `batchtools_torque`   | all         | parallelly via a TORQUE/PBS HPC job scheduler
-| **[future.callr]**      | `callr`               | all         | parallelly via one-time **callr** background R sessions (on current machine)
-| **[future.mirai]**      | `mirai_multisession`  | all         | parallelly via **mirai** background R sessions (on current machine)
-| **[future.mirai]**      | `mirai_cluster`       | all         | parallelly via **mirai** daemons running locally or remotely
+📶: futures relay progress updates in real-time<br>
+♻️: futures are interruptible and restartable; * disabled by default<br>
+(next): next release; (soon): in a near-future release
 
 By default, future expressions are evaluated synchronously in the current R session via the "sequential" backend.  In this section, we will go through the other backend and discuss what they have in common and how they differ.
 
