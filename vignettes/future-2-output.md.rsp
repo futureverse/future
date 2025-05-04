@@ -130,13 +130,17 @@ world!      ## <= 2nd message
 
 ## Future frontends
 
-The output is relayed automatically also when using frontends such as [future.apply] or [foreach] with [doFuture].  Again, it works with any future backend.  For example,
+Because relaying of output is handled at the core of the future framework, it automatically works the same when using packages such as **[future.apply]**, **[furrr]**, and **[foreach]** with **[doFuture]**. Here are some examples how "it just works":
 
 ```r
 > library(future.apply)
 > plan(future.callr::callr)
 
-> y <- future_lapply(1:3, FUN = function(x) { cat("x =", x, "\n"); message("x : ", x); sqrt(x) })
+> y <- future_lapply(1:3, FUN = function(x) {
+    cat("x =", x, "\n")
+    message("x : ", x)
+    sqrt(x)
+  })
 x = 1 
 x = 2 
 x = 3 
@@ -150,15 +154,39 @@ List of 3
  $ : num 1.41
  $ : num 1.73
 ```
- 
-Equivalently,
+
+```r
+> library(furrr)
+> plan(future.callr::callr)
+
+> y <- future_map(1:3, function(x) {
+    cat("x =", x, "\n")
+    message("x : ", x)
+    sqrt(x)
+  })
+x = 1 
+x = 2 
+x = 3 
+x : 1  ## <= 1st message
+x : 2  ## <= 2nd message
+x : 3  ## <= 3rd message
+
+> str(y)
+List of 3
+ $ : num 1
+ $ : num 1.41
+ $ : num 1.73
+```
 
 ```r
 > library(doFuture)
-> registerDoFuture()
 > plan(future.callr::callr)
 
-> y <- foreach(x = 1:3) %dopar% { cat("x =", x, "\n");  message("x : ", x); sqrt(x) }
+> y <- foreach(x = 1:3) %dofuture% {
+    cat("x =", x, "\n")
+    message("x : ", x)
+    sqrt(x)
+  }
 x = 1 
 x = 2 
 x = 3
@@ -176,7 +204,7 @@ List of 3
  
 ## Capturing output
 
-To capture the output produced by futures, use `capture.output()` as you would do when capturing output elsewhere in R.  For example,
+To capture the output produced by futures, use `capture.output()` as you would do when capturing output elsewhere in R. For example,
 
 ```r
 > library(future)
@@ -209,8 +237,7 @@ It is only the standard output that is relayed.  It is _not possible_ to relay o
 
 
 [foreach]: https://cran.r-project.org/package=foreach
-[future]: https://cran.r-project.org/package=future
-[future.apply]: https://cran.r-project.org/package=future.apply
-[doFuture]: https://cran.r-project.org/package=doFuture
-[globals]: https://cran.r-project.org/package=globals
-[listenv]: https://cran.r-project.org/package=listenv
+[future]: https://future.futureverse.org/
+[future.apply]: https://future.apply.futureverse.org/
+[furrr]: https://furrr.futureverse.org/
+[doFuture]: https://doFuture.futureverse.org/
