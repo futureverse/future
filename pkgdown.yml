@@ -4,6 +4,7 @@ pkgdown_sha: ~
 articles:
   future-1-overview: future-1-overview.html
   future-2-output: future-2-output.html
+  future-2b-backend: future-2b-backend.html
   future-3-topologies: future-3-topologies.html
   future-4-issues: future-4-issues.html
   future-4-non-exportable-objects: future-4-non-exportable-objects.html
@@ -11,7 +12,7 @@ articles:
   future-6-future-api-backend-specification: future-6-future-api-backend-specification.html
   future-7-for-package-developers: future-7-for-package-developers.html
   future-8-how-future-is-validated: future-8-how-future-is-validated.html
-last_built: 2025-05-04T16:54Z
+last_built: 2025-05-04T17:04Z
 urls:
   reference: https://future.futureverse.org/reference
   article: https://future.futureverse.org/articles

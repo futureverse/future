@@ -26,6 +26,7 @@
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/future-1-overview.html">A Future for R: A Comprehensive Overview</a></li>
     <li><a class="dropdown-item" href="../articles/future-2-output.html">A Future for R: Text and Message Output</a></li>
+    <li><a class="dropdown-item" href="../articles/future-2b-backend.html">A Future for R: Available Future Backends</a></li>
     <li><a class="dropdown-item" href="../articles/future-3-topologies.html">A Future for R: Future Topologies</a></li>
     <li><a class="dropdown-item" href="../articles/future-4-issues.html">A Future for R: Common Issues with Solutions</a></li>
     <li><a class="dropdown-item" href="../articles/future-4-non-exportable-objects.html">A Future for R: Non-Exportable Objects</a></li>
@@ -143,7 +144,7 @@ such that it can be relaunched, possible on another future backend.</p></div>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## The value of the canceled future is an error</span></span></span>
 <span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/try.html" class="external-link">try</a></span><span class="op">(</span><span class="va">v</span> <span class="op">&lt;-</span> <span class="fu"><a href="value.html">value</a></span><span class="op">(</span><span class="va">fs</span><span class="op">[</span><span class="op">!</span><span class="va">r</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Error : Future (NULL) of class MultisessionFuture was canceled, while running on ‘localhost’ (pid 2583539)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Error : Future (NULL) of class MultisessionFuture was canceled, while running on ‘localhost’ (pid 2593058)</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Shut down parallel workers</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="plan.html">plan</a></span><span class="op">(</span><span class="va">sequential</span><span class="op">)</span></span></span>

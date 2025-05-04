@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>A Future for R: Controlling Default Future Strategy • future</title>
+<title>A Future for R: Available Future Backends • future</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="96x96" href="../favicon-96x96.png">
 <link rel="icon" type="”image/svg+xml”" href="../favicon.svg">
 <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
@@ -15,7 +15,7 @@
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="A Future for R: Controlling Default Future Strategy">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="A Future for R: Available Future Backends">
 <!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-SB3EQSD9FR"></script><script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -107,81 +107,116 @@
 
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="../logo.png" class="logo" alt=""><h1>A Future for R: Controlling Default Future Strategy</h1>
+      <img src="../logo.png" class="logo" alt=""><h1>A Future for R: Available Future Backends</h1>
                         <h4 data-toc-skip class="author">Henrik
 Bengtsson</h4>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/futureverse/future/blob/HEAD/vignettes/future-5-startup.md.rsp" class="external-link"><code>vignettes/future-5-startup.md.rsp</code></a></small>
-      <div class="d-none name"><code>future-5-startup.Rmd</code></div>
+      <small class="dont-index">Source: <a href="https://github.com/futureverse/future/blob/HEAD/vignettes/future-2b-backend.md.rsp" class="external-link"><code>vignettes/future-2b-backend.md.rsp</code></a></small>
+      <div class="d-none name"><code>future-2b-backend.Rmd</code></div>
     </div>
 
     
     
-<p>The default is to use synchronous futures, but this <em>default</em>
-can be overridden via R options, system environment variables and
-command-line options as explained below as well as in
-<code><a href="../reference/zzz-future.options.html">help("future.options", package = "future")</a></code>.</p>
-<div class="section level2">
-<h2 id="r-options">R options<a class="anchor" aria-label="anchor" href="#r-options"></a>
-</h2>
-<p>The default future backend can be controlled via R option
-<code>future.plan</code>. For instance, if we add</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>future.plan <span class="op">=</span> <span class="st">"multisession"</span><span class="op">)</span></span></code></pre></div>
-<p>to our <code>~/.Rprofile</code> startup script, the future package
-will resolve futures in parallel (asynchronously using all available
-cores), i.e.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="ex">$</span> Rscript <span class="at">-e</span> <span class="st">"class(future::plan())"</span></span>
-<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="ex">[1]</span> <span class="st">"multisession"</span> <span class="st">"future"</span>       <span class="st">"function"</span></span></code></pre></div>
-<p>Option <code>future.plan</code> is ignored if command-line option
-<code>--parallel</code> (<code>-p</code>) is specified.</p>
-</div>
-<div class="section level2">
-<h2 id="environment-variables">Environment variables<a class="anchor" aria-label="anchor" href="#environment-variables"></a>
-</h2>
-<p>An alternative to using <code><a href="https://rdrr.io/r/base/options.html" class="external-link">options()</a></code> for setting option
-<code>future.plan</code> is to specify system environment variable
-<code>R_FUTURE_PLAN</code>. If set, then the future package will set
-<code>future.plan</code> accordingly <em>when loaded</em>. For
-example,</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="ex">$</span> export R_FUTURE_PLAN=multisession</span>
-<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="ex">$</span> Rscript <span class="at">-e</span> <span class="st">"class(future::plan())"</span></span>
-<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="ex">[1]</span> <span class="st">"multisession"</span> <span class="st">"future"</span>       <span class="st">"function"</span></span></code></pre></div>
-<p>Environment variable <code>R_FUTURE_PLAN</code> is ignored if either
-option <code>future.plan</code> or command-line option
-<code>--parallel</code> (<code>-p</code>) is specified.</p>
-</div>
-<div class="section level2">
-<h2 id="command-line-options">Command-line options<a class="anchor" aria-label="anchor" href="#command-line-options"></a>
-</h2>
-<p>When loaded, the future package checks for the command-line option
-<code>--parallel=ncores</code> (short <code>-p ncores</code>) and sets
-the future backend (via option <code>future.plan</code>) and the number
-of available cores (via option <code>mc.cores</code>) accordingly. This
-provides a convenient mechanism for specifying parallel future
-processing from the command line. For example, if we start R with</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="ex">$</span> R <span class="at">--quiet</span> <span class="at">--args</span> <span class="at">--parallel</span><span class="op">=</span>2</span></code></pre></div>
-<p>then future will interpret this as we wish to resolve futures in
-parallel using 2 cores. More specifically, we get that</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">availableCores</span>()</span>
-<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>mc.cores</span>
-<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>       <span class="dv">2</span></span>
-<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">class</span>(future<span class="sc">::</span><span class="fu">plan</span>())</span>
-<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"FutureStrategy"</span> <span class="st">"tweaked"</span>        <span class="st">"multisession"</span>   <span class="st">"future"</span>         <span class="st">"function"</span></span></code></pre></div>
-<p>We can use this command-line option also with <code>Rscript</code>,
-which provides a convenient mechanism for launching future-enhanced R
-scripts such that they run in parallel, e.g.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="ex">$</span> Rscript analysis.R <span class="at">--parallel</span><span class="op">=</span>4</span></code></pre></div>
-<p>This does, of course, require that the script uses futures and the
-future package.</p>
-<p>If <code>--parallel=1</code> is specified, or equivalently
-<code>-p 1</code>, then futures are resolved using a single process.</p>
-<p>Specifying these command-line options override any other startup
-settings.</p>
-</div>
-  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
-    </nav></aside>
+<p>The <strong>future</strong> package comes with built-in future
+backends that leverage the <strong>parallel</strong> package part of R
+itself. In addition to these backends, others exist in package
+extensions, e.g. <strong><a href="https://future.callr.futureverse.org" class="external-link">future.callr</a></strong>,
+<strong><a href="https://future.mirai.futureverse.org" class="external-link">future.mirai</a></strong>,
+and <strong><a href="https://future.batchtools.futureverse.org" class="external-link">future.batchtools</a></strong>.
+Below is an overview of the most common backends that you as an end-user
+can chose from.</p>
+<table class="table">
+<colgroup>
+<col width="20%">
+<col width="15%">
+<col width="64%">
+</colgroup>
+<thead><tr class="header">
+<th align="left">Package / Backend</th>
+<th align="left">Features</th>
+<th align="left">How futures are evaluated</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">
+<strong>future</strong><br><code>sequential</code>
+</td>
+<td align="left">📶<br>♻️<br>
+</td>
+<td align="left">sequentially and in the current R process; default</td>
+</tr>
+<tr class="even">
+<td align="left">
+<strong>future</strong><br><code>multisession</code>
+</td>
+<td align="left">📶<br>♻️<br>
+</td>
+<td align="left">parallelly via background R sessions on current
+machine</td>
+</tr>
+<tr class="odd">
+<td align="left">
+<strong>future</strong><br><code>cluster</code>
+</td>
+<td align="left">📶<br>♻️*<br>
+</td>
+<td align="left">parallelly in external R sessions on current, local,
+and/or remote machines</td>
+</tr>
+<tr class="even">
+<td align="left">
+<strong>future</strong><br><code>multicore</code>
+</td>
+<td align="left">📶<br>♻️<br>
+</td>
+<td align="left">(not recommended) parallelly via forked R processes on
+current machine; not with GUIs like RStudio; not on Windows</td>
+</tr>
+<tr class="odd">
+<td align="left">
+<strong><a href="https://future.callr.futureverse.org" class="external-link">future.callr</a></strong><br><code>callr</code>
+</td>
+<td align="left">📶(next)<br>♻️(next)<br>
+</td>
+<td align="left">parallelly via transient <strong><a href="https://cran.r-project.org/package=callr" class="external-link">callr</a></strong>
+background R sessions on current machine; all memory is returned when as
+each future is resolved</td>
+</tr>
+<tr class="even">
+<td align="left">
+<strong><a href="https://future.mirai.futureverse.org" class="external-link">future.mirai</a></strong><br><code>mirai_multisession</code>
+</td>
+<td align="left">📶(next)<br>♻️(next)<br>
+</td>
+<td align="left">parallelly via <strong><a href="https://cran.r-project.org/package=mirai" class="external-link">mirai</a></strong>
+background R sessions on current machine; low latency</td>
+</tr>
+<tr class="odd">
+<td align="left">
+<strong><a href="https://future.mirai.futureverse.org" class="external-link">future.mirai</a></strong><br><code>mirai_cluster</code>
+</td>
+<td align="left">♻️(next)<br>
+</td>
+<td align="left">parallelly via <strong><a href="https://cran.r-project.org/package=mirai" class="external-link">mirai</a></strong>
+daemons running locally or remotely</td>
+</tr>
+<tr class="even">
+<td align="left">
+<strong><a href="https://future.batchtools.futureverse.org" class="external-link">future.batchtools</a></strong><br><code>batchtools_lsf</code><br><code>batchtools_openlava</code><br><code>batchtools_sge</code><br><code>batchtools_slurm</code><br><code>batchtools_torque</code>
+</td>
+<td align="left">📶(soon)<br> ♻️(soon)</td>
+<td align="left">parallelly on HPC job schedulers (Load Sharing Facility
+[LSF], OpenLava, TORQUE/PBS, Son/Sun/Oracle/Univa Grid Engine [SGE],
+Slurm) via <strong><a href="https://cran.r-project.org/package=batchtools" class="external-link">batchtools</a></strong>;
+for long-running tasks; high latency</td>
+</tr>
+</tbody>
+</table>
+<p>📶: futures relay progress updates in real-time<br> ♻️: futures are
+interruptible and restartable; * disabled by default<br> (next): next
+release; (soon): in a near-future release</p>
+  </main>
 </div>
 
 
