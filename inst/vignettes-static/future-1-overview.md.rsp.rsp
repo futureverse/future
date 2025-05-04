@@ -52,7 +52,7 @@ options(mc.cores = 2L)
 
 ## Introduction
 
-The purpose of the [future] package is to provide a very simple and uniform way of evaluating R expressions asynchronously using various resources available to the user.
+The purpose of the **[future]** package is to provide a very simple and uniform way of evaluating R expressions asynchronously using various resources available to the user.
 
 In programming, a _future_ is an abstraction for a _value_ that may be available at some point in the future.  The state of a future can either be _unresolved_ or _resolved_.  As soon as it is resolved, the value is available instantaneously.  If the value is queried while the future is still unresolved, the current process is _blocked_ until the future is resolved.  It is possible to check whether a future is resolved or not without blocking.  Exactly where and when futures are resolved depends on what future backend is set to evaluate them.  For instance, a future can be resolved using the sequential backend, which means it is resolved in the current R session.  Other backends may be used for resolving futures asynchronously, for instance, in parallel on the current machine or on a compute cluster.
 
@@ -157,7 +157,7 @@ The **future** package comes with built-in future backends that leverage the **p
 | **[future.mirai]**<br> `mirai_cluster`            |♻️(next)<br> | parallelly via **[mirai]** daemons running locally or remotely
 | **[future.batchtools]**<br> `batchtools_lsf`<br>`batchtools_openlava`<br>`batchtools_sge`<br>`batchtools_slurm`<br>`batchtools_torque` | 📶(soon)<br> ♻️(soon) | parallelly on HPC job schedulers (Load Sharing Facility [LSF], OpenLava, TORQUE/PBS, Son/Sun/Oracle/Univa Grid Engine [SGE], Slurm) via **[batchtools]**; for long-running tasks; high latency |
 
-📶: futures relay progress updates in real-time<br>
+📶: futures relay progress updates in real-time, e.g. **[progressr]**<br>
 ♻️: futures are interruptible and restartable; * disabled by default<br>
 (next): next release; (soon): in a near-future release
 
@@ -166,7 +166,7 @@ By default, future expressions are evaluated synchronously in the current R sess
 
 ### Consistent Behavior Across Futures
 
-Before going through each of the different future backends, it is probably helpful to clarify the objectives of the Future API (as defined by the future package).  When programming with futures, it should not matter what future backend is used for executing code.  This is because we cannot really know what computational resources the user has access to, so the choice of parallel backend should be in the hands of the user and not the developer. In other words, the code should not make any assumptions on where and when futures are resolved.
+Before going through each of the different future backends, it is probably helpful to clarify the objectives of the Future API (as defined by the **future** package).  When programming with futures, it should not matter what future backend is used for executing code.  This is because we cannot really know what computational resources the user has access to, so the choice of parallel backend should be in the hands of the user and not the developer. In other words, the code should not make any assumptions on where and when futures are resolved.
 
 One of the designs of the Future API was to encapsulate any differences such that all types of futures will appear to work the same.  This despite expressions may be evaluated locally in the current R session or across the world in remote R sessions.  Another obvious advantage of having a consistent API and behavior among different types of futures is that it helps while prototyping.  Typically one would use sequential evaluation while building up a script and, later, when the script is fully developed, one may turn on asynchronous processing.
 
@@ -300,12 +300,12 @@ Just like for multisession futures, the maximum number of parallel processes run
 
 Forking an R process can be faster than working with a separate R session running in the background.  One reason is that the overhead of exporting large globals to the background session can be greater than when forking, and therefore shared memory, is used.  On the other hand, the shared memory is _read only_, meaning any modifications to shared objects by one of the forked processes ("workers") will cause a copy by the operating system.  This can also happen when the R garbage collector runs in one of the forked processes.
 
-On the other hand, process forking is also considered unstable in some R environments.  For instance, when running R from within RStudio process forking may resulting in crashed R sessions.  Because of this, the future package disables multicore futures by default when running from RStudio.  See `help("supportsMulticore")` for more details.
+On the other hand, process forking is also considered unstable in some R environments.  For instance, when running R from within RStudio process forking may resulting in crashed R sessions.  Because of this, the **future** package disables multicore futures by default when running from RStudio.  See `help("supportsMulticore")` for more details.
 
 
 #### Cluster Futures
 
-Cluster futures evaluate expressions on an ad-hoc cluster (as implemented by the parallel package).  For instance, assume you have access to three nodes `n1`, `n2` and `n3`, you can then use these for asynchronous evaluation as:
+Cluster futures evaluate expressions on an ad-hoc cluster (as implemented by the **parallel** package).  For instance, assume you have access to three nodes `n1`, `n2` and `n3`, you can then use these for asynchronous evaluation as:
 
 ```r
 <%=
@@ -606,7 +606,7 @@ log(a)
 
 Whenever an R expression is to be evaluated asynchronously (in parallel) or sequentially via lazy evaluation, global (aka "free") objects have to be identified and passed to the evaluator.  They need to be passed exactly as they were at the time the future was created, because, for lazy evaluation, globals may otherwise change between when it is created and when it is resolved.  For asynchronous processing, the reason globals need to be identified is so that they can be exported to the process that evaluates the future.
 
-The future package tries to automate these tasks as far as possible.  It does this with help of the [globals] package, which uses static-code inspection to identify global variables.  If a global variable is identified, it is captured and made available to the evaluating process.
+The **future** package tries to automate these tasks as far as possible.  It does this with help of the **[globals]** package, which uses static-code inspection to identify global variables.  If a global variable is identified, it is captured and made available to the evaluating process.
 <%---
 If it identifies a symbol that it believes is a global object, but it fails to locate it in the calling environment (or any the environment accessible from that one), an error is thrown immediately.  This minimizing the risk for run-time errors occurring later (sometimes much later) and in a different process (possible in a remote R session), which otherwise may be hard to troubleshoot.  For instance,
 
@@ -665,7 +665,7 @@ str(v)
 
 Here `as.list(v)` blocks until all futures in the environment `v` have been resolved.  Then their values are collected and returned as a regular list.
 
-If _numeric indices_ are required, then _list environments_ can be used.  List environments, which are implemented by the [listenv] package, are regular environments with customized subsetting operators making it possible to index them much like how lists can be indexed.  By using list environments where we otherwise would use lists, we can also assign implicit futures to list-like objects using numeric indices.  For example,
+If _numeric indices_ are required, then _list environments_ can be used.  List environments, which are implemented by the **[listenv]** package, are regular environments with customized subsetting operators making it possible to index them much like how lists can be indexed.  By using list environments where we otherwise would use lists, we can also assign implicit futures to list-like objects using numeric indices.  For example,
 
 ```r
 <%=withCapture({
@@ -717,5 +717,7 @@ demo("mandelbrot", package = "future", ask = FALSE)
 [future.mirai]: https://future.mirai.futureverse.org
 [globals]: https://globals.futureverse.org
 [listenv]: https://listenv.futureverse.org
+[progressr]: https://progressr.futureverse.org
 [A Future for R: Common Issues with Solutions]: future-4-issues.html
 [A Future for R: Future Topologies]: future-3-topologies.html
+

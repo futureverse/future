@@ -24,7 +24,7 @@ release cycles._
 
 This document is written to serve as a reference for developers who
 are developing a future backend to the future framework as implemented
-in the [future] package for R that available on CRAN.  The Future
+in the **[future]** package for R that available on CRAN.  The Future
 Application Programming Interface (API) has three fundamental
 functions at its core:
 
@@ -66,7 +66,7 @@ API Backends', which consists of a set of tests that can be used to
 validated that a future backend meets the minimal requirements of the
 Future API.  These tests run from the command-line, from the R prompt,
 or as part of the package tests of a backend package.  This test suite
-is documented and implemented in the [future.tests] package available
+is documented and implemented in the **[future.tests]** package available
 on CRAN.
 
 
@@ -122,7 +122,7 @@ the following components:
   `FALSE` if not.
 
 * An S3 method of `result()` for `MyParallelFuture` that returns a
-  `FutureResult` object (as defined by the [future] package) when the
+  `FutureResult` object (as defined by the **[future]** package) when the
   future is resolved or otherwise fails to resolve.  If the future is
   not yet resolved, this method should block until the future is
   resolved.
@@ -153,7 +153,7 @@ conditions or standard output will also be relayed at this point.
 This section describes in detail what the requirements of the above
 four components are. The requirements are given as a continuation of
 the above 'myparallel' example.  If otherwise not specified, all
-functions mentioned below are from the [future] package.
+functions mentioned below are from the **[future]** package.
 
 
 ### Constructor function creating a Future
@@ -249,5 +249,5 @@ The `result()` method must not update the RNG state.
 
 
 
-[future]: https://cran.r-project.org/package=future
-[future.tests]: https://cran.r-project.org/package=future.tests
+[future]: https://future.futureverse.org
+[future.tests]: https://future.tests.futureverse.org

@@ -33,7 +33,7 @@ The **future** package comes with built-in future backends that leverage the **p
 | **[future.mirai]**<br> `mirai_cluster`            |♻️(next)<br> | parallelly via **[mirai]** daemons running locally or remotely
 | **[future.batchtools]**<br> `batchtools_lsf`<br>`batchtools_openlava`<br>`batchtools_sge`<br>`batchtools_slurm`<br>`batchtools_torque` | 📶(soon)<br> ♻️(soon) | parallelly on HPC job schedulers (Load Sharing Facility [LSF], OpenLava, TORQUE/PBS, Son/Sun/Oracle/Univa Grid Engine [SGE], Slurm) via **[batchtools]**; for long-running tasks; high latency |
 
-📶: futures relay progress updates in real-time<br>
+📶: futures relay progress updates in real-time, e.g. **[progressr]**<br>
 ♻️: futures are interruptible and restartable; * disabled by default<br>
 (next): next release; (soon): in a near-future release
 
@@ -42,6 +42,11 @@ The **future** package comes with built-in future backends that leverage the **p
 [callr]: https://cran.r-project.org/package=callr
 [mirai]: https://cran.r-project.org/package=mirai
 [future]: https://future.futureverse.org
+[future.apply]: https://future.apply.futureverse.org
 [future.batchtools]: https://future.batchtools.futureverse.org
 [future.callr]: https://future.callr.futureverse.org
 [future.mirai]: https://future.mirai.futureverse.org
+[future.tests]: https://future.tests.futureverse.org
+[furrr]: https://furrr.futureverse.org
+[doFuture]: https://doFuture.futureverse.org
+[progressr]: https://progressr.futureverse.org
