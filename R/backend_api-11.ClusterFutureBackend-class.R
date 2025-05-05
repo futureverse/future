@@ -539,10 +539,22 @@ resolved.ClusterFuture <- function(x, run = TRUE, timeout = NULL, ...) {
       ## Find which nodes are available
       avail <- rep(TRUE, times = length(workers))
       futures <- FutureRegistry(reg, action = "list", earlySignal = FALSE, debug = debug)
-      nodes <- unlist(lapply(futures, FUN = function(f) f[["node"]]), use.names = FALSE)
-      avail[nodes] <- FALSE
+      if (length(futures) > 0) {
+        ## Get indices for all busy cluster nodes
+        nodes <- unlist(lapply(futures, FUN = function(f) f[["node"]]), use.names = FALSE)
+        stop_if_not(
+          length(nodes) == length(futures),
+          is.numeric(nodes), all(is.finite(nodes)),
+          all(nodes >= 1), all(nodes <= length(workers)),
+          length(unique(nodes)) == length(nodes)
+        )
+        avail[nodes] <- FALSE
+      }
       if (debug) mdebugf("avail: [n=%d] %s", length(avail), commaq(avail))
-      
+
+      ## Sanity check
+      stop_if_not(any(avail))
+
       ## If at least one is available, then launch this lazy future
       if (any(avail)) future <- run(future)
     }
@@ -979,14 +991,25 @@ requestNode <- function(await, backend, timeout, delta, alpha) {
   ## Find which node is available
   avail <- rep(TRUE, times = length(workers))
   futures <- FutureRegistry(reg, action = "list", earlySignal = FALSE, debug = debug)
-  nodes <- unlist(lapply(futures, FUN = function(f) f[["node"]]), use.names = FALSE)
-  avail[nodes] <- FALSE
+  if (length(futures) > 0) {
+    ## Get indices for all busy cluster nodes
+    nodes <- unlist(lapply(futures, FUN = function(f) f[["node"]]), use.names = FALSE)
+    stop_if_not(
+      length(nodes) == length(futures),
+      is.numeric(nodes), all(is.finite(nodes)),
+      all(nodes >= 1), all(nodes <= length(workers)),
+      length(unique(nodes)) == length(nodes)
+    )
+    avail[nodes] <- FALSE
+  }
 
   ## Sanity check
   stop_if_not(any(avail))
 
+  if (debug) mdebugf("avail: [n=%d] %s", length(avail), commaq(avail))
+
   node_idx <- which(avail)[1L]
-  stop_if_not(is.numeric(node_idx), is.finite(node_idx), node_idx >= 1)
+  stop_if_not(is.numeric(node_idx), is.finite(node_idx), node_idx >= 1, node_idx <= length(workers))
   if (debug) mdebugf("Index of first available worker: %d", node_idx)
   
   ## Validate that the cluster node is working
