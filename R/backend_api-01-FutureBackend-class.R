@@ -317,7 +317,6 @@ validateFutureGlobals.FutureBackend <- function(backend, future, ..., debug = FA
   
   sizes <- lapply(globals, FUN = objectSize)
   sizes <- unlist(sizes, use.names = TRUE)
-  total_size <- sum(sizes, na.rm = TRUE)
   msg <- summarize_size_of_globals(globals,
                                    sizes = sizes,
                                    maxSize = maxSizeOfObjects,
