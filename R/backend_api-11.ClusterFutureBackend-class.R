@@ -1098,7 +1098,18 @@ requestNode <- function(await, backend, timeout, delta, alpha) {
     
     Sys.sleep(0.1)
   } ##  for (kk in maxTries:1)
-  
+
+  ## Assert that there is no other registered future that is using
+  ## the found node
+  futures <- FutureRegistry(reg, action = "list", earlySignal = FALSE, debug = debug)
+  for (kk in seq_along(futures)) {
+    future <- futures[[kk]]
+    if (node_idx == future[["node"]]) {
+      stop(FutureError(sprintf("[INTERNAL ERROR]: requestNode() found node #%d to be free, but it is used by future #%d (%s)", node_idx, kk, sQuoteLabel(future[["label"]]))))
+    }
+  }
+
+
   if (debug) mdebug_pop()
   
   node_idx
