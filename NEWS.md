@@ -53,6 +53,11 @@
    FUN = as.integer, FUN.VALUE = NA_integer_): values must be length
    1, but FUN(X[[9]]) result is length 0` when there were such stray
    connections.
+   
+ * Shutdown of `cluster` and `multisession` workers could fail if one
+   of the the workers was already terminated, e.g. interrupted or
+   crashed. Now the shutdown of each worker is independent of the
+   others, lowering the risk of leaving stray PSOCK workers behind.
 
 ## Deprecated and Defunct
 

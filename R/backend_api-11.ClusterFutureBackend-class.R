@@ -1549,10 +1549,17 @@ clusterRegistry <- local({
       mdebug("Cluster to shut down:")
       mprint(cluster)
     }
-   
-    res <- tryCatch({
-      parallel::stopCluster(cluster)
-    }, error = identity)
+
+    ## Shut down workers one-by-one, because if one of them has
+    ## already been interupted/terminated, that will trigger an
+    ## error
+    res <- rep(FALSE, times = length(cluster))
+    for (kk in seq_along(cluster)) {
+      cl <- cluster[kk]
+      tryCatch({ parallel::stopCluster(cl) }, error = identity)
+      res[kk] <- TRUE
+      cl <- NULL
+    }
     if (debug) mdebugf("Stopped cluster: %s", commaq(deparse(res)))
 
     NULL
