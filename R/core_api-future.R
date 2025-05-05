@@ -143,7 +143,7 @@
 #' false negatives) and `ignore` (to ignore false positives) on value
 #' `TRUE`.  For example, with
 #' `globals = structure(TRUE, ignore = "b", add = "a")` any globals
-#' automatically identified except `b` will be used in addition to
+#' automatically identified, except `b`, will be used, in addition to
 #' global `a`.
 #'
 #' @example incl/future.R
