@@ -24,9 +24,11 @@
 
   ## Tweak current strategy and apply
   plans <- oplan
-  args <- c(list(plans[[1]], penvir = envir), tweaks)
-  plans[[1]] <- do.call(tweak, args = args)
-  plan(plans, substitute = FALSE, .call = NULL, .cleanup = FALSE, .init = FALSE)
+  strategy <- plans[[1]]
+  args <- c(list(strategy, penvir = envir), tweaks)
+  strategy <- do.call(tweak, args = args)
+  plans[[1]] <- strategy
+  plan(plans, substitute = FALSE, .call = NULL, .cleanup = FALSE, .init = TRUE)
 
   eval(fassignment, envir = envir, enclos = baseenv())
 }

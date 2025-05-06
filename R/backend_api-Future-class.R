@@ -422,6 +422,7 @@ run.Future <- function(future, ...) {
     assertOwner(future)
   }
 
+  ## Get the future backend, which will be created if not already done
   backend <- plan("backend")
   if (!is.null(backend)) {
     if (debug) {
@@ -635,6 +636,9 @@ result.Future <- function(future, ...) {
   ## Has the result already been collected?
   result <- future[["result"]]
   if (!is.null(result)) {
+    ## Assert result is for the expected future
+    assertFutureResult(future)
+    
     ## Always signal immediateCondition:s and as soon as possible.
     ## They will always be signaled if they exist.
     signalImmediateConditions(future)
@@ -659,11 +663,19 @@ result.Future <- function(future, ...) {
   }
 
   result <- future[["result"]]
-  if (inherits(result, "FutureResult")) return(result)
+  if (inherits(result, "FutureResult")) {
+    ## Assert result is for the expected future
+    assertFutureResult(future)
+    return(result)
+  }
 
   ## BACKWARD COMPATIBILITY
   result <- future[["value"]]
-  if (inherits(result, "FutureResult")) return(result)
+  if (inherits(result, "FutureResult")) {
+    ## Assert result is for the expected future
+    assertFutureResult(future)
+    return(result)
+  }
 
   version <- future[["version"]]
   if (is.null(version)) {
@@ -873,6 +885,7 @@ getFutureContext <- function(future, mc.cores = NULL, local = TRUE, ..., debug =
 
   ## Create a future context
   context <- list(
+    uuid            = future[["uuid"]],
     threads         = NA_integer_,
     strategiesR     = strategiesR,
     backendPackages = backendPackages,

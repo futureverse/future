@@ -55,6 +55,9 @@ launchFuture.SequentialFutureBackend <- function(backend, future, ...) {
   FutureRegistry(reg, action = "remove", future = future, earlySignal = FALSE)
   if (debug) mdebugf("%s started (and completed)", class(future)[1])
 
+  ## Assert result is for the expected future
+  assertFutureResult(future)
+
   ## Always signal immediateCondition:s and as soon as possible.
   ## They will always be signaled if they exist.
   signalImmediateConditions(future)
@@ -174,5 +177,6 @@ sequential <- function(..., gc = FALSE, earlySignal = FALSE, envir = parent.fram
   f  
 }
 class(sequential) <- c("sequential", "uniprocess", "future", "function")
+attr(sequential, "init") <- TRUE
 attr(sequential, "factory") <- SequentialFutureBackend
 attr(sequential, "tweakable") <- tweakable(attr(sequential, "factory"))

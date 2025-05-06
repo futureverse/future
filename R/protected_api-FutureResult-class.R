@@ -37,7 +37,7 @@
 FutureResult <- local({
   r_info <- NULL
 
-  function(value = NULL, visible = TRUE, stdout = NULL, conditions = NULL, rng = FALSE, ..., started = .POSIXct(NA_real_), finished = Sys.time(), version = "1.8") {
+  function(value = NULL, visible = TRUE, stdout = NULL, conditions = NULL, rng = FALSE, ..., uuid = NULL, started = .POSIXct(NA_real_), finished = Sys.time(), version = "1.8") {
     args <- list(...)
     if (length(args) > 0) {
       names <- names(args)
@@ -80,6 +80,7 @@ FutureResult <- local({
       ...,
       started      = started,
       finished     = finished,
+      uuid         = uuid, 
       session_uuid = session_uuid(),
       r_info       = r_info,
       version      = version
@@ -125,3 +126,18 @@ print.FutureResult <- function(x, ...) {
   s <- c(s, sprintf("version: %s", x[["version"]]))
   cat(s, sep = "\n")
 }
+
+
+## Assert the collected FutureResult is for the future
+assertFutureResult <- function(future) {
+  result <- future[["result"]]
+  uuid <- result[["uuid"]]
+  if (is.null(uuid)) return(NULL)
+  if (identical(uuid, future[["uuid"]])) return(NULL)
+  label <- sQuoteLabel(future[["label"]])
+  result_uuid <- paste(uuid, collapse = "-")
+  future_uuid <- paste(future[["uuid"]], collapse = "-")
+  msg <- sprintf("Result for future (%s) is from another future. UUIDs do not match: %s != %s", label, result_uuid, future_uuid)
+  stop(UnexpectedFutureResultError(msg))
+}
+

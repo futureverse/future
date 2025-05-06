@@ -503,7 +503,7 @@ result.MulticoreFuture <- local({
   
       stop(ex)
     }
-  
+
     ## Collect and relay immediateCondition if they exists
     conditions <- readImmediateConditions()
     ## Record conditions as signaled
@@ -521,7 +521,10 @@ result.MulticoreFuture <- local({
     ## Remove from registry
     reg <- sprintf("multicore-%s", session_uuid())
     FutureRegistry(reg, action = "remove", future = future, earlySignal = TRUE)
-    
+
+    ## Assert result is for the expected future
+    assertFutureResult(future)
+
     ## Always signal immediateCondition:s and as soon as possible.
     ## They will always be signaled if they exist.
     signalImmediateConditions(future)
@@ -670,5 +673,6 @@ multicore <- function(..., workers = availableCores(constraints = "multicore"), 
   stop("INTERNAL ERROR: The future::multicore() function must never be called directly")
 }
 class(multicore) <- c("multicore", "multiprocess", "future", "function")
+attr(multicore, "init") <- TRUE
 attr(multicore, "factory") <- MulticoreFutureBackend
 attr(multicore, "tweakable") <- tweakable(attr(multicore, "factory"))

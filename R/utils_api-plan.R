@@ -212,7 +212,7 @@ all.equal.FutureStrategyList <- function(target, current, ..., debug = FALSE) {
       ## Launch FutureBackend?
       if (!is.null(factory)) {
         if (!is.null(attr(evaluator, "backend"))) {
-          stop(FutureError(sprintf("%s did not shut down itself down properly", class(attr(evaluator, "backend"))[1])))
+          stop(FutureError(sprintf("%s did not shut itself down properly", class(attr(evaluator, "backend"))[1])))
         }
         backend <- makeFutureBackend(evaluator, debug = debug)
         attr(evaluator, "backend") <- backend
@@ -547,9 +547,9 @@ plan <- local({
       strategy <- stack[[1L]]
       backend <- attr(strategy, "backend")
       if (is.null(backend)) {
-        backend <- makeFutureBackend(strategy, debug = debug)
-        attr(strategy, "backend") <- backend
+        strategy <- plan_init(strategy, debug = debug)
         stack[[1L]] <<- strategy
+        backend <- attr(strategy, "backend")
       }
       return(backend)
     } else if (is.null(strategy) || identical(strategy, "next")) {
