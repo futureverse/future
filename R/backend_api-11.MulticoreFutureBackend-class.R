@@ -673,5 +673,6 @@ multicore <- function(..., workers = availableCores(constraints = "multicore"), 
   stop("INTERNAL ERROR: The future::multicore() function must never be called directly")
 }
 class(multicore) <- c("multicore", "multiprocess", "future", "function")
+attr(multicore, "init") <- TRUE
 attr(multicore, "factory") <- MulticoreFutureBackend
 attr(multicore, "tweakable") <- tweakable(attr(multicore, "factory"))

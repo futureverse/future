@@ -95,6 +95,7 @@ tweak.future <- function(strategy, ..., penvir = parent.frame()) {
 
   ## Reset 'backend', if set
   attrs[["backend"]] <- NULL
+  if (identical(attrs[["init"]], "done")) attrs[["init"]] <- TRUE
 
   ## Tweak arguments
   formals <- names(formals(strategy))
