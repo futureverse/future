@@ -14,6 +14,28 @@ FutureRegistry <- local({
       on.exit(mdebugf_pop())
     }
 
+    futuresDB <- db[[where]]
+    drop <- integer(0L)
+
+    on.exit({
+      ## Clean out collected futures
+      if (length(drop) > 0) {
+        if (debug) {
+          mdebug_push("Remove collected futures ...")
+          mdebugf("Indices of futures to drop: [n=%d] %s", length(drop), commaq(drop))
+        }
+        futuresDB <- futuresDB[-drop]
+        db[[where]] <<- futuresDB
+        if (debug) mdebug_pop()
+      } else {
+        if (debug) mdebug("Indices of futures to drop: [n=0] <none>")
+      }
+    }, add = TRUE)
+
+    if (debug) {
+      on.exit(mdebugf_pop(), add = TRUE)
+    }
+
     for (ii in seq_along(futures)) {
       future <- futures[[ii]]
 
@@ -44,6 +66,8 @@ FutureRegistry <- local({
           warning(msg, call. = TRUE, immediate. = TRUE)
         }, FutureError = function(ex) {
           if (debug) mdebugf_pop()
+          ## At a minimum, reset the future
+          future <- reset(future)
           ## It is not always possible to detect when a future fails to
           ## launch, e.g. there might be a broken Rprofile file that
           ## produces an error. Here we take a liberal approach an assume
@@ -54,12 +78,11 @@ FutureRegistry <- local({
 
         ## (b) Make sure future is removed from registry, unless
         ##     already done via above value() call.
-        futuresDB <- db[[where]]
         idx <- indexOf(futuresDB, future = future)
         if (!is.na(idx)) {
-          futuresDB[[idx]] <- NULL
-          db[[where]] <<- futuresDB
+          drop <- c(drop, idx)
 
+          ## Update backend
           backend <- future[["backend"]]
           if (!is.null(backend)) {
             ## Update counters
@@ -79,7 +102,7 @@ FutureRegistry <- local({
               }
             }
           }
-        }
+        } ## if (!is.na(idx))
 
         ## (c) Collect only the first resolved future?
         if (firstOnly) {
