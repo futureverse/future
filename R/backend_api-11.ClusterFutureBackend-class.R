@@ -369,7 +369,7 @@ stopWorkers.ClusterFutureBackend <- function(backend, interrupt = TRUE, ...) {
     mdebugf_push("Interrupt active futures ...")
     futures <- listFutures(backend)[["future"]]
     mdebugf("Number of futures: %d", length(futures))
-    futures <- lapply(futures, FUN = interrupt, ...)
+    futures <- lapply(futures, FUN = cancel, interrupt = interrupt, ...)
     mdebugf_pop()
   }
 

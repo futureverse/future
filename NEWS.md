@@ -1,4 +1,4 @@
-# Version 1.40.0-9000 [2025-04-25]
+# Version 1.40.0-9000 [2025-05-06]
 
 ## Known issues
 
@@ -15,8 +15,9 @@
 ## New Features
 
  * Add `cancel()` for canceling one or more futures. By default, it
-   attempts to interrupt any running futures. This superseeds the
-   `interrupt()` method introduced in the previous version.
+   attempts to interrupt any running futures. This replaces the
+   `interrupt()` method introduced in the previous version, which now
+   has been removed.
  
  * Now `print()` for `Future` reports also on the current state of the
    future, e.g. 'created', 'running', 'finished', and 'interrupted'.
@@ -61,13 +62,13 @@
 
 ## Deprecated and Defunct
 
- * Use `cancel()` instead of `interrupt()`, which was introduced in
-   the previous version. The default for `cancel()` is to interrupt as
+ * `interrupt()` introduced in previous version has been removed.  Use
+   `cancel()` instead. The default for `cancel()` is to interrupt as
    well. One reason for the change is that the word "interrupt"
    conveys the _mechanism_, whereas the "cancel" conveys the _intent_,
-   which is the preferred style. Also, `interrupt()` masks ditto of
-   the popular **rlang** package, and vice versa - the choice
-   `cancel()` is less used.
+   which is the preferred style. Another reason was that `interrupt()`
+   masked ditto of the popular **rlang** package, and vice versa - the
+   choice `cancel()` has fewer name clashes.
 
 
 # Version 1.40.0 [2025-04-10]

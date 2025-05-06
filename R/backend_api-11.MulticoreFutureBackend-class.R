@@ -237,7 +237,7 @@ stopWorkers.MulticoreFutureBackend <- function(backend, interrupt = TRUE, ...) {
   ## Interrupt all futures
   if (interrupt) {
     futures <- listFutures(backend)
-    futures <- lapply(futures, FUN = interrupt, ...)
+    futures <- lapply(futures, FUN = cancel, interrupt = interrupt, ...)
   }
 
   ## Clear registry
