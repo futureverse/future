@@ -649,8 +649,11 @@ resolved.ClusterFuture <- function(x, run = TRUE, timeout = NULL, ...) {
 
   if (debug) mdebug_pop()
 
+  ## Assert result is for the expected future
+  assertFutureResult(future)
+
   ## Signal conditions early? (happens only iff requested)
-  if (res) signalEarly(x, ...)
+  if (res) signalEarly(future, ...)
 
   res
 }
@@ -673,7 +676,7 @@ result.ClusterFuture <- function(future, ...) {
     if (inherits(result, "FutureError")) {
       stop(result)
     }
-    
+
     return(result)
   }
 
@@ -701,11 +704,15 @@ result.ClusterFuture <- function(future, ...) {
   repeat({
     result <- receiveMessageFromWorker(future, debug = debug)
     if (inherits(result, "FutureResult")) {
+      ## Assert result is for the expected future
+      assertFutureResult(future)
       return(result)
     } else if (inherits(result, "FutureInterruptError")) {
       stop(result)
     } else if (inherits(result, "FutureLaunchError")) {
       future[["result"]] <- result
+      ## Assert result is for the expected future
+      assertFutureResult(future)
       ## Remove future from registry
       backend <- future[["backend"]]
       reg <- backend[["reg"]]

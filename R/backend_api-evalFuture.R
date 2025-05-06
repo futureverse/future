@@ -374,6 +374,7 @@ evalFuture <- function(
         immediateConditionHandlers = list()
       ),
       context = list(
+        uuid = NULL,
         backendPackages = character(0L),
         strategiesR = NULL,
         threads = NA_integer_,
@@ -432,6 +433,7 @@ evalFutureInternal <- function(data) {
   local <- context[["local"]]
   if (is.null(local)) local <- TRUE
   reset <- context[["reset"]]
+  uuid <- context[["uuid"]]
 
   with_assert({
     if (!is.null(immediateConditionHandlers)) {
@@ -937,6 +939,7 @@ evalFutureInternal <- function(data) {
           visible = ...future.value[["visible"]],
           conditions = ...future.conditions,
           rng = !identical(globalenv()[[".Random.seed"]], ...future.rng),
+          uuid = uuid,
           misuseGlobalEnv = if (checkGlobalenv) list(added = diff_globalenv(...future.globalenv.names)) else NULL,
           misuseConnections = if (checkConnections) diff_connections(get_connections(details = isTRUE(attr(checkConnections, "details", exact = TRUE))), ...future.connections) else NULL,
           misuseDevices = if (checkDevices) diff_devices(...future.devices, base::.Devices) else NULL,
@@ -1036,6 +1039,7 @@ evalFutureInternal <- function(data) {
     FutureResult(
       conditions = ...future.conditions,
       rng = !identical(globalenv()[[".Random.seed"]], ...future.rng),
+      uuid = uuid,
       misuseGlobalEnv = if (checkGlobalenv) list(added = diff_globalenv(...future.globalenv.names)) else NULL,
       misuseConnections = diff_connections(get_connections(details = isTRUE(attr(checkConnections, "details", exact = TRUE))), ...future.connections),
       misuseDevices = if (checkDevices) diff_devices(base::.Devices, ...future.devices) else NULL,
@@ -1045,6 +1049,7 @@ evalFutureInternal <- function(data) {
     FutureResult(
       conditions = ...future.conditions,
       rng = !identical(globalenv()[[".Random.seed"]], ...future.rng),
+      uuid = uuid,
       misuseGlobalEnv = if (checkGlobalenv) list(added = diff_globalenv(...future.globalenv.names)) else NULL,
       misuseConnections = diff_connections(get_connections(details = isTRUE(attr(checkConnections, "details", exact = TRUE))), ...future.connections),
       misuseDevices = if (checkDevices) diff_devices(base::.Devices, ...future.devices) else NULL,

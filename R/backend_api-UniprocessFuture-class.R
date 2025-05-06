@@ -69,7 +69,11 @@ result.UniprocessFuture <- function(future, ...) {
   }
 
   result <- future[["result"]]
-  if (inherits(result, "FutureResult")) return(result)
+  if (inherits(result, "FutureResult")) {
+    ## Assert result is for the expected future
+    assertFutureResult(future)
+    return(result)
+  }
 
   ex <- UnexpectedFutureResultError(future)
   future[["result"]] <- ex
