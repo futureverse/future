@@ -66,6 +66,11 @@ reset.Future <- function(x, ...) {
   future <- x
 
   if (future[["state"]] == "running") {
+    backend <- future[["backend"]]
+    if (!inherits(backend, "FutureBackend")) {
+      warning(FutureWarning("Cannot reset a running future", future = future))
+      return(future)
+    }
     stop(FutureError("Cannot reset a running future", future = future))
   }
   
