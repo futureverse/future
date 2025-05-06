@@ -1,5 +1,5 @@
 Package: future
-Version: 1.40.0-9214
+Version: 1.40.0-9215
 Title: Unified Parallel and Distributed Processing in R for Everyone
 Depends:
     R (>= 3.2.0)
