@@ -66,7 +66,7 @@ nbrOfWorkers.future <- function(evaluator) {
 nbrOfWorkers.NULL <- function(evaluator) {
   assert_no_positional_args_but_first()
   
-  nbrOfWorkers(plan("next"))
+  nbrOfWorkers(plan("backend"))
 }
 
 
@@ -120,7 +120,7 @@ nbrOfFreeWorkers.future <- function(evaluator, background = FALSE, ...) {
 nbrOfFreeWorkers.NULL <- function(evaluator, background = FALSE, ...) {
   assert_no_positional_args_but_first()
   
-  nbrOfFreeWorkers(plan("next"), background = background, ...)
+  nbrOfFreeWorkers(plan("backend"), background = background, ...)
 }
 
 

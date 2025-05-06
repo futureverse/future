@@ -13,6 +13,7 @@ FutureResult(
   conditions = NULL,
   rng = FALSE,
   ...,
+  uuid = NULL,
   started = .POSIXct(NA_real_),
   finished = Sys.time(),
   version = "1.8"

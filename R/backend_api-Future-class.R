@@ -422,6 +422,7 @@ run.Future <- function(future, ...) {
     assertOwner(future)
   }
 
+  ## Get the future backend, which will be created if not already done
   backend <- plan("backend")
   if (!is.null(backend)) {
     if (debug) {

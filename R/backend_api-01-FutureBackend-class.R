@@ -57,7 +57,7 @@ FutureBackend <- function(..., earlySignal = FALSE, gc = FALSE, maxSizeOfObjects
   
   ## Record future plan tweaks, if any
   counters <- c(created = 0L, launched = 0L, finished = 0L)
-  args <- list(..., earlySignal = earlySignal, maxSizeOfObjects = maxSizeOfObjects, gc = gc, interrupts = interrupts, hooks = hooks, counters = counters, runtime = 0.0)
+  args <- list(..., earlySignal = earlySignal, maxSizeOfObjects = maxSizeOfObjects, gc = gc, interrupts = interrupts, hooks = hooks, uuid = uuid(proc.time()), counters = counters, runtime = 0.0)
   for (name in names(args)) {
     core[[name]] <- args[[name]]
   }
@@ -79,6 +79,8 @@ print.FutureBackend <- function(x, ...) {
   classes <- setdiff(class(backend), "environment")
   s <- sprintf("%s:", classes[1])
   s <- c(s, sprintf("Inherits: %s", paste(classes[-1], collapse = ", ")))
+
+  s <- c(s, sprintf("UUID: %s", backend[["uuid"]]))
 
   ## Summary of workers
   s <- c(s, sprintf("Number of workers: %g", nbrOfWorkers(backend)))
@@ -227,7 +229,7 @@ makeFutureBackend <- function(evaluator, ..., debug = FALSE) {
     return(backend)
   }
   
-    mdebugf("Backend function: <%s>", commaq(class(backend)))
+  mdebugf("Backend function: <%s>", commaq(class(backend)))
   
   factory <- attr(evaluator, "factory")
   if (is.null(factory)) {
