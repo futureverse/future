@@ -4,14 +4,22 @@
 #'
 #' @param x A Future.
 #'
-#' @param interrupt If TRUE, running futures are interrupted, if possible.
+#' @param interrupt If TRUE, running futures are interrupted, if the
+#' future backend supports it.
 #'
 #' @param \ldots All arguments used by the S3 methods.
 #'
 #' @return
-#' `cancel()` returns the [Future] flagged as "canceled".
+#' `cancel()` returns (invisibly) the canceled [Future]s after
+#' flagging them as "canceled" and possibly interrupting them as well.
 #'
 #' Canceling a lazy or a finished future has no effect.
+#'
+#' @example incl/cancel.R
+#'
+#' @seealso
+#' A canceled future can be [reset()] to a lazy, vanilla future
+#' such that it can be relaunched, possible on another future backend.
 #'
 #' @export
 cancel <- function(x, interrupt = TRUE, ...) {
@@ -20,12 +28,12 @@ cancel <- function(x, interrupt = TRUE, ...) {
 
 #' @export
 cancel.default <- function(x, ...) {
-  x
+  invisible(x)
 }
 
 #' @export
 cancel.list <- function(x, ...) {
-  lapply(x, FUN = cancel, ...)
+  invisible(lapply(x, FUN = cancel, ...))
 }
 
 #' @export
@@ -35,7 +43,7 @@ cancel.listenv <- cancel.list
 #' @importFrom listenv as.listenv
 #' @export
 cancel.environment <- function(x, ...) {
-  cancel(as.listenv(x), ...)
+  invisible(cancel(as.listenv(x), ...))
 }
 
 
@@ -56,9 +64,7 @@ cancel.Future <- function(x, interrupt = TRUE, ...) {
     interruptFuture(backend, future = future, ...)
   }
 
-  ## FIXME: For now, use 'interrupted", but should ideally also
-  ## be 'canceled'
   future[["state"]] <- "canceled"
 
-  future
+  invisible(future)
 }

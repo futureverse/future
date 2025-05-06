@@ -1,0 +1,52 @@
+<%@meta language="R-vignette" content="--------------------------------
+%\VignetteIndexEntry{A Future for R: Available Future Backends}
+%\VignetteAuthor{Henrik Bengtsson}
+%\VignetteKeyword{R}
+%\VignetteKeyword{package}
+%\VignetteKeyword{vignette}
+%\VignetteKeyword{future}
+%\VignetteKeyword{synchronous}
+%\VignetteKeyword{asynchronous}
+%\VignetteKeyword{parallel}
+%\VignetteKeyword{cluster}
+%\VignetteKeyword{callr}
+%\VignetteKeyword{mirai}
+%\VignetteKeyword{batchtools}
+%\VignetteKeyword{future.callr}
+%\VignetteKeyword{future.mirai}
+%\VignetteKeyword{future.batchtools}
+%\VignetteEngine{R.rsp::rsp}
+%\VignetteTangle{FALSE}
+--------------------------------------------------------------------"%>
+# A Future for R: Available Future Backends
+
+The **future** package comes with built-in future backends that leverage the **parallel** package part of R itself. In addition to these backends, others exist in package extensions, e.g. **[future.callr]**, **[future.mirai]**, and **[future.batchtools]**. Below is an overview of the most common backends that you as an end-user can chose from.
+
+| Package / Backend             | Features    | How futures are evaluated
+|:----------------|:------------|:-----------------------------------------------------
+| **future**<br> `sequential`    | 📶<br>♻️<br>         | sequentially and in the current R process; default 
+| **future**<br> `multisession`  | 📶<br>♻️<br>        | parallelly via background R sessions on current machine
+| **future**<br> `cluster`       | 📶<br>♻️*<br>       | parallelly in external R sessions on current, local, and/or remote machines
+| **future**<br> `multicore`     | 📶<br>♻️<br> | (not recommended) parallelly via forked R processes on current machine; not with GUIs like RStudio; not on Windows
+| **[future.callr]**<br> `callr`                    | 📶(next)<br>♻️(next)<br> | parallelly via transient **[callr]** background R sessions on current machine; all memory is returned when as each future is resolved
+| **[future.mirai]**<br> `mirai_multisession`       | 📶(next)<br>♻️(next)<br> | parallelly via **[mirai]** background R sessions on current machine; low latency
+| **[future.mirai]**<br> `mirai_cluster`            |♻️(next)<br> | parallelly via **[mirai]** daemons running locally or remotely
+| **[future.batchtools]**<br> `batchtools_lsf`<br>`batchtools_openlava`<br>`batchtools_sge`<br>`batchtools_slurm`<br>`batchtools_torque` | 📶(soon)<br> ♻️(soon) | parallelly on HPC job schedulers (Load Sharing Facility [LSF], OpenLava, TORQUE/PBS, Son/Sun/Oracle/Univa Grid Engine [SGE], Slurm) via **[batchtools]**; for long-running tasks; high latency |
+
+📶: futures relay progress updates in real-time, e.g. **[progressr]**<br>
+♻️: futures are interruptible and restartable; * disabled by default<br>
+(next): next release; (soon): in a near-future release
+
+
+[batchtools]: https://cran.r-project.org/package=batchtools
+[callr]: https://cran.r-project.org/package=callr
+[mirai]: https://cran.r-project.org/package=mirai
+[future]: https://future.futureverse.org
+[future.apply]: https://future.apply.futureverse.org
+[future.batchtools]: https://future.batchtools.futureverse.org
+[future.callr]: https://future.callr.futureverse.org
+[future.mirai]: https://future.mirai.futureverse.org
+[future.tests]: https://future.tests.futureverse.org
+[furrr]: https://furrr.futureverse.org
+[doFuture]: https://doFuture.futureverse.org
+[progressr]: https://progressr.futureverse.org

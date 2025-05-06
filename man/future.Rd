@@ -162,6 +162,9 @@ Querying the value of a non-resolved future will \emph{block} the call
 until the future is resolved.
 It is possible to check whether a future is resolved or not
 without blocking by using \code{\link{resolved}(f)}.
+It is possible to \code{\link[=cancel]{cancel()}} a future that is being resolved.
+Failed, canceled, and interrupted futures can be \code{\link[=reset]{reset()}} to a
+lazy, vanilla future that can be relaunched.
 
 The \code{futureCall()} function works analogously to
 \code{\link[base]{do.call}()}, which calls a function with a set of
@@ -280,7 +283,7 @@ specification of globals is supported via attributes \code{add} (to add
 false negatives) and \code{ignore} (to ignore false positives) on value
 \code{TRUE}.  For example, with
 \code{globals = structure(TRUE, ignore = "b", add = "a")} any globals
-automatically identified except \code{b} will be used in addition to
+automatically identified, except \code{b}, will be used, in addition to
 global \code{a}.
 }
 

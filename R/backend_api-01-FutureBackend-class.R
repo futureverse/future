@@ -317,7 +317,6 @@ validateFutureGlobals.FutureBackend <- function(backend, future, ..., debug = FA
   
   sizes <- lapply(globals, FUN = objectSize)
   sizes <- unlist(sizes, use.names = TRUE)
-  total_size <- sum(sizes, na.rm = TRUE)
   msg <- summarize_size_of_globals(globals,
                                    sizes = sizes,
                                    maxSize = maxSizeOfObjects,
@@ -360,7 +359,7 @@ stopWorkers.FutureBackend <- function(backend, interrupt = TRUE, ...) {
   ## Interrupt all futures
   if (interrupt) {
     futures <- listFutures(backend)
-    void <- lapply(futures, FUN = interrupt, ...)
+    void <- lapply(futures, FUN = cancel, interrupt = interrupt, ...)
   }
   warning(FutureWarning(sprintf("%s does not implement stopWorkers()", sQuote(class(backend)[1]))))
 }

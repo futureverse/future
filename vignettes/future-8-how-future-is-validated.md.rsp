@@ -20,18 +20,25 @@ options("withCapture/newline" = FALSE)
 Since correctness and reproducibility is essential to all data processing, validation is a top priority and part of the design and implementation throughout the future ecosystem.  Several types of testing are performed.
 
 First, all the essential core packages part of the future framework,
-**[future]**, **[globals]**, and **[listenv]**, implement a rich set of package tests.
-These are validated regularly across the wide-range of operating
-systems (Linux, Solaris, macOS, and MS Windows) and R versions available
-on CRAN, via continuous integration (CI) ([GitHub Actions]), and on [R-hub].
+**[future]**, **[parallelly]**, **[globals]**, and **[listenv]**, implement a
+rich set of package tests.  These are validated regularly across the
+wide-range of operating systems (Linux, macOS, and MS Windows) and R
+versions available on CRAN, on continuous integration (CI) services
+(GitHub Actions), an on [R-hub]. The core packages are also tested with
+non-English locale settings, including Korean, Simplified Chinese
+(China) and Traditional Chinese (Taiwan). They are also verified to
+work with single-core and dual-core machines, which may be the case
+for some free, cloud services that provide R.
 
 Second, for each new release, these packages undergo full reverse-package
 dependency checks using **[revdepcheck]**.
-As of June 2022, the **future** package is tested against 240+
+As of May 2025, the **future** package is tested against ~450
 direct reverse-package dependencies available on CRAN and Bioconductor.
 These checks are performed on Linux with both the default settings and
 when forcing tests to use multisession workers (SOCK clusters), which further
 validates that globals and packages are identified correctly.
+We also test with `NOT_CRAN = true`, to further increase the test
+coverage.
 
 Third, a suite of _Future API conformance tests_ available in the
 **[future.tests]** package validates the
@@ -75,15 +82,17 @@ of the _Future API_ and the future ecosystem at large.
 (\*) There is a plan to update **[foreach]** to use the exact same static-code-analysis method as the **[future]** package use for identifying globals.  As the maintainer of the future framework, I collaborate with the maintainer of the **[foreach]** package to implement this.
 
 
+[parallelly]: https://parallelly.futureverse.org
+[future]: https://future.futureverse.org
+[future.tests]: https://future.tests.futureverse.org
+[globals]: https://globals.futureverse.org
+[listenv]: https://listenv.futureverse.org
+
 [caret]: https://CRAN.R-Project.org/package=caret
-[doFuture]: https://CRAN.R-Project.org/package=doFuture
+[doFuture]: https://doFuture.futureverse.org
 [doMC]: https://CRAN.R-Project.org/package=doMC
 [foreach]: https://CRAN.R-Project.org/package=foreach
-[future]: https://CRAN.R-Project.org/package=future
-[future.tests]: https://CRAN.R-Project.org/package=future
 [glmnet]: https://CRAN.R-Project.org/package=glmnet
-[globals]: https://CRAN.R-Project.org/package=globals
-[listenv]: https://CRAN.R-Project.org/package=listenv
 [NMF]: https://CRAN.R-Project.org/package=NMF
 [plyr]: https://CRAN.R-Project.org/package=plyr
 [TSP]: https://CRAN.R-Project.org/package=TSP

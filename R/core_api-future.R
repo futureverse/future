@@ -28,6 +28,9 @@
 #' until the future is resolved.
 #' It is possible to check whether a future is resolved or not
 #' without blocking by using \code{\link{resolved}(f)}.
+#' It is possible to [cancel()] a future that is being resolved.
+#' Failed, canceled, and interrupted futures can be [reset()] to a
+#' lazy, vanilla future that can be relaunched.
 #'
 #' @section Eager or lazy evaluation:
 #' By default, a future is resolved using _eager_ evaluation
@@ -140,7 +143,7 @@
 #' false negatives) and `ignore` (to ignore false positives) on value
 #' `TRUE`.  For example, with
 #' `globals = structure(TRUE, ignore = "b", add = "a")` any globals
-#' automatically identified except `b` will be used in addition to
+#' automatically identified, except `b`, will be used, in addition to
 #' global `a`.
 #'
 #' @example incl/future.R

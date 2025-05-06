@@ -16,8 +16,8 @@ reset(x, ...)
 Resetting a running future results in a \link{FutureError}.
 }
 \description{
-A future that has successfully completed, canceled, interrupted, or
-has failed due to an error, can be relaunched after resetting it.
+A future that has successfully completed, \link[=cancel]{canceled}, interrupted,
+or has failed due to an error, can be relaunched after resetting it.
 }
 \details{
 A lazy, vanilla \link{Future} can be reused in another R session. For
