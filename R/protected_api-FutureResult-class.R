@@ -129,11 +129,22 @@ print.FutureResult <- function(x, ...) {
 
 
 ## Assert the collected FutureResult is for the future
-assertFutureResult <- function(future) {
+assertFutureResult <- function(future, debug = FALSE) {
+  if (debug) {
+    mdebug_push("assertFutureResult() ...")
+    on.exit(mdebug_pop())
+  }
   result <- future[["result"]]
   uuid <- result[["uuid"]]
-  if (is.null(uuid)) return(NULL)
-  if (identical(uuid, future[["uuid"]])) return(NULL)
+  if (is.null(uuid)) {
+    if (debug) mdebug("Future uuid: <none> (skipping)")
+    return(NULL)
+  }
+  if (debug) mdebugf("Future uuid: %s", uuid)
+  if (identical(uuid, future[["uuid"]])) {
+    if (debug) mdebug("identical; success")
+    return(NULL)
+  }
   label <- sQuoteLabel(future[["label"]])
   result_uuid <- paste(uuid, collapse = "-")
   future_uuid <- paste(future[["uuid"]], collapse = "-")

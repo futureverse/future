@@ -97,7 +97,7 @@ For example, option \option{future.fork.enable} has been renamed to
 \env{R_PARALLELLY_FORK_ENABLE}.
 For backward compatibility reasons, the \pkg{parallelly} package will
 support both versions for a long foreseeable time.
-See the \link[parallelly:parallelly.options]{parallelly::parallelly.options} page for the settings.
+See the \link[parallelly:zzz-parallelly.options]{parallelly::parallelly.options} page for the settings.
 }
 
 \section{Options for controlling futures}{
@@ -161,7 +161,7 @@ If this option is not specified, environment variable \env{R_FUTURE_STARTUP_SCRI
 \item{\option{future.output.windows.reencode}:}{(logical) Enable or disable re-encoding of UTF-8 symbols that were incorrectly encoded while captured.  In R (< 4.2.0) and on older versions of MS Windows, R cannot capture UTF-8 symbols as-is when they are captured from the standard output.  For examples, a UTF-8 check mark symbol (\code{"\\u2713"}) would be relayed as \code{"<U+2713>"} (a string with eight ASCII characters).  Setting this option to \code{TRUE} will cause \code{value()} to attempt to recover the intended UTF-8 symbols from \verb{<U+nnnn>} string components, if, and only if, the string was captured by a future resolved on MS Windows. (Default: \code{TRUE})}
 }
 
-See also \link[parallelly:parallelly.options]{parallelly::parallelly.options}.
+See also \link[parallelly:zzz-parallelly.options]{parallelly::parallelly.options}.
 }
 
 \section{Options for demos}{

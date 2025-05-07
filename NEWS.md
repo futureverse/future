@@ -1,4 +1,4 @@
-# Version 1.40.0-9000 [2025-05-06]
+# Version 1.40.0-9000 [2025-05-07]
 
 ## Known issues
 
@@ -36,6 +36,14 @@
    machines.
 
 ## Bug Fixes
+
+ * When a future fails to launch due to issues with the parallel
+   worker, querying it with `value()` produces a
+   `FutureLaunchError`. When this happened for `cluster` or
+   `multisession` futures, `resolved()` would return FALSE and not
+   TRUE as expected. In addition, the `FutureLaunchError` would be
+   lost, resulting in such futures being stuck in an unresolved state,
+   and the `FutureLaunchError` error never being signaled.
 
  * Globals in the environment of an anonymous function were lost since
    v1.40.0 (2025-04-10).
