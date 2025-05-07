@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.40.0-9309</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.40.0-9310</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -95,11 +95,11 @@
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-1-40-0-9000">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-1-40-0-9000"></a></h3>
-<ul><li><p>When a future fails to launch due to issues with the parallel worker, querying it with <code><a href="../reference/value.html">value()</a></code> produces a <code>FutureLaunchError</code>. When this happened for <code>cluster</code> or <code>multisession</code> futures, <code><a href="../reference/resolved.html">resolved()</a></code> would return FALSE and not TRUE as expected. In addition, the <code>FutureLaunchError</code> would be lost, resulting in such futures being stuck in an unresolved state, and the <code>FutureLaunchError</code> error never being signaled.</p></li>
-<li><p>Globals in the environment of an anonymous function were lost since v1.40.0 (2025-04-10).</p></li>
+<ul><li><p>Globals in the environment of an anonymous function were lost since v1.40.0 (2025-04-10). This was partly resolved by updates to the <strong>future</strong> package and partly due to updates in the <strong>globals</strong> package.</p></li>
 <li><p>In rare cases, a future backend might fail to launch a future and at the same time fail to handle such errors. That would result in hard-to-understand, obscure errors. In case the future backend does not detect this itself, such errors are now caught by the <strong>future</strong> package and resignaled as informative errors of class <code>FutureLaunchError</code>. By always handling launch errors, we assure that futures failing to launch can always be reset and relaunched again, possible on alternative backend.</p></li>
-<li><p>The built-in validation that futures do not leave behind stray connections could, in some cases, result in <code>Error in vapply(after,    FUN = as.integer, FUN.VALUE = NA_integer_): values must be length    1, but FUN(X[[9]]) result is length 0</code> when there were such stray connections.</p></li>
+<li><p>When a future fails to launch due to issues with the parallel worker, querying it with <code><a href="../reference/value.html">value()</a></code> produces a <code>FutureLaunchError</code>. When this happened for <code>cluster</code> or <code>multisession</code> futures, <code><a href="../reference/resolved.html">resolved()</a></code> would return FALSE and not TRUE as expected. In addition, the <code>FutureLaunchError</code> would be lost, resulting in such futures being stuck in an unresolved state, and the <code>FutureLaunchError</code> error never being signaled.</p></li>
 <li><p>Shutdown of <code>cluster</code> and <code>multisession</code> workers could fail if one of the the workers was already terminated, e.g. interrupted or crashed. Now the shutdown of each worker is independent of the others, lowering the risk of leaving stray PSOCK workers behind.</p></li>
+<li><p>The built-in validation that futures do not leave behind stray connections could, in some cases, result in <code>Error in vapply(after,    FUN = as.integer, FUN.VALUE = NA_integer_): values must be length    1, but FUN(X[[9]]) result is length 0</code> when there were such stray connections.</p></li>
 </ul></div>
 <div class="section level3">
 <h3 id="deprecated-and-defunct-1-40-0-9000">Deprecated and Defunct<a class="anchor" aria-label="anchor" href="#deprecated-and-defunct-1-40-0-9000"></a></h3>
