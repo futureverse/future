@@ -137,6 +137,7 @@ Topologies
 UDPipe
 UnexpectedFutureResultError
 UniprocessFuture
+Univa
 UseMethod
 VM
 VignetteAuthor
@@ -180,6 +181,7 @@ bc
 bfr
 bigmemory
 bioconductor
+br
 calc
 callr
 captureOutput
@@ -215,6 +217,7 @@ dir
 doFuture
 doMC
 doSEQ
+dofuture
 dontshow
 dopar
 dr
@@ -288,6 +291,7 @@ immediatedly
 ing
 inq
 interpretable
+interruptible
 interweaved
 io
 ipc
@@ -395,6 +399,7 @@ pre
 pred
 prepending
 preprocess
+progressr
 ptr
 purrr
 pwd
@@ -411,6 +416,7 @@ renice
 reproducibility
 resignal
 resignaled
+restartable
 reticulate
 revdepcheck
 rhub
