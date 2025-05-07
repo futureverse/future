@@ -584,6 +584,7 @@ resolved.ClusterFuture <- function(x, run = TRUE, timeout = NULL, ...) {
     ## AD HOC/SPECIAL CASE: Skip if connection has been serialized and lacks
     ## internal representation. /HB 2018-10-27
     connId <- connectionId(con)
+    if (debug) mdebugf("Cluster node socket connection: index=%d, id=%d", con, connId)
     if (!is.na(connId) && connId < 0L) return(FALSE)
 
     ## Broken connection due to interruption?
@@ -616,8 +617,11 @@ resolved.ClusterFuture <- function(x, run = TRUE, timeout = NULL, ...) {
     count <- 0L
     while (count < maxCount) {
       ## Is there a message from the worker waiting?
-      res <- socketSelect(list(con), write = FALSE, timeout = timeout)
-      if (!res) break
+      res <- socketSelect(list(con), timeout = timeout, write = FALSE)
+      if (!res) {
+        if (debug) mdebugf("socketSelect(list(<connection #%d (id=%d)>), timeout = %g, write = FALSE) returned %s; not resolved", con, connId, timeout, res)
+        break
+      }
 
       ## Receive it
       msg <- receiveMessageFromWorker(future, debug = debug)
@@ -625,12 +629,18 @@ resolved.ClusterFuture <- function(x, run = TRUE, timeout = NULL, ...) {
       ## If the message contains a FutureResult, then the future is resolved
       ## and we are done here
       res <- inherits(msg, "FutureResult")
-      if (res) break
+      if (res) {
+        if (debug) mdebugf("receiveMessageFromWorker() returned object of class %s; resolved", class(msg)[1])
+        break
+      }
 
       ## If the message contains a FutureInterruptError, then the future
       ## was interrupted and we are done here
       res <- inherits(msg, "FutureInterruptError")
-      if (res) break
+      if (res) {
+        if (debug) mdebugf("receiveMessageFromWorker() returned object of class %s; resolved", class(msg)[1])
+        break
+      }
 
       msg <- NULL
 
@@ -649,11 +659,13 @@ resolved.ClusterFuture <- function(x, run = TRUE, timeout = NULL, ...) {
 
   if (debug) mdebug_pop()
 
-  ## Assert result is for the expected future
-  assertFutureResult(future)
+  if (res) {
+    ## Assert result is for the expected future
+    assertFutureResult(future, debug = debug)
 
-  ## Signal conditions early? (happens only iff requested)
-  if (res) signalEarly(future, ...)
+    ## Signal conditions early? (happens only iff requested)
+    signalEarly(future, ...)
+  }
 
   res
 }
