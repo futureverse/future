@@ -387,7 +387,7 @@ evalFuture <- function(
     ## Wrap up in a FutureError
     msg <- sprintf("future::evalFuture() failed on %s (pid %s) at %s", Sys.info()[["nodename"]], Sys.getpid(), format(Sys.time(), "%FT%T"))
     if (!requireNamespace("future")) {
-      msg <- sprintf("%s. Package 'future' is not available", msg)
+      msg <- sprintf("%s. Package 'future' is not available (worker library path: %s)", msg, paste(sQuote(.libPaths()), collapse = ", "))
     } else {
       ns <- getNamespace("future")
       if (!exists("evalFutureInternal", mode = "function", envir = ns, inherits = FALSE)) {

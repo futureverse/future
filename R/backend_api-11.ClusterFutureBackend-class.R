@@ -635,13 +635,23 @@ resolved.ClusterFuture <- function(x, run = TRUE, timeout = NULL, ...) {
       }
 
       ## If the message contains a FutureInterruptError, then the future
-      ## was interrupted and we are done here
+      ## was interrupted and we are done here. Consider future resolved,
+      ## an let relaying of errors take care of this later.
       res <- inherits(msg, "FutureInterruptError")
       if (res) {
         if (debug) mdebugf("receiveMessageFromWorker() returned object of class %s; resolved", class(msg)[1])
         break
       }
-
+      
+      ## If the message contains a FutureError, e.g. FutureLaunchError, then
+      ## there's nothing more we can do here. Consider future resolved,
+      ## an let relaying of errors take care of this later.
+      res <- inherits(msg, "FutureError")
+      if (res) {
+        if (debug) mdebugf("receiveMessageFromWorker() returned object of class %s; non-fixable state", class(msg)[1])
+        break
+      }
+        
       msg <- NULL
 
       ## If not, we received a condition that has already been signaled
@@ -815,8 +825,6 @@ receiveMessageFromWorker <- local({
         stop(ex)
       }
 
-      str(list(data = data, msg = msg))
-      
       node_info <- sprintf("%s #%d", sQuote(class(node)[1]), node_idx)
       if (inherits(node, "RichSOCKnode")) {
         specs <- summary(node)
@@ -896,6 +904,9 @@ receiveMessageFromWorker <- local({
         if (debug) mdebug_pop()
       }
     } else if (inherits(msg, "FutureLaunchError")) {
+      if (debug) mdebug("Received %s", class(msg)[1])
+      future[["result"]] <- msg
+      future[["state"]] <- "failed"
     } else if (inherits(msg, "condition")) {
       condition <- msg
       
@@ -906,6 +917,8 @@ receiveMessageFromWorker <- local({
   
       ## Sanity check
       if (inherits(condition, "error")) {
+        future[["result"]] <- msg
+        future[["state"]] <- "failed"
         label <- sQuoteLabel(future[["label"]])
         stop(FutureError(sprintf("Received a %s condition from the %s worker for future (%s), which is not possible to relay because that would break the internal state of the future-worker communication. The condition message was: %s", class(condition)[1], class(future)[1], label, sQuote(conditionMessage(condition))), future = future))
       }
