@@ -904,7 +904,7 @@ receiveMessageFromWorker <- local({
         if (debug) mdebug_pop()
       }
     } else if (inherits(msg, "FutureLaunchError")) {
-      if (debug) mdebug("Received %s", class(msg)[1])
+      if (debug) mdebugf("Received %s", class(msg)[1])
       future[["result"]] <- msg
       future[["state"]] <- "failed"
     } else if (inherits(msg, "condition")) {
