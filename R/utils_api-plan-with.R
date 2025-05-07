@@ -15,7 +15,7 @@
 #' @param envir The environment where the future plan should be set and the
 #' expression evaluated.
 #'
-#' @return The value of the expression evaluated.
+#' @return The value of the expression evaluated (invisibly).
 #'
 #' @example incl/with.R
 #'
@@ -47,6 +47,6 @@ with.FutureStrategyList <- function(data, expr, ..., local = FALSE, envir = pare
       plan(old_plan, .init = FALSE, .cleanup = .cleanup)
     })
   
-    eval(expr, envir = envir)
+    invisible(eval(expr, envir = envir))
   }
 }

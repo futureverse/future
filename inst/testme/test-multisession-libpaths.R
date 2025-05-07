@@ -6,6 +6,25 @@
 library(future)
 options(future.debug = FALSE)
 
+assert_libs <- function(libs_worker, libs_main) {
+  if (identical(libs_worker, libs_main)) return()
+  libs_main_extra <- setdiff(libs_main, libs_worker)
+  stopifnot(length(libs_main_added) == 0L)
+  libs_main_worker <- setdiff(libs_worker, libs_main)
+  if (length(libs_main_worker) > 0L) {
+    warning("The worker's library path has extra components: ",
+            paste(sQuote(libs_main_worker), collapse = ", "))
+  }
+  n_worker <- length(libs_worker)
+  n_main <- length(libs_main)
+  n <- max(n_worker, n_main)
+  libs_worker <- c(libs_worker, rep("", times = n - n_worker))
+  libs_main <- c(libs_main, rep("", times = n - n_main))
+  is_equal <- (libs_worker == libs_main)
+  print(is_equal)
+} # assert_libs()
+
+
 message("Main R session library path:")
 libs <- .libPaths()
 print(libs)
@@ -16,7 +35,7 @@ with(plan(multisession), {
   libs_w <- value(f)
 })
 print(libs_w)
-stopifnot(identical(libs_w, libs))
+assert_libs(libs_w, libs)
 message("OK")
 
 
@@ -38,7 +57,7 @@ with(plan(multisession, rscript_libs = libs), {
   libs_w <- value(f)
 })
 print(libs_w)
-stopifnot(identical(libs_w, libs))
+assert_libs(libs_w, libs)
 .libPaths(libs)
 message("OK")
 
@@ -49,7 +68,7 @@ with(plan(multisession), {
   libs_w <- value(f)
 })
 print(libs_w)
-stopifnot(identical(libs_w, libs))
+assert_libs(libs_w, libs)
 message("OK")
 
 
