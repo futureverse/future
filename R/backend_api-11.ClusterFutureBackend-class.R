@@ -550,7 +550,7 @@ resolved.ClusterFuture <- function(x, run = TRUE, timeout = NULL, ...) {
         )
         avail[nodes] <- FALSE
       }
-      if (debug) mdebugf("avail: [n=%d] %s", length(avail), which(avail))
+      if (debug) mdebugf("avail: [n=%d] %s", length(avail), commaq(which(avail)))
 
       ## Sanity check
       stop_if_not(any(avail))
@@ -1013,7 +1013,7 @@ requestNode <- function(await, backend, timeout, delta, alpha) {
   ## Sanity check
   stop_if_not(any(avail))
 
-  if (debug) mdebugf("avail: [n=%d] %s", length(avail), which(avail))
+  if (debug) mdebugf("avail: [n=%d] %s", length(avail), commaq(which(avail)))
 
   node_idx <- which(avail)[1L]
   stop_if_not(is.numeric(node_idx), is.finite(node_idx), node_idx >= 1, node_idx <= length(workers))
