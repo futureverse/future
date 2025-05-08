@@ -6099,3 +6099,338 @@ Run `revdepcheck::revdep_details(, "tsissm")` for more info
 
 # tsmarch
 
+<details>
+
+* Version: 1.0.0
+* GitHub: https://github.com/tsmodels/tsmarch
+* Source code: https://github.com/cran/tsmarch
+* Date/Publication: 2024-11-18 13:30:02 UTC
+* Number of recursive dependencies: 148
+
+Run `revdepcheck::revdep_details(, "tsmarch")` for more info
+
+</details>
+
+## In both
+
+*   checking re-building of vignette outputs ... ERROR
+    ```
+    Error(s) in re-building vignettes:
+      ...
+    --- re-building ‘feasible_multivariate_garch.Rmd’ using rmarkdown
+    ! Undefined control sequence.
+    l.97 \NewDocumentCommand
+                            \citeproctext{}{} 
+    
+    Error: processing vignette 'feasible_multivariate_garch.Rmd' failed with diagnostics:
+    LaTeX failed to compile /scratch/henrik/revdep/future/checks/tsmarch/new/tsmarch.Rcheck/vign_test/tsmarch/vignettes/feasible_multivariate_garch.tex. See https://yihui.org/tinytex/r/#debugging for debugging tips. See feasible_multivariate_garch.log for more info.
+    --- failed re-building ‘feasible_multivariate_garch.Rmd’
+    
+    --- re-building ‘tsmarch_demo.Rmd’ using rmarkdown
+    --- finished re-building ‘tsmarch_demo.Rmd’
+    
+    SUMMARY: processing the following file failed:
+      ‘feasible_multivariate_garch.Rmd’
+    
+    Error: Vignette re-building failed.
+    Execution halted
+    ```
+
+*   checking installed package size ... NOTE
+    ```
+      installed size is 21.8Mb
+      sub-directories of 1Mb or more:
+        doc    1.6Mb
+        libs  18.8Mb
+    ```
+
+*   checking for GNU extensions in Makefiles ... NOTE
+    ```
+    GNU make is a SystemRequirements.
+    ```
+
+# txshift
+
+<details>
+
+* Version: 0.3.8
+* GitHub: https://github.com/nhejazi/txshift
+* Source code: https://github.com/cran/txshift
+* Date/Publication: 2022-02-09 22:30:02 UTC
+* Number of recursive dependencies: 109
+
+Run `revdepcheck::revdep_details(, "txshift")` for more info
+
+</details>
+
+## In both
+
+*   checking package dependencies ... NOTE
+    ```
+    Package which this enhances but not available for checking: ‘sl3’
+    ```
+
+*   checking Rd files ... NOTE
+    ```
+    checkRd: (-1) est_g_exp.Rd:55: Lost braces; missing escapes or markup?
+        55 |  {A - delta}, {A + delta}, and {A + 2 * delta}).
+           |  ^
+    checkRd: (-1) est_g_exp.Rd:55: Lost braces; missing escapes or markup?
+        55 |  {A - delta}, {A + delta}, and {A + 2 * delta}).
+           |               ^
+    checkRd: (-1) est_g_exp.Rd:55: Lost braces; missing escapes or markup?
+        55 |  {A - delta}, {A + delta}, and {A + 2 * delta}).
+           |                                ^
+    ```
+
+# UCSCXenaShiny
+
+<details>
+
+* Version: 2.1.0
+* GitHub: https://github.com/openbiox/UCSCXenaShiny
+* Source code: https://github.com/cran/UCSCXenaShiny
+* Date/Publication: 2024-05-15 14:10:06 UTC
+* Number of recursive dependencies: 208
+
+Run `revdepcheck::revdep_details(, "UCSCXenaShiny")` for more info
+
+</details>
+
+## In both
+
+*   checking installed package size ... NOTE
+    ```
+      installed size is  9.0Mb
+      sub-directories of 1Mb or more:
+        data       2.0Mb
+        doc        1.4Mb
+        shinyapp   4.9Mb
+    ```
+
+# updog
+
+<details>
+
+* Version: 2.1.5
+* GitHub: https://github.com/dcgerard/updog
+* Source code: https://github.com/cran/updog
+* Date/Publication: 2023-11-29 15:50:02 UTC
+* Number of recursive dependencies: 135
+
+Run `revdepcheck::revdep_details(, "updog")` for more info
+
+</details>
+
+## In both
+
+*   checking installed package size ... NOTE
+    ```
+      installed size is  8.9Mb
+      sub-directories of 1Mb or more:
+        libs   8.1Mb
+    ```
+
+# vital
+
+<details>
+
+* Version: 1.1.0
+* GitHub: https://github.com/robjhyndman/vital
+* Source code: https://github.com/cran/vital
+* Date/Publication: 2024-06-21 08:00:02 UTC
+* Number of recursive dependencies: 199
+
+Run `revdepcheck::revdep_details(, "vital")` for more info
+
+</details>
+
+## In both
+
+*   checking installed package size ... NOTE
+    ```
+      installed size is  9.7Mb
+      sub-directories of 1Mb or more:
+        data   8.0Mb
+        help   1.3Mb
+    ```
+
+# vmeasur
+
+<details>
+
+* Version: 0.1.4
+* GitHub: NA
+* Source code: https://github.com/cran/vmeasur
+* Date/Publication: 2021-11-11 19:00:02 UTC
+* Number of recursive dependencies: 108
+
+Run `revdepcheck::revdep_details(, "vmeasur")` for more info
+
+</details>
+
+## In both
+
+*   checking whether package ‘vmeasur’ can be installed ... WARNING
+    ```
+    Found the following significant warnings:
+      Warning: no DISPLAY variable so Tk is not available
+    See ‘/scratch/henrik/revdep/future/checks/vmeasur/new/vmeasur.Rcheck/00install.out’ for details.
+    ```
+
+# WeightedCluster
+
+<details>
+
+* Version: 1.8-1
+* GitHub: NA
+* Source code: https://github.com/cran/WeightedCluster
+* Date/Publication: 2024-12-10 22:00:02 UTC
+* Number of recursive dependencies: 72
+
+Run `revdepcheck::revdep_details(, "WeightedCluster")` for more info
+
+</details>
+
+## In both
+
+*   checking re-building of vignette outputs ... WARNING
+    ```
+    Error(s) in re-building vignettes:
+    --- re-building ‘BigDataSA.Rmd’ using rmarkdown
+    --- finished re-building ‘BigDataSA.Rmd’
+    
+    --- re-building ‘ClusterExternalValidSA.Rmd’ using rmarkdown
+    --- finished re-building ‘ClusterExternalValidSA.Rmd’
+    
+    --- re-building ‘ClusterValidSA.Rmd’ using rmarkdown
+    --- finished re-building ‘ClusterValidSA.Rmd’
+    
+    ...
+    l.85 \usepackage
+                    {tikz}^^M
+    !  ==> Fatal error occurred, no output PDF file produced!
+    --- failed re-building ‘WeightedClusterPreview.Rnw’
+    
+    SUMMARY: processing the following files failed:
+      ‘WeightedClusterFR.Rnw’ ‘WeightedClusterPreview.Rnw’
+    
+    Error: Vignette re-building failed.
+    Execution halted
+    ```
+
+# winputall
+
+<details>
+
+* Version: 1.0.1
+* GitHub: NA
+* Source code: https://github.com/cran/winputall
+* Date/Publication: 2024-06-07 14:40:02 UTC
+* Number of recursive dependencies: 100
+
+Run `revdepcheck::revdep_details(, "winputall")` for more info
+
+</details>
+
+## In both
+
+*   checking installed package size ... NOTE
+    ```
+      installed size is 103.3Mb
+      sub-directories of 1Mb or more:
+        libs  102.8Mb
+    ```
+
+*   checking for GNU extensions in Makefiles ... NOTE
+    ```
+    GNU make is a SystemRequirements.
+    ```
+
+# wru
+
+<details>
+
+* Version: 3.0.3
+* GitHub: https://github.com/kosukeimai/wru
+* Source code: https://github.com/cran/wru
+* Date/Publication: 2024-05-24 18:00:02 UTC
+* Number of recursive dependencies: 95
+
+Run `revdepcheck::revdep_details(, "wru")` for more info
+
+</details>
+
+## In both
+
+*   checking installed package size ... NOTE
+    ```
+      installed size is  9.6Mb
+      sub-directories of 1Mb or more:
+        data   5.5Mb
+        help   2.0Mb
+        libs   1.9Mb
+    ```
+
+*   checking dependencies in R code ... NOTE
+    ```
+    Namespaces in Imports field not imported from:
+      ‘future’ ‘tidyr’
+      All declared Imports should be used.
+    ```
+
+# XNAString
+
+<details>
+
+* Version: 1.14.0
+* GitHub: NA
+* Source code: https://github.com/cran/XNAString
+* Date/Publication: 2024-10-29
+* Number of recursive dependencies: 107
+
+Run `revdepcheck::revdep_details(, "XNAString")` for more info
+
+</details>
+
+## In both
+
+*   checking compiled code ... WARNING
+    ```
+    File ‘XNAString/libs/XNAString.so’:
+      Found ‘rand’, possibly from ‘rand’ (C)
+        Object: ‘./ViennaRNA/utils/utils.o’
+      Found ‘sprintf’, possibly from ‘sprintf’ (C)
+        Objects: ‘./ViennaRNA/part_func_up.o’, ‘./ViennaRNA/RNAstruct.o’,
+          ‘./ViennaRNA/model.o’
+      Found ‘srand’, possibly from ‘srand’ (C)
+        Object: ‘./ViennaRNA/utils/utils.o’
+    
+    Compiled code should not call entry points which might terminate R nor
+    write to stdout/stderr instead of to the console, nor use Fortran I/O
+    nor system RNGs nor [v]sprintf.
+    
+    See ‘Writing portable packages’ in the ‘Writing R Extensions’ manual.
+    ```
+
+*   checking C++ specification ... NOTE
+    ```
+      Specified C++11: please drop specification unless essential
+    ```
+
+*   checking installed package size ... NOTE
+    ```
+      installed size is 12.2Mb
+      sub-directories of 1Mb or more:
+        R      1.5Mb
+        doc    1.0Mb
+        libs   9.5Mb
+    ```
+
+*   checking top-level files ... NOTE
+    ```
+    File
+      LICENSE
+    is not mentioned in the DESCRIPTION file.
+    ```
+
