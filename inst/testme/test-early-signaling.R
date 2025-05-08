@@ -1,6 +1,6 @@
 #' @tags early-signal
-#' @tags not-cran
 #' @tags sequential multisession multicore
+#' @tags skip_on_cran
 
 library(future)
 

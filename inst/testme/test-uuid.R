@@ -21,7 +21,6 @@ if (supportsMulticore()) {
   plan(multicore, workers = 2L)
   fs <- lapply(1:2, FUN = function(i) {
     future({
-      Sys.sleep(0.2)
       session_uuid()
     })
   })

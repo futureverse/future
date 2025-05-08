@@ -1,5 +1,6 @@
 #' @tags mpi
 #' @tags cluster
+#' @tags skip_on_cran
 
 library(future)
 stopCluster <- parallel::stopCluster
