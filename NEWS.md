@@ -6,15 +6,15 @@ with package maintainers, release, and repeat. This release fixes two
 regressions introduced in future 1.40.0 (2025-04-10), despite passing
 [all unit, regression, and system
 tests](https://www.futureverse.org/quality.html) of the Future API
-that we have built up over the years. Fixing these issues led to a
-greatly improved static-code analyzer for automatically finding global
-variables in future expressions. With this release, we can now move on
-top releasing modern versions of future backends **future.callr** and
-**future.mirai** such that support interrupting of futures and
-near-live progress updates using the **progressr** package. Map-reduce
-packages such as **future.apply**, **furrr**, and **doFuture** can be
-updates to take advantage of early exiting on errors via cancellation
-of futures.
+that we have built up over the years. On the upside, fixing these
+issues led to a greatly improved static-code analyzer for
+automatically finding global variables in future expressions. Also,
+with this release, we can now move on top releasing modern versions of
+future backends **future.callr** and **future.mirai** that support
+interrupting futures and near-live progress updates using the
+**progressr** package. In addition, map-reduce packages such as
+**future.apply**, **furrr**, and **doFuture** can be updated to take
+advantage of early exiting on errors via cancellation of futures.
 
 ## New Features
 
