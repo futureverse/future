@@ -20,3 +20,23 @@ makeClusterPSOCK_args <- local({
 })
 
 
+if (packageVersion("parallelly") <= "1.44.0") {
+  ## WORKAROUND: 'constraints-N' ignores 'fallback' settings
+  availableCores <- function(constraints = NULL, ...) {
+    constraints_org <- constraints
+    pattern_connections <- "^connections-[[:digit:]]+$"
+    idxs <- grep(pattern_connections, constraints)
+    if (length(idxs) == 0) {
+      return(parallelly::availableCores(constraints = constraints, ...))
+    }
+
+    constraints_con <- constraints[idxs]
+    constraints <- constraints[-idxs]
+    ncores <- parallelly::availableCores(constraints = constraints, ...)
+    if (!any(constraints_con %in% names(ncores))) return(ncores)
+
+    upper <- parallelly::availableCores(methods = constraints_con)
+    ncores <- ncores[ncores <= upper]
+    ncores
+  }
+}

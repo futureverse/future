@@ -1,18 +1,28 @@
-# Version 1.40.0-9000 [2025-05-07]
+# Version 1.40.0-9000 [2025-05-08]
 
-## Known issues
+This is the second rollout out of three-four major updates, which is
+now possible due to a multi-year effort of internal re-designs, work
+with package maintainers, release, and repeat. This release fixes two
+regressions introduced in future 1.40.0 (2025-04-10), despite passing
+[all unit, regression, and system
+tests](https://www.futureverse.org/quality.html) of the Future API
+that we have built up over the years. On the upside, fixing these
+issues led to a greatly improved static-code analyzer for
+automatically finding global variables in future expressions. Also,
+with this release, we can now move on top releasing modern versions of
+future backends **future.callr** and **future.mirai** that support
+interrupting futures and near-live progress updates using the
+**progressr** package. In addition, map-reduce packages such as
+**future.apply**, **furrr**, and **doFuture** can be updated to take
+advantage of early exiting on errors via cancellation of futures.
 
- * Two regressions
-   ([#778](https://github.com/futureverse/future/issues/778) and
-   [#781](https://github.com/futureverse/future/issues/781)) have been
-   identified since the introduction of future 1.40.0 (2025-04-10),
-   which came with a major internal redesign. I am working on
-   resolving these issues. Until resolved, if you think you are
-   affected, you can roll back to future 1.34.0 by calling:
-
-   `install.packages("https://cran.r-project.org/src/contrib/Archive/future/future_1.34.0.tar.gz")`
-   
 ## New Features
+
+ * `future()` does a better job in identifying global variables in the
+   future expression. This is achieved by the static-code analysis now
+   walks the abstract syntax tree (AST) of the future expression using
+   a strategy that better emulates how the R engine identifies global
+   variables at run-time.
 
  * Add `cancel()` for canceling one or more futures. By default, it
    attempts to interrupt any running futures. This replaces the
@@ -34,7 +44,7 @@
    parallel PSOCK worker requires its own R connections. Previously,
    it would attempt to launch even more workers on machines with a
    large number of CPU cores, e.g. 128, 196, and 256 CPU-core
-   machines.
+   machines, which all are above the 125 connections available in R.
 
 ## Bug Fixes
 
