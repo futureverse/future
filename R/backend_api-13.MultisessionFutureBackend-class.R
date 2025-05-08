@@ -9,7 +9,15 @@
 #' @keywords internal
 #' @rdname FutureBackend
 #' @export
-MultisessionFutureBackend <- function(workers = availableCores(constraints = "connections"), interrupts = TRUE, ...) {
+MultisessionFutureBackend <- function(workers = availableCores(constraints = "connections"), rscript_libs = .libPaths(), interrupts = TRUE, gc = FALSE, earlySignal = FALSE, ...) {
+  debug <- isTRUE(getOption("future.debug"))
+  if (debug) {
+    mdebugf_push("MultisessionFutureBackend(workers = <workers>, interrupts = %s, ...) ...", interrupts)
+    mdebug("Arguments:")
+    mstr(list(workers = workers, rscript_libs = rscript_libs, interrupts = interrupts, gc = gc, earlySignal = earlySignal, ...))
+    on.exit(mdebugf_pop())
+  }
+  
   default_workers <- missing(workers)
   if (is.function(workers)) workers <- workers()
   stop_if_not(is.numeric(workers))
@@ -26,7 +34,14 @@ MultisessionFutureBackend <- function(workers = availableCores(constraints = "co
     return(SequentialFutureBackend(...))
   }
 
-  core <- ClusterFutureBackend(workers = workers, interrupts = interrupts, ...)
+  core <- ClusterFutureBackend(
+    workers = workers,
+    rscript_libs = rscript_libs,
+    interrupts = interrupts,
+    gc = gc,
+    earlySignal = earlySignal,
+    ...
+  )
   core[["futureClasses"]] <- c("MultisessionFuture", core[["futureClasses"]])
   core <- structure(core, class = c("MultisessionFutureBackend", class(core)))
   core
