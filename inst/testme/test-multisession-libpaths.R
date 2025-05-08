@@ -6,7 +6,14 @@
 library(future)
 options(future.debug = FALSE)
 
+normalize_libs <- function(paths) {
+  gsub("\\\\", "/", paths)
+}
+
 assert_libs <- function(libs_worker, libs_main) {
+  if (identical(libs_worker, libs_main)) return()
+  libs_worker <- normalize_libs(libs_worker)
+  libs_main <- normalize_libs(libs_main)
   if (identical(libs_worker, libs_main)) return()
   libs_main_added <- setdiff(libs_main, libs_worker)
   stopifnot(length(libs_main_added) == 0L)
@@ -25,6 +32,7 @@ assert_libs <- function(libs_worker, libs_main) {
 } # assert_libs()
 
 
+
 message("Main R session library path:")
 libs <- .libPaths()
 print(libs)
@@ -41,7 +49,7 @@ message("OK")
 
 message("Multisession worker with broken library path:")
 libs_tmp <- tempdir()
-with(plan(multisession, rscript_libs = libs_tmp), {
+with(plan(multisession, rscript_libs = normalize_libs(libs_tmp)), {
   f <- future(.libPaths())
   libs_w <- tryCatch(value(f), error = identity)
 })
@@ -52,7 +60,7 @@ message("OK")
 
 message("Main with broken and multisession worker with working library path:")
 .libPaths(libs_tmp)
-with(plan(multisession, rscript_libs = libs), {
+with(plan(multisession, rscript_libs = normalize_libs(libs)), {
   f <- future(.libPaths())
   libs_w <- value(f)
 })
