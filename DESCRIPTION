@@ -16,8 +16,8 @@ Suggests:
     R.rsp,
     markdown
 Remotes:
-    futureverse/parallelly,
-    futureverse/globals
+    futureverse/parallelly@1.44.0,
+    futureverse/globals@0.18.0
 VignetteBuilder: R.rsp
 Authors@R: c(person("Henrik", "Bengtsson",
                     role = c("aut", "cre", "cph"),
