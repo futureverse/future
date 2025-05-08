@@ -27,9 +27,10 @@
    on the total and average runtime of all finished futures thus far.
 
  * Now `plan(multisession)` defaults to
-   `parallelly::availableCores(constraints = "connections")`
+   `parallelly::availableCores(constraints = "connections-16")`
    workers. This is done to make sure to not use more parallel workers
-   than the number of connections available in R, because each
+   than the number of connections available in R, and to leave 16
+   connections available for other needs. This is because each
    parallel PSOCK worker requires its own R connections. Previously,
    it would attempt to launch even more workers on machines with a
    large number of CPU cores, e.g. 128, 196, and 256 CPU-core

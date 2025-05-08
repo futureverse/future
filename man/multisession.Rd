@@ -7,7 +7,7 @@
 \usage{
 multisession(
   ...,
-  workers = availableCores(constraints = "connections"),
+  workers = availableCores(constraints = "connections-16"),
   lazy = FALSE,
   rscript_libs = .libPaths(),
   gc = FALSE,

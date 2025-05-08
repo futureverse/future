@@ -196,9 +196,6 @@ export(supportsMulticore)
 export(tweak)
 export(validateFutureGlobals)
 export(value)
-if (packageVersion("parallelly") <= "1.43.0") {
-  S3method(all.equal,connection)
-}
 importFrom(digest,digest)
 importFrom(globals,Globals)
 importFrom(globals,as.Globals)
