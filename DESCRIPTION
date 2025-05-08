@@ -15,8 +15,6 @@ Suggests:
     RhpcBLASctl,
     R.rsp,
     markdown
-Remotes:
-    futureverse/globals@develop
 VignetteBuilder: R.rsp
 Authors@R: c(person("Henrik", "Bengtsson",
                     role = c("aut", "cre", "cph"),
