@@ -8,12 +8,12 @@ options(future.debug = FALSE)
 
 assert_libs <- function(libs_worker, libs_main) {
   if (identical(libs_worker, libs_main)) return()
-  libs_main_extra <- setdiff(libs_main, libs_worker)
+  libs_main_added <- setdiff(libs_main, libs_worker)
   stopifnot(length(libs_main_added) == 0L)
   libs_main_worker <- setdiff(libs_worker, libs_main)
-  if (length(libs_main_worker) > 0L) {
+  if (length(libs_main_added) > 0L) {
     warning("The worker's library path has extra components: ",
-            paste(sQuote(libs_main_worker), collapse = ", "))
+            paste(sQuote(libs_main_added), collapse = ", "))
   }
   n_worker <- length(libs_worker)
   n_main <- length(libs_main)
