@@ -36,16 +36,6 @@ advantage of early exiting on errors via cancellation of futures.
    finished futures since the future backend was set. It also reports
    on the total and average runtime of all finished futures thus far.
 
- * Now `plan(multisession)` defaults to
-   `parallelly::availableCores(constraints = "connections-16")`
-   workers. This is done to make sure to not use more parallel workers
-   than the number of connections available in R, and to leave 16
-   connections available for other needs. This is because each
-   parallel PSOCK worker requires its own R connections. Previously,
-   it would attempt to launch even more workers on machines with a
-   large number of CPU cores, e.g. 128, 196, and 256 CPU-core
-   machines, which all are above the 125 connections available in R.
-
 ## Bug Fixes
 
  * Globals in the environment of an anonymous function were lost since

@@ -9,7 +9,7 @@
 #' @keywords internal
 #' @rdname FutureBackend
 #' @export
-MultisessionFutureBackend <- function(workers = availableCores(constraints = "connections-16"), rscript_libs = .libPaths(), interrupts = TRUE, gc = FALSE, earlySignal = FALSE, ...) {
+MultisessionFutureBackend <- function(workers = availableCores(), rscript_libs = .libPaths(), interrupts = TRUE, gc = FALSE, earlySignal = FALSE, ...) {
   debug <- isTRUE(getOption("future.debug"))
   if (debug) {
     mdebugf_push("MultisessionFutureBackend(workers = <workers>, interrupts = %s, ...) ...", interrupts)
@@ -124,7 +124,7 @@ print.MultisessionFutureBackend <- function(x, validate = TRUE, ...) {
 #' cores that are available for the current \R session.
 #'
 #' @export
-multisession <- function(..., workers = availableCores(constraints = "connections-16"), lazy = FALSE, rscript_libs = .libPaths(), gc = FALSE, earlySignal = FALSE, envir = parent.frame()) {
+multisession <- function(..., workers = availableCores(), lazy = FALSE, rscript_libs = .libPaths(), gc = FALSE, earlySignal = FALSE, envir = parent.frame()) {
   ## WORKAROUNDS:
   ## (1) promises::future_promise() calls the "evaluator" function directly
   if ("promises" %in% loadedNamespaces()) {
