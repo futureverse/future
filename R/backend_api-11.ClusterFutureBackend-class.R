@@ -23,7 +23,6 @@ ClusterFutureBackend <- local({
 
   function(workers = availableWorkers(constraints = "connections"), gc = TRUE, earlySignal = TRUE, interrupts = FALSE, persistent = FALSE, ...) {
     debug <- isTRUE(getOption("future.debug"))
-
     if (debug) {
       mdebugf_push("ClusterFutureBackend(..., persistent = %s, gc = %s, earlySignal = %s) ...", persistent, gc, earlySignal)
       on.exit(mdebugf_pop())
@@ -429,8 +428,16 @@ nbrOfFreeWorkers.ClusterFutureBackend <- function(evaluator, ...) {
 
 
 .makeCluster <- function(workers, ...) {
+  debug <- isTRUE(getOption("future.debug"))
+  if (debug) {
+    mdebug_push(".makeCluster() ...")
+    mdebug("workers: ", commaq(workers))
+    on.exit(mdebug_pop())
+  }
+  
   if (length(workers) == 0L) return(NULL)
   oenv <- Sys.getenv("R_FUTURE_PLAN", NA_character_)
+  if (debug) mdebug("R_FUTURE_PLAN: ", oenv)
   Sys.unsetenv("R_FUTURE_PLAN")
   on.exit({
     if (!is.na(oenv)) Sys.setenv(R_FUTURE_PLAN = oenv)
@@ -443,6 +450,11 @@ nbrOfFreeWorkers.ClusterFutureBackend <- function(evaluator, ...) {
   args <- args[keep]
 
   args <- c(list(workers), args)
+  if (debug) {
+    mdebug("parallelly::makeClusterPSOCK() arguments:")
+    mstr(args)
+  }
+  
   cl <- do.call(makeClusterPSOCK, args = args, quote = TRUE)
   cl <- addCovrLibPath(cl)
   cl

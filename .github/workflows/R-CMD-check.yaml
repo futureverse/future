@@ -58,7 +58,8 @@ jobs:
       _R_CHECK_SUGGESTS_ONLY_: true
       _R_CHECK_THINGS_IN_TEMP_DIR_: true
       _R_CHECK_TESTS_NLINES_: 300
-      RCMDCHECK_ERROR_ON: note
+      RCMDCHECK_ERROR_ON: error
+      NOT_CRAN: true
       ## Specific to futures
       R_PARALLELLY_AVAILABLECORES_SYSTEM: ${{ matrix.config.availablecores }}
       R_FUTURE_RNG_ONMISUSE: error

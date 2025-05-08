@@ -9,7 +9,15 @@
 #' @keywords internal
 #' @rdname FutureBackend
 #' @export
-MultisessionFutureBackend <- function(workers = availableCores(constraints = "connections"), interrupts = TRUE, ...) {
+MultisessionFutureBackend <- function(workers = availableCores(constraints = "connections-16"), rscript_libs = .libPaths(), interrupts = TRUE, gc = FALSE, earlySignal = FALSE, ...) {
+  debug <- isTRUE(getOption("future.debug"))
+  if (debug) {
+    mdebugf_push("MultisessionFutureBackend(workers = <workers>, interrupts = %s, ...) ...", interrupts)
+    mdebug("Arguments:")
+    mstr(list(workers = workers, rscript_libs = rscript_libs, interrupts = interrupts, gc = gc, earlySignal = earlySignal, ...))
+    on.exit(mdebugf_pop())
+  }
+  
   default_workers <- missing(workers)
   if (is.function(workers)) workers <- workers()
   stop_if_not(is.numeric(workers))
@@ -26,7 +34,14 @@ MultisessionFutureBackend <- function(workers = availableCores(constraints = "co
     return(SequentialFutureBackend(...))
   }
 
-  core <- ClusterFutureBackend(workers = workers, interrupts = interrupts, ...)
+  core <- ClusterFutureBackend(
+    workers = workers,
+    rscript_libs = rscript_libs,
+    interrupts = interrupts,
+    gc = gc,
+    earlySignal = earlySignal,
+    ...
+  )
   core[["futureClasses"]] <- c("MultisessionFuture", core[["futureClasses"]])
   core <- structure(core, class = c("MultisessionFutureBackend", class(core)))
   core
@@ -109,7 +124,7 @@ print.MultisessionFutureBackend <- function(x, validate = TRUE, ...) {
 #' cores that are available for the current \R session.
 #'
 #' @export
-multisession <- function(..., workers = availableCores(constraints = "connections"), lazy = FALSE, rscript_libs = .libPaths(), gc = FALSE, earlySignal = FALSE, envir = parent.frame()) {
+multisession <- function(..., workers = availableCores(constraints = "connections-16"), lazy = FALSE, rscript_libs = .libPaths(), gc = FALSE, earlySignal = FALSE, envir = parent.frame()) {
   ## WORKAROUNDS:
   ## (1) promises::future_promise() calls the "evaluator" function directly
   if ("promises" %in% loadedNamespaces()) {

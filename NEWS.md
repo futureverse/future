@@ -27,9 +27,10 @@
    on the total and average runtime of all finished futures thus far.
 
  * Now `plan(multisession)` defaults to
-   `parallelly::availableCores(constraints = "connections")`
+   `parallelly::availableCores(constraints = "connections-16")`
    workers. This is done to make sure to not use more parallel workers
-   than the number of connections available in R, because each
+   than the number of connections available in R, and to leave 16
+   connections available for other needs. This is because each
    parallel PSOCK worker requires its own R connections. Previously,
    it would attempt to launch even more workers on machines with a
    large number of CPU cores, e.g. 128, 196, and 256 CPU-core
@@ -37,16 +38,14 @@
 
 ## Bug Fixes
 
- * When a future fails to launch due to issues with the parallel
-   worker, querying it with `value()` produces a
-   `FutureLaunchError`. When this happened for `cluster` or
-   `multisession` futures, `resolved()` would return FALSE and not
-   TRUE as expected. In addition, the `FutureLaunchError` would be
-   lost, resulting in such futures being stuck in an unresolved state,
-   and the `FutureLaunchError` error never being signaled.
-
  * Globals in the environment of an anonymous function were lost since
-   v1.40.0 (2025-04-10).
+   v1.40.0 (2025-04-10). This was partly resolved by updates to the
+   **future** package and partly by updates to the **globals**
+   package. This regression has now been fixed.
+   
+ * Multisession workers stopped inheriting the R package library path
+   of the main R session in v1.40.0 (2025-04-10). This regression has
+   now been fixed.
 
  * In rare cases, a future backend might fail to launch a future and
    at the same time fail to handle such errors. That would result in
@@ -57,16 +56,24 @@
    that futures failing to launch can always be reset and relaunched
    again, possible on alternative backend.
    
+ * When a future fails to launch due to issues with the parallel
+   worker, querying it with `value()` produces a
+   `FutureLaunchError`. When this happened for `cluster` or
+   `multisession` futures, `resolved()` would return FALSE and not
+   TRUE as expected. In addition, the `FutureLaunchError` would be
+   lost, resulting in such futures being stuck in an unresolved state,
+   and the `FutureLaunchError` error never being signaled.
+
+ * Shutdown of `cluster` and `multisession` workers could fail if one
+   of the the workers was already terminated, e.g. interrupted or
+   crashed. Now the shutdown of each worker is independent of the
+   others, lowering the risk of leaving stray PSOCK workers behind.
+
  * The built-in validation that futures do not leave behind stray
    connections could, in some cases, result in `Error in vapply(after,
    FUN = as.integer, FUN.VALUE = NA_integer_): values must be length
    1, but FUN(X[[9]]) result is length 0` when there were such stray
    connections.
-   
- * Shutdown of `cluster` and `multisession` workers could fail if one
-   of the the workers was already terminated, e.g. interrupted or
-   crashed. Now the shutdown of each worker is independent of the
-   others, lowering the risk of leaving stray PSOCK workers behind.
 
 ## Deprecated and Defunct
 

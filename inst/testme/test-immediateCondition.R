@@ -77,7 +77,7 @@ for (ss in seq_along(strategies)) {
       ## RACE CONDITION IN ASSERTION:
       ## Add some leeway for the immediateCondition files written by
       ## multicore futures to "settle" on the file system
-      Sys.sleep(0.2)
+      Sys.sleep(0.5)
       42L
     }, label = "single-future")
   })
@@ -166,7 +166,7 @@ for (ss in seq_along(strategies)) {
       ## RACE CONDITION IN ASSERTION:
       ## Add some leeway for the immediateCondition files written by
       ## multicore futures to "settle" on the file system
-      Sys.sleep(0.2)
+      Sys.sleep(0.5)
       1L
     }, label = "future-1")
     fs[[2]] <- future({
@@ -177,7 +177,7 @@ for (ss in seq_along(strategies)) {
       ## RACE CONDITION IN ASSERTION:
       ## Add some leeway for the immediateCondition files written by
       ## multicore futures to "settle" on the file system
-      Sys.sleep(0.2)
+      Sys.sleep(0.5)
       2L
     }, label = "future-2")
   })

@@ -243,6 +243,12 @@ makeFutureBackend <- function(evaluator, ..., debug = FALSE) {
   ## Apply future plan tweaks
   args <- attr(evaluator, "tweaks")
   if (is.null(args)) args <- list()
+
+  if (debug) {
+    mdebugf("Evaluator tweak arguments: [n=%d]", length(args))
+    mstr(args)
+  }
+
   args2 <- formals(evaluator)
   args2[["..."]] <- NULL
   args2$lazy <- NULL         ## bc multisession; should be removed
@@ -251,13 +257,20 @@ makeFutureBackend <- function(evaluator, ..., debug = FALSE) {
     args2[["envir"]] <- NULL
     names2 <- names(args2)
   }
-  
+  if (debug) {
+    mdebugf("Evaluator formal arguments: [n=%d]", length(args2))
+    mstr(args)
+  }
   for (name in names2) {
     args[[name]] <- args2[[name]]
   }
 
+  if (debug) {
+    mdebugf("Backend factory arguments: [n=%d]", length(args2))
+    mstr(args2)
+  }
   backend <- do.call(factory, args = args)
-  mdebugf("Backend: <%s>", commaq(class(backend)))
+  if (debug) mdebugf("Backend: <%s>", commaq(class(backend)))
   stop_if_not(inherits(backend, "FutureBackend"))
   
   ## Record factory function as an attribute; needed by tweak()

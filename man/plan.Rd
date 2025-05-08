@@ -54,7 +54,7 @@ function by its name.}
 arguments.}
 }
 \value{
-The value of the expression evaluated.
+The value of the expression evaluated (invisibly).
 
 \code{plan()} returns a the previous plan invisibly if a new future backend
 is chosen, otherwise it returns the current one visibly.
