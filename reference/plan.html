@@ -17,7 +17,7 @@ e.g. sequentially or in parallel."><meta property="og:image" content="https://fu
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.40.0-9310</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.40.0-9313</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -167,7 +167,7 @@ arguments.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>The value of the expression evaluated.</p>
+    <p>The value of the expression evaluated (invisibly).</p>
 <p><code>plan()</code> returns a the previous plan invisibly if a new future backend
 is chosen, otherwise it returns the current one visibly.</p>
 <p>a future function.</p>
@@ -336,7 +336,7 @@ new default strategy.</p></div>
 <span class="r-in"><span><span class="op">}</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>main <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getpid.html" class="external-link">Sys.getpid</a></span><span class="op">(</span><span class="op">)</span>, worker <span class="op">=</span> <span class="va">w_pid</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    main  worker </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3842925 3844716 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3892515 3894285 </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
@@ -349,7 +349,7 @@ new default strategy.</p></div>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>main <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getpid.html" class="external-link">Sys.getpid</a></span><span class="op">(</span><span class="op">)</span>, worker <span class="op">=</span> <span class="va">w_pid</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    main  worker </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3842925 3844784 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3892515 3894368 </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">a</span> <span class="op">&lt;-</span> <span class="va">b</span> <span class="op">&lt;-</span> <span class="va">c</span> <span class="op">&lt;-</span> <span class="cn">NA_real_</span></span></span>
