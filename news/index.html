@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.40.0-9401</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.40.0-9402</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -79,7 +79,7 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.40.0-9000" id="version-1400-9000">Version 1.40.0-9000<a class="anchor" aria-label="anchor" href="#version-1400-9000"></a></h2>
-<p>This is the second rollout out of three-four major updates, which is now possible due to a multi-year effort of internal re-designs, work with package maintainers, release, and repeat. This release fixes two regressions introduced in future 1.40.0 (2025-04-10), despite passing <a href="https://www.futureverse.org/quality.html" class="external-link">all unit, regression, and system tests</a> of the Future API that we have built up over the years. Fixing these issues led to a greatly improved static-code analyzer for automatically finding global variables in future expressions. With this release, we can now move on top releasing modern versions of future backends <strong>future.callr</strong> and <strong>future.mirai</strong> such that support interrupting of futures and near-live progress updates using the <strong>progressr</strong> package. Map-reduce packages such as <strong>future.apply</strong>, <strong>furrr</strong>, and <strong>doFuture</strong> can be updates to take advantage of early exiting on errors via cancellation of futures.</p>
+<p>This is the second rollout out of three-four major updates, which is now possible due to a multi-year effort of internal re-designs, work with package maintainers, release, and repeat. This release fixes two regressions introduced in future 1.40.0 (2025-04-10), despite passing <a href="https://www.futureverse.org/quality.html" class="external-link">all unit, regression, and system tests</a> of the Future API that we have built up over the years. On the upside, fixing these issues led to a greatly improved static-code analyzer for automatically finding global variables in future expressions. Also, with this release, we can now move on top releasing modern versions of future backends <strong>future.callr</strong> and <strong>future.mirai</strong> that support interrupting futures and near-live progress updates using the <strong>progressr</strong> package. In addition, map-reduce packages such as <strong>future.apply</strong>, <strong>furrr</strong>, and <strong>doFuture</strong> can be updated to take advantage of early exiting on errors via cancellation of futures.</p>
 <div class="section level3">
 <h3 id="new-features-1-40-0-9000">New Features<a class="anchor" aria-label="anchor" href="#new-features-1-40-0-9000"></a></h3>
 <ul><li><p><code><a href="../reference/future.html">future()</a></code> does a better job in identifying global variables in the future expression. This is achieved by the static-code analysis now walks the abstract syntax tree (AST) of the future expression using a strategy that better emulates how the R engine identifies global variables at run-time.</p></li>
@@ -808,7 +808,7 @@
 </ul></div>
 <div class="section level3">
 <h3 id="deprecated-and-defunct-1-11-0">Deprecated and Defunct<a class="anchor" aria-label="anchor" href="#deprecated-and-defunct-1-11-0"></a></h3>
-<ul><li>Removed defunct <code>future::future_lapply()</code>. Please use the one in the <strong>future.apply</strong> package instead.</li>
+<ul><li>Removed defunct <code><a href="https://future.apply.futureverse.org/reference/future_lapply.html" class="external-link">future::future_lapply()</a></code>. Please use the one in the <strong>future.apply</strong> package instead.</li>
 </ul></div>
 </div>
     <div class="section level2">
@@ -851,7 +851,7 @@
 </ul></div>
 <div class="section level3">
 <h3 id="deprecated-and-defunct-1-9-0">Deprecated and Defunct<a class="anchor" aria-label="anchor" href="#deprecated-and-defunct-1-9-0"></a></h3>
-<ul><li><p><code>future::future_lapply()</code> is defunct (gives an error if called). Please use the one in the <strong>future.apply</strong> package instead.</p></li>
+<ul><li><p><code><a href="https://future.apply.futureverse.org/reference/future_lapply.html" class="external-link">future::future_lapply()</a></code> is defunct (gives an error if called). Please use the one in the <strong>future.apply</strong> package instead.</p></li>
 <li><p>Argument <code>output</code> of <code><a href="../reference/FutureCondition.html">FutureError()</a></code> is formally deprecated.</p></li>
 <li><p>Removed all <code>FutureEvaluationCondition</code> classes and related methods.</p></li>
 </ul></div>
@@ -894,7 +894,7 @@
 </ul></div>
 <div class="section level3">
 <h3 id="deprecated-and-defunct-1-8-0">Deprecated and Defunct<a class="anchor" aria-label="anchor" href="#deprecated-and-defunct-1-8-0"></a></h3>
-<ul><li><p><code>future::future_lapply()</code> is formally deprecated. Please use the one in the <strong>future.apply</strong> package instead.</p></li>
+<ul><li><p><code><a href="https://future.apply.futureverse.org/reference/future_lapply.html" class="external-link">future::future_lapply()</a></code> is formally deprecated. Please use the one in the <strong>future.apply</strong> package instead.</p></li>
 <li><p>Recently introduced <code>FutureEvaluationCondition</code> classes are deprecated, because they no longer serve a purpose since future evaluation conditions are now signaled as-is.</p></li>
 </ul></div>
 </div>
@@ -903,7 +903,7 @@
 <div class="section level3">
 <h3 id="significant-changes-1-7-0">Significant Changes<a class="anchor" aria-label="anchor" href="#significant-changes-1-7-0"></a></h3>
 <ul><li>
-<code>future_lapply()</code> has moved to the <strong>future.apply</strong> package available on CRAN.</li>
+<code><a href="https://future.apply.futureverse.org/reference/future_lapply.html" class="external-link">future_lapply()</a></code> has moved to the <strong>future.apply</strong> package available on CRAN.</li>
 </ul></div>
 <div class="section level3">
 <h3 id="new-features-1-7-0">New Features<a class="anchor" aria-label="anchor" href="#new-features-1-7-0"></a></h3>
@@ -930,7 +930,7 @@
 </ul></div>
 <div class="section level3">
 <h3 id="deprecated-and-defunct-1-7-0">Deprecated and Defunct<a class="anchor" aria-label="anchor" href="#deprecated-and-defunct-1-7-0"></a></h3>
-<ul><li><p><code>future_lapply()</code> has moved to the new <strong>future.apply</strong> package available on CRAN. The <code>future::future_lapply()</code> function will soon be deprecated, then defunct, and eventually be removed from the <strong>future</strong> package. Please update your code to make use of <code><a href="https://future.apply.futureverse.org/reference/future_lapply.html" class="external-link">future.apply::future_lapply()</a></code> instead.</p></li>
+<ul><li><p><code><a href="https://future.apply.futureverse.org/reference/future_lapply.html" class="external-link">future_lapply()</a></code> has moved to the new <strong>future.apply</strong> package available on CRAN. The <code><a href="https://future.apply.futureverse.org/reference/future_lapply.html" class="external-link">future::future_lapply()</a></code> function will soon be deprecated, then defunct, and eventually be removed from the <strong>future</strong> package. Please update your code to make use of <code><a href="https://future.apply.futureverse.org/reference/future_lapply.html" class="external-link">future.apply::future_lapply()</a></code> instead.</p></li>
 <li><p>Dropped defunct ‘eager’ and ‘lazy’ futures; use ‘sequential’ instead.</p></li>
 <li><p>Dropped defunct arguments <code>cluster</code> and <code>maxCores</code>; use <code>workers</code> instead.</p></li>
 <li><p>In previous version of the <strong>future</strong> package the <code>FutureError</code> class was used to represent both orchestration errors (now <code>FutureError</code>) and evaluation errors (now <code>FutureEvaluationError</code>). Any usage of class <code>FutureError</code> for the latter type of errors is deprecated and should be updated to <code>FutureEvaluationError</code>.</p></li>
@@ -958,7 +958,7 @@
 <div class="section level3">
 <h3 id="bug-fixes-1-6-1">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-1-6-1"></a></h3>
 <ul><li>
-<code>future_lapply()</code> would give “Error in objectSize.env(x, depth = depth - 1L): object ‘nnn’ not found” when for instance ‘nnn’ is part of an unresolved expression that is an argument value.</li>
+<code><a href="https://future.apply.futureverse.org/reference/future_lapply.html" class="external-link">future_lapply()</a></code> would give “Error in objectSize.env(x, depth = depth - 1L): object ‘nnn’ not found” when for instance ‘nnn’ is part of an unresolved expression that is an argument value.</li>
 </ul></div>
 <div class="section level3">
 <h3 id="software-quality-1-6-1">Software Quality<a class="anchor" aria-label="anchor" href="#software-quality-1-6-1"></a></h3>
@@ -1009,8 +1009,8 @@
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-1-5-0">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-1-5-0"></a></h3>
-<ul><li><p><code>future_lapply()</code> with multicore / multisession futures, would use a suboptimal workload balancing where it split up the data in one chunk too many. This is no longer a problem because of how argument <code>workers</code> is now defined for those type of futures (see note on top).</p></li>
-<li><p><code>future_lapply()</code>, as well as lazy multicore and lazy sequential futures, did not respect option <code>future.globals.resolve</code>, but was hardcoded to always resolve globals (<code>future.globals.resolve =    TRUE</code>).</p></li>
+<ul><li><p><code><a href="https://future.apply.futureverse.org/reference/future_lapply.html" class="external-link">future_lapply()</a></code> with multicore / multisession futures, would use a suboptimal workload balancing where it split up the data in one chunk too many. This is no longer a problem because of how argument <code>workers</code> is now defined for those type of futures (see note on top).</p></li>
+<li><p><code><a href="https://future.apply.futureverse.org/reference/future_lapply.html" class="external-link">future_lapply()</a></code>, as well as lazy multicore and lazy sequential futures, did not respect option <code>future.globals.resolve</code>, but was hardcoded to always resolve globals (<code>future.globals.resolve =    TRUE</code>).</p></li>
 <li><p>When globals larger than the allowed size (option <code>future.globals.maxSize</code>) are detected an informative error message is generated. Previous version introduced a bug causing the error to produce another error.</p></li>
 <li><p>Lazy sequential futures would produce an error when resolved if required packages had been detached.</p></li>
 <li><p><code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> would not display globals gathered for lazy sequential futures.</p></li>
@@ -1026,28 +1026,28 @@
 <h2 class="pkg-version" data-toc-text="1.4.0" id="version-140">Version 1.4.0<a class="anchor" aria-label="anchor" href="#version-140"></a></h2><p class="text-muted">CRAN release: 2017-03-13</p>
 <div class="section level3">
 <h3 id="significant-changes-1-4-0">Significant Changes<a class="anchor" aria-label="anchor" href="#significant-changes-1-4-0"></a></h3>
-<ul><li>The default for <code>future_lapply()</code> is now to <em>not</em> generate RNG seeds (<code>future.seed = FALSE</code>). If proper random number generation is needed, use <code>future.seed = TRUE</code>. For more details, see help page.</li>
+<ul><li>The default for <code><a href="https://future.apply.futureverse.org/reference/future_lapply.html" class="external-link">future_lapply()</a></code> is now to <em>not</em> generate RNG seeds (<code>future.seed = FALSE</code>). If proper random number generation is needed, use <code>future.seed = TRUE</code>. For more details, see help page.</li>
 </ul></div>
 <div class="section level3">
 <h3 id="new-features-1-4-0">New Features<a class="anchor" aria-label="anchor" href="#new-features-1-4-0"></a></h3>
-<ul><li><p><code><a href="../reference/future.html">future()</a></code> and <code>future_lapply()</code> gained argument <code>packages</code> for explicitly specifying packages to be attached when the futures are evaluated. Note that the default throughout the <strong>future</strong> package is that all globals and all required packages are automatically identified and gathered, so in most cases those do not have to be specified manually.</p></li>
+<ul><li><p><code><a href="../reference/future.html">future()</a></code> and <code><a href="https://future.apply.futureverse.org/reference/future_lapply.html" class="external-link">future_lapply()</a></code> gained argument <code>packages</code> for explicitly specifying packages to be attached when the futures are evaluated. Note that the default throughout the <strong>future</strong> package is that all globals and all required packages are automatically identified and gathered, so in most cases those do not have to be specified manually.</p></li>
 <li><p>The default values for arguments <code>connectTimeout</code> and <code>timeout</code> of <code>makeNodePSOCK()</code> can now be controlled via global options.</p></li>
 </ul></div>
 <div class="section level3">
 <h3 id="random-number-generation-1-4-0">Random Number Generation<a class="anchor" aria-label="anchor" href="#random-number-generation-1-4-0"></a></h3>
-<ul><li><p>Now <code>future_lapply()</code> guarantees that the RNG state of the calling R process after returning is updated compared to what it was before and in the exact same way regardless of <code>future.seed</code> (except FALSE), <code>future.scheduling</code> and future strategy used. This is done in order to guarantee that an R script calling <code>future_lapply()</code> multiple times should be numerically reproducible given the same initial seed.</p></li>
+<ul><li><p>Now <code><a href="https://future.apply.futureverse.org/reference/future_lapply.html" class="external-link">future_lapply()</a></code> guarantees that the RNG state of the calling R process after returning is updated compared to what it was before and in the exact same way regardless of <code>future.seed</code> (except FALSE), <code>future.scheduling</code> and future strategy used. This is done in order to guarantee that an R script calling <code><a href="https://future.apply.futureverse.org/reference/future_lapply.html" class="external-link">future_lapply()</a></code> multiple times should be numerically reproducible given the same initial seed.</p></li>
 <li><p>It is now possible to specify a pre-generated sequence of <code>.Random.seed</code> seeds to be used for each <code>FUN(x[[i]], ...)</code> call in <code>future_lapply(x, FUN, ...)</code>.</p></li>
 </ul></div>
 <div class="section level3">
 <h3 id="performance-1-4-0">Performance<a class="anchor" aria-label="anchor" href="#performance-1-4-0"></a></h3>
 <ul><li>
-<code>future_lapply()</code> scans global variables for non-resolved futures (to resolve them) and calculate their total size once. Previously, each chunk (a future) would redo this.</li>
+<code><a href="https://future.apply.futureverse.org/reference/future_lapply.html" class="external-link">future_lapply()</a></code> scans global variables for non-resolved futures (to resolve them) and calculate their total size once. Previously, each chunk (a future) would redo this.</li>
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-1-4-0">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-1-4-0"></a></h3>
 <ul><li><p>Now <code>future_lapply(X, FUN, ...)</code> identifies global objects among <code>X</code>, <code>FUN</code> and <code>...</code> recursively until no new globals are found. Previously, only the first level of globals were scanned. This is mostly thanks to a bug fix in <strong>globals</strong> 0.9.0.</p></li>
 <li><p>A future that used a global object <code>x</code> of a class that overrides <code><a href="https://rdrr.io/r/base/length.html" class="external-link">length()</a></code> would produce an error if <code>length(x)</code> reports more elements than what can be subsetted.</p></li>
-<li><p><code><a href="../reference/nbrOfWorkers.html">nbrOfWorkers()</a></code> gave an error with <code>plan(cluster, workers = cl)</code> where <code>cl</code> is a <code>cluster</code> object created by <code><a href="https://rdrr.io/r/parallel/makeCluster.html" class="external-link">parallel::makeCluster()</a></code>, etc. This prevented for instance <code>future_lapply()</code> to work with such setups.</p></li>
+<li><p><code><a href="../reference/nbrOfWorkers.html">nbrOfWorkers()</a></code> gave an error with <code>plan(cluster, workers = cl)</code> where <code>cl</code> is a <code>cluster</code> object created by <code><a href="https://rdrr.io/r/parallel/makeCluster.html" class="external-link">parallel::makeCluster()</a></code>, etc. This prevented for instance <code><a href="https://future.apply.futureverse.org/reference/future_lapply.html" class="external-link">future_lapply()</a></code> to work with such setups.</p></li>
 <li><p><code>plan(cluster, workers = cl)</code> where <code>cl &lt;- makeCluster(..., type =    MPI")</code> would give an instant error due to an invalid internal assertion.</p></li>
 </ul></div>
 <div class="section level3">
@@ -1069,7 +1069,7 @@
 <li><p>Added support for controlling whether a future is resolved eagerly or lazily when creating the future, e.g. <code>future(..., lazy =    TRUE)</code>, <code>futureAssign(..., lazy = TRUE)</code>, and <code>x %&lt;-% { ... }    %lazy% TRUE</code>.</p></li>
 <li><p><code><a href="../reference/future.html">future()</a></code>, <code><a href="../reference/futureAssign.html">futureAssign()</a></code> and <code><a href="../reference/future.html">futureCall()</a></code> gained argument <code>seed</code>, which specifies a L’Ecuyer-CMRG random seed to be used by the future. The seed for future assignment can be specified via <code>%seed%</code>.</p></li>
 <li><p><code><a href="../reference/futureAssign.html">futureAssign()</a></code> now passes all additional arguments to <code><a href="../reference/future.html">future()</a></code>.</p></li>
-<li><p>Added <code>future_lapply()</code> which supports load balancing (“chunking”) and perfect reproducibility (regardless of type of load balancing and how futures are resolved) via initial random seed.</p></li>
+<li><p>Added <code><a href="https://future.apply.futureverse.org/reference/future_lapply.html" class="external-link">future_lapply()</a></code> which supports load balancing (“chunking”) and perfect reproducibility (regardless of type of load balancing and how futures are resolved) via initial random seed.</p></li>
 <li><p>Added <code><a href="../reference/re-exports.html">availableWorkers()</a></code>. By default it returns localhost workers according to <code><a href="../reference/re-exports.html">availableCores()</a></code>. In addition, it detects common HPC allocations given in environment variables set by the HPC scheduler.</p></li>
 <li><p>The default for <code>plan(cluster)</code> is now <code>workers =    availableWorkers()</code>.</p></li>
 <li><p>Now <code><a href="../reference/plan.html">plan()</a></code> stops any clusters that were implicitly created. For instance, a multisession cluster created by <code>plan(multisession)</code> will be stopped when <code>plan(eager)</code> is called.</p></li>
@@ -1089,7 +1089,7 @@
 <div class="section level3">
 <h3 id="bug-fixes-1-3-0">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-1-3-0"></a></h3>
 <ul><li><p>Creation of cluster futures (including multisession ones) would time out already after 40 seconds if all workers were busy. New default timeout is 30 days (option <code>future.wait.timeout</code>).</p></li>
-<li><p><code><a href="../reference/nbrOfWorkers.html">nbrOfWorkers()</a></code> gave an error for <code>plan(cluster, workers)</code> where <code>workers</code> was a character vector or a <code>cluster</code> object of the <strong>parallel</strong> package. Because of this, <code>future_lapply()</code> gave an error with such setups.</p></li>
+<li><p><code><a href="../reference/nbrOfWorkers.html">nbrOfWorkers()</a></code> gave an error for <code>plan(cluster, workers)</code> where <code>workers</code> was a character vector or a <code>cluster</code> object of the <strong>parallel</strong> package. Because of this, <code><a href="https://future.apply.futureverse.org/reference/future_lapply.html" class="external-link">future_lapply()</a></code> gave an error with such setups.</p></li>
 <li><p><code>availableCores(methods = "_R_CHECK_LIMIT_CORES_")</code> would give an error if not running <code>R CMD check</code>.</p></li>
 </ul></div>
 </div>
