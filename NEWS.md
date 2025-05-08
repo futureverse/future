@@ -1,4 +1,4 @@
-# Version 1.40.0-9000 [2025-05-08]
+# Version 1.49.0 [2025-05-08]
 
 This is the second rollout out of three-four major updates, which is
 now possible due to a multi-year effort of internal re-designs, work
