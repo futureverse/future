@@ -2,7 +2,7 @@
 plan(multisession, workers = 2)
 
 ## Launch two long running future
-fs <- lapply(c(1, 4), function(duration) {
+fs <- lapply(c(1, 2), function(duration) {
   future({
     Sys.sleep(duration)
     42
