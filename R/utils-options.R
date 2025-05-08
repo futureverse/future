@@ -373,7 +373,7 @@ update_package_options <- function(debug = FALSE) {
   ## future 1.34.0:
   update_package_option("future.globals.objectSize.method", mode = "character", debug = debug)
 
-  ## future (> 1.40.0):
+  ## future 1.40.0:
   update_package_option("future.connections.onMisuse", mode = "character", debug = debug)
   value <- getOption("future.connections.onMisuse")
   if (!is.null(value)) {
@@ -387,10 +387,9 @@ update_package_options <- function(debug = FALSE) {
 
   update_package_option("future.devices.onMisuse", mode = "character", debug = debug)
 
-  ## future (> 1.45.0):
+  ## future 1.49.0:
   update_package_option("future.regression.note", mode = "logical", default = TRUE, debug = debug)
-  default <- c("ordered", if (packageVersion("globals") >= "0.17.0-9015") "dfs")
-  update_package_option("future.globals.method.default", mode = "character", split = ",", default = default, debug = debug)
+  update_package_option("future.globals.method.default", mode = "character", split = ",", default = c("ordered", "dfs"), debug = debug)
 
   update_package_option("future.debug.indent", mode = "character", default = " ", debug = debug)
 }

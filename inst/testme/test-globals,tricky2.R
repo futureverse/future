@@ -67,7 +67,7 @@ for (cores in 1:availCores) {
 
 
     message("Case C")
-    ## This one fails to pick up 'a' as a global variable with
+    ## This one failed to pick up 'a' as a global variable with
     ## globals (<= 0.17.0).
     a <- 42L
     f <- future({
@@ -80,17 +80,10 @@ for (cores in 1:availCores) {
     rm(list = "a")
     globals <- f[["globals"]]
     if (not_cran) {
-      if (packageVersion("globals") <= "0.17.0") {
-        stopifnot(length(globals) == 0) ## fails to pick up 'a'
-        y <- tryCatch(value(f), error = identity)
-        print(y)
-        stopifnot(inherits(y, "error")) ## object 'a' not found
-      } else {
-        stopifnot(length(globals) == 1L, names(globals) == "a")
-        y <- value(f)
-        print(y)
-        stopifnot(y == 42L)
-      }
+      stopifnot(length(globals) == 1L, names(globals) == "a")
+      y <- value(f)
+      print(y)
+      stopifnot(y == 42L)
     }
     rm(list = "y")
     

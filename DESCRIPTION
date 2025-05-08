@@ -1,11 +1,11 @@
 Package: future
-Version: 1.40.0-9400
+Version: 1.40.0-9401
 Title: Unified Parallel and Distributed Processing in R for Everyone
 Depends:
     R (>= 3.2.0)
 Imports:
     digest,
-    globals (>= 0.16.1),
+    globals (>= 0.18.0),
     listenv (>= 0.8.0),
     parallel,
     parallelly (>= 1.44.0),
