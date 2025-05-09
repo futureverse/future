@@ -109,7 +109,13 @@ readImmediateConditions <- function(path = immediateConditionsPath(rootPath = ro
   ## Resignal conditions
   mdebugf(" - Resignal conditions ...")
   conds <- lapply(conds, FUN = function(condition) {
-    signalCondition(condition)
+    if (inherits(condition, "warning")) {
+      warning(condition)
+    } else if (inherits(condition, "message")) {
+      message(condition)
+    } else if (inherits(condition, "condition")) {
+      signalCondition(condition)
+    }
     ## Increment signal count
     signaled <- condition[["signaled"]]
     if (is.null(signaled)) signaled <- 0L
