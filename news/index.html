@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.40.0-9403</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.49.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -78,17 +78,17 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="1.40.0-9000" id="version-1400-9000">Version 1.40.0-9000<a class="anchor" aria-label="anchor" href="#version-1400-9000"></a></h2>
+<h2 class="pkg-version" data-toc-text="1.49.0" id="version-1490">Version 1.49.0<a class="anchor" aria-label="anchor" href="#version-1490"></a></h2><p class="text-muted">CRAN release: 2025-05-09</p>
 <p>This is the second rollout out of three-four major updates, which is now possible due to a multi-year effort of internal re-designs, work with package maintainers, release, and repeat. This release fixes two regressions introduced in future 1.40.0 (2025-04-10), despite passing <a href="https://www.futureverse.org/quality.html" class="external-link">all unit, regression, and system tests</a> of the Future API that we have built up over the years. On the upside, fixing these issues led to a greatly improved static-code analyzer for automatically finding global variables in future expressions. Also, with this release, we can now move on top releasing modern versions of future backends <strong>future.callr</strong> and <strong>future.mirai</strong> that support interrupting futures and near-live progress updates using the <strong>progressr</strong> package. In addition, map-reduce packages such as <strong>future.apply</strong>, <strong>furrr</strong>, and <strong>doFuture</strong> can be updated to take advantage of early exiting on errors via cancellation of futures.</p>
 <div class="section level3">
-<h3 id="new-features-1-40-0-9000">New Features<a class="anchor" aria-label="anchor" href="#new-features-1-40-0-9000"></a></h3>
+<h3 id="new-features-1-49-0">New Features<a class="anchor" aria-label="anchor" href="#new-features-1-49-0"></a></h3>
 <ul><li><p><code><a href="../reference/future.html">future()</a></code> does a better job in identifying global variables in the future expression. This is achieved by the static-code analysis now walks the abstract syntax tree (AST) of the future expression using a strategy that better emulates how the R engine identifies global variables at run-time.</p></li>
 <li><p>Add <code><a href="../reference/cancel.html">cancel()</a></code> for canceling one or more futures. By default, it attempts to interrupt any running futures. This replaces the <code>interrupt()</code> method introduced in the previous version, which now has been removed.</p></li>
 <li><p>Now <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> for <code>Future</code> reports also on the current state of the future, e.g. ‘created’, ‘running’, ‘finished’, and ‘interrupted’.</p></li>
 <li><p>Now <code>print(plan())</code> reports on the number of created, launched, and finished futures since the future backend was set. It also reports on the total and average runtime of all finished futures thus far.</p></li>
 </ul></div>
 <div class="section level3">
-<h3 id="bug-fixes-1-40-0-9000">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-1-40-0-9000"></a></h3>
+<h3 id="bug-fixes-1-49-0">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-1-49-0"></a></h3>
 <ul><li><p>Globals in the environment of an anonymous function were lost since v1.40.0 (2025-04-10). This was partly resolved by updates to the <strong>future</strong> package and partly by updates to the <strong>globals</strong> package. This regression has now been fixed.</p></li>
 <li><p>Multisession workers stopped inheriting the R package library path of the main R session in v1.40.0 (2025-04-10). This regression has now been fixed.</p></li>
 <li><p>In rare cases, a future backend might fail to launch a future and at the same time fail to handle such errors. That would result in hard-to-understand, obscure errors. In case the future backend does not detect this itself, such errors are now caught by the <strong>future</strong> package and resignaled as informative errors of class <code>FutureLaunchError</code>. By always handling launch errors, we assure that futures failing to launch can always be reset and relaunched again, possible on alternative backend.</p></li>
@@ -97,7 +97,7 @@
 <li><p>The built-in validation that futures do not leave behind stray connections could, in some cases, result in <code>Error in vapply(after,    FUN = as.integer, FUN.VALUE = NA_integer_): values must be length    1, but FUN(X[[9]]) result is length 0</code> when there were such stray connections.</p></li>
 </ul></div>
 <div class="section level3">
-<h3 id="deprecated-and-defunct-1-40-0-9000">Deprecated and Defunct<a class="anchor" aria-label="anchor" href="#deprecated-and-defunct-1-40-0-9000"></a></h3>
+<h3 id="deprecated-and-defunct-1-49-0">Deprecated and Defunct<a class="anchor" aria-label="anchor" href="#deprecated-and-defunct-1-49-0"></a></h3>
 <ul><li>
 <code>interrupt()</code> introduced in previous version has been removed. Use <code><a href="../reference/cancel.html">cancel()</a></code> instead. The default for <code><a href="../reference/cancel.html">cancel()</a></code> is to interrupt as well. One reason for the change is that the word “interrupt” conveys the <em>mechanism</em>, whereas the “cancel” conveys the <em>intent</em>, which is the preferred style. Another reason was that <code>interrupt()</code> masked ditto of the popular <strong>rlang</strong> package, and vice versa - the choice <code><a href="../reference/cancel.html">cancel()</a></code> has fewer name clashes.</li>
 </ul></div>
