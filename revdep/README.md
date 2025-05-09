@@ -10,7 +10,7 @@
 |collate  |en_US.UTF-8                                               |
 |ctype    |en_US.UTF-8                                               |
 |tz       |America/Los_Angeles                                       |
-|date     |2025-05-07                                                |
+|date     |2025-05-08                                                |
 |pandoc   |3.6.3 @ /software/c4/cbi/software/pandoc-3.6.3/bin/pandoc |
 |quarto   |NA                                                        |
 
@@ -18,12 +18,12 @@
 
 |package    |old    |new         |Δ  |
 |:----------|:------|:-----------|:--|
-|future     |1.40.0 |1.40.0-9303 |*  |
+|future     |1.40.0 |1.40.0-9403 |*  |
 |codetools  |0.2-20 |0.2-20      |   |
 |digest     |0.6.37 |0.6.37      |   |
-|globals    |0.17.0 |0.17.0      |   |
+|globals    |0.18.0 |0.18.0      |   |
 |listenv    |0.9.1  |0.9.1       |   |
-|parallelly |1.43.0 |1.44.0      |*  |
+|parallelly |1.44.0 |1.44.0      |   |
 
 # Revdeps
 
@@ -38,7 +38,6 @@
 |package                      |version   |error |warning |note |
 |:----------------------------|:---------|:-----|:-------|:----|
 |adestr                       |1.0.0     |      |        |     |
-|[AffymetrixDataTestFiles](problems.md#affymetrixdatatestfiles)|0.44.0    |      |        |2    |
 |AgePopDenom                  |0.4.0     |      |        |     |
 |AICcPermanova                |0.0.2     |      |        |     |
 |[aifeducation](problems.md#aifeducation)|1.0.2     |      |        |2    |
@@ -52,7 +51,7 @@
 |ao                           |1.2.0     |      |        |     |
 |[apsimx](problems.md#apsimx) |2.8.235   |      |        |1    |
 |arkdb                        |0.0.18    |      |        |     |
-|[aroma.affymetrix](problems.md#aromaaffymetrix)|3.2.2     |      |        |2    |
+|[aroma.affymetrix](problems.md#aromaaffymetrix)|3.2.2     |      |        |1    |
 |aroma.cn                     |1.7.1     |      |        |     |
 |[aroma.core](problems.md#aromacore)|3.3.1     |      |        |1    |
 |ARPALData                    |1.6.1     |      |        |     |
@@ -82,7 +81,7 @@
 |calmr                        |0.6.1     |      |        |     |
 |campsis                      |1.7.0     |      |        |     |
 |canaper                      |1.0.1     |      |        |     |
-|cccrm                        |3.0.4     |      |        |     |
+|cccrm                        |3.0.5     |      |        |     |
 |[ceRNAnetsim](problems.md#cernanetsim)|1.18.0    |      |        |1    |
 |Certara.RsNLME.ModelExecutor |3.0.2     |      |        |     |
 |cft                          |1.0.0     |      |        |     |
@@ -174,7 +173,7 @@
 |[GeDS](problems.md#geds)     |0.3.1     |      |1       |     |
 |genBaRcode                   |1.2.8     |      |        |     |
 |[geocmeans](problems.md#geocmeans)|0.3.4     |      |        |1    |
-|[geohabnet](problems.md#geohabnet)|2.1.3     |2     |        |     |
+|[geohabnet](problems.md#geohabnet)|2.1.3     |3     |        |     |
 |[GeoModels](problems.md#geomodels)|2.1.3     |      |        |1    |
 |GetBCBData                   |0.9.0     |      |        |     |
 |[googleComputeEngineR](problems.md#googlecomputeenginer)|0.3.0     |      |        |2    |
@@ -201,6 +200,7 @@
 |[httpgd](problems.md#httpgd) |2.0.4     |1     |        |1    |
 |[hwep](problems.md#hwep)     |2.0.2     |      |        |3    |
 |hydroloom                    |1.1.0     |      |        |     |
+|iccTraj                      |1.1.0     |      |        |     |
 |idmodelr                     |0.4.0     |      |        |     |
 |imagefluency                 |0.2.5     |      |        |     |
 |iml                          |0.11.4    |      |        |     |
@@ -245,7 +245,7 @@
 |maestro                      |0.5.3     |      |        |     |
 |[MAI](problems.md#mai)       |1.12.0    |      |        |1    |
 |malariaAtlas                 |1.6.3     |      |        |     |
-|MAMS                         |3.0.0     |      |        |     |
+|MAMS                         |3.0.1     |      |        |     |
 |[manynet](problems.md#manynet)|1.3.2     |      |        |3    |
 |[mapme.biodiversity](problems.md#mapmebiodiversity)|0.9.4     |1     |        |     |
 |[marginaleffects](problems.md#marginaleffects)|0.25.1    |      |        |1    |
@@ -434,7 +434,7 @@
 |[tableschema.r](problems.md#tableschemar)|1.1.2     |      |        |2    |
 |TAD                          |1.0.0     |      |        |     |
 |[targeted](problems.md#targeted)|0.5       |      |        |1    |
-|[targets](problems.md#targets)|1.11.1    |      |        |3    |
+|[targets](problems.md#targets)|1.11.3    |      |        |1    |
 |TaxaNorm                     |2.4       |      |        |     |
 |tealeaves                    |1.0.6     |      |        |     |
 |templr                       |0.2-0     |      |        |     |

@@ -1,41 +1,3 @@
-# AffymetrixDataTestFiles
-
-<details>
-
-* Version: 0.44.0
-* GitHub: NA
-* Source code: https://github.com/cran/AffymetrixDataTestFiles
-* Date/Publication: 2024-10-31
-* Number of recursive dependencies: 0
-
-Run `revdepcheck::revdep_details(, "AffymetrixDataTestFiles")` for more info
-
-</details>
-
-## In both
-
-*   checking for portable file names ... NOTE
-    ```
-    Found the following non-portable file paths:
-      AffymetrixDataTestFiles/inst/annotationData/chipTypes/HuGene-1_0-st-v1/HuGene-1_0-st-v1.r4,10_probesets.pgf
-      AffymetrixDataTestFiles/inst/annotationData/chipTypes/Mapping10K_Xba131/3.ASCII/Mapping10K_Xba131.CDF
-    
-    Tarballs are only required to store paths of up to 100 bytes and cannot
-    store those of more than 256 bytes, with restrictions including to 100
-    bytes for the final component.
-    See section ‘Package structure’ in the ‘Writing R Extensions’ manual.
-    ```
-
-*   checking installed package size ... NOTE
-    ```
-      installed size is 147.4Mb
-      sub-directories of 1Mb or more:
-        annotationData  70.7Mb
-        gcos11Data      49.4Mb
-        gcos14Data       6.7Mb
-        rawData         20.5Mb
-    ```
-
 # aifeducation
 
 <details>
@@ -170,11 +132,6 @@ Run `revdepcheck::revdep_details(, "aroma.affymetrix")` for more info
 
 ## In both
 
-*   checking package dependencies ... NOTE
-    ```
-    Package suggested but not available for checking: ‘AffymetrixDataTestFiles’
-    ```
-
 *   checking installed package size ... NOTE
     ```
       installed size is  7.2Mb
@@ -278,7 +235,7 @@ Run `revdepcheck::revdep_details(, "batchtools")` for more info
 
 *   checking dependencies in R code ... NOTE
     ```
-    [c4-n43:1345092] OPAL ERROR: Not initialized in file ext2x_client.c at line 112
+    [c4-n43:1939827] OPAL ERROR: Not initialized in file ext2x_client.c at line 112
     --------------------------------------------------------------------------
     The application appears to have been direct launched using "srun",
     but OMPI was not built with SLURM's PMI support and therefore cannot
@@ -543,10 +500,10 @@ Run `revdepcheck::revdep_details(, "bsitar")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 10.0Mb
+      installed size is 10.6Mb
       sub-directories of 1Mb or more:
-        R      1.8Mb
-        data   6.8Mb
+        R      1.5Mb
+        data   8.0Mb
     ```
 
 # bslib
@@ -936,10 +893,10 @@ Run `revdepcheck::revdep_details(, "Coxmos")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  8.1Mb
+      installed size is  7.7Mb
       sub-directories of 1Mb or more:
-        R      1.8Mb
-        data   2.3Mb
+        R      1.5Mb
+        data   2.5Mb
         doc    3.1Mb
     ```
 
@@ -1741,6 +1698,25 @@ Run `revdepcheck::revdep_details(, "geohabnet")` for more info
 
 ## In both
 
+*   checking examples ... ERROR
+    ```
+    Running examples in ‘geohabnet-Ex.R’ failed
+    The error most likely occurred in:
+    
+    > ### Name: set_parameters
+    > ### Title: Set Parameters
+    > ### Aliases: set_parameters
+    > 
+    > ### ** Examples
+    > 
+    > param_fp <- get_parameters()
+    > set_parameters(param_fp)
+    Error in yaml.load(readLines(con, warn = readLines.warn), error.label = error.label,  : 
+      (/scratch/henrik/Rtmplyznkt/parameters.yaml) Duplicate map key: 'default'
+    Calls: set_parameters -> .check_yaml_structure -> <Anonymous> -> yaml.load
+    Execution halted
+    ```
+
 *   checking tests ...
     ```
       Running ‘testthat.R’
@@ -2143,7 +2119,7 @@ Run `revdepcheck::revdep_details(, "hero")` for more info
 
 *   checking dependencies in R code ... NOTE
     ```
-    [c4-n43:3926938] OPAL ERROR: Not initialized in file ext2x_client.c at line 112
+    [c4-n43:3986125] OPAL ERROR: Not initialized in file ext2x_client.c at line 112
     --------------------------------------------------------------------------
     The application appears to have been direct launched using "srun",
     but OMPI was not built with SLURM's PMI support and therefore cannot
@@ -2238,7 +2214,7 @@ Run `revdepcheck::revdep_details(, "httpgd")` for more info
 
 *   checking tests ...
     ```
-      Running ‘testthat.R’/software/c4/cbi/software/_rocky8/R-4.4.3-gcc13/lib64/R/bin/BATCH: line 60: 3237360 Aborted                 (core dumped) ${R_HOME}/bin/R -f ${in} ${opts} ${R_BATCH_OPTIONS} > ${out} 2>&1
+      Running ‘testthat.R’/software/c4/cbi/software/_rocky8/R-4.4.3-gcc13/lib64/R/bin/BATCH: line 60: 1838465 Killed                  ${R_HOME}/bin/R -f ${in} ${opts} ${R_BATCH_OPTIONS} > ${out} 2>&1
     
      ERROR
     Running the tests in ‘tests/testthat.R’ failed.
@@ -2247,8 +2223,18 @@ Run `revdepcheck::revdep_details(, "httpgd")` for more info
       > library(httpgd)
       > 
       > test_check("httpgd")
-      terminate called after throwing an instance of 'std::system_error'
-        what():  epoll: Too many open files
+      [ FAIL 3 | WARN 0 | SKIP 0 | PASS 22 ]
+    ...
+       4. ├─httr::status_code(fetch_get(hgd_url("remove", index = 4)))
+       5. └─httpgd:::fetch_get(hgd_url("remove", index = 4))
+       6.   └─(function() {... at tests/testthat/helper-server.R:9:9
+       7.     ├─future::value(...) at tests/testthat/helper-server.R:12:17
+       8.     └─future:::value.Future(...)
+       9.       └─future:::signalConditions(...)
+      
+      [ FAIL 3 | WARN 0 | SKIP 0 | PASS 22 ]
+      Error: Test failures
+      Execution halted
     ```
 
 *   checking installed package size ... NOTE
@@ -2276,7 +2262,7 @@ Run `revdepcheck::revdep_details(, "hwep")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 80.1Mb
+      installed size is 80.5Mb
       sub-directories of 1Mb or more:
         libs  79.4Mb
     ```
@@ -2917,9 +2903,8 @@ Run `revdepcheck::revdep_details(, "mice")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  5.3Mb
+      installed size is  5.0Mb
       sub-directories of 1Mb or more:
-        help   1.5Mb
         libs   2.8Mb
     ```
 
@@ -4873,9 +4858,9 @@ Run `revdepcheck::revdep_details(, "signeR")` for more info
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  7.3Mb
+      installed size is  8.0Mb
       sub-directories of 1Mb or more:
-        R     1.2Mb
+        R     1.9Mb
         doc   5.2Mb
     ```
 
@@ -5717,10 +5702,10 @@ Run `revdepcheck::revdep_details(, "targeted")` for more info
 
 <details>
 
-* Version: 1.11.1
+* Version: 1.11.3
 * GitHub: https://github.com/ropensci/targets
 * Source code: https://github.com/cran/targets
-* Date/Publication: 2025-04-10 21:10:02 UTC
+* Date/Publication: 2025-05-08 17:40:02 UTC
 * Number of recursive dependencies: 156
 
 Run `revdepcheck::revdep_details(, "targets")` for more info
@@ -5728,19 +5713,6 @@ Run `revdepcheck::revdep_details(, "targets")` for more info
 </details>
 
 ## In both
-
-*   checking package dependencies ... NOTE
-    ```
-    Package suggested but not available for checking: ‘crew’
-    ```
-
-*   checking installed package size ... NOTE
-    ```
-      installed size is  5.5Mb
-      sub-directories of 1Mb or more:
-        R      3.5Mb
-        help   1.7Mb
-    ```
 
 *   checking Rd cross-references ... NOTE
     ```
