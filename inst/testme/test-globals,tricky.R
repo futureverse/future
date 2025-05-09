@@ -6,9 +6,18 @@ library(future)
 library(listenv)
 
 oopts <- c(oopts, options(
+  future.debug = FALSE,
   future.globals.resolve = TRUE,
   future.globals.onMissing = "error"
 ))
+
+## Muffle warnings on setting R option 'future.globals.method',
+## which are produced by the 'future' package
+if (getRversion() >= "4.0.0") {
+  globalCallingHandlers(deprecatedWarning = function(w) {
+    invokeRestart("muffleWarning")
+  })
+}
 
 message("*** Tricky use cases related to globals ...")
 
@@ -182,7 +191,7 @@ for (cores in 1:availCores) {
     v <- value(f)
     message(sprintf("value(f) = %s", sQuote(v)))
     stopifnot(v == TRUE)
-    
+
     plan(sequential)
   } ## for (strategy ...)
 

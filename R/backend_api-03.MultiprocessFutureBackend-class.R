@@ -35,7 +35,7 @@ launchFuture.MultiprocessFutureBackend <- function(backend, future, ...) {
 listFutures.MultiprocessFutureBackend <- function(backend, ..., debug = FALSE) {
   if (debug) {
     mdebugf_push("listFutures() for %s ...", class(backend)[1])
-    on.exit(mdebugf_pop("listFutures() for %s ... done", class(backend)[1]))
+    on.exit(mdebugf_pop())
   }
 
   reg <- backend[["reg"]]

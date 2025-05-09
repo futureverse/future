@@ -9,7 +9,15 @@
 #' @keywords internal
 #' @rdname FutureBackend
 #' @export
-MultisessionFutureBackend <- function(workers = availableCores(), interrupts = TRUE, ...) {
+MultisessionFutureBackend <- function(workers = availableCores(), rscript_libs = .libPaths(), interrupts = TRUE, gc = FALSE, earlySignal = FALSE, ...) {
+  debug <- isTRUE(getOption("future.debug"))
+  if (debug) {
+    mdebugf_push("MultisessionFutureBackend(workers = <workers>, interrupts = %s, ...) ...", interrupts)
+    mdebug("Arguments:")
+    mstr(list(workers = workers, rscript_libs = rscript_libs, interrupts = interrupts, gc = gc, earlySignal = earlySignal, ...))
+    on.exit(mdebugf_pop())
+  }
+  
   default_workers <- missing(workers)
   if (is.function(workers)) workers <- workers()
   stop_if_not(is.numeric(workers))
@@ -26,7 +34,14 @@ MultisessionFutureBackend <- function(workers = availableCores(), interrupts = T
     return(SequentialFutureBackend(...))
   }
 
-  core <- ClusterFutureBackend(workers = workers, interrupts = interrupts, ...)
+  core <- ClusterFutureBackend(
+    workers = workers,
+    rscript_libs = rscript_libs,
+    interrupts = interrupts,
+    gc = gc,
+    earlySignal = earlySignal,
+    ...
+  )
   core[["futureClasses"]] <- c("MultisessionFuture", core[["futureClasses"]])
   core <- structure(core, class = c("MultisessionFutureBackend", class(core)))
   core
@@ -42,12 +57,15 @@ print.MultisessionFutureBackend <- function(x, validate = TRUE, ...) {
 
 #' Create a multisession future whose value will be resolved asynchronously in a parallel \R session
 #'
+#' _WARNING: This function must never be called.
+#'  It may only be used with [future::plan()]_
+#'
 #' A multisession future is a future that uses multisession evaluation,
 #' which means that its _value is computed and resolved in
 #' parallel in another \R session_.
 #'
 #' @details
-#' This function is _not_ meant to be called directly.  Instead, the
+#' This function is must _not_ be called directly.  Instead, the
 #' typical usages are:
 #'
 #' ```r
@@ -113,7 +131,7 @@ multisession <- function(..., workers = availableCores(), lazy = FALSE, rscript_
     return(future(..., gc = gc, earlySignal = earlySignal, envir = envir))
   }
   
-  stop("INTERNAL ERROR: The future::multisession() function implements the FutureBackend and should never be called directly")
+  stop("INTERNAL ERROR: The future::multisession() must never be called directly")
 }
 class(multisession) <- c("multisession", "cluster", "multiprocess", "future", "function")
 attr(multisession, "init") <- TRUE

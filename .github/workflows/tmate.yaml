@@ -22,6 +22,7 @@ jobs:
       matrix:
         config:
 #          - {os: windows-latest, r: 'devel'    }
+           - {os: windows-latest, r: 'release'  }
 #          - {os: windows-latest, r: 'release', parallelly: 'develop'  }
 #          - {os: windows-latest, r: 'oldrel'   }
 #          - {os: macOS-latest,   r: 'devel'    }
@@ -35,7 +36,7 @@ jobs:
 #          - {os: ubuntu-latest,  r: '4.0'      }
 #          
 #          - {os: ubuntu-latest,  r: 'release'  , availablecores: 1, label: 'availableCores.system=1' }
-          - {os: ubuntu-latest,  r: 'release'  , availablecores: 2, label: 'availableCores.system=2' }
+#          - {os: ubuntu-latest,  r: 'release'  , availablecores: 2, label: 'availableCores.system=2' }
 #          - {os: ubuntu-latest,  r: 'release'  , language: ko,    label: ko    }
 #          - {os: ubuntu-latest,  r: 'release'  , language: zh_CN, label: zh_CN }
 #          - {os: ubuntu-latest,  r: 'release'  , language: zh_TW, label: zh_TW }

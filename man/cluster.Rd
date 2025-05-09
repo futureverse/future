@@ -6,7 +6,7 @@
 \usage{
 cluster(
   ...,
-  workers = availableWorkers(),
+  workers = availableWorkers(constraints = "connections"),
   gc = FALSE,
   earlySignal = FALSE,
   persistent = FALSE,
@@ -45,12 +45,15 @@ identified.}
 A ClusterFuture.
 }
 \description{
+\emph{WARNING: This function must never be called.
+It may only be used with \code{\link[=plan]{plan()}}}
+}
+\details{
 A cluster future is a future that uses cluster evaluation,
 which means that its \emph{value is computed and resolved in
 parallel in another process}.
-}
-\details{
-This function is \emph{not} meant to be called directly.  Instead, the
+
+This function is must \emph{not} be called directly.  Instead, the
 typical usages are:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{# Evaluate futures via a single background R process on the local machine

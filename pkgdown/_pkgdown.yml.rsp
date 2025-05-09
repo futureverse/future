@@ -26,7 +26,7 @@ home:
 
 navbar:
   structure:
-    right: [futureverse, pkgs, cran, github, lightswitch]
+    right: [search, futureverse, pkgs, cran, github, lightswitch]
   components:
     futureverse:
       icon: fas fa-home
@@ -41,7 +41,10 @@ navbar:
     cran:
       icon: fab fa-r-project
       href: https://cloud.r-project.org/package=<%= pkg %>
-
+      
+search:
+  exclude: ['README_ja.md']
+  
 template:
   params:
     docsearch:

@@ -22,13 +22,13 @@ The default is to use synchronous futures, but this _default_ can be overridden 
 
 ## R options
 
-The default strategy for resolving futures can be controlled via R option `future.plan`.  For instance, if we add
+The default future backend can be controlled via R option `future.plan`.  For instance, if we add
 
 ```r
 options(future.plan = "multisession")
 ```
 
-to our `~/.Rprofile` startup script, the future package will resolve futures in parallel (asynchronously using all available cores), i.e.
+to our `~/.Rprofile` startup script, the **future** package will resolve futures in parallel (asynchronously using all available cores), i.e.
 
 ```sh
 $ Rscript -e "class(future::plan())"
@@ -53,7 +53,7 @@ Environment variable `R_FUTURE_PLAN` is ignored if either option `future.plan` o
 
 ## Command-line options
 
-When loaded, the future package checks for the command-line option `--parallel=ncores` (short `-p ncores`) and sets the future strategy (via option `future.plan`) and the number of available cores (via option `mc.cores`) accordingly.  This provides a convenient mechanism for specifying parallel future processing from the command line.  For example, if we start R with
+When loaded, the **future** package checks for the command-line option `--parallel=ncores` (short `-p ncores`) and sets the future backend (via option `future.plan`) and the number of available cores (via option `mc.cores`) accordingly.  This provides a convenient mechanism for specifying parallel future processing from the command line.  For example, if we start R with
 
 ```sh
 $ R --quiet --args --parallel=2
@@ -75,7 +75,7 @@ We can use this command-line option also with `Rscript`, which provides a conven
 $ Rscript analysis.R --parallel=4
 ```
 
-This does, of course, require that the script uses futures and the future package.
+This does, of course, require that the script uses futures and the **future** package.
 
 If `--parallel=1` is specified, or equivalently `-p 1`, then futures are resolved using a single process.
 

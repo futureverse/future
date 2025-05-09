@@ -1,4 +1,5 @@
 ALTREP
+AST
 AVAILABLECORES
 AppVeyor
 AsIs
@@ -69,6 +70,7 @@ MultisessionFuture
 MultisessionFutureBackend
 MyMachine
 MyParallelFuture
+MyParallelFutureBackend
 NCPUS
 NMF
 NOTEs
@@ -136,6 +138,7 @@ Topologies
 UDPipe
 UnexpectedFutureResultError
 UniprocessFuture
+Univa
 UseMethod
 VM
 VignetteAuthor
@@ -179,6 +182,7 @@ bc
 bfr
 bigmemory
 bioconductor
+br
 calc
 callr
 captureOutput
@@ -214,6 +218,7 @@ dir
 doFuture
 doMC
 doSEQ
+dofuture
 dontshow
 dopar
 dr
@@ -271,6 +276,7 @@ gz
 haha
 halfCores
 hardcoded
+hardwiring
 hexcode
 hostname
 hostnames
@@ -286,6 +292,7 @@ immediatedly
 ing
 inq
 interpretable
+interruptible
 interweaved
 io
 ipc
@@ -299,6 +306,7 @@ keras
 kk
 lang
 lapply
+launchFuture
 libPaths
 libs
 linux
@@ -392,6 +400,7 @@ pre
 pred
 prepending
 preprocess
+progressr
 ptr
 purrr
 pwd
@@ -408,9 +417,11 @@ renice
 reproducibility
 resignal
 resignaled
+restartable
 reticulate
 revdepcheck
 rhub
+rlang
 rng
 rnorm
 rollout
@@ -460,6 +471,7 @@ subassignments
 subclasses
 suboptimal
 subprocesses
+superseeds
 supportsMulticore
 suppressMessages
 tagnames

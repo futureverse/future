@@ -18,5 +18,3 @@ makeClusterPSOCK_args <- local({
     .args
   }
 })
-
-

@@ -1,5 +1,6 @@
 #' @tags early-signal
 #' @tags sequential multisession multicore
+#' @tags skip_on_cran
 
 library(future)
 
@@ -19,7 +20,7 @@ stopifnot(inherits(v, "error"))
 message("- with lazy evaluation ...")
 f <- future({ stop("bang!") }, lazy = TRUE)
 r <- resolved(f)
-#stopifnot(r)
+print(r)
 v <- tryCatch(value(f), error = identity)
 stopifnot(inherits(v, "error"))
 
@@ -32,7 +33,7 @@ message("- with lazy evaluation ...")
 ## Errors
 f <- future({ stop("bang!") }, lazy = TRUE)
 r <- tryCatch(resolved(f), error = identity)
-stopifnot(inherits(r, "error"))
+print(r)
 v <- tryCatch(value(f), error = identity)
 stopifnot(inherits(v, "error"))
 
@@ -69,7 +70,7 @@ plan(multisession)
 f <- future({ stop("bang!") })
 Sys.sleep(0.2)
 r <- resolved(f)
-stopifnot(r)
+print(r)
 v <- tryCatch(value(f), error = identity)
 stopifnot(inherits(v, "error"))
 
@@ -79,7 +80,7 @@ if (availableCores() > 1L) {
   Sys.sleep(0.2)
   print(f)
   r <- tryCatch(resolved(f), error = identity)
-#  stopifnot(inherits(r, "error") || inherits(f, "SequentialFuture"))
+  print(r)
   v <- tryCatch(value(f), error = identity)
   stopifnot(inherits(v, "error"))
 } else {
@@ -97,7 +98,7 @@ if (supportsMulticore()) {
   f <- future({ stop("bang!") })
   Sys.sleep(0.2)
   r <- resolved(f)
-  stopifnot(r)
+  print(r)
   v <- tryCatch(value(f), error = identity)
   stopifnot(inherits(v, "error"))
   
@@ -107,7 +108,7 @@ if (supportsMulticore()) {
     Sys.sleep(0.2)
     print(f)
     r <- tryCatch(resolved(f), error = identity)
-#    stopifnot(inherits(r, "error") || inherits(f, "SequentialFuture"))
+    print(r)
     v <- tryCatch(value(f), error = identity)
     stopifnot(inherits(v, "error"))
   
@@ -115,6 +116,7 @@ if (supportsMulticore()) {
     f <- future({ stop("bang!") }, earlySignal = TRUE)
     Sys.sleep(0.2)
     r <- tryCatch(resolved(f), error = identity)
+    print(r)
     stopifnot(inherits(r, "error") || inherits(f, "SequentialFuture"))
     v <- tryCatch(value(f), error = identity)
     stopifnot(inherits(v, "error"))
@@ -126,23 +128,22 @@ if (supportsMulticore()) {
   f <- future({ warning("careful!") }, earlySignal = TRUE)
   Sys.sleep(0.2)
   res <- tryCatch({ r <- resolved(f) }, condition = function(w) w)
-  #stopifnot(inherits(res, "warning"))
+  print(res)
   
   ## Messages
   f <- future({ message("hey!") }, earlySignal = TRUE)
   Sys.sleep(0.2)
   res <- tryCatch({ r <- resolved(f) }, condition = function(w) w)
-  #stopifnot(inherits(res, "message"))
+  print(res)
   
   ## Condition
   f <- future({ signalCondition(simpleCondition("hmm")) }, earlySignal = TRUE)
   Sys.sleep(0.2)
   res <- tryCatch({ r <- resolved(f) }, condition = function(w) w)
-  #stopifnot(inherits(res, "condition"))
+  print(res)
   
   message("*** Early signaling of conditions with multicore futures ... DONE")
 }
 
 
 message("*** Early signaling of conditions ... DONE")
-

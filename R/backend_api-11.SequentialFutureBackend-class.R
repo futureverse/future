@@ -9,7 +9,7 @@
 #' @rdname FutureBackend
 #' @export
 SequentialFutureBackend <- function(..., maxSizeOfObjects = +Inf) {
-  core <- FutureBackend(..., maxSizeOfObjects = maxSizeOfObjects)
+  core <- FutureBackend(..., maxSizeOfObjects = maxSizeOfObjects, reg = "sequential")
   core[["futureClasses"]] <- c("SequentialFuture", "UniprocessFuture", core[["futureClasses"]])
   core <- structure(core, class = c("SequentialFutureBackend", class(core)))
   core
@@ -22,7 +22,7 @@ launchFuture.SequentialFutureBackend <- function(backend, future, ...) {
   debug <- isTRUE(getOption("future.debug"))
   if (debug) {
     mdebugf_push("launchFuture() for %s ...", commaq(class(backend)))
-    on.exit(mdebugf_pop("launchFuture() for %s ... DONE", commaq(class(backend))))
+    on.exit(mdebugf_pop())
   }
 
   hooks <- backend[["hooks"]]
@@ -49,7 +49,14 @@ launchFuture.SequentialFutureBackend <- function(backend, future, ...) {
   future[["result"]] <- evalFuture(data)
   future[["state"]] <- "finished"
 
+  ## Register run (used to collect statistics)
+  reg <- backend[["reg"]]
+  FutureRegistry(reg, action = "add", future = future, earlySignal = FALSE)
+  FutureRegistry(reg, action = "remove", future = future, earlySignal = FALSE)
   if (debug) mdebugf("%s started (and completed)", class(future)[1])
+
+  ## Assert result is for the expected future
+  assertFutureResult(future)
 
   ## Always signal immediateCondition:s and as soon as possible.
   ## They will always be signaled if they exist.
@@ -123,13 +130,16 @@ getFutureBackendConfigs.UniprocessFuture <- function(future, ...) {
 
 #' Create a sequential future whose value will be in the current \R session
 #'
+#' _WARNING: This function must never be called.
+#'  It may only be used with [future::plan()]_
+#'
 #' A sequential future is a future that is evaluated sequentially in the
 #' current \R session similarly to how \R expressions are evaluated in \R.
 #' The only difference to \R itself is that globals are validated
 #' by default just as for all other types of futures in this package.
 #'
 #' @details
-#' This function is _not_ meant to be called directly.  Instead, the
+#' This function is must _not_ be called directly.  Instead, the
 #' typical usages are:
 #'
 #' ```r
@@ -159,7 +169,7 @@ sequential <- function(..., gc = FALSE, earlySignal = FALSE, envir = parent.fram
   ## (2) fiery calls sequential() directly
   ##     https://github.com/thomasp85/fiery/issues/53
   if (!"fiery" %in% loadedNamespaces()) {
-    stop("The future::sequential() function implements the FutureBackend and should never be called directly")
+    stop("The future::sequential() function must never be called directly")
   }
   
   f <- Future(..., envir = envir)
@@ -167,5 +177,6 @@ sequential <- function(..., gc = FALSE, earlySignal = FALSE, envir = parent.fram
   f  
 }
 class(sequential) <- c("sequential", "uniprocess", "future", "function")
+attr(sequential, "init") <- TRUE
 attr(sequential, "factory") <- SequentialFutureBackend
 attr(sequential, "tweakable") <- tweakable(attr(sequential, "factory"))

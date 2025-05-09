@@ -1,3 +1,91 @@
+# Version 1.49.0 [2025-05-08]
+
+This is the second rollout out of three-four major updates, which is
+now possible due to a multi-year effort of internal re-designs, work
+with package maintainers, release, and repeat. This release fixes two
+regressions introduced in future 1.40.0 (2025-04-10), despite passing
+[all unit, regression, and system
+tests](https://www.futureverse.org/quality.html) of the Future API
+that we have built up over the years. On the upside, fixing these
+issues led to a greatly improved static-code analyzer for
+automatically finding global variables in future expressions. Also,
+with this release, we can now move on top releasing modern versions of
+future backends **future.callr** and **future.mirai** that support
+interrupting futures and near-live progress updates using the
+**progressr** package. In addition, map-reduce packages such as
+**future.apply**, **furrr**, and **doFuture** can be updated to take
+advantage of early exiting on errors via cancellation of futures.
+
+## New Features
+
+ * `future()` does a better job in identifying global variables in the
+   future expression. This is achieved by the static-code analysis now
+   walks the abstract syntax tree (AST) of the future expression using
+   a strategy that better emulates how the R engine identifies global
+   variables at run-time.
+
+ * Add `cancel()` for canceling one or more futures. By default, it
+   attempts to interrupt any running futures. This replaces the
+   `interrupt()` method introduced in the previous version, which now
+   has been removed.
+ 
+ * Now `print()` for `Future` reports also on the current state of the
+   future, e.g. 'created', 'running', 'finished', and 'interrupted'.
+
+ * Now `print(plan())` reports on the number of created, launched, and
+   finished futures since the future backend was set. It also reports
+   on the total and average runtime of all finished futures thus far.
+
+## Bug Fixes
+
+ * Globals in the environment of an anonymous function were lost since
+   v1.40.0 (2025-04-10). This was partly resolved by updates to the
+   **future** package and partly by updates to the **globals**
+   package. This regression has now been fixed.
+   
+ * Multisession workers stopped inheriting the R package library path
+   of the main R session in v1.40.0 (2025-04-10). This regression has
+   now been fixed.
+
+ * In rare cases, a future backend might fail to launch a future and
+   at the same time fail to handle such errors. That would result in
+   hard-to-understand, obscure errors. In case the future backend does
+   not detect this itself, such errors are now caught by the
+   **future** package and resignaled as informative errors of class
+   `FutureLaunchError`. By always handling launch errors, we assure
+   that futures failing to launch can always be reset and relaunched
+   again, possible on alternative backend.
+   
+ * When a future fails to launch due to issues with the parallel
+   worker, querying it with `value()` produces a
+   `FutureLaunchError`. When this happened for `cluster` or
+   `multisession` futures, `resolved()` would return FALSE and not
+   TRUE as expected. In addition, the `FutureLaunchError` would be
+   lost, resulting in such futures being stuck in an unresolved state,
+   and the `FutureLaunchError` error never being signaled.
+
+ * Shutdown of `cluster` and `multisession` workers could fail if one
+   of the the workers was already terminated, e.g. interrupted or
+   crashed. Now the shutdown of each worker is independent of the
+   others, lowering the risk of leaving stray PSOCK workers behind.
+
+ * The built-in validation that futures do not leave behind stray
+   connections could, in some cases, result in `Error in vapply(after,
+   FUN = as.integer, FUN.VALUE = NA_integer_): values must be length
+   1, but FUN(X[[9]]) result is length 0` when there were such stray
+   connections.
+
+## Deprecated and Defunct
+
+ * `interrupt()` introduced in previous version has been removed.  Use
+   `cancel()` instead. The default for `cancel()` is to interrupt as
+   well. One reason for the change is that the word "interrupt"
+   conveys the _mechanism_, whereas the "cancel" conveys the _intent_,
+   which is the preferred style. Another reason was that `interrupt()`
+   masked ditto of the popular **rlang** package, and vice versa - the
+   choice `cancel()` has fewer name clashes.
+
+
 # Version 1.40.0 [2025-04-10]
 
 This is the first rollout out of three major updates, which is now
@@ -12,7 +100,8 @@ implement a new backend.
 
 This update is fully backward compatible with previous versions.
 Developers and end-users can expect business as usual. Like all
-releases, this version has been validated thoroughly via
+releases, this version has been [validated
+thoroughly](https://www.futureverse.org/quality.html) via
 reverse-dependency checks, **future.tests** checks, and more.
 
 ## New Features
@@ -60,8 +149,8 @@ reverse-dependency checks, **future.tests** checks, and more.
    then it is memory efficient and more performant to use ``v <-
    value(fs, reduce = `+`, inorder = FALSE, drop = TRUE)``.
 
- * `value()` on containers interrupts non-resolved futures if an error
-   is detected in one of the futures.
+ * `value()` on containers cancels non-resolved futures if an error is
+   detected in one of the futures.
 
  * Add `minifuture()`, which is like `future()`, but with different
    default arguments resulting in less overhead with the added burden
@@ -81,7 +170,7 @@ reverse-dependency checks, **future.tests** checks, and more.
    
  * Failed workers are automatically detected and relaunched, if
    supported by the parallel backend. For instance, if a `cluster`
-   workers is interrupted, or crashes for other reasons, it will be
+   worker is interrupted, or crashes for other reasons, it will be
    relaunched. This works for both local and remote workers.
 
  * A future must close any connections or graphical devices it opens,

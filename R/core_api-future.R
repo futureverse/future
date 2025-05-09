@@ -28,6 +28,9 @@
 #' until the future is resolved.
 #' It is possible to check whether a future is resolved or not
 #' without blocking by using \code{\link{resolved}(f)}.
+#' It is possible to [cancel()] a future that is being resolved.
+#' Failed, canceled, and interrupted futures can be [reset()] to a
+#' lazy, vanilla future that can be relaunched.
 #'
 #' @section Eager or lazy evaluation:
 #' By default, a future is resolved using _eager_ evaluation
@@ -140,7 +143,7 @@
 #' false negatives) and `ignore` (to ignore false positives) on value
 #' `TRUE`.  For example, with
 #' `globals = structure(TRUE, ignore = "b", add = "a")` any globals
-#' automatically identified except `b` will be used in addition to
+#' automatically identified, except `b`, will be used, in addition to
 #' global `a`.
 #'
 #' @example incl/future.R
@@ -150,15 +153,25 @@
 #'
 #' @seealso
 #' How, when and where futures are resolved is given by the
-#' _future strategy_, which can be set by the end user using the
-#' [plan()] function.  The future strategy must not be
-#' set by the developer, e.g. it must not be called within a package.
+#' _future backend_, which can be set by the end user using the
+#' [plan()] function.
 #'
 #' @name future
 #' @aliases futureCall
 #' @rdname future
 #' @export
 future <- function(expr, envir = parent.frame(), substitute = TRUE, lazy = FALSE, seed = FALSE, globals = TRUE, packages = NULL, stdout = TRUE, conditions = "condition", label = NULL, gc = FALSE, earlySignal = FALSE, ...) {
+  debug <- isTRUE(getOption("future.debug"))
+  if (debug) {
+    mdebugf_push("future(..., label = %s) ...", sQuoteLabel(label))
+    mdebugf("lazy: %s", lazy)
+    mdebugf("stdout: %s", stdout)
+    mdebugf("conditions: [n=%d] %s", length(conditions), commaq(conditions))
+    mdebugf("gc: %s", gc)
+    mdebugf("earlySignal: %s", earlySignal)
+    on.exit(mdebugf_pop())
+  }
+  
   if (substitute) expr <- substitute(expr)
   t_start <- Sys.time()
 

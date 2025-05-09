@@ -141,11 +141,11 @@ should be assigned.}
 
 \item{capture}{If TRUE, the standard output will be captured, otherwise not.}
 
-\item{strategy}{The mechanism for how the future should be
+\item{strategy}{The backend controlling how the future is
 resolved. See \code{\link[=plan]{plan()}} for further details.}
 
 \item{tweaks}{A named list (or vector) with arguments that
-should be changed relative to the current strategy.}
+should be changed relative to the current backend.}
 
 \item{\ldots}{Additional arguments passed to \code{\link[=Future]{Future()}}.}
 }

@@ -55,12 +55,15 @@ current/main \R session and we therefore fall back to using a
 lazy future.  To override this fallback, use \code{workers = I(1)}.
 }
 \description{
+\emph{WARNING: This function must never be called.
+It may only be used with \code{\link[=plan]{plan()}}}
+}
+\details{
 A multisession future is a future that uses multisession evaluation,
 which means that its \emph{value is computed and resolved in
 parallel in another \R session}.
-}
-\details{
-This function is \emph{not} meant to be called directly.  Instead, the
+
+This function is must \emph{not} be called directly.  Instead, the
 typical usages are:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{# Evaluate futures in parallel on the local machine via as many background

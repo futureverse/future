@@ -28,6 +28,8 @@ jobs:
           - {os: ubuntu-latest,  r: 'oldrel-1' }
           - {os: ubuntu-latest,  r: 'oldrel-2' }
           - {os: ubuntu-latest,  r: '4.0'      }
+          - {os: ubuntu-latest,  r: 'devel'   , globals: develop, label: 'globals develop' }
+          - {os: ubuntu-latest,  r: '4.0'     , globals: develop, label: 'globals develop' }
 
           - {os: ubuntu-latest,  r: 'release', strict: true, label: 'strict' }
 
@@ -56,12 +58,14 @@ jobs:
       _R_CHECK_SUGGESTS_ONLY_: true
       _R_CHECK_THINGS_IN_TEMP_DIR_: true
       _R_CHECK_TESTS_NLINES_: 300
-      RCMDCHECK_ERROR_ON: note
+      RCMDCHECK_ERROR_ON: error
+      NOT_CRAN: true
       ## Specific to futures
       R_PARALLELLY_AVAILABLECORES_SYSTEM: ${{ matrix.config.availablecores }}
       R_FUTURE_RNG_ONMISUSE: error
       R_FUTURE_GLOBALS_KEEPWHERE: ${{ matrix.config.globals_keepWhere }}
       R_PARALLELLY_BRANCH: ${{ matrix.config.parallelly }}
+      R_GLOBALS_BRANCH: ${{ matrix.config.globals }}
       
     steps:
       - uses: actions/checkout@v4
@@ -87,6 +91,10 @@ jobs:
           pver <- Sys.getenv("R_PARALLELLY_BRANCH")
           if (nzchar(pver)) {
             remotes::install_github("futureverse/parallelly", ref = pver)
+          }
+          gver <- Sys.getenv("R_GLOBALS_BRANCH")
+          if (nzchar(gver)) {
+            remotes::install_github("futureverse/globals", ref = gver)
           }
           
         shell: Rscript {0}
@@ -139,7 +147,8 @@ jobs:
             Sys.setenv(R_FUTURE_RNG_ONMISUSE = "error")
           }
           rcmdcheck::rcmdcheck(
-            args = c("--no-manual", "--as-cran", if (.Platform$OS.type == "windows" && getRversion() >= "4.2.0") "--no-multiarch"),
+            args = c("--no-manual", "--as-cran",
+                     if (getRversion() >= "4.2.0") "--no-multiarch"),
             check_dir = "check"
           )
         shell: Rscript {0}

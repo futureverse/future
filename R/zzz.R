@@ -1,5 +1,13 @@
 .package <- new.env()
 
+future_1.40.0_regression_note <- function() {
+  if (interactive() && isTRUE(getOption("future.regression.note", TRUE))) {
+    msg <- sprintf('future %s: Two regressions (https://github.com/futureverse/future/issues/778) and https://github.com/futureverse/future/issues/781) were introduced in future 1.40.0 (2025-04-10). If your think you are affected, you can roll back to future 1.34.0 by calling:\n\n  install.packages("https://cran.r-project.org/src/contrib/Archive/future/future_1.34.0.tar.gz")\n\nTo disable this startup message, set options(future.regression.note = FALSE) or environment variable R_FUTURE_REGRESSION_NOTE=false.\n', packageVersion("future"))
+    packageStartupMessage(msg)
+  }
+}
+
+
 ## covr: skip=all
 #' @importFrom utils packageVersion
 .onLoad <- function(libname, pkgname) {
@@ -86,6 +94,8 @@
 .onAttach <- function(libname, pkgname) {
   ## Source .future.R script, if one exists
   sourceFutureStartupScript()
+
+##  future_1.40.0_regression_note()
 }
 
 

@@ -54,6 +54,12 @@ resolve.default <- function(x, ...) x
 resolve.Future <- function(x, idxs = NULL, recursive = 0, result = FALSE, stdout = FALSE, signal = FALSE, force = FALSE, sleep = getOption("future.wait.interval", 0.01), ...) {
   future <- x
   
+  debug <- isTRUE(getOption("future.debug"))
+  if (debug) {
+    mdebugf_push("resolve() for %s ...", class(future)[1])
+    on.exit(mdebugf_pop())
+  }
+  
   ## Automatically update journal entries for Future object
   if (inherits(future, "Future") &&
       inherits(future[[".journal"]], "FutureJournal")) {
@@ -134,7 +140,6 @@ resolve.Future <- function(x, idxs = NULL, recursive = 0, result = FALSE, stdout
     msg <- sprintf("%s (result was not collected)", msg)
   }
 
-  debug <- isTRUE(getOption("future.debug"))
   if (debug) mdebug(msg)
 
   future
@@ -176,15 +181,23 @@ subset_list <- function(x, idxs = NULL) {
 
 #' @export
 resolve.list <- function(x, idxs = NULL, recursive = 0, result = FALSE, stdout = FALSE, signal = FALSE, force = FALSE, sleep = getOption("future.wait.interval", 0.01), ...) {
+  debug <- isTRUE(getOption("future.debug"))
+  if (debug) {
+    mdebugf_push("resolve() for %s ...", class(x)[1])
+    on.exit(mdebugf_pop())
+  }
+  
   if (is.logical(recursive)) {
     if (recursive) recursive <- getOption("future.resolve.recursive", 99)
   }
   recursive <- as.numeric(recursive)
+  if (debug) mdebugf("recursive: %s", recursive)
   
   ## Nothing to do?
   if (recursive < 0) return(x)
   
   nx <- .length(x)
+  if (debug) mdebugf("Number of elements: %d", nx)
 
   ## Nothing to do?
   if (nx == 0) return(x)
@@ -211,13 +224,6 @@ resolve.list <- function(x, idxs = NULL, recursive = 0, result = FALSE, stdout =
     idxs <- NULL
   }
   
-  debug <- isTRUE(getOption("future.debug"))
-  if (debug) {
-    mdebugf_push("resolve() on %s ...", class(x))
-    mdebugf("recursive: %s", recursive)
-    on.exit(mdebugf_pop("resolve() on %s ... done", class(x)))
-  }
-
   ## NOTE: Everything is considered non-resolved by default
 
   ## Total number of values to resolve
@@ -228,7 +234,6 @@ resolve.list <- function(x, idxs = NULL, recursive = 0, result = FALSE, stdout =
   signalConditionsASAP <- make_signalConditionsASAP(nx, stdout = stdout, signal = signal, force = force, debug = debug)
 
   if (debug) {
-    mdebugf("length: %d", nx)
     mdebugf("elements: %s", hpaste(sQuote(names(x))))
   }
 
@@ -252,7 +257,7 @@ resolve.list <- function(x, idxs = NULL, recursive = 0, result = FALSE, stdout =
           if (result) {
             if (debug) mdebug_push("value(obj, ...) ...")
             value(obj, stdout = FALSE, signal = FALSE)
-            if (debug) mdebug_pop("value(obj, ...) ... done")
+            if (debug) mdebug_pop()
           }
         }
 
@@ -266,7 +271,7 @@ resolve.list <- function(x, idxs = NULL, recursive = 0, result = FALSE, stdout =
                 stdout = stdout && relay_ok,
                 signal = signal && relay_ok,
                 sleep = sleep, ...)
-        if (debug) mdebug_pop("resolve(obj, ...) ... done")
+        if (debug) mdebug_pop()
       }
 
       ## Check if resolved
@@ -285,7 +290,7 @@ resolve.list <- function(x, idxs = NULL, recursive = 0, result = FALSE, stdout =
   if (relay || force) {
     if (debug) mdebug_push("Relaying remaining futures ...")
     signalConditionsASAP(resignal = FALSE, pos = 0L)
-    if (debug) mdebug_pop("Relaying remaining futures ... done")
+    if (debug) mdebug_pop()
   }
   
   x0
@@ -323,15 +328,23 @@ subset_env <- function(x, idxs = NULL) {
 
 #' @export
 resolve.environment <- function(x, idxs = NULL, recursive = 0, result = FALSE, stdout = FALSE, signal = FALSE, force = FALSE, sleep = getOption("future.wait.interval", 0.01), ...) {
+  debug <- isTRUE(getOption("future.debug"))
+  if (debug) {
+    mdebugf_push("resolve() for %s ...", class(x)[1])
+    on.exit(mdebugf_pop())
+  }
+  
   if (is.logical(recursive)) {
     if (recursive) recursive <- getOption("future.resolve.recursive", 99)
   }
   recursive <- as.numeric(recursive)
+  if (debug) mdebugf("recursive: %s", recursive)
   
   ## Nothing to do?
   if (recursive < 0) return(x)
 
   nx <- .length(x)
+  if (debug) mdebugf("Number of elements: %d", nx)
 
   ## Nothing to do?
   if (nx == 0) return(x)
@@ -355,13 +368,6 @@ resolve.environment <- function(x, idxs = NULL, recursive = 0, result = FALSE, s
   )
   relay <- (stdout || signal)
   result <- result || relay
-
-  debug <- isTRUE(getOption("future.debug"))
-  if (debug) {
-    mdebugf_push("resolve() on %s ...", class(x))
-    mdebugf("recursive: %s", recursive)
-    on.exit(mdebugf_pop("resolve() on %s ... done", class(x)))
-  }
 
   ## Coerce future promises into Future objects
   x0 <- x
@@ -421,7 +427,7 @@ resolve.environment <- function(x, idxs = NULL, recursive = 0, result = FALSE, s
   if (relay || force) {
     if (debug) mdebug_push("Relaying remaining futures ...")
     signalConditionsASAP(resignal = FALSE, pos = 0L)
-    if (debug) mdebug_pop("Relaying remaining futures ... done")
+    if (debug) mdebug_pop()
   }
   
   x0
@@ -506,7 +512,7 @@ resolve.listenv <- function(x, idxs = NULL, recursive = 0, result = FALSE, stdou
   if (debug) {
     mdebugf_push("resolve() on %s ...", class(x))
     mdebugf("recursive: %s", recursive)
-    on.exit(mdebugf_pop("resolve() on %s ... done", class(x)))
+    on.exit(mdebug_pop())
   }
 
   ## Coerce future promises into Future objects

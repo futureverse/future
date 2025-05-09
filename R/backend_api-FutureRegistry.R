@@ -11,7 +11,29 @@ FutureRegistry <- local({
   collectValues <- function(where, futures, firstOnly = TRUE, debug = FALSE) {
     if (debug) {
       mdebugf_push("collectValues('%s', firstOnly = %s) ...", where, firstOnly)
-      on.exit(mdebugf_pop("collectValues('%s', firstOnly = %s) ... done", where, firstOnly))
+      on.exit(mdebugf_pop())
+    }
+
+    futuresDB <- db[[where]]
+    drop <- integer(0L)
+
+    on.exit({
+      ## Clean out collected futures
+      if (length(drop) > 0) {
+        if (debug) {
+          mdebug_push("Remove collected futures ...")
+          mdebugf("Indices of futures to drop: [n=%d] %s", length(drop), commaq(drop))
+        }
+        futuresDB <- futuresDB[-drop]
+        db[[where]] <<- futuresDB
+        if (debug) mdebug_pop()
+      } else {
+        if (debug) mdebug("Indices of futures to drop: [n=0] <none>")
+      }
+    }, add = TRUE)
+
+    if (debug) {
+      on.exit(mdebugf_pop(), add = TRUE)
     }
 
     for (ii in seq_along(futures)) {
@@ -34,16 +56,18 @@ FutureRegistry <- local({
         tryCatch({
           value(future, stdout = FALSE, signal = FALSE)
         }, FutureLaunchError = function(ex) {
-          if (debug) mdebugf_pop("Future at position #%d is resolved ... done", ii)
+          if (debug) mdebugf_pop()
           stop(ex)
         }, FutureInterruptError = function(ex) {
-          if (debug) mdebugf_pop("Future at position #%d is resolved ... done", ii)
+          if (debug) mdebugf_pop()
           ## At a minimum, reset the future
           future <- reset(future)
           msg <- sprintf("[FUTURE INTERRUPTED]: Caught %s with error message: %s", class(ex)[1], conditionMessage(ex))
           warning(msg, call. = TRUE, immediate. = TRUE)
         }, FutureError = function(ex) {
-          if (debug) mdebugf_pop("Future at position #%d is resolved ... done", ii)
+          if (debug) mdebugf_pop()
+          ## At a minimum, reset the future
+          future <- reset(future)
           ## It is not always possible to detect when a future fails to
           ## launch, e.g. there might be a broken Rprofile file that
           ## produces an error. Here we take a liberal approach an assume
@@ -54,19 +78,38 @@ FutureRegistry <- local({
 
         ## (b) Make sure future is removed from registry, unless
         ##     already done via above value() call.
-        futuresDB <- db[[where]]
         idx <- indexOf(futuresDB, future = future)
         if (!is.na(idx)) {
-          futuresDB[[idx]] <- NULL
-          db[[where]] <<- futuresDB
-        }
+          drop <- c(drop, idx)
+
+          ## Update backend
+          backend <- future[["backend"]]
+          if (!is.null(backend)) {
+            ## Update counters
+            counters <- backend[["counters"]]
+            counters["finished"] <- counters["finished"] + 1L
+            backend[["counters"]] <- counters
+            
+            ## Update total runtime 
+            result <- future[["result"]]
+            if (inherits(result, "FutureResult")) {
+              times <- result[c("finished", "started")]
+              if (length(times) == 2L) {
+                dt <- times[["finished"]] - times[["started"]]
+                runtime <- backend[["runtime"]]
+                runtime <- runtime + dt
+                backend[["runtime"]] <- runtime
+              }
+            }
+          }
+        } ## if (!is.na(idx))
 
         ## (c) Collect only the first resolved future?
         if (firstOnly) {
-          if (debug) mdebugf_pop("Future at position #%d is resolved ... done", ii)
+          if (debug) mdebugf_pop()
           break
         }
-        if (debug) mdebugf_pop("Future at position #%d is resolved ... done", ii)
+        if (debug) mdebugf_pop()
       } else {
         if (debug) mdebugf("Future at position #%d is not resolved", ii)
       }
@@ -81,7 +124,7 @@ FutureRegistry <- local({
 
     if (debug) {
       mdebugf_push("FutureRegistry('%s', action = '%s', earlySignal = %d) ...", where, action, earlySignal)
-      on.exit(mdebugf_pop("FutureRegistry('%s', action = '%s', earlySignal = %d) ... done", where, action, earlySignal))
+      on.exit(mdebugf_pop())
     }
 
     futures <- db[[where]]
@@ -103,6 +146,14 @@ FutureRegistry <- local({
       futures[[length(futures)+1L]] <- future
       db[[where]] <<- futures
       if (debug) mdebugf("Appended future to position #%d", length(futures))
+
+      ## Update counters
+      backend <- future[["backend"]]
+      if (!is.null(backend)) {
+        counters <- backend[["counters"]]
+        counters["launched"] <- counters["launched"] + 1L
+        backend[["counters"]] <- counters
+      }
     } else if (action == "contains") {
       idx <- indexOf(futures, future = future)
       if (debug) {
@@ -123,6 +174,25 @@ FutureRegistry <- local({
       futures[[idx]] <- NULL
       db[[where]] <<- futures
       if (debug) mdebugf("Removed future from position #%d", idx)
+      ## Update counters
+      backend <- future[["backend"]]
+      if (!is.null(backend)) {
+        counters <- backend[["counters"]]
+        counters["finished"] <- counters["finished"] + 1L
+        backend[["counters"]] <- counters
+
+        ## Update total runtime 
+        result <- future[["result"]]
+        if (inherits(result, "FutureResult")) {
+          times <- result[c("finished", "started")]
+          if (length(times) == 2L) {
+            dt <- times[["finished"]] - times[["started"]]
+            runtime <- backend[["runtime"]]
+            runtime <- runtime + dt
+            backend[["runtime"]] <- runtime
+          }
+        }
+      }
     } else if (action == "collect-first") {
       collectValues(where, futures = futures, firstOnly = TRUE, debug = debug)
     } else if (action == "collect-all") {

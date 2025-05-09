@@ -235,7 +235,7 @@ Future <- function(expr = NULL, envir = parent.frame(), substitute = TRUE, stdou
   core[["calls"]] <- sys.calls()
 
   ## The current state of the future, e.g.
-  ## 'created', 'running', 'finished', 'failed', 'interrupted'.
+  ## 'created', 'running', 'finished', 'failed', 'canceled', 'interrupted'
   core[["state"]] <- "created"
 
   ## Additional named arguments
@@ -316,6 +316,9 @@ print.Future <- function(x, ...) {
     cat("L'Ecuyer-CMRG RNG seed: <none> (seed = ", deparse(future[["seed"]]), ")\n", sep = "")
   }
 
+  state <- future[["state"]]
+  cat(sprintf("State: %s\n", commaq(state)))
+  
   result <- future[["result"]]
   hasResult <- inherits(result, "FutureResult")
   ## BACKWARD COMPATIBILITY
@@ -401,9 +404,9 @@ assertOwner <- local({
 run.Future <- function(future, ...) {
   debug <- isTRUE(getOption("future.debug"))
   if (debug) {
-    mdebugf_push("run() for Future (%s) ...", sQuote(class(future)[1]))
+    mdebugf_push("run() for %s (%s) ...", sQuote(class(future)[1]), sQuoteLabel(future[["label"]]))
     mdebug("state: ", sQuote(future[["state"]]))
-    on.exit(mdebugf_pop("run() for Future (%s) ... done", sQuote(class(future)[1])), add = TRUE)
+    on.exit(mdebugf_pop())
   }
 
   if (future[["state"]] != "created") {
@@ -419,9 +422,17 @@ run.Future <- function(future, ...) {
     assertOwner(future)
   }
 
+  ## Get the future backend, which will be created if not already done
   backend <- plan("backend")
   if (!is.null(backend)) {
-    if (debug) mdebugf_push("Using %s ...", class(backend)[1])
+    if (debug) {
+      mdebugf_push("Using %s ...", class(backend)[1])
+      counters <- backend[["counters"]]
+      names <- names(counters)
+      info <- sprintf("%s %s", counters, names)
+      info <- paste(info, collapse = ", ")
+      mdebugf("Number of futures since start: %d (%s)", counters[["created"]], info)
+    }
 
     ## Protect against exporting too large objects
     future <- validateFutureGlobals(backend, future)
@@ -440,15 +451,28 @@ run.Future <- function(future, ...) {
     if (debug) mdebug_push("Launching futures ...")
     future[["backend"]] <- backend
     future[["start"]] <- proc.time()[[3]]
-    future2 <- launchFuture(backend, future = future)
-    if (debug) mdebug_pop("Launching futures ... done")
+    future2 <- tryCatch(
+      launchFuture(backend, future = future)
+    , FutureError = function(ex) {
+      ## Known error caught by the future backend
+      stop(ex)
+    }, error = function(ex) {
+      ## Unexpected error
+      msg <- conditionMessage(ex)
+      label <- sQuoteLabel(future[["label"]])
+      msg <- sprintf("Caught an unexpected error of class %s when trying to launch future (%s) on backend of class %s. The reason was: %s", class(ex)[1], label, class(backend)[1], msg)
+      stop(FutureLaunchError(msg, future = future))
+    })
+    if (debug) mdebug_pop()
     if (debug) mdebug("Future launched: ", commaq(class(future2)))
     stop_if_not(inherits(future2, "Future"))
 
-    ## Increment counter
-    backend[["counter"]] <- backend[["counter"]] + 1L
+    ## Increment counters
+    counters <- backend[["counters"]]
+    counters["created"] <- counters["created"] + 1L
+    backend[["counters"]] <- counters
     
-    if (debug) mdebugf_pop("Using %s ... done", class(backend)[1])
+    if (debug) mdebugf_pop()
     
     return(future2)
   }
@@ -514,7 +538,7 @@ run.Future <- function(future, ...) {
     if (debug) mdebug("Field: ", sQuote(name))
     future[[name]] <- tmpFuture[[name]]
   }
-  if (debug) mdebugf_pop("Copy elements of temporary %s to final %s object ... done", sQuote(class(tmpFuture)[1]), sQuote(class(future)[1]))
+  if (debug) mdebugf_pop()
   ## (b) Copy all attributes
   attributes(future) <- attributes(tmpFuture)
 
@@ -525,7 +549,7 @@ run.Future <- function(future, ...) {
   if (future[["lazy"]]) {
     if (debug) mdebug_push("Launch lazy future ...")
     future <- run(future)
-    if (debug) mdebug_pop("Launch lazy future ... done")
+    if (debug) mdebug_pop()
   }
 
   ## Set FutureBackend, if it exists
@@ -602,9 +626,19 @@ result <- function(future, ...) {
 #' @export
 #' @keywords internal
 result.Future <- function(future, ...) {
+  debug <- isTRUE(getOption("future.debug"))
+  if (debug) {
+    mdebugf_push("result() for %s (%s) ...", sQuote(class(future)[1]), sQuoteLabel(future[["label"]]))
+    mdebug("state: ", sQuote(future[["state"]]))
+    on.exit(mdebugf_pop())
+  }
+  
   ## Has the result already been collected?
   result <- future[["result"]]
   if (!is.null(result)) {
+    ## Assert result is for the expected future
+    assertFutureResult(future)
+    
     ## Always signal immediateCondition:s and as soon as possible.
     ## They will always be signaled if they exist.
     signalImmediateConditions(future)
@@ -617,7 +651,7 @@ result.Future <- function(future, ...) {
     future <- run(future)
   }
 
-  if (!future[["state"]] %in% c("finished", "failed", "interrupted")) {
+  if (!future[["state"]] %in% c("finished", "failed", "canceled", "interrupted")) {
     ## BACKWARD COMPATIBILITY:
     ## For now, it is value() that collects the results.  Later we want
     ## all future backends to use result() to do it. /HB 2018-02-22
@@ -629,11 +663,19 @@ result.Future <- function(future, ...) {
   }
 
   result <- future[["result"]]
-  if (inherits(result, "FutureResult")) return(result)
+  if (inherits(result, "FutureResult")) {
+    ## Assert result is for the expected future
+    assertFutureResult(future)
+    return(result)
+  }
 
   ## BACKWARD COMPATIBILITY
   result <- future[["value"]]
-  if (inherits(result, "FutureResult")) return(result)
+  if (inherits(result, "FutureResult")) {
+    ## Assert result is for the expected future
+    assertFutureResult(future)
+    return(result)
+  }
 
   version <- future[["version"]]
   if (is.null(version)) {
@@ -656,39 +698,40 @@ result.Future <- function(future, ...) {
 
 #' @export
 resolved.Future <- function(x, run = TRUE, ...) {
+  future <- x
   debug <- isTRUE(getOption("future.debug"))
   if (debug) {
-    mdebug_push("resolved() for ", sQuote(class(x)[1]), " ...")
-    on.exit(mdebug_pop("resolved() for ", sQuote(class(x)[1]), " ... done"))
-    mdebug("state: ", sQuote(x[["state"]]))
+    mdebugf_push("resolved() for %s (%s) ...", class(future)[1], sQuoteLabel(future[["label"]]))
+    on.exit(mdebug_pop())
+    mdebug("state: ", sQuote(future[["state"]]))
     mdebug("run: ", run)
   }
   
   ## A lazy future not even launched?
-  if (x[["state"]] == "created") {
+  if (future[["state"]] == "created") {
     if (!run) return(FALSE)
     if (debug) mdebug_push("run() ...")
-    x <- run(x)
+    future <- run(future)
     if (debug) {
-      mdebug_pop("run() ... done")
+      mdebug_pop()
       mdebug_push("resolved() ...")
     }
-    res <- resolved(x, ...)
+    res <- resolved(future, ...)
     if (debug) {
       mdebug("resolved: ", res)
-      mdebug_pop("resolved() ... done")
+      mdebug_pop()
     }
     return(res)
   }
 
   ## Signal conditions early, iff specified for the given future
   ## Note, collect = TRUE will block here, which is intentional
-  signalEarly(x, collect = TRUE, ...)
+  signalEarly(future, collect = TRUE, ...)
 
-  if (debug) mdebug("result: ", sQuote(class(x[["result"]])[1]))
-  if (inherits(x[["result"]], "FutureResult")) return(TRUE)
+  if (debug) mdebug("result: ", sQuote(class(future[["result"]])[1]))
+  if (inherits(future[["result"]], "FutureResult")) return(TRUE)
   
-  res <- (x[["state"]] %in% c("finished", "failed", "interrupted"))
+  res <- (future[["state"]] %in% c("finished", "failed", "canceled", "interrupted"))
 
   if (debug) mdebug("resolved: ", res)
 
@@ -702,7 +745,7 @@ getFutureCore <- function(future, ..., debug = isTRUE(getOption("future.debug"))
   stop_if_not(inherits(future, "Future"))
   if (debug) {
     mdebug_push("getFutureCore() ...")
-    on.exit(mdebug_pop("getFutureCore() ... done"))
+    on.exit(mdebug_pop())
   }
 
   ## Globals used by the future
@@ -732,7 +775,7 @@ getFutureCapture <- function(future, ..., debug = isTRUE(getOption("future.debug
   stop_if_not(inherits(future, "Future"))
   if (debug) {
     mdebug_push("getFutureCapture() ...")
-    on.exit(mdebug_pop("getFutureCapture() ... done"))
+    on.exit(mdebug_pop())
   }
 
   split <- future[["split"]]
@@ -771,7 +814,7 @@ getFutureContext <- function(future, mc.cores = NULL, local = TRUE, ..., debug =
   stop_if_not(inherits(future, "Future"))
   if (debug) {
     mdebug_push("getFutureContext() ...")
-    on.exit(mdebug_pop("getFutureContext() ... done"))
+    on.exit(mdebug_pop())
   }
 
   backend <- future[["backend"]]
@@ -779,15 +822,15 @@ getFutureContext <- function(future, mc.cores = NULL, local = TRUE, ..., debug =
   ## Future strategies
   strategiesR <- plan("tail")
   stop_if_not(length(strategiesR) >= 0L)
-  ##  mdebugf("Number of tail strategies: %d", length(strategiesR))
+  ##  mdebugf("Number of tail backends: %d", length(strategiesR))
 
-  ## Use default future strategy + identify packages needed by the backend
+  ## Use default future backend + identify packages needed by the backend
   if (length(strategiesR) == 0L) {
-    if (debug) mdebug("Packages needed by future strategies (n = 0): <none>")
+    if (debug) mdebug("Packages needed by future backend (n = 0): <none>")
     strategiesR <- sequential
     backendPackages <- c("future")
   } else {
-    ## Identify package namespaces needed for strategies
+    ## Identify package namespaces needed for backends
     backendPackages <- lapply(strategiesR, FUN = environment)
     backendPackages <- lapply(backendPackages, FUN = environmentName)
     backendPackages <- unlist(backendPackages, use.names = FALSE)
@@ -842,6 +885,7 @@ getFutureContext <- function(future, mc.cores = NULL, local = TRUE, ..., debug =
 
   ## Create a future context
   context <- list(
+    uuid            = future[["uuid"]],
     threads         = NA_integer_,
     strategiesR     = strategiesR,
     backendPackages = backendPackages,
@@ -862,7 +906,7 @@ getFutureBackendConfigs <- function(future, ...) {
 getFutureData <- function(future, ..., debug = isTRUE(getOption("future.debug"))) {
   if (debug) {
     mdebug_push("getFutureData() ...")
-    on.exit(mdebug_pop("getFutureData() ... done"))
+    on.exit(mdebug_pop())
   }
 
   args <- list(...)
@@ -899,8 +943,8 @@ getFutureData <- function(future, ..., debug = isTRUE(getOption("future.debug"))
 #' type of future to use for nested futures, iff any.
 #'
 #' @details
-#' If no next future strategy is specified, the default is to
-#' use [sequential] futures.  This conservative approach protects
+#' If there is no future backend specified after this one, the default
+#' is to use [sequential] futures.  This conservative approach protects
 #' against spawning off recursive futures by mistake, especially
 #' [multicore] and [multisession] ones.
 #' The default will also set `options(mc.cores = 1L)` (*) so that
@@ -953,7 +997,7 @@ getExpression.Future <- local({
 #' @export
 `$<-.Future` <- function(x, name, value) {
   if (name == "state") {
-    if (!is.element(value, c("created", "running", "finished", "failed", "interrupted"))) {
+    if (!is.element(value, c("created", "running", "finished", "failed", "canceled", "interrupted"))) {
       action <- getOption("future.state.onInvalid", "warning")
       
       if (action != "ignore") {

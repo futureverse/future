@@ -44,7 +44,7 @@
 #'
 #' @section Options for controlling futures:
 #' \describe{
-#'  \item{\option{future.plan}:}{(character string or future function) Default future strategy plan used unless otherwise specified via [plan()]. This will also be the future plan set when calling `plan("default")`.  If not specified, this option may be set when the \pkg{future} package is _loaded_ if command-line option `--parallel=ncores` (short `-p ncores`) is specified; if `ncores > 1`, then option \option{future.plan} is set to `multisession` otherwise `sequential` (in addition to option \option{mc.cores} being set to `ncores`, if `ncores >= 1`). (Default: `sequential`)}
+#'  \item{\option{future.plan}:}{(character string or future function) Default future backend used unless otherwise specified via [plan()]. This will also be the future plan set when calling `plan("default")`.  If not specified, this option may be set when the \pkg{future} package is _loaded_ if command-line option `--parallel=ncores` (short `-p ncores`) is specified; if `ncores > 1`, then option \option{future.plan} is set to `multisession` otherwise `sequential` (in addition to option \option{mc.cores} being set to `ncores`, if `ncores >= 1`). (Default: `sequential`)}
 #'
 #'  \item{\option{future.globals.maxSize}:}{(numeric) Maximum allowed total size (in bytes) of global variables identified. This is used to protect against exporting too large objects to parallel workers by mistake. Transferring large objects over a network, or over the internet, can be slow and therefore introduce a large bottleneck that increases the overall processing time. It can also result in large egress or ingress costs, which may exist on some systems. If set of `+Inf`, then the check for large globals is skipped. (Default: `500 * 1024 ^ 2` = 500 MiB)}
 #'
@@ -367,13 +367,13 @@ update_package_options <- function(debug = FALSE) {
   update_package_option("future.journal", mode = "logical", debug = debug)
 
   ## SETTINGS USED FOR DEPRECATING FEATURES
-  ## future 1.22.0:
-  update_package_option("future.globals.keepWhere", mode = "logical", debug = debug)
+  ## future 1.22.0 & future 1.45.0 (new default keepWhere = TRUE)
+  update_package_option("future.globals.keepWhere", mode = "logical", default = TRUE, debug = debug)
 
   ## future 1.34.0:
   update_package_option("future.globals.objectSize.method", mode = "character", debug = debug)
 
-  ## future (> 1.34.0-9000):
+  ## future 1.40.0:
   update_package_option("future.connections.onMisuse", mode = "character", debug = debug)
   value <- getOption("future.connections.onMisuse")
   if (!is.null(value)) {
@@ -386,5 +386,12 @@ update_package_options <- function(debug = FALSE) {
   }
 
   update_package_option("future.devices.onMisuse", mode = "character", debug = debug)
+
+  ## future 1.49.0:
+  update_package_option("future.regression.note", mode = "logical", default = TRUE, debug = debug)
+  update_package_option("future.globals.method.default", mode = "character", split = ",", default = c("ordered", "dfs"), debug = debug)
+
+  update_package_option("future.debug.indent", mode = "character", default = " ", debug = debug)
 }
+
 

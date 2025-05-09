@@ -34,7 +34,7 @@ for (strategy in supportedStrategies()) {
   rm(list = "my_fcn")
   v <- tryCatch(value(f), error = identity)
   print(v)
-  if (isTRUE(getOption("future.globals.keepWhere", FALSE))) {
+  if (isTRUE(getOption("future.globals.keepWhere", TRUE))) {
     message("future.globals.keepWhere=TRUE")
     stopifnot(identical(v, truth))
   } else {

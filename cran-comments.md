@@ -1,8 +1,8 @@
-# CRAN submission future 1.40.0
+# CRAN submission future 1.49.0
 
-on 2025-04-10
+on 2025-05-08
 
-I've verified this submission has no negative impact on any of the 427 reverse package dependencies available on CRAN (n = 406) and Bioconductor (n = 22).
+I've verified this submission has no negative impact on any of the 433 reverse package dependencies available on CRAN (n = 410) and Bioconductor (n = 23).
 
 Thank you
 

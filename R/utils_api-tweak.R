@@ -24,7 +24,7 @@ tweak.character <- function(strategy, ..., penvir = parent.frame()) {
     envir <- getNamespace(parts[[1]])
     s <- parts[[2]]
     if (!exists(s, mode = "function", envir = envir, inherits = TRUE)) {
-      stopf("No such strategy for futures: %s", sQuote(strategy))
+      stopf("No such backend for futures: %s", sQuote(strategy))
     }
     strategy <- get(s, mode = "function", envir = envir, inherits = TRUE)
   } else {
@@ -34,7 +34,7 @@ tweak.character <- function(strategy, ..., penvir = parent.frame()) {
     for (envir in envirs) {
       ## Reached the end? Nothing found.
       if (is.null(envir)) {
-        stopf("No such strategy for futures: %s", sQuote(strategy))
+        stopf("No such backend for futures: %s", sQuote(strategy))
       }
   
       if (exists(strategy, mode = "function", envir = envir, inherits = TRUE)) {
@@ -95,6 +95,7 @@ tweak.future <- function(strategy, ..., penvir = parent.frame()) {
 
   ## Reset 'backend', if set
   attrs[["backend"]] <- NULL
+  if (identical(attrs[["init"]], "done")) attrs[["init"]] <- TRUE
 
   ## Tweak arguments
   formals <- names(formals(strategy))

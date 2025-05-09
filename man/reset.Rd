@@ -2,7 +2,7 @@
 % Please edit documentation in R/core_api-reset.R
 \name{reset}
 \alias{reset}
-\title{Reset a finished, failed, or interrupted future to a lazy future}
+\title{Reset a finished, failed, canceled, or interrupted future to a lazy future}
 \usage{
 reset(x, ...)
 }
@@ -16,8 +16,8 @@ reset(x, ...)
 Resetting a running future results in a \link{FutureError}.
 }
 \description{
-A future that has successfully completed, has been interrupted, or
-failed due to an error, can be relaunched after resetting it.
+A future that has successfully completed, \link[=cancel]{canceled}, interrupted,
+or has failed due to an error, can be relaunched after resetting it.
 }
 \details{
 A lazy, vanilla \link{Future} can be reused in another R session. For

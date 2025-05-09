@@ -27,13 +27,16 @@ identified.}
 A \link{Future}.
 }
 \description{
+\emph{WARNING: This function must never be called.
+It may only be used with \code{\link[=plan]{plan()}}}
+}
+\details{
 A sequential future is a future that is evaluated sequentially in the
 current \R session similarly to how \R expressions are evaluated in \R.
 The only difference to \R itself is that globals are validated
 by default just as for all other types of futures in this package.
-}
-\details{
-This function is \emph{not} meant to be called directly.  Instead, the
+
+This function is must \emph{not} be called directly.  Instead, the
 typical usages are:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{# Evaluate futures sequentially in the current R process

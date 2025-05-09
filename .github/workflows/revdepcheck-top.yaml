@@ -23,6 +23,13 @@ jobs:
           - { r: "release", pkg: "future.apply"      }
           - { r: "release", pkg: "furrr"             }
           - { r: "release", pkg: "future.tests"      }
+          - { r: "release", pkg: "future.batchtools" , globals: develop, label: 'globals develop' }
+          - { r: "release", pkg: "future.callr"      , globals: develop, label: 'globals develop' }
+          - { r: "release", pkg: "future.mirai"      , globals: develop, label: 'globals develop' }
+          - { r: "release", pkg: "doFuture"          , globals: develop, label: 'globals develop' }
+          - { r: "release", pkg: "future.apply"      , globals: develop, label: 'globals develop' }
+          - { r: "release", pkg: "furrr"             , globals: develop, label: 'globals develop' }
+          - { r: "release", pkg: "future.tests"      , globals: develop, label: 'globals develop' }
           - { r: "release", pkg: "doFuture"          , plan: multisession, label: multisession }
           - { r: "release", pkg: "future.apply"      , plan: multisession, label: multisession }
           - { r: "release", pkg: "furrr"             , plan: multisession, label: multisession }
@@ -39,6 +46,7 @@ jobs:
       R_FUTURE_RNG_ONMISUSE: error
       R_FUTURE_PLAN: ${{ matrix.config.plan }}
       R_FUTURE_GLOBALS_KEEPWHERE: ${{ matrix.config.globals_keepWhere }}
+      R_GLOBALS_BRANCH: ${{ matrix.config.globals }}
       ## Specific to furrr (to disable expect_snapshot() tests)
       NOT_CRAN: false
       
@@ -66,6 +74,10 @@ jobs:
           remotes::install_deps(dependencies = TRUE)
           install.packages(".", repos=NULL, type="source")
           install.packages("${{ matrix.config.pkg }}", dependencies=TRUE)
+          gver <- Sys.getenv("R_GLOBALS_BRANCH")
+          if (nzchar(gver)) {
+            remotes::install_github("futureverse/globals", ref = gver)
+          }
         shell: Rscript {0}
 
       - name: Session info

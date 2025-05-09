@@ -56,7 +56,8 @@ FutureBackend <- function(..., earlySignal = FALSE, gc = FALSE, maxSizeOfObjects
   stop_if_not(length(hooks) == 1L, is.logical(hooks), !is.na(hooks))
   
   ## Record future plan tweaks, if any
-  args <- list(..., earlySignal = earlySignal, maxSizeOfObjects = maxSizeOfObjects, gc = gc, interrupts = interrupts, hooks = hooks, counter = 0L)
+  counters <- c(created = 0L, launched = 0L, finished = 0L)
+  args <- list(..., earlySignal = earlySignal, maxSizeOfObjects = maxSizeOfObjects, gc = gc, interrupts = interrupts, hooks = hooks, uuid = uuid(proc.time()), counters = counters, runtime = 0.0)
   for (name in names(args)) {
     core[[name]] <- args[[name]]
   }
@@ -78,6 +79,8 @@ print.FutureBackend <- function(x, ...) {
   classes <- setdiff(class(backend), "environment")
   s <- sprintf("%s:", classes[1])
   s <- c(s, sprintf("Inherits: %s", paste(classes[-1], collapse = ", ")))
+
+  s <- c(s, sprintf("UUID: %s", backend[["uuid"]]))
 
   ## Summary of workers
   s <- c(s, sprintf("Number of workers: %g", nbrOfWorkers(backend)))
@@ -126,7 +129,27 @@ print.FutureBackend <- function(x, ...) {
       s <- c(s, sprintf("Non-resolved future running times: %s", stats))
     }
   }
-  s <- c(s, sprintf("Number of futures since start: %d", backend[["counter"]]))
+
+  counters <- backend[["counters"]]
+  names <- names(counters)
+  info <- sprintf("%s %s", counters, names)
+  info <- paste(info, collapse = ", ")
+  s <- c(s, sprintf("Number of futures since start: %d (%s)", counters[["created"]], info))
+
+  ## Total runtime in seconds
+  runtime <- backend[["runtime"]]    ## 'difftime' (or seconds)
+
+  ## Turn into a 'difftime' object, if not already done
+  if (!inherits(runtime, "difftime")) {
+    origin <- as.POSIXct(0.0, origin = "1970-01-01") ## for R (< 4.3.0)
+    if (!inherits(runtime, "POSIXct")) {
+      runtime <- as.POSIXct(runtime, origin = origin)
+    }
+    runtime <- difftime(runtime, origin)  ## automatically choose 'units'
+  }
+  
+  s <- c(s, sprintf("Total runtime of futures: %s (%s/finished future)", format(runtime), format(runtime/counters[["finished"]])))
+
   cat(s, sep = "\n")
   invisible(x)
 }
@@ -196,7 +219,7 @@ interruptFuture.FutureBackend <- function(backend, future, ...) {
 makeFutureBackend <- function(evaluator, ..., debug = FALSE) {
   if (debug) {
     mdebugf_push("makeFutureBackend(<%s>) ...", class(evaluator)[1])
-    on.exit(mdebugf_pop("makeFutureBackend(<%s>) ... done", class(evaluator)[1]))
+    on.exit(mdebugf_pop())
   }
   
   ## Already created?
@@ -206,7 +229,7 @@ makeFutureBackend <- function(evaluator, ..., debug = FALSE) {
     return(backend)
   }
   
-    mdebugf("Backend function: <%s>", commaq(class(backend)))
+  mdebugf("Backend function: <%s>", commaq(class(backend)))
   
   factory <- attr(evaluator, "factory")
   if (is.null(factory)) {
@@ -220,6 +243,12 @@ makeFutureBackend <- function(evaluator, ..., debug = FALSE) {
   ## Apply future plan tweaks
   args <- attr(evaluator, "tweaks")
   if (is.null(args)) args <- list()
+
+  if (debug) {
+    mdebugf("Evaluator tweak arguments: [n=%d]", length(args))
+    mstr(args)
+  }
+
   args2 <- formals(evaluator)
   args2[["..."]] <- NULL
   args2$lazy <- NULL         ## bc multisession; should be removed
@@ -228,13 +257,20 @@ makeFutureBackend <- function(evaluator, ..., debug = FALSE) {
     args2[["envir"]] <- NULL
     names2 <- names(args2)
   }
-  
+  if (debug) {
+    mdebugf("Evaluator formal arguments: [n=%d]", length(args2))
+    mstr(args)
+  }
   for (name in names2) {
     args[[name]] <- args2[[name]]
   }
 
+  if (debug) {
+    mdebugf("Backend factory arguments: [n=%d]", length(args2))
+    mstr(args2)
+  }
   backend <- do.call(factory, args = args)
-  mdebugf("Backend: <%s>", commaq(class(backend)))
+  if (debug) mdebugf("Backend: <%s>", commaq(class(backend)))
   stop_if_not(inherits(backend, "FutureBackend"))
   
   ## Record factory function as an attribute; needed by tweak()
@@ -255,7 +291,7 @@ validateFutureGlobals <- function(backend, future, ...) {
 validateFutureGlobals.FutureBackend <- function(backend, future, ..., debug = FALSE) {
   if (debug) {
     mdebugf_push("validateFutureGlobals(<%s>) ...", class(backend)[1])
-    on.exit(mdebugf_pop("validateFutureGlobals(<%s>) ... done", class(backend)[1]))
+    on.exit(mdebugf_pop())
   }
 
   ## Maximum allowed total size of globals
@@ -275,7 +311,7 @@ validateFutureGlobals.FutureBackend <- function(backend, future, ..., debug = FA
   
   if (debug) {
     mdebug_push("Checking size limitations of globals ...")
-    on.exit(mdebug_pop("Checking size limitations of globals ... done"), add = TRUE)
+    on.exit(mdebug_pop(), add = TRUE)
   }
       
   ## Calculate the total size of globals, unless already done
@@ -296,7 +332,6 @@ validateFutureGlobals.FutureBackend <- function(backend, future, ..., debug = FA
   
   sizes <- lapply(globals, FUN = objectSize)
   sizes <- unlist(sizes, use.names = TRUE)
-  total_size <- sum(sizes, na.rm = TRUE)
   msg <- summarize_size_of_globals(globals,
                                    sizes = sizes,
                                    maxSize = maxSizeOfObjects,
@@ -339,7 +374,7 @@ stopWorkers.FutureBackend <- function(backend, interrupt = TRUE, ...) {
   ## Interrupt all futures
   if (interrupt) {
     futures <- listFutures(backend)
-    void <- lapply(futures, FUN = interrupt, ...)
+    void <- lapply(futures, FUN = cancel, interrupt = interrupt, ...)
   }
   warning(FutureWarning(sprintf("%s does not implement stopWorkers()", sQuote(class(backend)[1]))))
 }

@@ -1,3 +1,5 @@
+#!/usr/bin/env Rscript
+
 #' Run a 'testme' Test Script
 #'
 #' R usage:
@@ -16,6 +18,7 @@ idx <- grep(pattern, cmd_args)
 if (length(idx) > 0L) {
   stopifnot(length(idx) == 1L)
   testme_package <- gsub(pattern, "\\1", cmd_args[idx])
+  cmd_args <- cmd_args[-idx]
 } else {
   testme_package <- Sys.getenv("R_TESTME_PACKAGE", NA_character_)
   if (is.na(testme_package)) {
@@ -29,6 +32,7 @@ idx <- grep(pattern, cmd_args)
 if (length(idx) > 0L) {
   stopifnot(length(idx) == 1L)
   path <- gsub(pattern, "\\1", cmd_args[idx])
+  cmd_args <- cmd_args[-idx]
 } else {
   path <- Sys.getenv("R_TESTME_PATH", NA_character_)
   if (is.na(path)) {
@@ -46,12 +50,28 @@ idx <- grep(pattern, cmd_args)
 if (length(idx) > 0L) {
   stopifnot(length(idx) == 1L)
   testme_name <- gsub(pattern, "\\1", cmd_args[idx])
+  cmd_args <- cmd_args[-idx]
 } else {
-  testme_name <- Sys.getenv("R_TESTME_NAME", NA_character_)
-  if (is.na(testme_name)) {
-    stop("testme: Environment variable 'R_TESTME_NAME' is not set")
+  testme_name <- NULL
+}
+
+## Fallback for 'testme_name'?
+if (is.null(testme_name)) {
+  if (length(cmd_args) > 0) {
+    stopifnot(length(cmd_args) == 1L)
+    file <- cmd_args[1]
+    if (utils::file_test("-f", file)) {
+      testme_name <- gsub("(^test-|[.]R$)", "", basename(file))
+    } else {
+      stop("No such file: ", file)
+    }
+  } else {
+    testme_name <- Sys.getenv("R_TESTME_NAME", NA_character_)
+    if (is.na(testme_name)) {
+      stop("testme: Environment variable 'R_TESTME_NAME' is not set")
+    }
   }
-}  
+}
 
 
 testme_file <- file.path(path, sprintf("test-%s.R", testme_name))
@@ -145,6 +165,11 @@ if (!is.na(code)) {
 
 
 message(sprintf("Test %s ...", sQuote(testme[["name"]])))
+
+if (testme[["debug"]]) {
+  message("testme:")
+  message(paste(utils::capture.output(utils::str(as.list(testme))), collapse = "\n"))
+}
 
 ## Process prologue scripts, if they exist
 if (testme[["status"]] != "skipped" &&

@@ -40,7 +40,7 @@ expression evaluated.}
 \item{substitute}{If \code{TRUE}, the \code{strategy} expression is
 \code{substitute()}:d, otherwise not.}
 
-\item{.skip}{(internal) If \code{TRUE}, then attempts to set a strategy
+\item{.skip}{(internal) If \code{TRUE}, then attempts to set a future backend
 that is the same as what is currently in use, will be skipped.}
 
 \item{.call}{(internal) Used for recording the call to this function.}
@@ -54,9 +54,9 @@ function by its name.}
 arguments.}
 }
 \value{
-The value of the expression evaluated.
+The value of the expression evaluated (invisibly).
 
-\code{plan()} returns a the previous plan invisibly if a new strategy
+\code{plan()} returns a the previous plan invisibly if a new future backend
 is chosen, otherwise it returns the current one visibly.
 
 a future function.
@@ -67,7 +67,7 @@ it specifies how \code{\link[=future]{future()}}:s are resolved,
 e.g. sequentially or in parallel.
 }
 \details{
-The default strategy is \code{\link{sequential}}, but another one can be set
+The default backend is \code{\link{sequential}}, but another one can be set
 using \code{plan()}, e.g. \code{plan(multisession)} will launch parallel workers
 running in the background, which then will be used to resolve future.
 To shut down background workers launched this way, call \code{plan(sequential)}.
@@ -174,7 +174,7 @@ The backend resolved futures via the OpenLava scheduler, e.g.
 \section{For package developers}{
 
 
-Please refrain from modifying the future strategy inside your packages /
+Please refrain from modifying the future backend inside your packages /
 functions, i.e. do not call \code{plan()} in your code. Instead, leave
 the control on what backend to use to the end user. This idea is part of
 the core philosophy of the future framework---as a developer you can never
@@ -182,9 +182,9 @@ know what future backends the user have access to. Moreover, by not making
 any assumptions about what backends are available, your code will also work
 automatically with any new backends developed after you wrote your code.
 
-If you think it is necessary to modify the future strategy within a
+If you think it is necessary to modify the future backend within a
 function, then make sure to undo the changes when exiting the function.
-This can be archived by using \code{with(plan(...), local = TRUE)}, e.g.
+This can be achieved by using \code{with(plan(...), local = TRUE)}, e.g.
 
 \preformatted{
   my_fcn <- function(x) {

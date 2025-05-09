@@ -65,8 +65,9 @@ nbrOfWorkers.future <- function(evaluator) {
 #' @export
 nbrOfWorkers.NULL <- function(evaluator) {
   assert_no_positional_args_but_first()
-  
-  nbrOfWorkers(plan("next"))
+  backend <- plan("backend")
+  if (!inherits(backend, "FutureBackend")) backend <- plan("next")
+  nbrOfWorkers(backend)
 }
 
 
@@ -119,8 +120,9 @@ nbrOfFreeWorkers.future <- function(evaluator, background = FALSE, ...) {
 #' @export
 nbrOfFreeWorkers.NULL <- function(evaluator, background = FALSE, ...) {
   assert_no_positional_args_but_first()
-  
-  nbrOfFreeWorkers(plan("next"), background = background, ...)
+  backend <- plan("backend")
+  if (!inherits(backend, "FutureBackend")) backend <- plan("next")
+  nbrOfFreeWorkers(backend, background = background, ...)
 }
 
 

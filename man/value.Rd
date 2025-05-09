@@ -19,7 +19,8 @@ value(...)
   reduce = NULL,
   stdout = TRUE,
   signal = TRUE,
-  interrupt = TRUE,
+  cancel = TRUE,
+  interrupt = cancel,
   inorder = TRUE,
   drop = FALSE,
   force = TRUE,
@@ -34,7 +35,8 @@ value(...)
   reduce = NULL,
   stdout = TRUE,
   signal = TRUE,
-  interrupt = TRUE,
+  cancel = TRUE,
+  interrupt = cancel,
   inorder = TRUE,
   drop = FALSE,
   force = TRUE,
@@ -74,9 +76,10 @@ initial value.
 Reduction of values is done as soon as possible, but always in the
 same order as \code{x}, unless \code{inorder} is FALSE.}
 
-\item{interrupt}{If TRUE and \code{signal} is TRUE, non-resolved futures are
-interrupted as soon as an error is detected in one of the futures,
-before signaling the error.}
+\item{cancel, interrupt}{If TRUE and \code{signal} is TRUE, non-resolved futures
+are canceled as soon as an error is detected in one of the futures,
+before signaling the error. Argument \code{interrupt} is passed to \code{cancel()}
+controlling whether non-resolved futures should also be interrupted.}
 
 \item{inorder}{If TRUE, then standard output and conditions are relayed,
 and value reduction, is done in the order the futures occur in \code{x}, but
@@ -106,7 +109,7 @@ For all other elements, the existing object is kept as-is.
 
 If \code{signal} is TRUE and one of the futures produces an error, then
 that error is relayed. Any remaining, non-resolved futures in \code{x} are
-interrupted, prior to signaling such an error.
+canceled, prior to signaling such an error.
 }
 \description{
 Gets the value of a future or the values of all elements (including futures)

@@ -1,11 +1,11 @@
-#' Temporarily tweaks the arguments of the current strategy
+#' Temporarily tweaks the arguments of the current backend
 #'
 #' @usage fassignment \%tweak\% tweaks
 #'
 #' @param fassignment The future assignment, e.g.
 #'        `x %<-% { expr }`.
 #' @param tweaks A named list (or vector) with arguments that
-#' should be changed relative to the current strategy.
+#' should be changed relative to the current backend.
 #'
 #' @aliases %tweak%
 #' @rdname futureAssign
@@ -24,9 +24,11 @@
 
   ## Tweak current strategy and apply
   plans <- oplan
-  args <- c(list(plans[[1]], penvir = envir), tweaks)
-  plans[[1]] <- do.call(tweak, args = args)
-  plan(plans, substitute = FALSE, .call = NULL, .cleanup = FALSE, .init = FALSE)
+  strategy <- plans[[1]]
+  args <- c(list(strategy, penvir = envir), tweaks)
+  strategy <- do.call(tweak, args = args)
+  plans[[1]] <- strategy
+  plan(plans, substitute = FALSE, .call = NULL, .cleanup = FALSE, .init = TRUE)
 
   eval(fassignment, envir = envir, enclos = baseenv())
 }

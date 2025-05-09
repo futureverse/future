@@ -138,7 +138,10 @@ arguments \code{args}.
 
 \code{minifuture(expr)} creates a future with minimal overhead, by disabling
 user-friendly behaviors, e.g. automatic identification of global
-variables and packages needed, and relaying of output.
+variables and packages needed, and relaying of output. Unless you have
+good reasons for using this function, please use \code{\link[=future]{future()}} instead.
+This function exists mainly for the purpose of profiling and identifying
+which automatic features of \code{\link[=future]{future()}} introduce extra overhead.
 }
 \description{
 \if{html}{\figure{logo.png}{options: style='float: right;' alt='logo' width='120'}}
@@ -159,6 +162,9 @@ Querying the value of a non-resolved future will \emph{block} the call
 until the future is resolved.
 It is possible to check whether a future is resolved or not
 without blocking by using \code{\link{resolved}(f)}.
+It is possible to \code{\link[=cancel]{cancel()}} a future that is being resolved.
+Failed, canceled, and interrupted futures can be \code{\link[=reset]{reset()}} to a
+lazy, vanilla future that can be relaunched.
 
 The \code{futureCall()} function works analogously to
 \code{\link[base]{do.call}()}, which calls a function with a set of
@@ -277,7 +283,7 @@ specification of globals is supported via attributes \code{add} (to add
 false negatives) and \code{ignore} (to ignore false positives) on value
 \code{TRUE}.  For example, with
 \code{globals = structure(TRUE, ignore = "b", add = "a")} any globals
-automatically identified except \code{b} will be used in addition to
+automatically identified, except \code{b}, will be used, in addition to
 global \code{a}.
 }
 
@@ -345,9 +351,8 @@ print(y1)
 }
 \seealso{
 How, when and where futures are resolved is given by the
-\emph{future strategy}, which can be set by the end user using the
-\code{\link[=plan]{plan()}} function.  The future strategy must not be
-set by the developer, e.g. it must not be called within a package.
+\emph{future backend}, which can be set by the end user using the
+\code{\link[=plan]{plan()}} function.
 }
 \author{
 The future logo was designed by Dan LaBar and tweaked by Henrik Bengtsson.

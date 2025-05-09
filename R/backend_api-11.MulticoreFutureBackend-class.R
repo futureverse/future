@@ -72,7 +72,7 @@ usedCores <- function() {
 #'         extensive waiting, then a timeout error is thrown.
 #'
 #' @keywords internal
-requestCore <- function(await, workers = availableCores(), timeout, delta, alpha) {
+requestCore <- function(await, workers = availableCores(constraints = "multicore"), timeout, delta, alpha) {
   stop_if_not(length(workers) == 1L, is.numeric(workers), is.finite(workers), workers >= 1)
   stop_if_not(is.function(await))
   stop_if_not(is.finite(timeout), timeout >= 0)
@@ -81,7 +81,7 @@ requestCore <- function(await, workers = availableCores(), timeout, delta, alpha
   debug <- isTRUE(getOption("future.debug"))
   if (debug) {
     mdebugf_push("requestCore(..., workers = %d) ...", workers)
-    on.exit(mdebugf_pop("requestCore(..., workers = %d) ...", workers))
+    on.exit(mdebugf_pop())
   }
 
   ## No additional cores available?
@@ -177,7 +177,7 @@ launchFuture.MulticoreFutureBackend <- local({
     debug <- isTRUE(getOption("future.debug"))
     if (debug) {
       mdebug_push("launchFuture() for MulticoreFutureBackend ...")
-      on.exit(mdebug_pop("launchFuture() for MulticoreFutureBackend ..."))
+      on.exit(mdebug_pop())
     }
 
     hooks <- backend[["hooks"]]
@@ -237,7 +237,7 @@ stopWorkers.MulticoreFutureBackend <- function(backend, interrupt = TRUE, ...) {
   ## Interrupt all futures
   if (interrupt) {
     futures <- listFutures(backend)
-    futures <- lapply(futures, FUN = interrupt, ...)
+    futures <- lapply(futures, FUN = cancel, interrupt = interrupt, ...)
   }
 
   ## Clear registry
@@ -353,7 +353,7 @@ result.MulticoreFuture <- local({
     debug <- isTRUE(getOption("future.debug"))
     if (debug) {
       mdebugf_push("result() for %s ...", class(future)[1])
-      on.exit(mdebugf_pop("result() for %s ... done", class(future)[1]))
+      on.exit(mdebugf_pop())
     }
   
     ## Has the result already been collected?
@@ -383,7 +383,7 @@ result.MulticoreFuture <- local({
 
     ## NOTE: mccollect() produces a "1 parallel job did not deliver a result"
     ## warning, if the parallel worker has been interrupted and terminated.
-    if (future[["state"]] == "interrupted") {
+    if (future[["state"]] %in% c("canceled", "interrupted")) {
       result <- suppressWarnings(mccollect(jobs = jobs, wait = TRUE)[[1L]])
     } else {
       result <- mccollect(jobs = jobs, wait = TRUE)[[1L]]
@@ -415,7 +415,7 @@ result.MulticoreFuture <- local({
       if (is.null(result) || identical(result, structure("fatal error in wrapper code", class = "try-error"))) {
         label <- sQuoteLabel(future[["label"]])
 
-        if (future[["state"]] == "interrupted") {
+        if (future[["state"]] %in% c("canceled", "interrupted")) {
           if (debug) mdebugf("Detected interrupted %s whose result cannot be retrieved", sQuote(class(future)[1]))
           msg <- sprintf("A future (%s) of class %s was interrupted, while running on localhost (pid %d)", label, class(future)[1], pid)
           result <- FutureInterruptError(msg, future = future)
@@ -427,7 +427,7 @@ result.MulticoreFuture <- local({
           FutureRegistry(reg, action = "remove", future = future, earlySignal = FALSE)
           if (debug) {
             mdebug("Erased future from future backend")
-            mdebugf_pop("Detected non-FutureResult result ... done")
+            mdebugf_pop()
           }
           stop(result)
         }
@@ -499,11 +499,11 @@ result.MulticoreFuture <- local({
         }
       }
       
-      if (debug) mdebugf_pop("Detected non-FutureResult result ... done")
+      if (debug) mdebugf_pop()
   
       stop(ex)
     }
-  
+
     ## Collect and relay immediateCondition if they exists
     conditions <- readImmediateConditions()
     ## Record conditions as signaled
@@ -521,7 +521,10 @@ result.MulticoreFuture <- local({
     ## Remove from registry
     reg <- sprintf("multicore-%s", session_uuid())
     FutureRegistry(reg, action = "remove", future = future, earlySignal = TRUE)
-    
+
+    ## Assert result is for the expected future
+    assertFutureResult(future)
+
     ## Always signal immediateCondition:s and as soon as possible.
     ## They will always be signaled if they exist.
     signalImmediateConditions(future)
@@ -589,12 +592,15 @@ interruptFuture.MulticoreFutureBackend <- function(backend, future, ...) {
 
 #' Create a multicore future whose value will be resolved asynchronously in a forked parallel process
 #'
+#' _WARNING: This function must never be called.
+#'  It may only be used with [future::plan()]_
+#'
 #' A multicore future is a future that uses multicore evaluation,
 #' which means that its _value is computed and resolved in
 #' parallel in another process_.
 #'
 #' @details
-#' This function is _not_ meant to be called directly.  Instead, the
+#' This function is must _not_ be called directly.  Instead, the
 #' typical usages are:
 #'
 #' ```r
@@ -664,8 +670,9 @@ multicore <- function(..., workers = availableCores(constraints = "multicore"), 
     return(future(..., gc = gc, earlySignal = earlySignal, envir = envir))
   }
   
-  stop("INTERNAL ERROR: The future::multicore() function implements the FutureBackend and should never be called directly")
+  stop("INTERNAL ERROR: The future::multicore() function must never be called directly")
 }
 class(multicore) <- c("multicore", "multiprocess", "future", "function")
+attr(multicore, "init") <- TRUE
 attr(multicore, "factory") <- MulticoreFutureBackend
 attr(multicore, "tweakable") <- tweakable(attr(multicore, "factory"))

@@ -46,7 +46,7 @@ MultiprocessFutureBackend(
 )
 
 ClusterFutureBackend(
-  workers = availableWorkers(),
+  workers = availableWorkers(constraints = "connections"),
   gc = TRUE,
   earlySignal = TRUE,
   interrupts = FALSE,
@@ -62,7 +62,14 @@ MulticoreFutureBackend(
 
 SequentialFutureBackend(..., maxSizeOfObjects = +Inf)
 
-MultisessionFutureBackend(workers = availableCores(), interrupts = TRUE, ...)
+MultisessionFutureBackend(
+  workers = availableCores(),
+  rscript_libs = .libPaths(),
+  interrupts = TRUE,
+  gc = FALSE,
+  earlySignal = FALSE,
+  ...
+)
 }
 \arguments{
 \item{earlySignal}{Overrides the default behavior on whether futures

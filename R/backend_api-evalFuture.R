@@ -10,7 +10,7 @@ attachPackages <- function(packages) {
   if (debug) {
     mdebug_push("attachPackages() ...")
     mdebugf("packages: [n=%d] %s", length(packages), commaq(packages))
-    on.exit(mdebug_pop("attachPackages() ... DONE"))
+    on.exit(mdebug_pop())
   }
   
   ## Nothing to do?
@@ -83,7 +83,7 @@ canForceSingleThreading <- local({
     debug <- isTRUE(getOption("future.debug"))
     if (debug) {
       mdebug_push("canForceSingleThreading() ...")
-      on.exit(mdebug_pop("canForceSingleThreading() ... DONE"))
+      on.exit(mdebug_pop())
     }
     
     if (!is.null(.cache)) {
@@ -115,7 +115,7 @@ setNumberOfThreads <- function(openmp = NA_integer_, rcpp = openmp) {
   debug <- isTRUE(getOption("future.debug"))
   if (debug) {
     mdebug_push("setNumberOfThreads() ...")
-    on.exit(mdebug_pop("setNumberOfThreads() ... DONE"))
+    on.exit(mdebug_pop())
   }
   
   if (is.list(openmp)) {
@@ -211,6 +211,9 @@ get_connections <- function(details = FALSE) {
     cons <- lapply(getAllConnections()[-(1:3)], FUN = function(idx) {
       tryCatch(getConnection(idx), error = function(e) NULL)
     })
+    ## Drop entries for which we failed to retrieve a connection
+    keep <- vapply(cons, FUN = inherits, "connection", FUN.VALUE = FALSE)
+    cons <- cons[keep]
   }
   cons
 }
@@ -237,7 +240,7 @@ diff_connections <- function(after, before) {
     idxs <- setdiff(before[["index"]], after[["index"]])
     if (length(idxs) > 0) {
       removed <- subset(before, index %in% idxs)
-      before <- subset(before, ! index %in% idxs)
+      before  <- subset(before, ! index %in% idxs)
     } else {
       removed <- NULL
     }
@@ -371,6 +374,7 @@ evalFuture <- function(
         immediateConditionHandlers = list()
       ),
       context = list(
+        uuid = NULL,
         backendPackages = character(0L),
         strategiesR = NULL,
         threads = NA_integer_,
@@ -383,7 +387,7 @@ evalFuture <- function(
     ## Wrap up in a FutureError
     msg <- sprintf("future::evalFuture() failed on %s (pid %s) at %s", Sys.info()[["nodename"]], Sys.getpid(), format(Sys.time(), "%FT%T"))
     if (!requireNamespace("future")) {
-      msg <- sprintf("%s. Package 'future' is not available", msg)
+      msg <- sprintf("%s. Package 'future' is not available (worker library path: %s)", msg, paste(sQuote(.libPaths()), collapse = ", "))
     } else {
       ns <- getNamespace("future")
       if (!exists("evalFutureInternal", mode = "function", envir = ns, inherits = FALSE)) {
@@ -429,6 +433,7 @@ evalFutureInternal <- function(data) {
   local <- context[["local"]]
   if (is.null(local)) local <- TRUE
   reset <- context[["reset"]]
+  uuid <- context[["uuid"]]
 
   with_assert({
     if (!is.null(immediateConditionHandlers)) {
@@ -650,7 +655,7 @@ evalFutureInternal <- function(data) {
       ...future.strategy.old <- plan("list")
 
       on.exit({
-        ## Revert to the original future strategy
+        ## Revert to the original future strategy set
         ## Reset option 'future.plan' and env var 'R_FUTURE_PLAN'
         options(future.plan = ...future.plan.old)
         plan(...future.strategy.old, .cleanup = FALSE, .init = FALSE)
@@ -784,7 +789,7 @@ evalFutureInternal <- function(data) {
   }
 
 
-  ## Use the next-level-down ("popped") future strategy
+  ## Use the next-level-down ("popped") future backend
   plan(strategiesR, .cleanup = FALSE, .init = FALSE)
 
   if (!is.na(...future.ncores)) {
@@ -934,6 +939,7 @@ evalFutureInternal <- function(data) {
           visible = ...future.value[["visible"]],
           conditions = ...future.conditions,
           rng = !identical(globalenv()[[".Random.seed"]], ...future.rng),
+          uuid = uuid,
           misuseGlobalEnv = if (checkGlobalenv) list(added = diff_globalenv(...future.globalenv.names)) else NULL,
           misuseConnections = if (checkConnections) diff_connections(get_connections(details = isTRUE(attr(checkConnections, "details", exact = TRUE))), ...future.connections) else NULL,
           misuseDevices = if (checkDevices) diff_devices(...future.devices, base::.Devices) else NULL,
@@ -1033,6 +1039,7 @@ evalFutureInternal <- function(data) {
     FutureResult(
       conditions = ...future.conditions,
       rng = !identical(globalenv()[[".Random.seed"]], ...future.rng),
+      uuid = uuid,
       misuseGlobalEnv = if (checkGlobalenv) list(added = diff_globalenv(...future.globalenv.names)) else NULL,
       misuseConnections = diff_connections(get_connections(details = isTRUE(attr(checkConnections, "details", exact = TRUE))), ...future.connections),
       misuseDevices = if (checkDevices) diff_devices(base::.Devices, ...future.devices) else NULL,
@@ -1042,6 +1049,7 @@ evalFutureInternal <- function(data) {
     FutureResult(
       conditions = ...future.conditions,
       rng = !identical(globalenv()[[".Random.seed"]], ...future.rng),
+      uuid = uuid,
       misuseGlobalEnv = if (checkGlobalenv) list(added = diff_globalenv(...future.globalenv.names)) else NULL,
       misuseConnections = diff_connections(get_connections(details = isTRUE(attr(checkConnections, "details", exact = TRUE))), ...future.connections),
       misuseDevices = if (checkDevices) diff_devices(base::.Devices, ...future.devices) else NULL,
