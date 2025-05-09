@@ -1,5 +1,5 @@
 Package: future
-Version: 1.40.0-9403
+Version: 1.49.0
 Title: Unified Parallel and Distributed Processing in R for Everyone
 Depends:
     R (>= 3.2.0)
@@ -15,8 +15,6 @@ Suggests:
     RhpcBLASctl,
     R.rsp,
     markdown
-Remotes:
-    futureverse/globals@0.18.0
 VignetteBuilder: R.rsp
 Authors@R: c(person("Henrik", "Bengtsson",
                     role = c("aut", "cre", "cph"),
