@@ -529,7 +529,7 @@ getSocketSelectTimeout <- function(future, timeout = NULL) {
 } ## getSocketSelectTimeout()
 
 
-#' @importFrom parallelly connectionId isConnectionValid 
+#' @importFrom parallelly connectionId isConnectionValid
 #' @export
 resolved.ClusterFuture <- function(x, run = TRUE, timeout = NULL, ...) {
   debug <- isTRUE(getOption("future.debug"))
@@ -1090,8 +1090,8 @@ requestNode <- function(await, backend, timeout, delta, alpha) {
       }
   
       if (is.na(connectionOkay) || connectionOkay) {
-        ## If the node does not use a connection, or the  connection is working,
-        ## we can only assume the worker is also alive.  If so, we should try to
+        ## If the node does not use a connection, or the connection is working,
+        ## we can only assume the worker is also alive. If so, we should try to
         ## kill the worker.
         res <- suppressWarnings(killNode(node))
         if (debug) mdebugf("Killed %s: %s", class(node)[1], res)
@@ -1564,7 +1564,8 @@ attr(cluster, "tweakable") <- tweakable(attr(cluster, "factory"))
 ## function, because that function is set as attribute "factory" of the
 ## 'cluster' function, which will be passed along to parallel workers
 ## as part of plan("tail").
-#' @importFrom parallel stopCluster isConnectionValid
+#' @importFrom parallel stopCluster
+#' @importFrom parallelly isConnectionValid
 clusterRegistry <- local({
   ## We only allow one parallel 'cluster' per session
   cluster <- NULL
@@ -1654,6 +1655,9 @@ clusterRegistry <- local({
       }
     }
 
+    ## (iv) Let the garbage collector clean out other, stray connections
+    gc()
+    
     NULL
   } ## stopCluster()
 

@@ -21,7 +21,7 @@
 #' })
 #' \dontshow{
 #' ## R CMD check: make sure any open connections are closed afterward
-#' if (!inherits(plan("next"), "sequential")) plan(sequential)
+#' plan(sequential)
 #' }
 #'
 #' @export
