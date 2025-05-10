@@ -343,13 +343,29 @@ launchFuture.ClusterFutureBackend <- function(backend, future, ...) {
 #' @importFrom parallelly killNode
 #' @export
 interruptFuture.ClusterFutureBackend <- function(backend, future, ...) {
+  debug <- isTRUE(getOption("future.debug"))
+  if (debug) {
+    mdebugf_push("interruptFuture(<%s>, future = <%s>, ...) ...", class(backend)[1], class(future)[1])
+    on.exit(mdebugf_pop())
+  }
+  
   ## Has interrupts been disabled by user?
-  if (!backend[["interrupts"]]) return(future)
+  if (!backend[["interrupts"]]) {
+    if (debug) mdebug("Skipping, because interrupts are disabled for this backend")
+    return(future)
+  }
   
   workers <- backend[["workers"]]
   node_idx <- future[["node"]]
   node <- workers[[node_idx]]
-  void <- suppressWarnings(killNode(node))
+  local({
+    if (debug) {
+      mdebugf_push("parallelly::killNode(<%s>) ...", class(node)[1])
+      on.exit(mdebugf_pop())
+    }
+    void <- suppressWarnings(killNode(node))
+  })
+  
   future[["state"]] <- "interrupted"
   
   future

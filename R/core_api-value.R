@@ -651,7 +651,7 @@ value.list <- function(x, idxs = NULL, recursive = 0, reduce = NULL, stdout = TR
             if (cancel) {
               local({
                 if (debug) {
-                  mdebug_push("cancel(y) ...")
+                  mdebugf_push("cancel(y, interrupt = %s) ...", interrupt)
                   mdebug_pop()
                 }
                 cancel(y, interrupt = interrupt)
