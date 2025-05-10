@@ -581,7 +581,7 @@ value.list <- function(x, idxs = NULL, recursive = 0, reduce = NULL, stdout = TR
   while (length(remaining) > 0) {
     if (debug) mdebug("Number of remaining objects: ", length(remaining))
     for (ii in remaining) {
-      mdebugf_push("checking value #%d ...", ii)
+      mdebugf("checking value #%d:", ii)
       obj <- x[[ii]]
 
       if (is.atomic(obj)) {
@@ -625,28 +625,39 @@ value.list <- function(x, idxs = NULL, recursive = 0, reduce = NULL, stdout = TR
           if (obj[["state"]] == 'created') obj <- run(obj)
           
           if (!resolved(obj)) {
-            if (debug) mdebug_pop()
             next
           }
           
           if (debug) mdebugf("%s #%d", class(obj)[1], ii)
           relay_ok <- relay && signalConditionsASAP(obj, resignal = FALSE, exclude = "error", pos = ii)
           
-          if (debug) mdebugf_push("value(<%s>, ...) ...", class(obj)[1])
-          value <- value(obj, stdout = !inorder, signal = !inorder, drop = drop)
-          if (debug) mdebugf("value: <%s>", class(value)[1])
-          if (debug) mdebug_pop()
+          value <- local({
+            if (debug) {
+              mdebugf_push("value(<%s>, ...) ...", class(obj)[1])
+              mdebugf_pop()
+            }
+            value <- value(obj, stdout = !inorder, signal = !inorder, drop = drop)
+            if (debug) mdebugf("value: <%s>", class(value)[1])
+            value
+          })
           
           if (signal && inherits(value, "error")) {
             if (debug) mdebugf_push("signal %s ...", class(value)[1])
+            
             if (debug) mdebug_push("futures(x) ...")
             y <- futures(x)
             if (debug) mdebug_pop()
+            
             if (cancel) {
-              if (debug) mdebug_push("cancel(y) ...")
-              cancel(y, interrupt = interrupt)
-              if (debug) mdebug_pop()
+              local({
+                if (debug) {
+                  mdebug_push("cancel(y) ...")
+                  mdebug_pop()
+                }
+                cancel(y, interrupt = interrupt)
+              })
             }
+            
             if (debug) mdebug_push("resolve(y, ...) ...")
             ## Resolve remaining futures, while relaying output and
             ## conditions, but without signaling any errors
@@ -654,9 +665,12 @@ value.list <- function(x, idxs = NULL, recursive = 0, reduce = NULL, stdout = TR
               tryCatch(resolve(y[[kk]], result = TRUE, stdout = stdout, signal = signal, force = !drop), error = identity)
             }
             if (debug) mdebug_pop()
-            if (debug) mdebugf("stop(value) in 3, 2, 1 ...")
+            
+            if (debug) {
+              mdebugf("stop(value) in 3, 2, 1 ...")
+              mdebug_pop()
+            }
             stop(value)
-            if (debug) mdebug_pop()
           } ## if (signal && inherits(value, "error"))
           
           resolved[ii] <- TRUE
