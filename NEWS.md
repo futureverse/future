@@ -1,7 +1,17 @@
 # Version (development version)
 
- * ...
+## Bug Fixes
 
+ * The `multicore` backend did not relay `immediateCondition`:s in a
+   near-live fashion, but only when the results of the futures where
+   collected.
+
+ * Now the ClusterFutureBackend tries even harder to shut down
+   parallel cluster workers when shutting down the backend. If it
+   fails to communicate with one or more of the parallel workers, it
+   will now close any socket connections that remain open towards such
+   cluster nodes.
+   
 
 # Version 1.49.0 [2025-05-08]
 
