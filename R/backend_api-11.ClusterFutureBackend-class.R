@@ -1564,7 +1564,7 @@ attr(cluster, "tweakable") <- tweakable(attr(cluster, "factory"))
 ## function, because that function is set as attribute "factory" of the
 ## 'cluster' function, which will be passed along to parallel workers
 ## as part of plan("tail").
-#' @importFrom parallel stopCluster
+#' @importFrom parallel stopCluster isConnectionValid
 clusterRegistry <- local({
   ## We only allow one parallel 'cluster' per session
   cluster <- NULL
@@ -1628,9 +1628,12 @@ clusterRegistry <- local({
       mprint(cluster)
     }
 
-    ## Shut down workers one-by-one, because if one of them has
-    ## already been interupted/terminated, that will trigger an
-    ## error
+    ## (i) Try to shut down all of them at once
+    tryCatch({ parallel::stopCluster(cluster) }, error = identity)
+
+    ## (ii) As a backup, shut down workers one-by-one, because if one
+    ## of them has already been interupted/terminated, that will trigger
+    ## an error
     res <- rep(FALSE, times = length(cluster))
     for (kk in seq_along(cluster)) {
       cl <- cluster[kk]
@@ -1639,6 +1642,17 @@ clusterRegistry <- local({
       cl <- NULL
     }
     if (debug) mdebugf("Stopped cluster: %s", commaq(deparse(res)))
+
+    ## (iii) As a final effort, make sure any PSOCK connections have
+    ## been closed. This will prevent leaving behind stray connections
+    ## in case parallel::stopCluster() failed
+    for (kk in seq_along(cluster)) {
+      node <- cluster[[kk]]
+      con <- node$con
+      if (inherits(con, "connection") && isConnectionValid(con)) {
+        tryCatch(close(con), error = identity)
+      }
+    }
 
     NULL
   } ## stopCluster()

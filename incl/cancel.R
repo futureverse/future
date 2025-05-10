@@ -26,3 +26,4 @@ try(v <- value(fs[!r]))
 
 ## Shut down parallel workers
 plan(sequential)
+
