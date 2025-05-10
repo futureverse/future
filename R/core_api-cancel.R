@@ -79,8 +79,15 @@ cancel.environment <- function(x, ...) {
 cancel.Future <- function(x, interrupt = TRUE, ...) {
   future <- x
 
+  debug <- isTRUE(getOption("future.debug"))
+  if (debug) {
+    mdebugf_push("cancel(<%s>, interrupt = %s) ...", class(future)[1], interrupt)
+    on.exit(mdebug_pop())
+  }
+  
   ## Only running futures can be canceled, ignore everything else
   if (future[["state"]] != "running") {
+    if (debug) mdebug("Skipping, because a non-running future")
     return(future)
   }
 
@@ -89,7 +96,13 @@ cancel.Future <- function(x, interrupt = TRUE, ...) {
     if (is.null(backend)) {
       stop(FutureError("Interruption of futures require a backend implementing the FutureBackend API: ", sQuote(class(future)[1])))
     }
-    interruptFuture(backend, future = future, ...)
+    local({
+      if (debug) {
+        mdebugf_push("interruptFuture(<%s>, future = <%s>, ...) ...", class(backend)[1], class(future)[1])
+        on.exit(mdebug_pop())
+      }
+      interruptFuture(backend, future = future, ...)
+    })
   }
 
   future[["state"]] <- "canceled"
