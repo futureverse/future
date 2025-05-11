@@ -708,6 +708,11 @@ plan(cluster, workers = c("n2", "n5", "n6", "n6", "n9"))
 demo("mandelbrot", package = "future", ask = FALSE)
 ```
 
+<%
+## Make sure to shut down any parallel workers
+plan(sequential)
+%>
+
 [batchtools]: https://cran.r-project.org/package=batchtools
 [callr]: https://cran.r-project.org/package=callr
 [mirai]: https://cran.r-project.org/package=mirai
@@ -720,4 +725,3 @@ demo("mandelbrot", package = "future", ask = FALSE)
 [progressr]: https://progressr.futureverse.org
 [A Future for R: Common Issues with Solutions]: future-4-issues.html
 [A Future for R: Future Topologies]: future-3-topologies.html
-

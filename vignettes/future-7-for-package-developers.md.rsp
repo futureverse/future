@@ -193,6 +193,14 @@ vignettes, resulting in the default `workers = availableCores()` to
 use whatever number of cores that the operating system has given our R
 process.
 
+Don't forget to stop the parallel workers by calling
+
+```r
+plan(sequential)
+```
+
+at the end of you vignette.
+
 
 
 ## Testing a package that relies on futures
@@ -262,6 +270,7 @@ plan(cluster, workers = cl)
 make sure to stop such clusters at the end using
 
 ```r
+plan(sequential)
 parallel::stopCluster(cl)
 ```
 
