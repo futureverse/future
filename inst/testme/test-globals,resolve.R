@@ -1,6 +1,7 @@
 #' @tags globals resolve
 #' @tags listenv
 #' @tags multisession
+#' @tags skip_cran
 
 library(future)
 library(listenv)
