@@ -1,6 +1,6 @@
 #' @tags requestNode
 #' @tags cluster
-#' @tags skip_cran
+#' @tags skip_on_cran
 
 library(future)
 
