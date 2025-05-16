@@ -32,7 +32,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.49.0-9008</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.49.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -282,45 +282,26 @@ backend in the help documentation, but you still want it run, wrap the
 statement in an Rd <code>\dontshow{}</code> statement.</p>
 </div>
 <div class="section level2">
-<h2 id="writing-vignettes">Writing vignettes<a class="anchor" aria-label="anchor" href="#writing-vignettes"></a>
-</h2>
-<p>Importantly, if you use the <code>multisession</code> backend in a
-vignette, you must manually specify the number of workers, i.e.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/plan.html">plan</a></span><span class="op">(</span><span class="va">multisession</span>, workers <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
-<p>The reason for having to manually limit the number workers in
-vignettes, while it is automatically limited for us in package examples
-and package tests, is that <code>R CMD check --as-cran</code> does
-<em>not</em> set environment variable <code>_R_CHECK_LIMIT_CORES_</code>
-when re-building vignettes, resulting in the default
-<code>workers = availableCores()</code> to use whatever number of cores
-that the operating system has given our R process.</p>
-<p>Don’t forget to stop the parallel workers by calling</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/plan.html">plan</a></span><span class="op">(</span><span class="va">sequential</span><span class="op">)</span></span></code></pre></div>
-<p>at the end of you vignette.</p>
-</div>
-<div class="section level2">
 <h2 id="testing-a-package-that-relies-on-futures">Testing a package that relies on futures<a class="anchor" aria-label="anchor" href="#testing-a-package-that-relies-on-futures"></a>
 </h2>
 <p>If you want to make sure your code works when running sequentially as
 well as when running in parallel, it is often good enough to have
 package tests that run the code with:</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plan.html">plan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span></span></code></pre></div>
 <p>If the code works with this setup, you can be sure that all global
 variables are properly identified and exported to the workers and that
 the required packages are loaded on the workers.</p>
 <p>Always make sure to shut down your parallel ‘multisession’ workers at
 the end of each package test by calling:</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plan.html">plan</a></span><span class="op">(</span><span class="va">sequential</span><span class="op">)</span></span></code></pre></div>
 <p>If not all of your tests are written this way, you can set
 environment variable <code>R_FUTURE_PLAN=multisession</code> before you
 call <code>R CMD check</code>. This will make the default future backend
 to become ‘multisession’ instead of ‘sequential’. For example,</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a><span class="ex">$</span> export R_FUTURE_PLAN=multisession</span>
-<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a><span class="ex">$</span> R CMD check <span class="at">--as-cran</span> mypkg_1.0.tar.gz</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="ex">$</span> export R_FUTURE_PLAN=multisession</span>
+<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a><span class="ex">$</span> R CMD check <span class="at">--as-cran</span> mypkg_1.0.tar.gz</span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="making-sure-to-stop-parallel-workers">Making sure to stop parallel workers<a class="anchor" aria-label="anchor" href="#making-sure-to-stop-parallel-workers"></a>
@@ -348,17 +329,16 @@ Found the following files/directories:
 worker processes, which almost always are parallel
 <code>cluster</code>:s that we forgot to stop at the end. To stop
 ‘multisession’ workers, call:</p>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plan.html">plan</a></span><span class="op">(</span><span class="va">sequential</span><span class="op">)</span></span></code></pre></div>
 <p>at the end of your examples(*), vignettes, and package tests.</p>
 <p>If you create the <code>cluster</code> manually using</p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">cl</span> <span class="op">&lt;-</span> <span class="fu">parallelly</span><span class="fu">::</span><span class="fu"><a href="https://parallelly.futureverse.org/reference/makeClusterPSOCK.html" class="external-link">makeClusterPSOCK</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/plan.html">plan</a></span><span class="op">(</span><span class="va">cluster</span>, workers <span class="op">=</span> <span class="va">cl</span><span class="op">)</span></span></code></pre></div>
 <p>make sure to stop such clusters at the end using</p>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/plan.html">plan</a></span><span class="op">(</span><span class="va">sequential</span><span class="op">)</span></span>
-<span><span class="fu">parallel</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/parallel/makeCluster.html" class="external-link">stopCluster</a></span><span class="op">(</span><span class="va">cl</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">parallel</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/parallel/makeCluster.html" class="external-link">stopCluster</a></span><span class="op">(</span><span class="va">cl</span><span class="op">)</span></span></code></pre></div>
 <p>(*) Currently, examples are excluded from the detritus checks. This
 was the validated with R-devel revision 82991 (2022-10-02).</p>
 </div>

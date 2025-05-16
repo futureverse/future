@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.49.0-9008</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.49.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -77,14 +77,6 @@
       <small>Source: <a href="https://github.com/futureverse/future/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="development version" id="version-development-version">Version (development version)<a class="anchor" aria-label="anchor" href="#version-development-version"></a></h2>
-<div class="section level3">
-<h3 id="bug-fixes-development-version">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h3>
-<ul><li><p>The <code>multicore</code> backend did not relay <code>immediateCondition</code>:s in a near-live fashion, but only when the results of the futures where collected.</p></li>
-<li><p>Now the ClusterFutureBackend tries even harder to shut down parallel cluster workers when shutting down the backend. If it fails to communicate with one or more of the parallel workers, it will now close any socket connections that remain open towards such cluster nodes.</p></li>
-</ul></div>
-</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.49.0" id="version-1490">Version 1.49.0<a class="anchor" aria-label="anchor" href="#version-1490"></a></h2><p class="text-muted">CRAN release: 2025-05-09</p>
 <p>This is the second rollout out of three-four major updates, which is now possible due to a multi-year effort of internal re-designs, work with package maintainers, release, and repeat. This release fixes two regressions introduced in future 1.40.0 (2025-04-10), despite passing <a href="https://www.futureverse.org/quality.html" class="external-link">all unit, regression, and system tests</a> of the Future API that we have built up over the years. On the upside, fixing these issues led to a greatly improved static-code analyzer for automatically finding global variables in future expressions. Also, with this release, we can now move on top releasing modern versions of future backends <strong>future.callr</strong> and <strong>future.mirai</strong> that support interrupting futures and near-live progress updates using the <strong>progressr</strong> package. In addition, map-reduce packages such as <strong>future.apply</strong>, <strong>furrr</strong>, and <strong>doFuture</strong> can be updated to take advantage of early exiting on errors via cancellation of futures.</p>
