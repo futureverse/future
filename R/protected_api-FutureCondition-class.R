@@ -320,7 +320,7 @@ DeviceMisuseFutureError <- function(...) {
 #' @export
 FutureLaunchError <- function(..., future = NULL) {
   cond <- FutureError(..., future = future)
-  class <- c("FutureLaunch", class(cond))
+  class <- c("FutureLaunchError", class(cond))
   class(cond) <- class[!duplicated(class, fromLast = TRUE)]
   cond
 }
