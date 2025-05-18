@@ -1119,7 +1119,7 @@ requestNode <- function(await, backend, timeout, delta, alpha) {
         if (debug) mdebugf("Killed %s: %s", class(node)[1], res)
       }
       if (kk == 1L) {
-        stop(FutureError(sprintf("Failed to find a functional cluster workers, after attempting to relaunch the parallel worker %d times", maxTries)))
+        stop(FutureError(sprintf("Failed to find a functional cluster worker, after attempting to relaunch the parallel worker %d times", maxTries)))
       }
     } else {
       if (debug) mdebug("Worker is functional")
