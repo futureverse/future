@@ -83,7 +83,7 @@
 <h3 id="bug-fixes-development-version">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h3>
 <ul><li><p>The <code>multicore</code> backend did not relay <code>immediateCondition</code>:s in a near-live fashion, but only when the results of the futures where collected.</p></li>
 <li><p>Now the ClusterFutureBackend tries even harder to shut down parallel cluster workers when shutting down the backend. If it fails to communicate with one or more of the parallel workers, it will now close any socket connections that remain open towards such cluster nodes.</p></li>
-<li><p>The built-in checks for added, removed, or modified graphical devices, could produce false positives, complaining about “A future expression must close any opened devices and must not close devices it did not open. Details: 1 devices differ: index=2, before=‘NA’, after=’‘“. The problem was that it did not prune the empty ’after’ before the check.</p></li>
+<li><p>The built-in checks for added, removed, or modified graphical devices introduced in <strong>future</strong> 1.40.0 (2025-04-10), could produce false positives, complaining about “A future expression must close any opened devices and must not close devices it did not open. Details: 1 devices differ: index=2, before=‘NA’, after=’‘“. The problem was that it did not prune the empty ’after’ before the check.</p></li>
 </ul></div>
 </div>
     <div class="section level2">
