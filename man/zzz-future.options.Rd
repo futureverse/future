@@ -116,12 +116,6 @@ If \code{"ignore"}, no scan is performed.
 
 \item{\option{future.resolve.recursive}:}{(integer) An integer specifying the maximum recursive depth to which futures should be resolved. If negative, nothing is resolved.  If \code{0}, only the future itself is resolved.  If \code{1}, the future and any of its elements that are futures are resolved, and so on. If \code{+Inf}, infinite search depth is used. (Default: \code{0})}
 
-\item{\option{future.rng.onMisuse}: (\emph{beta feature - may change})}{(character string) If random numbers are used in futures, then parallel (L'Ecuyer-CMRG) RNG should be used in order to get statistical sound RNGs. The defaults in the future framework assume that \emph{no} random number generation (RNG) is taken place in the future expression because L'Ecuyer-CMRG RNGs come with an unnecessary overhead if not needed.  To protect against mistakes, the future framework attempts to detect when random numbers are used despite L'Ecuyer-CMRG RNGs are not in place.  If this is detected, and \code{future.rng.onMisuse = "error"}, then an informative error message is produced.  If \code{"warning"}, then a warning message is produced.  If \code{"ignore"}, no check is performed. (Default: \code{"warning"})}
-
-\item{\option{future.connections.onMisuse}: (\emph{beta feature - may change})}{(character string) A future must close any connections it opens and must not close connections it did not open. If such misuse is detected and this option is set to \code{"error"}, \code{value()} will produce an error with details. If it is set to \code{"warning"}, a warning is produced. If \code{"ignore"}, no check is performed. (Default: \code{"warning"})}
-
-\item{\option{future.globalenv.onMisuse}: (\emph{beta feature - may change})}{(character string) Assigning variables to the global environment for the purpose of using the variable at a later time makes no sense with futures, because the next future may be evaluated in different R process.  To protect against mistakes, the future framework attempts to detect when variables are added to the global environment.  If this is detected, and \code{future.globalenv.onMisuse = "error"}, then an informative error message is produced.  If \code{"warning"}, then a warning message is produced.  If \code{"ignore"}, no check is performed. (Default: \code{"ignore"})}
-
 \item{\option{future.onFutureCondition.keepFuture}:}{(logical) If \code{TRUE}, a \code{FutureCondition} keeps a copy of the \code{Future} object that triggered the condition. If \code{FALSE}, it is dropped. (Default: \code{TRUE})}
 
 \item{\option{future.wait.timeout}:}{(numeric) Maximum waiting time (in seconds) for a future to resolve or for a free worker to become available before a timeout error is generated. (Default: \code{30 * 24 * 60 * 60} (= 30 days))}
@@ -132,6 +126,68 @@ an available worker when all workers are currently busy. It also controls
 the polling frequency of \code{resolve()}. (Default: \code{0.01} = 1 ms)}
 
 \item{\option{future.wait.alpha}:}{(numeric) Positive scale factor used to increase the interval after each poll. (Default: \code{1.01})}
+}
+}
+
+\section{Options for built-in sanity checks}{
+
+
+Ideally, the evaluation of a future should have no side effects. To
+protect against unexpected side effects, the future framework comes
+with a set of built-in tools for checking against this.
+Below R options control these built-in checks and what should happen
+if they fail. You may modify them for troubleshooting purposes, but
+please refrain from disabling these checks when there is an underlying
+problem that should be fixed.
+
+\emph{Beta features: Please consider these checks to be "under construction".}
+
+\describe{
+\item{\option{future.connections.onMisuse}:}{(character string)
+A future must close any connections it opens and must not close
+connections it did not open itself.
+If such misuse is detected and this option is set to \code{"error"},
+then an informative error is produced. If it is set to \code{"warning"},
+a warning is produced. If\code{"ignore"}, no check is performed.
+(Default: \code{"warning"})
+}
+
+\item{\option{future.devices.onMisuse}:}{(character string)
+A future must close any graphics devices it opens and must not close
+devices it did not open itself.
+If such misuse is detected and this option is set to \code{"error"},
+then an informative error is produced. If it is set to \code{"warning"},
+a warning is produced. If\code{"ignore"}, no check is performed.
+(Default: \code{"warning"})
+}
+
+\item{\option{future.globalenv.onMisuse}:}{(character string)
+Assigning variables to the global environment for the purpose of using
+the variable at a later time makes no sense with futures, because the
+next the future may be evaluated in different R process.
+To protect against mistakes, the future framework attempts to detect
+when variables are added to the global environment.
+If this is detected, and this option is set to \code{"error"}, then an
+informative error is produced. If \code{"warning"}, then a warning is
+iproduced. If \code{"ignore"}, no check is performed.
+(Default: \code{"ignore"})
+}
+
+\item{\option{future.rng.onMisuse}:}{(character string)
+If random numbers are used in futures, then parallel RNG should be
+\emph{declared} in order to get statistical sound RNGs. You can declare
+this by specifying future argument \code{seed = TRUE}. The defaults in the
+future framework assume that \emph{no} random number generation (RNG) is
+taken place in the future expression because L'Ecuyer-CMRG RNGs come
+with an unnecessary overhead if not needed.
+To protect against  mistakes of not declaring use of the RNG, the
+future framework detects when random numbers were used despite not
+declaring such use.
+If this is detected, and this options is set \code{"error"}, then an
+informative error is produced. If \code{"warning"}, then a warning is
+produced.  If \code{"ignore"}, no check is performed.
+(Default: \code{"warning"})
+}
 }
 }
 

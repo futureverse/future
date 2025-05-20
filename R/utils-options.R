@@ -59,12 +59,6 @@
 #'
 ### HIDDEN/SECRET FOR NOW:  \item{\option{future.resolved.timeout}:}{(numeric) The maximum time (in seconds) `resolved()` spends checking whether or not a future is resolved. If it takes longer, it will give up and return FALSE. (Default: `0.01` = 0.01 seconds)}
 #'
-#'  \item{\option{future.rng.onMisuse}: (_beta feature - may change_)}{(character string) If random numbers are used in futures, then parallel (L'Ecuyer-CMRG) RNG should be used in order to get statistical sound RNGs. The defaults in the future framework assume that _no_ random number generation (RNG) is taken place in the future expression because L'Ecuyer-CMRG RNGs come with an unnecessary overhead if not needed.  To protect against mistakes, the future framework attempts to detect when random numbers are used despite L'Ecuyer-CMRG RNGs are not in place.  If this is detected, and `future.rng.onMisuse = "error"`, then an informative error message is produced.  If `"warning"`, then a warning message is produced.  If `"ignore"`, no check is performed. (Default: `"warning"`)}
-#'
-#'  \item{\option{future.connections.onMisuse}: (_beta feature - may change_)}{(character string) A future must close any connections it opens and must not close connections it did not open. If such misuse is detected and this option is set to `"error"`, `value()` will produce an error with details. If it is set to `"warning"`, a warning is produced. If `"ignore"`, no check is performed. (Default: `"warning"`)}
-#'
-#'  \item{\option{future.globalenv.onMisuse}: (_beta feature - may change_)}{(character string) Assigning variables to the global environment for the purpose of using the variable at a later time makes no sense with futures, because the next future may be evaluated in different R process.  To protect against mistakes, the future framework attempts to detect when variables are added to the global environment.  If this is detected, and `future.globalenv.onMisuse = "error"`, then an informative error message is produced.  If `"warning"`, then a warning message is produced.  If `"ignore"`, no check is performed. (Default: `"ignore"`)}
-#'
 #'  \item{\option{future.onFutureCondition.keepFuture}:}{(logical) If `TRUE`, a `FutureCondition` keeps a copy of the `Future` object that triggered the condition. If `FALSE`, it is dropped. (Default: `TRUE`)}
 #'
 #'  \item{\option{future.wait.timeout}:}{(numeric) Maximum waiting time (in seconds) for a future to resolve or for a free worker to become available before a timeout error is generated. (Default: `30 * 24 * 60 * 60` (= 30 days))}
@@ -76,6 +70,68 @@
 #'
 #'  \item{\option{future.wait.alpha}:}{(numeric) Positive scale factor used to increase the interval after each poll. (Default: `1.01`)}
 #' }
+#'
+#'
+#' @section Options for built-in sanity checks:
+#'
+#' Ideally, the evaluation of a future should have no side effects. To
+#' protect against unexpected side effects, the future framework comes
+#' with a set of built-in tools for checking against this.
+#' Below R options control these built-in checks and what should happen
+#' if they fail. You may modify them for troubleshooting purposes, but
+#' please refrain from disabling these checks when there is an underlying
+#' problem that should be fixed.
+#'
+#' _Beta features: Please consider these checks to be "under construction"._
+#'
+#' \describe{
+#'  \item{\option{future.connections.onMisuse}:}{(character string)
+#'    A future must close any connections it opens and must not close
+#'    connections it did not open itself.
+#'    If such misuse is detected and this option is set to `"error"`,
+#'    then an informative error is produced. If it is set to `"warning"`,
+#'    a warning is produced. If`"ignore"`, no check is performed.
+#'    (Default: `"warning"`)
+#'  }
+#'
+#'  \item{\option{future.devices.onMisuse}:}{(character string)
+#'    A future must close any graphics devices it opens and must not close
+#'    devices it did not open itself.
+#'    If such misuse is detected and this option is set to `"error"`,
+#'    then an informative error is produced. If it is set to `"warning"`,
+#'    a warning is produced. If`"ignore"`, no check is performed.
+#'    (Default: `"warning"`)
+#'  }
+#'
+#'  \item{\option{future.globalenv.onMisuse}:}{(character string)
+#'    Assigning variables to the global environment for the purpose of using
+#'    the variable at a later time makes no sense with futures, because the
+#'    next the future may be evaluated in different R process.
+#'    To protect against mistakes, the future framework attempts to detect
+#'    when variables are added to the global environment.
+#'    If this is detected, and this option is set to `"error"`, then an
+#'    informative error is produced. If `"warning"`, then a warning is
+#'    iproduced. If `"ignore"`, no check is performed.
+#'    (Default: `"ignore"`)
+#'  }
+#'
+#'  \item{\option{future.rng.onMisuse}:}{(character string)
+#'    If random numbers are used in futures, then parallel RNG should be
+#'    _declared_ in order to get statistical sound RNGs. You can declare
+#'    this by specifying future argument `seed = TRUE`. The defaults in the
+#'    future framework assume that _no_ random number generation (RNG) is
+#'    taken place in the future expression because L'Ecuyer-CMRG RNGs come
+#'    with an unnecessary overhead if not needed.
+#'    To protect against  mistakes of not declaring use of the RNG, the
+#'    future framework detects when random numbers were used despite not
+#'    declaring such use.
+#'    If this is detected, and this options is set `"error"`, then an
+#'    informative error is produced. If `"warning"`, then a warning is
+#'    produced.  If `"ignore"`, no check is performed.
+#'    (Default: `"warning"`)
+#'  }
+#' }
+#'
 #'
 #' @section Options for debugging futures:
 #' \describe{
@@ -393,5 +449,3 @@ update_package_options <- function(debug = FALSE) {
 
   update_package_option("future.debug.indent", mode = "character", default = " ", debug = debug)
 }
-
-
