@@ -13,9 +13,10 @@
    cluster nodes.
 
  * The built-in checks for added, removed, or modified graphical
-   devices, could produce false positives, complaining about "A future
-   expression must close any opened devices and must not close devices
-   it did not open. Details: 1 devices differ: index=2, before='NA',
+   devices introduced in **future** 1.40.0 (2025-04-10), could produce
+   false positives, complaining about "A future expression must close
+   any opened devices and must not close devices it did not
+   open. Details: 1 devices differ: index=2, before='NA',
    after=''". The problem was that it did not prune the empty 'after'
    before the check.
    
