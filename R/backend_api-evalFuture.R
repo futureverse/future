@@ -343,6 +343,12 @@ diff_globalenv <- function(before, after = names(.GlobalEnv)) {
 
 
 diff_devices <- function(before, after = base::.Devices) {
+  ## Prune
+  before <- unlist(before)
+  before <- before[before != ""]
+  after <- unlist(after)
+  after <- after[after != ""]
+  ## Compare
   n_before <- length(before)
   n_after <- length(after)
   n <- max(n_before, n_after)
@@ -353,7 +359,7 @@ diff_devices <- function(before, after = base::.Devices) {
     data[[kk]] <- data.frame(index = kk, before = before_kk, after = after_kk, identical = identical(after_kk, before_kk))
   }
   data <- do.call(rbind, data)
-  data <- data[!data[["identical"]], ]
+    data <- data[!data[["identical"]], ]
   if (nrow(data) == 0L) NULL else data
 }
 

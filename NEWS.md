@@ -11,6 +11,13 @@
    fails to communicate with one or more of the parallel workers, it
    will now close any socket connections that remain open towards such
    cluster nodes.
+
+ * The built-in checks for added, removed, or modified graphical
+   devices, could produce false positives, complaining about "A future
+   expression must close any opened devices and must not close devices
+   it did not open. Details: 1 devices differ: index=2, before='NA',
+   after=''". The problem was that it did not prune the empty 'after'
+   before the check.
    
 
 # Version 1.49.0 [2025-05-08]
