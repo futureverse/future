@@ -88,7 +88,7 @@ DeviceMisuseFutureError(...)
 
 DefaultDeviceMisuseFutureCondition(
   message = NULL,
-  times = 0L,
+  incidents = NULL,
   call = NULL,
   uuid = future[["uuid"]],
   future = NULL

@@ -321,10 +321,19 @@ DeviceMisuseFutureError <- function(...) {
 
 #' @rdname FutureCondition
 #' @export
-DefaultDeviceMisuseFutureCondition <- function(message = NULL, times = 0L, call = NULL, uuid = future[["uuid"]], future = NULL) {
+DefaultDeviceMisuseFutureCondition <- function(message = NULL, incidents = NULL, call = NULL, uuid = future[["uuid"]], future = NULL) {
   if (is.null(message)) {
     label <- sQuoteLabel(future[["label"]])
-    message <- sprintf("%s (%s) opened the default graphics device %d times. This happens for instance if plot() is called without explicitly opening a graphics device before. Using default graphics devices in parallel processing will typically leave behind a 'Rplots.pdf' file on the parallel worker. If the intention is to plot to file, please open a graphics device explicitly (e.g. pdf() or png()), the plot, and make sure to close it at the end (i.e. dev.off())", class(future)[1], label, times)
+    message <- sprintf("%s (%s) opened the default graphics device", class(future)[1], label)
+    if (length(incidents) > 0L) {
+      calls <- lapply(incidents, FUN = lapply, deparse)
+      calls <- lapply(calls, FUN = paste, collapse = " -> ")
+      calls <- unlist(calls, use.names = FALSE)
+      calls <- sprintf("%d: %s", seq_along(calls), calls)
+      calls <- paste(calls, collapse = "; ")
+      message <- sprintf("%s (%s) opened the default graphics device (%s)", class(future)[1], label, calls)
+    }
+    message <- sprintf("%s. This happens for instance if plot() is called without explicitly opening a graphics device before. Using default graphics devices in parallel processing will typically leave behind a 'Rplots.pdf' file on the parallel worker. If the intention is to plot to file, please open a graphics device explicitly (e.g. pdf() or png()) [recommended], or set your preferred `options(default = ...)` [not recommended], then plot, and make sure to close it at the end (i.e. dev.off())", message)
     message <- sprintf("%s. See also help(\"future.options\", package = \"future\")", message)
   }
   cond <- FutureCondition(message = message, call = call, uuid = uuid, future = future)
