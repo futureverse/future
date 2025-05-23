@@ -23,7 +23,7 @@ further notice."><meta property="og:image" content="https://future.futureverse.o
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.49.0-9014</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.49.0-9015</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -198,6 +198,18 @@ a warning is produced. If<code>"ignore"</code>, no check is performed.
 (Default: <code>"warning"</code>)</p></dd>
 
 
+<dt><span class="option">future.defaultDevice.onMisuse</span>:</dt>
+<dd><p>(character string)
+A future must open graphics devices explicitly, if it creates new
+plots. It should not rely on the default graphics device that
+is given by R option <code>"default"</code>, because that rarely does what
+is intended.
+If such misuse is detected and this option is set to <code>"error"</code>,
+then an informative error is produced. If it is set to <code>"warning"</code>,
+a warning is produced. If<code>"ignore"</code>, no check is performed.
+(Default: <code>"warning"</code>)</p></dd>
+
+
 <dt><span class="option">future.devices.onMisuse</span>:</dt>
 <dd><p>(character string)
 A future must close any graphics devices it opens and must not close
@@ -217,7 +229,7 @@ To protect against mistakes, the future framework attempts to detect
 when variables are added to the global environment.
 If this is detected, and this option is set to <code>"error"</code>, then an
 informative error is produced. If <code>"warning"</code>, then a warning is
-iproduced. If <code>"ignore"</code>, no check is performed.
+produced. If <code>"ignore"</code>, no check is performed.
 (Default: <code>"ignore"</code>)</p></dd>
 
 
