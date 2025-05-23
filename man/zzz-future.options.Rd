@@ -152,6 +152,17 @@ a warning is produced. If\code{"ignore"}, no check is performed.
 (Default: \code{"warning"})
 }
 
+\item{\option{future.defaultDevice.onMisuse}:}{(character string)
+A future must open graphics devices explicitly, if it creates new
+plots. It should not rely on the default graphics device that
+is given by R option \code{"default"}, because that rarely does what
+is intended.
+If such misuse is detected and this option is set to \code{"error"},
+then an informative error is produced. If it is set to \code{"warning"},
+a warning is produced. If\code{"ignore"}, no check is performed.
+(Default: \code{"warning"})
+}
+
 \item{\option{future.devices.onMisuse}:}{(character string)
 A future must close any graphics devices it opens and must not close
 devices it did not open itself.
@@ -169,7 +180,7 @@ To protect against mistakes, the future framework attempts to detect
 when variables are added to the global environment.
 If this is detected, and this option is set to \code{"error"}, then an
 informative error is produced. If \code{"warning"}, then a warning is
-iproduced. If \code{"ignore"}, no check is performed.
+produced. If \code{"ignore"}, no check is performed.
 (Default: \code{"ignore"})
 }
 

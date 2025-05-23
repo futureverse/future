@@ -914,6 +914,7 @@ evalFutureInternal <- function(data) {
 
 
   checkDevices <- getOption("future.devices.onMisuse")
+  ...future.option.defaultDevice <- 0L
   if (is.null(checkDevices)) {
     checkDevices <- TRUE
   } else {
@@ -922,6 +923,25 @@ evalFutureInternal <- function(data) {
   if (checkDevices) {
     ## IMPORTANT: Need to use as.list() - if not, it's a reference variable/alias (sic!)
     ...future.devices <- as.list(base::.Devices)
+    ## Detect attempts to open the default graphics device
+    device <- getOption("device")
+    if (!is.null(device)) {
+      if (is.character(device)) {
+        if (exists(device, mode = "function")) {
+          device <- get(device, mode = "function")
+        } else {
+          device <- NULL
+        }
+      }
+      if (!is.null(device)) {
+        ...future.option.device <- device
+        options(device = function(...) {
+          ...future.option.defaultDevice <<- ...future.option.defaultDevice + 1L
+          ## Call the default graphics device
+          ...future.option.device(...)
+        })
+      }
+    }
   }
 
 
@@ -949,6 +969,7 @@ evalFutureInternal <- function(data) {
           misuseGlobalEnv = if (checkGlobalenv) list(added = diff_globalenv(...future.globalenv.names)) else NULL,
           misuseConnections = if (checkConnections) diff_connections(get_connections(details = isTRUE(attr(checkConnections, "details", exact = TRUE))), ...future.connections) else NULL,
           misuseDevices = if (checkDevices) diff_devices(...future.devices, base::.Devices) else NULL,
+          misuseDefaultDevice = ...future.option.defaultDevice,
           started = ...future.startTime
         )
       }, condition = function(cond) {
@@ -1049,6 +1070,7 @@ evalFutureInternal <- function(data) {
       misuseGlobalEnv = if (checkGlobalenv) list(added = diff_globalenv(...future.globalenv.names)) else NULL,
       misuseConnections = diff_connections(get_connections(details = isTRUE(attr(checkConnections, "details", exact = TRUE))), ...future.connections),
       misuseDevices = if (checkDevices) diff_devices(base::.Devices, ...future.devices) else NULL,
+      misuseDefaultDevice = ...future.option.defaultDevice,
       started = ...future.startTime
     )
   }, error = function(ex) {
@@ -1059,6 +1081,7 @@ evalFutureInternal <- function(data) {
       misuseGlobalEnv = if (checkGlobalenv) list(added = diff_globalenv(...future.globalenv.names)) else NULL,
       misuseConnections = diff_connections(get_connections(details = isTRUE(attr(checkConnections, "details", exact = TRUE))), ...future.connections),
       misuseDevices = if (checkDevices) diff_devices(base::.Devices, ...future.devices) else NULL,
+      misuseDefaultDevice = ...future.option.defaultDevice,
       started = ...future.startTime
     )
   }) ## output tryCatch()
