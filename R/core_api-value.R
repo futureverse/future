@@ -239,6 +239,44 @@ value.Future <- function(future, stdout = TRUE, signal = TRUE, drop = FALSE, ...
     }
   }
 
+  ## ------------------------------------------------------------------
+  ## Report on misuse of the default devices
+  ## ------------------------------------------------------------------
+  if (!is.null(result[["misuseDefaultDevice"]]) &&
+      result[["misuseDefaultDevice"]] > 0L) {
+    onMisuse <- getOption("future.defaultDevice.onMisuse")
+    if (is.null(onMisuse)) onMisuse <- "warning"
+    if (onMisuse != "ignore") {
+      if (onMisuse == "error") {
+        cond <- DefaultDeviceMisuseFutureError(times = result[["misuseDefaultDevice"]], future = future)
+      } else if (onMisuse == "warning") {
+        cond <- DefaultDeviceMisuseFutureWarning(times = result[["misuseDefaultDevice"]], future = future)
+      } else {
+        cond <- NULL
+        warnf("Unknown value on option 'future.defaultDevice.onMisuse': %s",
+              sQuote(onMisuse))
+      }
+
+      if (!is.null(cond)) {
+        ## FutureCondition to stack of captured conditions
+        new <- list(condition = cond, signaled = FALSE)
+        conditions <- result[["conditions"]]
+        n <- length(conditions)
+      
+        ## An existing run-time error takes precedence
+        if (n > 0L && inherits(conditions[[n]][["condition"]], "error")) {
+          conditions[[n + 1L]] <- conditions[[n]]
+          conditions[[n]] <- new
+        } else {
+          conditions[[n + 1L]] <- new
+        }
+        
+        result[["conditions"]] <- conditions
+        future[["result"]] <- result
+      }
+    }
+  }
+
 
   ## ------------------------------------------------------------------
   ## Report on misuse of the RNG

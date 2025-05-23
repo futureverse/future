@@ -1,5 +1,18 @@
 # Version (development version)
 
+## New Features
+
+ * Now futures produce a warning when they detect that the _default_
+   graphics device, as defined by R option `"device"`, is opened by,
+   for instance, a `plot()` call without explicitly opening a graphics
+   device. The reason for this check is that we rarely want to plot to
+   the _default_ graphics device in parallel processing, which
+   typically ends up plotting to a `Rplots.pdf` file that is local to
+   the parallel worker. If that is truly wanted, please open a
+   graphics devices explicitly (e.g. `pdf()` or `png()`) before
+   plotting. Alternatively, explicitly set R option `device` inside
+   the future expression.
+
 ## Bug Fixes
 
  * The `multicore` backend did not relay `immediateCondition`:s in a

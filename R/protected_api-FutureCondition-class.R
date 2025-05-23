@@ -194,6 +194,7 @@ GlobalEnvMisuseFutureCondition <- function(message = NULL, call = NULL, differen
   if (is.null(message)) {
     label <- sQuoteLabel(future[["label"]])
     message <- sprintf("%s (%s) added variables to the global environment. A future expression should never assign variables to the global environment - neither by assign() nor by <<-: [n=%d] %s", class(future)[1], label, length(differences[["added"]]), commaq(differences[["added"]]))
+    message <- sprintf("%s. See also help(\"future.options\", package = \"future\")", message)
   }
   cond <- FutureCondition(message = message, call = call, uuid = uuid, future = future)
   cond[["differences"]] <- differences
@@ -244,6 +245,7 @@ ConnectionMisuseFutureCondition <- function(message = NULL, call = NULL, differe
       details <- paste(details, collapse = ", ")
       message <- sprintf("%s. Details: %s", message, details)
     }
+    message <- sprintf("%s. See also help(\"future.options\", package = \"future\")", message)
   }
   cond <- FutureCondition(message = message, call = call, uuid = uuid, future = future)
   cond[["differences"]] <- differences
@@ -288,6 +290,7 @@ DeviceMisuseFutureCondition <- function(message = NULL, call = NULL, differences
       details <- sprintf("%d devices differ: %s", length(details), paste(details, collapse = "; "))
       message <- sprintf("%s. Details: %s", message, details)
     }
+    message <- sprintf("%s. See also help(\"future.options\", package = \"future\")", message)
   }
   cond <- FutureCondition(message = message, call = call, uuid = uuid, future = future)
   cond[["differences"]] <- differences
@@ -310,6 +313,40 @@ DeviceMisuseFutureWarning <- function(...) {
 DeviceMisuseFutureError <- function(...) {
   cond <- DeviceMisuseFutureCondition(...)
   class <- c("DeviceMisuseFutureError", "MisuseFutureError", "FutureError", "error", class(cond))
+  class(cond) <- class[!duplicated(class, fromLast = TRUE)]
+  cond
+}
+
+
+
+#' @rdname FutureCondition
+#' @export
+DefaultDeviceMisuseFutureCondition <- function(message = NULL, times = 0L, call = NULL, uuid = future[["uuid"]], future = NULL) {
+  if (is.null(message)) {
+    label <- sQuoteLabel(future[["label"]])
+    message <- sprintf("%s (%s) opened the default graphics device %d times. This happens for instance if plot() is called without explicitly opening a graphics device before. Using default graphics devices in parallel processing will typically leave behind a 'Rplots.pdf' file on the parallel worker. If the intention is to plot to file, please open a graphics device explicitly (e.g. pdf() or png()), the plot, and make sure to close it at the end (i.e. dev.off())", class(future)[1], label, times)
+    message <- sprintf("%s. See also help(\"future.options\", package = \"future\")", message)
+  }
+  cond <- FutureCondition(message = message, call = call, uuid = uuid, future = future)
+  class <- c("DefaultDeviceMisuseFutureCondition", "MisuseFutureCondition", class(cond))
+  class(cond) <- class[!duplicated(class, fromLast = TRUE)]
+  cond
+}
+
+#' @rdname FutureCondition
+#' @export
+DefaultDeviceMisuseFutureWarning <- function(...) {
+  cond <- DefaultDeviceMisuseFutureCondition(...)
+  class <- c("DefaultDeviceMisuseFutureWarning", "MisuseFutureWarning", "FutureWarning", "warning", class(cond))
+  class(cond) <- class[!duplicated(class, fromLast = TRUE)]
+  cond
+}
+
+#' @rdname FutureCondition
+#' @export
+DefaultDeviceMisuseFutureError <- function(...) {
+  cond <- DefaultDeviceMisuseFutureCondition(...)
+  class <- c("DefaultDeviceMisuseFutureError", "MisuseFutureError", "FutureError", "error", class(cond))
   class(cond) <- class[!duplicated(class, fromLast = TRUE)]
   cond
 }
