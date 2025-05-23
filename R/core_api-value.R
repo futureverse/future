@@ -242,15 +242,14 @@ value.Future <- function(future, stdout = TRUE, signal = TRUE, drop = FALSE, ...
   ## ------------------------------------------------------------------
   ## Report on misuse of the default devices
   ## ------------------------------------------------------------------
-  if (!is.null(result[["misuseDefaultDevice"]]) &&
-      result[["misuseDefaultDevice"]] > 0L) {
+  if (length(result[["misuseDefaultDevice"]]) > 0L) {
     onMisuse <- getOption("future.defaultDevice.onMisuse")
     if (is.null(onMisuse)) onMisuse <- "warning"
     if (onMisuse != "ignore") {
       if (onMisuse == "error") {
-        cond <- DefaultDeviceMisuseFutureError(times = result[["misuseDefaultDevice"]], future = future)
+        cond <- DefaultDeviceMisuseFutureError(incidents = result[["misuseDefaultDevice"]], future = future)
       } else if (onMisuse == "warning") {
-        cond <- DefaultDeviceMisuseFutureWarning(times = result[["misuseDefaultDevice"]], future = future)
+        cond <- DefaultDeviceMisuseFutureWarning(incidents = result[["misuseDefaultDevice"]], future = future)
       } else {
         cond <- NULL
         warnf("Unknown value on option 'future.defaultDevice.onMisuse': %s",

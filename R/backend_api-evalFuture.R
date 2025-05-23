@@ -914,7 +914,7 @@ evalFutureInternal <- function(data) {
 
 
   checkDevices <- getOption("future.devices.onMisuse")
-  ...future.option.defaultDevice <- 0L
+  ...future.option.defaultDevice <- list()
   if (is.null(checkDevices)) {
     checkDevices <- TRUE
   } else {
@@ -935,8 +935,13 @@ evalFutureInternal <- function(data) {
       }
       if (!is.null(device)) {
         ...future.option.device <- device
+        ...future.sys.calls.baseline <- length(sys.calls()) + 19L
         options(device = function(...) {
-          ...future.option.defaultDevice <<- ...future.option.defaultDevice + 1L
+          n <- length(...future.option.defaultDevice)
+          calls <- sys.calls()
+          calls <- calls[-seq_len(...future.sys.calls.baseline)]
+          calls <- calls[-length(calls)]
+          ...future.option.defaultDevice[[n + 1L]] <<- calls
           ## Call the default graphics device
           ...future.option.device(...)
         })
@@ -959,7 +964,9 @@ evalFutureInternal <- function(data) {
   ...future.result <- tryCatch({
     tryCatch({
       withCallingHandlers({
-        ...future.value <- withVisible(eval(expr, envir = globalenv()))
+        ...future.value <- withVisible({
+          eval(expr, envir = globalenv())
+        })
         FutureResult(
           value = ...future.value[["value"]],
           visible = ...future.value[["visible"]],
