@@ -23,7 +23,7 @@ further notice."><meta property="og:image" content="https://future.futureverse.o
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.49.0-9019</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.49.0-9020</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -110,26 +110,6 @@ use something like the following inside your function:</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">oopts</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>future.globals.maxSize <span class="op">=</span> <span class="fl">1.0</span> <span class="op">*</span> <span class="fl">1e9</span><span class="op">)</span>  <span class="co">## 1.0 GB</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/on.exit.html" class="external-link">on.exit</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span><span class="va">oopts</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">f</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/future.html">future</a></span><span class="op">(</span><span class="op">{</span> <span class="va">expr</span> <span class="op">}</span><span class="op">)</span>  <span class="co">## Launch a future with large objects</span></span></code></pre><p></p></div>
-    </div>
-    <div class="section level2">
-    <h2 id="settings-moved-to-the-parallelly-package">Settings moved to the 'parallelly' package<a class="anchor" aria-label="anchor" href="#settings-moved-to-the-parallelly-package"></a></h2>
-
-
-<p>Several functions have been moved to the <span class="pkg">parallelly</span> package:</p><ul><li><p><code><a href="https://parallelly.futureverse.org/reference/availableCores.html" class="external-link">parallelly::availableCores()</a></code></p></li>
-<li><p><code><a href="https://parallelly.futureverse.org/reference/availableWorkers.html" class="external-link">parallelly::availableWorkers()</a></code></p></li>
-<li><p><code><a href="https://parallelly.futureverse.org/reference/makeClusterMPI.html" class="external-link">parallelly::makeClusterMPI()</a></code></p></li>
-<li><p><code><a href="https://parallelly.futureverse.org/reference/makeClusterPSOCK.html" class="external-link">parallelly::makeClusterPSOCK()</a></code></p></li>
-<li><p><code><a href="https://parallelly.futureverse.org/reference/makeClusterPSOCK.html" class="external-link">parallelly::makeNodePSOCK()</a></code></p></li>
-<li><p><code><a href="https://parallelly.futureverse.org/reference/supportsMulticore.html" class="external-link">parallelly::supportsMulticore()</a></code></p></li>
-</ul><p>The options and environment variables controlling those have been adjusted
-accordingly to have different prefixes.
-For example, option <span class="option">future.fork.enable</span> has been renamed to
-<span class="option">parallelly.fork.enable</span> and the corresponding environment variable
-<code class="env">R_FUTURE_FORK_ENABLE</code> has been renamed to
-<code class="env">R_PARALLELLY_FORK_ENABLE</code>.
-For backward compatibility reasons, the <span class="pkg">parallelly</span> package will
-support both versions for a long foreseeable time.
-See the <a href="https://parallelly.futureverse.org/reference/zzz-parallelly.options.html" class="external-link">parallelly::parallelly.options</a> page for the settings.</p>
     </div>
     <div class="section level2">
     <h2 id="options-for-controlling-futures">Options for controlling futures<a class="anchor" aria-label="anchor" href="#options-for-controlling-futures"></a></h2>
@@ -287,8 +267,7 @@ If this option is not specified, environment variable <code class="env">R_FUTURE
 <dd><p>(logical) Enable or disable re-encoding of UTF-8 symbols that were incorrectly encoded while captured.  In R (&lt; 4.2.0) and on older versions of MS Windows, R cannot capture UTF-8 symbols as-is when they are captured from the standard output.  For examples, a UTF-8 check mark symbol (<code>"\u2713"</code>) would be relayed as <code>"&lt;U+2713&gt;"</code> (a string with eight ASCII characters).  Setting this option to <code>TRUE</code> will cause <code><a href="value.html">value()</a></code> to attempt to recover the intended UTF-8 symbols from <code>&lt;U+nnnn&gt;</code> string components, if, and only if, the string was captured by a future resolved on MS Windows. (Default: <code>TRUE</code>)</p></dd>
 
 
-</dl><p>See also <a href="https://parallelly.futureverse.org/reference/zzz-parallelly.options.html" class="external-link">parallelly::parallelly.options</a>.</p>
-    </div>
+</dl></div>
     <div class="section level2">
     <h2 id="options-for-demos">Options for demos<a class="anchor" aria-label="anchor" href="#options-for-demos"></a></h2>
 
@@ -337,6 +316,26 @@ For example, if <code>R_FUTURE_RNG_ONMISUSE="ignore"</code>, then option
 <span class="option">future.rng.onMisuse</span> is set to <code>"ignore"</code> (character string).
 Similarly, if <code>R_FUTURE_GLOBALS_MAXSIZE="50000000"</code>, then option
 <span class="option">future.globals.maxSize</span> is set to <code>50000000</code> (numeric).</p>
+    </div>
+    <div class="section level2">
+    <h2 id="options-moved-to-the-parallelly-package">Options moved to the 'parallelly' package<a class="anchor" aria-label="anchor" href="#options-moved-to-the-parallelly-package"></a></h2>
+
+
+<p>Several functions have been moved to the <span class="pkg">parallelly</span> package:</p><ul><li><p><code><a href="https://parallelly.futureverse.org/reference/availableCores.html" class="external-link">parallelly::availableCores()</a></code></p></li>
+<li><p><code><a href="https://parallelly.futureverse.org/reference/availableWorkers.html" class="external-link">parallelly::availableWorkers()</a></code></p></li>
+<li><p><code><a href="https://parallelly.futureverse.org/reference/makeClusterMPI.html" class="external-link">parallelly::makeClusterMPI()</a></code></p></li>
+<li><p><code><a href="https://parallelly.futureverse.org/reference/makeClusterPSOCK.html" class="external-link">parallelly::makeClusterPSOCK()</a></code></p></li>
+<li><p><code><a href="https://parallelly.futureverse.org/reference/makeClusterPSOCK.html" class="external-link">parallelly::makeNodePSOCK()</a></code></p></li>
+<li><p><code><a href="https://parallelly.futureverse.org/reference/supportsMulticore.html" class="external-link">parallelly::supportsMulticore()</a></code></p></li>
+</ul><p>The options and environment variables controlling those have been adjusted
+accordingly to have different prefixes.
+For example, option <span class="option">future.fork.enable</span> has been renamed to
+<span class="option">parallelly.fork.enable</span> and the corresponding environment variable
+<code class="env">R_FUTURE_FORK_ENABLE</code> has been renamed to
+<code class="env">R_PARALLELLY_FORK_ENABLE</code>.
+For backward compatibility reasons, the <span class="pkg">parallelly</span> package will
+support both versions for a long foreseeable time.
+See the <a href="https://parallelly.futureverse.org/reference/zzz-parallelly.options.html" class="external-link">parallelly::parallelly.options</a> page for the settings.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
