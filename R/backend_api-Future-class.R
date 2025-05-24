@@ -246,6 +246,21 @@ Future <- function(expr = NULL, envir = parent.frame(), substitute = TRUE, stdou
 
 
 sQuoteLabel <- function(label) {
+  if (inherits(label, "Future")) {
+    future <- label
+    label <- future[["label"]]
+    if (is.null(label)) {
+      uuid <- future[["uuid"]]
+      idx <- uuid[length(uuid)]
+      label <- sprintf("<unnamed-%s>", idx)
+    } else if (is.na(label)) {
+      label <- "NA"
+    } else {
+      label <- sQuote(label)
+    }
+    return(label)
+  }
+  
   if (is.null(label)) {
     "NULL"
   } else if (is.na(label)) {
@@ -261,7 +276,7 @@ print.Future <- function(x, ...) {
   future <- x
   class <- class(future)
   cat(sprintf("%s:\n", class[1]))
-  label <- sQuoteLabel(future[["label"]])
+  label <- sQuoteLabel(future)
   cat("Label: ", label, "\n", sep = "")
   cat("Expression:\n")
   print(future[["expr"]])
@@ -404,13 +419,13 @@ assertOwner <- local({
 run.Future <- function(future, ...) {
   debug <- isTRUE(getOption("future.debug"))
   if (debug) {
-    mdebugf_push("run() for %s (%s) ...", sQuote(class(future)[1]), sQuoteLabel(future[["label"]]))
+    mdebugf_push("run() for %s (%s) ...", sQuote(class(future)[1]), sQuoteLabel(future))
     mdebug("state: ", sQuote(future[["state"]]))
     on.exit(mdebugf_pop())
   }
 
   if (future[["state"]] != "created") {
-    label <- sQuoteLabel(future[["label"]])
+    label <- sQuoteLabel(future)
     msg <- sprintf("A future (%s) can only be launched once", label)
     stop(FutureError(msg, future = future))
   }
@@ -459,7 +474,7 @@ run.Future <- function(future, ...) {
     }, error = function(ex) {
       ## Unexpected error
       msg <- conditionMessage(ex)
-      label <- sQuoteLabel(future[["label"]])
+      label <- sQuoteLabel(future)
       msg <- sprintf("Caught an unexpected error of class %s when trying to launch future (%s) on backend of class %s. The reason was: %s", class(ex)[1], label, class(backend)[1], msg)
       stop(FutureLaunchError(msg, future = future))
     })
@@ -599,7 +614,7 @@ result <- function(future, ...) {
       ## Signal FutureJournalCondition?
       if (!isTRUE(future[[".journal_signalled"]])) {
         journal <- journal(future)
-        label <- sQuoteLabel(future[["label"]])
+        label <- sQuoteLabel(future)
         msg <- sprintf("A future (%s) of class %s was resolved", label, class(future)[1])
         cond <- FutureJournalCondition(message = msg, journal = journal) 
         signalCondition(cond)
@@ -628,7 +643,7 @@ result <- function(future, ...) {
 result.Future <- function(future, ...) {
   debug <- isTRUE(getOption("future.debug"))
   if (debug) {
-    mdebugf_push("result() for %s (%s) ...", sQuote(class(future)[1]), sQuoteLabel(future[["label"]]))
+    mdebugf_push("result() for %s (%s) ...", sQuote(class(future)[1]), sQuoteLabel(future))
     mdebug("state: ", sQuote(future[["state"]]))
     on.exit(mdebugf_pop())
   }
@@ -686,7 +701,7 @@ result.Future <- function(future, ...) {
   ## Sanity check
   if (is.null(result) && version == "1.8") {
     if (inherits(future, "MulticoreFuture")) {
-      label <- sQuoteLabel(future[["label"]])
+      label <- sQuoteLabel(future)
       msg <- sprintf("A future (%s) of class %s did not produce a FutureResult object but NULL. This suggests that the R worker terminated (crashed?) before the future expression was resolved.", label, class(future)[1])
       stop(FutureError(msg, future = future))
     }
@@ -701,7 +716,7 @@ resolved.Future <- function(x, run = TRUE, ...) {
   future <- x
   debug <- isTRUE(getOption("future.debug"))
   if (debug) {
-    mdebugf_push("resolved() for %s (%s) ...", class(future)[1], sQuoteLabel(future[["label"]]))
+    mdebugf_push("resolved() for %s (%s) ...", class(future)[1], sQuoteLabel(future))
     on.exit(mdebug_pop())
     mdebug("state: ", sQuote(future[["state"]]))
     mdebug("run: ", run)

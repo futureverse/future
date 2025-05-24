@@ -127,7 +127,7 @@ FutureError <- function(message, call = NULL, uuid = future[["uuid"]], future = 
 #' @export
 RngFutureCondition <- function(message = NULL, call = NULL, uuid = future[["uuid"]], future = NULL) {
   if (is.null(message)) {
-    label <- sQuoteLabel(future[["label"]])
+    label <- sQuoteLabel(future)
     message <- sprintf("UNRELIABLE VALUE: Future (%s) unexpectedly generated random numbers without specifying argument 'seed'. There is a risk that those random numbers are not statistically sound and the overall results might be invalid. To fix this, specify 'seed=TRUE'. This ensures that proper, parallel-safe random numbers are produced. To disable this check, use 'seed=NULL', or set option 'future.rng.onMisuse' to \"ignore\".", label)
   }
   cond <- FutureCondition(message = message, call = call, uuid = uuid, future = future)
@@ -160,7 +160,7 @@ RngFutureError <- function(...) {
 #' @rdname FutureCondition
 #' @export
 UnexpectedFutureResultError <- function(future, hint = NULL) {
-  label <- sQuoteLabel(future[["label"]])
+  label <- sQuoteLabel(future)
   expr <- hexpr(future[["expr"]])
   result <- future[["result"]]
   result_string <- hpaste(as.character(result))
@@ -192,7 +192,7 @@ UnexpectedFutureResultError <- function(future, hint = NULL) {
 #' @export
 GlobalEnvMisuseFutureCondition <- function(message = NULL, call = NULL, differences = NULL, uuid = future[["uuid"]], future = NULL) {
   if (is.null(message)) {
-    label <- sQuoteLabel(future[["label"]])
+    label <- sQuoteLabel(future)
     message <- sprintf("%s (%s) added variables to the global environment. A future expression should never assign variables to the global environment - neither by assign() nor by <<-: [n=%d] %s", class(future)[1], label, length(differences[["added"]]), commaq(differences[["added"]]))
     message <- sprintf("%s. See also help(\"future.options\", package = \"future\")", message)
   }
@@ -226,7 +226,7 @@ GlobalEnvMisuseFutureError <- function(...) {
 #' @export
 ConnectionMisuseFutureCondition <- function(message = NULL, call = NULL, differences = NULL, uuid = future[["uuid"]], future = NULL) {
   if (is.null(message)) {
-    label <- sQuoteLabel(future[["label"]])
+    label <- sQuoteLabel(future)
     message <- sprintf("%s (%s) added, removed, or modified connections. A future expression must close any opened connections and must not close connections it did not open", class(future)[1], label)
     if (!is.null(differences)) {
       details <- lapply(differences, FUN = function(diffs) {
@@ -278,7 +278,7 @@ ConnectionMisuseFutureError <- function(...) {
 #' @export
 DeviceMisuseFutureCondition <- function(message = NULL, call = NULL, differences = NULL, uuid = future[["uuid"]], future = NULL) {
   if (is.null(message)) {
-    label <- sQuoteLabel(future[["label"]])
+    label <- sQuoteLabel(future)
     message <- sprintf("%s (%s) added, removed, or modified devices. A future expression must close any opened devices and must not close devices it did not open", class(future)[1], label)
     if (!is.null(differences)) {
       details <- character(0L)
@@ -323,7 +323,7 @@ DeviceMisuseFutureError <- function(...) {
 #' @export
 DefaultDeviceMisuseFutureCondition <- function(message = NULL, incidents = NULL, call = NULL, uuid = future[["uuid"]], future = NULL) {
   if (is.null(message)) {
-    label <- sQuoteLabel(future[["label"]])
+    label <- sQuoteLabel(future)
     message <- sprintf("%s (%s) opened the default graphics device", class(future)[1], label)
     if (length(incidents) > 0L) {
       calls <- lapply(incidents, FUN = lapply, deparse)

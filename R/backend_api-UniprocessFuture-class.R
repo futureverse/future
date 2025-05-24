@@ -24,7 +24,7 @@ run.UniprocessFuture <- function(future, ...) {
   debug <- isTRUE(getOption("future.debug"))
    
   if (future[["state"]] != 'created') {
-    label <- sQuoteLabel(future[["label"]])
+    label <- sQuoteLabel(future)
     stop(FutureError(sprintf("A future (%s) can only be launched once", label), future = future))
   }
 

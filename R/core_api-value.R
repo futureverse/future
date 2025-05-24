@@ -54,7 +54,7 @@ value <- function(...) UseMethod("value")
 
 drop_future <- function(future) {
   class <- class(future)[1]
-  label <- sQuoteLabel(future[["label"]])
+  label <- sQuoteLabel(future)
   msg <- sprintf("Future (%s) of class %s is no longer valid, because its content has been minimized using value(..., drop = TRUE)", label, class)
   error <- FutureDroppedError(msg, future = future)
   
@@ -76,7 +76,7 @@ drop_future <- function(future) {
 value.Future <- function(future, stdout = TRUE, signal = TRUE, drop = FALSE, ...) {
   debug <- isTRUE(getOption("future.debug"))
   if (debug) {
-    mdebugf_push("value() for %s (%s) ...", class(future)[1], sQuoteLabel(future[["label"]]))
+    mdebugf_push("value() for %s (%s) ...", class(future)[1], sQuoteLabel(future))
     on.exit(mdebugf_pop())
   }
   

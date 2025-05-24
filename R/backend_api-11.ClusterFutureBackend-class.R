@@ -600,7 +600,7 @@ resolved.ClusterFuture <- function(x, run = TRUE, timeout = NULL, ...) {
   ## also the one that evaluates/resolves/queries it.
   assertOwner(future)
 
-  if (debug) mdebugf_push("resolved() for %s (%s) ...", class(future)[1], sQuoteLabel(future[["label"]]))
+  if (debug) mdebugf_push("resolved() for %s (%s) ...", class(future)[1], sQuoteLabel(future))
 
   node_idx <- future[["node"]]
   cl <- workers[node_idx]
@@ -947,7 +947,7 @@ receiveMessageFromWorker <- local({
       if (inherits(condition, "error")) {
         future[["result"]] <- msg
         future[["state"]] <- "failed"
-        label <- sQuoteLabel(future[["label"]])
+        label <- sQuoteLabel(future)
         stop(FutureError(sprintf("Received a %s condition from the %s worker for future (%s), which is not possible to relay because that would break the internal state of the future-worker communication. The condition message was: %s", class(condition)[1], class(future)[1], label, sQuote(conditionMessage(condition))), future = future))
       }
   
@@ -1165,7 +1165,7 @@ requestNode <- function(await, backend, timeout, delta, alpha) {
   for (kk in seq_along(futures)) {
     future <- futures[[kk]]
     if (node_idx == future[["node"]]) {
-      stop(FutureError(sprintf("[INTERNAL ERROR]: requestNode() found node #%d to be free, but it is used by future #%d (%s)", node_idx, kk, sQuoteLabel(future[["label"]]))))
+      stop(FutureError(sprintf("[INTERNAL ERROR]: requestNode() found node #%d to be free, but it is used by future #%d (%s)", node_idx, kk, sQuoteLabel(future))))
     }
   }
 
@@ -1260,7 +1260,7 @@ post_mortem_cluster_failure <- local({
     stop_if_not(length(node_info) == 1L)
     
     ## (3) Information on the future
-    label <- sQuoteLabel(future[["label"]])
+    label <- sQuoteLabel(future)
   
     ## (4) POST-MORTEM ANALYSIS:
     postmortem <- list()
@@ -1450,7 +1450,7 @@ handleInterruptedFuture <- local({
     state <- future[["state"]]
     stop_if_not(state %in% c("canceled", "interrupted", "running"))
   
-    label <- sQuoteLabel(future[["label"]])
+    label <- sQuoteLabel(future)
     workers <- backend[["workers"]]
     node_idx <- future[["node"]]
     cl <- workers[node_idx]
