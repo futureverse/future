@@ -413,7 +413,7 @@ result.MulticoreFuture <- local({
       ## turn into an error with a more informative error message, cf.
       ## https://github.com/futureverse/future/issues/35
       if (is.null(result) || identical(result, structure("fatal error in wrapper code", class = "try-error"))) {
-        label <- sQuoteLabel(future[["label"]])
+        label <- sQuoteLabel(future)
 
         if (future[["state"]] %in% c("canceled", "interrupted")) {
           if (debug) mdebugf("Detected interrupted %s whose result cannot be retrieved", sQuote(class(future)[1]))

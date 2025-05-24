@@ -95,7 +95,7 @@ signalConditions <- function(future, include = "condition", exclude = NULL, resi
       stop(condition)
     } else if (inherits(condition, "interrupt")) {
       future[["state"]] <- "interrupted"
-      label <- sQuoteLabel(future[["label"]])
+      label <- sQuoteLabel(future)
       result <- future[["result"]]
       when <- result[["finished"]]
       session_uuid <- result[["session_uuid"]]
