@@ -231,6 +231,7 @@
 #' future.onFutureCondition.keepFuture
 #' future.resolve.recursive
 #' future.connections.onMisuse
+#' future.defaultDevice.onMisuse
 #' future.devices.onMisuse
 #' future.globalenv.onMisuse
 #' future.rng.onMisuse
@@ -256,6 +257,7 @@
 #' R_FUTURE_RESOLVE_RECURSIVE
 #' R_FUTURE_CONNECTIONS_ONMISUSE
 #' R_FUTURE_DEVICES_ONMISUSE
+#' R_FUTURE_DEFAULTDEVICE_ONMISUSE
 #' R_FUTURE_GLOBALENV_ONMISUSE
 #' R_FUTURE_RNG_ONMISUSE
 #' R_FUTURE_WAIT_ALPHA
