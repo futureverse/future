@@ -22,26 +22,6 @@
 #' f <- future({ expr })  ## Launch a future with large objects
 #' ```
 #'
-#' @section Settings moved to the 'parallelly' package:
-#' Several functions have been moved to the \pkg{parallelly} package:
-#'
-#' * [parallelly::availableCores()]
-#' * [parallelly::availableWorkers()]
-#' * [parallelly::makeClusterMPI()]
-#' * [parallelly::makeClusterPSOCK()]
-#' * [parallelly::makeNodePSOCK()]
-#' * [parallelly::supportsMulticore()]
-#'
-#' The options and environment variables controlling those have been adjusted
-#' accordingly to have different prefixes.
-#' For example, option \option{future.fork.enable} has been renamed to
-#' \option{parallelly.fork.enable} and the corresponding environment variable
-#' \env{R_FUTURE_FORK_ENABLE} has been renamed to
-#' \env{R_PARALLELLY_FORK_ENABLE}.
-#' For backward compatibility reasons, the \pkg{parallelly} package will
-#' support both versions for a long foreseeable time.
-#' See the [parallelly::parallelly.options] page for the settings.
-#'
 #' @section Options for controlling futures:
 #' \describe{
 #'  \item{\option{future.plan}:}{(character string or future function) Default future backend used unless otherwise specified via [plan()]. This will also be the future plan set when calling `plan("default")`.  If not specified, this option may be set when the \pkg{future} package is _loaded_ if command-line option `--parallel=ncores` (short `-p ncores`) is specified; if `ncores > 1`, then option \option{future.plan} is set to `multisession` otherwise `sequential` (in addition to option \option{mc.cores} being set to `ncores`, if `ncores >= 1`). (Default: `sequential`)}
@@ -165,8 +145,6 @@
 #'  \item{\option{future.output.windows.reencode}:}{(logical) Enable or disable re-encoding of UTF-8 symbols that were incorrectly encoded while captured.  In R (< 4.2.0) and on older versions of MS Windows, R cannot capture UTF-8 symbols as-is when they are captured from the standard output.  For examples, a UTF-8 check mark symbol (`"\u2713"`) would be relayed as `"<U+2713>"` (a string with eight ASCII characters).  Setting this option to `TRUE` will cause `value()` to attempt to recover the intended UTF-8 symbols from `<U+nnnn>` string components, if, and only if, the string was captured by a future resolved on MS Windows. (Default: `TRUE`)}
 #' }
 #'
-#' See also [parallelly::parallelly.options].
-#'
 #'
 #' @section Options for demos:
 #' \describe{
@@ -201,6 +179,28 @@
 #' \option{future.rng.onMisuse} is set to `"ignore"` (character string).
 #' Similarly, if `R_FUTURE_GLOBALS_MAXSIZE="50000000"`, then option
 #' \option{future.globals.maxSize} is set to `50000000` (numeric).
+#'
+#'
+#' @section Options moved to the 'parallelly' package:
+#' Several functions have been moved to the \pkg{parallelly} package:
+#'
+#' * [parallelly::availableCores()]
+#' * [parallelly::availableWorkers()]
+#' * [parallelly::makeClusterMPI()]
+#' * [parallelly::makeClusterPSOCK()]
+#' * [parallelly::makeNodePSOCK()]
+#' * [parallelly::supportsMulticore()]
+#'
+#' The options and environment variables controlling those have been adjusted
+#' accordingly to have different prefixes.
+#' For example, option \option{future.fork.enable} has been renamed to
+#' \option{parallelly.fork.enable} and the corresponding environment variable
+#' \env{R_FUTURE_FORK_ENABLE} has been renamed to
+#' \env{R_PARALLELLY_FORK_ENABLE}.
+#' For backward compatibility reasons, the \pkg{parallelly} package will
+#' support both versions for a long foreseeable time.
+#' See the [parallelly::parallelly.options] page for the settings.
+#'
 #'
 #' @examples
 #' # Allow at most 5 MB globals per futures
