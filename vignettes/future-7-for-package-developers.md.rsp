@@ -101,7 +101,7 @@ or
 y <- my_fcn(x, parallel = TRUE)
 ```
 
-depending on their needs.  However, if another package developer decide to call you function in their function, they now have to expose that `parallel` argument to the users of their function, e.g.
+depending on their needs.  However, if another package developer decide to call your function in their function, they now have to expose that `parallel` argument to the users of their function, e.g.
 
 ```r
 their_fcn <- function(x, parallel = FALSE) {
