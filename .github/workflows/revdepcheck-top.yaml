@@ -23,6 +23,9 @@ jobs:
           - { r: "release", pkg: "future.apply"      }
           - { r: "release", pkg: "furrr"             }
           - { r: "release", pkg: "future.tests"      }
+          - { r: "release", pkg: "promises"          }
+          - { r: "release", pkg: "shiny"             }
+          - { r: "release", pkg: "plumber"           }
           - { r: "release", pkg: "future.batchtools" , globals: develop, label: 'globals develop' }
           - { r: "release", pkg: "future.callr"      , globals: develop, label: 'globals develop' }
           - { r: "release", pkg: "future.mirai"      , globals: develop, label: 'globals develop' }

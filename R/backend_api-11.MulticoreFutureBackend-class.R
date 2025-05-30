@@ -664,12 +664,6 @@ interruptFuture.MulticoreFutureBackend <- function(backend, future, ...) {
 #'
 #' @export
 multicore <- function(..., workers = availableCores(constraints = "multicore"), gc = FALSE, earlySignal = FALSE, envir = parent.frame()) {
-  ## WORKAROUNDS:
-  ## (1) promises::future_promise() calls the "evaluator" function directly
-  if ("promises" %in% loadedNamespaces()) {
-    return(future(..., gc = gc, earlySignal = earlySignal, envir = envir))
-  }
-  
   stop("INTERNAL ERROR: The future::multicore() function must never be called directly")
 }
 class(multicore) <- c("multicore", "multiprocess", "future", "function")

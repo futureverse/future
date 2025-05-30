@@ -1562,12 +1562,6 @@ handleInterruptedFuture <- local({
 #'
 #' @export
 cluster <- function(..., workers = availableWorkers(constraints = "connections"), gc = FALSE, earlySignal = FALSE, persistent = FALSE, envir = parent.frame()) {
-  ## WORKAROUNDS:
-  ## (1) promises::future_promise() calls the "evaluator" function directly
-  if ("promises" %in% loadedNamespaces()) {
-    return(future(..., gc = gc, earlySignal = earlySignal, envir = envir))
-  }
-  
   stop("INTERNAL ERROR: The future::cluster() function must never be called directly")
 }
 class(cluster) <- c("cluster", "multiprocess", "future", "function")
