@@ -1,5 +1,5 @@
 pandoc: '3.4'
-pkgdown: 2.1.2
+pkgdown: 2.1.3
 pkgdown_sha: ~
 articles:
   future-1-overview: future-1-overview.html
@@ -12,7 +12,7 @@ articles:
   future-6-future-api-backend-specification: future-6-future-api-backend-specification.html
   future-7-for-package-developers: future-7-for-package-developers.html
   future-8-how-future-is-validated: future-8-how-future-is-validated.html
-last_built: 2025-05-24T18:20Z
+last_built: 2025-05-31T00:54Z
 urls:
   reference: https://future.futureverse.org/reference
   article: https://future.futureverse.org/articles
