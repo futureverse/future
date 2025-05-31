@@ -50,8 +50,7 @@ jobs:
       R_FUTURE_PLAN: ${{ matrix.config.plan }}
       R_FUTURE_GLOBALS_KEEPWHERE: ${{ matrix.config.globals_keepWhere }}
       R_GLOBALS_BRANCH: ${{ matrix.config.globals }}
-      ## Specific to furrr (to disable expect_snapshot() tests)
-      NOT_CRAN: false
+      NOT_CRAN: true
       
     steps:
       - uses: actions/checkout@v4
@@ -94,6 +93,10 @@ jobs:
         run: |
           url=$(Rscript -e "cat(remotes:::download_version_url('${{ matrix.config.pkg }}', version=NULL, repos='https://cloud.r-project.org', type='source'))")
           wget "$url"
+          ## Specific to furrr (to disable expect_snapshot() tests)
+          if [[ "${{ matrix.config.pkg }}" == "furrr" ]]; then
+            export NOT_CRAN=false
+          fi
           R CMD check --no-manual --as-cran "$(basename "$url")"
 
       - name: Upload check results
