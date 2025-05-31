@@ -12,8 +12,15 @@
    graphics devices explicitly (e.g. `pdf()` or `png()`) before
    plotting. Alternatively, explicitly set R option `device` inside
    the future expression.
-
+   
 ## Bug Fixes
+
+ * Setting `options(warn = 2)` on a parallel worker was ignored -
+   warnings were not escalated to errors on the worker, and was
+   instead relayed as-is in the parent R session, unless `options(warn
+   = 2)` was also set in the parent. Now `options(warn = 2)` on a
+   worker causes warnings to be escalated immediately to errors on the
+   worker, which therefore also terminates the future.
 
  * The `multicore` backend did not relay `immediateCondition`:s in a
    near-live fashion, but only when the results of the futures where

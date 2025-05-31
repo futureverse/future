@@ -1044,6 +1044,13 @@ evalFutureInternal <- function(data) {
                      !is.null(conditionClasses) &&
                      inherits(cond, conditionClasses)
                     ) {
+
+            ## SPECIAL CASE: If a warnings and option 'warn' is >= 2 on the
+            ## worker, then let it escalate to an error here on the worker
+            if (inherits(cond, "warning") && getOption("warn") >= 2L) {
+              return()
+            }
+            
             ## Relay 'immediateCondition' conditions immediately?
             ## If so, then do not muffle it and flag it as signaled
             ## already here.
@@ -1058,6 +1065,12 @@ evalFutureInternal <- function(data) {
             }
           } else {
             if (!split && !is.null(conditionClasses)) {
+              ## SPECIAL CASE: If a warnings and option 'warn' is >= 2 on the
+              ## worker, then let it escalate to an error here on the worker
+              if (inherits(cond, "warning") && getOption("warn") >= 2L) {
+                return()
+              }
+            
               ## Muffle all non-captured conditions
               muffleCondition(cond, pattern = muffleInclude)
             }
