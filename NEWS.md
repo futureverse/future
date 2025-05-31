@@ -22,10 +22,6 @@
    worker causes warnings to be escalated immediately to errors on the
    worker, which therefore also terminates the future.
 
- * The `multicore` backend did not relay `immediateCondition`:s in a
-   near-live fashion, but only when the results of the futures where
-   collected.
-
  * Now the ClusterFutureBackend tries even harder to shut down
    parallel cluster workers when shutting down the backend. If it
    fails to communicate with one or more of the parallel workers, it
@@ -39,7 +35,15 @@
    open. Details: 1 devices differ: index=2, before='NA',
    after=''". The problem was that it did not prune the empty 'after'
    before the check.
-   
+
+ * The `multicore` backend did not relay `immediateCondition`:s in a
+   near-live fashion, but only when the results of the futures where
+   collected.
+
+ * The `cluster`, `multisession`, and `multicore` backends relayed
+   `immediateCondition`:s, but did not record the properly in the
+   future object.
+
 
 # Version 1.49.0 [2025-05-08]
 

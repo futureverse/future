@@ -679,7 +679,7 @@ resolved.ClusterFuture <- function(x, run = TRUE, timeout = NULL, ...) {
         if (debug) mdebugf("receiveMessageFromWorker() returned object of class %s; non-fixable state", class(msg)[1])
         break
       }
-        
+
       msg <- NULL
 
       ## If not, we received a condition that has already been signaled
@@ -878,6 +878,7 @@ receiveMessageFromWorker <- local({
   
     if (inherits(msg, "FutureResult")) {
       result <- msg
+      if (debug) mdebug("Received FutureResult")
   
       if (inherits(future[[".journal"]], "FutureJournal")) {
         appendToFutureJournal(future,
@@ -893,13 +894,17 @@ receiveMessageFromWorker <- local({
       ## they will be resignaled each time value() is called.
       signaled <- future[[".signaledConditions"]]
       if (length(signaled) > 0) {
+        if (debug) {
+          mdebug("Appending already signaled conditions:")
+          mstr(signaled)
+        }
         result[["conditions"]] <- c(future[[".signaledConditions"]], result[["conditions"]])
         future[[".signaledConditions"]] <- NULL
       }
   
       future[["result"]] <- result
       future[["state"]] <- "finished"
-      if (debug) mdebug("Received FutureResult")
+      if (debug) mprint(result)
     
       ## Remove from backend
       FutureRegistry(reg, action = "remove", future = future, earlySignal = FALSE, debug = debug)
@@ -908,7 +913,7 @@ receiveMessageFromWorker <- local({
       ## Always signal immediateCondition:s and as soon as possible.
       ## They will always be signaled if they exist.
       signalImmediateConditions(future)
-    
+
       ## Garbage collect cluster worker?
       if (future[["gc"]]) {
         if (debug) mdebug_push("Garbage collecting worker ...")
@@ -931,6 +936,8 @@ receiveMessageFromWorker <- local({
         cluster_call_blocking(cl[1], function() { gc(); "future-gc" }, verbose = FALSE, reset = FALSE, future = future, when = "call gc() on", expected = "future-gc")
         if (debug) mdebug_pop()
       }
+
+      msg <- result
     } else if (inherits(msg, "FutureLaunchError")) {
       if (debug) mdebugf("Received %s", class(msg)[1])
       future[["result"]] <- msg
@@ -950,7 +957,9 @@ receiveMessageFromWorker <- local({
         label <- sQuoteLabel(future)
         stop(FutureError(sprintf("Received a %s condition from the %s worker for future (%s), which is not possible to relay because that would break the internal state of the future-worker communication. The condition message was: %s", class(condition)[1], class(future)[1], label, sQuote(conditionMessage(condition))), future = future))
       }
-  
+
+      if (debug) mdebug("Signaling condition")
+
       ## Resignal condition
       if (inherits(condition, "warning")) {
         warning(condition)
@@ -959,18 +968,22 @@ receiveMessageFromWorker <- local({
       } else {
         signalCondition(condition)
       }
-  
+
+      if (debug) mdebug("Recording signaled condition")
+
       ## Increment signal count
-      signaled <- condition[["signaled"]]
-      if (is.null(signaled)) signaled <- 0L
-      condition[["signaled"]] <- signaled + 1L
+      cond <- list(
+        condition = condition,
+        signaled = 1L
+      )
       
       ## Record condition as signaled
       signaled <- future[[".signaledConditions"]]
       if (is.null(signaled)) signaled <- list()
-      signaled <- c(signaled, list(condition))
+      signaled <- c(signaled, list(cond))
       future[[".signaledConditions"]] <- signaled
-    }
+      if (debug) mstr(signaled)
+    } 
   
     msg
   }

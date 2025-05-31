@@ -36,8 +36,9 @@ to be kept.}
 \item{cond}{A condition of class \code{immediateCondition}.}
 }
 \value{
-\code{readImmediateConditions()} returns a \link[base:list]{base::list} of
-\code{immediateCondition} objects.
+\code{readImmediateConditions()} returns an unnamed \link[base:list]{base::list} of
+named lists with elements \code{condition} and \code{signaled}, where
+the \code{condition} elements hold \code{immediateCondition} objects.
 
 \code{saveImmediateCondition()} returns, invisibly, the pathname of
 the RDS written.
