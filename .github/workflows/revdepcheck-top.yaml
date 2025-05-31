@@ -50,7 +50,7 @@ jobs:
       R_FUTURE_PLAN: ${{ matrix.config.plan }}
       R_FUTURE_GLOBALS_KEEPWHERE: ${{ matrix.config.globals_keepWhere }}
       R_GLOBALS_BRANCH: ${{ matrix.config.globals }}
-      NOT_CRAN: ${{ matrix.config.not_cran || true }}
+      NOT_CRAN: ${{ (matrix.config.not_cran != null) && matrix.config.not_cran || true }}
       
     steps:
       - uses: actions/checkout@v4
