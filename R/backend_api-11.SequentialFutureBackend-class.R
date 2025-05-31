@@ -115,9 +115,23 @@ getFutureBackendConfigs.UniprocessFuture <- function(future, ...) {
   
   capture <- list(
     immediateConditionHandlers = list(
-      immediateCondition = function(cond) {
-        signalCondition(cond)
-      }
+      immediateCondition = local({
+        prev <- NULL
+        function(condition) {
+          ## Avoid re-catching itself
+          if (identical(condition, prev)) return(FALSE)
+          prev <<- condition
+          ## Resignal condition
+          if (inherits(condition, "warning")) {
+            warning(condition)
+          } else if (inherits(condition, "message")) {
+            message(condition)
+          } else {
+            signalCondition(condition)
+          }
+          TRUE
+        }
+      })
     )
   )
 

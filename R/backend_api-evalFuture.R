@@ -992,20 +992,24 @@ evalFutureInternal <- function(data) {
           if (length(immediateConditionHandlers) > 0) {
             ## Handle immediateCondition:s?
             idxs <- inherits(cond, names(immediateConditionHandlers), which = TRUE)
+
             if (length(idxs) > 0 && !identical(idxs, 0L)) {
               class <- class(cond)[idxs[[1]]]
+
               handler <- immediateConditionHandlers[[class]]
-              res <- handler(cond)
-  
+              record <- handler(cond)
+
+              ## Record condition?
+              if (isTRUE(record)) {
+                ...future.conditions[[length(...future.conditions) + 1L]] <<- list(
+                  condition = cond,
+                  signaled = 1L
+                )
+              }
+
               ## Avoid condition from being signaled more than once
               muffleCondition(cond)
-  
-              ## Record condition
-              ...future.conditions[[length(...future.conditions) + 1L]] <<- list(
-                condition = cond,
-                signaled = 1L
-              )
-  
+
               return()
             }
           }

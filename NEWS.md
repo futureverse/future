@@ -12,7 +12,12 @@
    graphics devices explicitly (e.g. `pdf()` or `png()`) before
    plotting. Alternatively, explicitly set R option `device` inside
    the future expression.
-   
+
+## Miscellaneous
+
+ * Rewrote `demo("mandelbrot")` to plot via `immediateCondition`:s,
+   which made the code neater.
+
 ## Bug Fixes
 
  * Setting `options(warn = 2)` on a parallel worker was ignored -
@@ -40,9 +45,9 @@
    near-live fashion, but only when the results of the futures where
    collected.
 
- * The `cluster`, `multisession`, and `multicore` backends relayed
-   `immediateCondition`:s, but did not record the properly in the
-   future object.
+ * The `sequential`, `cluster`, `multisession`, and `multicore`
+   backends relayed `immediateCondition`:s, but did not record the
+   properly in the future object.
 
 
 # Version 1.49.0 [2025-05-08]
