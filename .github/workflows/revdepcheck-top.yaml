@@ -50,7 +50,7 @@ jobs:
       R_FUTURE_PLAN: ${{ matrix.config.plan }}
       R_FUTURE_GLOBALS_KEEPWHERE: ${{ matrix.config.globals_keepWhere }}
       R_GLOBALS_BRANCH: ${{ matrix.config.globals }}
-      NOT_CRAN: ${{ (matrix.config.not_cran != null) && matrix.config.not_cran || true }}
+      NOT_CRAN: true
       
     steps:
       - uses: actions/checkout@v4
@@ -93,6 +93,9 @@ jobs:
         run: |
           url=$(Rscript -e "cat(remotes:::download_version_url('${{ matrix.config.pkg }}', version=NULL, repos='https://cloud.r-project.org', type='source'))")
           wget "$url"
+          if [[ "${{ matrix.config.not_cran }}" == "false" ]]; then
+            export NOT_CRAN=false
+          fi
           echo "NOT_CRAN=${NOT_CRAN:-<not set>}"
           R CMD check --no-manual --as-cran "$(basename "$url")"
 
