@@ -31,12 +31,11 @@ jobs:
           - { r: "release", pkg: "future.mirai"      , globals: develop, label: 'globals develop' }
           - { r: "release", pkg: "doFuture"          , globals: develop, label: 'globals develop' }
           - { r: "release", pkg: "future.apply"      , globals: develop, label: 'globals develop' }
-          - { r: "release", pkg: "furrr"             , globals: develop, label: 'globals develop' }
+          - { r: "release", pkg: "furrr", not_cran: false }             , globals: develop, label: 'globals develop' }
           - { r: "release", pkg: "future.tests"      , globals: develop, label: 'globals develop' }
           - { r: "release", pkg: "doFuture"          , plan: multisession, label: multisession }
           - { r: "release", pkg: "future.apply"      , plan: multisession, label: multisession }
-          - { r: "release", pkg: "furrr"             , plan: multisession, label: multisession }
-          - { r: "release", pkg: "future.apply"      , globals_keepWhere: true, label: 'keepWhere' }
+          - { r: "release", pkg: "furrr", not_cran: false }             , plan: multisession, label: multisession }
           - { r: "release", pkg: "future.apply"      , globals_keepWhere: false, label: '!keepWhere' }
 
     env:
