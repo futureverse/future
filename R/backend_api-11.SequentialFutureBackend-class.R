@@ -102,6 +102,8 @@ nbrOfWorkers.SequentialFutureBackend <- function(evaluator) {
 
 
 #' @export
+
+
 nbrOfFreeWorkers.SequentialFutureBackend <- function(evaluator, background = FALSE, ...) {
   assert_no_positional_args_but_first()
   if (isTRUE(background)) 0L else 1L
@@ -117,9 +119,13 @@ getFutureBackendConfigs.UniprocessFuture <- function(future, ...) {
     immediateConditionHandlers = list(
       immediateCondition = local({
         prev <- NULL
-        function(condition) {
-          ## Avoid re-catching itself
-          if (identical(condition, prev)) return(FALSE)
+        function(condition) {  
+          ## Avoid re-catching and re-signaling itself
+          if (identical(condition, prev)) {
+            prev <<- NULL
+            muffleCondition(condition)
+            return(FALSE)
+          }
           prev <<- condition
           ## Resignal condition
           if (inherits(condition, "warning")) {
