@@ -13,11 +13,6 @@
    plotting. Alternatively, explicitly set R option `device` inside
    the future expression.
 
-## Miscellaneous
-
- * Rewrote `demo("mandelbrot")` to plot via `immediateCondition`:s,
-   which made the code neater.
-
 ## Bug Fixes
 
  * Setting `options(warn = 2)` on a parallel worker was ignored -
