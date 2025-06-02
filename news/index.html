@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.49.0-9028</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.49.0-9029</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -87,7 +87,8 @@
 <h3 id="bug-fixes-development-version">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h3>
 <ul><li><p>Setting <code>options(warn = 2)</code> on a parallel worker was ignored - warnings were not escalated to errors on the worker, and was instead relayed as-is in the parent R session, unless <code>options(warn    = 2)</code> was also set in the parent. Now <code>options(warn = 2)</code> on a worker causes warnings to be escalated immediately to errors on the worker, which therefore also terminates the future.</p></li>
 <li><p><code><a href="../reference/future.html">future()</a></code> arguments <code>stdout</code> and <code>conditions</code> were not applied when packages that were specified via argument <code>packages</code> were loaded and attached. This prevented us from excluding, for instance, <code>packageStartupMessage</code>:s, causing them to be displayed in sequential and multicore processing.</p></li>
-<li><p>Now the ClusterFutureBackend tries even harder to shut down parallel cluster workers when shutting down the backend. If it fails to communicate with one or more of the parallel workers, it will now close any socket connections that remain open towards such cluster nodes.</p></li>
+<li><p>When the using <code>cluster</code> and <code>multisession</code> backends, one could, in some cases, end up with warnings on “package may not be available when loading” that are produced by <code><a href="https://rdrr.io/r/base/serialize.html" class="external-link">serialize()</a></code>. These type of warnings are now suppressed.</p></li>
+<li><p>Now the cluster future backend tries even harder to shut down parallel cluster workers when shutting down the backend. If it fails to communicate with one or more of the parallel workers, it will now close any socket connections that remain open towards such cluster nodes.</p></li>
 <li><p>The built-in checks for added, removed, or modified graphical devices introduced in <strong>future</strong> 1.40.0 (2025-04-10), could produce false positives, complaining about “A future expression must close any opened devices and must not close devices it did not open. Details: 1 devices differ: index=2, before=‘NA’, after=’‘“. The problem was that it did not prune the empty ’after’ before the check.</p></li>
 <li><p>The <code>multicore</code> backend did not relay <code>immediateCondition</code>:s in a near-live fashion, but only when the results of the futures where collected.</p></li>
 <li><p>The <code>sequential</code>, <code>cluster</code>, <code>multisession</code>, and <code>multicore</code> backends relayed <code>immediateCondition</code>:s, but did not record the properly in the future object.</p></li>
