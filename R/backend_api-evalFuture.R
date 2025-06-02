@@ -411,6 +411,123 @@ evalFuture <- function(
 
 
 evalFutureInternal <- function(data) {
+  onEvalCondition <- function(cond) {
+    is_error <- inherits(cond, "error")
+    if (is_error) {
+      ## Disable timeouts as soon as possible, in case there is a
+      ## timeout set by the future expression, which triggered
+      ## this error
+      setTimeLimit(cpu = Inf, elapsed = Inf, transient = FALSE)
+    }
+    
+    ## Handle immediately?
+    if (length(immediateConditionHandlers) > 0) {
+      ## Handle immediateCondition:s?
+      idxs <- inherits(cond, names(immediateConditionHandlers), which = TRUE)
+  
+      if (length(idxs) > 0 && !identical(idxs, 0L)) {
+        class <- class(cond)[idxs[[1]]]
+  
+        handler <- immediateConditionHandlers[[class]]
+        record <- handler(cond)
+  
+        ## Record condition?
+        if (isTRUE(record)) {
+          ...future.conditions[[length(...future.conditions) + 1L]] <<- list(
+            condition = cond,
+            signaled = 1L
+          )
+        }
+  
+        ## Avoid condition from being signaled more than once
+        muffleCondition(cond)
+  
+        return()
+      }
+    }
+  
+    ## Ignore condition?
+    ignore <- !is_error &&
+              !is.null(conditionClassesExclude) && 
+              inherits(cond, conditionClassesExclude)
+    
+    ## Handle error:s specially
+    if (is_error) {
+      sessionInformation <- function() {
+        list(
+          r          = R.Version(),
+          locale     = Sys.getlocale(),
+          rngkind    = RNGkind(),
+          namespaces = loadedNamespaces(),
+          search     = search(),
+          system     = Sys.info()
+        )
+      }
+  
+      sysCalls <- getSysCalls()
+  
+      ## Record condition
+      ...future.conditions[[length(...future.conditions) + 1L]] <<- list(
+        condition = cond,
+        calls     = c(sysCalls(from = ...future.frame), cond[["call"]]),
+        session   = sessionInformation(),
+        timestamp = Sys.time(),
+        signaled  = 0L
+      )
+  
+      signalCondition(cond)
+    } else if (!ignore &&
+               !is.null(conditionClasses) &&
+               inherits(cond, conditionClasses)
+              ) {
+  
+      ## SPECIAL CASE: If a warnings and option 'warn' is >= 2 on the
+      ## worker, then let it escalate to an error here on the worker
+      if (inherits(cond, "warning") && getOption("warn") >= 2L) {
+        return()
+      }
+      
+      ## Relay 'immediateCondition' conditions immediately?
+      ## If so, then do not muffle it and flag it as signaled
+      ## already here.
+      signal <- inherits(cond, immediateConditionClasses)
+      ## Record condition
+      ...future.conditions[[length(...future.conditions) + 1L]] <<- list(
+        condition = cond,
+        signaled = as.integer(signal)
+      )
+      if (length(immediateConditionClasses) > 0 && !split && !signal) {
+        muffleCondition(cond, pattern = muffleInclude)
+      }
+    } else {
+      if (!split && !is.null(conditionClasses)) {
+        ## SPECIAL CASE: If a warnings and option 'warn' is >= 2 on the
+        ## worker, then let it escalate to an error here on the worker
+        if (inherits(cond, "warning") && getOption("warn") >= 2L) {
+          return()
+        }
+      
+        ## Muffle all non-captured conditions
+        muffleCondition(cond, pattern = muffleInclude)
+      }
+    }
+  } ## onEvalCondition()
+
+  onEvalErrorOrInterrupt <- function(ex) {
+    FutureResult(
+      conditions = ...future.conditions,
+      rng = !identical(globalenv()[[".Random.seed"]], ...future.rng),
+      uuid = uuid,
+      misuseGlobalEnv = if (checkGlobalenv) list(added = diff_globalenv(...future.globalenv.names)) else NULL,
+      misuseConnections = diff_connections(get_connections(details = isTRUE(attr(checkConnections, "details", exact = TRUE))), ...future.connections),
+      misuseDevices = if (checkDevices) diff_devices(base::.Devices, ...future.devices) else NULL,
+      misuseDefaultDevice = ...future.option.defaultDevice,
+      started = ...future.startTime
+    )
+  } ## onEvalErrorOrInterrupt()
+
+
+
   debug <- FALSE
 
   core <- data[["core"]]
@@ -500,11 +617,20 @@ evalFutureInternal <- function(data) {
   ## Start time for future evaluation
   ...future.startTime <- Sys.time()
 
+  conditionClassesExclude <- attr(conditionClasses, "exclude", exact = TRUE)
+  muffleInclude <- attr(conditionClasses, "muffleInclude", exact = TRUE)
+  if (is.null(muffleInclude)) muffleInclude <- "^muffle"
+
+  ...future.frame <- sys.nframe()
+  ...future.conditions <- list()
+
 
   ## -----------------------------------------------------------------
   ## Load and attached backend packages
   ## -----------------------------------------------------------------
-  attachPackages(backendPackages)
+  withCallingHandlers({
+    attachPackages(backendPackages)
+  }, condition = onEvalCondition)
 
 
   ## -----------------------------------------------------------------
@@ -517,7 +643,9 @@ evalFutureInternal <- function(data) {
   ...future.mc.cores.old <- getOption("mc.cores")
 
   ## Load and attached packages
-  attachPackages(packages)
+  withCallingHandlers({
+    attachPackages(packages)
+  }, condition = onEvalCondition)
 
   ## Note, we record R options and environment variables _after_
   ## loading and attaching packages, in case they set options/env vars
@@ -950,13 +1078,6 @@ evalFutureInternal <- function(data) {
   }
 
 
-  conditionClassesExclude <- attr(conditionClasses, "exclude", exact = TRUE)
-  muffleInclude <- attr(conditionClasses, "muffleInclude", exact = TRUE)
-  if (is.null(muffleInclude)) muffleInclude <- "^muffle"
-
-  ...future.frame <- sys.nframe()
-  ...future.conditions <- list()
-
   ## NOTE: We don't want to use local(body) w/ on.exit() because
   ## evaluation in a local is optional, cf. argument 'local'.
   ## If this was mandatory, we could.  Instead we use
@@ -979,136 +1100,13 @@ evalFutureInternal <- function(data) {
           misuseDefaultDevice = ...future.option.defaultDevice,
           started = ...future.startTime
         )
-      }, condition = function(cond) {
-          is_error <- inherits(cond, "error")
-          if (is_error) {
-            ## Disable timeouts as soon as possible, in case there is a
-            ## timeout set by the future expression, which triggered
-            ## this error
-            setTimeLimit(cpu = Inf, elapsed = Inf, transient = FALSE)
-          }
-          
-          ## Handle immediately?
-          if (length(immediateConditionHandlers) > 0) {
-            ## Handle immediateCondition:s?
-            idxs <- inherits(cond, names(immediateConditionHandlers), which = TRUE)
-
-            if (length(idxs) > 0 && !identical(idxs, 0L)) {
-              class <- class(cond)[idxs[[1]]]
-
-              handler <- immediateConditionHandlers[[class]]
-              record <- handler(cond)
-
-              ## Record condition?
-              if (isTRUE(record)) {
-                ...future.conditions[[length(...future.conditions) + 1L]] <<- list(
-                  condition = cond,
-                  signaled = 1L
-                )
-              }
-
-              ## Avoid condition from being signaled more than once
-              muffleCondition(cond)
-
-              return()
-            }
-          }
-  
-          ## Ignore condition?
-          ignore <- !is_error &&
-                    !is.null(conditionClassesExclude) && 
-                    inherits(cond, conditionClassesExclude)
-          
-          ## Handle error:s specially
-          if (is_error) {
-            sessionInformation <- function() {
-              list(
-                r          = R.Version(),
-                locale     = Sys.getlocale(),
-                rngkind    = RNGkind(),
-                namespaces = loadedNamespaces(),
-                search     = search(),
-                system     = Sys.info()
-              )
-            }
-  
-            sysCalls <- getSysCalls()
-  
-            ## Record condition
-            ...future.conditions[[length(...future.conditions) + 1L]] <<- list(
-              condition = cond,
-              calls     = c(sysCalls(from = ...future.frame), cond[["call"]]),
-              session   = sessionInformation(),
-              timestamp = Sys.time(),
-              signaled  = 0L
-            )
-        
-            signalCondition(cond)
-          } else if (!ignore &&
-                     !is.null(conditionClasses) &&
-                     inherits(cond, conditionClasses)
-                    ) {
-
-            ## SPECIAL CASE: If a warnings and option 'warn' is >= 2 on the
-            ## worker, then let it escalate to an error here on the worker
-            if (inherits(cond, "warning") && getOption("warn") >= 2L) {
-              return()
-            }
-            
-            ## Relay 'immediateCondition' conditions immediately?
-            ## If so, then do not muffle it and flag it as signaled
-            ## already here.
-            signal <- inherits(cond, immediateConditionClasses)
-            ## Record condition
-            ...future.conditions[[length(...future.conditions) + 1L]] <<- list(
-              condition = cond,
-              signaled = as.integer(signal)
-            )
-            if (length(immediateConditionClasses) > 0 && !split && !signal) {
-              muffleCondition(cond, pattern = muffleInclude)
-            }
-          } else {
-            if (!split && !is.null(conditionClasses)) {
-              ## SPECIAL CASE: If a warnings and option 'warn' is >= 2 on the
-              ## worker, then let it escalate to an error here on the worker
-              if (inherits(cond, "warning") && getOption("warn") >= 2L) {
-                return()
-              }
-            
-              ## Muffle all non-captured conditions
-              muffleCondition(cond, pattern = muffleInclude)
-            }
-          }
-        } ## function(cond)
-      ) ## withCallingHandlers()
+      }, condition = onEvalCondition) ## withCallingHandlers()
     }, finally = {
       ## Disable timeouts as soon as possible, in case there is a
       ## timeout set by the future expression
       setTimeLimit(cpu = Inf, elapsed = Inf, transient = FALSE)
     }) ## tryCatch() for future evaluation 
-  }, interrupt = function(ex) {
-    FutureResult(
-      conditions = ...future.conditions,
-      rng = !identical(globalenv()[[".Random.seed"]], ...future.rng),
-      uuid = uuid,
-      misuseGlobalEnv = if (checkGlobalenv) list(added = diff_globalenv(...future.globalenv.names)) else NULL,
-      misuseConnections = diff_connections(get_connections(details = isTRUE(attr(checkConnections, "details", exact = TRUE))), ...future.connections),
-      misuseDevices = if (checkDevices) diff_devices(base::.Devices, ...future.devices) else NULL,
-      misuseDefaultDevice = ...future.option.defaultDevice,
-      started = ...future.startTime
-    )
-  }, error = function(ex) {
-    FutureResult(
-      conditions = ...future.conditions,
-      rng = !identical(globalenv()[[".Random.seed"]], ...future.rng),
-      uuid = uuid,
-      misuseGlobalEnv = if (checkGlobalenv) list(added = diff_globalenv(...future.globalenv.names)) else NULL,
-      misuseConnections = diff_connections(get_connections(details = isTRUE(attr(checkConnections, "details", exact = TRUE))), ...future.connections),
-      misuseDevices = if (checkDevices) diff_devices(base::.Devices, ...future.devices) else NULL,
-      misuseDefaultDevice = ...future.option.defaultDevice,
-      started = ...future.startTime
-    )
-  }) ## output tryCatch()
+  }, interrupt = onEvalErrorOrInterrupt, error = onEvalErrorOrInterrupt) ## output tryCatch()
   
 
   ## -----------------------------------------------------------------
