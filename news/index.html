@@ -84,10 +84,6 @@
 <ul><li>Now futures produce a warning when they detect that the <em>default</em> graphics device, as defined by R option <code>"device"</code>, is opened by, for instance, a <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code> call without explicitly opening a graphics device. The reason for this check is that we rarely want to plot to the <em>default</em> graphics device in parallel processing, which typically ends up plotting to a <code>Rplots.pdf</code> file that is local to the parallel worker. If that is truly wanted, please open a graphics devices explicitly (e.g. <code><a href="https://rdrr.io/r/grDevices/pdf.html" class="external-link">pdf()</a></code> or <code><a href="https://rdrr.io/r/grDevices/png.html" class="external-link">png()</a></code>) before plotting. Alternatively, explicitly set R option <code>device</code> inside the future expression.</li>
 </ul></div>
 <div class="section level3">
-<h3 id="miscellaneous-development-version">Miscellaneous<a class="anchor" aria-label="anchor" href="#miscellaneous-development-version"></a></h3>
-<ul><li>Rewrote <code>demo("mandelbrot")</code> to plot via <code>immediateCondition</code>:s, which made the code neater.</li>
-</ul></div>
-<div class="section level3">
 <h3 id="bug-fixes-development-version">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h3>
 <ul><li><p>Setting <code>options(warn = 2)</code> on a parallel worker was ignored - warnings were not escalated to errors on the worker, and was instead relayed as-is in the parent R session, unless <code>options(warn    = 2)</code> was also set in the parent. Now <code>options(warn = 2)</code> on a worker causes warnings to be escalated immediately to errors on the worker, which therefore also terminates the future.</p></li>
 <li><p>Now the ClusterFutureBackend tries even harder to shut down parallel cluster workers when shutting down the backend. If it fails to communicate with one or more of the parallel workers, it will now close any socket connections that remain open towards such cluster nodes.</p></li>
