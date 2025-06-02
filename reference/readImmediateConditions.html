@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.49.0-9022</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.49.0-9025</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -132,8 +132,9 @@ to be kept.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p><code>readImmediateConditions()</code> returns a <a href="https://rdrr.io/r/base/list.html" class="external-link">base::list</a> of
-<code>immediateCondition</code> objects.</p>
+    <p><code>readImmediateConditions()</code> returns an unnamed <a href="https://rdrr.io/r/base/list.html" class="external-link">base::list</a> of
+named lists with elements <code>condition</code> and <code>signaled</code>, where
+the <code>condition</code> elements hold <code>immediateCondition</code> objects.</p>
 <p><code>saveImmediateCondition()</code> returns, invisibly, the pathname of
 the RDS written.</p>
     </div>
