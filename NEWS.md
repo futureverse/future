@@ -22,11 +22,11 @@
    worker causes warnings to be escalated immediately to errors on the
    worker, which therefore also terminates the future.
 
- * `future()` argument `conditions` was not used when loading and
-   attaching packages specified via argument `packages`, which
-   prevented us from excluding, for instance,
-   `packageStartupMessage`:s, causing them to be displayed in
-   sequential and multicore processing.
+ * `future()` arguments `stdout` and `conditions` were not applied
+   when packages that are specified via argument `packages` where
+   loaded and attached. This prevented us from excluding, for
+   instance, `packageStartupMessage`:s, causing them to be displayed
+   in sequential and multicore processing.
  
  * Now the ClusterFutureBackend tries even harder to shut down
    parallel cluster workers when shutting down the backend. If it

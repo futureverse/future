@@ -626,6 +626,33 @@ evalFutureInternal <- function(data) {
 
 
   ## -----------------------------------------------------------------
+  ## Ignore, capture or discard standard output?
+  ## -----------------------------------------------------------------
+  if (is.na(stdout)) {  ## stdout = NA
+    ## Don't capture, but also don't block any output
+  } else {
+    if (stdout) {  ## stdout = TRUE
+      ## Capture all output
+      ## NOTE: Capturing to a raw connection is much more efficient
+      ## than to a character connection, cf.
+      ## https://www.jottr.org/2014/05/26/captureoutput/
+      ...future.stdout <- rawConnection(raw(0L), open = "w")
+    } else {  ## stdout = FALSE
+      ## Silence all output by sending it to the void
+      ...future.stdout <- file(
+        switch(.Platform[["OS.type"]], windows = "NUL", "/dev/null"),
+        open = "w"
+      )
+    }
+    sink(...future.stdout, type = "output", split = split)
+    on.exit(if (!is.null(...future.stdout)) {
+      sink(type = "output", split = split)
+      close(...future.stdout)
+    }, add = TRUE)
+  }
+
+
+  ## -----------------------------------------------------------------
   ## Load and attached backend packages
   ## -----------------------------------------------------------------
   withCallingHandlers({
@@ -855,29 +882,6 @@ evalFutureInternal <- function(data) {
     expr <- bquote_apply(tmpl_expr_local)
   }
 
-  ## Ignore, capture or discard standard output?
-  if (is.na(stdout)) {  ## stdout = NA
-    ## Don't capture, but also don't block any output
-  } else {
-    if (stdout) {  ## stdout = TRUE
-      ## Capture all output
-      ## NOTE: Capturing to a raw connection is much more efficient
-      ## than to a character connection, cf.
-      ## https://www.jottr.org/2014/05/26/captureoutput/
-      ...future.stdout <- rawConnection(raw(0L), open = "w")
-    } else {  ## stdout = FALSE
-      ## Silence all output by sending it to the void
-      ...future.stdout <- file(
-        switch(.Platform[["OS.type"]], windows = "NUL", "/dev/null"),
-        open = "w"
-      )
-    }
-    sink(...future.stdout, type = "output", split = split)
-    on.exit(if (!is.null(...future.stdout)) {
-      sink(type = "output", split = split)
-      close(...future.stdout)
-    }, add = TRUE)
-  }
 
   ## Prevent 'future.plan' / R_FUTURE_PLAN settings from being nested
   options(future.plan = NULL)
