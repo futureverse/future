@@ -1,13 +1,23 @@
 library(future)
 library(graphics)
 
-## Signal a condition object that holds data
-signalData <- function(..., message = character(0L), call = NULL, immediate = TRUE, signal = TRUE) {
-  cond <- simpleCondition(message = message, call = call)
-  cond[["data"]] <- list(...)
-  class(cond) <- c("dataCondition", if (immediate) "immediateCondition", class(cond))
-  if (signal) signalCondition(cond)
-  invisible(cond)
+plot_what_is_done <- function(counts) {
+  for (kk in seq_along(counts)) {
+    f <- counts[[kk]]
+
+    ## Already plotted?
+    if (!inherits(f, "Future")) next
+
+    ## Not resolved?
+    if (!resolved(f)) next
+
+    message(sprintf("Plotting tile #%d of %d ...", kk, n))
+    counts[[kk]] <- value(f)
+    screen(kk)
+    plot(counts[[kk]])
+  }
+
+  counts
 }
 
 
@@ -26,7 +36,7 @@ nrow <- getOption("future.demo.mandelbrot.nrow", 3L)
 resolution <- getOption("future.demo.mandelbrot.resolution", 400L)
 delay <- getOption("future.demo.mandelbrot.delay", interactive())
 if (isTRUE(delay)) {
-  delay <- function(counts) Sys.sleep(proc.time() %% 1 * 2.0)
+  delay <- function(counts) Sys.sleep(1.0)
 } else if (!is.function(delay)) {
   delay <- function(counts) {}
 }
@@ -49,33 +59,32 @@ if (interactive()) {
 }
 
 
-## Calculate and plot Mandelbrot tiles via futures
+## Create all Mandelbrot tiles via lazy futures
 n <- length(Cs)
-message(sprintf("Creating %d Mandelbrot tiles:\n", n), appendLF = FALSE)
+message(sprintf("Creating %d Mandelbrot tiles:", n), appendLF = FALSE)
+counts <- lapply(seq_along(Cs), FUN=function(ii) {
+  message(" ", ii, appendLF = FALSE)
+  C <- Cs[[ii]]
+  future({
+    message(sprintf("Calculating tile #%d of %d ...", ii, n), appendLF = FALSE)
+    fit <- mandelbrot(C)
 
-withCallingHandlers({
-  fs <- lapply(seq_along(Cs), FUN = function(idx) {
-    C <- Cs[[idx]]
-    future({
-      ## Emulate slowness
-      delay(fit)
-      tile <- mandelbrot(C)
-      signalData(
-        idx = idx, tile = tile,
-        message = sprintf("Tile %d", idx)
-      )
-      tile
-    }, stdout = NA)
-  })
-  message("value(fs):")
-  tiles <- value(fs)
-}, dataCondition = function(cond) {
-  if (length(msg <- conditionMessage(cond)) > 0L) message(msg)
-  with(cond[["data"]], {
-    screen(idx)
-    plot(tile)
-  })
+    ## Emulate slowness
+    delay(fit)
+
+    message(" done")
+    fit
+  }, lazy = TRUE)
 })
+message(".")
+
+## Calculate and plot tiles
+repeat {
+  counts <- plot_what_is_done(counts)
+  if (!any(sapply(counts, FUN = inherits, "Future"))) break
+}
+  
+
 
 close.screen()
 
