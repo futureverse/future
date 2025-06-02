@@ -1095,7 +1095,9 @@ requestNode <- function(await, backend, timeout, delta, alpha) {
     okay <- TRUE
     truth <- "future:::requestNode() validation call"
     res <- tryCatch({
-      clusterCall(cl = cl, function(x) x, truth)[[1]]
+      suppressWarnings({
+        clusterCall(cl = cl, function(x) x, truth)[[1]]
+      })
     }, error = identity)
     ## If not working, investigate why, and relaunch a new worker
     if (inherits(res, "error") || !identical(res, truth)) {
@@ -1195,7 +1197,9 @@ node_call_nonblocking <- local({
   
   function(node, ..., when = "send call to", future) {
     tryCatch({
-      sendCall(node, ...)
+      suppressWarnings({
+        sendCall(node, ...)
+      })
     }, error = function(ex) {
       msg <- post_mortem_cluster_failure(ex, when = when, node = node, future = future)
       ex <- FutureError(msg, future = future)
@@ -1210,7 +1214,9 @@ cluster_call_blocking <- function(cl, ..., when = "call function on", future, ex
   stop_if_not(inherits(future, "Future"))
   
   ans <- tryCatch({
-    clusterCall(cl = cl, ...)
+    suppressWarnings({
+      clusterCall(cl = cl, ...)
+    })
   }, error = function(ex) {
     msg <- post_mortem_cluster_failure(ex, when = when, node = cl[[1]], future = future)
     ex <- FutureError(msg, future = future)

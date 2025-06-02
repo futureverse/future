@@ -23,12 +23,17 @@
    worker, which therefore also terminates the future.
 
  * `future()` arguments `stdout` and `conditions` were not applied
-   when packages that are specified via argument `packages` where
+   when packages that were specified via argument `packages` were
    loaded and attached. This prevented us from excluding, for
    instance, `packageStartupMessage`:s, causing them to be displayed
    in sequential and multicore processing.
  
- * Now the ClusterFutureBackend tries even harder to shut down
+ * When the using `cluster` and `multisession` backends, one could, in
+   some cases, end up with warnings on "package may not be available
+   when loading" that are produced by `serialize()`. These type of
+   warnings are now suppressed.
+ 
+ * Now the cluster future backend tries even harder to shut down
    parallel cluster workers when shutting down the backend. If it
    fails to communicate with one or more of the parallel workers, it
    will now close any socket connections that remain open towards such
