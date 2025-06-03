@@ -5,10 +5,13 @@
 \alias{FUTURE}
 \title{Create a Future Cluster of Stateless Workers for Parallel Processing}
 \usage{
-makeClusterFuture(specs = NA_integer_, ...)
+makeClusterFuture(specs = nbrOfWorkers(), ...)
 }
 \arguments{
-\item{specs}{Ignored. This exists only to support
+\item{specs}{Ignored.
+If specified, the value should equal \code{nbrOfWorkers()} (default).
+A missing value corresponds to specifying \code{nbrOfWorkers()}.
+This argument exists only to support
 \code{parallel::makeCluster(NA, type = future::FUTURE)}.}
 
 \item{\ldots}{Named arguments passed to \code{\link[=future]{future()}}.}

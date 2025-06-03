@@ -6,7 +6,10 @@
 #' particularly because of the stateless nature of the cluster._
 #'
 #'
-#' @param specs Ignored. This exists only to support
+#' @param specs Ignored.
+#' If specified, the value should equal `nbrOfWorkers()` (default).
+#' A missing value corresponds to specifying `nbrOfWorkers()`.
+#' This argument exists only to support
 #' `parallel::makeCluster(NA, type = future::FUTURE)`.
 #'
 #' @param \ldots Named arguments passed to [future::future()].
@@ -81,7 +84,24 @@
 #' 
 #' @importFrom future nbrOfWorkers
 #' @rawNamespace if (getRversion() >= "4.4") export(makeClusterFuture)
-makeClusterFuture <- function(specs = NA_integer_, ...) {
+makeClusterFuture <- function(specs = nbrOfWorkers(), ...) {
+  stop_if_not(length(specs) == 1L)
+
+  backend <- plan("backend")
+  n <- nbrOfWorkers(backend)
+  if (is.na(specs)) specs <- n
+
+  if (is.numeric(specs)) {
+    if (specs <= 0) {
+      stop("Argument 'specs' must be a positive integer: %s", specs)
+    }
+    if (specs != n) {
+      stop(sprintf("Value of argument 'specs' does not match the number of workers in the registered future backend (%s:%s): %g != %g", class(backend)[1], backend[["uuid"]], specs, n))
+    }
+  } else {
+    stop("Unknown type of argument 'specs': ", typeof(specs))
+  }
+  
   options <- list(...)
   if (length(options) > 0L) {
     names <- names(options)
@@ -90,8 +110,7 @@ makeClusterFuture <- function(specs = NA_integer_, ...) {
     }
   }
 
-  backend <- plan("backend")
-  cl <- vector("list", length = nbrOfWorkers(backend))
+  cl <- vector("list", length = n)
   for (kk in seq_along(cl)) {
     node <- new.env(parent = emptyenv())
     node[["options"]] <- options
