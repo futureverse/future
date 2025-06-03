@@ -1,5 +1,11 @@
 #' Create a Future Cluster of Stateless Workers for Parallel Processing
 #'
+#' _WARNING: Please note that this sets up a stateless set of cluster nodes,
+#' which means that `clusterEvalQ(cl, { a <- 3.14 })` will have no effect.
+#' Consider this a first beta version and use it with great care,
+#' particularly because of the stateless nature of the cluster._
+#'
+#'
 #' @param \ldots Named arguments passed to [future::future()].
 #'
 #' @return
@@ -68,6 +74,8 @@
 #' futures are stateless.
 #'
 #' @aliases FUTURE
+#' @keywords internal
+#' 
 #' @importFrom future nbrOfWorkers
 #' @rawNamespace if (getRversion() >= "4.4") export(makeClusterFuture)
 makeClusterFuture <- function(...) {

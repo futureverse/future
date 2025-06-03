@@ -14,7 +14,10 @@ makeClusterFuture(...)
 Returns a \pkg{parallel} \code{cluster} object of class \code{FutureCluster}.
 }
 \description{
-Create a Future Cluster of Stateless Workers for Parallel Processing
+\emph{WARNING: Please note that this sets up a stateless set of cluster nodes,
+which means that \code{clusterEvalQ(cl, { a <- 3.14 })} will have no effect.
+Consider this a first beta version and use it with great care,
+particularly because of the stateless nature of the cluster.}
 }
 \section{Future Clusters are Stateless}{
 
@@ -84,3 +87,4 @@ str(y)
 plan(sequential)
 \dontshow{\}) # examplesIf}
 }
+\keyword{internal}

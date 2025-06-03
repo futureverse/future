@@ -12,7 +12,9 @@
    graphics devices explicitly (e.g. `pdf()` or `png()`) before
    plotting. Alternatively, explicitly set R option `device` inside
    the future expression.
-   
+
+## Beta Features
+
  * Add `makeClusterFuture()` for creating a cluster of stateless
    parallel workers for processing via the future framework. This
    requires R (>= 4.4.0) [2024-04-24].
