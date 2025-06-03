@@ -6,6 +6,9 @@
 #' particularly because of the stateless nature of the cluster._
 #'
 #'
+#' @param specs Ignored. This exists only to support
+#' `parallel::makeCluster(NA, type = future::FUTURE)`.
+#'
 #' @param \ldots Named arguments passed to [future::future()].
 #'
 #' @return
@@ -78,7 +81,7 @@
 #' 
 #' @importFrom future nbrOfWorkers
 #' @rawNamespace if (getRversion() >= "4.4") export(makeClusterFuture)
-makeClusterFuture <- function(...) {
+makeClusterFuture <- function(specs = NA_integer_, ...) {
   options <- list(...)
   if (length(options) > 0L) {
     names <- names(options)
