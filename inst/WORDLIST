@@ -196,6 +196,7 @@ chr
 ci
 cleanEx
 closeAllConnections
+clusterSetRNGStream
 conditionMessage
 configurating
 conn
@@ -211,6 +212,7 @@ dbConnect
 ddb
 deprecations
 detectCores
+deterministically
 df
 dfn
 difftime
