@@ -69,6 +69,7 @@ futures are stateless.
 }
 
 \examples{
+\dontshow{if ((getRversion() >= "4.4.0")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 plan(multisession)
 cl <- makeClusterFuture()
 
@@ -81,5 +82,5 @@ y <- parallel::parLapply(cl, 11:13, function(x) {
 str(y)
 
 plan(sequential)
-
+\dontshow{\}) # examplesIf}
 }

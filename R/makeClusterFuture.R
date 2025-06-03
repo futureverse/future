@@ -5,7 +5,7 @@
 #' @return
 #' Returns a \pkg{parallel} `cluster` object of class `FutureCluster`.
 #'
-#' @examples
+#' @examplesIf (getRversion() >= "4.4.0")
 #' plan(multisession)
 #' cl <- makeClusterFuture()
 #'
