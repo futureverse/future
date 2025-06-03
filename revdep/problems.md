@@ -26,6 +26,30 @@ Run `revdepcheck::revdep_details(, "adestr")` for more info
         ‘plot.R’ ‘print.R’ ‘reference_implementation.R’
     ```
 
+# AgePopDenom
+
+<details>
+
+* Version: 0.4.0
+* GitHub: NA
+* Source code: https://github.com/cran/AgePopDenom
+* Date/Publication: 2025-02-25 18:10:02 UTC
+* Number of recursive dependencies: 138
+
+Run `revdepcheck::revdep_details(, "AgePopDenom")` for more info
+
+</details>
+
+## In both
+
+*   checking package dependencies ... ERROR
+    ```
+    Package required but not available: ‘terra’
+    
+    See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
+    manual.
+    ```
+
 # AICcPermanova
 
 <details>
@@ -132,13 +156,64 @@ Run `revdepcheck::revdep_details(, "bamm")` for more info
 
 ## In both
 
-*   checking dependencies in R code ... NOTE
+*   checking whether package ‘bamm’ can be installed ... ERROR
     ```
-    Namespaces in Imports field not imported from:
-      ‘crosstalk’ ‘plotly’
-      All declared Imports should be used.
+    Installation failed.
+    See ‘/scratch/henrik/revdep/future/checks/bamm/new/bamm.Rcheck/00install.out’ for details.
     ```
 
+## Installation
+
+### Devel
+
+```
+* installing *source* package ‘bamm’ ...
+** this is package ‘bamm’ version ‘0.5.0’
+** package ‘bamm’ successfully unpacked and MD5 sums checked
+** using staged installation
+** libs
+using C++ compiler: ‘g++ (GCC) 13.3.1 20240611 (Red Hat 13.3.1-2)’
+g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG  -I'/scratch/henrik/revdep/future/library/bamm/Rcpp/include' -I'/scratch/henrik/revdep/future/library/bamm/RcppArmadillo/include' -I/usr/local/include    -fpic  -g -O2   -c RcppExports.cpp -o RcppExports.o
+g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG  -I'/scratch/henrik/revdep/future/library/bamm/Rcpp/include' -I'/scratch/henrik/revdep/future/library/bamm/RcppArmadillo/include' -I/usr/local/include    -fpic  -g -O2   -c randomize_pams.cpp -o randomize_pams.o
+g++ -std=gnu++17 -shared -L/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/lib -L/usr/local/lib64 -o bamm.so RcppExports.o randomize_pams.o -L/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/lib -lR
+installing to /scratch/henrik/revdep/future/checks/bamm/new/bamm.Rcheck/00LOCK-bamm/00new/bamm/libs
+** R
+** inst
+** byte-compile and prepare package for lazy loading
+Error in loadNamespace(i, c(lib.loc, .libPaths()), versionCheck = vI[[i]]) : 
+  there is no package called ‘terra’
+Calls: <Anonymous> ... loadNamespace -> withRestarts -> withOneRestart -> doWithOneRestart
+Execution halted
+ERROR: lazy loading failed for package ‘bamm’
+* removing ‘/scratch/henrik/revdep/future/checks/bamm/new/bamm.Rcheck/bamm’
+
+
+```
+### CRAN
+
+```
+* installing *source* package ‘bamm’ ...
+** this is package ‘bamm’ version ‘0.5.0’
+** package ‘bamm’ successfully unpacked and MD5 sums checked
+** using staged installation
+** libs
+using C++ compiler: ‘g++ (GCC) 13.3.1 20240611 (Red Hat 13.3.1-2)’
+g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG  -I'/scratch/henrik/revdep/future/library/bamm/Rcpp/include' -I'/scratch/henrik/revdep/future/library/bamm/RcppArmadillo/include' -I/usr/local/include    -fpic  -g -O2   -c RcppExports.cpp -o RcppExports.o
+g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG  -I'/scratch/henrik/revdep/future/library/bamm/Rcpp/include' -I'/scratch/henrik/revdep/future/library/bamm/RcppArmadillo/include' -I/usr/local/include    -fpic  -g -O2   -c randomize_pams.cpp -o randomize_pams.o
+g++ -std=gnu++17 -shared -L/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/lib -L/usr/local/lib64 -o bamm.so RcppExports.o randomize_pams.o -L/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/lib -lR
+installing to /scratch/henrik/revdep/future/checks/bamm/old/bamm.Rcheck/00LOCK-bamm/00new/bamm/libs
+** R
+** inst
+** byte-compile and prepare package for lazy loading
+Error in loadNamespace(i, c(lib.loc, .libPaths()), versionCheck = vI[[i]]) : 
+  there is no package called ‘terra’
+Calls: <Anonymous> ... loadNamespace -> withRestarts -> withOneRestart -> doWithOneRestart
+Execution halted
+ERROR: lazy loading failed for package ‘bamm’
+* removing ‘/scratch/henrik/revdep/future/checks/bamm/old/bamm.Rcheck/bamm’
+
+
+```
 # baseballr
 
 <details>
@@ -257,6 +332,47 @@ Run `revdepcheck::revdep_details(, "brms")` for more info
     Found the following significant warnings:
       Warning: namespace ‘colorspace’ is not available and has been replaced
     See ‘/scratch/henrik/revdep/future/checks/brms/new/brms.Rcheck/00install.out’ for details.
+    ```
+
+# canaper
+
+<details>
+
+* Version: 1.0.1
+* GitHub: https://github.com/ropensci/canaper
+* Source code: https://github.com/cran/canaper
+* Date/Publication: 2023-05-04 23:00:06 UTC
+* Number of recursive dependencies: 151
+
+Run `revdepcheck::revdep_details(, "canaper")` for more info
+
+</details>
+
+## In both
+
+*   checking tests ...
+    ```
+      Running ‘testthat.R’
+     ERROR
+    Running the tests in ‘tests/testthat.R’ failed.
+    Last 50 lines of output:
+        8.       └─base::withRestarts(stop(cond), retry_loadNamespace = function() NULL)
+        9.         └─base (local) withOneRestart(expr, restarts[[1L]])
+       10.           └─base (local) doWithOneRestart(return(expr), restart)
+      ── Error ('test-get_ses.R:9:1'): (code run outside of `test_that()`) ───────────
+      <purrr_error_indexed/rlang_error/error/condition>
+      Error in `purrr::map(1:100, ~calc_biodiv_random(comm, phy, phy_alt, "curveball", 
+    ...
+        7.   └─base::loadNamespace(j <- i[[1L]], c(lib.loc, .libPaths()), versionCheck = vI[[j]])
+        8.     ├─base::namespaceImport(...)
+        9.     └─base::loadNamespace(i, c(lib.loc, .libPaths()), versionCheck = vI[[i]])
+       10.       └─base::withRestarts(stop(cond), retry_loadNamespace = function() NULL)
+       11.         └─base (local) withOneRestart(expr, restarts[[1L]])
+       12.           └─base (local) doWithOneRestart(return(expr), restart)
+      
+      [ FAIL 9 | WARN 0 | SKIP 0 | PASS 99 ]
+      Error: Test failures
+      Execution halted
     ```
 
 # ceRNAnetsim
@@ -627,6 +743,66 @@ Run `revdepcheck::revdep_details(, "CSGo")` for more info
       All declared Imports should be used.
     ```
 
+# dartR.popgen
+
+<details>
+
+* Version: 1.0.0
+* GitHub: NA
+* Source code: https://github.com/cran/dartR.popgen
+* Date/Publication: 2024-06-27 23:20:04 UTC
+* Number of recursive dependencies: 174
+
+Run `revdepcheck::revdep_details(, "dartR.popgen")` for more info
+
+</details>
+
+## In both
+
+*   checking whether package ‘dartR.popgen’ can be installed ... ERROR
+    ```
+    Installation failed.
+    See ‘/scratch/henrik/revdep/future/checks/dartR.popgen/new/dartR.popgen.Rcheck/00install.out’ for details.
+    ```
+
+## Installation
+
+### Devel
+
+```
+* installing *source* package ‘dartR.popgen’ ...
+** this is package ‘dartR.popgen’ version ‘1.0.0’
+** package ‘dartR.popgen’ successfully unpacked and MD5 sums checked
+** using staged installation
+** R
+** inst
+** byte-compile and prepare package for lazy loading
+Error: package or namespace load failed for ‘dartR.base’ in loadNamespace(i, c(lib.loc, .libPaths()), versionCheck = vI[[i]]):
+ there is no package called ‘terra’
+Execution halted
+ERROR: lazy loading failed for package ‘dartR.popgen’
+* removing ‘/scratch/henrik/revdep/future/checks/dartR.popgen/new/dartR.popgen.Rcheck/dartR.popgen’
+
+
+```
+### CRAN
+
+```
+* installing *source* package ‘dartR.popgen’ ...
+** this is package ‘dartR.popgen’ version ‘1.0.0’
+** package ‘dartR.popgen’ successfully unpacked and MD5 sums checked
+** using staged installation
+** R
+** inst
+** byte-compile and prepare package for lazy loading
+Error: package or namespace load failed for ‘dartR.base’ in loadNamespace(i, c(lib.loc, .libPaths()), versionCheck = vI[[i]]):
+ there is no package called ‘terra’
+Execution halted
+ERROR: lazy loading failed for package ‘dartR.popgen’
+* removing ‘/scratch/henrik/revdep/future/checks/dartR.popgen/old/dartR.popgen.Rcheck/dartR.popgen’
+
+
+```
 # dipsaus
 
 <details>
@@ -640,33 +816,6 @@ Run `revdepcheck::revdep_details(, "CSGo")` for more info
 Run `revdepcheck::revdep_details(, "dipsaus")` for more info
 
 </details>
-
-## Newly broken
-
-*   checking examples ... ERROR
-    ```
-    Running examples in ‘dipsaus-Ex.R’ failed
-    The error most likely occurred in:
-    
-    > ### Name: map
-    > ### Title: Create R object map.
-    > ### Aliases: map session_map rds_map text_map
-    > 
-    > ### ** Examples
-    > 
-    > # ----------------------Basic Usage ----------------------
-    ...
-    > # set a normal message
-    > map$set(key = 'a', value = 1)
-    > 
-    > # set a large object
-    > map$set(key = 'b', value = rnorm(100000))
-    Warning in file(con, "w") :
-      cannot open file '/c4/home/henrik/.cache/R/dipsaus/file_locks/4dMaH8wQnr6YGuuP1TjgiouKOyTKKHP9yRoGtIfjPLUtBt5R4w': No such file or directory
-    Error in file(con, "w") : cannot open the connection
-    Calls: <Anonymous> ... <Anonymous> -> <Anonymous> -> dipsaus_lock -> writeLines -> file
-    Execution halted
-    ```
 
 ## In both
 
@@ -771,6 +920,30 @@ Run `revdepcheck::revdep_details(, "EFAtools")` for more info
       All declared Imports should be used.
     ```
 
+# elevatr
+
+<details>
+
+* Version: 0.99.0
+* GitHub: https://github.com/jhollist/elevatr
+* Source code: https://github.com/cran/elevatr
+* Date/Publication: 2023-09-12 21:00:02 UTC
+* Number of recursive dependencies: 78
+
+Run `revdepcheck::revdep_details(, "elevatr")` for more info
+
+</details>
+
+## In both
+
+*   checking package dependencies ... ERROR
+    ```
+    Package required but not available: ‘terra’
+    
+    See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
+    manual.
+    ```
+
 # envi
 
 <details>
@@ -787,32 +960,9 @@ Run `revdepcheck::revdep_details(, "envi")` for more info
 
 ## In both
 
-*   checking whether package ‘envi’ can be installed ... WARNING
-    ```
-    Found the following significant warnings:
-      Warning: no DISPLAY variable so Tk is not available
-    See ‘/scratch/henrik/revdep/future/checks/envi/new/envi.Rcheck/00install.out’ for details.
-    ```
-
-# EpiForsk
-
-<details>
-
-* Version: 0.1.1
-* GitHub: NA
-* Source code: https://github.com/cran/EpiForsk
-* Date/Publication: 2024-02-26 13:40:05 UTC
-* Number of recursive dependencies: 124
-
-Run `revdepcheck::revdep_details(, "EpiForsk")` for more info
-
-</details>
-
-## In both
-
 *   checking package dependencies ... ERROR
     ```
-    Package required but not available: ‘MatchIt’
+    Package required but not available: ‘terra’
     
     See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
     manual.
@@ -1128,29 +1278,36 @@ Run `revdepcheck::revdep_details(, "geocmeans")` for more info
 
 ## In both
 
-*   checking re-building of vignette outputs ... ERROR
+*   checking package dependencies ... ERROR
     ```
-    Error(s) in re-building vignettes:
-    --- re-building ‘introduction.Rmd’ using rmarkdown
+    Package required but not available: ‘terra’
     
-    Quitting from introduction.Rmd:487-489 [unnamed-chunk-38]
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    <error/rlang_error>
-    Error in `st_transform.bbox()`:
-    ! method not available for GDAL: 3.0.4
-    ---
-    Backtrace:
-    ...
+    See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
+    manual.
+    ```
+
+# geohabnet
+
+<details>
+
+* Version: 2.2
+* GitHub: https://github.com/GarrettLab/HabitatConnectivity
+* Source code: https://github.com/cran/geohabnet
+* Date/Publication: 2025-05-21 09:00:02 UTC
+* Number of recursive dependencies: 139
+
+Run `revdepcheck::revdep_details(, "geohabnet")` for more info
+
+</details>
+
+## In both
+
+*   checking package dependencies ... ERROR
+    ```
+    Package required but not available: ‘terra’
     
-    Error: processing vignette 'introduction.Rmd' failed with diagnostics:
-    method not available for GDAL: 3.0.4
-    --- failed re-building ‘introduction.Rmd’
-    
-    SUMMARY: processing the following file failed:
-      ‘introduction.Rmd’
-    
-    Error: Vignette re-building failed.
-    Execution halted
+    See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
+    manual.
     ```
 
 # googleComputeEngineR
@@ -1259,6 +1416,30 @@ Run `revdepcheck::revdep_details(, "gsynth")` for more info
       Specified C++11: please drop specification unless essential
     ```
 
+# gtfs2emis
+
+<details>
+
+* Version: 0.1.1
+* GitHub: https://github.com/ipeaGIT/gtfs2emis
+* Source code: https://github.com/cran/gtfs2emis
+* Date/Publication: 2024-12-02 15:40:12 UTC
+* Number of recursive dependencies: 92
+
+Run `revdepcheck::revdep_details(, "gtfs2emis")` for more info
+
+</details>
+
+## In both
+
+*   checking package dependencies ... ERROR
+    ```
+    Package required but not available: ‘terra’
+    
+    See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
+    manual.
+    ```
+
 # gtfs2gps
 
 <details>
@@ -1275,38 +1456,12 @@ Run `revdepcheck::revdep_details(, "gtfs2gps")` for more info
 
 ## In both
 
-*   checking tests ...
+*   checking package dependencies ... ERROR
     ```
-      Running ‘testthat.R’
-     ERROR
-    Running the tests in ‘tests/testthat.R’ failed.
-    Complete output:
-      > library(testthat)
-      > library(gtfs2gps)
-      gtfs2gps version 2.1-2 is now loaded
-      NOTE: All filter functions from gtfs2gps were removed
-      Please replace them by similar functions from gtfstools
-      > 
-    ...
-       4.     └─terra (local) .local(x, ...)
-       5.       ├─terra::makeValid(x)
-       6.       └─terra::makeValid(x)
-       7.         └─terra (local) .local(x, ...)
-       8.           └─terra:::messages(x)
-       9.             └─terra:::error(f, x@pntr$getError())
-      
-      [ FAIL 1 | WARN 26 | SKIP 0 | PASS 119 ]
-      Error: Test failures
-      Execution halted
-    ```
-
-*   checking DESCRIPTION meta-information ... NOTE
-    ```
-      Missing dependency on R >= 4.1.0 because package code uses the pipe
-      |> or function shorthand \(...) syntax added in R 4.1.0.
-      File(s) using such syntax:
-        ‘adjust_speed.R’ ‘adjust_speed.Rd’ ‘gps_as_sflinestring.Rd’
-        ‘gps_as_sfpoints.Rd’ ‘gtfs2gps.Rd’ ‘write_gtfs.Rd’
+    Package required but not available: ‘terra’
+    
+    See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
+    manual.
     ```
 
 # hero
@@ -1333,6 +1488,30 @@ Run `revdepcheck::revdep_details(, "hero")` for more info
     checkRd: (-1) hero.Rd:69: Lost braces
         69 | code{package == "Rmpi"}, then \code{\link[Rmpi]{mpi.applyLB}} is used.}
            |     ^
+    ```
+
+# heterogen
+
+<details>
+
+* Version: 1.2.33
+* GitHub: https://github.com/patauchi/heterogen
+* Source code: https://github.com/cran/heterogen
+* Date/Publication: 2023-08-17 07:42:33 UTC
+* Number of recursive dependencies: 53
+
+Run `revdepcheck::revdep_details(, "heterogen")` for more info
+
+</details>
+
+## In both
+
+*   checking package dependencies ... ERROR
+    ```
+    Package required but not available: ‘terra’
+    
+    See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
+    manual.
     ```
 
 # hwep
@@ -1485,6 +1664,30 @@ Run `revdepcheck::revdep_details(, "interflex")` for more info
 *   checking C++ specification ... NOTE
     ```
       Specified C++11: please drop specification unless essential
+    ```
+
+# InterpolateR
+
+<details>
+
+* Version: 1.3-4
+* GitHub: https://github.com/Jonnathan-Landi/InterpolateR
+* Source code: https://github.com/cran/InterpolateR
+* Date/Publication: 2025-05-02 18:50:06 UTC
+* Number of recursive dependencies: 67
+
+Run `revdepcheck::revdep_details(, "InterpolateR")` for more info
+
+</details>
+
+## In both
+
+*   checking package dependencies ... ERROR
+    ```
+    Package required but not available: ‘terra’
+    
+    See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
+    manual.
     ```
 
 # ISAnalytics
@@ -1671,6 +1874,30 @@ Run `revdepcheck::revdep_details(, "lava")` for more info
         ‘contr.Rd’
     ```
 
+# ldmppr
+
+<details>
+
+* Version: 1.0.4
+* GitHub: https://github.com/lanedrew/ldmppr
+* Source code: https://github.com/cran/ldmppr
+* Date/Publication: 2025-02-24 21:00:02 UTC
+* Number of recursive dependencies: 129
+
+Run `revdepcheck::revdep_details(, "ldmppr")` for more info
+
+</details>
+
+## In both
+
+*   checking package dependencies ... ERROR
+    ```
+    Package required but not available: ‘terra’
+    
+    See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
+    manual.
+    ```
+
 # ldsr
 
 <details>
@@ -1690,6 +1917,30 @@ Run `revdepcheck::revdep_details(, "ldsr")` for more info
 *   checking C++ specification ... NOTE
     ```
       Specified C++11: please drop specification unless essential
+    ```
+
+# lidR
+
+<details>
+
+* Version: 4.2.1
+* GitHub: https://github.com/r-lidar/lidR
+* Source code: https://github.com/cran/lidR
+* Date/Publication: 2025-06-02 10:20:02 UTC
+* Number of recursive dependencies: 153
+
+Run `revdepcheck::revdep_details(, "lidR")` for more info
+
+</details>
+
+## In both
+
+*   checking package dependencies ... ERROR
+    ```
+    Package required but not available: ‘terra’
+    
+    See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
+    manual.
     ```
 
 # MAI
@@ -1715,6 +1966,30 @@ Run `revdepcheck::revdep_details(, "MAI")` for more info
     is not mentioned in the DESCRIPTION file.
     ```
 
+# malariaAtlas
+
+<details>
+
+* Version: 1.6.3
+* GitHub: https://github.com/malaria-atlas-project/malariaAtlas
+* Source code: https://github.com/cran/malariaAtlas
+* Date/Publication: 2024-08-26 08:20:02 UTC
+* Number of recursive dependencies: 122
+
+Run `revdepcheck::revdep_details(, "malariaAtlas")` for more info
+
+</details>
+
+## In both
+
+*   checking package dependencies ... ERROR
+    ```
+    Package required but not available: ‘terra’
+    
+    See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
+    manual.
+    ```
+
 # mapme.biodiversity
 
 <details>
@@ -1731,29 +2006,12 @@ Run `revdepcheck::revdep_details(, "mapme.biodiversity")` for more info
 
 ## In both
 
-*   checking tests ...
+*   checking package dependencies ... ERROR
     ```
-      Running ‘testthat.R’
-     ERROR
-    Running the tests in ‘tests/testthat.R’ failed.
-    Last 50 lines of output:
-      ══ Failed tests ════════════════════════════════════════════════════════════════
-      ── Failure ('test-calc_deforestation_drivers.R:16:3'): deforestation drivers works ──
-      `.check_single_asset(result)` produced warnings.
-      ── Failure ('test-calc_deforestation_drivers.R:17:3'): deforestation drivers works ──
-      unique(result$variable) (`actual`) not equal to c(...) (`expected`).
-      
-    ...
-       12. │               └─jsonlite:::parseJSON(txt, bigint_as_char)
-       13. │                 └─jsonlite:::parse_string(txt, bigint_as_char)
-       14. └─base::.handleSimpleError(...)
-       15.   └─purrr (local) h(simpleError(msg, call))
-       16.     └─cli::cli_abort(...)
-       17.       └─rlang::abort(...)
-      
-      [ FAIL 5 | WARN 1 | SKIP 38 | PASS 563 ]
-      Error: Test failures
-      Execution halted
+    Package required but not available: ‘terra’
+    
+    See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
+    manual.
     ```
 
 # migraph
@@ -1870,11 +2128,9 @@ Run `revdepcheck::revdep_details(, "MineICA")` for more info
     Missing or unexported object: ‘GOstats::geneIdsByCategory’
     ':::' calls which should be '::':
       ‘Biobase:::annotation<-’ ‘Biobase:::validMsg’ ‘fpc:::pamk’
-      ‘mclust:::adjustedRandIndex’
+      ‘lumi:::getChipInfo’ ‘mclust:::adjustedRandIndex’
       See the note in ?`:::` about the use of this operator.
     Unexported object imported by a ':::' call: ‘Biobase:::isValidVersion’
-      See the note in ?`:::` about the use of this operator.
-    Unavailable namespace imported from by a ':::' call: ‘lumi’
       See the note in ?`:::` about the use of this operator.
     ```
 
@@ -2013,6 +2269,108 @@ Run `revdepcheck::revdep_details(, "mistyR")` for more info
            |                                                   ^
     ```
 
+# mlr3spatial
+
+<details>
+
+* Version: 0.5.0
+* GitHub: https://github.com/mlr-org/mlr3spatial
+* Source code: https://github.com/cran/mlr3spatial
+* Date/Publication: 2024-03-09 13:00:02 UTC
+* Number of recursive dependencies: 91
+
+Run `revdepcheck::revdep_details(, "mlr3spatial")` for more info
+
+</details>
+
+## In both
+
+*   checking package dependencies ... ERROR
+    ```
+    Package required but not available: ‘terra’
+    
+    See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
+    manual.
+    ```
+
+# momentuHMM
+
+<details>
+
+* Version: 1.5.5
+* GitHub: https://github.com/bmcclintock/momentuHMM
+* Source code: https://github.com/cran/momentuHMM
+* Date/Publication: 2022-10-18 20:52:35 UTC
+* Number of recursive dependencies: 150
+
+Run `revdepcheck::revdep_details(, "momentuHMM")` for more info
+
+</details>
+
+## In both
+
+*   checking whether package ‘momentuHMM’ can be installed ... ERROR
+    ```
+    Installation failed.
+    See ‘/scratch/henrik/revdep/future/checks/momentuHMM/new/momentuHMM.Rcheck/00install.out’ for details.
+    ```
+
+## Installation
+
+### Devel
+
+```
+* installing *source* package ‘momentuHMM’ ...
+** this is package ‘momentuHMM’ version ‘1.5.5’
+** package ‘momentuHMM’ successfully unpacked and MD5 sums checked
+** using staged installation
+** libs
+using C compiler: ‘gcc (GCC) 13.3.1 20240611 (Red Hat 13.3.1-2)’
+using C++ compiler: ‘g++ (GCC) 13.3.1 20240611 (Red Hat 13.3.1-2)’
+g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG  -I'/scratch/henrik/revdep/future/library/momentuHMM/Rcpp/include' -I'/scratch/henrik/revdep/future/library/momentuHMM/RcppArmadillo/include' -I/usr/local/include    -fpic  -g -O2   -c RcppExports.cpp -o RcppExports.o
+g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG  -I'/scratch/henrik/revdep/future/library/momentuHMM/Rcpp/include' -I'/scratch/henrik/revdep/future/library/momentuHMM/RcppArmadillo/include' -I/usr/local/include    -fpic  -g -O2   -c XBloop.cpp -o XBloop.o
+g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG  -I'/scratch/henrik/revdep/future/library/momentuHMM/Rcpp/include' -I'/scratch/henrik/revdep/future/library/momentuHMM/RcppArmadillo/include' -I/usr/local/include    -fpic  -g -O2   -c getDM.cpp -o getDM.o
+...
+** data
+*** moving datasets to lazyload DB
+** inst
+** byte-compile and prepare package for lazy loading
+Error in loadNamespace(i, c(lib.loc, .libPaths()), versionCheck = vI[[i]]) : 
+  there is no package called ‘terra’
+Calls: <Anonymous> ... loadNamespace -> withRestarts -> withOneRestart -> doWithOneRestart
+Execution halted
+ERROR: lazy loading failed for package ‘momentuHMM’
+* removing ‘/scratch/henrik/revdep/future/checks/momentuHMM/new/momentuHMM.Rcheck/momentuHMM’
+
+
+```
+### CRAN
+
+```
+* installing *source* package ‘momentuHMM’ ...
+** this is package ‘momentuHMM’ version ‘1.5.5’
+** package ‘momentuHMM’ successfully unpacked and MD5 sums checked
+** using staged installation
+** libs
+using C compiler: ‘gcc (GCC) 13.3.1 20240611 (Red Hat 13.3.1-2)’
+using C++ compiler: ‘g++ (GCC) 13.3.1 20240611 (Red Hat 13.3.1-2)’
+g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG  -I'/scratch/henrik/revdep/future/library/momentuHMM/Rcpp/include' -I'/scratch/henrik/revdep/future/library/momentuHMM/RcppArmadillo/include' -I/usr/local/include    -fpic  -g -O2   -c RcppExports.cpp -o RcppExports.o
+g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG  -I'/scratch/henrik/revdep/future/library/momentuHMM/Rcpp/include' -I'/scratch/henrik/revdep/future/library/momentuHMM/RcppArmadillo/include' -I/usr/local/include    -fpic  -g -O2   -c XBloop.cpp -o XBloop.o
+g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG  -I'/scratch/henrik/revdep/future/library/momentuHMM/Rcpp/include' -I'/scratch/henrik/revdep/future/library/momentuHMM/RcppArmadillo/include' -I/usr/local/include    -fpic  -g -O2   -c getDM.cpp -o getDM.o
+...
+** data
+*** moving datasets to lazyload DB
+** inst
+** byte-compile and prepare package for lazy loading
+Error in loadNamespace(i, c(lib.loc, .libPaths()), versionCheck = vI[[i]]) : 
+  there is no package called ‘terra’
+Calls: <Anonymous> ... loadNamespace -> withRestarts -> withOneRestart -> doWithOneRestart
+Execution halted
+ERROR: lazy loading failed for package ‘momentuHMM’
+* removing ‘/scratch/henrik/revdep/future/checks/momentuHMM/old/momentuHMM.Rcheck/momentuHMM’
+
+
+```
 # multitool
 
 <details>
@@ -2140,10 +2498,10 @@ Run `revdepcheck::revdep_details(, "PAMscapes")` for more info
 
 <details>
 
-* Version: 1.6.0
+* Version: 1.8.0
 * GitHub: https://github.com/cbg-ethz/pareg
 * Source code: https://github.com/cran/pareg
-* Date/Publication: 2023-10-24
+* Date/Publication: 2024-04-30
 * Number of recursive dependencies: 319
 
 Run `revdepcheck::revdep_details(, "pareg")` for more info
@@ -2357,6 +2715,54 @@ Run `revdepcheck::revdep_details(, "photosynthesis")` for more info
         ‘simulate_error.R’ ‘simulate_error.Rd’ ‘utils.R’
     ```
 
+# phylospatial
+
+<details>
+
+* Version: 1.1.1
+* GitHub: https://github.com/matthewkling/phylospatial
+* Source code: https://github.com/cran/phylospatial
+* Date/Publication: 2025-05-02 14:00:02 UTC
+* Number of recursive dependencies: 173
+
+Run `revdepcheck::revdep_details(, "phylospatial")` for more info
+
+</details>
+
+## In both
+
+*   checking package dependencies ... ERROR
+    ```
+    Package required but not available: ‘terra’
+    
+    See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
+    manual.
+    ```
+
+# pliman
+
+<details>
+
+* Version: 3.0.0
+* GitHub: https://github.com/NA/NA
+* Source code: https://github.com/cran/pliman
+* Date/Publication: 2024-11-06 10:30:02 UTC
+* Number of recursive dependencies: 133
+
+Run `revdepcheck::revdep_details(, "pliman")` for more info
+
+</details>
+
+## In both
+
+*   checking package dependencies ... ERROR
+    ```
+    Package required but not available: ‘terra’
+    
+    See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
+    manual.
+    ```
+
 # powRICLPM
 
 <details>
@@ -2474,6 +2880,30 @@ Run `revdepcheck::revdep_details(, "qape")` for more info
            |                                                                            ^
     ```
 
+# QBMS
+
+<details>
+
+* Version: 1.5.0
+* GitHub: https://github.com/icarda-git/QBMS
+* Source code: https://github.com/cran/QBMS
+* Date/Publication: 2024-09-18 12:40:02 UTC
+* Number of recursive dependencies: 52
+
+Run `revdepcheck::revdep_details(, "QBMS")` for more info
+
+</details>
+
+## In both
+
+*   checking package dependencies ... ERROR
+    ```
+    Package required but not available: ‘terra’
+    
+    See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
+    manual.
+    ```
+
 # QDNAseq
 
 <details>
@@ -2515,47 +2945,132 @@ Run `revdepcheck::revdep_details(, "QDNAseq")` for more info
     Execution halted
     ```
 
-# receptiviti
+# rangeMapper
 
 <details>
 
-* Version: 0.1.8
-* GitHub: https://github.com/Receptiviti/receptiviti-r
-* Source code: https://github.com/cran/receptiviti
-* Date/Publication: 2024-03-29 18:00:03 UTC
-* Number of recursive dependencies: 65
+* Version: 2.0.3
+* GitHub: https://github.com/mpio-be/rangeMapper
+* Source code: https://github.com/cran/rangeMapper
+* Date/Publication: 2022-10-03 22:20:02 UTC
+* Number of recursive dependencies: 110
 
-Run `revdepcheck::revdep_details(, "receptiviti")` for more info
+Run `revdepcheck::revdep_details(, "rangeMapper")` for more info
 
 </details>
 
 ## In both
 
-*   checking tests ...
+*   checking whether package ‘rangeMapper’ can be installed ... ERROR
     ```
-      Running ‘testthat.R’
-     ERROR
-    Running the tests in ‘tests/testthat.R’ failed.
-    Complete output:
-      > library(testthat)
-      > library(receptiviti)
-      > 
-      > test_check("receptiviti")
-      Status: ERROR
-      Message: Invalid header received from client.
-    ...
-       7. └─receptiviti::receptiviti(...)
-      ── Failure ('test-receptiviti_status.R:5:3'): failures works ───────────────────
-      receptiviti_status(...) is not NULL
-      
-      `actual` is a list
-      `expected` is NULL
-      
-      [ FAIL 2 | WARN 0 | SKIP 2 | PASS 6 ]
-      Error: Test failures
-      Execution halted
+    Installation failed.
+    See ‘/scratch/henrik/revdep/future/checks/rangeMapper/new/rangeMapper.Rcheck/00install.out’ for details.
     ```
 
+## Installation
+
+### Devel
+
+```
+* installing *source* package ‘rangeMapper’ ...
+** this is package ‘rangeMapper’ version ‘2.0.3’
+** package ‘rangeMapper’ successfully unpacked and MD5 sums checked
+** using staged installation
+** R
+** data
+*** moving datasets to lazyload DB
+** inst
+** byte-compile and prepare package for lazy loading
+Error in loadNamespace(i, c(lib.loc, .libPaths()), versionCheck = vI[[i]]) : 
+  there is no package called ‘terra’
+Calls: <Anonymous> ... loadNamespace -> withRestarts -> withOneRestart -> doWithOneRestart
+Execution halted
+ERROR: lazy loading failed for package ‘rangeMapper’
+* removing ‘/scratch/henrik/revdep/future/checks/rangeMapper/new/rangeMapper.Rcheck/rangeMapper’
+
+
+```
+### CRAN
+
+```
+* installing *source* package ‘rangeMapper’ ...
+** this is package ‘rangeMapper’ version ‘2.0.3’
+** package ‘rangeMapper’ successfully unpacked and MD5 sums checked
+** using staged installation
+** R
+** data
+*** moving datasets to lazyload DB
+** inst
+** byte-compile and prepare package for lazy loading
+Error in loadNamespace(i, c(lib.loc, .libPaths()), versionCheck = vI[[i]]) : 
+  there is no package called ‘terra’
+Calls: <Anonymous> ... loadNamespace -> withRestarts -> withOneRestart -> doWithOneRestart
+Execution halted
+ERROR: lazy loading failed for package ‘rangeMapper’
+* removing ‘/scratch/henrik/revdep/future/checks/rangeMapper/old/rangeMapper.Rcheck/rangeMapper’
+
+
+```
+# rechaRge
+
+<details>
+
+* Version: 1.0.0
+* GitHub: https://github.com/gwrecharge/rechaRge
+* Source code: https://github.com/cran/rechaRge
+* Date/Publication: 2024-05-14 08:20:02 UTC
+* Number of recursive dependencies: 53
+
+Run `revdepcheck::revdep_details(, "rechaRge")` for more info
+
+</details>
+
+## In both
+
+*   checking whether package ‘rechaRge’ can be installed ... ERROR
+    ```
+    Installation failed.
+    See ‘/scratch/henrik/revdep/future/checks/rechaRge/new/rechaRge.Rcheck/00install.out’ for details.
+    ```
+
+## Installation
+
+### Devel
+
+```
+* installing *source* package ‘rechaRge’ ...
+** this is package ‘rechaRge’ version ‘1.0.0’
+** package ‘rechaRge’ successfully unpacked and MD5 sums checked
+** using staged installation
+** R
+** byte-compile and prepare package for lazy loading
+Error in loadNamespace(i, c(lib.loc, .libPaths()), versionCheck = vI[[i]]) : 
+  there is no package called ‘terra’
+Calls: <Anonymous> ... loadNamespace -> withRestarts -> withOneRestart -> doWithOneRestart
+Execution halted
+ERROR: lazy loading failed for package ‘rechaRge’
+* removing ‘/scratch/henrik/revdep/future/checks/rechaRge/new/rechaRge.Rcheck/rechaRge’
+
+
+```
+### CRAN
+
+```
+* installing *source* package ‘rechaRge’ ...
+** this is package ‘rechaRge’ version ‘1.0.0’
+** package ‘rechaRge’ successfully unpacked and MD5 sums checked
+** using staged installation
+** R
+** byte-compile and prepare package for lazy loading
+Error in loadNamespace(i, c(lib.loc, .libPaths()), versionCheck = vI[[i]]) : 
+  there is no package called ‘terra’
+Calls: <Anonymous> ... loadNamespace -> withRestarts -> withOneRestart -> doWithOneRestart
+Execution halted
+ERROR: lazy loading failed for package ‘rechaRge’
+* removing ‘/scratch/henrik/revdep/future/checks/rechaRge/old/rechaRge.Rcheck/rechaRge’
+
+
+```
 # regmedint
 
 <details>
@@ -2594,27 +3109,47 @@ Run `revdepcheck::revdep_details(, "reproducible")` for more info
 
 ## In both
 
+*   checking examples ... ERROR
+    ```
+    Running examples in ‘reproducible-Ex.R’ failed
+    The error most likely occurred in:
+    
+    > ### Name: gdalProject
+    > ### Title: 3-Step postProcess sequence for SpatRasters using 'gdalwarp'
+    > ### Aliases: gdalProject gdalResample gdalMask
+    > 
+    > ### ** Examples
+    > 
+    > # prepare dummy data -- 3 SpatRasters, 2 SpatVectors
+    > # need 2 SpatRaster
+    > rf <- system.file("ex/elev.tif", package = "terra")
+    > elev1 <- terra::rast(rf)
+    Error in loadNamespace(x) : there is no package called ‘terra’
+    Calls: loadNamespace -> withRestarts -> withOneRestart -> doWithOneRestart
+    Execution halted
+    ```
+
 *   checking tests ...
     ```
       Running ‘test-all.R’
      ERROR
     Running the tests in ‘tests/test-all.R’ failed.
     Last 50 lines of output:
+        'test-preProcessWorks.R:270:3', 'test-preProcessWorks.R:286:3',
+        'test-preProcessWorks.R:302:3', 'test-preProcessWorks.R:315:3',
         'test-preProcessWorks.R:328:3', 'test-preProcessWorks.R:348:3',
         'test-preProcessWorks.R:361:3', 'test-preProcessWorks.R:374:3',
         'test-preProcessWorks.R:391:3', 'test-preProcessWorks.R:409:3',
         'test-preProcessWorks.R:438:3', 'test-preProcessWorks.R:459:3',
-        'test-preProcessWorks.R:487:3', 'test-preProcessWorks.R:543:3',
-        'test-preProcessWorks.R:569:3', 'test-preProcessWorks.R:672:3',
     ...
-       4.       └─reproducible:::makeVal(x)
-       5.         ├─terra::makeValid(x)
-       6.         └─terra::makeValid(x)
-       7.           └─terra (local) .local(x, ...)
-       8.             └─terra:::messages(x)
-       9.               └─terra:::error(f, x@pntr$getError())
+      ── Error ('test-cache.R:1310:5'): test cache with new approach to match.call ───
+      Error in `st_make_valid.sfc(p1)`: package lwgeom required, please install it first
+      Backtrace:
+          ▆
+       1. ├─sf::st_make_valid(p1)
+       2. └─sf:::st_make_valid.sfc(p1)
       
-      [ FAIL 2 | WARN 0 | SKIP 90 | PASS 391 ]
+      [ FAIL 1 | WARN 0 | SKIP 114 | PASS 185 ]
       Error: Test failures
       Execution halted
     ```
@@ -2635,31 +3170,52 @@ Run `revdepcheck::revdep_details(, "rgee")` for more info
 
 ## In both
 
-*   checking Rd files ... NOTE
+*   checking whether package ‘rgee’ can be installed ... ERROR
     ```
-    checkRd: (-1) ee_Authenticate.Rd:40: Lost braces in \itemize; meant \describe ?
-    checkRd: (-1) ee_Authenticate.Rd:41: Lost braces in \itemize; meant \describe ?
-    checkRd: (-1) ee_Authenticate.Rd:42: Lost braces in \itemize; meant \describe ?
-    checkRd: (-1) ee_Authenticate.Rd:43: Lost braces in \itemize; meant \describe ?
-    checkRd: (-1) ee_Authenticate.Rd:44: Lost braces in \itemize; meant \describe ?
-    checkRd: (-1) ee_Initialize.Rd:49: Lost braces in \itemize; meant \describe ?
-    checkRd: (-1) ee_Initialize.Rd:50: Lost braces in \itemize; meant \describe ?
-    checkRd: (-1) ee_Initialize.Rd:51: Lost braces in \itemize; meant \describe ?
-    checkRd: (-1) ee_Initialize.Rd:52: Lost braces in \itemize; meant \describe ?
-    checkRd: (-1) ee_Initialize.Rd:53: Lost braces in \itemize; meant \describe ?
-    ...
-    checkRd: (-1) ee_imagecollection_to_local.Rd:105: Lost braces in \itemize; meant \describe ?
-    checkRd: (-1) ee_imagecollection_to_local.Rd:106: Lost braces in \itemize; meant \describe ?
-    checkRd: (-1) ee_imagecollection_to_local.Rd:107: Lost braces in \itemize; meant \describe ?
-    checkRd: (-1) ee_imagecollection_to_local.Rd:108: Lost braces in \itemize; meant \describe ?
-    checkRd: (-1) ee_install.Rd:35-37: Lost braces in \itemize; meant \describe ?
-    checkRd: (-1) ee_install.Rd:38-39: Lost braces in \itemize; meant \describe ?
-    checkRd: (-1) ee_install.Rd:40: Lost braces in \itemize; meant \describe ?
-    checkRd: (-1) ee_install.Rd:41-44: Lost braces in \itemize; meant \describe ?
-    checkRd: (-1) ee_install.Rd:45: Lost braces in \itemize; meant \describe ?
-    checkRd: (-1) ee_install.Rd:46: Lost braces in \itemize; meant \describe ?
+    Installation failed.
+    See ‘/scratch/henrik/revdep/future/checks/rgee/new/rgee.Rcheck/00install.out’ for details.
     ```
 
+## Installation
+
+### Devel
+
+```
+* installing *source* package ‘rgee’ ...
+** this is package ‘rgee’ version ‘1.1.7’
+** package ‘rgee’ successfully unpacked and MD5 sums checked
+** using staged installation
+** R
+** inst
+** byte-compile and prepare package for lazy loading
+Error in loadNamespace(i, c(lib.loc, .libPaths()), versionCheck = vI[[i]]) : 
+  there is no package called ‘terra’
+Error: unable to load R code in package ‘rgee’
+Execution halted
+ERROR: lazy loading failed for package ‘rgee’
+* removing ‘/scratch/henrik/revdep/future/checks/rgee/new/rgee.Rcheck/rgee’
+
+
+```
+### CRAN
+
+```
+* installing *source* package ‘rgee’ ...
+** this is package ‘rgee’ version ‘1.1.7’
+** package ‘rgee’ successfully unpacked and MD5 sums checked
+** using staged installation
+** R
+** inst
+** byte-compile and prepare package for lazy loading
+Error in loadNamespace(i, c(lib.loc, .libPaths()), versionCheck = vI[[i]]) : 
+  there is no package called ‘terra’
+Error: unable to load R code in package ‘rgee’
+Execution halted
+ERROR: lazy loading failed for package ‘rgee’
+* removing ‘/scratch/henrik/revdep/future/checks/rgee/old/rgee.Rcheck/rgee’
+
+
+```
 # rsi
 
 <details>
@@ -2676,13 +3232,12 @@ Run `revdepcheck::revdep_details(, "rsi")` for more info
 
 ## In both
 
-*   checking DESCRIPTION meta-information ... NOTE
+*   checking package dependencies ... ERROR
     ```
-      Missing dependency on R >= 4.1.0 because package code uses the pipe
-      |> or function shorthand \(...) syntax added in R 4.1.0.
-      File(s) using such syntax:
-        ‘calculate_indices.Rd’ ‘get_stac_data.R’ ‘get_stac_data.Rd’
-        ‘landsat_mask_function.Rd’
+    Package required but not available: ‘terra’
+    
+    See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
+    manual.
     ```
 
 # SCArray.sat
@@ -2907,6 +3462,32 @@ Run `revdepcheck::revdep_details(, "solitude")` for more info
       All declared Imports should be used.
     ```
 
+# SpaDES.core
+
+<details>
+
+* Version: 2.1.0
+* GitHub: https://github.com/PredictiveEcology/SpaDES.core
+* Source code: https://github.com/cran/SpaDES.core
+* Date/Publication: 2024-06-02 11:02:47 UTC
+* Number of recursive dependencies: 133
+
+Run `revdepcheck::revdep_details(, "SpaDES.core")` for more info
+
+</details>
+
+## In both
+
+*   checking package dependencies ... ERROR
+    ```
+    Package required but not available: ‘terra’
+    
+    Package suggested but not available for checking: ‘NLMR’
+    
+    See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
+    manual.
+    ```
+
 # spaMM
 
 <details>
@@ -2951,11 +3532,12 @@ Run `revdepcheck::revdep_details(, "sparrpowR")` for more info
 
 ## In both
 
-*   checking whether package ‘sparrpowR’ can be installed ... WARNING
+*   checking package dependencies ... ERROR
     ```
-    Found the following significant warnings:
-      Warning: no DISPLAY variable so Tk is not available
-    See ‘/scratch/henrik/revdep/future/checks/sparrpowR/new/sparrpowR.Rcheck/00install.out’ for details.
+    Package required but not available: ‘terra’
+    
+    See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
+    manual.
     ```
 
 # SPARSEMODr
@@ -3046,6 +3628,47 @@ Run `revdepcheck::revdep_details(, "sperrorest")` for more info
            |                                                             ^
     ```
 
+# spNetwork
+
+<details>
+
+* Version: 0.4.4.6
+* GitHub: https://github.com/JeremyGelb/spNetwork
+* Source code: https://github.com/cran/spNetwork
+* Date/Publication: 2025-03-29 16:00:02 UTC
+* Number of recursive dependencies: 155
+
+Run `revdepcheck::revdep_details(, "spNetwork")` for more info
+
+</details>
+
+## In both
+
+*   checking re-building of vignette outputs ... ERROR
+    ```
+    Error(s) in re-building vignettes:
+    --- re-building ‘KNetworkFunctions.Rmd’ using rmarkdown
+    
+    Quitting from KNetworkFunctions.Rmd:63-77 [unnamed-chunk-2]
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    <error/rlang_error>
+    Error:
+    ! package or namespace load failed for 'tmap' in loadNamespace(i, c(lib.loc, .libPaths()), versionCheck = vI[[i]]):
+     there is no package called 'terra'
+    ---
+    ...
+    Error: processing vignette 'TNKDE.Rmd' failed with diagnostics:
+    package or namespace load failed for 'tmap' in loadNamespace(i, c(lib.loc, .libPaths()), versionCheck = vI[[i]]):
+     there is no package called 'terra'
+    --- failed re-building ‘TNKDE.Rmd’
+    
+    SUMMARY: processing the following files failed:
+      ‘KNetworkFunctions.Rmd’ ‘NKDE.Rmd’ ‘NetworkBuilding.Rmd’ ‘TNKDE.Rmd’
+    
+    Error: Vignette re-building failed.
+    Execution halted
+    ```
+
 # sRACIPE
 
 <details>
@@ -3121,15 +3744,15 @@ Run `revdepcheck::revdep_details(, "stars")` for more info
 *   checking tests ...
     ```
       Running ‘aggregate.R’
-      Comparing ‘aggregate.Rout’ to ‘aggregate.Rout.save’ ... OK
-      Running ‘align.R’
-      Comparing ‘align.Rout’ to ‘align.Rout.save’ ... OK
-      Running ‘area.R’
-      Comparing ‘area.Rout’ to ‘area.Rout.save’ ... OK
-      Running ‘crop.R’
-      Comparing ‘crop.Rout’ to ‘crop.Rout.save’ ... OK
-      Running ‘curvilinear.R’
-      Comparing ‘curvilinear.Rout’ to ‘curvilinear.Rout.save’ ... OK
+      Comparing ‘aggregate.Rout’ to ‘aggregate.Rout.save’ ...92,93c92,108
+    < Error: package or namespace load failed for 'raster' in loadNamespace(i, c(lib.loc, .libPaths()), versionCheck = vI[[i]]):
+    <  there is no package called 'terra'
+    ---
+    > stars object with 2 dimensions and 1 attribute
+    > attribute(s):
+    >     Min. 1st Qu. Median  Mean 3rd Qu. Max.
+    > A1    28  194.25  360.5 360.5  526.75  693
+    > dimension(s):
     ...
       > 
       > s = st_set_dimensions(s, st_dimensions(s), xy = NULL) 
@@ -3151,6 +3774,84 @@ Run `revdepcheck::revdep_details(, "stars")` for more info
         ‘prcomp.Rd’
     ```
 
+# steps
+
+<details>
+
+* Version: 1.3.0
+* GitHub: https://github.com/steps-dev/steps
+* Source code: https://github.com/cran/steps
+* Date/Publication: 2022-10-04 23:30:02 UTC
+* Number of recursive dependencies: 71
+
+Run `revdepcheck::revdep_details(, "steps")` for more info
+
+</details>
+
+## In both
+
+*   checking whether package ‘steps’ can be installed ... ERROR
+    ```
+    Installation failed.
+    See ‘/scratch/henrik/revdep/future/checks/steps/new/steps.Rcheck/00install.out’ for details.
+    ```
+
+## Installation
+
+### Devel
+
+```
+* installing *source* package ‘steps’ ...
+** this is package ‘steps’ version ‘1.3.0’
+** package ‘steps’ successfully unpacked and MD5 sums checked
+** using staged installation
+** libs
+using C++ compiler: ‘g++ (GCC) 13.3.1 20240611 (Red Hat 13.3.1-2)’
+g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG  -I'/scratch/henrik/revdep/future/library/steps/Rcpp/include' -I/usr/local/include    -fpic  -g -O2   -c RcppExports.cpp -o RcppExports.o
+g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG  -I'/scratch/henrik/revdep/future/library/steps/Rcpp/include' -I/usr/local/include    -fpic  -g -O2   -c rcpp_dispersal_funs_v4.cpp -o rcpp_dispersal_funs_v4.o
+g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG  -I'/scratch/henrik/revdep/future/library/steps/Rcpp/include' -I/usr/local/include    -fpic  -g -O2   -c rcpp_utils_funs.cpp -o rcpp_utils_funs.o
+g++ -std=gnu++17 -shared -L/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/lib -L/usr/local/lib64 -o steps.so RcppExports.o rcpp_dispersal_funs_v4.o rcpp_utils_funs.o -L/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/lib -lR
+...
+** data
+*** moving datasets to lazyload DB
+** inst
+** byte-compile and prepare package for lazy loading
+Error in loadNamespace(i, c(lib.loc, .libPaths()), versionCheck = vI[[i]]) : 
+  there is no package called ‘terra’
+Calls: <Anonymous> ... loadNamespace -> withRestarts -> withOneRestart -> doWithOneRestart
+Execution halted
+ERROR: lazy loading failed for package ‘steps’
+* removing ‘/scratch/henrik/revdep/future/checks/steps/new/steps.Rcheck/steps’
+
+
+```
+### CRAN
+
+```
+* installing *source* package ‘steps’ ...
+** this is package ‘steps’ version ‘1.3.0’
+** package ‘steps’ successfully unpacked and MD5 sums checked
+** using staged installation
+** libs
+using C++ compiler: ‘g++ (GCC) 13.3.1 20240611 (Red Hat 13.3.1-2)’
+g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG  -I'/scratch/henrik/revdep/future/library/steps/Rcpp/include' -I/usr/local/include    -fpic  -g -O2   -c RcppExports.cpp -o RcppExports.o
+g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG  -I'/scratch/henrik/revdep/future/library/steps/Rcpp/include' -I/usr/local/include    -fpic  -g -O2   -c rcpp_dispersal_funs_v4.cpp -o rcpp_dispersal_funs_v4.o
+g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG  -I'/scratch/henrik/revdep/future/library/steps/Rcpp/include' -I/usr/local/include    -fpic  -g -O2   -c rcpp_utils_funs.cpp -o rcpp_utils_funs.o
+g++ -std=gnu++17 -shared -L/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/lib -L/usr/local/lib64 -o steps.so RcppExports.o rcpp_dispersal_funs_v4.o rcpp_utils_funs.o -L/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/lib -lR
+...
+** data
+*** moving datasets to lazyload DB
+** inst
+** byte-compile and prepare package for lazy loading
+Error in loadNamespace(i, c(lib.loc, .libPaths()), versionCheck = vI[[i]]) : 
+  there is no package called ‘terra’
+Calls: <Anonymous> ... loadNamespace -> withRestarts -> withOneRestart -> doWithOneRestart
+Execution halted
+ERROR: lazy loading failed for package ‘steps’
+* removing ‘/scratch/henrik/revdep/future/checks/steps/old/steps.Rcheck/steps’
+
+
+```
 # stppSim
 
 <details>
@@ -3167,11 +3868,36 @@ Run `revdepcheck::revdep_details(, "stppSim")` for more info
 
 ## In both
 
-*   checking whether package ‘stppSim’ can be installed ... WARNING
+*   checking package dependencies ... ERROR
     ```
-    Found the following significant warnings:
-      Warning: no DISPLAY variable so Tk is not available
-    See ‘/scratch/henrik/revdep/future/checks/stppSim/new/stppSim.Rcheck/00install.out’ for details.
+    Package required but not available: ‘terra’
+    
+    See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
+    manual.
+    ```
+
+# supercells
+
+<details>
+
+* Version: 1.0.0
+* GitHub: https://github.com/Nowosad/supercells
+* Source code: https://github.com/cran/supercells
+* Date/Publication: 2024-02-11 14:20:02 UTC
+* Number of recursive dependencies: 73
+
+Run `revdepcheck::revdep_details(, "supercells")` for more info
+
+</details>
+
+## In both
+
+*   checking package dependencies ... ERROR
+    ```
+    Package required but not available: ‘terra’
+    
+    See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
+    manual.
     ```
 
 # survstan
@@ -3290,45 +4016,28 @@ Run `revdepcheck::revdep_details(, "targeted")` for more info
         ‘alean.Rd’ ‘nondom.Rd’
     ```
 
-# targets
+# tenm
 
 <details>
 
-* Version: 1.11.3
-* GitHub: https://github.com/ropensci/targets
-* Source code: https://github.com/cran/targets
-* Date/Publication: 2025-05-08 17:40:02 UTC
-* Number of recursive dependencies: 156
+* Version: 0.5.1
+* GitHub: https://github.com/luismurao/tenm
+* Source code: https://github.com/cran/tenm
+* Date/Publication: 2024-07-23 00:30:01 UTC
+* Number of recursive dependencies: 78
 
-Run `revdepcheck::revdep_details(, "targets")` for more info
+Run `revdepcheck::revdep_details(, "tenm")` for more info
 
 </details>
 
 ## In both
 
-*   checking examples ... ERROR
+*   checking package dependencies ... ERROR
     ```
-    Running examples in ‘targets-Ex.R’ failed
-    The error most likely occurred in:
+    Package required but not available: ‘terra’
     
-    > ### Name: tar_renv
-    > ### Title: Set up package dependencies for compatibility with 'renv'
-    > ### Aliases: tar_renv
-    > 
-    > ### ** Examples
-    > 
-    > tar_dir({ # tar_dir() runs code from a temp dir for CRAN.
-    ...
-    +     list()
-    +   }, ask = FALSE)
-    +   tar_renv()
-    +   writeLines(readLines("_targets_packages.R"))
-    + })
-    Error:
-    ! Error in tar_renv():
-      there is no package called ‘tarchetypes’
-      See https://books.ropensci.org/targets/debugging.html
-    Execution halted
+    See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
+    manual.
     ```
 
 # tglkmeans
@@ -3661,12 +4370,12 @@ Run `revdepcheck::revdep_details(, "wingen")` for more info
 
 ## In both
 
-*   checking DESCRIPTION meta-information ... NOTE
+*   checking package dependencies ... ERROR
     ```
-      Missing dependency on R >= 4.1.0 because package code uses the pipe
-      |> or function shorthand \(...) syntax added in R 4.1.0.
-      File(s) using such syntax:
-        ‘general_gd.R’ ‘plot_gd.R’ ‘window_gd.R’
+    Package required but not available: ‘terra’
+    
+    See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
+    manual.
     ```
 
 # wru
