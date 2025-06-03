@@ -89,21 +89,40 @@ makeClusterFuture <- function(specs = NA_integer_, ...) {
       stop("All arguments must be named")
     }
   }
-  
-  cl <- vector("list", length = nbrOfWorkers())
+
+  backend <- plan("backend")
+  cl <- vector("list", length = nbrOfWorkers(backend))
   for (kk in seq_along(cl)) {
     node <- new.env(parent = emptyenv())
     node[["options"]] <- options
+    node[["backend"]] <- backend
     class(node) <- c("FutureNode")
     cl[[kk]] <- node
   }
+  attr(cl, "backend") <- backend
   class(cl) <- c("FutureCluster", "cluster")
   cl
 }
 
 
+#' @rawNamespace if (getRversion() >= "4.4") S3method(print,FutureCluster)
+print.FutureCluster <- function(x, ...) {
+  cat(sprintf("A %s cluster with %d node\n", sQuote(class(x)[1]), length(x)))
+  backend <- attr(x, "backend")
+  print(backend)
+
+  plan_backend <- plan("backend")
+  if (!identical(plan_backend[["uuid"]], backend[["uuid"]])) {
+    warning(FutureWarning(
+      sprintf("This %s cluster was set up under a future backend (%s:%s) that is not compatible with the current future backend (%s:%s). Make sure that the backend was not re-configured since this cluster was created", class(x)[1], class(backend)[1], backend[["uuid"]], class(plan_backend)[1], plan_backend[["uuid"]])
+    ), call. = FALSE, immediate. = TRUE)
+  }
+}
+
+
 #' @export
 `[.FutureCluster` <- function(x, ...) {
+  ## Subset, but drop class to make sure it's not a valid 'cluster' object
   .subset(x, ...)
 }
 
@@ -132,7 +151,16 @@ sendData.FutureNode <- function(node, data) {
 
   type <- data[["type"]]
   if (debug) message(sprintf("| type: %s", sQuote(type)))
-  
+
+  ## Assert that future backend has not changed
+  backend <- node[["backend"]]
+  plan_backend <- plan("backend")
+  if (!identical(plan_backend[["uuid"]], backend[["uuid"]])) {
+    stop(FutureError(
+      sprintf("This %s node was set up under a future backend (%s:%s) that is not compatible with the current future backend (%s:%s). Make sure that the backend was not re-configured since this cluster was created", class(node)[1], class(backend)[1], backend[["uuid"]], class(plan_backend)[1], plan_backend[["uuid"]])
+    ))
+  }
+
   if (type == "EXEC") {
     data <- data[["data"]]
 
