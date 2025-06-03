@@ -101,10 +101,9 @@ makeClusterFuture <- function(...) {
 }
 
 
-#' @importFrom parallel sendData
 #' @importFrom utils capture.output str
 #' @importFrom future future
-#' @export
+#' @exportS3Method sendData FutureNode
 sendData.FutureNode <- function(node, data) {
   ## sendCall(con, fcn, args, return = TRUE, tag = NULL)
   ##  postNode(con, "EXEC", value = list(fun = fun, args = args, return = return, tag = tag), tag = NULL)
@@ -198,9 +197,8 @@ sendData.FutureNode <- function(node, data) {
 }
 
 
-#' @importFrom parallel recvData
 #' @importFrom future value
-#' @export
+#' @exportS3Method recvData FutureNode
 recvData.FutureNode <- function(node) {
   debug <- isTRUE(getOption("parallel.future.debug"))
   if (debug) {
