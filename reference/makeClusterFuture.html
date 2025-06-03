@@ -19,7 +19,7 @@ particularly because of the stateless nature of the cluster."><meta property="og
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.49.0-9035</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.49.0-9037</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -80,7 +80,7 @@ particularly because of the stateless nature of the cluster."><meta property="og
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Create a Future Cluster of Stateless Workers for Parallel Processing</h1>
-      <small class="dont-index">Source: <a href="https://github.com/futureverse/future/blob/HEAD/R/makeClusterFuture.R" class="external-link"><code>R/makeClusterFuture.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/futureverse/future/blob/HEAD/R/utils_api-makeClusterFuture.R" class="external-link"><code>R/utils_api-makeClusterFuture.R</code></a></small>
       <div class="d-none name"><code>makeClusterFuture.Rd</code></div>
     </div>
 
@@ -93,14 +93,22 @@ particularly because of the stateless nature of the cluster.</em></p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">makeClusterFuture</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">makeClusterFuture</span><span class="op">(</span>specs <span class="op">=</span> <span class="fu"><a href="nbrOfWorkers.html">nbrOfWorkers</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
 
 
-<dl><dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
+<dl><dt id="arg-specs">specs<a class="anchor" aria-label="anchor" href="#arg-specs"></a></dt>
+<dd><p>Ignored.
+If specified, the value should equal <code><a href="nbrOfWorkers.html">nbrOfWorkers()</a></code> (default).
+A missing value corresponds to specifying <code><a href="nbrOfWorkers.html">nbrOfWorkers()</a></code>.
+This argument exists only to support
+<code>parallel::makeCluster(NA, type = future::FUTURE)</code>.</p></dd>
+
+
+<dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>Named arguments passed to <code><a href="future.html">future()</a></code>.</p></dd>
 
 </dl></div>
@@ -118,7 +126,7 @@ launches two parallel worker processes in the background, where
 cluster node <code>cl[[1]]</code> maps to worker #1 and node <code>cl[[2]]</code> to
 worker #2, and that never changes through the lifespan of these
 workers. This one-to-one mapping allows for deterministic
-configuration of workers. For examples, some code make assign globals
+configuration of workers. For examples, some code may assign globals
 with values specific to each worker, e.g.
 <code>clusterEvalQ(cl[1], { a &lt;- 3.14 })</code> and
 <code>clusterEvalQ(cl[2], { a &lt;- 2.71 })</code>.</p>
@@ -170,9 +178,9 @@ futures are stateless.</p>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">message</a></span><span class="op">(</span><span class="st">"Process ID: "</span>, <span class="fu"><a href="https://rdrr.io/r/base/Sys.getpid.html" class="external-link">Sys.getpid</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span>n <span class="op">=</span> <span class="va">x</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Process ID: 102883</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Process ID: 102886</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Process ID: 102881</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Process ID: 216701</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Process ID: 216703</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Process ID: 216700</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> List of 3</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ : num 0.315</span>
