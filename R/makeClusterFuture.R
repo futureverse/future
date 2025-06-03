@@ -67,8 +67,9 @@
 #' makes sure `clusterSetRNGStream()` has the expected effect although
 #' futures are stateless.
 #'
+#' @aliases FUTURE
 #' @importFrom future nbrOfWorkers
-#' @export
+#' @rawNamespace if (getRversion() >= "4.4") export(makeClusterFuture)
 makeClusterFuture <- function(...) {
   options <- list(...)
   if (length(options) > 0L) {
@@ -103,7 +104,8 @@ makeClusterFuture <- function(...) {
 
 #' @importFrom utils capture.output str
 #' @importFrom future future
-#' @exportS3Method sendData FutureNode
+#' @rawNamespace if (getRversion() >= "4.4") importFrom(parallel,sendData)
+#' @rawNamespace if (getRversion() >= "4.4") S3method(sendData,FutureNode)
 sendData.FutureNode <- function(node, data) {
   ## sendCall(con, fcn, args, return = TRUE, tag = NULL)
   ##  postNode(con, "EXEC", value = list(fun = fun, args = args, return = return, tag = tag), tag = NULL)
@@ -198,7 +200,8 @@ sendData.FutureNode <- function(node, data) {
 
 
 #' @importFrom future value
-#' @exportS3Method recvData FutureNode
+#' @rawNamespace if (getRversion() >= "4.4") importFrom(parallel,recvData)
+#' @rawNamespace if (getRversion() >= "4.4") S3method(recvData,FutureNode)
 recvData.FutureNode <- function(node) {
   debug <- isTRUE(getOption("parallel.future.debug"))
   if (debug) {

@@ -14,7 +14,8 @@
    the future expression.
    
  * Add `makeClusterFuture()` for creating a cluster of stateless
-   parallel workers for processing via the future framework.
+   parallel workers for processing via the future framework. This
+   requires R (>= 4.4.0) [2024-04-24].
 
 ## Bug Fixes
 

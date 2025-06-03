@@ -2,6 +2,7 @@
 % Please edit documentation in R/makeClusterFuture.R
 \name{makeClusterFuture}
 \alias{makeClusterFuture}
+\alias{FUTURE}
 \title{Create a Future Cluster of Stateless Workers for Parallel Processing}
 \usage{
 makeClusterFuture(...)

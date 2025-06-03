@@ -160,5 +160,8 @@ sourceFutureStartupScript <- function(default = c(".future.R", "~/.future.R"), d
     warning(msg)
   })
 
+  ## Register future::FUTURE
+  registerClusterTypes()
+
   pathname
 } ## sourceFutureStartupScript()
