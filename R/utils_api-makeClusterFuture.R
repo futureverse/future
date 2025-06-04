@@ -3,7 +3,10 @@
 #' _WARNING: Please note that this sets up a stateless set of cluster nodes,
 #' which means that `clusterEvalQ(cl, { a <- 3.14 })` will have no effect.
 #' Consider this a first beta version and use it with great care,
-#' particularly because of the stateless nature of the cluster._
+#' particularly because of the stateless nature of the cluster.
+#' For now, I recommend to manually validate that you can get identical
+#' results using this cluster type with what you get from using the
+#' classical `parallel::makeCluster()` cluster type._
 #'
 #'
 #' @param specs Ignored.
@@ -38,7 +41,7 @@
 #' cluster node `cl[[1]]` maps to worker #1 and node `cl[[2]]` to
 #' worker #2, and that never changes through the lifespan of these
 #' workers. This one-to-one mapping allows for deterministic
-#' configuration of workers. For examples, some code make assign globals
+#' configuration of workers. For examples, some code may assign globals
 #' with values specific to each worker, e.g.
 #' `clusterEvalQ(cl[1], { a <- 3.14 })` and
 #' `clusterEvalQ(cl[2], { a <- 2.71 })`.

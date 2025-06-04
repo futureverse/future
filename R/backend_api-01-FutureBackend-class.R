@@ -1,5 +1,14 @@
 #' Configure a backend that controls how and where futures are evaluated
 #'
+#' @description
+#' _This functionality is only for developers who wish to implement their
+#' own future backend.  End-users and package developers use futureverse,
+#' does not need to know about these functions._
+#'
+#' If you are looking for available future backends to choose from, please
+#' see the 'A Future for R: Available Future Backends' vignette and
+#' \url{https://www.futureverse.org/backends.html}.
+#'
 #' @param \ldots (optional) Backend-specific named arguments.
 #'
 #' @param earlySignal Overrides the default behavior on whether futures

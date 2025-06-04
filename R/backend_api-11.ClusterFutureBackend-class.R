@@ -1539,7 +1539,7 @@ handleInterruptedFuture <- local({
 #'
 #' ```r
 #' # Evaluate futures via a single background R process on the local machine
-#' plan(cluster, workers = 1)
+#' plan(cluster, workers = I(1))
 #'
 #' # Evaluate futures via two background R processes on the local machine
 #' plan(cluster, workers = 2)
@@ -1578,6 +1578,10 @@ handleInterruptedFuture <- local({
 #' A ClusterFuture.
 #'
 #' @example incl/cluster.R
+#'
+#' @seealso
+#' For alternative future backends, see the 'A Future for R: Available Future
+#' Backends' vignette and \url{https://www.futureverse.org/backends.html}.
 #'
 #' @export
 cluster <- function(..., workers = availableWorkers(constraints = "connections"), gc = FALSE, earlySignal = FALSE, persistent = FALSE, envir = parent.frame()) {

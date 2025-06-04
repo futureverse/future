@@ -131,21 +131,13 @@ if supported, other the unmodified future.
 otherwise FALSE.
 }
 \description{
-Configure a backend that controls how and where futures are evaluated
+\emph{This functionality is only for developers who wish to implement their
+own future backend.  End-users and package developers use futureverse,
+does not need to know about these functions.}
 
-\code{launchFuture()} runs a future on the backend.
-
-\code{interruptFuture()} interrupts a future on the backend.
-
-\code{stopWorkers()} stops backend workers
-
-A ClusterFutureBackend resolves futures in parallel using any PSOCK cluster
-
-A MulticoreFutureBackend resolves futures in parallel using forked processing on the current machine
-
-A SequentialFutureBackend resolves futures sequentially in the current R session
-
-A MultisessionFutureBackend resolves futures in parallel using a PSOCK cluster on the current machine
+If you are looking for available future backends to choose from, please
+see the 'A Future for R: Available Future Backends' vignette and
+\url{https://www.futureverse.org/backends.html}.
 }
 \details{
 The \code{ClusterFutureBackend} is selected by
@@ -165,4 +157,11 @@ The \code{FutureBackend} class specifies FutureBackend API,
 that all backends must implement and comply to. Specifically,
 }
 
+\seealso{
+For alternative future backends, see the 'A Future for R: Available Future
+Backends' vignette and \url{https://www.futureverse.org/backends.html}.
+
+For alternative future backends, see the 'A Future for R: Available Future
+Backends' vignette and \url{https://www.futureverse.org/backends.html}.
+}
 \keyword{internal}

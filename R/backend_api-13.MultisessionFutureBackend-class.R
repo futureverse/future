@@ -6,6 +6,10 @@
 #' The `MultisessionFutureBackend` backend is selected by
 #' `plan(multisession, workers = workers)`.
 #'
+#' @seealso
+#' For alternative future backends, see the 'A Future for R: Available Future
+#' Backends' vignette and \url{https://www.futureverse.org/backends.html}.
+#'
 #' @keywords internal
 #' @rdname FutureBackend
 #' @export

@@ -5,6 +5,10 @@
 #' @details
 #' The `SequentialFutureBackend` is selected by `plan(sequential)`.
 #'
+#' @seealso
+#' For alternative future backends, see the 'A Future for R: Available Future
+#' Backends' vignette and \url{https://www.futureverse.org/backends.html}.
+#'
 #' @keywords internal
 #' @rdname FutureBackend
 #' @export

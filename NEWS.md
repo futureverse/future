@@ -17,7 +17,11 @@
 
  * Add `makeClusterFuture()` for creating a cluster of stateless
    parallel workers for processing via the future framework. This
-   requires R (>= 4.4.0) [2024-04-24].
+   requires R (>= 4.4.0) [2024-04-24]. Please make sure to read
+   `help("makeClusterFuture", package = "future")` to learn about
+   potential pitfalls. The plan is to support more corner cases in
+   future releases, and when not possible, add more mechanisms for
+   detecting non-supported cases and given an informative error.
 
 ## Bug Fixes
 
