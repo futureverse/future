@@ -66,7 +66,8 @@
 #' Exceptions to the latter limitation are `clusterSetRNGStream()`
 #' and `clusterExport()`, which can be safely used with future clusters.
 #' See below for more details.
-#' If `clusterEvalQ()` is called, a warning is produced.
+#' If `clusterEvalQ()` is called, the call is ignored, and a warning
+#' is produced.
 #'
 #' @section clusterSetRNGStream:
 #' [parallel::clusterSetRNGStream()] distributes "L'Ecuyer-CMRG" RNG

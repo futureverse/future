@@ -61,7 +61,8 @@ the above example will all give an error.
 Exceptions to the latter limitation are \code{clusterSetRNGStream()}
 and \code{clusterExport()}, which can be safely used with future clusters.
 See below for more details.
-If \code{clusterEvalQ()} is called, a warning is produced.
+If \code{clusterEvalQ()} is called, the call is ignored, and a warning
+is produced.
 }
 
 \section{clusterSetRNGStream}{
