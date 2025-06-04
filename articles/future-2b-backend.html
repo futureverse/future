@@ -32,7 +32,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.49.0-9037</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.49.0-9038</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -144,7 +144,9 @@ can chose from.</p>
 </td>
 <td align="left">📶<br>♻️<br>
 </td>
-<td align="left">sequentially and in the current R process; default</td>
+<td align="left">sequentially and in the current R process;
+default<br>Example: <code>plan(sequential)</code>
+</td>
 </tr>
 <tr class="even">
 <td align="left">
@@ -153,7 +155,9 @@ can chose from.</p>
 <td align="left">📶<br>♻️<br>
 </td>
 <td align="left">parallelly via background R sessions on current
-machine</td>
+machine<br>Examples: <code>plan(multisession)</code> and
+<code>plan(multisession, workers = 2)</code>
+</td>
 </tr>
 <tr class="odd">
 <td align="left">
@@ -162,7 +166,10 @@ machine</td>
 <td align="left">📶<br>♻️*<br>
 </td>
 <td align="left">parallelly in external R sessions on current, local,
-and/or remote machines</td>
+and/or remote machines<br>Examples:
+<code>plan(cluster, workers = "raspberry-pi")</code>,
+<code>plan(cluster, workers = c("localhost", "n1", "n1", "pi.example.org"))</code>
+</td>
 </tr>
 <tr class="even">
 <td align="left">
@@ -171,7 +178,10 @@ and/or remote machines</td>
 <td align="left">📶<br>♻️<br>
 </td>
 <td align="left">(not recommended) parallelly via forked R processes on
-current machine; not with GUIs like RStudio; not on Windows</td>
+current machine; not with GUIs like RStudio; not on Windows<br>Examples:
+<code>plan(multicore)</code> and
+<code>plan(multicore, workers = 2)</code>
+</td>
 </tr>
 <tr class="odd">
 <td align="left">
@@ -181,7 +191,9 @@ current machine; not with GUIs like RStudio; not on Windows</td>
 </td>
 <td align="left">parallelly via transient <strong><a href="https://cran.r-project.org/package=callr" class="external-link">callr</a></strong>
 background R sessions on current machine; all memory is returned when as
-each future is resolved</td>
+each future is resolved<br>Examples: <code>plan(callr)</code> and
+<code>plan(callr, workers = 2)</code>
+</td>
 </tr>
 <tr class="even">
 <td align="left">
@@ -190,7 +202,10 @@ each future is resolved</td>
 <td align="left">📶(next)<br>♻️(next)<br>
 </td>
 <td align="left">parallelly via <strong><a href="https://cran.r-project.org/package=mirai" class="external-link">mirai</a></strong>
-background R sessions on current machine; low latency</td>
+background R sessions on current machine; low latency<br>Examples:
+<code>plan(mirai_multisession)</code> and
+<code>plan(mirai_multisession, workers = 2)</code>
+</td>
 </tr>
 <tr class="odd">
 <td align="left">
@@ -199,7 +214,9 @@ background R sessions on current machine; low latency</td>
 <td align="left">♻️(next)<br>
 </td>
 <td align="left">parallelly via <strong><a href="https://cran.r-project.org/package=mirai" class="external-link">mirai</a></strong>
-daemons running locally or remotely</td>
+daemons running locally or remotely<br>Example:
+<code>plan(mirai_cluster)</code>
+</td>
 </tr>
 <tr class="even">
 <td align="left">

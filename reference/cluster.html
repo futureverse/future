@@ -15,7 +15,7 @@ It may only be used with plan()"><meta property="og:image" content="https://futu
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.49.0-9037</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.49.0-9038</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -152,7 +152,7 @@ parallel in another process</em>.</p>
 <p>This function is must <em>not</em> be called directly.  Instead, the
 typical usages are:</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="co"># Evaluate futures via a single background R process on the local machine</span></span>
-<span><span class="fu"><a href="../reference/plan.html">plan</a></span><span class="op">(</span><span class="va">cluster</span>, workers <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/plan.html">plan</a></span><span class="op">(</span><span class="va">cluster</span>, workers <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Evaluate futures via two background R processes on the local machine</span></span>
 <span><span class="fu"><a href="../reference/plan.html">plan</a></span><span class="op">(</span><span class="va">cluster</span>, workers <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
@@ -167,6 +167,11 @@ typical usages are:</p>
 <span><span class="co"># Evaluate futures via four R processes, one running on the local machine,</span></span>
 <span><span class="co"># two running on LAN machine 'n1' and one on a remote machine</span></span>
 <span><span class="fu"><a href="../reference/plan.html">plan</a></span><span class="op">(</span><span class="va">cluster</span>, workers <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"localhost"</span>, <span class="st">"n1"</span>, <span class="st">"n1"</span>, <span class="st">"pi.example.org"</span><span class="op">)</span><span class="op">)</span></span></code></pre><p></p></div>
+    </div>
+    <div class="section level2">
+    <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
+    <div class="dont-index"><p>For alternative future backends, see the 'A Future for R: Available Future
+Backends' vignette and <a href="https://www.futureverse.org/backends.html" class="external-link">https://www.futureverse.org/backends.html</a>.</p></div>
     </div>
 
     <div class="section level2">
