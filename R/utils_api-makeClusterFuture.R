@@ -240,16 +240,21 @@ sendData.FutureNode <- function(node, data) {
     ## SPECIAL CASE #2: Called via clusterExport()?
     if (called_via_clusterExport()) {
       if (debug) message("Detected: clusterExport()")
-      args <- data[["args"]]
-      if (debug) message(sprintf("Exports: [n=%d] %s", length(args), commaq(names(args))))
-      cluster_env <- node[["cluster_env"]]
-      exports <- cluster_env[["exports"]]
-      if (is.null(exports)) exports <- list()
-      ## Append <name>=<value> to 'exports'
-      name <- args[[1]]
-      value <- args[[2]]
-      exports[[name]] <- value
-      cluster_env[["exports"]] <- exports
+
+      ## Only need to be handled once per cluster - not once per node
+      if (index == 1L) {
+        args <- data[["args"]]
+        if (debug) message(sprintf("Exports: [n=%d] %s", length(args), commaq(names(args))))
+        cluster_env <- node[["cluster_env"]]
+        exports <- cluster_env[["exports"]]
+        if (is.null(exports)) exports <- list()
+        ## Append <name>=<value> to 'exports'
+        name <- args[[1]]
+        value <- args[[2]]
+        exports[[name]] <- value
+        cluster_env[["exports"]] <- exports
+      }
+
       ns <- getNamespace("future")
       ConstantFuture <- get("ConstantFuture", mode = "function", envir = ns, inherits = FALSE)
       ## parallel:::recvResult() expects element 'value'
@@ -258,40 +263,47 @@ sendData.FutureNode <- function(node, data) {
     }
 
     ## SPECIAL CASE #3: Called via clusterEvalQ()?
-    if (index == 1L && called_via_clusterEvalQ()) {
+    if (called_via_clusterEvalQ()) {
       if (debug) message("Detected: clusterEvalQ()")
-      args <- data[["args"]]
-      expr <- args[[1]]
-      calls <- sys.calls()
-      if (debug) {
-        message("Expression:")
-        mprint(expr)
-      }
 
-      cluster_env <- node[["cluster_env"]]
-
-      ## Record ignored clusterEvalQ() expressions
-      clusterEvalQs <- cluster_env[["clusterEvalQs"]]
-      if (is.null(clusterEvalQs)) clusterEvalQs <- list()
-      call <- list(expression = expr, calls = calls)
-      clusterEvalQs <- c(clusterEvalQs, list(call))
-      cluster_env[["clusterEvalQs"]] <- clusterEvalQs
-
-      ## Warn about ignored clusterEvalQ() call?
-      action <- getOption("future.ClusterFuture.clusterEvalQ", "warning")
-      if (action != "ignore") {
-        cluster <- cluster_env[["cluster"]]
-        code <- deparse(expr)
-        code <- paste(code, collapse = " ")
-        code <- substring(code, first = 1L, last = 30L)
-        code <- gsub(" +", " ", code)
-        msg <- sprintf("parallel::clusterEvalQ() is not supported by %s clusters. Ignoring expression: %s", class(cluster)[[1]], code)
-        if (action == "warning") {
-          warning(FutureWarning(msg))
-        } else if (action == "error") {
-          stop(FutureError(msg))
+      ## Only need to be handled once per cluster - not once per node
+      if (index == 1L) {
+        args <- data[["args"]]
+        expr <- args[[1]]
+        calls <- sys.calls()
+        if (debug) {
+          message("Expression:")
+          mprint(expr)
+        }
+  
+        cluster_env <- node[["cluster_env"]]
+  
+        ## Record ignored clusterEvalQ() expressions
+        clusterEvalQs <- cluster_env[["clusterEvalQs"]]
+        if (is.null(clusterEvalQs)) clusterEvalQs <- list()
+        call <- list(expression = expr, calls = calls)
+        clusterEvalQs <- c(clusterEvalQs, list(call))
+        cluster_env[["clusterEvalQs"]] <- clusterEvalQs
+  
+        ## Warn about ignored clusterEvalQ() call?
+        action <- getOption("future.ClusterFuture.clusterEvalQ", "warning")
+        if (action != "ignore") {
+          cluster <- cluster_env[["cluster"]]
+          code <- deparse(expr)
+          code <- paste(code, collapse = " ")
+          code <- substring(code, first = 1L, last = 30L)
+          code <- gsub(" +", " ", code)
+          msg <- sprintf("parallel::clusterEvalQ() is not supported by %s clusters. Ignoring expression: %s", class(cluster)[[1]], code)
+          if (action == "warning") {
+            warning(FutureWarning(msg))
+          } else if (action == "error") {
+            stop(FutureError(msg))
+          }
         }
       }
+      
+      node[["future"]] <- ConstantFuture(list(value = NULL), substitute = FALSE)
+      return(invisible(node))
     }
 
     options <- node[["options"]]
