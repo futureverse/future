@@ -25,7 +25,7 @@ classical parallel::makeCluster() cluster type."><meta property="og:image" conte
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.49.0-9038</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.49.0-9042</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -154,14 +154,10 @@ To protect against this, any attempt to address a subset of future
 cluster nodes, results in an error, e.g. <code>clusterEvalQ(cl[1], ...)</code>,
 <code>clusterEvalQ(cl[1:2], ...)</code>, and <code>clusterEvalQ(cl[2:1], ...)</code> in
 the above example will all give an error.</p>
-<p>That said, there will be no error produced when calling
-<code>clusterEvalQ(cl, { a &lt;- 42 })</code>, but we can still not rely on
-variable <code>a</code> being available in following parallel tasks. Again,
-this is because each parallel task, including the above ones, may
-be processes on random or transient parallel workers.</p>
-<p>One exception to the latter limitation is <code>clusterSetRNGStream()</code>,
-which can be safely used with future clusters. See below for more
-details.</p>
+<p>Exceptions to the latter limitation are <code>clusterSetRNGStream()</code>
+and <code>clusterExport()</code>, which can be safely used with future clusters.
+See below for more details.
+If <code>clusterEvalQ()</code> is called, a warning is produced.</p>
     </div>
     <div class="section level2">
     <h2 id="clustersetrngstream">clusterSetRNGStream<a class="anchor" aria-label="anchor" href="#clustersetrngstream"></a></h2>
@@ -175,6 +171,14 @@ round again of future will use those, and so on. This strategy
 makes sure <code>clusterSetRNGStream()</code> has the expected effect although
 futures are stateless.</p>
     </div>
+    <div class="section level2">
+    <h2 id="clusterexport">clusterExport<a class="anchor" aria-label="anchor" href="#clusterexport"></a></h2>
+
+
+<p><code><a href="https://rdrr.io/r/parallel/clusterApply.html" class="external-link">parallel::clusterExport()</a></code> assign values to the cluster nodes.
+Specifically, these values are recorded and are used as globals
+for all futures created there on.</p>
+    </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
@@ -187,9 +191,9 @@ futures are stateless.</p>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">message</a></span><span class="op">(</span><span class="st">"Process ID: "</span>, <span class="fu"><a href="https://rdrr.io/r/base/Sys.getpid.html" class="external-link">Sys.getpid</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span>n <span class="op">=</span> <span class="va">x</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Process ID: 247679</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Process ID: 247684</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Process ID: 247683</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Process ID: 424010</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Process ID: 424012</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Process ID: 424008</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> List of 3</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ : num 0.315</span>
