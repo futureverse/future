@@ -58,15 +58,10 @@ cluster nodes, results in an error, e.g. \code{clusterEvalQ(cl[1], ...)},
 \code{clusterEvalQ(cl[1:2], ...)}, and \code{clusterEvalQ(cl[2:1], ...)} in
 the above example will all give an error.
 
-That said, there will be no error produced when calling
-\code{clusterEvalQ(cl, { a <- 42 })}, but we can still not rely on
-variable \code{a} being available in following parallel tasks. Again,
-this is because each parallel task, including the above ones, may
-be processes on random or transient parallel workers.
-
-One exception to the latter limitation is \code{clusterSetRNGStream()},
-which can be safely used with future clusters. See below for more
-details.
+Exceptions to the latter limitation are \code{clusterSetRNGStream()}
+and \code{clusterExport()}, which can be safely used with future clusters.
+See below for more details.
+If \code{clusterEvalQ()} is called, a warning is produced.
 }
 
 \section{clusterSetRNGStream}{
@@ -78,6 +73,13 @@ futures are resolved are recorded accordingly, such that the next
 round again of future will use those, and so on. This strategy
 makes sure \code{clusterSetRNGStream()} has the expected effect although
 futures are stateless.
+}
+
+\section{clusterExport}{
+
+\code{\link[parallel:clusterApply]{parallel::clusterExport()}} assign values to the cluster nodes.
+Specifically, these values are recorded and are used as globals
+for all futures created there on.
 }
 
 \examples{
