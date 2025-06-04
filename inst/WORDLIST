@@ -196,6 +196,7 @@ chr
 ci
 cleanEx
 closeAllConnections
+clusterExport
 clusterSetRNGStream
 conditionMessage
 configurating

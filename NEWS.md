@@ -1,5 +1,13 @@
 # Version (development version)
 
+This is the third rollout out of several towards a near-future major
+release that I am really excited about. This has been made possible
+due to a multi-year effort of internal re-designs, work with package
+maintainers, release, and repeat. This release fixes a few
+regressions introduced in future 1.40.0 (2025-04-10), despite passing
+[all unit, regression, and system
+tests](https://www.futureverse.org/quality.html).
+
 ## New Features
 
  * Now futures produce a warning when they detect that the _default_
