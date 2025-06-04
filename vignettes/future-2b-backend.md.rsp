@@ -34,7 +34,7 @@ The **future** package comes with built-in future backends that leverage the **p
 | **[future.batchtools]**<br> `batchtools_lsf`<br>`batchtools_openlava`<br>`batchtools_sge`<br>`batchtools_slurm`<br>`batchtools_torque` | 📶(soon)<br> ♻️(soon) | parallelly on HPC job schedulers (Load Sharing Facility [LSF], OpenLava, TORQUE/PBS, Son/Sun/Oracle/Univa Grid Engine [SGE], Slurm) via **[batchtools]**; for long-running tasks; high latency |
 
 📶: futures relay progress updates in real-time, e.g. **[progressr]**<br>
-♻️: futures are interruptible and restartable; * disabled by default<br>
+♻️: futures are interruptible and restartable; * interrupts are disabled by default<br>
 (next): next release; (soon): in a near-future release
 
 
