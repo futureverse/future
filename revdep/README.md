@@ -10,7 +10,7 @@
 |collate  |en_US.UTF-8                                               |
 |ctype    |en_US.UTF-8                                               |
 |tz       |America/Los_Angeles                                       |
-|date     |2025-06-02                                                |
+|date     |2025-06-04                                                |
 |pandoc   |3.6.3 @ /software/c4/cbi/software/pandoc-3.6.3/bin/pandoc |
 |quarto   |NA                                                        |
 
@@ -18,7 +18,7 @@
 
 |package    |old    |new         |Δ  |
 |:----------|:------|:-----------|:--|
-|future     |1.49.0 |1.49.0-9029 |*  |
+|future     |1.49.0 |1.49.0-9040 |*  |
 |codetools  |0.2-20 |0.2-20      |   |
 |digest     |0.6.37 |0.6.37      |   |
 |globals    |0.18.0 |0.18.0      |   |
@@ -74,7 +74,7 @@
 |BayesianMCPMod               |1.1.0     |      |        |     |
 |[bayesmove](problems.md#bayesmove)|0.2.1     |      |        |1    |
 |bayesSSM                     |0.5.0     |      |        |     |
-|bbknnR                       |1.1.1     |      |        |     |
+|bbknnR                       |2.0.0     |      |        |     |
 |bcmaps                       |2.2.1     |      |        |     |
 |BEKKs                        |1.4.5     |      |        |     |
 |bhmbasket                    |0.9.5     |      |        |     |
@@ -399,7 +399,7 @@
 |[sigminer](problems.md#sigminer)|2.3.1     |      |        |1    |
 |Signac                       |1.14.0    |      |        |     |
 |[signeR](problems.md#signer) |2.10.0    |      |        |3    |
-|SimDesign                    |2.19.2    |-1    |        |     |
+|SimDesign                    |2.19.2    |      |        |     |
 |simglm                       |0.8.9     |      |        |     |
 |[simhelpers](problems.md#simhelpers)|0.3.1     |      |        |1    |
 |simIDM                       |0.1.0     |      |        |     |
