@@ -58,15 +58,10 @@ cluster nodes, results in an error, e.g. \code{clusterEvalQ(cl[1], ...)},
 \code{clusterEvalQ(cl[1:2], ...)}, and \code{clusterEvalQ(cl[2:1], ...)} in
 the above example will all give an error.
 
-That said, there will be no error produced when calling
-\code{clusterEvalQ(cl, { a <- 42 })}, but we can still not rely on
-variable \code{a} being available in following parallel tasks. Again,
-this is because each parallel task, including the above ones, may
-be processes on random or transient parallel workers.
-
 Exceptions to the latter limitation are \code{clusterSetRNGStream()}
 and \code{clusterExport()}, which can be safely used with future clusters.
 See below for more details.
+If \code{clusterEvalQ()} is called, a warning is produced.
 }
 
 \section{clusterSetRNGStream}{

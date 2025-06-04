@@ -241,6 +241,7 @@
 #' future.output.windows.reencode
 #' future.journal
 #' future.globals.objectSize.method
+#' future.ClusterFuture.clusterEvalQ
 #'
 #' R_FUTURE_STARTUP_SCRIPT
 #' R_FUTURE_DEBUG
@@ -267,6 +268,7 @@
 #' R_FUTURE_OUTPUT_WINDOWS_REENCODE
 #' R_FUTURE_JOURNAL
 #' R_FUTURE_GLOBALS_OBJECTSIZE_METHOD
+#' R_FUTURE_CLUSTERFUTURE_CLUSTEREVALQ
 #'
 #' future.cmdargs 
 #' .future.R
@@ -461,4 +463,6 @@ update_package_options <- function(debug = FALSE) {
   update_package_option("future.globals.method.default", mode = "character", split = ",", default = c("ordered", "dfs"), debug = debug)
 
   update_package_option("future.debug.indent", mode = "character", default = " ", debug = debug)
+
+  update_package_option("future.ClusterFuture.clusterEvalQ", mode = "character", default = "warning", debug = debug)
 }

@@ -63,15 +63,10 @@
 #' `clusterEvalQ(cl[1:2], ...)`, and `clusterEvalQ(cl[2:1], ...)` in
 #' the above example will all give an error.
 #'
-#' That said, there will be no error produced when calling
-#' `clusterEvalQ(cl, { a <- 42 })`, but we can still not rely on
-#' variable `a` being available in following parallel tasks. Again,
-#' this is because each parallel task, including the above ones, may
-#' be processes on random or transient parallel workers.
-#'
 #' Exceptions to the latter limitation are `clusterSetRNGStream()`
 #' and `clusterExport()`, which can be safely used with future clusters.
 #' See below for more details.
+#' If `clusterEvalQ()` is called, a warning is produced.
 #'
 #' @section clusterSetRNGStream:
 #' [parallel::clusterSetRNGStream()] distributes "L'Ecuyer-CMRG" RNG
@@ -127,6 +122,7 @@ makeClusterFuture <- function(specs = nbrOfWorkers(), ...) {
   cl <- vector("list", length = n)
   for (kk in seq_along(cl)) {
     node <- new.env(parent = emptyenv())
+    node[["index"]] <- kk
     node[["options"]] <- options
     node[["backend"]] <- backend
     node[["cluster_env"]] <- env
@@ -135,10 +131,12 @@ makeClusterFuture <- function(specs = nbrOfWorkers(), ...) {
   }
   attr(cl, "cluster_env") <- env
   class(cl) <- c("FutureCluster", "cluster")
+  env[["cluster"]] <- cl
   cl
 }
 
 
+#' @importFrom utils str
 #' @rawNamespace if (getRversion() >= "4.4") S3method(print,FutureCluster)
 print.FutureCluster <- function(x, ...) {
   cat(sprintf("A %s cluster with %d node\n", sQuote(class(x)[1]), length(x)))
@@ -149,6 +147,19 @@ print.FutureCluster <- function(x, ...) {
   types <- vapply(exports, FUN.VALUE = NA_character_, FUN = typeof)
   info <- sprintf("%s (%s)", names, types)
   cat(sprintf("Exports: [n=%d] %s\n", length(exports), comma(info)))
+
+  clusterEvalQs <- cluster_env[["clusterEvalQs"]]
+  n <- length(clusterEvalQs)
+  if (n > 0) {
+    cat(sprintf("clusterEvalQ() calls ignored: [n=%d]:\n", n))
+    if (n > 3) clusterEvalQs <- clusterEvalQs[1:3]
+    exprs <- lapply(clusterEvalQs, FUN = function(x) {
+      expr <- x[["expression"]]
+      attributes(expr) <- NULL
+      expr
+    })
+    str(exprs)
+  }
 
   backend <- cluster_env[["backend"]]
   print(backend)
@@ -185,10 +196,12 @@ sendData.FutureNode <- function(node, data) {
   ##
   ## => sendData(con, data = list(type = "EXEC", data = list(fun = fun, args = args, return = TRUE), tag = NULL))
   
+  index <- node[["index"]]
+  
   debug <- isTRUE(getOption("future.debug"))
   if (debug) {
-    message(sprintf("sendData() for %s ...", class(node)[1]))
-    on.exit(message(sprintf("sendData() for %s ... done", class(node)[1])))
+    message(sprintf("sendData() for %s #%d ...", class(node)[1], index))
+    on.exit(message(sprintf("sendData() for %s %d ... done", class(node)[1], index)))
   }
 
   type <- data[["type"]]
@@ -243,6 +256,42 @@ sendData.FutureNode <- function(node, data) {
       return(invisible(node))
     }
 
+    ## SPECIAL CASE #3: Called via clusterEvalQ()?
+    if (index == 1L && called_via_clusterEvalQ()) {
+      if (debug) message("Detected: clusterEvalQ()")
+      args <- data[["args"]]
+      expr <- args[[1]]
+      calls <- sys.calls()
+      if (debug) {
+        message("Expression:")
+        mprint(expr)
+      }
+
+      cluster_env <- node[["cluster_env"]]
+
+      ## Record ignored clusterEvalQ() expressions
+      clusterEvalQs <- cluster_env[["clusterEvalQs"]]
+      if (is.null(clusterEvalQs)) clusterEvalQs <- list()
+      call <- list(expression = expr, calls = calls)
+      clusterEvalQs <- c(clusterEvalQs, list(call))
+      cluster_env[["clusterEvalQs"]] <- clusterEvalQs
+
+      ## Warn about ignored clusterEvalQ() call?
+      action <- getOption("future.ClusterFuture.clusterEvalQ", "warning")
+      if (action != "ignore") {
+        cluster <- cluster_env[["cluster"]]
+        code <- deparse(expr)
+        code <- paste(code, collapse = " ")
+        code <- substring(code, first = 1L, last = 30L)
+        code <- gsub(" +", " ", code)
+        msg <- sprintf("parallel::clusterEvalQ() is not supported by %s clusters. Ignoring expression: %s", class(cluster)[[1]], code)
+        if (action == "warning") {
+          warning(FutureWarning(msg))
+        } else if (action == "error") {
+          stop(FutureError(msg))
+        }
+      }
+    }
 
     options <- node[["options"]]
     if ("seed" %in% names(node)) {
@@ -435,3 +484,50 @@ called_via_clusterExport <- function(calls = sys.calls()) {
   FALSE
 } ## called_via_clusterExport()
 
+
+# Dotted pair list of 6
+#  $ : language clusterEvalQ(cl, 42)
+#  $ : language clusterCall(cl, eval, substitute(expr), envir = .GlobalEnv)
+#  $ : language sendCall(cl[[i]], fun, list(...))
+#  $ : language postNode(con, "EXEC", list(fun = fun, args = args, return = return, tag = tag))
+#  $ : language sendData(con, list(type = type, data = value, tag = tag))
+#  $ : language sendData.FutureNode(con, list(type = type, data = value, tag = tag))
+called_via_clusterEvalQ <- function(calls = sys.calls()) {
+  finds <- c("sendData", "postNode", "sendCall", "clusterCall")
+  nfinds <- length(finds)
+  ncalls <- length(calls)
+  
+  ## Not possible?
+  if (ncalls <= nfinds + 1L) return(FALSE)
+
+  ii <- 1L
+  find <- as.symbol(finds[ii])
+  
+  found <- FALSE
+  for (jj in ncalls:1) {
+    call <- calls[[jj]][[1]]
+
+    if (identical(call, find)) {
+      if (ii == nfinds) {
+        ## First passage done
+        found <- TRUE
+        break
+      }
+      ii <- ii + 1L
+      find <- as.symbol(finds[ii])
+    } else if (ii > 1L) {
+      return(FALSE)
+    }
+  }
+  if (!found) return(FALSE)
+  jj <- jj - 1L
+
+  call <- calls[[jj]][[1]]
+  if (identical(call, as.symbol("clusterEvalQ"))) {
+    return(TRUE)
+  }
+  if (identical(call, quote(parallel::clusterEvalQ))) {
+    return(TRUE)
+  }
+  FALSE
+} ## called_via_clusterEvalQ()

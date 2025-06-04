@@ -27,6 +27,7 @@
 \alias{future.output.windows.reencode}
 \alias{future.journal}
 \alias{future.globals.objectSize.method}
+\alias{future.ClusterFuture.clusterEvalQ}
 \alias{R_FUTURE_STARTUP_SCRIPT}
 \alias{R_FUTURE_DEBUG}
 \alias{R_FUTURE_DEMO_MANDELBROT_REGION}
@@ -52,6 +53,7 @@
 \alias{R_FUTURE_OUTPUT_WINDOWS_REENCODE}
 \alias{R_FUTURE_JOURNAL}
 \alias{R_FUTURE_GLOBALS_OBJECTSIZE_METHOD}
+\alias{R_FUTURE_CLUSTERFUTURE_CLUSTEREVALQ}
 \alias{future.cmdargs}
 \alias{.future.R}
 \title{Options used for futures}
