@@ -64,9 +64,9 @@ variable \code{a} being available in following parallel tasks. Again,
 this is because each parallel task, including the above ones, may
 be processes on random or transient parallel workers.
 
-One exception to the latter limitation is \code{clusterSetRNGStream()},
-which can be safely used with future clusters. See below for more
-details.
+Exceptions to the latter limitation are \code{clusterSetRNGStream()}
+and \code{clusterExport()}, which can be safely used with future clusters.
+See below for more details.
 }
 
 \section{clusterSetRNGStream}{
@@ -78,6 +78,13 @@ futures are resolved are recorded accordingly, such that the next
 round again of future will use those, and so on. This strategy
 makes sure \code{clusterSetRNGStream()} has the expected effect although
 futures are stateless.
+}
+
+\section{clusterExport}{
+
+\code{\link[parallel:clusterApply]{parallel::clusterExport()}} assign values to the cluster nodes.
+Specifically, these values are recorded and are used as globals
+for all futures created there on.
 }
 
 \examples{
