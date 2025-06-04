@@ -198,7 +198,8 @@ sendData.FutureNode <- function(node, data) {
       stopifnot(is_lecyer_cmrg_seed(seed))
       node[["seed"]] <- seed
       ConstantFuture <- get("ConstantFuture", mode = "function", envir = ns, inherits = FALSE)
-      node[["future"]] <- ConstantFuture(list(value = NULL, seed = seed), substitute = FALSE)
+      ## parallel:::recvResult() expects element 'value'
+      node[["future"]] <- ConstantFuture(list(value = NULL), seed = seed, substitute = FALSE)
       return(invisible(node))
     }
 
@@ -224,10 +225,7 @@ sendData.FutureNode <- function(node, data) {
       }
       fun <- data[["fun"]]
       args <- data[["args"]]
-      expr <- quote(list(
-        value = do.call(fun, args = args),
-         seed = globalenv()[[".Random.seed"]]
-      ))
+      expr <- quote(do.call(fun, args = args))
       future_args <- list(expr = quote(expr), substitute = FALSE)
       future_args <- c(future_args, options)
       if (debug) {
@@ -274,15 +272,19 @@ recvData.FutureNode <- function(node) {
   if (!inherits(future, "Future")) {
     stop(sprintf("%s does not have a future associated with it", class(node)[1]))
   }
-  res <- value(future)
-  
-  value <- res[["value"]]
-  
-  if ("seed" %in% names(node)) {
-    node[["seed"]] <- res[["seed"]]
+  result <- result(future)
+  if (debug) {
+    print(result)
+    print(utils::ls.str(result))
   }
   
-  list(value = value)
+  if ("seed" %in% names(node)) {
+    if (debug) mdebug("Updating the node's RNG state")
+    node[["seed"]] <- result[["seed"]]
+  }
+
+  ## parallel:::recvResult() expects element 'value'
+  list(value = value(future))
 }
 
 

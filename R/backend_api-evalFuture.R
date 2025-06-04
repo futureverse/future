@@ -514,9 +514,11 @@ evalFutureInternal <- function(data) {
   } ## onEvalCondition()
 
   onEvalErrorOrInterrupt <- function(ex) {
+    seed <- globalenv()[[".Random.seed"]]
     FutureResult(
       conditions = ...future.conditions,
-      rng = !identical(globalenv()[[".Random.seed"]], ...future.rng),
+      rng = !identical(seed, ...future.rng),
+      seed = seed,
       uuid = uuid,
       misuseGlobalEnv = if (checkGlobalenv) list(added = diff_globalenv(...future.globalenv.names)) else NULL,
       misuseConnections = diff_connections(get_connections(details = isTRUE(attr(checkConnections, "details", exact = TRUE))), ...future.connections),
@@ -1092,11 +1094,13 @@ evalFutureInternal <- function(data) {
         ...future.value <- withVisible({
           eval(expr, envir = globalenv())
         })
+        seed <- globalenv()[[".Random.seed"]]
         FutureResult(
           value = ...future.value[["value"]],
           visible = ...future.value[["visible"]],
           conditions = ...future.conditions,
-          rng = !identical(globalenv()[[".Random.seed"]], ...future.rng),
+          rng = !identical(seed, ...future.rng),
+          seed = seed,
           uuid = uuid,
           misuseGlobalEnv = if (checkGlobalenv) list(added = diff_globalenv(...future.globalenv.names)) else NULL,
           misuseConnections = if (checkConnections) diff_connections(get_connections(details = isTRUE(attr(checkConnections, "details", exact = TRUE))), ...future.connections) else NULL,
