@@ -70,7 +70,7 @@ tests](https://www.futureverse.org/quality.html).
    collected.
 
  * The `sequential`, `cluster`, `multisession`, and `multicore`
-   backends relayed `immediateCondition`:s, but did not record the
+   backends relayed `immediateCondition`:s, but did not record them
    properly in the future object.
 
 

@@ -1,4 +1,4 @@
-# arkdb
+# geocmeans
 
 <details>
 
@@ -14,613 +14,100 @@
 ### Devel
 
 ```
-g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG -Iinclude -I../inst/include -DDUCKDB_DISABLE_PRINT -DDUCKDB_R_BUILD -DBROTLI_ENCODER_CLEANUP_ON_OOM -DDUCKDB_EXTENSION_AUTOLOAD_DEFAULT -Iduckdb/src/include -Iduckdb/third_party/concurrentqueue -Iduckdb/third_party/fast_float -Iduckdb/third_party/fastpforlib -Iduckdb/third_party/fmt/include -Iduckdb/third_party/fsst -Iduckdb/third_party/httplib -Iduckdb/third_party/hyperloglog -Iduckdb/third_party/jaro_winkler -Iduckdb/third_party/jaro_winkler/details -Iduckdb/third_party/libpg_query -Iduckdb/third_party/libpg_query/include -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/mbedtls/library -Iduckdb/third_party/miniz -Iduckdb/third_party/pcg -Iduckdb/third_party/re2 -Iduckdb/third_party/skiplist -Iduckdb/third_party/tdigest -Iduckdb/third_party/utf8proc -Iduckdb/third_party/utf8proc/include -Iduckdb/third_party/yyjson/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/parquet/include -Iduckdb/third_party/parquet -Iduckdb/third_party/thrift -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/snappy -Iduckdb/third_party/mbedtls -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/core_functions/include -I../inst/include -Iduckdb -DDUCKDB_EXTENSION_PARQUET_LINKED -DDUCKDB_BUILD_LIBRARY -DDUCKDB_EXTENSION_CORE_FUNCTIONS_LINKED -DDUCKDB_BUILD_LIBRARY  -I/usr/local/include    -fpic  -g -O2  -c rfuns.cpp -o rfuns.o
-g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG -Iinclude -I../inst/include -DDUCKDB_DISABLE_PRINT -DDUCKDB_R_BUILD -DBROTLI_ENCODER_CLEANUP_ON_OOM -DDUCKDB_EXTENSION_AUTOLOAD_DEFAULT -Iduckdb/src/include -Iduckdb/third_party/concurrentqueue -Iduckdb/third_party/fast_float -Iduckdb/third_party/fastpforlib -Iduckdb/third_party/fmt/include -Iduckdb/third_party/fsst -Iduckdb/third_party/httplib -Iduckdb/third_party/hyperloglog -Iduckdb/third_party/jaro_winkler -Iduckdb/third_party/jaro_winkler/details -Iduckdb/third_party/libpg_query -Iduckdb/third_party/libpg_query/include -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/mbedtls/library -Iduckdb/third_party/miniz -Iduckdb/third_party/pcg -Iduckdb/third_party/re2 -Iduckdb/third_party/skiplist -Iduckdb/third_party/tdigest -Iduckdb/third_party/utf8proc -Iduckdb/third_party/utf8proc/include -Iduckdb/third_party/yyjson/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/parquet/include -Iduckdb/third_party/parquet -Iduckdb/third_party/thrift -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/snappy -Iduckdb/third_party/mbedtls -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/core_functions/include -I../inst/include -Iduckdb -DDUCKDB_EXTENSION_PARQUET_LINKED -DDUCKDB_BUILD_LIBRARY -DDUCKDB_EXTENSION_CORE_FUNCTIONS_LINKED -DDUCKDB_BUILD_LIBRARY  -I/usr/local/include    -fpic  -g -O2  -c database.cpp -o database.o
-g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG -Iinclude -I../inst/include -DDUCKDB_DISABLE_PRINT -DDUCKDB_R_BUILD -DBROTLI_ENCODER_CLEANUP_ON_OOM -DDUCKDB_EXTENSION_AUTOLOAD_DEFAULT -Iduckdb/src/include -Iduckdb/third_party/concurrentqueue -Iduckdb/third_party/fast_float -Iduckdb/third_party/fastpforlib -Iduckdb/third_party/fmt/include -Iduckdb/third_party/fsst -Iduckdb/third_party/httplib -Iduckdb/third_party/hyperloglog -Iduckdb/third_party/jaro_winkler -Iduckdb/third_party/jaro_winkler/details -Iduckdb/third_party/libpg_query -Iduckdb/third_party/libpg_query/include -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/mbedtls/library -Iduckdb/third_party/miniz -Iduckdb/third_party/pcg -Iduckdb/third_party/re2 -Iduckdb/third_party/skiplist -Iduckdb/third_party/tdigest -Iduckdb/third_party/utf8proc -Iduckdb/third_party/utf8proc/include -Iduckdb/third_party/yyjson/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/parquet/include -Iduckdb/third_party/parquet -Iduckdb/third_party/thrift -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/snappy -Iduckdb/third_party/mbedtls -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/core_functions/include -I../inst/include -Iduckdb -DDUCKDB_EXTENSION_PARQUET_LINKED -DDUCKDB_BUILD_LIBRARY -DDUCKDB_EXTENSION_CORE_FUNCTIONS_LINKED -DDUCKDB_BUILD_LIBRARY  -I/usr/local/include    -fpic  -g -O2  -c connection.cpp -o connection.o
-g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG -Iinclude -I../inst/include -DDUCKDB_DISABLE_PRINT -DDUCKDB_R_BUILD -DBROTLI_ENCODER_CLEANUP_ON_OOM -DDUCKDB_EXTENSION_AUTOLOAD_DEFAULT -Iduckdb/src/include -Iduckdb/third_party/concurrentqueue -Iduckdb/third_party/fast_float -Iduckdb/third_party/fastpforlib -Iduckdb/third_party/fmt/include -Iduckdb/third_party/fsst -Iduckdb/third_party/httplib -Iduckdb/third_party/hyperloglog -Iduckdb/third_party/jaro_winkler -Iduckdb/third_party/jaro_winkler/details -Iduckdb/third_party/libpg_query -Iduckdb/third_party/libpg_query/include -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/mbedtls/library -Iduckdb/third_party/miniz -Iduckdb/third_party/pcg -Iduckdb/third_party/re2 -Iduckdb/third_party/skiplist -Iduckdb/third_party/tdigest -Iduckdb/third_party/utf8proc -Iduckdb/third_party/utf8proc/include -Iduckdb/third_party/yyjson/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/parquet/include -Iduckdb/third_party/parquet -Iduckdb/third_party/thrift -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/snappy -Iduckdb/third_party/mbedtls -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/core_functions/include -I../inst/include -Iduckdb -DDUCKDB_EXTENSION_PARQUET_LINKED -DDUCKDB_BUILD_LIBRARY -DDUCKDB_EXTENSION_CORE_FUNCTIONS_LINKED -DDUCKDB_BUILD_LIBRARY  -I/usr/local/include    -fpic  -g -O2  -c statement.cpp -o statement.o
-g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG -Iinclude -I../inst/include -DDUCKDB_DISABLE_PRINT -DDUCKDB_R_BUILD -DBROTLI_ENCODER_CLEANUP_ON_OOM -DDUCKDB_EXTENSION_AUTOLOAD_DEFAULT -Iduckdb/src/include -Iduckdb/third_party/concurrentqueue -Iduckdb/third_party/fast_float -Iduckdb/third_party/fastpforlib -Iduckdb/third_party/fmt/include -Iduckdb/third_party/fsst -Iduckdb/third_party/httplib -Iduckdb/third_party/hyperloglog -Iduckdb/third_party/jaro_winkler -Iduckdb/third_party/jaro_winkler/details -Iduckdb/third_party/libpg_query -Iduckdb/third_party/libpg_query/include -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/mbedtls/library -Iduckdb/third_party/miniz -Iduckdb/third_party/pcg -Iduckdb/third_party/re2 -Iduckdb/third_party/skiplist -Iduckdb/third_party/tdigest -Iduckdb/third_party/utf8proc -Iduckdb/third_party/utf8proc/include -Iduckdb/third_party/yyjson/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/parquet/include -Iduckdb/third_party/parquet -Iduckdb/third_party/thrift -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/snappy -Iduckdb/third_party/mbedtls -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/core_functions/include -I../inst/include -Iduckdb -DDUCKDB_EXTENSION_PARQUET_LINKED -DDUCKDB_BUILD_LIBRARY -DDUCKDB_EXTENSION_CORE_FUNCTIONS_LINKED -DDUCKDB_BUILD_LIBRARY  -I/usr/local/include    -fpic  -g -O2  -c register.cpp -o register.o
-g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG -Iinclude -I../inst/include -DDUCKDB_DISABLE_PRINT -DDUCKDB_R_BUILD -DBROTLI_ENCODER_CLEANUP_ON_OOM -DDUCKDB_EXTENSION_AUTOLOAD_DEFAULT -Iduckdb/src/include -Iduckdb/third_party/concurrentqueue -Iduckdb/third_party/fast_float -Iduckdb/third_party/fastpforlib -Iduckdb/third_party/fmt/include -Iduckdb/third_party/fsst -Iduckdb/third_party/httplib -Iduckdb/third_party/hyperloglog -Iduckdb/third_party/jaro_winkler -Iduckdb/third_party/jaro_winkler/details -Iduckdb/third_party/libpg_query -Iduckdb/third_party/libpg_query/include -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/mbedtls/library -Iduckdb/third_party/miniz -Iduckdb/third_party/pcg -Iduckdb/third_party/re2 -Iduckdb/third_party/skiplist -Iduckdb/third_party/tdigest -Iduckdb/third_party/utf8proc -Iduckdb/third_party/utf8proc/include -Iduckdb/third_party/yyjson/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/parquet/include -Iduckdb/third_party/parquet -Iduckdb/third_party/thrift -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/snappy -Iduckdb/third_party/mbedtls -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/core_functions/include -I../inst/include -Iduckdb -DDUCKDB_EXTENSION_PARQUET_LINKED -DDUCKDB_BUILD_LIBRARY -DDUCKDB_EXTENSION_CORE_FUNCTIONS_LINKED -DDUCKDB_BUILD_LIBRARY  -I/usr/local/include    -fpic  -g -O2  -c relational.cpp -o relational.o
-g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG -Iinclude -I../inst/include -DDUCKDB_DISABLE_PRINT -DDUCKDB_R_BUILD -DBROTLI_ENCODER_CLEANUP_ON_OOM -DDUCKDB_EXTENSION_AUTOLOAD_DEFAULT -Iduckdb/src/include -Iduckdb/third_party/concurrentqueue -Iduckdb/third_party/fast_float -Iduckdb/third_party/fastpforlib -Iduckdb/third_party/fmt/include -Iduckdb/third_party/fsst -Iduckdb/third_party/httplib -Iduckdb/third_party/hyperloglog -Iduckdb/third_party/jaro_winkler -Iduckdb/third_party/jaro_winkler/details -Iduckdb/third_party/libpg_query -Iduckdb/third_party/libpg_query/include -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/mbedtls/library -Iduckdb/third_party/miniz -Iduckdb/third_party/pcg -Iduckdb/third_party/re2 -Iduckdb/third_party/skiplist -Iduckdb/third_party/tdigest -Iduckdb/third_party/utf8proc -Iduckdb/third_party/utf8proc/include -Iduckdb/third_party/yyjson/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/parquet/include -Iduckdb/third_party/parquet -Iduckdb/third_party/thrift -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/snappy -Iduckdb/third_party/mbedtls -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/core_functions/include -I../inst/include -Iduckdb -DDUCKDB_EXTENSION_PARQUET_LINKED -DDUCKDB_BUILD_LIBRARY -DDUCKDB_EXTENSION_CORE_FUNCTIONS_LINKED -DDUCKDB_BUILD_LIBRARY  -I/usr/local/include    -fpic  -g -O2  -c scan.cpp -o scan.o
-g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG -Iinclude -I../inst/include -DDUCKDB_DISABLE_PRINT -DDUCKDB_R_BUILD -DBROTLI_ENCODER_CLEANUP_ON_OOM -DDUCKDB_EXTENSION_AUTOLOAD_DEFAULT -Iduckdb/src/include -Iduckdb/third_party/concurrentqueue -Iduckdb/third_party/fast_float -Iduckdb/third_party/fastpforlib -Iduckdb/third_party/fmt/include -Iduckdb/third_party/fsst -Iduckdb/third_party/httplib -Iduckdb/third_party/hyperloglog -Iduckdb/third_party/jaro_winkler -Iduckdb/third_party/jaro_winkler/details -Iduckdb/third_party/libpg_query -Iduckdb/third_party/libpg_query/include -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/mbedtls/library -Iduckdb/third_party/miniz -Iduckdb/third_party/pcg -Iduckdb/third_party/re2 -Iduckdb/third_party/skiplist -Iduckdb/third_party/tdigest -Iduckdb/third_party/utf8proc -Iduckdb/third_party/utf8proc/include -Iduckdb/third_party/yyjson/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/parquet/include -Iduckdb/third_party/parquet -Iduckdb/third_party/thrift -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/snappy -Iduckdb/third_party/mbedtls -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/core_functions/include -I../inst/include -Iduckdb -DDUCKDB_EXTENSION_PARQUET_LINKED -DDUCKDB_BUILD_LIBRARY -DDUCKDB_EXTENSION_CORE_FUNCTIONS_LINKED -DDUCKDB_BUILD_LIBRARY  -I/usr/local/include    -fpic  -g -O2  -c signal.cpp -o signal.o
-g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG -Iinclude -I../inst/include -DDUCKDB_DISABLE_PRINT -DDUCKDB_R_BUILD -DBROTLI_ENCODER_CLEANUP_ON_OOM -DDUCKDB_EXTENSION_AUTOLOAD_DEFAULT -Iduckdb/src/include -Iduckdb/third_party/concurrentqueue -Iduckdb/third_party/fast_float -Iduckdb/third_party/fastpforlib -Iduckdb/third_party/fmt/include -Iduckdb/third_party/fsst -Iduckdb/third_party/httplib -Iduckdb/third_party/hyperloglog -Iduckdb/third_party/jaro_winkler -Iduckdb/third_party/jaro_winkler/details -Iduckdb/third_party/libpg_query -Iduckdb/third_party/libpg_query/include -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/mbedtls/library -Iduckdb/third_party/miniz -Iduckdb/third_party/pcg -Iduckdb/third_party/re2 -Iduckdb/third_party/skiplist -Iduckdb/third_party/tdigest -Iduckdb/third_party/utf8proc -Iduckdb/third_party/utf8proc/include -Iduckdb/third_party/yyjson/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/parquet/include -Iduckdb/third_party/parquet -Iduckdb/third_party/thrift -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/snappy -Iduckdb/third_party/mbedtls -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/core_functions/include -I../inst/include -Iduckdb -DDUCKDB_EXTENSION_PARQUET_LINKED -DDUCKDB_BUILD_LIBRARY -DDUCKDB_EXTENSION_CORE_FUNCTIONS_LINKED -DDUCKDB_BUILD_LIBRARY  -I/usr/local/include    -fpic  -g -O2  -c transform.cpp -o transform.o
-g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG -Iinclude -I../inst/include -DDUCKDB_DISABLE_PRINT -DDUCKDB_R_BUILD -DBROTLI_ENCODER_CLEANUP_ON_OOM -DDUCKDB_EXTENSION_AUTOLOAD_DEFAULT -Iduckdb/src/include -Iduckdb/third_party/concurrentqueue -Iduckdb/third_party/fast_float -Iduckdb/third_party/fastpforlib -Iduckdb/third_party/fmt/include -Iduckdb/third_party/fsst -Iduckdb/third_party/httplib -Iduckdb/third_party/hyperloglog -Iduckdb/third_party/jaro_winkler -Iduckdb/third_party/jaro_winkler/details -Iduckdb/third_party/libpg_query -Iduckdb/third_party/libpg_query/include -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/mbedtls/library -Iduckdb/third_party/miniz -Iduckdb/third_party/pcg -Iduckdb/third_party/re2 -Iduckdb/third_party/skiplist -Iduckdb/third_party/tdigest -Iduckdb/third_party/utf8proc -Iduckdb/third_party/utf8proc/include -Iduckdb/third_party/yyjson/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/parquet/include -Iduckdb/third_party/parquet -Iduckdb/third_party/thrift -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/snappy -Iduckdb/third_party/mbedtls -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/core_functions/include -I../inst/include -Iduckdb -DDUCKDB_EXTENSION_PARQUET_LINKED -DDUCKDB_BUILD_LIBRARY -DDUCKDB_EXTENSION_CORE_FUNCTIONS_LINKED -DDUCKDB_BUILD_LIBRARY  -I/usr/local/include    -fpic  -g -O2  -c utils.cpp -o utils.o
+gcc -I"/home/henrik/shared/software/CBI/_ubuntu22_04/R-4.5.0-gcc11/lib/R/include" -DNDEBUG   -I/usr/local/include    -fpic  -g -O2  -c dotsElt.c -o dotsElt.o
+gcc -I"/home/henrik/shared/software/CBI/_ubuntu22_04/R-4.5.0-gcc11/lib/R/include" -DNDEBUG   -I/usr/local/include    -fpic  -g -O2  -c dotsLength.c -o dotsLength.o
+gcc -I"/home/henrik/shared/software/CBI/_ubuntu22_04/R-4.5.0-gcc11/lib/R/include" -DNDEBUG   -I/usr/local/include    -fpic  -g -O2  -c dotsNames.c -o dotsNames.o
+gcc -I"/home/henrik/shared/software/CBI/_ubuntu22_04/R-4.5.0-gcc11/lib/R/include" -DNDEBUG   -I/usr/local/include    -fpic  -g -O2  -c init.c -o init.o
+gcc -shared -L/home/henrik/shared/software/CBI/_ubuntu22_04/R-4.5.0-gcc11/lib/R/lib -L/usr/local/lib -o backports.so dotsElt.o dotsLength.o dotsNames.o init.o -L/home/henrik/shared/software/CBI/_ubuntu22_04/R-4.5.0-gcc11/lib/R/lib -lR
+gcc -I"/home/henrik/shared/software/CBI/_ubuntu22_04/R-4.5.0-gcc11/lib/R/include" -DNDEBUG   -I/usr/local/include    -fpic  -g -O2  -c base64.c -o base64.o
+gcc -I"/home/henrik/shared/software/CBI/_ubuntu22_04/R-4.5.0-gcc11/lib/R/include" -DNDEBUG   -I/usr/local/include    -fpic  -g -O2  -c uriencode.c -o uriencode.o
+gcc -I"/home/henrik/shared/software/CBI/_ubuntu22_04/R-4.5.0-gcc11/lib/R/include" -DNDEBUG   -I/usr/local/include    -fpic  -g -O2  -c utf8.c -o utf8.o
+gcc -shared -L/home/henrik/shared/software/CBI/_ubuntu22_04/R-4.5.0-gcc11/lib/R/lib -L/usr/local/lib -o base64enc.so base64.o uriencode.o utf8.o -L/home/henrik/shared/software/CBI/_ubuntu22_04/R-4.5.0-gcc11/lib/R/lib -lR
+gcc -I"/home/henrik/shared/software/CBI/_ubuntu22_04/R-4.5.0-gcc11/lib/R/include" -DNDEBUG   -I/usr/local/include    -fpic  -g -O2  -c brio.c -o brio.o
 ...
-g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG -Iinclude -I../inst/include -DDUCKDB_DISABLE_PRINT -DDUCKDB_R_BUILD -DBROTLI_ENCODER_CLEANUP_ON_OOM -DDUCKDB_EXTENSION_AUTOLOAD_DEFAULT -Iduckdb/src/include -Iduckdb/third_party/concurrentqueue -Iduckdb/third_party/fast_float -Iduckdb/third_party/fastpforlib -Iduckdb/third_party/fmt/include -Iduckdb/third_party/fsst -Iduckdb/third_party/httplib -Iduckdb/third_party/hyperloglog -Iduckdb/third_party/jaro_winkler -Iduckdb/third_party/jaro_winkler/details -Iduckdb/third_party/libpg_query -Iduckdb/third_party/libpg_query/include -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/mbedtls/library -Iduckdb/third_party/miniz -Iduckdb/third_party/pcg -Iduckdb/third_party/re2 -Iduckdb/third_party/skiplist -Iduckdb/third_party/tdigest -Iduckdb/third_party/utf8proc -Iduckdb/third_party/utf8proc/include -Iduckdb/third_party/yyjson/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/parquet/include -Iduckdb/third_party/parquet -Iduckdb/third_party/thrift -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/snappy -Iduckdb/third_party/mbedtls -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/core_functions/include -I../inst/include -Iduckdb -DDUCKDB_EXTENSION_PARQUET_LINKED -DDUCKDB_BUILD_LIBRARY -DDUCKDB_EXTENSION_CORE_FUNCTIONS_LINKED -DDUCKDB_BUILD_LIBRARY  -I/usr/local/include    -fpic  -g -O2  -c duckdb/third_party/brotli/enc/literal_cost.cpp -o duckdb/third_party/brotli/enc/literal_cost.o
-g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG -Iinclude -I../inst/include -DDUCKDB_DISABLE_PRINT -DDUCKDB_R_BUILD -DBROTLI_ENCODER_CLEANUP_ON_OOM -DDUCKDB_EXTENSION_AUTOLOAD_DEFAULT -Iduckdb/src/include -Iduckdb/third_party/concurrentqueue -Iduckdb/third_party/fast_float -Iduckdb/third_party/fastpforlib -Iduckdb/third_party/fmt/include -Iduckdb/third_party/fsst -Iduckdb/third_party/httplib -Iduckdb/third_party/hyperloglog -Iduckdb/third_party/jaro_winkler -Iduckdb/third_party/jaro_winkler/details -Iduckdb/third_party/libpg_query -Iduckdb/third_party/libpg_query/include -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/mbedtls/library -Iduckdb/third_party/miniz -Iduckdb/third_party/pcg -Iduckdb/third_party/re2 -Iduckdb/third_party/skiplist -Iduckdb/third_party/tdigest -Iduckdb/third_party/utf8proc -Iduckdb/third_party/utf8proc/include -Iduckdb/third_party/yyjson/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/parquet/include -Iduckdb/third_party/parquet -Iduckdb/third_party/thrift -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/snappy -Iduckdb/third_party/mbedtls -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/core_functions/include -I../inst/include -Iduckdb -DDUCKDB_EXTENSION_PARQUET_LINKED -DDUCKDB_BUILD_LIBRARY -DDUCKDB_EXTENSION_CORE_FUNCTIONS_LINKED -DDUCKDB_BUILD_LIBRARY  -I/usr/local/include    -fpic  -g -O2  -c duckdb/third_party/brotli/enc/memory.cpp -o duckdb/third_party/brotli/enc/memory.o
-g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG -Iinclude -I../inst/include -DDUCKDB_DISABLE_PRINT -DDUCKDB_R_BUILD -DBROTLI_ENCODER_CLEANUP_ON_OOM -DDUCKDB_EXTENSION_AUTOLOAD_DEFAULT -Iduckdb/src/include -Iduckdb/third_party/concurrentqueue -Iduckdb/third_party/fast_float -Iduckdb/third_party/fastpforlib -Iduckdb/third_party/fmt/include -Iduckdb/third_party/fsst -Iduckdb/third_party/httplib -Iduckdb/third_party/hyperloglog -Iduckdb/third_party/jaro_winkler -Iduckdb/third_party/jaro_winkler/details -Iduckdb/third_party/libpg_query -Iduckdb/third_party/libpg_query/include -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/mbedtls/library -Iduckdb/third_party/miniz -Iduckdb/third_party/pcg -Iduckdb/third_party/re2 -Iduckdb/third_party/skiplist -Iduckdb/third_party/tdigest -Iduckdb/third_party/utf8proc -Iduckdb/third_party/utf8proc/include -Iduckdb/third_party/yyjson/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/parquet/include -Iduckdb/third_party/parquet -Iduckdb/third_party/thrift -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/snappy -Iduckdb/third_party/mbedtls -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/core_functions/include -I../inst/include -Iduckdb -DDUCKDB_EXTENSION_PARQUET_LINKED -DDUCKDB_BUILD_LIBRARY -DDUCKDB_EXTENSION_CORE_FUNCTIONS_LINKED -DDUCKDB_BUILD_LIBRARY  -I/usr/local/include    -fpic  -g -O2  -c duckdb/third_party/brotli/enc/metablock.cpp -o duckdb/third_party/brotli/enc/metablock.o
-g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG -Iinclude -I../inst/include -DDUCKDB_DISABLE_PRINT -DDUCKDB_R_BUILD -DBROTLI_ENCODER_CLEANUP_ON_OOM -DDUCKDB_EXTENSION_AUTOLOAD_DEFAULT -Iduckdb/src/include -Iduckdb/third_party/concurrentqueue -Iduckdb/third_party/fast_float -Iduckdb/third_party/fastpforlib -Iduckdb/third_party/fmt/include -Iduckdb/third_party/fsst -Iduckdb/third_party/httplib -Iduckdb/third_party/hyperloglog -Iduckdb/third_party/jaro_winkler -Iduckdb/third_party/jaro_winkler/details -Iduckdb/third_party/libpg_query -Iduckdb/third_party/libpg_query/include -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/mbedtls/library -Iduckdb/third_party/miniz -Iduckdb/third_party/pcg -Iduckdb/third_party/re2 -Iduckdb/third_party/skiplist -Iduckdb/third_party/tdigest -Iduckdb/third_party/utf8proc -Iduckdb/third_party/utf8proc/include -Iduckdb/third_party/yyjson/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/parquet/include -Iduckdb/third_party/parquet -Iduckdb/third_party/thrift -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/snappy -Iduckdb/third_party/mbedtls -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/core_functions/include -I../inst/include -Iduckdb -DDUCKDB_EXTENSION_PARQUET_LINKED -DDUCKDB_BUILD_LIBRARY -DDUCKDB_EXTENSION_CORE_FUNCTIONS_LINKED -DDUCKDB_BUILD_LIBRARY  -I/usr/local/include    -fpic  -g -O2  -c duckdb/third_party/brotli/enc/static_dict.cpp -o duckdb/third_party/brotli/enc/static_dict.o
-g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG -Iinclude -I../inst/include -DDUCKDB_DISABLE_PRINT -DDUCKDB_R_BUILD -DBROTLI_ENCODER_CLEANUP_ON_OOM -DDUCKDB_EXTENSION_AUTOLOAD_DEFAULT -Iduckdb/src/include -Iduckdb/third_party/concurrentqueue -Iduckdb/third_party/fast_float -Iduckdb/third_party/fastpforlib -Iduckdb/third_party/fmt/include -Iduckdb/third_party/fsst -Iduckdb/third_party/httplib -Iduckdb/third_party/hyperloglog -Iduckdb/third_party/jaro_winkler -Iduckdb/third_party/jaro_winkler/details -Iduckdb/third_party/libpg_query -Iduckdb/third_party/libpg_query/include -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/mbedtls/library -Iduckdb/third_party/miniz -Iduckdb/third_party/pcg -Iduckdb/third_party/re2 -Iduckdb/third_party/skiplist -Iduckdb/third_party/tdigest -Iduckdb/third_party/utf8proc -Iduckdb/third_party/utf8proc/include -Iduckdb/third_party/yyjson/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/parquet/include -Iduckdb/third_party/parquet -Iduckdb/third_party/thrift -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/snappy -Iduckdb/third_party/mbedtls -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/core_functions/include -I../inst/include -Iduckdb -DDUCKDB_EXTENSION_PARQUET_LINKED -DDUCKDB_BUILD_LIBRARY -DDUCKDB_EXTENSION_CORE_FUNCTIONS_LINKED -DDUCKDB_BUILD_LIBRARY  -I/usr/local/include    -fpic  -g -O2  -c duckdb/third_party/brotli/enc/utf8_util.cpp -o duckdb/third_party/brotli/enc/utf8_util.o
-g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG -Iinclude -I../inst/include -DDUCKDB_DISABLE_PRINT -DDUCKDB_R_BUILD -DBROTLI_ENCODER_CLEANUP_ON_OOM -DDUCKDB_EXTENSION_AUTOLOAD_DEFAULT -Iduckdb/src/include -Iduckdb/third_party/concurrentqueue -Iduckdb/third_party/fast_float -Iduckdb/third_party/fastpforlib -Iduckdb/third_party/fmt/include -Iduckdb/third_party/fsst -Iduckdb/third_party/httplib -Iduckdb/third_party/hyperloglog -Iduckdb/third_party/jaro_winkler -Iduckdb/third_party/jaro_winkler/details -Iduckdb/third_party/libpg_query -Iduckdb/third_party/libpg_query/include -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/mbedtls/library -Iduckdb/third_party/miniz -Iduckdb/third_party/pcg -Iduckdb/third_party/re2 -Iduckdb/third_party/skiplist -Iduckdb/third_party/tdigest -Iduckdb/third_party/utf8proc -Iduckdb/third_party/utf8proc/include -Iduckdb/third_party/yyjson/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/parquet/include -Iduckdb/third_party/parquet -Iduckdb/third_party/thrift -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/snappy -Iduckdb/third_party/mbedtls -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/core_functions/include -I../inst/include -Iduckdb -DDUCKDB_EXTENSION_PARQUET_LINKED -DDUCKDB_BUILD_LIBRARY -DDUCKDB_EXTENSION_CORE_FUNCTIONS_LINKED -DDUCKDB_BUILD_LIBRARY  -I/usr/local/include    -fpic  -g -O2  -c duckdb/extension/core_functions/function_list.cpp -o duckdb/extension/core_functions/function_list.o
-g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG -Iinclude -I../inst/include -DDUCKDB_DISABLE_PRINT -DDUCKDB_R_BUILD -DBROTLI_ENCODER_CLEANUP_ON_OOM -DDUCKDB_EXTENSION_AUTOLOAD_DEFAULT -Iduckdb/src/include -Iduckdb/third_party/concurrentqueue -Iduckdb/third_party/fast_float -Iduckdb/third_party/fastpforlib -Iduckdb/third_party/fmt/include -Iduckdb/third_party/fsst -Iduckdb/third_party/httplib -Iduckdb/third_party/hyperloglog -Iduckdb/third_party/jaro_winkler -Iduckdb/third_party/jaro_winkler/details -Iduckdb/third_party/libpg_query -Iduckdb/third_party/libpg_query/include -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/mbedtls/library -Iduckdb/third_party/miniz -Iduckdb/third_party/pcg -Iduckdb/third_party/re2 -Iduckdb/third_party/skiplist -Iduckdb/third_party/tdigest -Iduckdb/third_party/utf8proc -Iduckdb/third_party/utf8proc/include -Iduckdb/third_party/yyjson/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/parquet/include -Iduckdb/third_party/parquet -Iduckdb/third_party/thrift -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/snappy -Iduckdb/third_party/mbedtls -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/core_functions/include -I../inst/include -Iduckdb -DDUCKDB_EXTENSION_PARQUET_LINKED -DDUCKDB_BUILD_LIBRARY -DDUCKDB_EXTENSION_CORE_FUNCTIONS_LINKED -DDUCKDB_BUILD_LIBRARY  -I/usr/local/include    -fpic  -g -O2  -c duckdb/extension/core_functions/core_functions_extension.cpp -o duckdb/extension/core_functions/core_functions_extension.o
-g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG -Iinclude -I../inst/include -DDUCKDB_DISABLE_PRINT -DDUCKDB_R_BUILD -DBROTLI_ENCODER_CLEANUP_ON_OOM -DDUCKDB_EXTENSION_AUTOLOAD_DEFAULT -Iduckdb/src/include -Iduckdb/third_party/concurrentqueue -Iduckdb/third_party/fast_float -Iduckdb/third_party/fastpforlib -Iduckdb/third_party/fmt/include -Iduckdb/third_party/fsst -Iduckdb/third_party/httplib -Iduckdb/third_party/hyperloglog -Iduckdb/third_party/jaro_winkler -Iduckdb/third_party/jaro_winkler/details -Iduckdb/third_party/libpg_query -Iduckdb/third_party/libpg_query/include -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/mbedtls/library -Iduckdb/third_party/miniz -Iduckdb/third_party/pcg -Iduckdb/third_party/re2 -Iduckdb/third_party/skiplist -Iduckdb/third_party/tdigest -Iduckdb/third_party/utf8proc -Iduckdb/third_party/utf8proc/include -Iduckdb/third_party/yyjson/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/parquet/include -Iduckdb/third_party/parquet -Iduckdb/third_party/thrift -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/snappy -Iduckdb/third_party/mbedtls -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/core_functions/include -I../inst/include -Iduckdb -DDUCKDB_EXTENSION_PARQUET_LINKED -DDUCKDB_BUILD_LIBRARY -DDUCKDB_EXTENSION_CORE_FUNCTIONS_LINKED -DDUCKDB_BUILD_LIBRARY  -I/usr/local/include    -fpic  -g -O2  -c duckdb/extension/core_functions/lambda_functions.cpp -o duckdb/extension/core_functions/lambda_functions.o
-g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG -Iinclude -I../inst/include -DDUCKDB_DISABLE_PRINT -DDUCKDB_R_BUILD -DBROTLI_ENCODER_CLEANUP_ON_OOM -DDUCKDB_EXTENSION_AUTOLOAD_DEFAULT -Iduckdb/src/include -Iduckdb/third_party/concurrentqueue -Iduckdb/third_party/fast_float -Iduckdb/third_party/fastpforlib -Iduckdb/third_party/fmt/include -Iduckdb/third_party/fsst -Iduckdb/third_party/httplib -Iduckdb/third_party/hyperloglog -Iduckdb/third_party/jaro_winkler -Iduckdb/third_party/jaro_winkler/details -Iduckdb/third_party/libpg_query -Iduckdb/third_party/libpg_query/include -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/mbedtls/library -Iduckdb/third_party/miniz -Iduckdb/third_party/pcg -Iduckdb/third_party/re2 -Iduckdb/third_party/skiplist -Iduckdb/third_party/tdigest -Iduckdb/third_party/utf8proc -Iduckdb/third_party/utf8proc/include -Iduckdb/third_party/yyjson/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/parquet/include -Iduckdb/third_party/parquet -Iduckdb/third_party/thrift -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/snappy -Iduckdb/third_party/mbedtls -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/core_functions/include -I../inst/include -Iduckdb -DDUCKDB_EXTENSION_PARQUET_LINKED -DDUCKDB_BUILD_LIBRARY -DDUCKDB_EXTENSION_CORE_FUNCTIONS_LINKED -DDUCKDB_BUILD_LIBRARY  -I/usr/local/include    -fpic  -g -O2  -c duckdb/ub_extension_core_functions_aggregate_holistic.cpp -o duckdb/ub_extension_core_functions_aggregate_holistic.o
-g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG -Iinclude -I../inst/include -DDUCKDB_DISABLE_PRINT -DDUCKDB_R_BUILD -DBROTLI_ENCODER_CLEANUP_ON_OOM -DDUCKDB_EXTENSION_AUTOLOAD_DEFAULT -Iduckdb/src/include -Iduckdb/third_party/concurrentqueue -Iduckdb/third_party/fast_float -Iduckdb/third_party/fastpforlib -Iduckdb/third_party/fmt/include -Iduckdb/third_party/fsst -Iduckdb/third_party/httplib -Iduckdb/third_party/hyperloglog -Iduckdb/third_party/jaro_winkler -Iduckdb/third_party/jaro_winkler/details -Iduckdb/third_party/libpg_query -Iduckdb/third_party/libpg_query/include -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/mbedtls/library -Iduckdb/third_party/miniz -Iduckdb/third_party/pcg -Iduckdb/third_party/re2 -Iduckdb/third_party/skiplist -Iduckdb/third_party/tdigest -Iduckdb/third_party/utf8proc -Iduckdb/third_party/utf8proc/include -Iduckdb/third_party/yyjson/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/parquet/include -Iduckdb/third_party/parquet -Iduckdb/third_party/thrift -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/snappy -Iduckdb/third_party/mbedtls -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/core_functions/include -I../inst/include -Iduckdb -DDUCKDB_EXTENSION_PARQUET_LINKED -DDUCKDB_BUILD_LIBRARY -DDUCKDB_EXTENSION_CORE_FUNCTIONS_LINKED -DDUCKDB_BUILD_LIBRARY  -I/usr/local/include    -fpic  -g -O2  -c duckdb/ub_extension_core_functions_aggregate_distributive.cpp -o duckdb/ub_extension_core_functions_aggregate_distributive.o
+g++ -std=gnu++17 -I"/home/henrik/shared/software/CBI/_ubuntu22_04/R-4.5.0-gcc11/lib/R/include" -DNDEBUG  -I'/home/henrik/futureverse/future/revdep/library/geocmeans/cpp11/include' -I/usr/local/include    -fpic  -g -O2   -c simplifyPieces.cpp -o simplifyPieces.o
+g++ -std=gnu++17 -shared -L/home/henrik/shared/software/CBI/_ubuntu22_04/R-4.5.0-gcc11/lib/R/lib -L/usr/local/lib -o tidyr.so cpp11.o melt.o simplifyPieces.o -L/home/henrik/shared/software/CBI/_ubuntu22_04/R-4.5.0-gcc11/lib/R/lib -lR
+Error in loadNamespace(j <- i[[1L]], c(lib.loc, .libPaths()), versionCheck = vI[[j]]) : 
+  there is no package called ‘dichromat’
+Calls: <Anonymous> -> code2LazyLoadDB -> suppressPackageStartupMessages -> withCallingHandlers -> loadNamespace -> namespaceImportFrom -> asNamespace -> loadNamespace -> withRestarts -> withOneRestart -> doWithOneRestart
+Execution halted
+Error in loadNamespace(j <- i[[1L]], c(lib.loc, .libPaths()), versionCheck = vI[[j]]) : 
+  there is no package called ‘Deriv’
+Calls: <Anonymous> -> code2LazyLoadDB -> suppressPackageStartupMessages -> withCallingHandlers -> loadNamespace -> namespaceImportFrom -> asNamespace -> loadNamespace -> withRestarts -> withOneRestart -> doWithOneRestart
+Execution halted
 
 
-* installing *binary* package ‘assertthat’ ...
-* DONE (assertthat)
-* installing *binary* package ‘base64enc’ ...
-* DONE (base64enc)
-* installing *binary* package ‘bit’ ...
-* DONE (bit)
-* installing *binary* package ‘brio’ ...
-* DONE (brio)
-* installing *binary* package ‘cli’ ...
-* DONE (cli)
+trying URL 'https://packagemanager.posit.co/cran/__linux__/jammy/latest/src/contrib/abind_1.4-8.tar.gz'
+trying URL 'https://packagemanager.posit.co/cran/__linux__/jammy/latest/src/contrib/askpass_1.2.1.tar.gz'
+trying URL 'https://packagemanager.posit.co/cran/__linux__/jammy/latest/src/contrib/backports_1.5.0.tar.gz'
+trying URL 'https://packagemanager.posit.co/cran/__linux__/jammy/latest/src/contrib/base64enc_0.1-3.tar.gz'
+trying URL 'https://packagemanager.posit.co/cran/__linux__/jammy/latest/src/contrib/BH_1.87.0-1.tar.gz'
+trying URL 'https://packagemanager.posit.co/cran/__linux__/jammy/latest/src/contrib/4.5.1/Recommended/boot_1.3-31.tar.gz'
+trying URL 'https://packagemanager.posit.co/cran/__linux__/jammy/latest/src/contrib/brio_1.1.5.tar.gz'
+trying URL 'https://packagemanager.posit.co/cran/__linux__/jammy/latest/src/contrib/broom_1.0.8.tar.gz'
+trying URL 'https://packagemanager.posit.co/cran/__linux__/jammy/latest/src/contrib/bslib_0.9.0.tar.gz'
+trying URL 'https://packagemanager.posit.co/cran/__linux__/jammy/latest/src/contrib/cachem_1.1.0.tar.gz'
 ...
-** using staged installation
-++ dirname ./configure
-+ cd ./src
-+ '[' -f '' ']'
-+ cp include/to-tar.mk Makevars.duckdb
-+ '[' -f duckdb.tar.xz ']'
-+ tar xJf duckdb.tar.xz
-** libs
-using C++ compiler: ‘g++ (GCC) 13.3.1 20240611 (Red Hat 13.3.1-2)’
-using C++17
+Perhaps try a variation of:
+install.packages('car')
+* removing ‘/home/henrik/futureverse/future/revdep/library/geocmeans/rstatix’
+ERROR: dependency ‘rstatix’ is not available for package ‘ggpubr’
+Perhaps try a variation of:
+install.packages('rstatix')
+* removing ‘/home/henrik/futureverse/future/revdep/library/geocmeans/ggpubr’
+
+The downloaded source packages are in
+	‘/tmp/henrik/RtmpEvPzBw/downloaded_packages’
 
 
 ```
 ### CRAN
 
 ```
-g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG -Iinclude -I../inst/include -DDUCKDB_DISABLE_PRINT -DDUCKDB_R_BUILD -DBROTLI_ENCODER_CLEANUP_ON_OOM -DDUCKDB_EXTENSION_AUTOLOAD_DEFAULT -Iduckdb/src/include -Iduckdb/third_party/concurrentqueue -Iduckdb/third_party/fast_float -Iduckdb/third_party/fastpforlib -Iduckdb/third_party/fmt/include -Iduckdb/third_party/fsst -Iduckdb/third_party/httplib -Iduckdb/third_party/hyperloglog -Iduckdb/third_party/jaro_winkler -Iduckdb/third_party/jaro_winkler/details -Iduckdb/third_party/libpg_query -Iduckdb/third_party/libpg_query/include -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/mbedtls/library -Iduckdb/third_party/miniz -Iduckdb/third_party/pcg -Iduckdb/third_party/re2 -Iduckdb/third_party/skiplist -Iduckdb/third_party/tdigest -Iduckdb/third_party/utf8proc -Iduckdb/third_party/utf8proc/include -Iduckdb/third_party/yyjson/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/parquet/include -Iduckdb/third_party/parquet -Iduckdb/third_party/thrift -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/snappy -Iduckdb/third_party/mbedtls -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/core_functions/include -I../inst/include -Iduckdb -DDUCKDB_EXTENSION_PARQUET_LINKED -DDUCKDB_BUILD_LIBRARY -DDUCKDB_EXTENSION_CORE_FUNCTIONS_LINKED -DDUCKDB_BUILD_LIBRARY  -I/usr/local/include    -fpic  -g -O2  -c rfuns.cpp -o rfuns.o
-g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG -Iinclude -I../inst/include -DDUCKDB_DISABLE_PRINT -DDUCKDB_R_BUILD -DBROTLI_ENCODER_CLEANUP_ON_OOM -DDUCKDB_EXTENSION_AUTOLOAD_DEFAULT -Iduckdb/src/include -Iduckdb/third_party/concurrentqueue -Iduckdb/third_party/fast_float -Iduckdb/third_party/fastpforlib -Iduckdb/third_party/fmt/include -Iduckdb/third_party/fsst -Iduckdb/third_party/httplib -Iduckdb/third_party/hyperloglog -Iduckdb/third_party/jaro_winkler -Iduckdb/third_party/jaro_winkler/details -Iduckdb/third_party/libpg_query -Iduckdb/third_party/libpg_query/include -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/mbedtls/library -Iduckdb/third_party/miniz -Iduckdb/third_party/pcg -Iduckdb/third_party/re2 -Iduckdb/third_party/skiplist -Iduckdb/third_party/tdigest -Iduckdb/third_party/utf8proc -Iduckdb/third_party/utf8proc/include -Iduckdb/third_party/yyjson/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/parquet/include -Iduckdb/third_party/parquet -Iduckdb/third_party/thrift -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/snappy -Iduckdb/third_party/mbedtls -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/core_functions/include -I../inst/include -Iduckdb -DDUCKDB_EXTENSION_PARQUET_LINKED -DDUCKDB_BUILD_LIBRARY -DDUCKDB_EXTENSION_CORE_FUNCTIONS_LINKED -DDUCKDB_BUILD_LIBRARY  -I/usr/local/include    -fpic  -g -O2  -c database.cpp -o database.o
-g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG -Iinclude -I../inst/include -DDUCKDB_DISABLE_PRINT -DDUCKDB_R_BUILD -DBROTLI_ENCODER_CLEANUP_ON_OOM -DDUCKDB_EXTENSION_AUTOLOAD_DEFAULT -Iduckdb/src/include -Iduckdb/third_party/concurrentqueue -Iduckdb/third_party/fast_float -Iduckdb/third_party/fastpforlib -Iduckdb/third_party/fmt/include -Iduckdb/third_party/fsst -Iduckdb/third_party/httplib -Iduckdb/third_party/hyperloglog -Iduckdb/third_party/jaro_winkler -Iduckdb/third_party/jaro_winkler/details -Iduckdb/third_party/libpg_query -Iduckdb/third_party/libpg_query/include -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/mbedtls/library -Iduckdb/third_party/miniz -Iduckdb/third_party/pcg -Iduckdb/third_party/re2 -Iduckdb/third_party/skiplist -Iduckdb/third_party/tdigest -Iduckdb/third_party/utf8proc -Iduckdb/third_party/utf8proc/include -Iduckdb/third_party/yyjson/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/parquet/include -Iduckdb/third_party/parquet -Iduckdb/third_party/thrift -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/snappy -Iduckdb/third_party/mbedtls -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/core_functions/include -I../inst/include -Iduckdb -DDUCKDB_EXTENSION_PARQUET_LINKED -DDUCKDB_BUILD_LIBRARY -DDUCKDB_EXTENSION_CORE_FUNCTIONS_LINKED -DDUCKDB_BUILD_LIBRARY  -I/usr/local/include    -fpic  -g -O2  -c connection.cpp -o connection.o
-g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG -Iinclude -I../inst/include -DDUCKDB_DISABLE_PRINT -DDUCKDB_R_BUILD -DBROTLI_ENCODER_CLEANUP_ON_OOM -DDUCKDB_EXTENSION_AUTOLOAD_DEFAULT -Iduckdb/src/include -Iduckdb/third_party/concurrentqueue -Iduckdb/third_party/fast_float -Iduckdb/third_party/fastpforlib -Iduckdb/third_party/fmt/include -Iduckdb/third_party/fsst -Iduckdb/third_party/httplib -Iduckdb/third_party/hyperloglog -Iduckdb/third_party/jaro_winkler -Iduckdb/third_party/jaro_winkler/details -Iduckdb/third_party/libpg_query -Iduckdb/third_party/libpg_query/include -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/mbedtls/library -Iduckdb/third_party/miniz -Iduckdb/third_party/pcg -Iduckdb/third_party/re2 -Iduckdb/third_party/skiplist -Iduckdb/third_party/tdigest -Iduckdb/third_party/utf8proc -Iduckdb/third_party/utf8proc/include -Iduckdb/third_party/yyjson/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/parquet/include -Iduckdb/third_party/parquet -Iduckdb/third_party/thrift -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/snappy -Iduckdb/third_party/mbedtls -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/core_functions/include -I../inst/include -Iduckdb -DDUCKDB_EXTENSION_PARQUET_LINKED -DDUCKDB_BUILD_LIBRARY -DDUCKDB_EXTENSION_CORE_FUNCTIONS_LINKED -DDUCKDB_BUILD_LIBRARY  -I/usr/local/include    -fpic  -g -O2  -c statement.cpp -o statement.o
-g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG -Iinclude -I../inst/include -DDUCKDB_DISABLE_PRINT -DDUCKDB_R_BUILD -DBROTLI_ENCODER_CLEANUP_ON_OOM -DDUCKDB_EXTENSION_AUTOLOAD_DEFAULT -Iduckdb/src/include -Iduckdb/third_party/concurrentqueue -Iduckdb/third_party/fast_float -Iduckdb/third_party/fastpforlib -Iduckdb/third_party/fmt/include -Iduckdb/third_party/fsst -Iduckdb/third_party/httplib -Iduckdb/third_party/hyperloglog -Iduckdb/third_party/jaro_winkler -Iduckdb/third_party/jaro_winkler/details -Iduckdb/third_party/libpg_query -Iduckdb/third_party/libpg_query/include -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/mbedtls/library -Iduckdb/third_party/miniz -Iduckdb/third_party/pcg -Iduckdb/third_party/re2 -Iduckdb/third_party/skiplist -Iduckdb/third_party/tdigest -Iduckdb/third_party/utf8proc -Iduckdb/third_party/utf8proc/include -Iduckdb/third_party/yyjson/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/parquet/include -Iduckdb/third_party/parquet -Iduckdb/third_party/thrift -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/snappy -Iduckdb/third_party/mbedtls -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/core_functions/include -I../inst/include -Iduckdb -DDUCKDB_EXTENSION_PARQUET_LINKED -DDUCKDB_BUILD_LIBRARY -DDUCKDB_EXTENSION_CORE_FUNCTIONS_LINKED -DDUCKDB_BUILD_LIBRARY  -I/usr/local/include    -fpic  -g -O2  -c register.cpp -o register.o
-g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG -Iinclude -I../inst/include -DDUCKDB_DISABLE_PRINT -DDUCKDB_R_BUILD -DBROTLI_ENCODER_CLEANUP_ON_OOM -DDUCKDB_EXTENSION_AUTOLOAD_DEFAULT -Iduckdb/src/include -Iduckdb/third_party/concurrentqueue -Iduckdb/third_party/fast_float -Iduckdb/third_party/fastpforlib -Iduckdb/third_party/fmt/include -Iduckdb/third_party/fsst -Iduckdb/third_party/httplib -Iduckdb/third_party/hyperloglog -Iduckdb/third_party/jaro_winkler -Iduckdb/third_party/jaro_winkler/details -Iduckdb/third_party/libpg_query -Iduckdb/third_party/libpg_query/include -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/mbedtls/library -Iduckdb/third_party/miniz -Iduckdb/third_party/pcg -Iduckdb/third_party/re2 -Iduckdb/third_party/skiplist -Iduckdb/third_party/tdigest -Iduckdb/third_party/utf8proc -Iduckdb/third_party/utf8proc/include -Iduckdb/third_party/yyjson/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/parquet/include -Iduckdb/third_party/parquet -Iduckdb/third_party/thrift -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/snappy -Iduckdb/third_party/mbedtls -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/core_functions/include -I../inst/include -Iduckdb -DDUCKDB_EXTENSION_PARQUET_LINKED -DDUCKDB_BUILD_LIBRARY -DDUCKDB_EXTENSION_CORE_FUNCTIONS_LINKED -DDUCKDB_BUILD_LIBRARY  -I/usr/local/include    -fpic  -g -O2  -c relational.cpp -o relational.o
-g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG -Iinclude -I../inst/include -DDUCKDB_DISABLE_PRINT -DDUCKDB_R_BUILD -DBROTLI_ENCODER_CLEANUP_ON_OOM -DDUCKDB_EXTENSION_AUTOLOAD_DEFAULT -Iduckdb/src/include -Iduckdb/third_party/concurrentqueue -Iduckdb/third_party/fast_float -Iduckdb/third_party/fastpforlib -Iduckdb/third_party/fmt/include -Iduckdb/third_party/fsst -Iduckdb/third_party/httplib -Iduckdb/third_party/hyperloglog -Iduckdb/third_party/jaro_winkler -Iduckdb/third_party/jaro_winkler/details -Iduckdb/third_party/libpg_query -Iduckdb/third_party/libpg_query/include -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/mbedtls/library -Iduckdb/third_party/miniz -Iduckdb/third_party/pcg -Iduckdb/third_party/re2 -Iduckdb/third_party/skiplist -Iduckdb/third_party/tdigest -Iduckdb/third_party/utf8proc -Iduckdb/third_party/utf8proc/include -Iduckdb/third_party/yyjson/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/parquet/include -Iduckdb/third_party/parquet -Iduckdb/third_party/thrift -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/snappy -Iduckdb/third_party/mbedtls -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/core_functions/include -I../inst/include -Iduckdb -DDUCKDB_EXTENSION_PARQUET_LINKED -DDUCKDB_BUILD_LIBRARY -DDUCKDB_EXTENSION_CORE_FUNCTIONS_LINKED -DDUCKDB_BUILD_LIBRARY  -I/usr/local/include    -fpic  -g -O2  -c scan.cpp -o scan.o
-g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG -Iinclude -I../inst/include -DDUCKDB_DISABLE_PRINT -DDUCKDB_R_BUILD -DBROTLI_ENCODER_CLEANUP_ON_OOM -DDUCKDB_EXTENSION_AUTOLOAD_DEFAULT -Iduckdb/src/include -Iduckdb/third_party/concurrentqueue -Iduckdb/third_party/fast_float -Iduckdb/third_party/fastpforlib -Iduckdb/third_party/fmt/include -Iduckdb/third_party/fsst -Iduckdb/third_party/httplib -Iduckdb/third_party/hyperloglog -Iduckdb/third_party/jaro_winkler -Iduckdb/third_party/jaro_winkler/details -Iduckdb/third_party/libpg_query -Iduckdb/third_party/libpg_query/include -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/mbedtls/library -Iduckdb/third_party/miniz -Iduckdb/third_party/pcg -Iduckdb/third_party/re2 -Iduckdb/third_party/skiplist -Iduckdb/third_party/tdigest -Iduckdb/third_party/utf8proc -Iduckdb/third_party/utf8proc/include -Iduckdb/third_party/yyjson/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/parquet/include -Iduckdb/third_party/parquet -Iduckdb/third_party/thrift -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/snappy -Iduckdb/third_party/mbedtls -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/core_functions/include -I../inst/include -Iduckdb -DDUCKDB_EXTENSION_PARQUET_LINKED -DDUCKDB_BUILD_LIBRARY -DDUCKDB_EXTENSION_CORE_FUNCTIONS_LINKED -DDUCKDB_BUILD_LIBRARY  -I/usr/local/include    -fpic  -g -O2  -c signal.cpp -o signal.o
-g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG -Iinclude -I../inst/include -DDUCKDB_DISABLE_PRINT -DDUCKDB_R_BUILD -DBROTLI_ENCODER_CLEANUP_ON_OOM -DDUCKDB_EXTENSION_AUTOLOAD_DEFAULT -Iduckdb/src/include -Iduckdb/third_party/concurrentqueue -Iduckdb/third_party/fast_float -Iduckdb/third_party/fastpforlib -Iduckdb/third_party/fmt/include -Iduckdb/third_party/fsst -Iduckdb/third_party/httplib -Iduckdb/third_party/hyperloglog -Iduckdb/third_party/jaro_winkler -Iduckdb/third_party/jaro_winkler/details -Iduckdb/third_party/libpg_query -Iduckdb/third_party/libpg_query/include -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/mbedtls/library -Iduckdb/third_party/miniz -Iduckdb/third_party/pcg -Iduckdb/third_party/re2 -Iduckdb/third_party/skiplist -Iduckdb/third_party/tdigest -Iduckdb/third_party/utf8proc -Iduckdb/third_party/utf8proc/include -Iduckdb/third_party/yyjson/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/parquet/include -Iduckdb/third_party/parquet -Iduckdb/third_party/thrift -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/snappy -Iduckdb/third_party/mbedtls -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/core_functions/include -I../inst/include -Iduckdb -DDUCKDB_EXTENSION_PARQUET_LINKED -DDUCKDB_BUILD_LIBRARY -DDUCKDB_EXTENSION_CORE_FUNCTIONS_LINKED -DDUCKDB_BUILD_LIBRARY  -I/usr/local/include    -fpic  -g -O2  -c transform.cpp -o transform.o
-g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG -Iinclude -I../inst/include -DDUCKDB_DISABLE_PRINT -DDUCKDB_R_BUILD -DBROTLI_ENCODER_CLEANUP_ON_OOM -DDUCKDB_EXTENSION_AUTOLOAD_DEFAULT -Iduckdb/src/include -Iduckdb/third_party/concurrentqueue -Iduckdb/third_party/fast_float -Iduckdb/third_party/fastpforlib -Iduckdb/third_party/fmt/include -Iduckdb/third_party/fsst -Iduckdb/third_party/httplib -Iduckdb/third_party/hyperloglog -Iduckdb/third_party/jaro_winkler -Iduckdb/third_party/jaro_winkler/details -Iduckdb/third_party/libpg_query -Iduckdb/third_party/libpg_query/include -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/mbedtls/library -Iduckdb/third_party/miniz -Iduckdb/third_party/pcg -Iduckdb/third_party/re2 -Iduckdb/third_party/skiplist -Iduckdb/third_party/tdigest -Iduckdb/third_party/utf8proc -Iduckdb/third_party/utf8proc/include -Iduckdb/third_party/yyjson/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/parquet/include -Iduckdb/third_party/parquet -Iduckdb/third_party/thrift -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/snappy -Iduckdb/third_party/mbedtls -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/core_functions/include -I../inst/include -Iduckdb -DDUCKDB_EXTENSION_PARQUET_LINKED -DDUCKDB_BUILD_LIBRARY -DDUCKDB_EXTENSION_CORE_FUNCTIONS_LINKED -DDUCKDB_BUILD_LIBRARY  -I/usr/local/include    -fpic  -g -O2  -c utils.cpp -o utils.o
+gcc -I"/home/henrik/shared/software/CBI/_ubuntu22_04/R-4.5.0-gcc11/lib/R/include" -DNDEBUG   -I/usr/local/include    -fpic  -g -O2  -c dotsElt.c -o dotsElt.o
+gcc -I"/home/henrik/shared/software/CBI/_ubuntu22_04/R-4.5.0-gcc11/lib/R/include" -DNDEBUG   -I/usr/local/include    -fpic  -g -O2  -c dotsLength.c -o dotsLength.o
+gcc -I"/home/henrik/shared/software/CBI/_ubuntu22_04/R-4.5.0-gcc11/lib/R/include" -DNDEBUG   -I/usr/local/include    -fpic  -g -O2  -c dotsNames.c -o dotsNames.o
+gcc -I"/home/henrik/shared/software/CBI/_ubuntu22_04/R-4.5.0-gcc11/lib/R/include" -DNDEBUG   -I/usr/local/include    -fpic  -g -O2  -c init.c -o init.o
+gcc -shared -L/home/henrik/shared/software/CBI/_ubuntu22_04/R-4.5.0-gcc11/lib/R/lib -L/usr/local/lib -o backports.so dotsElt.o dotsLength.o dotsNames.o init.o -L/home/henrik/shared/software/CBI/_ubuntu22_04/R-4.5.0-gcc11/lib/R/lib -lR
+gcc -I"/home/henrik/shared/software/CBI/_ubuntu22_04/R-4.5.0-gcc11/lib/R/include" -DNDEBUG   -I/usr/local/include    -fpic  -g -O2  -c base64.c -o base64.o
+gcc -I"/home/henrik/shared/software/CBI/_ubuntu22_04/R-4.5.0-gcc11/lib/R/include" -DNDEBUG   -I/usr/local/include    -fpic  -g -O2  -c uriencode.c -o uriencode.o
+gcc -I"/home/henrik/shared/software/CBI/_ubuntu22_04/R-4.5.0-gcc11/lib/R/include" -DNDEBUG   -I/usr/local/include    -fpic  -g -O2  -c utf8.c -o utf8.o
+gcc -shared -L/home/henrik/shared/software/CBI/_ubuntu22_04/R-4.5.0-gcc11/lib/R/lib -L/usr/local/lib -o base64enc.so base64.o uriencode.o utf8.o -L/home/henrik/shared/software/CBI/_ubuntu22_04/R-4.5.0-gcc11/lib/R/lib -lR
+gcc -I"/home/henrik/shared/software/CBI/_ubuntu22_04/R-4.5.0-gcc11/lib/R/include" -DNDEBUG   -I/usr/local/include    -fpic  -g -O2  -c brio.c -o brio.o
 ...
-g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG -Iinclude -I../inst/include -DDUCKDB_DISABLE_PRINT -DDUCKDB_R_BUILD -DBROTLI_ENCODER_CLEANUP_ON_OOM -DDUCKDB_EXTENSION_AUTOLOAD_DEFAULT -Iduckdb/src/include -Iduckdb/third_party/concurrentqueue -Iduckdb/third_party/fast_float -Iduckdb/third_party/fastpforlib -Iduckdb/third_party/fmt/include -Iduckdb/third_party/fsst -Iduckdb/third_party/httplib -Iduckdb/third_party/hyperloglog -Iduckdb/third_party/jaro_winkler -Iduckdb/third_party/jaro_winkler/details -Iduckdb/third_party/libpg_query -Iduckdb/third_party/libpg_query/include -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/mbedtls/library -Iduckdb/third_party/miniz -Iduckdb/third_party/pcg -Iduckdb/third_party/re2 -Iduckdb/third_party/skiplist -Iduckdb/third_party/tdigest -Iduckdb/third_party/utf8proc -Iduckdb/third_party/utf8proc/include -Iduckdb/third_party/yyjson/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/parquet/include -Iduckdb/third_party/parquet -Iduckdb/third_party/thrift -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/snappy -Iduckdb/third_party/mbedtls -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/core_functions/include -I../inst/include -Iduckdb -DDUCKDB_EXTENSION_PARQUET_LINKED -DDUCKDB_BUILD_LIBRARY -DDUCKDB_EXTENSION_CORE_FUNCTIONS_LINKED -DDUCKDB_BUILD_LIBRARY  -I/usr/local/include    -fpic  -g -O2  -c duckdb/third_party/brotli/enc/literal_cost.cpp -o duckdb/third_party/brotli/enc/literal_cost.o
-g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG -Iinclude -I../inst/include -DDUCKDB_DISABLE_PRINT -DDUCKDB_R_BUILD -DBROTLI_ENCODER_CLEANUP_ON_OOM -DDUCKDB_EXTENSION_AUTOLOAD_DEFAULT -Iduckdb/src/include -Iduckdb/third_party/concurrentqueue -Iduckdb/third_party/fast_float -Iduckdb/third_party/fastpforlib -Iduckdb/third_party/fmt/include -Iduckdb/third_party/fsst -Iduckdb/third_party/httplib -Iduckdb/third_party/hyperloglog -Iduckdb/third_party/jaro_winkler -Iduckdb/third_party/jaro_winkler/details -Iduckdb/third_party/libpg_query -Iduckdb/third_party/libpg_query/include -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/mbedtls/library -Iduckdb/third_party/miniz -Iduckdb/third_party/pcg -Iduckdb/third_party/re2 -Iduckdb/third_party/skiplist -Iduckdb/third_party/tdigest -Iduckdb/third_party/utf8proc -Iduckdb/third_party/utf8proc/include -Iduckdb/third_party/yyjson/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/parquet/include -Iduckdb/third_party/parquet -Iduckdb/third_party/thrift -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/snappy -Iduckdb/third_party/mbedtls -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/core_functions/include -I../inst/include -Iduckdb -DDUCKDB_EXTENSION_PARQUET_LINKED -DDUCKDB_BUILD_LIBRARY -DDUCKDB_EXTENSION_CORE_FUNCTIONS_LINKED -DDUCKDB_BUILD_LIBRARY  -I/usr/local/include    -fpic  -g -O2  -c duckdb/third_party/brotli/enc/memory.cpp -o duckdb/third_party/brotli/enc/memory.o
-g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG -Iinclude -I../inst/include -DDUCKDB_DISABLE_PRINT -DDUCKDB_R_BUILD -DBROTLI_ENCODER_CLEANUP_ON_OOM -DDUCKDB_EXTENSION_AUTOLOAD_DEFAULT -Iduckdb/src/include -Iduckdb/third_party/concurrentqueue -Iduckdb/third_party/fast_float -Iduckdb/third_party/fastpforlib -Iduckdb/third_party/fmt/include -Iduckdb/third_party/fsst -Iduckdb/third_party/httplib -Iduckdb/third_party/hyperloglog -Iduckdb/third_party/jaro_winkler -Iduckdb/third_party/jaro_winkler/details -Iduckdb/third_party/libpg_query -Iduckdb/third_party/libpg_query/include -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/mbedtls/library -Iduckdb/third_party/miniz -Iduckdb/third_party/pcg -Iduckdb/third_party/re2 -Iduckdb/third_party/skiplist -Iduckdb/third_party/tdigest -Iduckdb/third_party/utf8proc -Iduckdb/third_party/utf8proc/include -Iduckdb/third_party/yyjson/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/parquet/include -Iduckdb/third_party/parquet -Iduckdb/third_party/thrift -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/snappy -Iduckdb/third_party/mbedtls -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/core_functions/include -I../inst/include -Iduckdb -DDUCKDB_EXTENSION_PARQUET_LINKED -DDUCKDB_BUILD_LIBRARY -DDUCKDB_EXTENSION_CORE_FUNCTIONS_LINKED -DDUCKDB_BUILD_LIBRARY  -I/usr/local/include    -fpic  -g -O2  -c duckdb/third_party/brotli/enc/metablock.cpp -o duckdb/third_party/brotli/enc/metablock.o
-g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG -Iinclude -I../inst/include -DDUCKDB_DISABLE_PRINT -DDUCKDB_R_BUILD -DBROTLI_ENCODER_CLEANUP_ON_OOM -DDUCKDB_EXTENSION_AUTOLOAD_DEFAULT -Iduckdb/src/include -Iduckdb/third_party/concurrentqueue -Iduckdb/third_party/fast_float -Iduckdb/third_party/fastpforlib -Iduckdb/third_party/fmt/include -Iduckdb/third_party/fsst -Iduckdb/third_party/httplib -Iduckdb/third_party/hyperloglog -Iduckdb/third_party/jaro_winkler -Iduckdb/third_party/jaro_winkler/details -Iduckdb/third_party/libpg_query -Iduckdb/third_party/libpg_query/include -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/mbedtls/library -Iduckdb/third_party/miniz -Iduckdb/third_party/pcg -Iduckdb/third_party/re2 -Iduckdb/third_party/skiplist -Iduckdb/third_party/tdigest -Iduckdb/third_party/utf8proc -Iduckdb/third_party/utf8proc/include -Iduckdb/third_party/yyjson/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/parquet/include -Iduckdb/third_party/parquet -Iduckdb/third_party/thrift -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/snappy -Iduckdb/third_party/mbedtls -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/core_functions/include -I../inst/include -Iduckdb -DDUCKDB_EXTENSION_PARQUET_LINKED -DDUCKDB_BUILD_LIBRARY -DDUCKDB_EXTENSION_CORE_FUNCTIONS_LINKED -DDUCKDB_BUILD_LIBRARY  -I/usr/local/include    -fpic  -g -O2  -c duckdb/third_party/brotli/enc/static_dict.cpp -o duckdb/third_party/brotli/enc/static_dict.o
-g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG -Iinclude -I../inst/include -DDUCKDB_DISABLE_PRINT -DDUCKDB_R_BUILD -DBROTLI_ENCODER_CLEANUP_ON_OOM -DDUCKDB_EXTENSION_AUTOLOAD_DEFAULT -Iduckdb/src/include -Iduckdb/third_party/concurrentqueue -Iduckdb/third_party/fast_float -Iduckdb/third_party/fastpforlib -Iduckdb/third_party/fmt/include -Iduckdb/third_party/fsst -Iduckdb/third_party/httplib -Iduckdb/third_party/hyperloglog -Iduckdb/third_party/jaro_winkler -Iduckdb/third_party/jaro_winkler/details -Iduckdb/third_party/libpg_query -Iduckdb/third_party/libpg_query/include -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/mbedtls/library -Iduckdb/third_party/miniz -Iduckdb/third_party/pcg -Iduckdb/third_party/re2 -Iduckdb/third_party/skiplist -Iduckdb/third_party/tdigest -Iduckdb/third_party/utf8proc -Iduckdb/third_party/utf8proc/include -Iduckdb/third_party/yyjson/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/parquet/include -Iduckdb/third_party/parquet -Iduckdb/third_party/thrift -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/snappy -Iduckdb/third_party/mbedtls -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/core_functions/include -I../inst/include -Iduckdb -DDUCKDB_EXTENSION_PARQUET_LINKED -DDUCKDB_BUILD_LIBRARY -DDUCKDB_EXTENSION_CORE_FUNCTIONS_LINKED -DDUCKDB_BUILD_LIBRARY  -I/usr/local/include    -fpic  -g -O2  -c duckdb/third_party/brotli/enc/utf8_util.cpp -o duckdb/third_party/brotli/enc/utf8_util.o
-g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG -Iinclude -I../inst/include -DDUCKDB_DISABLE_PRINT -DDUCKDB_R_BUILD -DBROTLI_ENCODER_CLEANUP_ON_OOM -DDUCKDB_EXTENSION_AUTOLOAD_DEFAULT -Iduckdb/src/include -Iduckdb/third_party/concurrentqueue -Iduckdb/third_party/fast_float -Iduckdb/third_party/fastpforlib -Iduckdb/third_party/fmt/include -Iduckdb/third_party/fsst -Iduckdb/third_party/httplib -Iduckdb/third_party/hyperloglog -Iduckdb/third_party/jaro_winkler -Iduckdb/third_party/jaro_winkler/details -Iduckdb/third_party/libpg_query -Iduckdb/third_party/libpg_query/include -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/mbedtls/library -Iduckdb/third_party/miniz -Iduckdb/third_party/pcg -Iduckdb/third_party/re2 -Iduckdb/third_party/skiplist -Iduckdb/third_party/tdigest -Iduckdb/third_party/utf8proc -Iduckdb/third_party/utf8proc/include -Iduckdb/third_party/yyjson/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/parquet/include -Iduckdb/third_party/parquet -Iduckdb/third_party/thrift -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/snappy -Iduckdb/third_party/mbedtls -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/core_functions/include -I../inst/include -Iduckdb -DDUCKDB_EXTENSION_PARQUET_LINKED -DDUCKDB_BUILD_LIBRARY -DDUCKDB_EXTENSION_CORE_FUNCTIONS_LINKED -DDUCKDB_BUILD_LIBRARY  -I/usr/local/include    -fpic  -g -O2  -c duckdb/extension/core_functions/function_list.cpp -o duckdb/extension/core_functions/function_list.o
-g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG -Iinclude -I../inst/include -DDUCKDB_DISABLE_PRINT -DDUCKDB_R_BUILD -DBROTLI_ENCODER_CLEANUP_ON_OOM -DDUCKDB_EXTENSION_AUTOLOAD_DEFAULT -Iduckdb/src/include -Iduckdb/third_party/concurrentqueue -Iduckdb/third_party/fast_float -Iduckdb/third_party/fastpforlib -Iduckdb/third_party/fmt/include -Iduckdb/third_party/fsst -Iduckdb/third_party/httplib -Iduckdb/third_party/hyperloglog -Iduckdb/third_party/jaro_winkler -Iduckdb/third_party/jaro_winkler/details -Iduckdb/third_party/libpg_query -Iduckdb/third_party/libpg_query/include -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/mbedtls/library -Iduckdb/third_party/miniz -Iduckdb/third_party/pcg -Iduckdb/third_party/re2 -Iduckdb/third_party/skiplist -Iduckdb/third_party/tdigest -Iduckdb/third_party/utf8proc -Iduckdb/third_party/utf8proc/include -Iduckdb/third_party/yyjson/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/parquet/include -Iduckdb/third_party/parquet -Iduckdb/third_party/thrift -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/snappy -Iduckdb/third_party/mbedtls -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/core_functions/include -I../inst/include -Iduckdb -DDUCKDB_EXTENSION_PARQUET_LINKED -DDUCKDB_BUILD_LIBRARY -DDUCKDB_EXTENSION_CORE_FUNCTIONS_LINKED -DDUCKDB_BUILD_LIBRARY  -I/usr/local/include    -fpic  -g -O2  -c duckdb/extension/core_functions/core_functions_extension.cpp -o duckdb/extension/core_functions/core_functions_extension.o
-g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG -Iinclude -I../inst/include -DDUCKDB_DISABLE_PRINT -DDUCKDB_R_BUILD -DBROTLI_ENCODER_CLEANUP_ON_OOM -DDUCKDB_EXTENSION_AUTOLOAD_DEFAULT -Iduckdb/src/include -Iduckdb/third_party/concurrentqueue -Iduckdb/third_party/fast_float -Iduckdb/third_party/fastpforlib -Iduckdb/third_party/fmt/include -Iduckdb/third_party/fsst -Iduckdb/third_party/httplib -Iduckdb/third_party/hyperloglog -Iduckdb/third_party/jaro_winkler -Iduckdb/third_party/jaro_winkler/details -Iduckdb/third_party/libpg_query -Iduckdb/third_party/libpg_query/include -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/mbedtls/library -Iduckdb/third_party/miniz -Iduckdb/third_party/pcg -Iduckdb/third_party/re2 -Iduckdb/third_party/skiplist -Iduckdb/third_party/tdigest -Iduckdb/third_party/utf8proc -Iduckdb/third_party/utf8proc/include -Iduckdb/third_party/yyjson/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/parquet/include -Iduckdb/third_party/parquet -Iduckdb/third_party/thrift -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/snappy -Iduckdb/third_party/mbedtls -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/core_functions/include -I../inst/include -Iduckdb -DDUCKDB_EXTENSION_PARQUET_LINKED -DDUCKDB_BUILD_LIBRARY -DDUCKDB_EXTENSION_CORE_FUNCTIONS_LINKED -DDUCKDB_BUILD_LIBRARY  -I/usr/local/include    -fpic  -g -O2  -c duckdb/extension/core_functions/lambda_functions.cpp -o duckdb/extension/core_functions/lambda_functions.o
-g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG -Iinclude -I../inst/include -DDUCKDB_DISABLE_PRINT -DDUCKDB_R_BUILD -DBROTLI_ENCODER_CLEANUP_ON_OOM -DDUCKDB_EXTENSION_AUTOLOAD_DEFAULT -Iduckdb/src/include -Iduckdb/third_party/concurrentqueue -Iduckdb/third_party/fast_float -Iduckdb/third_party/fastpforlib -Iduckdb/third_party/fmt/include -Iduckdb/third_party/fsst -Iduckdb/third_party/httplib -Iduckdb/third_party/hyperloglog -Iduckdb/third_party/jaro_winkler -Iduckdb/third_party/jaro_winkler/details -Iduckdb/third_party/libpg_query -Iduckdb/third_party/libpg_query/include -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/mbedtls/library -Iduckdb/third_party/miniz -Iduckdb/third_party/pcg -Iduckdb/third_party/re2 -Iduckdb/third_party/skiplist -Iduckdb/third_party/tdigest -Iduckdb/third_party/utf8proc -Iduckdb/third_party/utf8proc/include -Iduckdb/third_party/yyjson/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/parquet/include -Iduckdb/third_party/parquet -Iduckdb/third_party/thrift -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/snappy -Iduckdb/third_party/mbedtls -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/core_functions/include -I../inst/include -Iduckdb -DDUCKDB_EXTENSION_PARQUET_LINKED -DDUCKDB_BUILD_LIBRARY -DDUCKDB_EXTENSION_CORE_FUNCTIONS_LINKED -DDUCKDB_BUILD_LIBRARY  -I/usr/local/include    -fpic  -g -O2  -c duckdb/ub_extension_core_functions_aggregate_holistic.cpp -o duckdb/ub_extension_core_functions_aggregate_holistic.o
-g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG -Iinclude -I../inst/include -DDUCKDB_DISABLE_PRINT -DDUCKDB_R_BUILD -DBROTLI_ENCODER_CLEANUP_ON_OOM -DDUCKDB_EXTENSION_AUTOLOAD_DEFAULT -Iduckdb/src/include -Iduckdb/third_party/concurrentqueue -Iduckdb/third_party/fast_float -Iduckdb/third_party/fastpforlib -Iduckdb/third_party/fmt/include -Iduckdb/third_party/fsst -Iduckdb/third_party/httplib -Iduckdb/third_party/hyperloglog -Iduckdb/third_party/jaro_winkler -Iduckdb/third_party/jaro_winkler/details -Iduckdb/third_party/libpg_query -Iduckdb/third_party/libpg_query/include -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/mbedtls/library -Iduckdb/third_party/miniz -Iduckdb/third_party/pcg -Iduckdb/third_party/re2 -Iduckdb/third_party/skiplist -Iduckdb/third_party/tdigest -Iduckdb/third_party/utf8proc -Iduckdb/third_party/utf8proc/include -Iduckdb/third_party/yyjson/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/parquet/include -Iduckdb/third_party/parquet -Iduckdb/third_party/thrift -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/snappy -Iduckdb/third_party/mbedtls -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/core_functions/include -I../inst/include -Iduckdb -DDUCKDB_EXTENSION_PARQUET_LINKED -DDUCKDB_BUILD_LIBRARY -DDUCKDB_EXTENSION_CORE_FUNCTIONS_LINKED -DDUCKDB_BUILD_LIBRARY  -I/usr/local/include    -fpic  -g -O2  -c duckdb/ub_extension_core_functions_aggregate_distributive.cpp -o duckdb/ub_extension_core_functions_aggregate_distributive.o
+g++ -std=gnu++17 -I"/home/henrik/shared/software/CBI/_ubuntu22_04/R-4.5.0-gcc11/lib/R/include" -DNDEBUG  -I'/home/henrik/futureverse/future/revdep/library/geocmeans/cpp11/include' -I/usr/local/include    -fpic  -g -O2   -c simplifyPieces.cpp -o simplifyPieces.o
+g++ -std=gnu++17 -shared -L/home/henrik/shared/software/CBI/_ubuntu22_04/R-4.5.0-gcc11/lib/R/lib -L/usr/local/lib -o tidyr.so cpp11.o melt.o simplifyPieces.o -L/home/henrik/shared/software/CBI/_ubuntu22_04/R-4.5.0-gcc11/lib/R/lib -lR
+Error in loadNamespace(j <- i[[1L]], c(lib.loc, .libPaths()), versionCheck = vI[[j]]) : 
+  there is no package called ‘dichromat’
+Calls: <Anonymous> -> code2LazyLoadDB -> suppressPackageStartupMessages -> withCallingHandlers -> loadNamespace -> namespaceImportFrom -> asNamespace -> loadNamespace -> withRestarts -> withOneRestart -> doWithOneRestart
+Execution halted
+Error in loadNamespace(j <- i[[1L]], c(lib.loc, .libPaths()), versionCheck = vI[[j]]) : 
+  there is no package called ‘Deriv’
+Calls: <Anonymous> -> code2LazyLoadDB -> suppressPackageStartupMessages -> withCallingHandlers -> loadNamespace -> namespaceImportFrom -> asNamespace -> loadNamespace -> withRestarts -> withOneRestart -> doWithOneRestart
+Execution halted
 
 
-* installing *binary* package ‘assertthat’ ...
-* DONE (assertthat)
-* installing *binary* package ‘base64enc’ ...
-* DONE (base64enc)
-* installing *binary* package ‘bit’ ...
-* DONE (bit)
-* installing *binary* package ‘brio’ ...
-* DONE (brio)
-* installing *binary* package ‘cli’ ...
-* DONE (cli)
+trying URL 'https://packagemanager.posit.co/cran/__linux__/jammy/latest/src/contrib/abind_1.4-8.tar.gz'
+trying URL 'https://packagemanager.posit.co/cran/__linux__/jammy/latest/src/contrib/askpass_1.2.1.tar.gz'
+trying URL 'https://packagemanager.posit.co/cran/__linux__/jammy/latest/src/contrib/backports_1.5.0.tar.gz'
+trying URL 'https://packagemanager.posit.co/cran/__linux__/jammy/latest/src/contrib/base64enc_0.1-3.tar.gz'
+trying URL 'https://packagemanager.posit.co/cran/__linux__/jammy/latest/src/contrib/BH_1.87.0-1.tar.gz'
+trying URL 'https://packagemanager.posit.co/cran/__linux__/jammy/latest/src/contrib/4.5.1/Recommended/boot_1.3-31.tar.gz'
+trying URL 'https://packagemanager.posit.co/cran/__linux__/jammy/latest/src/contrib/brio_1.1.5.tar.gz'
+trying URL 'https://packagemanager.posit.co/cran/__linux__/jammy/latest/src/contrib/broom_1.0.8.tar.gz'
+trying URL 'https://packagemanager.posit.co/cran/__linux__/jammy/latest/src/contrib/bslib_0.9.0.tar.gz'
+trying URL 'https://packagemanager.posit.co/cran/__linux__/jammy/latest/src/contrib/cachem_1.1.0.tar.gz'
 ...
-** using staged installation
-++ dirname ./configure
-+ cd ./src
-+ '[' -f '' ']'
-+ cp include/to-tar.mk Makevars.duckdb
-+ '[' -f duckdb.tar.xz ']'
-+ tar xJf duckdb.tar.xz
-** libs
-using C++ compiler: ‘g++ (GCC) 13.3.1 20240611 (Red Hat 13.3.1-2)’
-using C++17
-
-
-```
-# bamm
-
-<details>
-
-* Version: 0.5.0
-* GitHub: https://github.com/luismurao/bamm
-* Source code: https://github.com/cran/bamm
-* Date/Publication: 2024-07-06 20:22:11 UTC
-* Number of recursive dependencies: 101
-
-Run `revdepcheck::revdep_details(, "bamm")` for more info
-
-</details>
-
-## In both
-
-*   checking whether package ‘bamm’ can be installed ... ERROR
-    ```
-    Installation failed.
-    See ‘/scratch/henrik/revdep/future/checks/bamm/new/bamm.Rcheck/00install.out’ for details.
-    ```
-
-## Installation
-
-### Devel
-
-```
-* installing *source* package ‘bamm’ ...
-** this is package ‘bamm’ version ‘0.5.0’
-** package ‘bamm’ successfully unpacked and MD5 sums checked
-** using staged installation
-** libs
-using C++ compiler: ‘g++ (GCC) 13.3.1 20240611 (Red Hat 13.3.1-2)’
-g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG  -I'/scratch/henrik/revdep/future/library/bamm/Rcpp/include' -I'/scratch/henrik/revdep/future/library/bamm/RcppArmadillo/include' -I/usr/local/include    -fpic  -g -O2   -c RcppExports.cpp -o RcppExports.o
-g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG  -I'/scratch/henrik/revdep/future/library/bamm/Rcpp/include' -I'/scratch/henrik/revdep/future/library/bamm/RcppArmadillo/include' -I/usr/local/include    -fpic  -g -O2   -c randomize_pams.cpp -o randomize_pams.o
-g++ -std=gnu++17 -shared -L/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/lib -L/usr/local/lib64 -o bamm.so RcppExports.o randomize_pams.o -L/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/lib -lR
-installing to /scratch/henrik/revdep/future/checks/bamm/new/bamm.Rcheck/00LOCK-bamm/00new/bamm/libs
-** R
-** inst
-** byte-compile and prepare package for lazy loading
-Error in loadNamespace(i, c(lib.loc, .libPaths()), versionCheck = vI[[i]]) : 
-  there is no package called ‘terra’
-Calls: <Anonymous> ... loadNamespace -> withRestarts -> withOneRestart -> doWithOneRestart
-Execution halted
-ERROR: lazy loading failed for package ‘bamm’
-* removing ‘/scratch/henrik/revdep/future/checks/bamm/new/bamm.Rcheck/bamm’
-
-
-```
-### CRAN
-
-```
-* installing *source* package ‘bamm’ ...
-** this is package ‘bamm’ version ‘0.5.0’
-** package ‘bamm’ successfully unpacked and MD5 sums checked
-** using staged installation
-** libs
-using C++ compiler: ‘g++ (GCC) 13.3.1 20240611 (Red Hat 13.3.1-2)’
-g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG  -I'/scratch/henrik/revdep/future/library/bamm/Rcpp/include' -I'/scratch/henrik/revdep/future/library/bamm/RcppArmadillo/include' -I/usr/local/include    -fpic  -g -O2   -c RcppExports.cpp -o RcppExports.o
-g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG  -I'/scratch/henrik/revdep/future/library/bamm/Rcpp/include' -I'/scratch/henrik/revdep/future/library/bamm/RcppArmadillo/include' -I/usr/local/include    -fpic  -g -O2   -c randomize_pams.cpp -o randomize_pams.o
-g++ -std=gnu++17 -shared -L/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/lib -L/usr/local/lib64 -o bamm.so RcppExports.o randomize_pams.o -L/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/lib -lR
-installing to /scratch/henrik/revdep/future/checks/bamm/old/bamm.Rcheck/00LOCK-bamm/00new/bamm/libs
-** R
-** inst
-** byte-compile and prepare package for lazy loading
-Error in loadNamespace(i, c(lib.loc, .libPaths()), versionCheck = vI[[i]]) : 
-  there is no package called ‘terra’
-Calls: <Anonymous> ... loadNamespace -> withRestarts -> withOneRestart -> doWithOneRestart
-Execution halted
-ERROR: lazy loading failed for package ‘bamm’
-* removing ‘/scratch/henrik/revdep/future/checks/bamm/old/bamm.Rcheck/bamm’
-
-
-```
-# dartR.popgen
-
-<details>
-
-* Version: 1.0.0
-* GitHub: NA
-* Source code: https://github.com/cran/dartR.popgen
-* Date/Publication: 2024-06-27 23:20:04 UTC
-* Number of recursive dependencies: 174
-
-Run `revdepcheck::revdep_details(, "dartR.popgen")` for more info
-
-</details>
-
-## In both
-
-*   checking whether package ‘dartR.popgen’ can be installed ... ERROR
-    ```
-    Installation failed.
-    See ‘/scratch/henrik/revdep/future/checks/dartR.popgen/new/dartR.popgen.Rcheck/00install.out’ for details.
-    ```
-
-## Installation
-
-### Devel
-
-```
-* installing *source* package ‘dartR.popgen’ ...
-** this is package ‘dartR.popgen’ version ‘1.0.0’
-** package ‘dartR.popgen’ successfully unpacked and MD5 sums checked
-** using staged installation
-** R
-** inst
-** byte-compile and prepare package for lazy loading
-Error: package or namespace load failed for ‘dartR.base’ in loadNamespace(i, c(lib.loc, .libPaths()), versionCheck = vI[[i]]):
- there is no package called ‘terra’
-Execution halted
-ERROR: lazy loading failed for package ‘dartR.popgen’
-* removing ‘/scratch/henrik/revdep/future/checks/dartR.popgen/new/dartR.popgen.Rcheck/dartR.popgen’
-
-
-```
-### CRAN
-
-```
-* installing *source* package ‘dartR.popgen’ ...
-** this is package ‘dartR.popgen’ version ‘1.0.0’
-** package ‘dartR.popgen’ successfully unpacked and MD5 sums checked
-** using staged installation
-** R
-** inst
-** byte-compile and prepare package for lazy loading
-Error: package or namespace load failed for ‘dartR.base’ in loadNamespace(i, c(lib.loc, .libPaths()), versionCheck = vI[[i]]):
- there is no package called ‘terra’
-Execution halted
-ERROR: lazy loading failed for package ‘dartR.popgen’
-* removing ‘/scratch/henrik/revdep/future/checks/dartR.popgen/old/dartR.popgen.Rcheck/dartR.popgen’
-
-
-```
-# mlr3db
-
-<details>
-
-* Version: 
-* GitHub: https://github.com/futureverse/future
-* Source code: NA
-* Number of recursive dependencies: 0
-
-</details>
-
-## Error before installation
-
-### Devel
-
-```
-g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG -Iinclude -I../inst/include -DDUCKDB_DISABLE_PRINT -DDUCKDB_R_BUILD -DBROTLI_ENCODER_CLEANUP_ON_OOM -DDUCKDB_EXTENSION_AUTOLOAD_DEFAULT -Iduckdb/src/include -Iduckdb/third_party/concurrentqueue -Iduckdb/third_party/fast_float -Iduckdb/third_party/fastpforlib -Iduckdb/third_party/fmt/include -Iduckdb/third_party/fsst -Iduckdb/third_party/httplib -Iduckdb/third_party/hyperloglog -Iduckdb/third_party/jaro_winkler -Iduckdb/third_party/jaro_winkler/details -Iduckdb/third_party/libpg_query -Iduckdb/third_party/libpg_query/include -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/mbedtls/library -Iduckdb/third_party/miniz -Iduckdb/third_party/pcg -Iduckdb/third_party/re2 -Iduckdb/third_party/skiplist -Iduckdb/third_party/tdigest -Iduckdb/third_party/utf8proc -Iduckdb/third_party/utf8proc/include -Iduckdb/third_party/yyjson/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/parquet/include -Iduckdb/third_party/parquet -Iduckdb/third_party/thrift -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/snappy -Iduckdb/third_party/mbedtls -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/core_functions/include -I../inst/include -Iduckdb -DDUCKDB_EXTENSION_PARQUET_LINKED -DDUCKDB_BUILD_LIBRARY -DDUCKDB_EXTENSION_CORE_FUNCTIONS_LINKED -DDUCKDB_BUILD_LIBRARY  -I/usr/local/include    -fpic  -g -O2  -c rfuns.cpp -o rfuns.o
-g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG -Iinclude -I../inst/include -DDUCKDB_DISABLE_PRINT -DDUCKDB_R_BUILD -DBROTLI_ENCODER_CLEANUP_ON_OOM -DDUCKDB_EXTENSION_AUTOLOAD_DEFAULT -Iduckdb/src/include -Iduckdb/third_party/concurrentqueue -Iduckdb/third_party/fast_float -Iduckdb/third_party/fastpforlib -Iduckdb/third_party/fmt/include -Iduckdb/third_party/fsst -Iduckdb/third_party/httplib -Iduckdb/third_party/hyperloglog -Iduckdb/third_party/jaro_winkler -Iduckdb/third_party/jaro_winkler/details -Iduckdb/third_party/libpg_query -Iduckdb/third_party/libpg_query/include -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/mbedtls/library -Iduckdb/third_party/miniz -Iduckdb/third_party/pcg -Iduckdb/third_party/re2 -Iduckdb/third_party/skiplist -Iduckdb/third_party/tdigest -Iduckdb/third_party/utf8proc -Iduckdb/third_party/utf8proc/include -Iduckdb/third_party/yyjson/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/parquet/include -Iduckdb/third_party/parquet -Iduckdb/third_party/thrift -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/snappy -Iduckdb/third_party/mbedtls -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/core_functions/include -I../inst/include -Iduckdb -DDUCKDB_EXTENSION_PARQUET_LINKED -DDUCKDB_BUILD_LIBRARY -DDUCKDB_EXTENSION_CORE_FUNCTIONS_LINKED -DDUCKDB_BUILD_LIBRARY  -I/usr/local/include    -fpic  -g -O2  -c database.cpp -o database.o
-g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG -Iinclude -I../inst/include -DDUCKDB_DISABLE_PRINT -DDUCKDB_R_BUILD -DBROTLI_ENCODER_CLEANUP_ON_OOM -DDUCKDB_EXTENSION_AUTOLOAD_DEFAULT -Iduckdb/src/include -Iduckdb/third_party/concurrentqueue -Iduckdb/third_party/fast_float -Iduckdb/third_party/fastpforlib -Iduckdb/third_party/fmt/include -Iduckdb/third_party/fsst -Iduckdb/third_party/httplib -Iduckdb/third_party/hyperloglog -Iduckdb/third_party/jaro_winkler -Iduckdb/third_party/jaro_winkler/details -Iduckdb/third_party/libpg_query -Iduckdb/third_party/libpg_query/include -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/mbedtls/library -Iduckdb/third_party/miniz -Iduckdb/third_party/pcg -Iduckdb/third_party/re2 -Iduckdb/third_party/skiplist -Iduckdb/third_party/tdigest -Iduckdb/third_party/utf8proc -Iduckdb/third_party/utf8proc/include -Iduckdb/third_party/yyjson/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/parquet/include -Iduckdb/third_party/parquet -Iduckdb/third_party/thrift -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/snappy -Iduckdb/third_party/mbedtls -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/core_functions/include -I../inst/include -Iduckdb -DDUCKDB_EXTENSION_PARQUET_LINKED -DDUCKDB_BUILD_LIBRARY -DDUCKDB_EXTENSION_CORE_FUNCTIONS_LINKED -DDUCKDB_BUILD_LIBRARY  -I/usr/local/include    -fpic  -g -O2  -c connection.cpp -o connection.o
-g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG -Iinclude -I../inst/include -DDUCKDB_DISABLE_PRINT -DDUCKDB_R_BUILD -DBROTLI_ENCODER_CLEANUP_ON_OOM -DDUCKDB_EXTENSION_AUTOLOAD_DEFAULT -Iduckdb/src/include -Iduckdb/third_party/concurrentqueue -Iduckdb/third_party/fast_float -Iduckdb/third_party/fastpforlib -Iduckdb/third_party/fmt/include -Iduckdb/third_party/fsst -Iduckdb/third_party/httplib -Iduckdb/third_party/hyperloglog -Iduckdb/third_party/jaro_winkler -Iduckdb/third_party/jaro_winkler/details -Iduckdb/third_party/libpg_query -Iduckdb/third_party/libpg_query/include -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/mbedtls/library -Iduckdb/third_party/miniz -Iduckdb/third_party/pcg -Iduckdb/third_party/re2 -Iduckdb/third_party/skiplist -Iduckdb/third_party/tdigest -Iduckdb/third_party/utf8proc -Iduckdb/third_party/utf8proc/include -Iduckdb/third_party/yyjson/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/parquet/include -Iduckdb/third_party/parquet -Iduckdb/third_party/thrift -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/snappy -Iduckdb/third_party/mbedtls -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/core_functions/include -I../inst/include -Iduckdb -DDUCKDB_EXTENSION_PARQUET_LINKED -DDUCKDB_BUILD_LIBRARY -DDUCKDB_EXTENSION_CORE_FUNCTIONS_LINKED -DDUCKDB_BUILD_LIBRARY  -I/usr/local/include    -fpic  -g -O2  -c statement.cpp -o statement.o
-g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG -Iinclude -I../inst/include -DDUCKDB_DISABLE_PRINT -DDUCKDB_R_BUILD -DBROTLI_ENCODER_CLEANUP_ON_OOM -DDUCKDB_EXTENSION_AUTOLOAD_DEFAULT -Iduckdb/src/include -Iduckdb/third_party/concurrentqueue -Iduckdb/third_party/fast_float -Iduckdb/third_party/fastpforlib -Iduckdb/third_party/fmt/include -Iduckdb/third_party/fsst -Iduckdb/third_party/httplib -Iduckdb/third_party/hyperloglog -Iduckdb/third_party/jaro_winkler -Iduckdb/third_party/jaro_winkler/details -Iduckdb/third_party/libpg_query -Iduckdb/third_party/libpg_query/include -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/mbedtls/library -Iduckdb/third_party/miniz -Iduckdb/third_party/pcg -Iduckdb/third_party/re2 -Iduckdb/third_party/skiplist -Iduckdb/third_party/tdigest -Iduckdb/third_party/utf8proc -Iduckdb/third_party/utf8proc/include -Iduckdb/third_party/yyjson/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/parquet/include -Iduckdb/third_party/parquet -Iduckdb/third_party/thrift -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/snappy -Iduckdb/third_party/mbedtls -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/core_functions/include -I../inst/include -Iduckdb -DDUCKDB_EXTENSION_PARQUET_LINKED -DDUCKDB_BUILD_LIBRARY -DDUCKDB_EXTENSION_CORE_FUNCTIONS_LINKED -DDUCKDB_BUILD_LIBRARY  -I/usr/local/include    -fpic  -g -O2  -c register.cpp -o register.o
-g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG -Iinclude -I../inst/include -DDUCKDB_DISABLE_PRINT -DDUCKDB_R_BUILD -DBROTLI_ENCODER_CLEANUP_ON_OOM -DDUCKDB_EXTENSION_AUTOLOAD_DEFAULT -Iduckdb/src/include -Iduckdb/third_party/concurrentqueue -Iduckdb/third_party/fast_float -Iduckdb/third_party/fastpforlib -Iduckdb/third_party/fmt/include -Iduckdb/third_party/fsst -Iduckdb/third_party/httplib -Iduckdb/third_party/hyperloglog -Iduckdb/third_party/jaro_winkler -Iduckdb/third_party/jaro_winkler/details -Iduckdb/third_party/libpg_query -Iduckdb/third_party/libpg_query/include -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/mbedtls/library -Iduckdb/third_party/miniz -Iduckdb/third_party/pcg -Iduckdb/third_party/re2 -Iduckdb/third_party/skiplist -Iduckdb/third_party/tdigest -Iduckdb/third_party/utf8proc -Iduckdb/third_party/utf8proc/include -Iduckdb/third_party/yyjson/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/parquet/include -Iduckdb/third_party/parquet -Iduckdb/third_party/thrift -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/snappy -Iduckdb/third_party/mbedtls -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/core_functions/include -I../inst/include -Iduckdb -DDUCKDB_EXTENSION_PARQUET_LINKED -DDUCKDB_BUILD_LIBRARY -DDUCKDB_EXTENSION_CORE_FUNCTIONS_LINKED -DDUCKDB_BUILD_LIBRARY  -I/usr/local/include    -fpic  -g -O2  -c relational.cpp -o relational.o
-g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG -Iinclude -I../inst/include -DDUCKDB_DISABLE_PRINT -DDUCKDB_R_BUILD -DBROTLI_ENCODER_CLEANUP_ON_OOM -DDUCKDB_EXTENSION_AUTOLOAD_DEFAULT -Iduckdb/src/include -Iduckdb/third_party/concurrentqueue -Iduckdb/third_party/fast_float -Iduckdb/third_party/fastpforlib -Iduckdb/third_party/fmt/include -Iduckdb/third_party/fsst -Iduckdb/third_party/httplib -Iduckdb/third_party/hyperloglog -Iduckdb/third_party/jaro_winkler -Iduckdb/third_party/jaro_winkler/details -Iduckdb/third_party/libpg_query -Iduckdb/third_party/libpg_query/include -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/mbedtls/library -Iduckdb/third_party/miniz -Iduckdb/third_party/pcg -Iduckdb/third_party/re2 -Iduckdb/third_party/skiplist -Iduckdb/third_party/tdigest -Iduckdb/third_party/utf8proc -Iduckdb/third_party/utf8proc/include -Iduckdb/third_party/yyjson/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/parquet/include -Iduckdb/third_party/parquet -Iduckdb/third_party/thrift -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/snappy -Iduckdb/third_party/mbedtls -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/core_functions/include -I../inst/include -Iduckdb -DDUCKDB_EXTENSION_PARQUET_LINKED -DDUCKDB_BUILD_LIBRARY -DDUCKDB_EXTENSION_CORE_FUNCTIONS_LINKED -DDUCKDB_BUILD_LIBRARY  -I/usr/local/include    -fpic  -g -O2  -c scan.cpp -o scan.o
-g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG -Iinclude -I../inst/include -DDUCKDB_DISABLE_PRINT -DDUCKDB_R_BUILD -DBROTLI_ENCODER_CLEANUP_ON_OOM -DDUCKDB_EXTENSION_AUTOLOAD_DEFAULT -Iduckdb/src/include -Iduckdb/third_party/concurrentqueue -Iduckdb/third_party/fast_float -Iduckdb/third_party/fastpforlib -Iduckdb/third_party/fmt/include -Iduckdb/third_party/fsst -Iduckdb/third_party/httplib -Iduckdb/third_party/hyperloglog -Iduckdb/third_party/jaro_winkler -Iduckdb/third_party/jaro_winkler/details -Iduckdb/third_party/libpg_query -Iduckdb/third_party/libpg_query/include -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/mbedtls/library -Iduckdb/third_party/miniz -Iduckdb/third_party/pcg -Iduckdb/third_party/re2 -Iduckdb/third_party/skiplist -Iduckdb/third_party/tdigest -Iduckdb/third_party/utf8proc -Iduckdb/third_party/utf8proc/include -Iduckdb/third_party/yyjson/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/parquet/include -Iduckdb/third_party/parquet -Iduckdb/third_party/thrift -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/snappy -Iduckdb/third_party/mbedtls -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/core_functions/include -I../inst/include -Iduckdb -DDUCKDB_EXTENSION_PARQUET_LINKED -DDUCKDB_BUILD_LIBRARY -DDUCKDB_EXTENSION_CORE_FUNCTIONS_LINKED -DDUCKDB_BUILD_LIBRARY  -I/usr/local/include    -fpic  -g -O2  -c signal.cpp -o signal.o
-g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG -Iinclude -I../inst/include -DDUCKDB_DISABLE_PRINT -DDUCKDB_R_BUILD -DBROTLI_ENCODER_CLEANUP_ON_OOM -DDUCKDB_EXTENSION_AUTOLOAD_DEFAULT -Iduckdb/src/include -Iduckdb/third_party/concurrentqueue -Iduckdb/third_party/fast_float -Iduckdb/third_party/fastpforlib -Iduckdb/third_party/fmt/include -Iduckdb/third_party/fsst -Iduckdb/third_party/httplib -Iduckdb/third_party/hyperloglog -Iduckdb/third_party/jaro_winkler -Iduckdb/third_party/jaro_winkler/details -Iduckdb/third_party/libpg_query -Iduckdb/third_party/libpg_query/include -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/mbedtls/library -Iduckdb/third_party/miniz -Iduckdb/third_party/pcg -Iduckdb/third_party/re2 -Iduckdb/third_party/skiplist -Iduckdb/third_party/tdigest -Iduckdb/third_party/utf8proc -Iduckdb/third_party/utf8proc/include -Iduckdb/third_party/yyjson/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/parquet/include -Iduckdb/third_party/parquet -Iduckdb/third_party/thrift -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/snappy -Iduckdb/third_party/mbedtls -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/core_functions/include -I../inst/include -Iduckdb -DDUCKDB_EXTENSION_PARQUET_LINKED -DDUCKDB_BUILD_LIBRARY -DDUCKDB_EXTENSION_CORE_FUNCTIONS_LINKED -DDUCKDB_BUILD_LIBRARY  -I/usr/local/include    -fpic  -g -O2  -c transform.cpp -o transform.o
-g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG -Iinclude -I../inst/include -DDUCKDB_DISABLE_PRINT -DDUCKDB_R_BUILD -DBROTLI_ENCODER_CLEANUP_ON_OOM -DDUCKDB_EXTENSION_AUTOLOAD_DEFAULT -Iduckdb/src/include -Iduckdb/third_party/concurrentqueue -Iduckdb/third_party/fast_float -Iduckdb/third_party/fastpforlib -Iduckdb/third_party/fmt/include -Iduckdb/third_party/fsst -Iduckdb/third_party/httplib -Iduckdb/third_party/hyperloglog -Iduckdb/third_party/jaro_winkler -Iduckdb/third_party/jaro_winkler/details -Iduckdb/third_party/libpg_query -Iduckdb/third_party/libpg_query/include -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/mbedtls/library -Iduckdb/third_party/miniz -Iduckdb/third_party/pcg -Iduckdb/third_party/re2 -Iduckdb/third_party/skiplist -Iduckdb/third_party/tdigest -Iduckdb/third_party/utf8proc -Iduckdb/third_party/utf8proc/include -Iduckdb/third_party/yyjson/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/parquet/include -Iduckdb/third_party/parquet -Iduckdb/third_party/thrift -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/snappy -Iduckdb/third_party/mbedtls -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/core_functions/include -I../inst/include -Iduckdb -DDUCKDB_EXTENSION_PARQUET_LINKED -DDUCKDB_BUILD_LIBRARY -DDUCKDB_EXTENSION_CORE_FUNCTIONS_LINKED -DDUCKDB_BUILD_LIBRARY  -I/usr/local/include    -fpic  -g -O2  -c utils.cpp -o utils.o
-...
-g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG -Iinclude -I../inst/include -DDUCKDB_DISABLE_PRINT -DDUCKDB_R_BUILD -DBROTLI_ENCODER_CLEANUP_ON_OOM -DDUCKDB_EXTENSION_AUTOLOAD_DEFAULT -Iduckdb/src/include -Iduckdb/third_party/concurrentqueue -Iduckdb/third_party/fast_float -Iduckdb/third_party/fastpforlib -Iduckdb/third_party/fmt/include -Iduckdb/third_party/fsst -Iduckdb/third_party/httplib -Iduckdb/third_party/hyperloglog -Iduckdb/third_party/jaro_winkler -Iduckdb/third_party/jaro_winkler/details -Iduckdb/third_party/libpg_query -Iduckdb/third_party/libpg_query/include -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/mbedtls/library -Iduckdb/third_party/miniz -Iduckdb/third_party/pcg -Iduckdb/third_party/re2 -Iduckdb/third_party/skiplist -Iduckdb/third_party/tdigest -Iduckdb/third_party/utf8proc -Iduckdb/third_party/utf8proc/include -Iduckdb/third_party/yyjson/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/parquet/include -Iduckdb/third_party/parquet -Iduckdb/third_party/thrift -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/snappy -Iduckdb/third_party/mbedtls -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/core_functions/include -I../inst/include -Iduckdb -DDUCKDB_EXTENSION_PARQUET_LINKED -DDUCKDB_BUILD_LIBRARY -DDUCKDB_EXTENSION_CORE_FUNCTIONS_LINKED -DDUCKDB_BUILD_LIBRARY  -I/usr/local/include    -fpic  -g -O2  -c duckdb/extension/core_functions/lambda_functions.cpp -o duckdb/extension/core_functions/lambda_functions.o
-g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG -Iinclude -I../inst/include -DDUCKDB_DISABLE_PRINT -DDUCKDB_R_BUILD -DBROTLI_ENCODER_CLEANUP_ON_OOM -DDUCKDB_EXTENSION_AUTOLOAD_DEFAULT -Iduckdb/src/include -Iduckdb/third_party/concurrentqueue -Iduckdb/third_party/fast_float -Iduckdb/third_party/fastpforlib -Iduckdb/third_party/fmt/include -Iduckdb/third_party/fsst -Iduckdb/third_party/httplib -Iduckdb/third_party/hyperloglog -Iduckdb/third_party/jaro_winkler -Iduckdb/third_party/jaro_winkler/details -Iduckdb/third_party/libpg_query -Iduckdb/third_party/libpg_query/include -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/mbedtls/library -Iduckdb/third_party/miniz -Iduckdb/third_party/pcg -Iduckdb/third_party/re2 -Iduckdb/third_party/skiplist -Iduckdb/third_party/tdigest -Iduckdb/third_party/utf8proc -Iduckdb/third_party/utf8proc/include -Iduckdb/third_party/yyjson/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/parquet/include -Iduckdb/third_party/parquet -Iduckdb/third_party/thrift -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/snappy -Iduckdb/third_party/mbedtls -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/core_functions/include -I../inst/include -Iduckdb -DDUCKDB_EXTENSION_PARQUET_LINKED -DDUCKDB_BUILD_LIBRARY -DDUCKDB_EXTENSION_CORE_FUNCTIONS_LINKED -DDUCKDB_BUILD_LIBRARY  -I/usr/local/include    -fpic  -g -O2  -c duckdb/ub_extension_core_functions_aggregate_holistic.cpp -o duckdb/ub_extension_core_functions_aggregate_holistic.o
-g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG -Iinclude -I../inst/include -DDUCKDB_DISABLE_PRINT -DDUCKDB_R_BUILD -DBROTLI_ENCODER_CLEANUP_ON_OOM -DDUCKDB_EXTENSION_AUTOLOAD_DEFAULT -Iduckdb/src/include -Iduckdb/third_party/concurrentqueue -Iduckdb/third_party/fast_float -Iduckdb/third_party/fastpforlib -Iduckdb/third_party/fmt/include -Iduckdb/third_party/fsst -Iduckdb/third_party/httplib -Iduckdb/third_party/hyperloglog -Iduckdb/third_party/jaro_winkler -Iduckdb/third_party/jaro_winkler/details -Iduckdb/third_party/libpg_query -Iduckdb/third_party/libpg_query/include -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/mbedtls/library -Iduckdb/third_party/miniz -Iduckdb/third_party/pcg -Iduckdb/third_party/re2 -Iduckdb/third_party/skiplist -Iduckdb/third_party/tdigest -Iduckdb/third_party/utf8proc -Iduckdb/third_party/utf8proc/include -Iduckdb/third_party/yyjson/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/parquet/include -Iduckdb/third_party/parquet -Iduckdb/third_party/thrift -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/snappy -Iduckdb/third_party/mbedtls -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/core_functions/include -I../inst/include -Iduckdb -DDUCKDB_EXTENSION_PARQUET_LINKED -DDUCKDB_BUILD_LIBRARY -DDUCKDB_EXTENSION_CORE_FUNCTIONS_LINKED -DDUCKDB_BUILD_LIBRARY  -I/usr/local/include    -fpic  -g -O2  -c duckdb/ub_extension_core_functions_aggregate_distributive.cpp -o duckdb/ub_extension_core_functions_aggregate_distributive.o
-g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG -Iinclude -I../inst/include -DDUCKDB_DISABLE_PRINT -DDUCKDB_R_BUILD -DBROTLI_ENCODER_CLEANUP_ON_OOM -DDUCKDB_EXTENSION_AUTOLOAD_DEFAULT -Iduckdb/src/include -Iduckdb/third_party/concurrentqueue -Iduckdb/third_party/fast_float -Iduckdb/third_party/fastpforlib -Iduckdb/third_party/fmt/include -Iduckdb/third_party/fsst -Iduckdb/third_party/httplib -Iduckdb/third_party/hyperloglog -Iduckdb/third_party/jaro_winkler -Iduckdb/third_party/jaro_winkler/details -Iduckdb/third_party/libpg_query -Iduckdb/third_party/libpg_query/include -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/mbedtls/library -Iduckdb/third_party/miniz -Iduckdb/third_party/pcg -Iduckdb/third_party/re2 -Iduckdb/third_party/skiplist -Iduckdb/third_party/tdigest -Iduckdb/third_party/utf8proc -Iduckdb/third_party/utf8proc/include -Iduckdb/third_party/yyjson/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/parquet/include -Iduckdb/third_party/parquet -Iduckdb/third_party/thrift -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/snappy -Iduckdb/third_party/mbedtls -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/core_functions/include -I../inst/include -Iduckdb -DDUCKDB_EXTENSION_PARQUET_LINKED -DDUCKDB_BUILD_LIBRARY -DDUCKDB_EXTENSION_CORE_FUNCTIONS_LINKED -DDUCKDB_BUILD_LIBRARY  -I/usr/local/include    -fpic  -g -O2  -c duckdb/ub_extension_core_functions_aggregate_algebraic.cpp -o duckdb/ub_extension_core_functions_aggregate_algebraic.o
-g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG -Iinclude -I../inst/include -DDUCKDB_DISABLE_PRINT -DDUCKDB_R_BUILD -DBROTLI_ENCODER_CLEANUP_ON_OOM -DDUCKDB_EXTENSION_AUTOLOAD_DEFAULT -Iduckdb/src/include -Iduckdb/third_party/concurrentqueue -Iduckdb/third_party/fast_float -Iduckdb/third_party/fastpforlib -Iduckdb/third_party/fmt/include -Iduckdb/third_party/fsst -Iduckdb/third_party/httplib -Iduckdb/third_party/hyperloglog -Iduckdb/third_party/jaro_winkler -Iduckdb/third_party/jaro_winkler/details -Iduckdb/third_party/libpg_query -Iduckdb/third_party/libpg_query/include -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/mbedtls/library -Iduckdb/third_party/miniz -Iduckdb/third_party/pcg -Iduckdb/third_party/re2 -Iduckdb/third_party/skiplist -Iduckdb/third_party/tdigest -Iduckdb/third_party/utf8proc -Iduckdb/third_party/utf8proc/include -Iduckdb/third_party/yyjson/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/parquet/include -Iduckdb/third_party/parquet -Iduckdb/third_party/thrift -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/snappy -Iduckdb/third_party/mbedtls -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/core_functions/include -I../inst/include -Iduckdb -DDUCKDB_EXTENSION_PARQUET_LINKED -DDUCKDB_BUILD_LIBRARY -DDUCKDB_EXTENSION_CORE_FUNCTIONS_LINKED -DDUCKDB_BUILD_LIBRARY  -I/usr/local/include    -fpic  -g -O2  -c duckdb/ub_extension_core_functions_aggregate_regression.cpp -o duckdb/ub_extension_core_functions_aggregate_regression.o
-g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG -Iinclude -I../inst/include -DDUCKDB_DISABLE_PRINT -DDUCKDB_R_BUILD -DBROTLI_ENCODER_CLEANUP_ON_OOM -DDUCKDB_EXTENSION_AUTOLOAD_DEFAULT -Iduckdb/src/include -Iduckdb/third_party/concurrentqueue -Iduckdb/third_party/fast_float -Iduckdb/third_party/fastpforlib -Iduckdb/third_party/fmt/include -Iduckdb/third_party/fsst -Iduckdb/third_party/httplib -Iduckdb/third_party/hyperloglog -Iduckdb/third_party/jaro_winkler -Iduckdb/third_party/jaro_winkler/details -Iduckdb/third_party/libpg_query -Iduckdb/third_party/libpg_query/include -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/mbedtls/library -Iduckdb/third_party/miniz -Iduckdb/third_party/pcg -Iduckdb/third_party/re2 -Iduckdb/third_party/skiplist -Iduckdb/third_party/tdigest -Iduckdb/third_party/utf8proc -Iduckdb/third_party/utf8proc/include -Iduckdb/third_party/yyjson/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/parquet/include -Iduckdb/third_party/parquet -Iduckdb/third_party/thrift -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/snappy -Iduckdb/third_party/mbedtls -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/core_functions/include -I../inst/include -Iduckdb -DDUCKDB_EXTENSION_PARQUET_LINKED -DDUCKDB_BUILD_LIBRARY -DDUCKDB_EXTENSION_CORE_FUNCTIONS_LINKED -DDUCKDB_BUILD_LIBRARY  -I/usr/local/include    -fpic  -g -O2  -c duckdb/ub_extension_core_functions_aggregate_nested.cpp -o duckdb/ub_extension_core_functions_aggregate_nested.o
-g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG -Iinclude -I../inst/include -DDUCKDB_DISABLE_PRINT -DDUCKDB_R_BUILD -DBROTLI_ENCODER_CLEANUP_ON_OOM -DDUCKDB_EXTENSION_AUTOLOAD_DEFAULT -Iduckdb/src/include -Iduckdb/third_party/concurrentqueue -Iduckdb/third_party/fast_float -Iduckdb/third_party/fastpforlib -Iduckdb/third_party/fmt/include -Iduckdb/third_party/fsst -Iduckdb/third_party/httplib -Iduckdb/third_party/hyperloglog -Iduckdb/third_party/jaro_winkler -Iduckdb/third_party/jaro_winkler/details -Iduckdb/third_party/libpg_query -Iduckdb/third_party/libpg_query/include -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/mbedtls/library -Iduckdb/third_party/miniz -Iduckdb/third_party/pcg -Iduckdb/third_party/re2 -Iduckdb/third_party/skiplist -Iduckdb/third_party/tdigest -Iduckdb/third_party/utf8proc -Iduckdb/third_party/utf8proc/include -Iduckdb/third_party/yyjson/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/parquet/include -Iduckdb/third_party/parquet -Iduckdb/third_party/thrift -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/snappy -Iduckdb/third_party/mbedtls -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/core_functions/include -I../inst/include -Iduckdb -DDUCKDB_EXTENSION_PARQUET_LINKED -DDUCKDB_BUILD_LIBRARY -DDUCKDB_EXTENSION_CORE_FUNCTIONS_LINKED -DDUCKDB_BUILD_LIBRARY  -I/usr/local/include    -fpic  -g -O2  -c duckdb/ub_extension_core_functions_scalar_bit.cpp -o duckdb/ub_extension_core_functions_scalar_bit.o
-g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG -Iinclude -I../inst/include -DDUCKDB_DISABLE_PRINT -DDUCKDB_R_BUILD -DBROTLI_ENCODER_CLEANUP_ON_OOM -DDUCKDB_EXTENSION_AUTOLOAD_DEFAULT -Iduckdb/src/include -Iduckdb/third_party/concurrentqueue -Iduckdb/third_party/fast_float -Iduckdb/third_party/fastpforlib -Iduckdb/third_party/fmt/include -Iduckdb/third_party/fsst -Iduckdb/third_party/httplib -Iduckdb/third_party/hyperloglog -Iduckdb/third_party/jaro_winkler -Iduckdb/third_party/jaro_winkler/details -Iduckdb/third_party/libpg_query -Iduckdb/third_party/libpg_query/include -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/mbedtls/library -Iduckdb/third_party/miniz -Iduckdb/third_party/pcg -Iduckdb/third_party/re2 -Iduckdb/third_party/skiplist -Iduckdb/third_party/tdigest -Iduckdb/third_party/utf8proc -Iduckdb/third_party/utf8proc/include -Iduckdb/third_party/yyjson/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/parquet/include -Iduckdb/third_party/parquet -Iduckdb/third_party/thrift -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/snappy -Iduckdb/third_party/mbedtls -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/core_functions/include -I../inst/include -Iduckdb -DDUCKDB_EXTENSION_PARQUET_LINKED -DDUCKDB_BUILD_LIBRARY -DDUCKDB_EXTENSION_CORE_FUNCTIONS_LINKED -DDUCKDB_BUILD_LIBRARY  -I/usr/local/include    -fpic  -g -O2  -c duckdb/ub_extension_core_functions_scalar_operators.cpp -o duckdb/ub_extension_core_functions_scalar_operators.o
-g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG -Iinclude -I../inst/include -DDUCKDB_DISABLE_PRINT -DDUCKDB_R_BUILD -DBROTLI_ENCODER_CLEANUP_ON_OOM -DDUCKDB_EXTENSION_AUTOLOAD_DEFAULT -Iduckdb/src/include -Iduckdb/third_party/concurrentqueue -Iduckdb/third_party/fast_float -Iduckdb/third_party/fastpforlib -Iduckdb/third_party/fmt/include -Iduckdb/third_party/fsst -Iduckdb/third_party/httplib -Iduckdb/third_party/hyperloglog -Iduckdb/third_party/jaro_winkler -Iduckdb/third_party/jaro_winkler/details -Iduckdb/third_party/libpg_query -Iduckdb/third_party/libpg_query/include -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/mbedtls/library -Iduckdb/third_party/miniz -Iduckdb/third_party/pcg -Iduckdb/third_party/re2 -Iduckdb/third_party/skiplist -Iduckdb/third_party/tdigest -Iduckdb/third_party/utf8proc -Iduckdb/third_party/utf8proc/include -Iduckdb/third_party/yyjson/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/parquet/include -Iduckdb/third_party/parquet -Iduckdb/third_party/thrift -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/snappy -Iduckdb/third_party/mbedtls -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/core_functions/include -I../inst/include -Iduckdb -DDUCKDB_EXTENSION_PARQUET_LINKED -DDUCKDB_BUILD_LIBRARY -DDUCKDB_EXTENSION_CORE_FUNCTIONS_LINKED -DDUCKDB_BUILD_LIBRARY  -I/usr/local/include    -fpic  -g -O2  -c duckdb/ub_extension_core_functions_scalar_array.cpp -o duckdb/ub_extension_core_functions_scalar_array.o
-g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG -Iinclude -I../inst/include -DDUCKDB_DISABLE_PRINT -DDUCKDB_R_BUILD -DBROTLI_ENCODER_CLEANUP_ON_OOM -DDUCKDB_EXTENSION_AUTOLOAD_DEFAULT -Iduckdb/src/include -Iduckdb/third_party/concurrentqueue -Iduckdb/third_party/fast_float -Iduckdb/third_party/fastpforlib -Iduckdb/third_party/fmt/include -Iduckdb/third_party/fsst -Iduckdb/third_party/httplib -Iduckdb/third_party/hyperloglog -Iduckdb/third_party/jaro_winkler -Iduckdb/third_party/jaro_winkler/details -Iduckdb/third_party/libpg_query -Iduckdb/third_party/libpg_query/include -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/mbedtls/library -Iduckdb/third_party/miniz -Iduckdb/third_party/pcg -Iduckdb/third_party/re2 -Iduckdb/third_party/skiplist -Iduckdb/third_party/tdigest -Iduckdb/third_party/utf8proc -Iduckdb/third_party/utf8proc/include -Iduckdb/third_party/yyjson/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/parquet/include -Iduckdb/third_party/parquet -Iduckdb/third_party/thrift -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/snappy -Iduckdb/third_party/mbedtls -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/core_functions/include -I../inst/include -Iduckdb -DDUCKDB_EXTENSION_PARQUET_LINKED -DDUCKDB_BUILD_LIBRARY -DDUCKDB_EXTENSION_CORE_FUNCTIONS_LINKED -DDUCKDB_BUILD_LIBRARY  -I/usr/local/include    -fpic  -g -O2  -c duckdb/ub_extension_core_functions_scalar_date.cpp -o duckdb/ub_extension_core_functions_scalar_date.o
-
-
-* installing *binary* package ‘backports’ ...
-* DONE (backports)
-* installing *binary* package ‘bit’ ...
-* DONE (bit)
-* installing *binary* package ‘brio’ ...
-* DONE (brio)
-* installing *binary* package ‘cli’ ...
-* DONE (cli)
-* installing *binary* package ‘codetools’ ...
-* DONE (codetools)
-...
-** using staged installation
-++ dirname ./configure
-+ cd ./src
-+ '[' -f '' ']'
-+ cp include/to-tar.mk Makevars.duckdb
-+ '[' -f duckdb.tar.xz ']'
-+ tar xJf duckdb.tar.xz
-** libs
-using C++ compiler: ‘g++ (GCC) 13.3.1 20240611 (Red Hat 13.3.1-2)’
-using C++17
-
-
-```
-### CRAN
-
-```
-g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG -Iinclude -I../inst/include -DDUCKDB_DISABLE_PRINT -DDUCKDB_R_BUILD -DBROTLI_ENCODER_CLEANUP_ON_OOM -DDUCKDB_EXTENSION_AUTOLOAD_DEFAULT -Iduckdb/src/include -Iduckdb/third_party/concurrentqueue -Iduckdb/third_party/fast_float -Iduckdb/third_party/fastpforlib -Iduckdb/third_party/fmt/include -Iduckdb/third_party/fsst -Iduckdb/third_party/httplib -Iduckdb/third_party/hyperloglog -Iduckdb/third_party/jaro_winkler -Iduckdb/third_party/jaro_winkler/details -Iduckdb/third_party/libpg_query -Iduckdb/third_party/libpg_query/include -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/mbedtls/library -Iduckdb/third_party/miniz -Iduckdb/third_party/pcg -Iduckdb/third_party/re2 -Iduckdb/third_party/skiplist -Iduckdb/third_party/tdigest -Iduckdb/third_party/utf8proc -Iduckdb/third_party/utf8proc/include -Iduckdb/third_party/yyjson/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/parquet/include -Iduckdb/third_party/parquet -Iduckdb/third_party/thrift -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/snappy -Iduckdb/third_party/mbedtls -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/core_functions/include -I../inst/include -Iduckdb -DDUCKDB_EXTENSION_PARQUET_LINKED -DDUCKDB_BUILD_LIBRARY -DDUCKDB_EXTENSION_CORE_FUNCTIONS_LINKED -DDUCKDB_BUILD_LIBRARY  -I/usr/local/include    -fpic  -g -O2  -c rfuns.cpp -o rfuns.o
-g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG -Iinclude -I../inst/include -DDUCKDB_DISABLE_PRINT -DDUCKDB_R_BUILD -DBROTLI_ENCODER_CLEANUP_ON_OOM -DDUCKDB_EXTENSION_AUTOLOAD_DEFAULT -Iduckdb/src/include -Iduckdb/third_party/concurrentqueue -Iduckdb/third_party/fast_float -Iduckdb/third_party/fastpforlib -Iduckdb/third_party/fmt/include -Iduckdb/third_party/fsst -Iduckdb/third_party/httplib -Iduckdb/third_party/hyperloglog -Iduckdb/third_party/jaro_winkler -Iduckdb/third_party/jaro_winkler/details -Iduckdb/third_party/libpg_query -Iduckdb/third_party/libpg_query/include -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/mbedtls/library -Iduckdb/third_party/miniz -Iduckdb/third_party/pcg -Iduckdb/third_party/re2 -Iduckdb/third_party/skiplist -Iduckdb/third_party/tdigest -Iduckdb/third_party/utf8proc -Iduckdb/third_party/utf8proc/include -Iduckdb/third_party/yyjson/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/parquet/include -Iduckdb/third_party/parquet -Iduckdb/third_party/thrift -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/snappy -Iduckdb/third_party/mbedtls -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/core_functions/include -I../inst/include -Iduckdb -DDUCKDB_EXTENSION_PARQUET_LINKED -DDUCKDB_BUILD_LIBRARY -DDUCKDB_EXTENSION_CORE_FUNCTIONS_LINKED -DDUCKDB_BUILD_LIBRARY  -I/usr/local/include    -fpic  -g -O2  -c database.cpp -o database.o
-g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG -Iinclude -I../inst/include -DDUCKDB_DISABLE_PRINT -DDUCKDB_R_BUILD -DBROTLI_ENCODER_CLEANUP_ON_OOM -DDUCKDB_EXTENSION_AUTOLOAD_DEFAULT -Iduckdb/src/include -Iduckdb/third_party/concurrentqueue -Iduckdb/third_party/fast_float -Iduckdb/third_party/fastpforlib -Iduckdb/third_party/fmt/include -Iduckdb/third_party/fsst -Iduckdb/third_party/httplib -Iduckdb/third_party/hyperloglog -Iduckdb/third_party/jaro_winkler -Iduckdb/third_party/jaro_winkler/details -Iduckdb/third_party/libpg_query -Iduckdb/third_party/libpg_query/include -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/mbedtls/library -Iduckdb/third_party/miniz -Iduckdb/third_party/pcg -Iduckdb/third_party/re2 -Iduckdb/third_party/skiplist -Iduckdb/third_party/tdigest -Iduckdb/third_party/utf8proc -Iduckdb/third_party/utf8proc/include -Iduckdb/third_party/yyjson/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/parquet/include -Iduckdb/third_party/parquet -Iduckdb/third_party/thrift -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/snappy -Iduckdb/third_party/mbedtls -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/core_functions/include -I../inst/include -Iduckdb -DDUCKDB_EXTENSION_PARQUET_LINKED -DDUCKDB_BUILD_LIBRARY -DDUCKDB_EXTENSION_CORE_FUNCTIONS_LINKED -DDUCKDB_BUILD_LIBRARY  -I/usr/local/include    -fpic  -g -O2  -c connection.cpp -o connection.o
-g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG -Iinclude -I../inst/include -DDUCKDB_DISABLE_PRINT -DDUCKDB_R_BUILD -DBROTLI_ENCODER_CLEANUP_ON_OOM -DDUCKDB_EXTENSION_AUTOLOAD_DEFAULT -Iduckdb/src/include -Iduckdb/third_party/concurrentqueue -Iduckdb/third_party/fast_float -Iduckdb/third_party/fastpforlib -Iduckdb/third_party/fmt/include -Iduckdb/third_party/fsst -Iduckdb/third_party/httplib -Iduckdb/third_party/hyperloglog -Iduckdb/third_party/jaro_winkler -Iduckdb/third_party/jaro_winkler/details -Iduckdb/third_party/libpg_query -Iduckdb/third_party/libpg_query/include -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/mbedtls/library -Iduckdb/third_party/miniz -Iduckdb/third_party/pcg -Iduckdb/third_party/re2 -Iduckdb/third_party/skiplist -Iduckdb/third_party/tdigest -Iduckdb/third_party/utf8proc -Iduckdb/third_party/utf8proc/include -Iduckdb/third_party/yyjson/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/parquet/include -Iduckdb/third_party/parquet -Iduckdb/third_party/thrift -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/snappy -Iduckdb/third_party/mbedtls -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/core_functions/include -I../inst/include -Iduckdb -DDUCKDB_EXTENSION_PARQUET_LINKED -DDUCKDB_BUILD_LIBRARY -DDUCKDB_EXTENSION_CORE_FUNCTIONS_LINKED -DDUCKDB_BUILD_LIBRARY  -I/usr/local/include    -fpic  -g -O2  -c statement.cpp -o statement.o
-g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG -Iinclude -I../inst/include -DDUCKDB_DISABLE_PRINT -DDUCKDB_R_BUILD -DBROTLI_ENCODER_CLEANUP_ON_OOM -DDUCKDB_EXTENSION_AUTOLOAD_DEFAULT -Iduckdb/src/include -Iduckdb/third_party/concurrentqueue -Iduckdb/third_party/fast_float -Iduckdb/third_party/fastpforlib -Iduckdb/third_party/fmt/include -Iduckdb/third_party/fsst -Iduckdb/third_party/httplib -Iduckdb/third_party/hyperloglog -Iduckdb/third_party/jaro_winkler -Iduckdb/third_party/jaro_winkler/details -Iduckdb/third_party/libpg_query -Iduckdb/third_party/libpg_query/include -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/mbedtls/library -Iduckdb/third_party/miniz -Iduckdb/third_party/pcg -Iduckdb/third_party/re2 -Iduckdb/third_party/skiplist -Iduckdb/third_party/tdigest -Iduckdb/third_party/utf8proc -Iduckdb/third_party/utf8proc/include -Iduckdb/third_party/yyjson/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/parquet/include -Iduckdb/third_party/parquet -Iduckdb/third_party/thrift -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/snappy -Iduckdb/third_party/mbedtls -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/core_functions/include -I../inst/include -Iduckdb -DDUCKDB_EXTENSION_PARQUET_LINKED -DDUCKDB_BUILD_LIBRARY -DDUCKDB_EXTENSION_CORE_FUNCTIONS_LINKED -DDUCKDB_BUILD_LIBRARY  -I/usr/local/include    -fpic  -g -O2  -c register.cpp -o register.o
-g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG -Iinclude -I../inst/include -DDUCKDB_DISABLE_PRINT -DDUCKDB_R_BUILD -DBROTLI_ENCODER_CLEANUP_ON_OOM -DDUCKDB_EXTENSION_AUTOLOAD_DEFAULT -Iduckdb/src/include -Iduckdb/third_party/concurrentqueue -Iduckdb/third_party/fast_float -Iduckdb/third_party/fastpforlib -Iduckdb/third_party/fmt/include -Iduckdb/third_party/fsst -Iduckdb/third_party/httplib -Iduckdb/third_party/hyperloglog -Iduckdb/third_party/jaro_winkler -Iduckdb/third_party/jaro_winkler/details -Iduckdb/third_party/libpg_query -Iduckdb/third_party/libpg_query/include -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/mbedtls/library -Iduckdb/third_party/miniz -Iduckdb/third_party/pcg -Iduckdb/third_party/re2 -Iduckdb/third_party/skiplist -Iduckdb/third_party/tdigest -Iduckdb/third_party/utf8proc -Iduckdb/third_party/utf8proc/include -Iduckdb/third_party/yyjson/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/parquet/include -Iduckdb/third_party/parquet -Iduckdb/third_party/thrift -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/snappy -Iduckdb/third_party/mbedtls -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/core_functions/include -I../inst/include -Iduckdb -DDUCKDB_EXTENSION_PARQUET_LINKED -DDUCKDB_BUILD_LIBRARY -DDUCKDB_EXTENSION_CORE_FUNCTIONS_LINKED -DDUCKDB_BUILD_LIBRARY  -I/usr/local/include    -fpic  -g -O2  -c relational.cpp -o relational.o
-g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG -Iinclude -I../inst/include -DDUCKDB_DISABLE_PRINT -DDUCKDB_R_BUILD -DBROTLI_ENCODER_CLEANUP_ON_OOM -DDUCKDB_EXTENSION_AUTOLOAD_DEFAULT -Iduckdb/src/include -Iduckdb/third_party/concurrentqueue -Iduckdb/third_party/fast_float -Iduckdb/third_party/fastpforlib -Iduckdb/third_party/fmt/include -Iduckdb/third_party/fsst -Iduckdb/third_party/httplib -Iduckdb/third_party/hyperloglog -Iduckdb/third_party/jaro_winkler -Iduckdb/third_party/jaro_winkler/details -Iduckdb/third_party/libpg_query -Iduckdb/third_party/libpg_query/include -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/mbedtls/library -Iduckdb/third_party/miniz -Iduckdb/third_party/pcg -Iduckdb/third_party/re2 -Iduckdb/third_party/skiplist -Iduckdb/third_party/tdigest -Iduckdb/third_party/utf8proc -Iduckdb/third_party/utf8proc/include -Iduckdb/third_party/yyjson/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/parquet/include -Iduckdb/third_party/parquet -Iduckdb/third_party/thrift -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/snappy -Iduckdb/third_party/mbedtls -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/core_functions/include -I../inst/include -Iduckdb -DDUCKDB_EXTENSION_PARQUET_LINKED -DDUCKDB_BUILD_LIBRARY -DDUCKDB_EXTENSION_CORE_FUNCTIONS_LINKED -DDUCKDB_BUILD_LIBRARY  -I/usr/local/include    -fpic  -g -O2  -c scan.cpp -o scan.o
-g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG -Iinclude -I../inst/include -DDUCKDB_DISABLE_PRINT -DDUCKDB_R_BUILD -DBROTLI_ENCODER_CLEANUP_ON_OOM -DDUCKDB_EXTENSION_AUTOLOAD_DEFAULT -Iduckdb/src/include -Iduckdb/third_party/concurrentqueue -Iduckdb/third_party/fast_float -Iduckdb/third_party/fastpforlib -Iduckdb/third_party/fmt/include -Iduckdb/third_party/fsst -Iduckdb/third_party/httplib -Iduckdb/third_party/hyperloglog -Iduckdb/third_party/jaro_winkler -Iduckdb/third_party/jaro_winkler/details -Iduckdb/third_party/libpg_query -Iduckdb/third_party/libpg_query/include -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/mbedtls/library -Iduckdb/third_party/miniz -Iduckdb/third_party/pcg -Iduckdb/third_party/re2 -Iduckdb/third_party/skiplist -Iduckdb/third_party/tdigest -Iduckdb/third_party/utf8proc -Iduckdb/third_party/utf8proc/include -Iduckdb/third_party/yyjson/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/parquet/include -Iduckdb/third_party/parquet -Iduckdb/third_party/thrift -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/snappy -Iduckdb/third_party/mbedtls -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/core_functions/include -I../inst/include -Iduckdb -DDUCKDB_EXTENSION_PARQUET_LINKED -DDUCKDB_BUILD_LIBRARY -DDUCKDB_EXTENSION_CORE_FUNCTIONS_LINKED -DDUCKDB_BUILD_LIBRARY  -I/usr/local/include    -fpic  -g -O2  -c signal.cpp -o signal.o
-g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG -Iinclude -I../inst/include -DDUCKDB_DISABLE_PRINT -DDUCKDB_R_BUILD -DBROTLI_ENCODER_CLEANUP_ON_OOM -DDUCKDB_EXTENSION_AUTOLOAD_DEFAULT -Iduckdb/src/include -Iduckdb/third_party/concurrentqueue -Iduckdb/third_party/fast_float -Iduckdb/third_party/fastpforlib -Iduckdb/third_party/fmt/include -Iduckdb/third_party/fsst -Iduckdb/third_party/httplib -Iduckdb/third_party/hyperloglog -Iduckdb/third_party/jaro_winkler -Iduckdb/third_party/jaro_winkler/details -Iduckdb/third_party/libpg_query -Iduckdb/third_party/libpg_query/include -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/mbedtls/library -Iduckdb/third_party/miniz -Iduckdb/third_party/pcg -Iduckdb/third_party/re2 -Iduckdb/third_party/skiplist -Iduckdb/third_party/tdigest -Iduckdb/third_party/utf8proc -Iduckdb/third_party/utf8proc/include -Iduckdb/third_party/yyjson/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/parquet/include -Iduckdb/third_party/parquet -Iduckdb/third_party/thrift -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/snappy -Iduckdb/third_party/mbedtls -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/core_functions/include -I../inst/include -Iduckdb -DDUCKDB_EXTENSION_PARQUET_LINKED -DDUCKDB_BUILD_LIBRARY -DDUCKDB_EXTENSION_CORE_FUNCTIONS_LINKED -DDUCKDB_BUILD_LIBRARY  -I/usr/local/include    -fpic  -g -O2  -c transform.cpp -o transform.o
-g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG -Iinclude -I../inst/include -DDUCKDB_DISABLE_PRINT -DDUCKDB_R_BUILD -DBROTLI_ENCODER_CLEANUP_ON_OOM -DDUCKDB_EXTENSION_AUTOLOAD_DEFAULT -Iduckdb/src/include -Iduckdb/third_party/concurrentqueue -Iduckdb/third_party/fast_float -Iduckdb/third_party/fastpforlib -Iduckdb/third_party/fmt/include -Iduckdb/third_party/fsst -Iduckdb/third_party/httplib -Iduckdb/third_party/hyperloglog -Iduckdb/third_party/jaro_winkler -Iduckdb/third_party/jaro_winkler/details -Iduckdb/third_party/libpg_query -Iduckdb/third_party/libpg_query/include -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/mbedtls/library -Iduckdb/third_party/miniz -Iduckdb/third_party/pcg -Iduckdb/third_party/re2 -Iduckdb/third_party/skiplist -Iduckdb/third_party/tdigest -Iduckdb/third_party/utf8proc -Iduckdb/third_party/utf8proc/include -Iduckdb/third_party/yyjson/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/parquet/include -Iduckdb/third_party/parquet -Iduckdb/third_party/thrift -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/snappy -Iduckdb/third_party/mbedtls -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/core_functions/include -I../inst/include -Iduckdb -DDUCKDB_EXTENSION_PARQUET_LINKED -DDUCKDB_BUILD_LIBRARY -DDUCKDB_EXTENSION_CORE_FUNCTIONS_LINKED -DDUCKDB_BUILD_LIBRARY  -I/usr/local/include    -fpic  -g -O2  -c utils.cpp -o utils.o
-...
-g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG -Iinclude -I../inst/include -DDUCKDB_DISABLE_PRINT -DDUCKDB_R_BUILD -DBROTLI_ENCODER_CLEANUP_ON_OOM -DDUCKDB_EXTENSION_AUTOLOAD_DEFAULT -Iduckdb/src/include -Iduckdb/third_party/concurrentqueue -Iduckdb/third_party/fast_float -Iduckdb/third_party/fastpforlib -Iduckdb/third_party/fmt/include -Iduckdb/third_party/fsst -Iduckdb/third_party/httplib -Iduckdb/third_party/hyperloglog -Iduckdb/third_party/jaro_winkler -Iduckdb/third_party/jaro_winkler/details -Iduckdb/third_party/libpg_query -Iduckdb/third_party/libpg_query/include -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/mbedtls/library -Iduckdb/third_party/miniz -Iduckdb/third_party/pcg -Iduckdb/third_party/re2 -Iduckdb/third_party/skiplist -Iduckdb/third_party/tdigest -Iduckdb/third_party/utf8proc -Iduckdb/third_party/utf8proc/include -Iduckdb/third_party/yyjson/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/parquet/include -Iduckdb/third_party/parquet -Iduckdb/third_party/thrift -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/snappy -Iduckdb/third_party/mbedtls -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/core_functions/include -I../inst/include -Iduckdb -DDUCKDB_EXTENSION_PARQUET_LINKED -DDUCKDB_BUILD_LIBRARY -DDUCKDB_EXTENSION_CORE_FUNCTIONS_LINKED -DDUCKDB_BUILD_LIBRARY  -I/usr/local/include    -fpic  -g -O2  -c duckdb/extension/core_functions/lambda_functions.cpp -o duckdb/extension/core_functions/lambda_functions.o
-g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG -Iinclude -I../inst/include -DDUCKDB_DISABLE_PRINT -DDUCKDB_R_BUILD -DBROTLI_ENCODER_CLEANUP_ON_OOM -DDUCKDB_EXTENSION_AUTOLOAD_DEFAULT -Iduckdb/src/include -Iduckdb/third_party/concurrentqueue -Iduckdb/third_party/fast_float -Iduckdb/third_party/fastpforlib -Iduckdb/third_party/fmt/include -Iduckdb/third_party/fsst -Iduckdb/third_party/httplib -Iduckdb/third_party/hyperloglog -Iduckdb/third_party/jaro_winkler -Iduckdb/third_party/jaro_winkler/details -Iduckdb/third_party/libpg_query -Iduckdb/third_party/libpg_query/include -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/mbedtls/library -Iduckdb/third_party/miniz -Iduckdb/third_party/pcg -Iduckdb/third_party/re2 -Iduckdb/third_party/skiplist -Iduckdb/third_party/tdigest -Iduckdb/third_party/utf8proc -Iduckdb/third_party/utf8proc/include -Iduckdb/third_party/yyjson/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/parquet/include -Iduckdb/third_party/parquet -Iduckdb/third_party/thrift -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/snappy -Iduckdb/third_party/mbedtls -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/core_functions/include -I../inst/include -Iduckdb -DDUCKDB_EXTENSION_PARQUET_LINKED -DDUCKDB_BUILD_LIBRARY -DDUCKDB_EXTENSION_CORE_FUNCTIONS_LINKED -DDUCKDB_BUILD_LIBRARY  -I/usr/local/include    -fpic  -g -O2  -c duckdb/ub_extension_core_functions_aggregate_holistic.cpp -o duckdb/ub_extension_core_functions_aggregate_holistic.o
-g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG -Iinclude -I../inst/include -DDUCKDB_DISABLE_PRINT -DDUCKDB_R_BUILD -DBROTLI_ENCODER_CLEANUP_ON_OOM -DDUCKDB_EXTENSION_AUTOLOAD_DEFAULT -Iduckdb/src/include -Iduckdb/third_party/concurrentqueue -Iduckdb/third_party/fast_float -Iduckdb/third_party/fastpforlib -Iduckdb/third_party/fmt/include -Iduckdb/third_party/fsst -Iduckdb/third_party/httplib -Iduckdb/third_party/hyperloglog -Iduckdb/third_party/jaro_winkler -Iduckdb/third_party/jaro_winkler/details -Iduckdb/third_party/libpg_query -Iduckdb/third_party/libpg_query/include -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/mbedtls/library -Iduckdb/third_party/miniz -Iduckdb/third_party/pcg -Iduckdb/third_party/re2 -Iduckdb/third_party/skiplist -Iduckdb/third_party/tdigest -Iduckdb/third_party/utf8proc -Iduckdb/third_party/utf8proc/include -Iduckdb/third_party/yyjson/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/parquet/include -Iduckdb/third_party/parquet -Iduckdb/third_party/thrift -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/snappy -Iduckdb/third_party/mbedtls -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/core_functions/include -I../inst/include -Iduckdb -DDUCKDB_EXTENSION_PARQUET_LINKED -DDUCKDB_BUILD_LIBRARY -DDUCKDB_EXTENSION_CORE_FUNCTIONS_LINKED -DDUCKDB_BUILD_LIBRARY  -I/usr/local/include    -fpic  -g -O2  -c duckdb/ub_extension_core_functions_aggregate_distributive.cpp -o duckdb/ub_extension_core_functions_aggregate_distributive.o
-g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG -Iinclude -I../inst/include -DDUCKDB_DISABLE_PRINT -DDUCKDB_R_BUILD -DBROTLI_ENCODER_CLEANUP_ON_OOM -DDUCKDB_EXTENSION_AUTOLOAD_DEFAULT -Iduckdb/src/include -Iduckdb/third_party/concurrentqueue -Iduckdb/third_party/fast_float -Iduckdb/third_party/fastpforlib -Iduckdb/third_party/fmt/include -Iduckdb/third_party/fsst -Iduckdb/third_party/httplib -Iduckdb/third_party/hyperloglog -Iduckdb/third_party/jaro_winkler -Iduckdb/third_party/jaro_winkler/details -Iduckdb/third_party/libpg_query -Iduckdb/third_party/libpg_query/include -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/mbedtls/library -Iduckdb/third_party/miniz -Iduckdb/third_party/pcg -Iduckdb/third_party/re2 -Iduckdb/third_party/skiplist -Iduckdb/third_party/tdigest -Iduckdb/third_party/utf8proc -Iduckdb/third_party/utf8proc/include -Iduckdb/third_party/yyjson/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/parquet/include -Iduckdb/third_party/parquet -Iduckdb/third_party/thrift -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/snappy -Iduckdb/third_party/mbedtls -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/core_functions/include -I../inst/include -Iduckdb -DDUCKDB_EXTENSION_PARQUET_LINKED -DDUCKDB_BUILD_LIBRARY -DDUCKDB_EXTENSION_CORE_FUNCTIONS_LINKED -DDUCKDB_BUILD_LIBRARY  -I/usr/local/include    -fpic  -g -O2  -c duckdb/ub_extension_core_functions_aggregate_algebraic.cpp -o duckdb/ub_extension_core_functions_aggregate_algebraic.o
-g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG -Iinclude -I../inst/include -DDUCKDB_DISABLE_PRINT -DDUCKDB_R_BUILD -DBROTLI_ENCODER_CLEANUP_ON_OOM -DDUCKDB_EXTENSION_AUTOLOAD_DEFAULT -Iduckdb/src/include -Iduckdb/third_party/concurrentqueue -Iduckdb/third_party/fast_float -Iduckdb/third_party/fastpforlib -Iduckdb/third_party/fmt/include -Iduckdb/third_party/fsst -Iduckdb/third_party/httplib -Iduckdb/third_party/hyperloglog -Iduckdb/third_party/jaro_winkler -Iduckdb/third_party/jaro_winkler/details -Iduckdb/third_party/libpg_query -Iduckdb/third_party/libpg_query/include -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/mbedtls/library -Iduckdb/third_party/miniz -Iduckdb/third_party/pcg -Iduckdb/third_party/re2 -Iduckdb/third_party/skiplist -Iduckdb/third_party/tdigest -Iduckdb/third_party/utf8proc -Iduckdb/third_party/utf8proc/include -Iduckdb/third_party/yyjson/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/parquet/include -Iduckdb/third_party/parquet -Iduckdb/third_party/thrift -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/snappy -Iduckdb/third_party/mbedtls -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/core_functions/include -I../inst/include -Iduckdb -DDUCKDB_EXTENSION_PARQUET_LINKED -DDUCKDB_BUILD_LIBRARY -DDUCKDB_EXTENSION_CORE_FUNCTIONS_LINKED -DDUCKDB_BUILD_LIBRARY  -I/usr/local/include    -fpic  -g -O2  -c duckdb/ub_extension_core_functions_aggregate_regression.cpp -o duckdb/ub_extension_core_functions_aggregate_regression.o
-g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG -Iinclude -I../inst/include -DDUCKDB_DISABLE_PRINT -DDUCKDB_R_BUILD -DBROTLI_ENCODER_CLEANUP_ON_OOM -DDUCKDB_EXTENSION_AUTOLOAD_DEFAULT -Iduckdb/src/include -Iduckdb/third_party/concurrentqueue -Iduckdb/third_party/fast_float -Iduckdb/third_party/fastpforlib -Iduckdb/third_party/fmt/include -Iduckdb/third_party/fsst -Iduckdb/third_party/httplib -Iduckdb/third_party/hyperloglog -Iduckdb/third_party/jaro_winkler -Iduckdb/third_party/jaro_winkler/details -Iduckdb/third_party/libpg_query -Iduckdb/third_party/libpg_query/include -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/mbedtls/library -Iduckdb/third_party/miniz -Iduckdb/third_party/pcg -Iduckdb/third_party/re2 -Iduckdb/third_party/skiplist -Iduckdb/third_party/tdigest -Iduckdb/third_party/utf8proc -Iduckdb/third_party/utf8proc/include -Iduckdb/third_party/yyjson/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/parquet/include -Iduckdb/third_party/parquet -Iduckdb/third_party/thrift -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/snappy -Iduckdb/third_party/mbedtls -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/core_functions/include -I../inst/include -Iduckdb -DDUCKDB_EXTENSION_PARQUET_LINKED -DDUCKDB_BUILD_LIBRARY -DDUCKDB_EXTENSION_CORE_FUNCTIONS_LINKED -DDUCKDB_BUILD_LIBRARY  -I/usr/local/include    -fpic  -g -O2  -c duckdb/ub_extension_core_functions_aggregate_nested.cpp -o duckdb/ub_extension_core_functions_aggregate_nested.o
-g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG -Iinclude -I../inst/include -DDUCKDB_DISABLE_PRINT -DDUCKDB_R_BUILD -DBROTLI_ENCODER_CLEANUP_ON_OOM -DDUCKDB_EXTENSION_AUTOLOAD_DEFAULT -Iduckdb/src/include -Iduckdb/third_party/concurrentqueue -Iduckdb/third_party/fast_float -Iduckdb/third_party/fastpforlib -Iduckdb/third_party/fmt/include -Iduckdb/third_party/fsst -Iduckdb/third_party/httplib -Iduckdb/third_party/hyperloglog -Iduckdb/third_party/jaro_winkler -Iduckdb/third_party/jaro_winkler/details -Iduckdb/third_party/libpg_query -Iduckdb/third_party/libpg_query/include -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/mbedtls/library -Iduckdb/third_party/miniz -Iduckdb/third_party/pcg -Iduckdb/third_party/re2 -Iduckdb/third_party/skiplist -Iduckdb/third_party/tdigest -Iduckdb/third_party/utf8proc -Iduckdb/third_party/utf8proc/include -Iduckdb/third_party/yyjson/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/parquet/include -Iduckdb/third_party/parquet -Iduckdb/third_party/thrift -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/snappy -Iduckdb/third_party/mbedtls -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/core_functions/include -I../inst/include -Iduckdb -DDUCKDB_EXTENSION_PARQUET_LINKED -DDUCKDB_BUILD_LIBRARY -DDUCKDB_EXTENSION_CORE_FUNCTIONS_LINKED -DDUCKDB_BUILD_LIBRARY  -I/usr/local/include    -fpic  -g -O2  -c duckdb/ub_extension_core_functions_scalar_bit.cpp -o duckdb/ub_extension_core_functions_scalar_bit.o
-g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG -Iinclude -I../inst/include -DDUCKDB_DISABLE_PRINT -DDUCKDB_R_BUILD -DBROTLI_ENCODER_CLEANUP_ON_OOM -DDUCKDB_EXTENSION_AUTOLOAD_DEFAULT -Iduckdb/src/include -Iduckdb/third_party/concurrentqueue -Iduckdb/third_party/fast_float -Iduckdb/third_party/fastpforlib -Iduckdb/third_party/fmt/include -Iduckdb/third_party/fsst -Iduckdb/third_party/httplib -Iduckdb/third_party/hyperloglog -Iduckdb/third_party/jaro_winkler -Iduckdb/third_party/jaro_winkler/details -Iduckdb/third_party/libpg_query -Iduckdb/third_party/libpg_query/include -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/mbedtls/library -Iduckdb/third_party/miniz -Iduckdb/third_party/pcg -Iduckdb/third_party/re2 -Iduckdb/third_party/skiplist -Iduckdb/third_party/tdigest -Iduckdb/third_party/utf8proc -Iduckdb/third_party/utf8proc/include -Iduckdb/third_party/yyjson/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/parquet/include -Iduckdb/third_party/parquet -Iduckdb/third_party/thrift -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/snappy -Iduckdb/third_party/mbedtls -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/core_functions/include -I../inst/include -Iduckdb -DDUCKDB_EXTENSION_PARQUET_LINKED -DDUCKDB_BUILD_LIBRARY -DDUCKDB_EXTENSION_CORE_FUNCTIONS_LINKED -DDUCKDB_BUILD_LIBRARY  -I/usr/local/include    -fpic  -g -O2  -c duckdb/ub_extension_core_functions_scalar_operators.cpp -o duckdb/ub_extension_core_functions_scalar_operators.o
-g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG -Iinclude -I../inst/include -DDUCKDB_DISABLE_PRINT -DDUCKDB_R_BUILD -DBROTLI_ENCODER_CLEANUP_ON_OOM -DDUCKDB_EXTENSION_AUTOLOAD_DEFAULT -Iduckdb/src/include -Iduckdb/third_party/concurrentqueue -Iduckdb/third_party/fast_float -Iduckdb/third_party/fastpforlib -Iduckdb/third_party/fmt/include -Iduckdb/third_party/fsst -Iduckdb/third_party/httplib -Iduckdb/third_party/hyperloglog -Iduckdb/third_party/jaro_winkler -Iduckdb/third_party/jaro_winkler/details -Iduckdb/third_party/libpg_query -Iduckdb/third_party/libpg_query/include -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/mbedtls/library -Iduckdb/third_party/miniz -Iduckdb/third_party/pcg -Iduckdb/third_party/re2 -Iduckdb/third_party/skiplist -Iduckdb/third_party/tdigest -Iduckdb/third_party/utf8proc -Iduckdb/third_party/utf8proc/include -Iduckdb/third_party/yyjson/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/parquet/include -Iduckdb/third_party/parquet -Iduckdb/third_party/thrift -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/snappy -Iduckdb/third_party/mbedtls -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/core_functions/include -I../inst/include -Iduckdb -DDUCKDB_EXTENSION_PARQUET_LINKED -DDUCKDB_BUILD_LIBRARY -DDUCKDB_EXTENSION_CORE_FUNCTIONS_LINKED -DDUCKDB_BUILD_LIBRARY  -I/usr/local/include    -fpic  -g -O2  -c duckdb/ub_extension_core_functions_scalar_array.cpp -o duckdb/ub_extension_core_functions_scalar_array.o
-g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG -Iinclude -I../inst/include -DDUCKDB_DISABLE_PRINT -DDUCKDB_R_BUILD -DBROTLI_ENCODER_CLEANUP_ON_OOM -DDUCKDB_EXTENSION_AUTOLOAD_DEFAULT -Iduckdb/src/include -Iduckdb/third_party/concurrentqueue -Iduckdb/third_party/fast_float -Iduckdb/third_party/fastpforlib -Iduckdb/third_party/fmt/include -Iduckdb/third_party/fsst -Iduckdb/third_party/httplib -Iduckdb/third_party/hyperloglog -Iduckdb/third_party/jaro_winkler -Iduckdb/third_party/jaro_winkler/details -Iduckdb/third_party/libpg_query -Iduckdb/third_party/libpg_query/include -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/mbedtls/library -Iduckdb/third_party/miniz -Iduckdb/third_party/pcg -Iduckdb/third_party/re2 -Iduckdb/third_party/skiplist -Iduckdb/third_party/tdigest -Iduckdb/third_party/utf8proc -Iduckdb/third_party/utf8proc/include -Iduckdb/third_party/yyjson/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/parquet/include -Iduckdb/third_party/parquet -Iduckdb/third_party/thrift -Iduckdb/third_party/lz4 -Iduckdb/third_party/brotli/include -Iduckdb/third_party/brotli/common -Iduckdb/third_party/brotli/dec -Iduckdb/third_party/brotli/enc -Iduckdb/third_party/snappy -Iduckdb/third_party/mbedtls -Iduckdb/third_party/mbedtls/include -Iduckdb/third_party/zstd/include -Iduckdb/extension/core_functions/include -I../inst/include -Iduckdb -DDUCKDB_EXTENSION_PARQUET_LINKED -DDUCKDB_BUILD_LIBRARY -DDUCKDB_EXTENSION_CORE_FUNCTIONS_LINKED -DDUCKDB_BUILD_LIBRARY  -I/usr/local/include    -fpic  -g -O2  -c duckdb/ub_extension_core_functions_scalar_date.cpp -o duckdb/ub_extension_core_functions_scalar_date.o
-
-
-* installing *binary* package ‘backports’ ...
-* DONE (backports)
-* installing *binary* package ‘bit’ ...
-* DONE (bit)
-* installing *binary* package ‘brio’ ...
-* DONE (brio)
-* installing *binary* package ‘cli’ ...
-* DONE (cli)
-* installing *binary* package ‘codetools’ ...
-* DONE (codetools)
-...
-** using staged installation
-++ dirname ./configure
-+ cd ./src
-+ '[' -f '' ']'
-+ cp include/to-tar.mk Makevars.duckdb
-+ '[' -f duckdb.tar.xz ']'
-+ tar xJf duckdb.tar.xz
-** libs
-using C++ compiler: ‘g++ (GCC) 13.3.1 20240611 (Red Hat 13.3.1-2)’
-using C++17
-
-
-```
-# momentuHMM
-
-<details>
-
-* Version: 1.5.5
-* GitHub: https://github.com/bmcclintock/momentuHMM
-* Source code: https://github.com/cran/momentuHMM
-* Date/Publication: 2022-10-18 20:52:35 UTC
-* Number of recursive dependencies: 150
-
-Run `revdepcheck::revdep_details(, "momentuHMM")` for more info
-
-</details>
-
-## In both
-
-*   checking whether package ‘momentuHMM’ can be installed ... ERROR
-    ```
-    Installation failed.
-    See ‘/scratch/henrik/revdep/future/checks/momentuHMM/new/momentuHMM.Rcheck/00install.out’ for details.
-    ```
-
-## Installation
-
-### Devel
-
-```
-* installing *source* package ‘momentuHMM’ ...
-** this is package ‘momentuHMM’ version ‘1.5.5’
-** package ‘momentuHMM’ successfully unpacked and MD5 sums checked
-** using staged installation
-** libs
-using C compiler: ‘gcc (GCC) 13.3.1 20240611 (Red Hat 13.3.1-2)’
-using C++ compiler: ‘g++ (GCC) 13.3.1 20240611 (Red Hat 13.3.1-2)’
-g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG  -I'/scratch/henrik/revdep/future/library/momentuHMM/Rcpp/include' -I'/scratch/henrik/revdep/future/library/momentuHMM/RcppArmadillo/include' -I/usr/local/include    -fpic  -g -O2   -c RcppExports.cpp -o RcppExports.o
-g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG  -I'/scratch/henrik/revdep/future/library/momentuHMM/Rcpp/include' -I'/scratch/henrik/revdep/future/library/momentuHMM/RcppArmadillo/include' -I/usr/local/include    -fpic  -g -O2   -c XBloop.cpp -o XBloop.o
-g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG  -I'/scratch/henrik/revdep/future/library/momentuHMM/Rcpp/include' -I'/scratch/henrik/revdep/future/library/momentuHMM/RcppArmadillo/include' -I/usr/local/include    -fpic  -g -O2   -c getDM.cpp -o getDM.o
-...
-** data
-*** moving datasets to lazyload DB
-** inst
-** byte-compile and prepare package for lazy loading
-Error in loadNamespace(i, c(lib.loc, .libPaths()), versionCheck = vI[[i]]) : 
-  there is no package called ‘terra’
-Calls: <Anonymous> ... loadNamespace -> withRestarts -> withOneRestart -> doWithOneRestart
-Execution halted
-ERROR: lazy loading failed for package ‘momentuHMM’
-* removing ‘/scratch/henrik/revdep/future/checks/momentuHMM/new/momentuHMM.Rcheck/momentuHMM’
-
-
-```
-### CRAN
-
-```
-* installing *source* package ‘momentuHMM’ ...
-** this is package ‘momentuHMM’ version ‘1.5.5’
-** package ‘momentuHMM’ successfully unpacked and MD5 sums checked
-** using staged installation
-** libs
-using C compiler: ‘gcc (GCC) 13.3.1 20240611 (Red Hat 13.3.1-2)’
-using C++ compiler: ‘g++ (GCC) 13.3.1 20240611 (Red Hat 13.3.1-2)’
-g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG  -I'/scratch/henrik/revdep/future/library/momentuHMM/Rcpp/include' -I'/scratch/henrik/revdep/future/library/momentuHMM/RcppArmadillo/include' -I/usr/local/include    -fpic  -g -O2   -c RcppExports.cpp -o RcppExports.o
-g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG  -I'/scratch/henrik/revdep/future/library/momentuHMM/Rcpp/include' -I'/scratch/henrik/revdep/future/library/momentuHMM/RcppArmadillo/include' -I/usr/local/include    -fpic  -g -O2   -c XBloop.cpp -o XBloop.o
-g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG  -I'/scratch/henrik/revdep/future/library/momentuHMM/Rcpp/include' -I'/scratch/henrik/revdep/future/library/momentuHMM/RcppArmadillo/include' -I/usr/local/include    -fpic  -g -O2   -c getDM.cpp -o getDM.o
-...
-** data
-*** moving datasets to lazyload DB
-** inst
-** byte-compile and prepare package for lazy loading
-Error in loadNamespace(i, c(lib.loc, .libPaths()), versionCheck = vI[[i]]) : 
-  there is no package called ‘terra’
-Calls: <Anonymous> ... loadNamespace -> withRestarts -> withOneRestart -> doWithOneRestart
-Execution halted
-ERROR: lazy loading failed for package ‘momentuHMM’
-* removing ‘/scratch/henrik/revdep/future/checks/momentuHMM/old/momentuHMM.Rcheck/momentuHMM’
-
-
-```
-# rangeMapper
-
-<details>
-
-* Version: 2.0.3
-* GitHub: https://github.com/mpio-be/rangeMapper
-* Source code: https://github.com/cran/rangeMapper
-* Date/Publication: 2022-10-03 22:20:02 UTC
-* Number of recursive dependencies: 110
-
-Run `revdepcheck::revdep_details(, "rangeMapper")` for more info
-
-</details>
-
-## In both
-
-*   checking whether package ‘rangeMapper’ can be installed ... ERROR
-    ```
-    Installation failed.
-    See ‘/scratch/henrik/revdep/future/checks/rangeMapper/new/rangeMapper.Rcheck/00install.out’ for details.
-    ```
-
-## Installation
-
-### Devel
-
-```
-* installing *source* package ‘rangeMapper’ ...
-** this is package ‘rangeMapper’ version ‘2.0.3’
-** package ‘rangeMapper’ successfully unpacked and MD5 sums checked
-** using staged installation
-** R
-** data
-*** moving datasets to lazyload DB
-** inst
-** byte-compile and prepare package for lazy loading
-Error in loadNamespace(i, c(lib.loc, .libPaths()), versionCheck = vI[[i]]) : 
-  there is no package called ‘terra’
-Calls: <Anonymous> ... loadNamespace -> withRestarts -> withOneRestart -> doWithOneRestart
-Execution halted
-ERROR: lazy loading failed for package ‘rangeMapper’
-* removing ‘/scratch/henrik/revdep/future/checks/rangeMapper/new/rangeMapper.Rcheck/rangeMapper’
-
-
-```
-### CRAN
-
-```
-* installing *source* package ‘rangeMapper’ ...
-** this is package ‘rangeMapper’ version ‘2.0.3’
-** package ‘rangeMapper’ successfully unpacked and MD5 sums checked
-** using staged installation
-** R
-** data
-*** moving datasets to lazyload DB
-** inst
-** byte-compile and prepare package for lazy loading
-Error in loadNamespace(i, c(lib.loc, .libPaths()), versionCheck = vI[[i]]) : 
-  there is no package called ‘terra’
-Calls: <Anonymous> ... loadNamespace -> withRestarts -> withOneRestart -> doWithOneRestart
-Execution halted
-ERROR: lazy loading failed for package ‘rangeMapper’
-* removing ‘/scratch/henrik/revdep/future/checks/rangeMapper/old/rangeMapper.Rcheck/rangeMapper’
-
-
-```
-# rechaRge
-
-<details>
-
-* Version: 1.0.0
-* GitHub: https://github.com/gwrecharge/rechaRge
-* Source code: https://github.com/cran/rechaRge
-* Date/Publication: 2024-05-14 08:20:02 UTC
-* Number of recursive dependencies: 53
-
-Run `revdepcheck::revdep_details(, "rechaRge")` for more info
-
-</details>
-
-## In both
-
-*   checking whether package ‘rechaRge’ can be installed ... ERROR
-    ```
-    Installation failed.
-    See ‘/scratch/henrik/revdep/future/checks/rechaRge/new/rechaRge.Rcheck/00install.out’ for details.
-    ```
-
-## Installation
-
-### Devel
-
-```
-* installing *source* package ‘rechaRge’ ...
-** this is package ‘rechaRge’ version ‘1.0.0’
-** package ‘rechaRge’ successfully unpacked and MD5 sums checked
-** using staged installation
-** R
-** byte-compile and prepare package for lazy loading
-Error in loadNamespace(i, c(lib.loc, .libPaths()), versionCheck = vI[[i]]) : 
-  there is no package called ‘terra’
-Calls: <Anonymous> ... loadNamespace -> withRestarts -> withOneRestart -> doWithOneRestart
-Execution halted
-ERROR: lazy loading failed for package ‘rechaRge’
-* removing ‘/scratch/henrik/revdep/future/checks/rechaRge/new/rechaRge.Rcheck/rechaRge’
-
-
-```
-### CRAN
-
-```
-* installing *source* package ‘rechaRge’ ...
-** this is package ‘rechaRge’ version ‘1.0.0’
-** package ‘rechaRge’ successfully unpacked and MD5 sums checked
-** using staged installation
-** R
-** byte-compile and prepare package for lazy loading
-Error in loadNamespace(i, c(lib.loc, .libPaths()), versionCheck = vI[[i]]) : 
-  there is no package called ‘terra’
-Calls: <Anonymous> ... loadNamespace -> withRestarts -> withOneRestart -> doWithOneRestart
-Execution halted
-ERROR: lazy loading failed for package ‘rechaRge’
-* removing ‘/scratch/henrik/revdep/future/checks/rechaRge/old/rechaRge.Rcheck/rechaRge’
-
-
-```
-# rgee
-
-<details>
-
-* Version: 1.1.7
-* GitHub: https://github.com/r-spatial/rgee
-* Source code: https://github.com/cran/rgee
-* Date/Publication: 2023-09-27 08:30:02 UTC
-* Number of recursive dependencies: 133
-
-Run `revdepcheck::revdep_details(, "rgee")` for more info
-
-</details>
-
-## In both
-
-*   checking whether package ‘rgee’ can be installed ... ERROR
-    ```
-    Installation failed.
-    See ‘/scratch/henrik/revdep/future/checks/rgee/new/rgee.Rcheck/00install.out’ for details.
-    ```
-
-## Installation
-
-### Devel
-
-```
-* installing *source* package ‘rgee’ ...
-** this is package ‘rgee’ version ‘1.1.7’
-** package ‘rgee’ successfully unpacked and MD5 sums checked
-** using staged installation
-** R
-** inst
-** byte-compile and prepare package for lazy loading
-Error in loadNamespace(i, c(lib.loc, .libPaths()), versionCheck = vI[[i]]) : 
-  there is no package called ‘terra’
-Error: unable to load R code in package ‘rgee’
-Execution halted
-ERROR: lazy loading failed for package ‘rgee’
-* removing ‘/scratch/henrik/revdep/future/checks/rgee/new/rgee.Rcheck/rgee’
-
-
-```
-### CRAN
-
-```
-* installing *source* package ‘rgee’ ...
-** this is package ‘rgee’ version ‘1.1.7’
-** package ‘rgee’ successfully unpacked and MD5 sums checked
-** using staged installation
-** R
-** inst
-** byte-compile and prepare package for lazy loading
-Error in loadNamespace(i, c(lib.loc, .libPaths()), versionCheck = vI[[i]]) : 
-  there is no package called ‘terra’
-Error: unable to load R code in package ‘rgee’
-Execution halted
-ERROR: lazy loading failed for package ‘rgee’
-* removing ‘/scratch/henrik/revdep/future/checks/rgee/old/rgee.Rcheck/rgee’
+Perhaps try a variation of:
+install.packages('car')
+* removing ‘/home/henrik/futureverse/future/revdep/library/geocmeans/rstatix’
+ERROR: dependency ‘rstatix’ is not available for package ‘ggpubr’
+Perhaps try a variation of:
+install.packages('rstatix')
+* removing ‘/home/henrik/futureverse/future/revdep/library/geocmeans/ggpubr’
+
+The downloaded source packages are in
+	‘/tmp/henrik/RtmpEvPzBw/downloaded_packages’
 
 
 ```
@@ -734,216 +221,6 @@ installing via 'install.libs.R' to /scratch/henrik/revdep/future/library/spanish
 ** R
 ** inst
 ** byte-compile and prepare package for lazy loading
-
-
-```
-# steps
-
-<details>
-
-* Version: 1.3.0
-* GitHub: https://github.com/steps-dev/steps
-* Source code: https://github.com/cran/steps
-* Date/Publication: 2022-10-04 23:30:02 UTC
-* Number of recursive dependencies: 71
-
-Run `revdepcheck::revdep_details(, "steps")` for more info
-
-</details>
-
-## In both
-
-*   checking whether package ‘steps’ can be installed ... ERROR
-    ```
-    Installation failed.
-    See ‘/scratch/henrik/revdep/future/checks/steps/new/steps.Rcheck/00install.out’ for details.
-    ```
-
-## Installation
-
-### Devel
-
-```
-* installing *source* package ‘steps’ ...
-** this is package ‘steps’ version ‘1.3.0’
-** package ‘steps’ successfully unpacked and MD5 sums checked
-** using staged installation
-** libs
-using C++ compiler: ‘g++ (GCC) 13.3.1 20240611 (Red Hat 13.3.1-2)’
-g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG  -I'/scratch/henrik/revdep/future/library/steps/Rcpp/include' -I/usr/local/include    -fpic  -g -O2   -c RcppExports.cpp -o RcppExports.o
-g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG  -I'/scratch/henrik/revdep/future/library/steps/Rcpp/include' -I/usr/local/include    -fpic  -g -O2   -c rcpp_dispersal_funs_v4.cpp -o rcpp_dispersal_funs_v4.o
-g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG  -I'/scratch/henrik/revdep/future/library/steps/Rcpp/include' -I/usr/local/include    -fpic  -g -O2   -c rcpp_utils_funs.cpp -o rcpp_utils_funs.o
-g++ -std=gnu++17 -shared -L/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/lib -L/usr/local/lib64 -o steps.so RcppExports.o rcpp_dispersal_funs_v4.o rcpp_utils_funs.o -L/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/lib -lR
-...
-** data
-*** moving datasets to lazyload DB
-** inst
-** byte-compile and prepare package for lazy loading
-Error in loadNamespace(i, c(lib.loc, .libPaths()), versionCheck = vI[[i]]) : 
-  there is no package called ‘terra’
-Calls: <Anonymous> ... loadNamespace -> withRestarts -> withOneRestart -> doWithOneRestart
-Execution halted
-ERROR: lazy loading failed for package ‘steps’
-* removing ‘/scratch/henrik/revdep/future/checks/steps/new/steps.Rcheck/steps’
-
-
-```
-### CRAN
-
-```
-* installing *source* package ‘steps’ ...
-** this is package ‘steps’ version ‘1.3.0’
-** package ‘steps’ successfully unpacked and MD5 sums checked
-** using staged installation
-** libs
-using C++ compiler: ‘g++ (GCC) 13.3.1 20240611 (Red Hat 13.3.1-2)’
-g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG  -I'/scratch/henrik/revdep/future/library/steps/Rcpp/include' -I/usr/local/include    -fpic  -g -O2   -c RcppExports.cpp -o RcppExports.o
-g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG  -I'/scratch/henrik/revdep/future/library/steps/Rcpp/include' -I/usr/local/include    -fpic  -g -O2   -c rcpp_dispersal_funs_v4.cpp -o rcpp_dispersal_funs_v4.o
-g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG  -I'/scratch/henrik/revdep/future/library/steps/Rcpp/include' -I/usr/local/include    -fpic  -g -O2   -c rcpp_utils_funs.cpp -o rcpp_utils_funs.o
-g++ -std=gnu++17 -shared -L/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/lib -L/usr/local/lib64 -o steps.so RcppExports.o rcpp_dispersal_funs_v4.o rcpp_utils_funs.o -L/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/lib -lR
-...
-** data
-*** moving datasets to lazyload DB
-** inst
-** byte-compile and prepare package for lazy loading
-Error in loadNamespace(i, c(lib.loc, .libPaths()), versionCheck = vI[[i]]) : 
-  there is no package called ‘terra’
-Calls: <Anonymous> ... loadNamespace -> withRestarts -> withOneRestart -> doWithOneRestart
-Execution halted
-ERROR: lazy loading failed for package ‘steps’
-* removing ‘/scratch/henrik/revdep/future/checks/steps/old/steps.Rcheck/steps’
-
-
-```
-# TriDimRegression
-
-<details>
-
-* Version: 1.0.2
-* GitHub: https://github.com/alexander-pastukhov/tridim-regression
-* Source code: https://github.com/cran/TriDimRegression
-* Date/Publication: 2023-09-13 14:10:03 UTC
-* Number of recursive dependencies: 96
-
-Run `revdepcheck::revdep_details(, "TriDimRegression")` for more info
-
-</details>
-
-## In both
-
-*   checking whether package ‘TriDimRegression’ can be installed ... ERROR
-    ```
-    Installation failed.
-    See ‘/scratch/henrik/revdep/future/checks/TriDimRegression/new/TriDimRegression.Rcheck/00install.out’ for details.
-    ```
-
-## Installation
-
-### Devel
-
-```
-* installing *source* package ‘TriDimRegression’ ...
-** this is package ‘TriDimRegression’ version ‘1.0.2’
-** package ‘TriDimRegression’ successfully unpacked and MD5 sums checked
-** using staged installation
-Error in loadNamespace(x) : there is no package called ‘rstantools’
-Calls: loadNamespace -> withRestarts -> withOneRestart -> doWithOneRestart
-Execution halted
-ERROR: configuration failed for package ‘TriDimRegression’
-* removing ‘/scratch/henrik/revdep/future/checks/TriDimRegression/new/TriDimRegression.Rcheck/TriDimRegression’
-
-
-```
-### CRAN
-
-```
-* installing *source* package ‘TriDimRegression’ ...
-** this is package ‘TriDimRegression’ version ‘1.0.2’
-** package ‘TriDimRegression’ successfully unpacked and MD5 sums checked
-** using staged installation
-Error in loadNamespace(x) : there is no package called ‘rstantools’
-Calls: loadNamespace -> withRestarts -> withOneRestart -> doWithOneRestart
-Execution halted
-ERROR: configuration failed for package ‘TriDimRegression’
-* removing ‘/scratch/henrik/revdep/future/checks/TriDimRegression/old/TriDimRegression.Rcheck/TriDimRegression’
-
-
-```
-# XNAString
-
-<details>
-
-* Version: 1.15.0
-* GitHub: NA
-* Source code: https://github.com/cran/XNAString
-* Date/Publication: 2024-10-29
-* Number of recursive dependencies: 107
-
-Run `revdepcheck::revdep_details(, "XNAString")` for more info
-
-</details>
-
-## In both
-
-*   checking whether package ‘XNAString’ can be installed ... ERROR
-    ```
-    Installation failed.
-    See ‘/scratch/henrik/revdep/future/checks/XNAString/new/XNAString.Rcheck/00install.out’ for details.
-    ```
-
-## Installation
-
-### Devel
-
-```
-* installing *source* package ‘XNAString’ ...
-** this is package ‘XNAString’ version ‘1.15.0’
-** using staged installation
-** libs
-using C++ compiler: ‘g++ (GCC) 13.3.1 20240611 (Red Hat 13.3.1-2)’
-using C++11
-gcc -std=gnu2x -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG -Dlibcaf_core_shared_EXPORTS -I../src -I../src -I'/scratch/henrik/revdep/future/library/XNAString/Rcpp/include' -I/usr/local/include    -fpic  -g -O2  -c ViennaRNA/utils/cpu.c -o ViennaRNA/utils/cpu.o
-gcc -std=gnu2x -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG -Dlibcaf_core_shared_EXPORTS -I../src -I../src -I'/scratch/henrik/revdep/future/library/XNAString/Rcpp/include' -I/usr/local/include    -fpic  -g -O2  -c ViennaRNA/utils/msa_utils.c -o ViennaRNA/utils/msa_utils.o
-gcc -std=gnu2x -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG -Dlibcaf_core_shared_EXPORTS -I../src -I../src -I'/scratch/henrik/revdep/future/library/XNAString/Rcpp/include' -I/usr/local/include    -fpic  -g -O2  -c ViennaRNA/utils/structure_tree.c -o ViennaRNA/utils/structure_tree.o
-gcc -std=gnu2x -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG -Dlibcaf_core_shared_EXPORTS -I../src -I../src -I'/scratch/henrik/revdep/future/library/XNAString/Rcpp/include' -I/usr/local/include    -fpic  -g -O2  -c ViennaRNA/utils/higher_order_functions.c -o ViennaRNA/utils/higher_order_functions.o
-...
-      |      ^~~~~~~~
-ViennaRNA/datastructures/lists.c:284:1: error: conflicting types for ‘lst_mergesort’; have ‘void(LIST *, int (*)(void *, void *))’
-  284 | lst_mergesort (LIST * l, int (*cmp_func) (void *, void *))
-      | ^~~~~~~~~~~~~
-../src/ViennaRNA/datastructures/lists.h:63:6: note: previous declaration of ‘lst_mergesort’ with type ‘void(LIST *, int (*)(void))’
-   63 | void lst_mergesort (LIST * l, int (*cmp_func) ());
-      |      ^~~~~~~~~~~~~
-make: *** [/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/etc/Makeconf:202: ViennaRNA/datastructures/lists.o] Error 1
-ERROR: compilation failed for package ‘XNAString’
-* removing ‘/scratch/henrik/revdep/future/checks/XNAString/new/XNAString.Rcheck/XNAString’
-
-
-```
-### CRAN
-
-```
-* installing *source* package ‘XNAString’ ...
-** this is package ‘XNAString’ version ‘1.15.0’
-** using staged installation
-** libs
-using C++ compiler: ‘g++ (GCC) 13.3.1 20240611 (Red Hat 13.3.1-2)’
-using C++11
-gcc -std=gnu2x -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG -Dlibcaf_core_shared_EXPORTS -I../src -I../src -I'/scratch/henrik/revdep/future/library/XNAString/Rcpp/include' -I/usr/local/include    -fpic  -g -O2  -c ViennaRNA/utils/cpu.c -o ViennaRNA/utils/cpu.o
-gcc -std=gnu2x -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG -Dlibcaf_core_shared_EXPORTS -I../src -I../src -I'/scratch/henrik/revdep/future/library/XNAString/Rcpp/include' -I/usr/local/include    -fpic  -g -O2  -c ViennaRNA/utils/msa_utils.c -o ViennaRNA/utils/msa_utils.o
-gcc -std=gnu2x -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG -Dlibcaf_core_shared_EXPORTS -I../src -I../src -I'/scratch/henrik/revdep/future/library/XNAString/Rcpp/include' -I/usr/local/include    -fpic  -g -O2  -c ViennaRNA/utils/structure_tree.c -o ViennaRNA/utils/structure_tree.o
-gcc -std=gnu2x -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG -Dlibcaf_core_shared_EXPORTS -I../src -I../src -I'/scratch/henrik/revdep/future/library/XNAString/Rcpp/include' -I/usr/local/include    -fpic  -g -O2  -c ViennaRNA/utils/higher_order_functions.c -o ViennaRNA/utils/higher_order_functions.o
-...
-      |      ^~~~~~~~
-ViennaRNA/datastructures/lists.c:284:1: error: conflicting types for ‘lst_mergesort’; have ‘void(LIST *, int (*)(void *, void *))’
-  284 | lst_mergesort (LIST * l, int (*cmp_func) (void *, void *))
-      | ^~~~~~~~~~~~~
-../src/ViennaRNA/datastructures/lists.h:63:6: note: previous declaration of ‘lst_mergesort’ with type ‘void(LIST *, int (*)(void))’
-   63 | void lst_mergesort (LIST * l, int (*cmp_func) ());
-      |      ^~~~~~~~~~~~~
-make: *** [/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/etc/Makeconf:202: ViennaRNA/datastructures/lists.o] Error 1
-ERROR: compilation failed for package ‘XNAString’
-* removing ‘/scratch/henrik/revdep/future/checks/XNAString/old/XNAString.Rcheck/XNAString’
 
 
 ```
