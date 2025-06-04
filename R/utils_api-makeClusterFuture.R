@@ -113,15 +113,19 @@ makeClusterFuture <- function(specs = nbrOfWorkers(), ...) {
     }
   }
 
+  env <- new.env(parent = emptyenv())
+  env[["backend"]] <- backend
+  
   cl <- vector("list", length = n)
   for (kk in seq_along(cl)) {
     node <- new.env(parent = emptyenv())
     node[["options"]] <- options
     node[["backend"]] <- backend
+    node[["cluster_env"]] <- env
     class(node) <- c("FutureNode")
     cl[[kk]] <- node
   }
-  attr(cl, "backend") <- backend
+  attr(cl, "cluster_env") <- env
   class(cl) <- c("FutureCluster", "cluster")
   cl
 }
@@ -130,7 +134,7 @@ makeClusterFuture <- function(specs = nbrOfWorkers(), ...) {
 #' @rawNamespace if (getRversion() >= "4.4") S3method(print,FutureCluster)
 print.FutureCluster <- function(x, ...) {
   cat(sprintf("A %s cluster with %d node\n", sQuote(class(x)[1]), length(x)))
-  backend <- attr(x, "backend")
+  backend <- attr(x, "cluster_env")[["backend"]]
   print(backend)
 
   plan_backend <- plan("backend")
@@ -175,7 +179,7 @@ sendData.FutureNode <- function(node, data) {
   if (debug) message(sprintf("| type: %s", sQuote(type)))
 
   ## Assert that future backend has not changed
-  backend <- node[["backend"]]
+  backend <- node[["cluster_env"]][["backend"]]
   plan_backend <- plan("backend")
   if (!identical(plan_backend[["uuid"]], backend[["uuid"]])) {
     stop(FutureError(
