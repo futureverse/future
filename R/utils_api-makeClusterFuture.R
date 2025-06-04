@@ -137,7 +137,6 @@ makeClusterFuture <- function(specs = nbrOfWorkers(), ...) {
 }
 
 
-#' @importFrom utils str
 #' @rawNamespace if (getRversion() >= "4.4") S3method(print,FutureCluster)
 print.FutureCluster <- function(x, ...) {
   cat(sprintf("A %s cluster with %d node\n", sQuote(class(x)[1]), length(x)))
@@ -186,7 +185,6 @@ print.FutureCluster <- function(x, ...) {
 }
 
 
-#' @importFrom utils capture.output str
 #' @importFrom future future
 #' @rawNamespace if (getRversion() >= "4.4") importFrom(parallel,sendData)
 #' @rawNamespace if (getRversion() >= "4.4") S3method(sendData,FutureNode)
@@ -201,12 +199,12 @@ sendData.FutureNode <- function(node, data) {
   
   debug <- isTRUE(getOption("future.debug"))
   if (debug) {
-    message(sprintf("sendData() for %s #%d ...", class(node)[1], index))
-    on.exit(message(sprintf("sendData() for %s %d ... done", class(node)[1], index)))
+    mdebugf_push("sendData() for %s #%d ...", class(node)[1], index)
+    on.exit(mdebug_pop())
   }
 
   type <- data[["type"]]
-  if (debug) message(sprintf("| type: %s", sQuote(type)))
+  if (debug) mdebugf("| type: %s", sQuote(type))
 
   ## Assert that future backend has not changed
   backend <- node[["cluster_env"]][["backend"]]
@@ -222,11 +220,11 @@ sendData.FutureNode <- function(node, data) {
 
     ## SPECIAL CASE #1: Called via clusterSetRNGStream()?
     if (called_via_clusterSetRNGStream()) {
-      if (debug) message("Detected: clusterSetRNGStream()")
+      if (debug) mdebug("Detected: clusterSetRNGStream()")
       args <- data[["args"]]
       call <- args[[1]]
       seed <- call[[3]]
-      if (debug) message(sprintf("Seed recorded: (%s)", paste(seed, collapse = ", ")))
+      if (debug) mdebugf("Seed recorded: (%s)", comma(seed))
       ns <- getNamespace("future")
       is_lecyer_cmrg_seed <- get("is_lecyer_cmrg_seed", mode = "function", envir = ns, inherits = FALSE)
       stopifnot(is_lecyer_cmrg_seed(seed))
@@ -239,12 +237,12 @@ sendData.FutureNode <- function(node, data) {
 
     ## SPECIAL CASE #2: Called via clusterExport()?
     if (called_via_clusterExport()) {
-      if (debug) message("Detected: clusterExport()")
+      if (debug) mdebug("Detected: clusterExport()")
 
       ## Only need to be handled once per cluster - not once per node
       if (index == 1L) {
         args <- data[["args"]]
-        if (debug) message(sprintf("Exports: [n=%d] %s", length(args), commaq(names(args))))
+        if (debug) mdebugf("Exports: [n=%d] %s", length(args), commaq(names(args)))
         cluster_env <- node[["cluster_env"]]
         exports <- cluster_env[["exports"]]
         if (is.null(exports)) exports <- list()
@@ -264,7 +262,7 @@ sendData.FutureNode <- function(node, data) {
 
     ## SPECIAL CASE #3: Called via clusterEvalQ()?
     if (called_via_clusterEvalQ()) {
-      if (debug) message("Detected: clusterEvalQ()")
+      if (debug) mdebug("Detected: clusterEvalQ()")
 
       ## Only need to be handled once per cluster - not once per node
       if (index == 1L) {
@@ -272,7 +270,7 @@ sendData.FutureNode <- function(node, data) {
         expr <- args[[1]]
         calls <- sys.calls()
         if (debug) {
-          message("Expression:")
+          mdebug("Expression:")
           mprint(expr)
         }
   
@@ -327,18 +325,10 @@ sendData.FutureNode <- function(node, data) {
 
     node[["future"]] <- local({
       if (debug) {
-        message("| Create future ...")
-        on.exit(message("| Create future ... done"))
-        
-        out <- capture.output(str(list(data = data)))
-        out <- sprintf("| : %s", out)
-        out <- paste(out, collapse = "\n")
-        message(out)
-
-        out <- capture.output(str(list(options = options)))
-        out <- sprintf("| : %s", out)
-        out <- paste(out, collapse = "\n")
-        message(out)
+        mdebug_push("Create future ...")
+        on.exit(mdebug_pop())
+        mstr(list(data = data))
+        mstr(list(options = options))
       }
       fun <- data[["fun"]]
       args <- data[["args"]]
@@ -347,12 +337,7 @@ sendData.FutureNode <- function(node, data) {
       future_args <- list(expr = quote(expr), substitute = FALSE)
       future_args <- c(future_args, options)
 
-      if (debug) {
-        out <- capture.output(str(list(args = future_args)))
-        out <- sprintf("| : %s", out)
-        out <- paste(out, collapse = "\n")
-        message(out)
-      }
+      if (debug) mstr(list(future_args = future_args))
       do.call(future, args = future_args)
     })
   } else if (type == "DONE") {
@@ -360,8 +345,8 @@ sendData.FutureNode <- function(node, data) {
     if (inherits(future, "Future")) {
       node[["future"]] <- local({
         if (debug) {
-          message("| Canceling future ...")
-          on.exit(message("| Canceling future ... done"))
+          mdebug_push("Canceling future ...")
+          on.exit(mdebug_pop())
         }
         future <- cancel(future)
         tryCatch(resolve(future), error = identity)
@@ -383,8 +368,8 @@ sendData.FutureNode <- function(node, data) {
 recvData.FutureNode <- function(node) {
   debug <- isTRUE(getOption("future.debug"))
   if (debug) {
-    message(sprintf("recvData() for %s ...", class(node)[1]))
-    on.exit(message(sprintf("recvData() for %s ... done", class(node)[1])))
+    mdebugf_push("recvData() for %s ...", class(node)[1])
+    on.exit(mdebug_pop())
   }
 
   future <- node[["future"]]
@@ -392,10 +377,7 @@ recvData.FutureNode <- function(node) {
     stop(sprintf("%s does not have a future associated with it", class(node)[1]))
   }
   result <- result(future)
-  if (debug) {
-    print(result)
-    print(utils::ls.str(result))
-  }
+  if (debug) mprint(result)
   
   if ("seed" %in% names(node) && !is.null(result[["seed"]])) {
     if (debug) mdebug("Updating the node's RNG state")
