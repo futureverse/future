@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.49.0-9044</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.58.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -78,25 +78,25 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="development version" id="version-development-version">Version (development version)<a class="anchor" aria-label="anchor" href="#version-development-version"></a></h2>
+<h2 class="pkg-version" data-toc-text="1.58.0" id="version-1580">Version 1.58.0<a class="anchor" aria-label="anchor" href="#version-1580"></a></h2><p class="text-muted">CRAN release: 2025-06-05</p>
 <p>This is the third rollout out of several towards a near-future major release that I am really excited about. This has been made possible due to a multi-year effort of internal re-designs, work with package maintainers, release, and repeat. This release fixes a few regressions introduced in future 1.40.0 (2025-04-10), despite passing <a href="https://www.futureverse.org/quality.html" class="external-link">all unit, regression, and system tests</a>.</p>
 <div class="section level3">
-<h3 id="new-features-development-version">New Features<a class="anchor" aria-label="anchor" href="#new-features-development-version"></a></h3>
+<h3 id="new-features-1-58-0">New Features<a class="anchor" aria-label="anchor" href="#new-features-1-58-0"></a></h3>
 <ul><li>Now futures produce a warning when they detect that the <em>default</em> graphics device, as defined by R option <code>"device"</code>, is opened by, for instance, a <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code> call without explicitly opening a graphics device. The reason for this check is that we rarely want to plot to the <em>default</em> graphics device in parallel processing, which typically ends up plotting to a <code>Rplots.pdf</code> file that is local to the parallel worker. If that is truly wanted, please open a graphics devices explicitly (e.g. <code><a href="https://rdrr.io/r/grDevices/pdf.html" class="external-link">pdf()</a></code> or <code><a href="https://rdrr.io/r/grDevices/png.html" class="external-link">png()</a></code>) before plotting. Alternatively, explicitly set R option <code>device</code> inside the future expression.</li>
 </ul></div>
 <div class="section level3">
-<h3 id="beta-features-development-version">Beta Features<a class="anchor" aria-label="anchor" href="#beta-features-development-version"></a></h3>
+<h3 id="beta-features-1-58-0">Beta Features<a class="anchor" aria-label="anchor" href="#beta-features-1-58-0"></a></h3>
 <ul><li>Add <code><a href="../reference/makeClusterFuture.html">makeClusterFuture()</a></code> for creating a cluster of stateless parallel workers for processing via the future framework. This requires R (&gt;= 4.4.0) [2024-04-24]. Please make sure to read <code><a href="../reference/makeClusterFuture.html">help("makeClusterFuture", package = "future")</a></code> to learn about potential pitfalls. The plan is to support more corner cases in future releases, and when not possible, add more mechanisms for detecting non-supported cases and given an informative error.</li>
 </ul></div>
 <div class="section level3">
-<h3 id="bug-fixes-development-version">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h3>
+<h3 id="bug-fixes-1-58-0">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-1-58-0"></a></h3>
 <ul><li><p>Setting <code>options(warn = 2)</code> on a parallel worker was ignored - warnings were not escalated to errors on the worker, and was instead relayed as-is in the parent R session, unless <code>options(warn    = 2)</code> was also set in the parent. Now <code>options(warn = 2)</code> on a worker causes warnings to be escalated immediately to errors on the worker, which therefore also terminates the future.</p></li>
 <li><p><code><a href="../reference/future.html">future()</a></code> arguments <code>stdout</code> and <code>conditions</code> were not applied when packages that were specified via argument <code>packages</code> were loaded and attached. This prevented us from excluding, for instance, <code>packageStartupMessage</code>:s, causing them to be displayed in sequential and multicore processing.</p></li>
 <li><p>When the using <code>cluster</code> and <code>multisession</code> backends, one could, in some cases, end up with warnings on “package may not be available when loading” that are produced by <code><a href="https://rdrr.io/r/base/serialize.html" class="external-link">serialize()</a></code>. These type of warnings are now suppressed.</p></li>
 <li><p>Now the cluster future backend tries even harder to shut down parallel cluster workers when shutting down the backend. If it fails to communicate with one or more of the parallel workers, it will now close any socket connections that remain open towards such cluster nodes.</p></li>
 <li><p>The built-in checks for added, removed, or modified graphical devices introduced in <strong>future</strong> 1.40.0 (2025-04-10), could produce false positives, complaining about “A future expression must close any opened devices and must not close devices it did not open. Details: 1 devices differ: index=2, before=‘NA’, after=’‘“. The problem was that it did not prune the empty ’after’ before the check.</p></li>
 <li><p>The <code>multicore</code> backend did not relay <code>immediateCondition</code>:s in a near-live fashion, but only when the results of the futures where collected.</p></li>
-<li><p>The <code>sequential</code>, <code>cluster</code>, <code>multisession</code>, and <code>multicore</code> backends relayed <code>immediateCondition</code>:s, but did not record the properly in the future object.</p></li>
+<li><p>The <code>sequential</code>, <code>cluster</code>, <code>multisession</code>, and <code>multicore</code> backends relayed <code>immediateCondition</code>:s, but did not record them properly in the future object.</p></li>
 </ul></div>
 </div>
     <div class="section level2">
