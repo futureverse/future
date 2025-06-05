@@ -1,4 +1,4 @@
-# Version (development version)
+# Version 1.58.0 [2025-06-05]
 
 This is the third rollout out of several towards a near-future major
 release that I am really excited about. This has been made possible
