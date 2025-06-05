@@ -101,7 +101,7 @@ or
 y <- my_fcn(x, parallel = TRUE)
 ```
 
-depending on their needs.  However, if another package developer decide to call you function in their function, they now have to expose that `parallel` argument to the users of their function, e.g.
+depending on their needs.  However, if another package developer decide to call your function in their function, they now have to expose that `parallel` argument to the users of their function, e.g.
 
 ```r
 their_fcn <- function(x, parallel = FALSE) {
@@ -176,6 +176,31 @@ Execution halted
 If you for some reason do not like to display reset of the future backend in the help documentation, but you still want it run, wrap the statement in an Rd `\dontshow{}` statement.
 
 
+## Writing vignettes
+
+Importantly, if you use the `multisession` backend in a vignette, you
+must manually specify the number of workers, i.e.
+
+```r
+plan(multisession, workers = 2)
+```
+
+The reason for having to manually limit the number workers in
+vignettes, while it is automatically limited for us in package
+examples and package tests, is that `R CMD check --as-cran` does _not_
+set environment variable `_R_CHECK_LIMIT_CORES_` when re-building
+vignettes, resulting in the default `workers = availableCores()` to
+use whatever number of cores that the operating system has given our R
+process.
+
+Don't forget to stop the parallel workers by calling
+
+```r
+plan(sequential)
+```
+
+at the end of you vignette.
+
 
 
 ## Testing a package that relies on futures
@@ -245,6 +270,7 @@ plan(cluster, workers = cl)
 make sure to stop such clusters at the end using
 
 ```r
+plan(sequential)
 parallel::stopCluster(cl)
 ```
 

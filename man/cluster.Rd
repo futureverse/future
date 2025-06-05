@@ -57,7 +57,7 @@ This function is must \emph{not} be called directly.  Instead, the
 typical usages are:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{# Evaluate futures via a single background R process on the local machine
-plan(cluster, workers = 1)
+plan(cluster, workers = I(1))
 
 # Evaluate futures via two background R processes on the local machine
 plan(cluster, workers = 2)
@@ -105,4 +105,8 @@ stopifnot(v == 0)
 parallel::stopCluster(cl)
 
 }
+}
+\seealso{
+For alternative future backends, see the 'A Future for R: Available Future
+Backends' vignette and \url{https://www.futureverse.org/backends.html}.
 }

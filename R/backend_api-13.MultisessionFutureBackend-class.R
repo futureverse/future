@@ -6,6 +6,10 @@
 #' The `MultisessionFutureBackend` backend is selected by
 #' `plan(multisession, workers = workers)`.
 #'
+#' @seealso
+#' For alternative future backends, see the 'A Future for R: Available Future
+#' Backends' vignette and \url{https://www.futureverse.org/backends.html}.
+#'
 #' @keywords internal
 #' @rdname FutureBackend
 #' @export
@@ -125,12 +129,6 @@ print.MultisessionFutureBackend <- function(x, validate = TRUE, ...) {
 #'
 #' @export
 multisession <- function(..., workers = availableCores(), lazy = FALSE, rscript_libs = .libPaths(), gc = FALSE, earlySignal = FALSE, envir = parent.frame()) {
-  ## WORKAROUNDS:
-  ## (1) promises::future_promise() calls the "evaluator" function directly
-  if ("promises" %in% loadedNamespaces()) {
-    return(future(..., gc = gc, earlySignal = earlySignal, envir = envir))
-  }
-  
   stop("INTERNAL ERROR: The future::multisession() must never be called directly")
 }
 class(multisession) <- c("multisession", "cluster", "multiprocess", "future", "function")

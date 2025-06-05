@@ -244,7 +244,7 @@ We start with multisession futures because they are supported by all operating s
 
 ```r
 <%=bfr <- withCapture({
-plan(multisession)
+plan(multisession, workers = 2)
 <%@include file="incl/future-1-overview-example2.R"%>
 })%>
 ```
@@ -282,7 +282,7 @@ plan(multicore)
 ```r
 <%=if (supportsMulticore()) {
 withCapture({
-plan(multicore)
+plan(multicore, workers = 2)
 <%@include file="incl/future-1-overview-example2.R"%>
 })
 } else {
@@ -392,7 +392,7 @@ For instance, here is an example of two "top" futures (`a` and `b`) that uses mu
 
 ```r
 <%=withCapture({
-plan(multisession)
+plan(multisession, workers = 2)
 <%@include file="incl/future-1-overview-example3.R"%>
 pid
 a
@@ -538,7 +538,7 @@ It is possible to check whether a future has been resolved or not without blocki
 
 ```r
 <%=withCapture({
-plan(multisession)
+plan(multisession, workers = 2)
 a %<-% {
   cat("Future 'a' ...")
   Sys.sleep(2)
@@ -639,7 +639,7 @@ There is one limitation with implicit futures that does not exist for explicit o
 
 ```r
 <%=withCapture({
-plan(multisession)
+plan(multisession, workers = 2)
 f <- list()
 for (ii in 1:3) {
   f[[ii]] <- future({ Sys.getpid() })
@@ -653,7 +653,7 @@ This is _not_ possible to do when using implicit futures.  This is because the `
 
 ```r
 <%=withCapture({
-plan(multisession)
+plan(multisession, workers = 2)
 v <- new.env()
 for (name in c("a", "b", "c")) {
   v[[name]] %<-% { Sys.getpid() }
@@ -670,7 +670,7 @@ If _numeric indices_ are required, then _list environments_ can be used.  List e
 ```r
 <%=withCapture({
 library(listenv)
-plan(multisession)
+plan(multisession, workers = 2)
 v <- listenv()
 for (ii in 1:3) {
   v[[ii]] %<-% { Sys.getpid() }
@@ -708,6 +708,11 @@ plan(cluster, workers = c("n2", "n5", "n6", "n6", "n9"))
 demo("mandelbrot", package = "future", ask = FALSE)
 ```
 
+<%
+## Make sure to shut down any parallel workers
+plan(sequential)
+%>
+
 [batchtools]: https://cran.r-project.org/package=batchtools
 [callr]: https://cran.r-project.org/package=callr
 [mirai]: https://cran.r-project.org/package=mirai
@@ -720,4 +725,3 @@ demo("mandelbrot", package = "future", ask = FALSE)
 [progressr]: https://progressr.futureverse.org
 [A Future for R: Common Issues with Solutions]: future-4-issues.html
 [A Future for R: Future Topologies]: future-3-topologies.html
-

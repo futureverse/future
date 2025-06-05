@@ -5,6 +5,10 @@
 #' @details
 #' The `SequentialFutureBackend` is selected by `plan(sequential)`.
 #'
+#' @seealso
+#' For alternative future backends, see the 'A Future for R: Available Future
+#' Backends' vignette and \url{https://www.futureverse.org/backends.html}.
+#'
 #' @keywords internal
 #' @rdname FutureBackend
 #' @export
@@ -102,6 +106,8 @@ nbrOfWorkers.SequentialFutureBackend <- function(evaluator) {
 
 
 #' @export
+
+
 nbrOfFreeWorkers.SequentialFutureBackend <- function(evaluator, background = FALSE, ...) {
   assert_no_positional_args_but_first()
   if (isTRUE(background)) 0L else 1L
@@ -115,9 +121,27 @@ getFutureBackendConfigs.UniprocessFuture <- function(future, ...) {
   
   capture <- list(
     immediateConditionHandlers = list(
-      immediateCondition = function(cond) {
-        signalCondition(cond)
-      }
+      immediateCondition = local({
+        prev <- NULL
+        function(condition) {  
+          ## Avoid re-catching and re-signaling itself
+          if (identical(condition, prev)) {
+            prev <<- NULL
+            muffleCondition(condition)
+            return(FALSE)
+          }
+          prev <<- condition
+          ## Resignal condition
+          if (inherits(condition, "warning")) {
+            warning(condition)
+          } else if (inherits(condition, "message")) {
+            message(condition)
+          } else {
+            signalCondition(condition)
+          }
+          TRUE
+        }
+      })
     )
   )
 
@@ -161,12 +185,7 @@ getFutureBackendConfigs.UniprocessFuture <- function(future, ...) {
 #' @export
 sequential <- function(..., gc = FALSE, earlySignal = FALSE, envir = parent.frame()) {
   ## WORKAROUNDS:
-  ## (1) promises::future_promise() calls the "evaluator" function directly
-  if ("promises" %in% loadedNamespaces()) {
-    return(future(..., gc = gc, earlySignal = earlySignal, envir = envir))
-  }
-  
-  ## (2) fiery calls sequential() directly
+  ## (1) fiery calls sequential() directly
   ##     https://github.com/thomasp85/fiery/issues/53
   if (!"fiery" %in% loadedNamespaces()) {
     stop("The future::sequential() function must never be called directly")

@@ -1,5 +1,6 @@
 #' @tags requestNode
 #' @tags cluster
+#' @tags skip_on_cran
 
 library(future)
 
@@ -43,4 +44,3 @@ plan(sequential)
 message("*** requestNode() - timeout ... DONE")
 
 message("*** requestNode() ... DONE")
-

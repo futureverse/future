@@ -22,26 +22,6 @@
 #' f <- future({ expr })  ## Launch a future with large objects
 #' ```
 #'
-#' @section Settings moved to the 'parallelly' package:
-#' Several functions have been moved to the \pkg{parallelly} package:
-#'
-#' * [parallelly::availableCores()]
-#' * [parallelly::availableWorkers()]
-#' * [parallelly::makeClusterMPI()]
-#' * [parallelly::makeClusterPSOCK()]
-#' * [parallelly::makeNodePSOCK()]
-#' * [parallelly::supportsMulticore()]
-#'
-#' The options and environment variables controlling those have been adjusted
-#' accordingly to have different prefixes.
-#' For example, option \option{future.fork.enable} has been renamed to
-#' \option{parallelly.fork.enable} and the corresponding environment variable
-#' \env{R_FUTURE_FORK_ENABLE} has been renamed to
-#' \env{R_PARALLELLY_FORK_ENABLE}.
-#' For backward compatibility reasons, the \pkg{parallelly} package will
-#' support both versions for a long foreseeable time.
-#' See the [parallelly::parallelly.options] page for the settings.
-#'
 #' @section Options for controlling futures:
 #' \describe{
 #'  \item{\option{future.plan}:}{(character string or future function) Default future backend used unless otherwise specified via [plan()]. This will also be the future plan set when calling `plan("default")`.  If not specified, this option may be set when the \pkg{future} package is _loaded_ if command-line option `--parallel=ncores` (short `-p ncores`) is specified; if `ncores > 1`, then option \option{future.plan} is set to `multisession` otherwise `sequential` (in addition to option \option{mc.cores} being set to `ncores`, if `ncores >= 1`). (Default: `sequential`)}
@@ -59,12 +39,6 @@
 #'
 ### HIDDEN/SECRET FOR NOW:  \item{\option{future.resolved.timeout}:}{(numeric) The maximum time (in seconds) `resolved()` spends checking whether or not a future is resolved. If it takes longer, it will give up and return FALSE. (Default: `0.01` = 0.01 seconds)}
 #'
-#'  \item{\option{future.rng.onMisuse}: (_beta feature - may change_)}{(character string) If random numbers are used in futures, then parallel (L'Ecuyer-CMRG) RNG should be used in order to get statistical sound RNGs. The defaults in the future framework assume that _no_ random number generation (RNG) is taken place in the future expression because L'Ecuyer-CMRG RNGs come with an unnecessary overhead if not needed.  To protect against mistakes, the future framework attempts to detect when random numbers are used despite L'Ecuyer-CMRG RNGs are not in place.  If this is detected, and `future.rng.onMisuse = "error"`, then an informative error message is produced.  If `"warning"`, then a warning message is produced.  If `"ignore"`, no check is performed. (Default: `"warning"`)}
-#'
-#'  \item{\option{future.connections.onMisuse}: (_beta feature - may change_)}{(character string) A future must close any connections it opens and must not close connections it did not open. If such misuse is detected and this option is set to `"error"`, `value()` will produce an error with details. If it is set to `"warning"`, a warning is produced. If `"ignore"`, no check is performed. (Default: `"warning"`)}
-#'
-#'  \item{\option{future.globalenv.onMisuse}: (_beta feature - may change_)}{(character string) Assigning variables to the global environment for the purpose of using the variable at a later time makes no sense with futures, because the next future may be evaluated in different R process.  To protect against mistakes, the future framework attempts to detect when variables are added to the global environment.  If this is detected, and `future.globalenv.onMisuse = "error"`, then an informative error message is produced.  If `"warning"`, then a warning message is produced.  If `"ignore"`, no check is performed. (Default: `"ignore"`)}
-#'
 #'  \item{\option{future.onFutureCondition.keepFuture}:}{(logical) If `TRUE`, a `FutureCondition` keeps a copy of the `Future` object that triggered the condition. If `FALSE`, it is dropped. (Default: `TRUE`)}
 #'
 #'  \item{\option{future.wait.timeout}:}{(numeric) Maximum waiting time (in seconds) for a future to resolve or for a free worker to become available before a timeout error is generated. (Default: `30 * 24 * 60 * 60` (= 30 days))}
@@ -76,6 +50,79 @@
 #'
 #'  \item{\option{future.wait.alpha}:}{(numeric) Positive scale factor used to increase the interval after each poll. (Default: `1.01`)}
 #' }
+#'
+#'
+#' @section Options for built-in sanity checks:
+#'
+#' Ideally, the evaluation of a future should have no side effects. To
+#' protect against unexpected side effects, the future framework comes
+#' with a set of built-in tools for checking against this.
+#' Below R options control these built-in checks and what should happen
+#' if they fail. You may modify them for troubleshooting purposes, but
+#' please refrain from disabling these checks when there is an underlying
+#' problem that should be fixed.
+#'
+#' _Beta features: Please consider these checks to be "under construction"._
+#'
+#' \describe{
+#'  \item{\option{future.connections.onMisuse}:}{(character string)
+#'    A future must close any connections it opens and must not close
+#'    connections it did not open itself.
+#'    If such misuse is detected and this option is set to `"error"`,
+#'    then an informative error is produced. If it is set to `"warning"`,
+#'    a warning is produced. If`"ignore"`, no check is performed.
+#'    (Default: `"warning"`)
+#'  }
+#'
+#'  \item{\option{future.defaultDevice.onMisuse}:}{(character string)
+#'    A future must open graphics devices explicitly, if it creates new
+#'    plots. It should not rely on the default graphics device that
+#'    is given by R option `"default"`, because that rarely does what
+#'    is intended.
+#'    If such misuse is detected and this option is set to `"error"`,
+#'    then an informative error is produced. If it is set to `"warning"`,
+#'    a warning is produced. If`"ignore"`, no check is performed.
+#'    (Default: `"warning"`)
+#'  }
+#'
+#'  \item{\option{future.devices.onMisuse}:}{(character string)
+#'    A future must close any graphics devices it opens and must not close
+#'    devices it did not open itself.
+#'    If such misuse is detected and this option is set to `"error"`,
+#'    then an informative error is produced. If it is set to `"warning"`,
+#'    a warning is produced. If`"ignore"`, no check is performed.
+#'    (Default: `"warning"`)
+#'  }
+#'
+#'  \item{\option{future.globalenv.onMisuse}:}{(character string)
+#'    Assigning variables to the global environment for the purpose of using
+#'    the variable at a later time makes no sense with futures, because the
+#'    next the future may be evaluated in different R process.
+#'    To protect against mistakes, the future framework attempts to detect
+#'    when variables are added to the global environment.
+#'    If this is detected, and this option is set to `"error"`, then an
+#'    informative error is produced. If `"warning"`, then a warning is
+#'    produced. If `"ignore"`, no check is performed.
+#'    (Default: `"ignore"`)
+#'  }
+#'
+#'  \item{\option{future.rng.onMisuse}:}{(character string)
+#'    If random numbers are used in futures, then parallel RNG should be
+#'    _declared_ in order to get statistical sound RNGs. You can declare
+#'    this by specifying future argument `seed = TRUE`. The defaults in the
+#'    future framework assume that _no_ random number generation (RNG) is
+#'    taken place in the future expression because L'Ecuyer-CMRG RNGs come
+#'    with an unnecessary overhead if not needed.
+#'    To protect against  mistakes of not declaring use of the RNG, the
+#'    future framework detects when random numbers were used despite not
+#'    declaring such use.
+#'    If this is detected, and this options is set `"error"`, then an
+#'    informative error is produced. If `"warning"`, then a warning is
+#'    produced.  If `"ignore"`, no check is performed.
+#'    (Default: `"warning"`)
+#'  }
+#' }
+#'
 #'
 #' @section Options for debugging futures:
 #' \describe{
@@ -97,8 +144,6 @@
 #'
 #'  \item{\option{future.output.windows.reencode}:}{(logical) Enable or disable re-encoding of UTF-8 symbols that were incorrectly encoded while captured.  In R (< 4.2.0) and on older versions of MS Windows, R cannot capture UTF-8 symbols as-is when they are captured from the standard output.  For examples, a UTF-8 check mark symbol (`"\u2713"`) would be relayed as `"<U+2713>"` (a string with eight ASCII characters).  Setting this option to `TRUE` will cause `value()` to attempt to recover the intended UTF-8 symbols from `<U+nnnn>` string components, if, and only if, the string was captured by a future resolved on MS Windows. (Default: `TRUE`)}
 #' }
-#'
-#' See also [parallelly::parallelly.options].
 #'
 #'
 #' @section Options for demos:
@@ -135,6 +180,28 @@
 #' Similarly, if `R_FUTURE_GLOBALS_MAXSIZE="50000000"`, then option
 #' \option{future.globals.maxSize} is set to `50000000` (numeric).
 #'
+#'
+#' @section Options moved to the 'parallelly' package:
+#' Several functions have been moved to the \pkg{parallelly} package:
+#'
+#' * [parallelly::availableCores()]
+#' * [parallelly::availableWorkers()]
+#' * [parallelly::makeClusterMPI()]
+#' * [parallelly::makeClusterPSOCK()]
+#' * [parallelly::makeNodePSOCK()]
+#' * [parallelly::supportsMulticore()]
+#'
+#' The options and environment variables controlling those have been adjusted
+#' accordingly to have different prefixes.
+#' For example, option \option{future.fork.enable} has been renamed to
+#' \option{parallelly.fork.enable} and the corresponding environment variable
+#' \env{R_FUTURE_FORK_ENABLE} has been renamed to
+#' \env{R_PARALLELLY_FORK_ENABLE}.
+#' For backward compatibility reasons, the \pkg{parallelly} package will
+#' support both versions for a long foreseeable time.
+#' See the [parallelly::parallelly.options] page for the settings.
+#'
+#'
 #' @examples
 #' # Allow at most 5 MB globals per futures
 #' options(future.globals.maxSize = 5e6)
@@ -164,6 +231,7 @@
 #' future.onFutureCondition.keepFuture
 #' future.resolve.recursive
 #' future.connections.onMisuse
+#' future.defaultDevice.onMisuse
 #' future.devices.onMisuse
 #' future.globalenv.onMisuse
 #' future.rng.onMisuse
@@ -173,6 +241,7 @@
 #' future.output.windows.reencode
 #' future.journal
 #' future.globals.objectSize.method
+#' future.ClusterFuture.clusterEvalQ
 #'
 #' R_FUTURE_STARTUP_SCRIPT
 #' R_FUTURE_DEBUG
@@ -189,6 +258,7 @@
 #' R_FUTURE_RESOLVE_RECURSIVE
 #' R_FUTURE_CONNECTIONS_ONMISUSE
 #' R_FUTURE_DEVICES_ONMISUSE
+#' R_FUTURE_DEFAULTDEVICE_ONMISUSE
 #' R_FUTURE_GLOBALENV_ONMISUSE
 #' R_FUTURE_RNG_ONMISUSE
 #' R_FUTURE_WAIT_ALPHA
@@ -198,6 +268,7 @@
 #' R_FUTURE_OUTPUT_WINDOWS_REENCODE
 #' R_FUTURE_JOURNAL
 #' R_FUTURE_GLOBALS_OBJECTSIZE_METHOD
+#' R_FUTURE_CLUSTERFUTURE_CLUSTEREVALQ
 #'
 #' future.cmdargs 
 #' .future.R
@@ -392,6 +463,6 @@ update_package_options <- function(debug = FALSE) {
   update_package_option("future.globals.method.default", mode = "character", split = ",", default = c("ordered", "dfs"), debug = debug)
 
   update_package_option("future.debug.indent", mode = "character", default = " ", debug = debug)
+
+  update_package_option("future.ClusterFuture.clusterEvalQ", mode = "character", default = "warning", debug = debug)
 }
-
-

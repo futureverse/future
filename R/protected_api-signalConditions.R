@@ -23,6 +23,7 @@
 #' Conditions are signaled by
 #' \code{\link[base:conditions]{signalCondition}()}.
 #'
+#' @importFrom utils capture.output str
 #' @keywords internal
 signalConditions <- function(future, include = "condition", exclude = NULL, resignal = TRUE, ...) {
   ## Nothing to do?
@@ -39,33 +40,40 @@ signalConditions <- function(future, include = "condition", exclude = NULL, resi
 
   result <- result(future)
   stop_if_not(inherits(result, "FutureResult"))
-  
+
   conditions <- result[["conditions"]]
-  
-  ## Nothing to do
-  if (length(conditions) == 0) return(future)
 
   debug <- isTRUE(getOption("future.debug"))
-
   if (debug) {
     mdebug_push("signalConditions() ...")
     mdebug("include = ", paste(sQuote(include), collapse = ", "))
     mdebug("exclude = ", paste(sQuote(exclude), collapse = ", "))
     mdebug("resignal = ", resignal)
     mdebug("Number of conditions: ", length(conditions))
+    mstr(length(conditions))
     on.exit(mdebug_pop())
   }
 
+  ## Nothing to do
+  if (length(conditions) == 0) return(future)
 
   ## Signal detected conditions one by one
   signaled <- logical(length(conditions))
   for (kk in seq_along(conditions)) {
     cond <- conditions[[kk]]
+    condition <- cond[["condition"]]
+    if (debug) mdebugf("Condition #%d (class: %s):", kk, commaq(class(condition)))
+
+    if (is.null(condition)) {
+      msg <- sprintf("[INTERNAL ERROR]: Unexpected structure for condition set element %d:\n%s", kk, paste(capture.output(str(cond)), collapse = "\n"))
+      stop(FutureError(msg))
+    }
 
     ## Skip already signaled conditions?
-    if (!resignal && !is.null(cond[["signaled"]]) && cond[["signaled"]] > 0L) next
-    
-    condition <- cond[["condition"]]
+    if (!resignal && !is.null(cond[["signaled"]]) && cond[["signaled"]] > 0L) {
+      if (debug) mdebug("already signaled, skipping")
+      next
+    }
 
     ## Don't signal condition based on 'exclude'?
     if (length(exclude) > 0L && inherits(condition, exclude)) next
@@ -95,7 +103,7 @@ signalConditions <- function(future, include = "condition", exclude = NULL, resi
       stop(condition)
     } else if (inherits(condition, "interrupt")) {
       future[["state"]] <- "interrupted"
-      label <- sQuoteLabel(future[["label"]])
+      label <- sQuoteLabel(future)
       result <- future[["result"]]
       when <- result[["finished"]]
       session_uuid <- result[["session_uuid"]]
@@ -118,6 +126,7 @@ signalConditions <- function(future, include = "condition", exclude = NULL, resi
 
   ## Drop captured and signaled conditions to save memory?
   if (isTRUE(attr(future[["conditions"]], "drop"))) {
+    if (debug) mdebugf("Drop signaled conditions: %d", sum(signaled))
     conditions <- conditions[!signaled]
   }
   

@@ -413,7 +413,7 @@ result.MulticoreFuture <- local({
       ## turn into an error with a more informative error message, cf.
       ## https://github.com/futureverse/future/issues/35
       if (is.null(result) || identical(result, structure("fatal error in wrapper code", class = "try-error"))) {
-        label <- sQuoteLabel(future[["label"]])
+        label <- sQuoteLabel(future)
 
         if (future[["state"]] %in% c("canceled", "interrupted")) {
           if (debug) mdebugf("Detected interrupted %s whose result cannot be retrieved", sQuote(class(future)[1]))
@@ -656,6 +656,9 @@ interruptFuture.MulticoreFutureBackend <- function(backend, future, ...) {
 #' For processing in multiple background \R sessions, see
 #' [multisession] futures.
 #'
+#' For alternative future backends, see the 'A Future for R: Available Future
+#' Backends' vignette and \url{https://www.futureverse.org/backends.html}.
+#'
 #' Use [parallelly::availableCores()] to see the total number of
 #' cores that are available for the current \R session.
 #' Use \code{\link[parallelly:availableCores]{availableCores}("multicore") > 1L} to check
@@ -664,12 +667,6 @@ interruptFuture.MulticoreFutureBackend <- function(backend, future, ...) {
 #'
 #' @export
 multicore <- function(..., workers = availableCores(constraints = "multicore"), gc = FALSE, earlySignal = FALSE, envir = parent.frame()) {
-  ## WORKAROUNDS:
-  ## (1) promises::future_promise() calls the "evaluator" function directly
-  if ("promises" %in% loadedNamespaces()) {
-    return(future(..., gc = gc, earlySignal = earlySignal, envir = envir))
-  }
-  
   stop("INTERNAL ERROR: The future::multicore() function must never be called directly")
 }
 class(multicore) <- c("multicore", "multiprocess", "future", "function")

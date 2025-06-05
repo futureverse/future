@@ -145,7 +145,7 @@ assertFutureResult <- function(future, debug = FALSE) {
     if (debug) mdebug("identical; success")
     return(NULL)
   }
-  label <- sQuoteLabel(future[["label"]])
+  label <- sQuoteLabel(future)
   result_uuid <- paste(uuid, collapse = "-")
   future_uuid <- paste(future[["uuid"]], collapse = "-")
   msg <- sprintf("Result for future (%s) is from another future. UUIDs do not match: %s != %s", label, result_uuid, future_uuid)

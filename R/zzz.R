@@ -86,6 +86,9 @@ future_1.40.0_regression_note <- function() {
   
   ## NOTE: Don't initiate during startup - it might hang / give an error
   plan("default", .init = FALSE)
+
+  ## Register future::FUTURE
+  registerClusterTypes()
 } ## .onLoad()
 
 

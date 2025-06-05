@@ -32,28 +32,33 @@ immediateConditionsPath <- local({
 #' @param remove (logical) If TRUE, the RDS files used are removed on exit.
 #'
 #' @return
-#' `readImmediateConditions()` returns a [base::list] of
-#' `immediateCondition` objects.
+#' `readImmediateConditions()` returns an unnamed [base::list] of
+#' named lists with elements `condition` and `signaled`, where
+#' the `condition` elements hold `immediateCondition` objects.
 #'
 #' @importFrom utils file_test
 #' @keywords internal
 readImmediateConditions <- function(path = immediateConditionsPath(rootPath = rootPath), rootPath = tempdir(), pattern = "[.]rds$", include = getOption("future.relay.immediate", "immediateCondition"), signal = FALSE, remove = TRUE) {
   stop_if_not(is.logical(remove), length(remove) == 1L, !is.na(remove))
 
+  conds <- list()
+  
   debug <- isTRUE(getOption("future.debug"))
   if (debug) {
-    mdebug("readImmediateCondition() ...")
-    mdebugf("  - path: %s", sQuote(path))
-    on.exit(mdebug("readImmediateCondition() ... DONE"))
+    mdebug_push("readImmediateCondition() ...")
+    mdebugf("Path: %s", sQuote(path))
+    on.exit({
+      mdebug("Returned conditions set:")
+      mstr(conds)
+      mdebug_pop()
+    })
   }
 
   ## Nothing to do?
   if (!file_test("-d", path)) return(list())
   
   files <- dir(path = path, pattern = "[.]rds$", full.names = TRUE)
-  if (debug) {
-    mdebugf(" - Number of RDS files: %d", length(files))
-  }
+  if (debug) mdebugf("Number of RDS files: %d", length(files))
 
   ## Nothing to do?
   if (length(files) == 0L) return(list())
@@ -65,6 +70,7 @@ readImmediateConditions <- function(path = immediateConditionsPath(rootPath = ro
   keep <- !vapply(objs, FUN = inherits, "error", FUN.VALUE = FALSE)
   objs <- objs[keep]        
   files <- files[keep]
+  if (debug) mdebugf("Number of read RDS files: %d", length(files))
 
   ## Nothing to do?
   if (length(files) == 0L) return(list())
@@ -85,41 +91,48 @@ readImmediateConditions <- function(path = immediateConditionsPath(rootPath = ro
   }, FUN.VALUE = FALSE)
   objs <- objs[keep]        
   files <- files[keep]
+  if (debug) mdebugf("Number of filtered conditions: %d", length(files))
   
   ## Nothing to do?
-  if (length(files) == 0L) return(list())
+  if (length(files) == 0L) return(conds)
 
   ## Re-order by timestamp
   times <- vapply(objs, FUN = .subset2, "time", FUN.VALUE = NA_real_)
   objs <- objs[order(times, na.last = TRUE)]
   times <- NULL
 
-  ## Get conditions
-  conds <- lapply(objs, FUN = .subset2, "condition")
-  objs <- NULL
 
-  if (debug) {
-    mdebugf(" - Number of conditions: %d", length(conds))
-    classes <- lapply(conds, FUN = function(x) commaq(class(x)))
-    t <- table(classes)
-    t <- sprintf("%d:%s", t, names(t))
-    mdebugf(" - Condition class sets: %s", paste(t, collapse = "; "))
-  }
-
-  ## Resignal conditions
-  mdebugf(" - Resignal conditions ...")
-  conds <- lapply(conds, FUN = function(condition) {
-    signalCondition(condition)
+  if (debug) mdebug_push("Resignal conditions in order of timestamps...")
+  conds <- list()
+  for (kk in seq_along(objs)) {
+    obj <- objs[[kk]]
+    condition <- obj[["condition"]]
+    if (debug) {
+      mdebugf("Condition #%d: %s", kk, commaq(class(condition)))
+    }
+    
+    if (inherits(condition, "warning")) {
+      warning(condition)
+    } else if (inherits(condition, "message")) {
+      message(condition)
+    } else if (inherits(condition, "condition")) {
+      signalCondition(condition)
+    }
+    
     ## Increment signal count
-    signaled <- condition[["signaled"]]
+    signaled <- obj[["signaled"]]
     if (is.null(signaled)) signaled <- 0L
-    condition[["signaled"]] <- signaled + 1L
-    condition
-  })
-  mdebugf(" - Resignal conditions ... done")
+    obj[["signaled"]] <- signaled + 1L
+    conds[[kk]] <- obj
+  }
+  if (debug) mdebug_pop()
 
   ## Remove files?
-  if (remove && length(files) > 0L) file.remove(files)
+  if (remove && length(files) > 0L) local({
+    mdebug_push("Removing RDS files ...")
+    on.exit(mdebug_pop())
+    file.remove(files)
+  })
 
   conds
 }

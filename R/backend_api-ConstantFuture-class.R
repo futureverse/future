@@ -4,6 +4,7 @@ ConstantFuture <- function(..., globals = NULL, packages = NULL, stdout = NA, co
   t_start <- Sys.time()
   future[["result"]] <- FutureResult(
     value = eval(future[["expr"]], envir = envir),
+    seed = seed,
     started = t_start,
     finished = t_start
   )

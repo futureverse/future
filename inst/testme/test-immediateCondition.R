@@ -90,7 +90,7 @@ for (ss in seq_along(strategies)) {
       stopifnot(length(msgs) == 0L)
     }
   })
-  
+
   message("- checking if resolved")
   msgs <- recordMessages({
     r <- resolved(f)
@@ -140,7 +140,23 @@ for (ss in seq_along(strategies)) {
       stopifnot(identical(msgs, c("IM1\n", "IW", "IM2\n", "M\n")))
     }
   })
-  
+
+  r <- result(f)
+  conditions <- r$conditions
+  if (length(conditions) != 4L) {
+    str(conditions)
+    stopifnot(length(conditions) == 4L)
+  }
+  conditions <- lapply(conditions, FUN = .subset2, "condition")
+  str(conditions)
+  stopifnot(length(conditions) == 4L)
+  stopifnot(
+    vapply(conditions, FUN.VALUE = FALSE, FUN = inherits, "condition"),
+    vapply(conditions[c(1,3,4)], FUN.VALUE = FALSE, FUN = inherits, "immediateCondition"),
+    vapply(conditions[c(1,2,4)], FUN.VALUE = FALSE, FUN = inherits, "message"),
+    vapply(conditions[c(3)], FUN.VALUE = FALSE, FUN = inherits, "warning")
+  )
+
   message("- getting value again")
   msgs <- recordMessages({
     v <- value(f)
@@ -270,4 +286,3 @@ for (ss in seq_along(strategies)) {
 } ## for (ss ...)
 
 message("*** immediateCondition:s ... DONE")
-

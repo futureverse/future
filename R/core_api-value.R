@@ -54,7 +54,7 @@ value <- function(...) UseMethod("value")
 
 drop_future <- function(future) {
   class <- class(future)[1]
-  label <- sQuoteLabel(future[["label"]])
+  label <- sQuoteLabel(future)
   msg <- sprintf("Future (%s) of class %s is no longer valid, because its content has been minimized using value(..., drop = TRUE)", label, class)
   error <- FutureDroppedError(msg, future = future)
   
@@ -76,7 +76,7 @@ drop_future <- function(future) {
 value.Future <- function(future, stdout = TRUE, signal = TRUE, drop = FALSE, ...) {
   debug <- isTRUE(getOption("future.debug"))
   if (debug) {
-    mdebugf_push("value() for %s (%s) ...", class(future)[1], sQuoteLabel(future[["label"]]))
+    mdebugf_push("value() for %s (%s) ...", class(future)[1], sQuoteLabel(future))
     on.exit(mdebugf_pop())
   }
   
@@ -216,6 +216,43 @@ value.Future <- function(future, stdout = TRUE, signal = TRUE, drop = FALSE, ...
       } else {
         cond <- NULL
         warnf("Unknown value on option 'future.devices.onMisuse': %s",
+              sQuote(onMisuse))
+      }
+
+      if (!is.null(cond)) {
+        ## FutureCondition to stack of captured conditions
+        new <- list(condition = cond, signaled = FALSE)
+        conditions <- result[["conditions"]]
+        n <- length(conditions)
+      
+        ## An existing run-time error takes precedence
+        if (n > 0L && inherits(conditions[[n]][["condition"]], "error")) {
+          conditions[[n + 1L]] <- conditions[[n]]
+          conditions[[n]] <- new
+        } else {
+          conditions[[n + 1L]] <- new
+        }
+        
+        result[["conditions"]] <- conditions
+        future[["result"]] <- result
+      }
+    }
+  }
+
+  ## ------------------------------------------------------------------
+  ## Report on misuse of the default devices
+  ## ------------------------------------------------------------------
+  if (length(result[["misuseDefaultDevice"]]) > 0L) {
+    onMisuse <- getOption("future.defaultDevice.onMisuse")
+    if (is.null(onMisuse)) onMisuse <- "warning"
+    if (onMisuse != "ignore") {
+      if (onMisuse == "error") {
+        cond <- DefaultDeviceMisuseFutureError(incidents = result[["misuseDefaultDevice"]], future = future)
+      } else if (onMisuse == "warning") {
+        cond <- DefaultDeviceMisuseFutureWarning(incidents = result[["misuseDefaultDevice"]], future = future)
+      } else {
+        cond <- NULL
+        warnf("Unknown value on option 'future.defaultDevice.onMisuse': %s",
               sQuote(onMisuse))
       }
 
@@ -581,7 +618,7 @@ value.list <- function(x, idxs = NULL, recursive = 0, reduce = NULL, stdout = TR
   while (length(remaining) > 0) {
     if (debug) mdebug("Number of remaining objects: ", length(remaining))
     for (ii in remaining) {
-      mdebugf_push("checking value #%d ...", ii)
+      mdebugf("checking value #%d:", ii)
       obj <- x[[ii]]
 
       if (is.atomic(obj)) {
@@ -625,28 +662,39 @@ value.list <- function(x, idxs = NULL, recursive = 0, reduce = NULL, stdout = TR
           if (obj[["state"]] == 'created') obj <- run(obj)
           
           if (!resolved(obj)) {
-            if (debug) mdebug_pop()
             next
           }
           
           if (debug) mdebugf("%s #%d", class(obj)[1], ii)
           relay_ok <- relay && signalConditionsASAP(obj, resignal = FALSE, exclude = "error", pos = ii)
           
-          if (debug) mdebugf_push("value(<%s>, ...) ...", class(obj)[1])
-          value <- value(obj, stdout = !inorder, signal = !inorder, drop = drop)
-          if (debug) mdebugf("value: <%s>", class(value)[1])
-          if (debug) mdebug_pop()
+          value <- local({
+            if (debug) {
+              mdebugf_push("value(<%s>, ...) ...", class(obj)[1])
+              mdebugf_pop()
+            }
+            value <- value(obj, stdout = !inorder, signal = !inorder, drop = drop)
+            if (debug) mdebugf("value: <%s>", class(value)[1])
+            value
+          })
           
           if (signal && inherits(value, "error")) {
             if (debug) mdebugf_push("signal %s ...", class(value)[1])
+            
             if (debug) mdebug_push("futures(x) ...")
             y <- futures(x)
             if (debug) mdebug_pop()
+            
             if (cancel) {
-              if (debug) mdebug_push("cancel(y) ...")
-              cancel(y, interrupt = interrupt)
-              if (debug) mdebug_pop()
+              local({
+                if (debug) {
+                  mdebugf_push("cancel(y, interrupt = %s) ...", interrupt)
+                  mdebug_pop()
+                }
+                cancel(y, interrupt = interrupt)
+              })
             }
+            
             if (debug) mdebug_push("resolve(y, ...) ...")
             ## Resolve remaining futures, while relaying output and
             ## conditions, but without signaling any errors
@@ -654,9 +702,12 @@ value.list <- function(x, idxs = NULL, recursive = 0, reduce = NULL, stdout = TR
               tryCatch(resolve(y[[kk]], result = TRUE, stdout = stdout, signal = signal, force = !drop), error = identity)
             }
             if (debug) mdebug_pop()
-            if (debug) mdebugf("stop(value) in 3, 2, 1 ...")
+            
+            if (debug) {
+              mdebugf("stop(value) in 3, 2, 1 ...")
+              mdebug_pop()
+            }
             stop(value)
-            if (debug) mdebug_pop()
           } ## if (signal && inherits(value, "error"))
           
           resolved[ii] <- TRUE

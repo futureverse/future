@@ -246,6 +246,21 @@ Future <- function(expr = NULL, envir = parent.frame(), substitute = TRUE, stdou
 
 
 sQuoteLabel <- function(label) {
+  if (inherits(label, "Future")) {
+    future <- label
+    label <- future[["label"]]
+    if (is.null(label)) {
+      uuid <- future[["uuid"]]
+      idx <- uuid[length(uuid)]
+      label <- sprintf("<unnamed-%s>", idx)
+    } else if (is.na(label)) {
+      label <- "NA"
+    } else {
+      label <- sQuote(label)
+    }
+    return(label)
+  }
+  
   if (is.null(label)) {
     "NULL"
   } else if (is.na(label)) {
@@ -261,43 +276,27 @@ print.Future <- function(x, ...) {
   future <- x
   class <- class(future)
   cat(sprintf("%s:\n", class[1]))
-  label <- sQuoteLabel(future[["label"]])
+  label <- sQuoteLabel(future)
   cat("Label: ", label, "\n", sep = "")
   cat("Expression:\n")
   print(future[["expr"]])
-  cat(sprintf("Lazy evaluation: %s\n", future[["lazy"]]))
-  cat(sprintf("Asynchronous evaluation: %s\n", future[["asynchronous"]]))
-  cat(sprintf("Local evaluation: %s\n", future[["local"]]))
-  cat(sprintf("Environment: %s\n", envname(future[["envir"]])))
-  cat(sprintf("Capture standard output: %s\n", future[["stdout"]]))
-  conditions <- future[["conditions"]]
-  if (length(conditions) > 0) {
-    exclude <- attr(conditions, "exclude", exact = TRUE)
-    if (length(exclude) == 0) exclude <- "<none>"
-    immediateConditionClasses <- attr(conditions, "immediateConditionClasses", exact = TRUE)
-    if (length(immediateConditionClasses) == 0) immediateConditionClasses <- "<none>"
-    cat(sprintf("Capture condition classes: %s (excluding %s)\n",
-                commaq(conditions),
-                commaq(exclude)))
-    cat(sprintf("Immediate condition classes: %s\n",
-                commaq(immediateConditionClasses)))
-  } else {
-    cat("Capture condition classes: <none>\n")
-  }
 
   ## FIXME: Add method globals_of() for Future such that it's possible
   ## also for SequentialFuture to return something here. /HB 2017-05-17
-  g <- future[["globals"]]
-  ng <- length(g)
-  if (ng > 0) {
-    gSizes <- sapply(g, FUN = objectSize)
-    gTotalSize <- sum(gSizes)
-    g <- head(g, n = 5L)
-    gSizes <- head(gSizes, n = 5L)
-    g <- sprintf("%s %s of %s", sapply(g, FUN = function(future) class(future)[1]), sQuote(names(g)), sapply(gSizes, FUN = asIEC))
-    if (ng > length(g)) g <- c(g, "...")
+  gs <- future[["globals"]]
+  ngs <- length(gs)
+  if (ngs > 0) {
+    gTotalSize <- objectSize(gs)
+    gSizes <- sapply(gs, FUN = objectSize)
+    o <- order(gSizes, decreasing = TRUE)
+    o <- head(o, n = 5L)
+    gSizes <- gSizes[o]
+    gs <- gs[o]
+    types <- vapply(gs, FUN.VALUE = NA_character_, FUN = function(g) class(g)[1])
+    g <- sprintf("%s %s of %s", types, sQuote(names(gSizes)), sapply(gSizes, FUN = asIEC))
+    if (ngs > length(gSizes)) g <- c(g, "...")
     g <- hpaste(g, maxHead = 5L, maxTail = 0L)
-    cat(sprintf("Globals: %d objects totaling %s (%s)\n", ng, asIEC(gTotalSize), g))
+    cat(sprintf("Globals: %d objects totaling %s (%s)\n", ngs, asIEC(gTotalSize), g))
   } else {
     cat("Globals: <none>\n")
   }
@@ -315,6 +314,28 @@ print.Future <- function(x, ...) {
   } else {
     cat("L'Ecuyer-CMRG RNG seed: <none> (seed = ", deparse(future[["seed"]]), ")\n", sep = "")
   }
+
+  cat(sprintf("Capture standard output: %s\n", future[["stdout"]]))
+  conditions <- future[["conditions"]]
+  if (length(conditions) > 0) {
+    exclude <- attr(conditions, "exclude", exact = TRUE)
+    if (length(exclude) == 0) exclude <- "<none>"
+    immediateConditionClasses <- attr(conditions, "immediateConditionClasses", exact = TRUE)
+    if (length(immediateConditionClasses) == 0) immediateConditionClasses <- "<none>"
+    cat(sprintf("Capture condition classes: %s (excluding %s)\n",
+                commaq(conditions),
+                commaq(exclude)))
+    cat(sprintf("Immediate condition classes: %s\n",
+                commaq(immediateConditionClasses)))
+  } else {
+    cat("Capture condition classes: <none>\n")
+  }
+
+  cat(sprintf("Lazy evaluation: %s\n", future[["lazy"]]))
+  cat(sprintf("Local evaluation: %s\n", future[["local"]]))
+  cat(sprintf("Asynchronous evaluation: %s\n", future[["asynchronous"]]))
+  cat(sprintf("Early signaling: %s\n", isTRUE(future[["earlySignal"]])))
+  cat(sprintf("Environment: %s\n", envname(future[["envir"]])))
 
   state <- future[["state"]]
   cat(sprintf("State: %s\n", commaq(state)))
@@ -340,25 +361,30 @@ print.Future <- function(x, ...) {
     cat(sprintf("Resolved: %s\n", tryCatch(resolved(future, .signalEarly = FALSE), error = function(ex) NA)))
   }
 
+  cat(sprintf("Unique identifier: %s\n", paste(future[["uuid"]], collapse = "-")))
+  cat(sprintf("Owner process: %s\n", future[["owner"]]))
+  cat(sprintf("Class: %s\n", commaq(class)))
+
   if (hasResult) {
-    if (inherits(result, "FutureResult")) {
-      value <- result[["value"]]
-    } else {
+    if (!inherits(result, "FutureResult")) {
       stop(FutureError(sprintf("The %s object does not have a 'results' field", class(future)[1]), future = future))
     }
+    
+    value <- result[["value"]]
     cat(sprintf("Value: %s of class %s\n", asIEC(objectSize(value)), sQuote(class(value)[1])))
-    if (inherits(result, "FutureResult")) {
-      conditions <- result[["conditions"]]
-      conditionClasses <- vapply(conditions, FUN = function(c) class(c[["condition"]])[1], FUN.VALUE = NA_character_)
-      cat(sprintf("Conditions captured: [n=%d] %s\n", length(conditionClasses), hpaste(sQuote(conditionClasses))))
-    }
+    
+    conditions <- result[["conditions"]]
+    conditionClasses <- vapply(conditions, FUN = function(c) class(c[["condition"]])[1], FUN.VALUE = NA_character_)
+    cat(sprintf("Conditions captured: [n=%d] %s\n", length(conditionClasses), hpaste(sQuote(conditionClasses))))
+
+    t0 <- result[["started"]]
+    t1 <- result[["finished"]]
+    cat(sprintf("Duration: %s (started %s)\n", format(t1-t0), t0))
+    cat(sprintf("Worker process: %s\n", result[["session_uuid"]]))
   } else {
     cat("Value: <not collected>\n")
     cat("Conditions captured: <none>\n")
   }
-  cat(sprintf("Early signaling: %s\n", isTRUE(future[["earlySignal"]])))
-  cat(sprintf("Owner process: %s\n", future[["owner"]]))
-  cat(sprintf("Class: %s\n", commaq(class)))
 } ## print()
 
 
@@ -404,13 +430,13 @@ assertOwner <- local({
 run.Future <- function(future, ...) {
   debug <- isTRUE(getOption("future.debug"))
   if (debug) {
-    mdebugf_push("run() for %s (%s) ...", sQuote(class(future)[1]), sQuoteLabel(future[["label"]]))
+    mdebugf_push("run() for %s (%s) ...", sQuote(class(future)[1]), sQuoteLabel(future))
     mdebug("state: ", sQuote(future[["state"]]))
     on.exit(mdebugf_pop())
   }
 
   if (future[["state"]] != "created") {
-    label <- sQuoteLabel(future[["label"]])
+    label <- sQuoteLabel(future)
     msg <- sprintf("A future (%s) can only be launched once", label)
     stop(FutureError(msg, future = future))
   }
@@ -459,7 +485,7 @@ run.Future <- function(future, ...) {
     }, error = function(ex) {
       ## Unexpected error
       msg <- conditionMessage(ex)
-      label <- sQuoteLabel(future[["label"]])
+      label <- sQuoteLabel(future)
       msg <- sprintf("Caught an unexpected error of class %s when trying to launch future (%s) on backend of class %s. The reason was: %s", class(ex)[1], label, class(backend)[1], msg)
       stop(FutureLaunchError(msg, future = future))
     })
@@ -599,7 +625,7 @@ result <- function(future, ...) {
       ## Signal FutureJournalCondition?
       if (!isTRUE(future[[".journal_signalled"]])) {
         journal <- journal(future)
-        label <- sQuoteLabel(future[["label"]])
+        label <- sQuoteLabel(future)
         msg <- sprintf("A future (%s) of class %s was resolved", label, class(future)[1])
         cond <- FutureJournalCondition(message = msg, journal = journal) 
         signalCondition(cond)
@@ -628,7 +654,7 @@ result <- function(future, ...) {
 result.Future <- function(future, ...) {
   debug <- isTRUE(getOption("future.debug"))
   if (debug) {
-    mdebugf_push("result() for %s (%s) ...", sQuote(class(future)[1]), sQuoteLabel(future[["label"]]))
+    mdebugf_push("result() for %s (%s) ...", sQuote(class(future)[1]), sQuoteLabel(future))
     mdebug("state: ", sQuote(future[["state"]]))
     on.exit(mdebugf_pop())
   }
@@ -686,7 +712,7 @@ result.Future <- function(future, ...) {
   ## Sanity check
   if (is.null(result) && version == "1.8") {
     if (inherits(future, "MulticoreFuture")) {
-      label <- sQuoteLabel(future[["label"]])
+      label <- sQuoteLabel(future)
       msg <- sprintf("A future (%s) of class %s did not produce a FutureResult object but NULL. This suggests that the R worker terminated (crashed?) before the future expression was resolved.", label, class(future)[1])
       stop(FutureError(msg, future = future))
     }
@@ -701,7 +727,7 @@ resolved.Future <- function(x, run = TRUE, ...) {
   future <- x
   debug <- isTRUE(getOption("future.debug"))
   if (debug) {
-    mdebugf_push("resolved() for %s (%s) ...", class(future)[1], sQuoteLabel(future[["label"]]))
+    mdebugf_push("resolved() for %s (%s) ...", class(future)[1], sQuoteLabel(future))
     on.exit(mdebug_pop())
     mdebug("state: ", sQuote(future[["state"]]))
     mdebug("run: ", run)

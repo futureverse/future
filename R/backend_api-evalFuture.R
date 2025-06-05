@@ -343,6 +343,12 @@ diff_globalenv <- function(before, after = names(.GlobalEnv)) {
 
 
 diff_devices <- function(before, after = base::.Devices) {
+  ## Prune
+  before <- unlist(before)
+  before <- before[before != ""]
+  after <- unlist(after)
+  after <- after[after != ""]
+  ## Compare
   n_before <- length(before)
   n_after <- length(after)
   n <- max(n_before, n_after)
@@ -353,7 +359,7 @@ diff_devices <- function(before, after = base::.Devices) {
     data[[kk]] <- data.frame(index = kk, before = before_kk, after = after_kk, identical = identical(after_kk, before_kk))
   }
   data <- do.call(rbind, data)
-  data <- data[!data[["identical"]], ]
+    data <- data[!data[["identical"]], ]
   if (nrow(data) == 0L) NULL else data
 }
 
@@ -405,6 +411,125 @@ evalFuture <- function(
 
 
 evalFutureInternal <- function(data) {
+  onEvalCondition <- function(cond) {
+    is_error <- inherits(cond, "error")
+    if (is_error) {
+      ## Disable timeouts as soon as possible, in case there is a
+      ## timeout set by the future expression, which triggered
+      ## this error
+      setTimeLimit(cpu = Inf, elapsed = Inf, transient = FALSE)
+    }
+    
+    ## Handle immediately?
+    if (length(immediateConditionHandlers) > 0) {
+      ## Handle immediateCondition:s?
+      idxs <- inherits(cond, names(immediateConditionHandlers), which = TRUE)
+  
+      if (length(idxs) > 0 && !identical(idxs, 0L)) {
+        class <- class(cond)[idxs[[1]]]
+  
+        handler <- immediateConditionHandlers[[class]]
+        record <- handler(cond)
+  
+        ## Record condition?
+        if (isTRUE(record)) {
+          ...future.conditions[[length(...future.conditions) + 1L]] <<- list(
+            condition = cond,
+            signaled = 1L
+          )
+        }
+  
+        ## Avoid condition from being signaled more than once
+        muffleCondition(cond)
+  
+        return()
+      }
+    }
+  
+    ## Ignore condition?
+    ignore <- !is_error &&
+              !is.null(conditionClassesExclude) && 
+              inherits(cond, conditionClassesExclude)
+    
+    ## Handle error:s specially
+    if (is_error) {
+      sessionInformation <- function() {
+        list(
+          r          = R.Version(),
+          locale     = Sys.getlocale(),
+          rngkind    = RNGkind(),
+          namespaces = loadedNamespaces(),
+          search     = search(),
+          system     = Sys.info()
+        )
+      }
+  
+      sysCalls <- getSysCalls()
+  
+      ## Record condition
+      ...future.conditions[[length(...future.conditions) + 1L]] <<- list(
+        condition = cond,
+        calls     = c(sysCalls(from = ...future.frame), cond[["call"]]),
+        session   = sessionInformation(),
+        timestamp = Sys.time(),
+        signaled  = 0L
+      )
+  
+      signalCondition(cond)
+    } else if (!ignore &&
+               !is.null(conditionClasses) &&
+               inherits(cond, conditionClasses)
+              ) {
+  
+      ## SPECIAL CASE: If a warnings and option 'warn' is >= 2 on the
+      ## worker, then let it escalate to an error here on the worker
+      if (inherits(cond, "warning") && getOption("warn") >= 2L) {
+        return()
+      }
+      
+      ## Relay 'immediateCondition' conditions immediately?
+      ## If so, then do not muffle it and flag it as signaled
+      ## already here.
+      signal <- inherits(cond, immediateConditionClasses)
+      ## Record condition
+      ...future.conditions[[length(...future.conditions) + 1L]] <<- list(
+        condition = cond,
+        signaled = as.integer(signal)
+      )
+      if (length(immediateConditionClasses) > 0 && !split && !signal) {
+        muffleCondition(cond, pattern = muffleInclude)
+      }
+    } else {
+      if (!split && !is.null(conditionClasses)) {
+        ## SPECIAL CASE: If a warnings and option 'warn' is >= 2 on the
+        ## worker, then let it escalate to an error here on the worker
+        if (inherits(cond, "warning") && getOption("warn") >= 2L) {
+          return()
+        }
+      
+        ## Muffle all non-captured conditions
+        muffleCondition(cond, pattern = muffleInclude)
+      }
+    }
+  } ## onEvalCondition()
+
+  onEvalErrorOrInterrupt <- function(ex) {
+    seed <- globalenv()[[".Random.seed"]]
+    FutureResult(
+      conditions = ...future.conditions,
+      rng = !identical(seed, ...future.rng),
+      seed = seed,
+      uuid = uuid,
+      misuseGlobalEnv = if (checkGlobalenv) list(added = diff_globalenv(...future.globalenv.names)) else NULL,
+      misuseConnections = diff_connections(get_connections(details = isTRUE(attr(checkConnections, "details", exact = TRUE))), ...future.connections),
+      misuseDevices = if (checkDevices) diff_devices(base::.Devices, ...future.devices) else NULL,
+      misuseDefaultDevice = ...future.option.defaultDevice,
+      started = ...future.startTime
+    )
+  } ## onEvalErrorOrInterrupt()
+
+
+
   debug <- FALSE
 
   core <- data[["core"]]
@@ -494,11 +619,47 @@ evalFutureInternal <- function(data) {
   ## Start time for future evaluation
   ...future.startTime <- Sys.time()
 
+  conditionClassesExclude <- attr(conditionClasses, "exclude", exact = TRUE)
+  muffleInclude <- attr(conditionClasses, "muffleInclude", exact = TRUE)
+  if (is.null(muffleInclude)) muffleInclude <- "^muffle"
+
+  ...future.frame <- sys.nframe()
+  ...future.conditions <- list()
+
+
+  ## -----------------------------------------------------------------
+  ## Ignore, capture or discard standard output?
+  ## -----------------------------------------------------------------
+  if (is.na(stdout)) {  ## stdout = NA
+    ## Don't capture, but also don't block any output
+  } else {
+    if (stdout) {  ## stdout = TRUE
+      ## Capture all output
+      ## NOTE: Capturing to a raw connection is much more efficient
+      ## than to a character connection, cf.
+      ## https://www.jottr.org/2014/05/26/captureoutput/
+      ...future.stdout <- rawConnection(raw(0L), open = "w")
+    } else {  ## stdout = FALSE
+      ## Silence all output by sending it to the void
+      ...future.stdout <- file(
+        switch(.Platform[["OS.type"]], windows = "NUL", "/dev/null"),
+        open = "w"
+      )
+    }
+    sink(...future.stdout, type = "output", split = split)
+    on.exit(if (!is.null(...future.stdout)) {
+      sink(type = "output", split = split)
+      close(...future.stdout)
+    }, add = TRUE)
+  }
+
 
   ## -----------------------------------------------------------------
   ## Load and attached backend packages
   ## -----------------------------------------------------------------
-  attachPackages(backendPackages)
+  withCallingHandlers({
+    attachPackages(backendPackages)
+  }, condition = onEvalCondition)
 
 
   ## -----------------------------------------------------------------
@@ -511,7 +672,9 @@ evalFutureInternal <- function(data) {
   ...future.mc.cores.old <- getOption("mc.cores")
 
   ## Load and attached packages
-  attachPackages(packages)
+  withCallingHandlers({
+    attachPackages(packages)
+  }, condition = onEvalCondition)
 
   ## Note, we record R options and environment variables _after_
   ## loading and attaching packages, in case they set options/env vars
@@ -721,29 +884,6 @@ evalFutureInternal <- function(data) {
     expr <- bquote_apply(tmpl_expr_local)
   }
 
-  ## Ignore, capture or discard standard output?
-  if (is.na(stdout)) {  ## stdout = NA
-    ## Don't capture, but also don't block any output
-  } else {
-    if (stdout) {  ## stdout = TRUE
-      ## Capture all output
-      ## NOTE: Capturing to a raw connection is much more efficient
-      ## than to a character connection, cf.
-      ## https://www.jottr.org/2014/05/26/captureoutput/
-      ...future.stdout <- rawConnection(raw(0L), open = "w")
-    } else {  ## stdout = FALSE
-      ## Silence all output by sending it to the void
-      ...future.stdout <- file(
-        switch(.Platform[["OS.type"]], windows = "NUL", "/dev/null"),
-        open = "w"
-      )
-    }
-    sink(...future.stdout, type = "output", split = split)
-    on.exit(if (!is.null(...future.stdout)) {
-      sink(type = "output", split = split)
-      close(...future.stdout)
-    }, add = TRUE)
-  }
 
   ## Prevent 'future.plan' / R_FUTURE_PLAN settings from being nested
   options(future.plan = NULL)
@@ -908,6 +1048,7 @@ evalFutureInternal <- function(data) {
 
 
   checkDevices <- getOption("future.devices.onMisuse")
+  ...future.option.defaultDevice <- list()
   if (is.null(checkDevices)) {
     checkDevices <- TRUE
   } else {
@@ -916,15 +1057,32 @@ evalFutureInternal <- function(data) {
   if (checkDevices) {
     ## IMPORTANT: Need to use as.list() - if not, it's a reference variable/alias (sic!)
     ...future.devices <- as.list(base::.Devices)
+    ## Detect attempts to open the default graphics device
+    device <- getOption("device")
+    if (!is.null(device)) {
+      if (is.character(device)) {
+        if (exists(device, mode = "function")) {
+          device <- get(device, mode = "function")
+        } else {
+          device <- NULL
+        }
+      }
+      if (!is.null(device)) {
+        ...future.option.device <- device
+        ...future.sys.calls.baseline <- length(sys.calls()) + 19L
+        options(device = function(...) {
+          n <- length(...future.option.defaultDevice)
+          calls <- sys.calls()
+          calls <- calls[-seq_len(...future.sys.calls.baseline)]
+          calls <- calls[-length(calls)]
+          ...future.option.defaultDevice[[n + 1L]] <<- calls
+          ## Call the default graphics device
+          ...future.option.device(...)
+        })
+      }
+    }
   }
 
-
-  conditionClassesExclude <- attr(conditionClasses, "exclude", exact = TRUE)
-  muffleInclude <- attr(conditionClasses, "muffleInclude", exact = TRUE)
-  if (is.null(muffleInclude)) muffleInclude <- "^muffle"
-
-  ...future.frame <- sys.nframe()
-  ...future.conditions <- list()
 
   ## NOTE: We don't want to use local(body) w/ on.exit() because
   ## evaluation in a local is optional, cf. argument 'local'.
@@ -933,129 +1091,30 @@ evalFutureInternal <- function(data) {
   ...future.result <- tryCatch({
     tryCatch({
       withCallingHandlers({
-        ...future.value <- withVisible(eval(expr, envir = globalenv()))
+        ...future.value <- withVisible({
+          eval(expr, envir = globalenv())
+        })
+        seed <- globalenv()[[".Random.seed"]]
         FutureResult(
           value = ...future.value[["value"]],
           visible = ...future.value[["visible"]],
           conditions = ...future.conditions,
-          rng = !identical(globalenv()[[".Random.seed"]], ...future.rng),
+          rng = !identical(seed, ...future.rng),
+          seed = seed,
           uuid = uuid,
           misuseGlobalEnv = if (checkGlobalenv) list(added = diff_globalenv(...future.globalenv.names)) else NULL,
           misuseConnections = if (checkConnections) diff_connections(get_connections(details = isTRUE(attr(checkConnections, "details", exact = TRUE))), ...future.connections) else NULL,
           misuseDevices = if (checkDevices) diff_devices(...future.devices, base::.Devices) else NULL,
+          misuseDefaultDevice = ...future.option.defaultDevice,
           started = ...future.startTime
         )
-      }, condition = function(cond) {
-          is_error <- inherits(cond, "error")
-          if (is_error) {
-            ## Disable timeouts as soon as possible, in case there is a
-            ## timeout set by the future expression, which triggered
-            ## this error
-            setTimeLimit(cpu = Inf, elapsed = Inf, transient = FALSE)
-          }
-          
-          ## Handle immediately?
-          if (length(immediateConditionHandlers) > 0) {
-            ## Handle immediateCondition:s?
-            idxs <- inherits(cond, names(immediateConditionHandlers), which = TRUE)
-            if (length(idxs) > 0 && !identical(idxs, 0L)) {
-              class <- class(cond)[idxs[[1]]]
-              handler <- immediateConditionHandlers[[class]]
-              res <- handler(cond)
-  
-              ## Avoid condition from being signaled more than once
-              muffleCondition(cond)
-  
-              ## Record condition
-              ...future.conditions[[length(...future.conditions) + 1L]] <<- list(
-                condition = cond,
-                signaled = 1L
-              )
-  
-              return()
-            }
-          }
-  
-          ## Ignore condition?
-          ignore <- !is_error &&
-                    !is.null(conditionClassesExclude) && 
-                    inherits(cond, conditionClassesExclude)
-          
-          ## Handle error:s specially
-          if (is_error) {
-            sessionInformation <- function() {
-              list(
-                r          = R.Version(),
-                locale     = Sys.getlocale(),
-                rngkind    = RNGkind(),
-                namespaces = loadedNamespaces(),
-                search     = search(),
-                system     = Sys.info()
-              )
-            }
-  
-            sysCalls <- getSysCalls()
-  
-            ## Record condition
-            ...future.conditions[[length(...future.conditions) + 1L]] <<- list(
-              condition = cond,
-              calls     = c(sysCalls(from = ...future.frame), cond[["call"]]),
-              session   = sessionInformation(),
-              timestamp = Sys.time(),
-              signaled  = 0L
-            )
-        
-            signalCondition(cond)
-          } else if (!ignore &&
-                     !is.null(conditionClasses) &&
-                     inherits(cond, conditionClasses)
-                    ) {
-            ## Relay 'immediateCondition' conditions immediately?
-            ## If so, then do not muffle it and flag it as signaled
-            ## already here.
-            signal <- inherits(cond, immediateConditionClasses)
-            ## Record condition
-            ...future.conditions[[length(...future.conditions) + 1L]] <<- list(
-              condition = cond,
-              signaled = as.integer(signal)
-            )
-            if (length(immediateConditionClasses) > 0 && !split && !signal) {
-              muffleCondition(cond, pattern = muffleInclude)
-            }
-          } else {
-            if (!split && !is.null(conditionClasses)) {
-              ## Muffle all non-captured conditions
-              muffleCondition(cond, pattern = muffleInclude)
-            }
-          }
-        } ## function(cond)
-      ) ## withCallingHandlers()
+      }, condition = onEvalCondition) ## withCallingHandlers()
     }, finally = {
       ## Disable timeouts as soon as possible, in case there is a
       ## timeout set by the future expression
       setTimeLimit(cpu = Inf, elapsed = Inf, transient = FALSE)
     }) ## tryCatch() for future evaluation 
-  }, interrupt = function(ex) {
-    FutureResult(
-      conditions = ...future.conditions,
-      rng = !identical(globalenv()[[".Random.seed"]], ...future.rng),
-      uuid = uuid,
-      misuseGlobalEnv = if (checkGlobalenv) list(added = diff_globalenv(...future.globalenv.names)) else NULL,
-      misuseConnections = diff_connections(get_connections(details = isTRUE(attr(checkConnections, "details", exact = TRUE))), ...future.connections),
-      misuseDevices = if (checkDevices) diff_devices(base::.Devices, ...future.devices) else NULL,
-      started = ...future.startTime
-    )
-  }, error = function(ex) {
-    FutureResult(
-      conditions = ...future.conditions,
-      rng = !identical(globalenv()[[".Random.seed"]], ...future.rng),
-      uuid = uuid,
-      misuseGlobalEnv = if (checkGlobalenv) list(added = diff_globalenv(...future.globalenv.names)) else NULL,
-      misuseConnections = diff_connections(get_connections(details = isTRUE(attr(checkConnections, "details", exact = TRUE))), ...future.connections),
-      misuseDevices = if (checkDevices) diff_devices(base::.Devices, ...future.devices) else NULL,
-      started = ...future.startTime
-    )
-  }) ## output tryCatch()
+  }, interrupt = onEvalErrorOrInterrupt, error = onEvalErrorOrInterrupt) ## output tryCatch()
   
 
   ## -----------------------------------------------------------------

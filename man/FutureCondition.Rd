@@ -19,6 +19,9 @@
 \alias{DeviceMisuseFutureCondition}
 \alias{DeviceMisuseFutureWarning}
 \alias{DeviceMisuseFutureError}
+\alias{DefaultDeviceMisuseFutureCondition}
+\alias{DefaultDeviceMisuseFutureWarning}
+\alias{DefaultDeviceMisuseFutureError}
 \alias{FutureLaunchError}
 \alias{FutureInterruptError}
 \alias{FutureCanceledError}
@@ -82,6 +85,18 @@ DeviceMisuseFutureCondition(
 DeviceMisuseFutureWarning(...)
 
 DeviceMisuseFutureError(...)
+
+DefaultDeviceMisuseFutureCondition(
+  message = NULL,
+  incidents = NULL,
+  call = NULL,
+  uuid = future[["uuid"]],
+  future = NULL
+)
+
+DefaultDeviceMisuseFutureWarning(...)
+
+DefaultDeviceMisuseFutureError(...)
 
 FutureLaunchError(..., future = NULL)
 

@@ -1,3 +1,79 @@
+# Version 1.58.0 [2025-06-05]
+
+This is the third rollout out of several towards a near-future major
+release that I am really excited about. This has been made possible
+due to a multi-year effort of internal re-designs, work with package
+maintainers, release, and repeat. This release fixes a few
+regressions introduced in future 1.40.0 (2025-04-10), despite passing
+[all unit, regression, and system
+tests](https://www.futureverse.org/quality.html).
+
+## New Features
+
+ * Now futures produce a warning when they detect that the _default_
+   graphics device, as defined by R option `"device"`, is opened by,
+   for instance, a `plot()` call without explicitly opening a graphics
+   device. The reason for this check is that we rarely want to plot to
+   the _default_ graphics device in parallel processing, which
+   typically ends up plotting to a `Rplots.pdf` file that is local to
+   the parallel worker. If that is truly wanted, please open a
+   graphics devices explicitly (e.g. `pdf()` or `png()`) before
+   plotting. Alternatively, explicitly set R option `device` inside
+   the future expression.
+
+## Beta Features
+
+ * Add `makeClusterFuture()` for creating a cluster of stateless
+   parallel workers for processing via the future framework. This
+   requires R (>= 4.4.0) [2024-04-24]. Please make sure to read
+   `help("makeClusterFuture", package = "future")` to learn about
+   potential pitfalls. The plan is to support more corner cases in
+   future releases, and when not possible, add more mechanisms for
+   detecting non-supported cases and given an informative error.
+
+## Bug Fixes
+
+ * Setting `options(warn = 2)` on a parallel worker was ignored -
+   warnings were not escalated to errors on the worker, and was
+   instead relayed as-is in the parent R session, unless `options(warn
+   = 2)` was also set in the parent. Now `options(warn = 2)` on a
+   worker causes warnings to be escalated immediately to errors on the
+   worker, which therefore also terminates the future.
+
+ * `future()` arguments `stdout` and `conditions` were not applied
+   when packages that were specified via argument `packages` were
+   loaded and attached. This prevented us from excluding, for
+   instance, `packageStartupMessage`:s, causing them to be displayed
+   in sequential and multicore processing.
+ 
+ * When the using `cluster` and `multisession` backends, one could, in
+   some cases, end up with warnings on "package may not be available
+   when loading" that are produced by `serialize()`. These type of
+   warnings are now suppressed.
+ 
+ * Now the cluster future backend tries even harder to shut down
+   parallel cluster workers when shutting down the backend. If it
+   fails to communicate with one or more of the parallel workers, it
+   will now close any socket connections that remain open towards such
+   cluster nodes.
+
+ * The built-in checks for added, removed, or modified graphical
+   devices introduced in **future** 1.40.0 (2025-04-10), could produce
+   false positives, complaining about "A future expression must close
+   any opened devices and must not close devices it did not
+   open. Details: 1 devices differ: index=2, before='NA',
+   after=''". The problem was that it did not prune the empty 'after'
+   before the check.
+
+ * The `multicore` backend did not relay `immediateCondition`:s in a
+   near-live fashion, but only when the results of the futures where
+   collected.
+
+ * The `sequential`, `cluster`, `multisession`, and `multicore`
+   backends relayed `immediateCondition`:s, but did not record them
+   properly in the future object.
+
+
 # Version 1.49.0 [2025-05-08]
 
 This is the second rollout out of three-four major updates, which is

@@ -24,6 +24,7 @@ Canceling a lazy or a finished future has no effect.
 Cancels futures, with the option to interrupt running ones.
 }
 \examples{
+\dontshow{if ((interactive() || .Platform[["OS.type"]] != "windows")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 ## Set up two parallel workers
 plan(multisession, workers = 2)
 
@@ -52,6 +53,7 @@ try(v <- value(fs[!r]))
 
 ## Shut down parallel workers
 plan(sequential)
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 A canceled future can be \code{\link[=reset]{reset()}} to a lazy, vanilla future

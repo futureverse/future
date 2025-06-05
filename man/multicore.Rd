@@ -110,6 +110,9 @@ stopifnot(v == 0)
 For processing in multiple background \R sessions, see
 \link{multisession} futures.
 
+For alternative future backends, see the 'A Future for R: Available Future
+Backends' vignette and \url{https://www.futureverse.org/backends.html}.
+
 Use \code{\link[parallelly:availableCores]{parallelly::availableCores()}} to see the total number of
 cores that are available for the current \R session.
 Use \code{\link[parallelly:availableCores]{availableCores}("multicore") > 1L} to check
