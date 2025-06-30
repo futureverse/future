@@ -140,7 +140,7 @@ assertFutureResult <- function(future, debug = FALSE) {
     if (debug) mdebug("Future uuid: <none> (skipping)")
     return(NULL)
   }
-  if (debug) mdebugf("Future uuid: %s", uuid)
+  if (debug) mdebugf("Future uuid: %s", paste(uuid, collapse = "-"))
   if (identical(uuid, future[["uuid"]])) {
     if (debug) mdebug("identical; success")
     return(NULL)
