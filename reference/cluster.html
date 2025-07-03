@@ -15,7 +15,7 @@ It may only be used with plan()"><meta property="og:image" content="https://futu
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.58.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.58.0-9002</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -109,7 +109,10 @@ If a character vector or a numeric scalar, a <code>cluster</code> object
 is created using <code><a href="https://parallelly.futureverse.org/reference/makeClusterPSOCK.html" class="external-link">makeClusterPSOCK</a>(workers)</code>.
 If a function, it is called without arguments <em>when the future
 is created</em> and its value is used to configure the workers.
-The function should return any of the above types.</p></dd>
+The function should return any of the above types.
+If <code>workers == 1</code>, then all processing using done in the
+current/main <span style="R">R</span> session and we therefore fall back to using a
+sequential future. To override this fallback, use <code>workers = I(1)</code>.</p></dd>
 
 
 <dt id="arg-gc">gc<a class="anchor" aria-label="anchor" href="#arg-gc"></a></dt>
@@ -140,10 +143,6 @@ identified.</p></dd>
 <dd><p>Additional named elements passed to <code><a href="Future-class.html">Future()</a></code>.</p></dd>
 
 </dl></div>
-    <div class="section level2">
-    <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A ClusterFuture.</p>
-    </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>A cluster future is a future that uses cluster evaluation,

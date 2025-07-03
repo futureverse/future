@@ -15,7 +15,7 @@ It may only be used with plan()"><meta property="og:image" content="https://futu
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.58.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.58.0-9002</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -105,7 +105,10 @@ It may only be used with <code><a href="plan.html">plan()</a></code></em></p>
 <dl><dt id="arg-workers">workers<a class="anchor" aria-label="anchor" href="#arg-workers"></a></dt>
 <dd><p>The number of parallel processes to use.
 If a function, it is called without arguments <em>when the future
-is created</em> and its value is used to configure the workers.</p></dd>
+is created</em> and its value is used to configure the workers.
+If <code>workers == 1</code>, then all processing using done in the
+current/main <span style="R">R</span> session and we therefore fall back to using a
+sequential future. To override this fallback, use <code>workers = I(1)</code>.</p></dd>
 
 
 <dt id="arg-lazy">lazy<a class="anchor" aria-label="anchor" href="#arg-lazy"></a></dt>
