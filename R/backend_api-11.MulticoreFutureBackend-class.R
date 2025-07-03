@@ -271,19 +271,11 @@ nbrOfFreeWorkers.MulticoreFutureBackend <- function(evaluator, background = FALS
 
 
 
-#' A multicore future is a future whose value will be resolved asynchronously in a parallel process
-#'
-#' @inheritParams MultiprocessFuture-class
-#' @inheritParams Future-class
-#'
-#' @return
-#' `MulticoreFuture()` returns an object of class `MulticoreFuture`.
-#'
-#' @section Usage:
-#' To use 'multicore' futures, use `plan(multicore, ...)`, cf. [multicore].
-#'
-#' @name MulticoreFuture-class
-#' @keywords internal
+#' @section Behavior of multicore futures:
+#' `resolved()` for `MulticoreFuture` may receive immediate condition objects, rather than a
+#' [FutureResult], when polling the worker for results. In such cases, _all_ such condition
+#' objects are collected, before considering the future non-resolved and FALSE being returned.
+#' @rdname resolved
 #' @export
 resolved.MulticoreFuture <- local({
   selectChildren <- import_parallel_fcn("selectChildren")
@@ -618,16 +610,11 @@ interruptFuture.MulticoreFutureBackend <- function(backend, future, ...) {
 #' @param workers The number of parallel processes to use.
 #' If a function, it is called without arguments _when the future
 #' is created_ and its value is used to configure the workers.
-#'
-#' @param \ldots Additional named elements to [Future()].
-#'
-#' @return
-#' A [Future].
 #' If `workers == 1`, then all processing using done in the
 #' current/main \R session and we therefore fall back to using a
 #' sequential future. To override this fallback, use `workers = I(1)`.
-#' This is also the case whenever multicore processing is not supported,
-#' e.g. on Windows.
+#'
+#' @param \ldots Additional named elements to [Future()].
 #'
 #' @example incl/multicore.R
 #'
@@ -665,6 +652,7 @@ interruptFuture.MulticoreFutureBackend <- function(backend, future, ...) {
 #' whether multicore futures are supported or not on the current
 #' system.
 #'
+#' @aliases MulticoreFuture
 #' @export
 multicore <- function(..., workers = availableCores(constraints = "multicore"), gc = FALSE, earlySignal = FALSE, envir = parent.frame()) {
   stop("INTERNAL ERROR: The future::multicore() function must never be called directly")

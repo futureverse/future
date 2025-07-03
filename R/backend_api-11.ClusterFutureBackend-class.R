@@ -545,6 +545,26 @@ getSocketSelectTimeout <- function(future, timeout = NULL) {
 } ## getSocketSelectTimeout()
 
 
+#' @param timeout (numeric) The maximum time (in seconds) for polling the worker
+#' for a response. If no response is available within this time limit, FALSE is
+#' returned assuming the future is still being processed.
+#' If NULL, the value defaults to `getOption("future.<type>.resolved.timeout")`,
+#' then `getOption("future.resolved.timeout")`, and finally 0.01 (seconds),
+#' where `<type>` corresponds to the type of future, e.g. `cluster` and `multicore`.
+#'
+#' @section Behavior of cluster and multisession futures:
+#' `resolved()` for `ClusterFuture`, and therefore also `MultisessionFuture`,
+#' will always check whether any of the currently running futures are resolved,
+#' and if one of them has been resolved, then its result is collected. This makes
+#' sure to free up workers, when possible.
+#'
+#' `resolved()` for `ClusterFuture` may receive immediate condition objects, rather
+#' than a [FutureResult], when polling the worker for results. In such cases, the
+#' condition object is collected and another poll it performed. Up to 100 immediate
+#' conditions may be collected this way per `resolved()` call, before considering
+#' the future non-resolved and FALSE being returned.
+#'
+#' @rdname resolved
 #' @importFrom parallelly connectionId isConnectionValid
 #' @export
 resolved.ClusterFuture <- function(x, run = TRUE, timeout = NULL, ...) {
@@ -585,7 +605,8 @@ resolved.ClusterFuture <- function(x, run = TRUE, timeout = NULL, ...) {
 
       ## If at least one is available, then launch this lazy future
       if (any(avail)) future <- run(future)
-    }
+    } ## if (run)
+    
     return(FALSE)
   }
 
@@ -1568,14 +1589,14 @@ handleInterruptedFuture <- local({
 #' If a function, it is called without arguments _when the future
 #' is created_ and its value is used to configure the workers.
 #' The function should return any of the above types.
+#' If `workers == 1`, then all processing using done in the
+#' current/main \R session and we therefore fall back to using a
+#' sequential future. To override this fallback, use `workers = I(1)`.
 #'
 #' @param persistent If FALSE, the evaluation environment is cleared
 #' from objects prior to the evaluation of the future.
 #' 
 #' @param \ldots Additional named elements passed to [Future()].
-#'
-#' @return
-#' A ClusterFuture.
 #'
 #' @example incl/cluster.R
 #'

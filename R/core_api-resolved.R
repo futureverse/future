@@ -3,20 +3,28 @@
 #' @param x A \link{Future}, a list, or an environment (which also
 #' includes \link[listenv:listenv]{list environment}).
 #'
+#' @param run (logical) If TRUE, any lazy futures is launched,
+#' otherwise not.
+#'
 #' @param \ldots Not used.
 #'
-#' @return A logical of the same length and dimensions as `x`.
+#' @return
+#' A logical vector of the same length and dimensions as `x`.
 #' Each element is TRUE unless the corresponding element is a
 #' non-resolved future in case it is FALSE.
 #'
 #' @details
-#' This method needs to be implemented by the class that implement
-#' the Future API.  The implementation should return either TRUE or FALSE
-#' and must never throw an error (except for [FutureError]:s which indicate
-#' significant, often unrecoverable infrastructure problems).
-#' It should also be possible to use the method for polling the
-#' future until it is resolved (without having to wait infinitely long),
-#' e.g. `while (!resolved(future)) Sys.sleep(5)`.
+#' Checking a lazy future, triggers it to be launched, unless `run = FALSE`.
+#'
+#' `resolved()` methods must always return `TRUE` or `FALSE` values, must
+#' always launch lazy futures by default (`run = TRUE`), and must never block
+#' indefinitely. This is because it should always be possible to poll futures
+#' until they are resolved using `resolved()`, e.g.
+#' `while (!all(resolved(futures))) Sys.sleep(5)`.
+#'
+#' Each future backend must implement a `resolved()` method that returns
+#' either TRUE or FALSE, or throw a [FutureError] (which indicate a
+#' significant, often unrecoverable infrastructure problem, or an interrupt).
 #'
 #' @export
 resolved <- function(x, ...) {
@@ -37,9 +45,15 @@ resolved <- function(x, ...) {
   UseMethod("resolved")
 }
 
+#' @return
+#' The default method always returns TRUE.
+#'
+#' @rdname resolved
 #' @export
 resolved.default <- function(x, ...) TRUE
 
+
+#' @rdname resolved
 #' @export
 resolved.list <- function(x, ...) {
   debug <- isTRUE(getOption("future.debug"))
@@ -76,6 +90,8 @@ resolved.list <- function(x, ...) {
   res
 }
 
+
+#' @rdname resolved
 #' @export
 resolved.environment <- function(x, ...) {
   debug <- isTRUE(getOption("future.debug"))

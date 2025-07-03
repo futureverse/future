@@ -3,6 +3,7 @@
 %   R/backend_api-13.MultisessionFutureBackend-class.R
 \name{multisession}
 \alias{multisession}
+\alias{MultisessionFuture}
 \title{Create a multisession future whose value will be resolved asynchronously in a parallel \R session}
 \usage{
 multisession(
@@ -18,7 +19,10 @@ multisession(
 \arguments{
 \item{workers}{The number of parallel processes to use.
 If a function, it is called without arguments \emph{when the future
-is created} and its value is used to configure the workers.}
+is created} and its value is used to configure the workers.
+If \code{workers == 1}, then all processing using done in the
+current/main \R session and we therefore fall back to using a
+sequential future. To override this fallback, use \code{workers = I(1)}.}
 
 \item{lazy}{If FALSE (default), the future is resolved
 eagerly (starting immediately), otherwise not.}

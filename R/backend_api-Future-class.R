@@ -722,6 +722,7 @@ result.Future <- function(future, ...) {
 }
 
 
+#' @rdname resolved
 #' @export
 resolved.Future <- function(x, run = TRUE, ...) {
   future <- x

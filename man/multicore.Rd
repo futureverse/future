@@ -2,6 +2,7 @@
 % Please edit documentation in R/backend_api-11.MulticoreFutureBackend-class.R
 \name{multicore}
 \alias{multicore}
+\alias{MulticoreFuture}
 \title{Create a multicore future whose value will be resolved asynchronously in a forked parallel process}
 \usage{
 multicore(
@@ -15,7 +16,10 @@ multicore(
 \arguments{
 \item{workers}{The number of parallel processes to use.
 If a function, it is called without arguments \emph{when the future
-is created} and its value is used to configure the workers.}
+is created} and its value is used to configure the workers.
+If \code{workers == 1}, then all processing using done in the
+current/main \R session and we therefore fall back to using a
+sequential future. To override this fallback, use \code{workers = I(1)}.}
 
 \item{gc}{If TRUE, the garbage collector run (in the process that
 evaluated the future) only after the value of the future is collected.
@@ -31,14 +35,6 @@ as possible or not.}
 identified.}
 
 \item{\ldots}{Additional named elements to \code{\link[=Future]{Future()}}.}
-}
-\value{
-A \link{Future}.
-If \code{workers == 1}, then all processing using done in the
-current/main \R session and we therefore fall back to using a
-sequential future. To override this fallback, use \code{workers = I(1)}.
-This is also the case whenever multicore processing is not supported,
-e.g. on Windows.
 }
 \description{
 \emph{WARNING: This function must never be called.

@@ -127,6 +127,7 @@ print.MultisessionFutureBackend <- function(x, validate = TRUE, ...) {
 #' Use [parallelly::availableCores()] to see the total number of
 #' cores that are available for the current \R session.
 #'
+#' @aliases MultisessionFuture
 #' @export
 multisession <- function(..., workers = availableCores(), lazy = FALSE, rscript_libs = .libPaths(), gc = FALSE, earlySignal = FALSE, envir = parent.frame()) {
   stop("INTERNAL ERROR: The future::multisession() must never be called directly")
