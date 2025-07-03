@@ -152,7 +152,7 @@ either TRUE or FALSE, or throw a <a href="FutureCondition.html">FutureError</a> 
 significant, often unrecoverable infrastructure problem, or an interrupt).</p>
     </div>
     <div class="section level2">
-    <h2 id="behavior-for-clusterfuture-and-multisessionfuture">Behavior for ClusterFuture and MultisessionFuture<a class="anchor" aria-label="anchor" href="#behavior-for-clusterfuture-and-multisessionfuture"></a></h2>
+    <h2 id="behavior-of-cluster-and-multisession-futures">Behavior of cluster and multisession futures<a class="anchor" aria-label="anchor" href="#behavior-of-cluster-and-multisession-futures"></a></h2>
 
 
 <p><code>resolved()</code> for <code>ClusterFuture</code>, and therefore also and <code>MultisessionFuture</code>,
@@ -166,7 +166,7 @@ conditions may be collected this way per <code>resolved()</code> call, before co
 the future non-resolved and FALSE being returned.</p>
     </div>
     <div class="section level2">
-    <h2 id="behavior-for-multicorefuture">Behavior for MulticoreFuture<a class="anchor" aria-label="anchor" href="#behavior-for-multicorefuture"></a></h2>
+    <h2 id="behavior-of-multicore-futures">Behavior of multicore futures<a class="anchor" aria-label="anchor" href="#behavior-of-multicore-futures"></a></h2>
 
 
 <p><code>resolved()</code> for <code>MulticoreFuture</code> may receive immediate condition objects, rather than a
