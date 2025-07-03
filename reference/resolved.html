@@ -121,7 +121,7 @@ otherwise not.</p></dd>
 
 <dt id="arg-timeout">timeout<a class="anchor" aria-label="anchor" href="#arg-timeout"></a></dt>
 <dd><p>(numeric) The maximum time (in seconds) for polling the worker
-for a reponse. If no reponse is available within this time limit, FALSE is
+for a response. If no response is available within this time limit, FALSE is
 returned assuming the future is still being processed.
 If NULL, the value defaults to <code>getOption("future.&lt;type&gt;.resolved.timeout")</code>,
 then <code>getOption("future.resolved.timeout")</code>, and finally 0.01 (seconds),
@@ -155,7 +155,7 @@ significant, often unrecoverable infrastructure problem, or an interrupt).</p>
     <h2 id="behavior-of-cluster-and-multisession-futures">Behavior of cluster and multisession futures<a class="anchor" aria-label="anchor" href="#behavior-of-cluster-and-multisession-futures"></a></h2>
 
 
-<p><code>resolved()</code> for <code>ClusterFuture</code>, and therefore also and <code>MultisessionFuture</code>,
+<p><code>resolved()</code> for <code>ClusterFuture</code>, and therefore also <code>MultisessionFuture</code>,
 will always check whether any of the currently running futures are resolved,
 and if one of them has been resolved, then its result is collected. This makes
 sure to free up workers, when possible.</p>
