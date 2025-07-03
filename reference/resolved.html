@@ -141,18 +141,7 @@ non-resolved future in case it is FALSE.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p><code>resolved()</code> for <code>ClusterFuture</code> will always check whether any of the currently running
-futures are resolved, and if one of them has been resolved, then its result is collected.
-This makes sure to free up workers, when possible.
-<code>resolved()</code> for <code>ClusterFuture</code> may receive immediate condition objects, rather than a
-<a href="FutureResult.html">FutureResult</a>, when polling the worker for results. In such cases, the condition object
-is collected and another poll it performed. Up to 100 immediate conditions may be collected
-this way per <code>resolved()</code> call, before considering the future non-resolved and FALSE
-being returned.</p>
-<p><code>resolved()</code> for <code>MulticoreFuture</code> may receive immediate condition objects, rather than a
-<a href="FutureResult.html">FutureResult</a>, when polling the worker for results. In such cases, <em>all</em> such condition
-objects are collected, before considering the future non-resolved and FALSE being returned.</p>
-<p>Checking a lazy future, triggers it to be launched, unless <code>run = FALSE</code>.</p>
+    <p>Checking a lazy future, triggers it to be launched, unless <code>run = FALSE</code>.</p>
 <p><code>resolved()</code> methods must always return <code>TRUE</code> or <code>FALSE</code> values, must
 always launch lazy futures by default (<code>run = TRUE</code>), and must never block
 indefinitely. This is because it should always be possible to poll futures
@@ -161,6 +150,28 @@ until they are resolved using <code>resolved()</code>, e.g.
 <p>Each future backend must implement a <code>resolved()</code> method that returns
 either TRUE or FALSE, or throw a <a href="FutureCondition.html">FutureError</a> (which indicate a
 significant, often unrecoverable infrastructure problem, or an interrupt).</p>
+    </div>
+    <div class="section level2">
+    <h2 id="behavior-for-clusterfuture-and-multisessionfuture">Behavior for ClusterFuture and MultisessionFuture<a class="anchor" aria-label="anchor" href="#behavior-for-clusterfuture-and-multisessionfuture"></a></h2>
+
+
+<p><code>resolved()</code> for <code>ClusterFuture</code>, and therefore also and <code>MultisessionFuture</code>,
+will always check whether any of the currently running futures are resolved,
+and if one of them has been resolved, then its result is collected. This makes
+sure to free up workers, when possible.</p>
+<p><code>resolved()</code> for <code>ClusterFuture</code> may receive immediate condition objects, rather
+than a <a href="FutureResult.html">FutureResult</a>, when polling the worker for results. In such cases, the
+condition object is collected and another poll it performed. Up to 100 immediate
+conditions may be collected this way per <code>resolved()</code> call, before considering
+the future non-resolved and FALSE being returned.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="behavior-for-multicorefuture">Behavior for MulticoreFuture<a class="anchor" aria-label="anchor" href="#behavior-for-multicorefuture"></a></h2>
+
+
+<p><code>resolved()</code> for <code>MulticoreFuture</code> may receive immediate condition objects, rather than a
+<a href="FutureResult.html">FutureResult</a>, when polling the worker for results. In such cases, <em>all</em> such condition
+objects are collected, before considering the future non-resolved and FALSE being returned.</p>
     </div>
 
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
