@@ -121,8 +121,8 @@ otherwise not.</p></dd>
 
 <dt id="arg-timeout">timeout<a class="anchor" aria-label="anchor" href="#arg-timeout"></a></dt>
 <dd><p>(numeric) The maximum time (in seconds) for polling the worker
-for results. If no results are available within this time, FALSE is returned
-assuming the future is still being processed.
+for a reponse. If no reponse is available within this time limit, FALSE is
+returned assuming the future is still being processed.
 If NULL, the value defaults to <code>getOption("future.&lt;type&gt;.resolved.timeout")</code>,
 then <code>getOption("future.resolved.timeout")</code>, and finally 0.01 (seconds),
 where <code>&lt;type&gt;</code> corresponds to the type of future, e.g. <code>cluster</code> and <code>multicore</code>.</p></dd>
