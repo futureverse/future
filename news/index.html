@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.58.0-9002</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.58.0-9003</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -79,8 +79,11 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="version-development-version">Version (development version)<a class="anchor" aria-label="anchor" href="#version-development-version"></a></h2>
-<ul><li>…</li>
+<div class="section level3">
+<h3 id="performance-development-version">Performance<a class="anchor" aria-label="anchor" href="#performance-development-version"></a></h3>
+<ul><li>Calling <code><a href="../reference/resolved.html">resolved()</a></code> on a lazy <code>ClusterFuture</code> would collect the result for the first <em>resolved</em> future in order to free up one worker slot. Now this is only done if all slots are occupied. The net benefit is that lazy cluster futures will be launched faster, unless all workers are busy.</li>
 </ul></div>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.58.0" id="version-1580">Version 1.58.0<a class="anchor" aria-label="anchor" href="#version-1580"></a></h2><p class="text-muted">CRAN release: 2025-06-05</p>
 <p>This is the third rollout out of several towards a near-future major release that I am really excited about. This has been made possible due to a multi-year effort of internal re-designs, work with package maintainers, release, and repeat. This release fixes a few regressions introduced in future 1.40.0 (2025-04-10), despite passing <a href="https://www.futureverse.org/quality.html" class="external-link">all unit, regression, and system tests</a>.</p>

@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.58.0-9002</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.58.0-9003</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -155,10 +155,11 @@ significant, often unrecoverable infrastructure problem, or an interrupt).</p>
     <h2 id="behavior-of-cluster-and-multisession-futures">Behavior of cluster and multisession futures<a class="anchor" aria-label="anchor" href="#behavior-of-cluster-and-multisession-futures"></a></h2>
 
 
-<p><code>resolved()</code> for <code>ClusterFuture</code>, and therefore also <code>MultisessionFuture</code>,
-will always check whether any of the currently running futures are resolved,
-and if one of them has been resolved, then its result is collected. This makes
-sure to free up workers, when possible.</p>
+<p><code>resolved()</code> will always attempt to launch a lazy future, if possible.
+If all worker slots are occupied, <code>resolved()</code> for <code>ClusterFuture</code> and
+<code>MultisessionFuture</code> will attempt to free one up by checking whether
+one of the futures is <em>resolved</em>. If it is, then its result is collected
+in order to free up one worker slot.</p>
 <p><code>resolved()</code> for <code>ClusterFuture</code> may receive immediate condition objects, rather
 than a <a href="FutureResult.html">FutureResult</a>, when polling the worker for results. In such cases, the
 condition object is collected and another poll it performed. Up to 100 immediate
