@@ -1,6 +1,12 @@
 # Version (development version)
 
- * ...
+## Performance
+
+ * Calling `resolved()` on a lazy `ClusterFuture` would collect the
+   result for the first _resolved_ future in order to free up one
+   worker slot. Now this is only done if all slots are occupied. The
+   net benefit is that lazy cluster futures will be launched faster,
+   unless all workers are busy.
 
 
 # Version 1.58.0 [2025-06-05]

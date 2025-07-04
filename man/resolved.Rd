@@ -67,10 +67,11 @@ significant, often unrecoverable infrastructure problem, or an interrupt).
 }
 \section{Behavior of cluster and multisession futures}{
 
-\code{resolved()} for \code{ClusterFuture}, and therefore also \code{MultisessionFuture},
-will always check whether any of the currently running futures are resolved,
-and if one of them has been resolved, then its result is collected. This makes
-sure to free up workers, when possible.
+\code{resolved()} will always attempt to launch a lazy future, if possible.
+If all worker slots are occupied, \code{resolved()} for \code{ClusterFuture} and
+\code{MultisessionFuture} will attempt to free one up by checking whether
+one of the futures is \emph{resolved}. If it is, then its result is collected
+in order to free up one worker slot.
 
 \code{resolved()} for \code{ClusterFuture} may receive immediate condition objects, rather
 than a \link{FutureResult}, when polling the worker for results. In such cases, the
