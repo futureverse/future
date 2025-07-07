@@ -478,13 +478,14 @@ nbrOfFreeWorkers.ClusterFutureBackend <- function(evaluator, ...) {
   cl <- addCovrLibPath(cl)
 
   ## Pre-load 'future' package
-  void <- clusterCall(cl = cl, fun = requireNamespace, "future", quietly = TRUE)
+  works <- clusterCall(cl = cl, fun = requireNamespace, "future", quietly = TRUE)
+  works <- unlist(works, use.names = FALSE)
   
   ## Pre-load 'RhpcBLASctl' package, if available
-  void <- clusterCall(cl = cl, fun = requireNamespace, "RhpcBLASctl", quietly = TRUE)
+  void <- clusterCall(cl = cl[works], fun = requireNamespace, "RhpcBLASctl", quietly = TRUE)
 
   ## Pre-calculate parallelly::availableCores()
-  void <- clusterEvalQ(cl = cl, parallelly::availableCores())
+  void <- clusterEvalQ(cl = cl[works], parallelly::availableCores())
 
   cl
 } ## .makeCluster()
