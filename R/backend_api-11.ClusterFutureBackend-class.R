@@ -484,7 +484,7 @@ nbrOfFreeWorkers.ClusterFutureBackend <- function(evaluator, ...) {
   void <- clusterCall(cl = cl, fun = requireNamespace, "RhpcBLASctl", quietly = TRUE)
 
   ## Pre-calculate parallelly::availableCores()
-  void <- parallel::clusterEvalQ(cl = cl, parallelly::availableCores())
+  void <- clusterEvalQ(cl = cl, parallelly::availableCores())
 
   cl
 } ## .makeCluster()
