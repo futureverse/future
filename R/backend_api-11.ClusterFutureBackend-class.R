@@ -209,6 +209,8 @@ launchFuture.ClusterFutureBackend <- function(backend, future, ...) {
   ## Get the index of a free cluster node, which has been validated to
   ## be functional. If the existing worker was found to be non-functional,
   ## it was re-launched by requestNode()
+  ## FIXME: Is this wrong? Does it get the future-registry slot index
+  ## rather than worker index? /HB 2025-07-04
   node_idx <- requestNode(await = function() {
     FutureRegistry(reg, action = "collect-first", earlySignal = TRUE, debug = debug)
   }, backend = backend, timeout = timeout, delta = delta, alpha = alpha)
@@ -473,6 +475,10 @@ nbrOfFreeWorkers.ClusterFutureBackend <- function(evaluator, ...) {
   
   cl <- do.call(makeClusterPSOCK, args = args, quote = TRUE)
   cl <- addCovrLibPath(cl)
+
+  ## Pre-attach 'future' package
+  void <- clusterCall(cl = cl, fun = requireNamespace, "future", quietly = TRUE)
+
   cl
 } ## .makeCluster()
 

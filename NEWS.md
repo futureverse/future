@@ -6,6 +6,11 @@
    launched was unnecessarily expensive due to a thinko, e.g. it would
    take ~0.1-0.2 seconds for a multisession future, whereas after the
    fix it is effectly 0.0 seconds.
+   
+ * The **future** package is now pre-loaded on the parallel workers as
+   soon as a new cluster or multisession future backend is set
+   up. Previously, it was loaded with the first future being evaluated
+   on a worker.
  
  * Calling `resolved()` on a lazy `ClusterFuture` would collect the
    result for the first _resolved_ future in order to free up one
