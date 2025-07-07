@@ -23,6 +23,10 @@
    net benefit is that lazy cluster futures will be launched faster,
    unless all workers are busy.
 
+## Bug Fixes
+
+ * Calls to `resolved()` were not registered by FutureJournal.
+ 
 
 # Version 1.58.0 [2025-06-05]
 
