@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.58.0-9010</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.58.0-9013</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -79,6 +79,10 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="version-development-version">Version (development version)<a class="anchor" aria-label="anchor" href="#version-development-version"></a></h2>
+<div class="section level3">
+<h3 id="significant-changes-development-version">Significant Changes<a class="anchor" aria-label="anchor" href="#significant-changes-development-version"></a></h3>
+<ul><li>Now argument <code>workers</code> for <code>plan(multisession)</code> defaults to <code>availableCores(constraints = "connections-16")</code>. This will make <code>plan(multisession)</code> work also on computers with a large number of CPU cores, e.g. 192 and 256 cores.</li>
+</ul></div>
 <div class="section level3">
 <h3 id="performance-development-version">Performance<a class="anchor" aria-label="anchor" href="#performance-development-version"></a></h3>
 <ul><li><p>The pre-validation of the cluster worker allotted to a future when launched was unnecessarily expensive due to a thinko since <strong>future</strong> 1.40.0 (2025-04-10), e.g. it would take ~0.1-0.2 seconds for a multisession future, whereas after the fix it is effectly 0.0 seconds.</p></li>
