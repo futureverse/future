@@ -28,6 +28,12 @@
 #'
 #' @export
 resolved <- function(x, ...) {
+  debug <- isTRUE(getOption("future.debug"))
+  if (debug) {
+    mdebug_push("resolved() ...")
+    on.exit(mdebugf_pop())
+  }
+  
   ## Automatically update journal entries for Future object
   if (inherits(future, "Future") &&
       inherits(future[[".journal"]], "FutureJournal")) {
@@ -40,8 +46,9 @@ resolved <- function(x, ...) {
         stop = Sys.time(),
         skip = FALSE
       )
-    })
+    }, add = TRUE)
   }
+  
   UseMethod("resolved")
 }
 
