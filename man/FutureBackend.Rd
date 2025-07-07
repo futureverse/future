@@ -63,7 +63,7 @@ MulticoreFutureBackend(
 SequentialFutureBackend(..., maxSizeOfObjects = +Inf)
 
 MultisessionFutureBackend(
-  workers = availableCores(),
+  workers = availableCores(constraints = "connections-16"),
   rscript_libs = .libPaths(),
   interrupts = TRUE,
   gc = FALSE,

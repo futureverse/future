@@ -1,5 +1,12 @@
 # Version (development version)
 
+## Significant Changes
+
+ * Now argument `workers` for `plan(multisession)` defaults to
+   `availableCores(constraints = "connections-16")`. This will make
+   `plan(multisession)` work also on computers with a large number of
+   CPU cores, e.g. 192 and 256 cores.
+
 ## Performance
 
  * The pre-validation of the cluster worker allotted to a future when
