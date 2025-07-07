@@ -445,6 +445,7 @@ nbrOfFreeWorkers.ClusterFutureBackend <- function(evaluator, ...) {
 }
 
 
+#' @importFrom parallel clusterCall clusterEvalQ
 .makeCluster <- function(workers, ...) {
   debug <- isTRUE(getOption("future.debug"))
   if (debug) {
@@ -476,8 +477,14 @@ nbrOfFreeWorkers.ClusterFutureBackend <- function(evaluator, ...) {
   cl <- do.call(makeClusterPSOCK, args = args, quote = TRUE)
   cl <- addCovrLibPath(cl)
 
-  ## Pre-attach 'future' package
+  ## Pre-load 'future' package
   void <- clusterCall(cl = cl, fun = requireNamespace, "future", quietly = TRUE)
+  
+  ## Pre-load 'RhpcBLASctl' package, if available
+  void <- clusterCall(cl = cl, fun = requireNamespace, "RhpcBLASctl", quietly = TRUE)
+
+  ## Pre-calculate parallelly::availableCores()
+  void <- parallel::clusterEvalQ(cl = cl, parallelly::availableCores())
 
   cl
 } ## .makeCluster()
@@ -870,7 +877,7 @@ receiveMessageFromWorker <- local({
     
     stop_if_not(isTRUE(ack))
     if (debug) {
-      mdebug("received data:")
+      mdebug("Received data:")
       mstr(data)
     }
 

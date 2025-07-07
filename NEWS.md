@@ -6,7 +6,12 @@
    launched was unnecessarily expensive due to a thinko, e.g. it would
    take ~0.1-0.2 seconds for a multisession future, whereas after the
    fix it is effectly 0.0 seconds.
-   
+
+ * Cluster and multisession workers initiates more things when
+   created, e.g. pre-loading of packages and memoization of available
+   cores. Previously, such steps were performed only when the first
+   future was evaluated on a worker.
+
  * The **future** package is now pre-loaded on the parallel workers as
    soon as a new cluster or multisession future backend is set
    up. Previously, it was loaded with the first future being evaluated
