@@ -94,7 +94,7 @@ cancel.Future <- function(x, interrupt = TRUE, ...) {
   if (interrupt) {
     backend <- future[["backend"]]
     if (is.null(backend)) {
-      stop(FutureError("Interruption of futures require a backend implementing the FutureBackend API: ", sQuote(class(future)[1])))
+      stop(FutureError(sprintf("Interruption of futures require a backend implementing the FutureBackend API: %s", sQuote(class(future)[1]))))
     }
     local({
       if (debug) {
