@@ -148,7 +148,7 @@ nbrOfFreeWorkers.NULL <- function(evaluator, background = FALSE, ...) {
   res <- nbrOfFreeWorkers(backend, background = background, ...)
 
   ## Attempt to free up a working, if none are left and possible
-  if (res == 0L) {
+  if (res == 0L && inherits(backend, "FutureBackend")) {
     reg <- backend[["reg"]]
     if (!is.null(reg)) {
       FutureRegistry(reg, action = "collect-first", earlySignal = FALSE)
