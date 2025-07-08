@@ -22,8 +22,8 @@
    net benefit is that lazy cluster futures will be launched faster,
    unless all workers are busy.
 
- * Cluster and multisession workers initiates more things when
-   created, e.g. pre-loading of packages and memoization of available
+ * Cluster and multisession workers initiate more things when created,
+   e.g. pre-loading of packages and memoization of available
    cores. Previously, such steps were performed only when the first
    future was evaluated on a worker.
 
