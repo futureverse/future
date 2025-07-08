@@ -388,7 +388,11 @@ result.MulticoreFuture <- local({
 
     ## Sanity checks
     if (!inherits(result, "FutureResult")) {
-      if (debug) mdebugf_push("Detected non-FutureResult result ...")
+      if (debug) {
+        mdebugf_push("Detected non-FutureResult result ...")
+        mstr(result)
+        mdebugf("Future state: %s", sQuote(future[["state"]]))
+      }
 
       alive <- NA
       pid <- job[["pid"]]
@@ -406,6 +410,11 @@ result.MulticoreFuture <- local({
       ## https://github.com/futureverse/future/issues/35
       if (is.null(result) || identical(result, structure("fatal error in wrapper code", class = "try-error"))) {
         label <- sQuoteLabel(future)
+
+        ## HEURISTICS: If the forked process is no longer alive, assume it was interrupted
+        if (is.numeric(pid) && !is.na(alive) && !alive) {
+          future[["state"]] <- "interrupted"
+        }
 
         if (future[["state"]] %in% c("canceled", "interrupted")) {
           if (debug) mdebugf("Detected interrupted %s whose result cannot be retrieved", sQuote(class(future)[1]))
@@ -452,7 +461,7 @@ result.MulticoreFuture <- local({
   
         ## (d) Size of globals
         postmortem[["global_sizes"]] <- summarize_size_of_globals(future[["globals"]])
-  
+
         postmortem <- unlist(postmortem, use.names = FALSE)
         if (!is.null(postmortem)) {
            postmortem <- sprintf("Post-mortem diagnostic: %s",
@@ -480,7 +489,7 @@ result.MulticoreFuture <- local({
         alive <- NA  ## For now, don't remove future when there's an unexpected error /HB 2023-04-19
       }
       future[["result"]] <- ex
-      
+
       ## Remove future from FutureRegistry?
       if (!is.na(alive) && !alive) {
         reg <- sprintf("multicore-%s", session_uuid())
@@ -490,9 +499,11 @@ result.MulticoreFuture <- local({
           FutureRegistry(reg, action = "remove", future = future, earlySignal = TRUE)
         }
       }
-      
+
       if (debug) mdebugf_pop()
-  
+
+      if (debug) mdebugf("Throwing %s: %s", class(ex)[1], conditionMessage(ex))
+
       stop(ex)
     }
 

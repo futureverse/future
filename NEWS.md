@@ -4,8 +4,9 @@
 
  * Now argument `workers` for `plan(multisession)` defaults to
    `availableCores(constraints = "connections-16")`. This will make
-   `plan(multisession)` work also on computers with a large number of
-   CPU cores, e.g. 192 and 256 cores.
+   the default for `plan(multisession)` work also on computers with a
+   large number of CPU cores (e.g. 192 and 256 cores) while leaving 16
+   connection slots available for other needs.
 
 ## Performance
 
@@ -28,6 +29,13 @@
 
 ## Bug Fixes
 
+ * If a multicore future that was terminated abruptly (e.g. via
+   `tools::pskill()` or by the operating system), then it was not
+   detected as such. Instead it resulted in an unexpected error that
+   could not be recovered from. Now it is detected and a
+   `FutureInterruptError` is signaled, which can then be handled and
+   the future may be `reset()`.
+ 
  * Calls to `resolved()` were not registered by FutureJournal.
  
 
