@@ -32,7 +32,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.58.0-9017</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.58.0-9019</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -156,15 +156,15 @@ futures in their software as well as the end-user of their software. A
 future backend that meets the requirements can be used in any software
 that use futures internally.</p>
 <p>For example, the above three functions serve as building blocks in
-several higher-level map-reduce APIs. One example is the
-<strong>[future.apply]</strong> package on CRAN that provides
-<code><a href="https://future.apply.futureverse.org/reference/future_lapply.html" class="external-link">future_lapply()</a></code>, which is a futurized version of
-<code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply()</a></code> available in the <strong>base</strong> package.
-This function can be used to perform the lapply-like processing in
-parallel using a parallel backend. The implementation of the
-<strong>future.apply</strong> package is 100% invariant to the parallel
-backend used. This is possible because all future backends conform to a
-set of rules. Rules that are documented below.</p>
+several higher-level map-reduce APIs. One example is the <strong><a href="https://future.apply.futureverse.org" class="external-link">future.apply</a></strong>
+package on CRAN that provides <code><a href="https://future.apply.futureverse.org/reference/future_lapply.html" class="external-link">future_lapply()</a></code>, which is a
+futurized version of <code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply()</a></code> available in the
+<strong>base</strong> package. This function can be used to perform the
+lapply-like processing in parallel using a parallel backend. The
+implementation of the <strong>future.apply</strong> package is 100%
+invariant to the parallel backend used. This is possible because all
+future backends conform to a set of rules. Rules that are documented
+below.</p>
 <p>A supplement to the specification herein is the ‘Test Suite for
 Future API Backends’, which consists of a set of tests that can be used
 to validated that a future backend meets the minimal requirements of the
