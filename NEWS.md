@@ -8,6 +8,11 @@
    large number of CPU cores (e.g. 192 and 256 cores) while leaving 16
    connection slots available for other needs.
 
+## New Features
+
+ * `nbrOfFreeWorkers()` attempts to free up one parallel worker in a
+   non-blocking way, if possible and if none are available.
+
 ## Performance
 
  * The pre-validation of the cluster worker allotted to a future when
