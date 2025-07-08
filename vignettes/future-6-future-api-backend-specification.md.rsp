@@ -250,4 +250,5 @@ The `result()` method must not update the RNG state.
 
 
 [future]: https://future.futureverse.org
+[future.apply]: https://future.apply.futureverse.org
 [future.tests]: https://future.tests.futureverse.org
