@@ -278,7 +278,7 @@ makeFutureBackend <- function(evaluator, ..., debug = FALSE) {
     mdebugf("Backend factory arguments: [n=%d]", length(args2))
     mstr(args2)
   }
-  backend <- do.call(factory, args = args)
+  backend <- do.call(factory, args = args, envir = environment(factory))
   if (debug) mdebugf("Backend: <%s>", commaq(class(backend)))
   stop_if_not(inherits(backend, "FutureBackend"))
   

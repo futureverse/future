@@ -42,6 +42,9 @@
    the future may be `reset()`.
  
  * Calls to `resolved()` were not registered by FutureJournal.
+
+ * Future backend factory was created via the calling environment
+   rather than via the namespace environment where it lives.
  
 
 # Version 1.58.0 [2025-06-05]
