@@ -2,11 +2,9 @@
 #'
 #' @inheritParams plan
 #'
-#' @param data The future plan to use temporarily.
+#' @param data The future plan to use temporarily, e.g. `plan(multisession)`.
 #'
 #' @param expr The R expression to be evaluated.
-#'
-#' @param \ldots Not used.
 #'
 #' @param local If TRUE, then the future plan specified by `data`
 #' is applied temporarily in the calling frame. Argument `expr` must
@@ -19,6 +17,7 @@
 #'
 #' @example incl/with.R
 #'
+#' @include utils_api-plan.R
 #' @rdname plan
 #' @export
 with.FutureStrategyList <- function(data, expr, ..., local = FALSE, envir = parent.frame(), .cleanup = NA) {

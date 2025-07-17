@@ -267,9 +267,9 @@ all.equal.FutureStrategyList <- function(target, current, ..., debug = FALSE) {
 #'
 #' @param \ldots Additional arguments overriding the default arguments
 #' of the evaluation function.  Which additional arguments are supported
-#' depends on what evaluation function is used, e.g. several support
+#' depends on which future backend is used, e.g. several support
 #' argument `workers` but not all. For details, see the individual
-#' functions of which some are linked to below.
+#' backends of which some are linked to below.
 #"
 #' @param substitute If `TRUE`, the `strategy` expression is
 #' `substitute()`:d, otherwise not.

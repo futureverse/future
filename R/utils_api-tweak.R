@@ -1,8 +1,7 @@
 #' Tweak a future function by adjusting its default arguments
 #'
-#' @param strategy An existing future function or the name of one.
-#' @param \ldots Named arguments to replace the defaults of existing
-#' arguments.
+#' @param strategy A future backend or the name of one.
+#'
 #' @param penvir The environment used when searching for a future
 #' function by its name.
 #'
