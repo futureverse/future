@@ -32,7 +32,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.58.0-9020</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.58.0-9022</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -208,7 +208,7 @@ an object of class <code>MyParallelFutureBackend</code> inheriting the
 <code>FutureBackend</code>. This function should be set as attribute
 <code>factory</code> for the above <code>myparallel</code>
 function.</p></li>
-<li><p>A <code><a href="../reference/FutureBackend.html">launchFuture()</a></code> method for the
+<li><p>A <code><a href="../reference/FutureBackend-class.html">launchFuture()</a></code> method for the
 <code>MyParallelFutureBackend</code> class taking arguments
 <code>backend</code> and <code>future</code>. This method is responsible
 for starting the concurrent evaluation of the <code>Future</code> object
@@ -232,7 +232,7 @@ resolved.</p></li>
 plan, will be done as <code>plan(myparallel)</code> with the option of
 specifying certain arguments to be passed to <code>myparallel()</code>.
 With the plan set, a call to <code>f &lt;- future(expr)</code> will then
-launch the evaluation of the future via the <code><a href="../reference/FutureBackend.html">launchFuture()</a></code>
+launch the evaluation of the future via the <code><a href="../reference/FutureBackend-class.html">launchFuture()</a></code>
 method for the current set future backend and return then launch the
 future now inheriting <code>MyParallelFuture</code>. When calling
 <code>resolved(f)</code> to query whether the future expression is
@@ -269,16 +269,16 @@ i.e. <code>MyParallelFutureBackend</code>.</p>
 <div class="section level4">
 <h4 id="launchfuture-method-of-the-futurebackend-class">launchFuture() method of the FutureBackend class<a class="anchor" aria-label="anchor" href="#launchfuture-method-of-the-futurebackend-class"></a>
 </h4>
-<p>An S3 method <code><a href="../reference/FutureBackend.html">launchFuture()</a></code> for
+<p>An S3 method <code><a href="../reference/FutureBackend-class.html">launchFuture()</a></code> for
 <code>MyParallelFutureBackend</code> that takes a
 <code>FutureBackend</code> object as its first argument and a
 <code>Future</code> object as the second is required. It should accept
 additional arguments via <code>...</code>, which are currently not
 used.</p>
-<p>The <code><a href="../reference/FutureBackend.html">launchFuture()</a></code> method should invisibly return the
+<p>The <code><a href="../reference/FutureBackend-class.html">launchFuture()</a></code> method should invisibly return the
 <code>Future</code> object of desired class,
 e.g. <code>MyParallelFuture</code>.</p>
-<p>The <code><a href="../reference/FutureBackend.html">launchFuture()</a></code> method is responsible for evaluation
+<p>The <code><a href="../reference/FutureBackend-class.html">launchFuture()</a></code> method is responsible for evaluation
 the <code>Future</code> object. The evaluation of the future expression
 should respect any global variables in the <code>FutureGlobals</code>
 object returned by <code>globals()</code> with the <code>Future</code>
@@ -286,15 +286,15 @@ object as the first argument. The evaluation should also respect any
 package names returned by <code>packages()</code> with the
 <code>Future</code> object as the first argument.</p>
 <p>If the backend provides parallel processing, then
-<code><a href="../reference/FutureBackend.html">launchFuture()</a></code> should return the future as soon as possible
+<code><a href="../reference/FutureBackend-class.html">launchFuture()</a></code> should return the future as soon as possible
 and without waiting for it to be resolved. If all workers are occupied,
-then <code><a href="../reference/FutureBackend.html">launchFuture()</a></code> is responsible for waiting until a
+then <code><a href="../reference/FutureBackend-class.html">launchFuture()</a></code> is responsible for waiting until a
 worker becomes available and then launch the future on that worker and
 immediatedly return the future.</p>
-<p>The <code><a href="../reference/FutureBackend.html">launchFuture()</a></code> method may produce an error of class
+<p>The <code><a href="../reference/FutureBackend-class.html">launchFuture()</a></code> method may produce an error of class
 <code>FutureError</code> in case it fails to launch the future on the
 worker or the worker has terminated unexpectedly.</p>
-<p>The <code><a href="../reference/FutureBackend.html">launchFuture()</a></code> method must not update the RNG
+<p>The <code><a href="../reference/FutureBackend-class.html">launchFuture()</a></code> method must not update the RNG
 state.</p>
 </div>
 <div class="section level4">

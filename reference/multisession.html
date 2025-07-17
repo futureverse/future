@@ -15,7 +15,7 @@ It may only be used with plan()"><meta property="og:image" content="https://futu
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.58.0-9020</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.58.0-9022</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -90,11 +90,7 @@ It may only be used with <code><a href="plan.html">plan()</a></code></em></p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">multisession</span><span class="op">(</span></span>
 <span>  <span class="va">...</span>,</span>
 <span>  workers <span class="op">=</span> <span class="fu"><a href="re-exports.html">availableCores</a></span><span class="op">(</span>constraints <span class="op">=</span> <span class="st">"connections-16"</span><span class="op">)</span>,</span>
-<span>  lazy <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  rscript_libs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/libPaths.html" class="external-link">.libPaths</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>  gc <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  earlySignal <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  envir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sys.parent.html" class="external-link">parent.frame</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  rscript_libs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/libPaths.html" class="external-link">.libPaths</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -111,11 +107,6 @@ current/main <span style="R">R</span> session and we therefore fall back to usin
 sequential future. To override this fallback, use <code>workers = I(1)</code>.</p></dd>
 
 
-<dt id="arg-lazy">lazy<a class="anchor" aria-label="anchor" href="#arg-lazy"></a></dt>
-<dd><p>If FALSE (default), the future is resolved
-eagerly (starting immediately), otherwise not.</p></dd>
-
-
 <dt id="arg-rscript-libs">rscript_libs<a class="anchor" aria-label="anchor" href="#arg-rscript-libs"></a></dt>
 <dd><p>A character vector of <span style="R">R</span> package library folders that
 the workers should use.  The default is <code><a href="https://rdrr.io/r/base/libPaths.html" class="external-link">.libPaths()</a></code> so that multisession
@@ -126,25 +117,6 @@ created, i.e. when <code>plan(multisession)</code> is called.  Any changes to
 <code><a href="https://rdrr.io/r/base/libPaths.html" class="external-link">.libPaths()</a></code> in the main R session after the workers have been created
 will have no effect.</em>
 This is passed down as-is to <code><a href="https://parallelly.futureverse.org/reference/makeClusterPSOCK.html" class="external-link">parallelly::makeClusterPSOCK()</a></code>.</p></dd>
-
-
-<dt id="arg-gc">gc<a class="anchor" aria-label="anchor" href="#arg-gc"></a></dt>
-<dd><p>If TRUE, the garbage collector run (in the process that
-evaluated the future) only after the value of the future is collected.
-Exactly when the values are collected may depend on various factors such
-as number of free workers and whether <code>earlySignal</code> is TRUE (more
-frequently) or FALSE (less frequently).
-<em>Some types of futures ignore this argument.</em></p></dd>
-
-
-<dt id="arg-earlysignal">earlySignal<a class="anchor" aria-label="anchor" href="#arg-earlysignal"></a></dt>
-<dd><p>Specified whether conditions should be signaled as soon
-as possible or not.</p></dd>
-
-
-<dt id="arg-envir">envir<a class="anchor" aria-label="anchor" href="#arg-envir"></a></dt>
-<dd><p>The <a href="https://rdrr.io/r/base/environment.html" class="external-link">environment</a> from where global objects should be
-identified.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>

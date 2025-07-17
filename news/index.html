@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.58.0-9020</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.58.0-9022</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -98,6 +98,7 @@
 <h3 id="bug-fixes-development-version">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h3>
 <ul><li><p>If a multicore future that was terminated abruptly (e.g. via <code><a href="https://rdrr.io/r/tools/pskill.html" class="external-link">tools::pskill()</a></code> or by the operating system), then it was not detected as such. Instead it resulted in an unexpected error that could not be recovered from. Now it is detected and a <code>FutureInterruptError</code> is signaled, which can then be handled and the future may be <code><a href="../reference/reset.html">reset()</a></code>.</p></li>
 <li><p>Calls to <code><a href="../reference/resolved.html">resolved()</a></code> were not registered by FutureJournal.</p></li>
+<li><p>Future backend factory was created via the calling environment rather than via the namespace environment where it lives.</p></li>
 </ul></div>
 </div>
     <div class="section level2">
