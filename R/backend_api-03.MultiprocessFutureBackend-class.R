@@ -1,4 +1,4 @@
-#' @inheritParams FutureBackend
+#' @inheritParams FutureBackend-class
 #'
 #' @param wait.timeout Number of seconds before timing out.
 #'
@@ -8,7 +8,7 @@
 #' attempt.
 #'
 #' @keywords internal
-#' @rdname FutureBackend
+#' @rdname FutureBackend-class
 #'
 #' @export
 MultiprocessFutureBackend <- function(..., wait.timeout = getOption("future.wait.timeout", 24 * 60 * 60), wait.interval = getOption("future.wait.interval", 0.01), wait.alpha = getOption("future.wait.alpha", 1.01)) {
@@ -92,7 +92,7 @@ nbrOfFreeWorkers.MultiprocessFutureBackend <- function(evaluator, background = F
 
 
 
-#' A multiprocess future is a future whose value will be resolved asynchronously in a parallel process
+D#' A multiprocess future is a future whose value will be resolved asynchronously in a parallel process
 #'
 #' @inheritParams Future-class
 #' 

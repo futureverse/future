@@ -131,7 +131,7 @@ evaluated the future) only after the value of the future is collected.
 Exactly when the values are collected may depend on various factors such
 as number of free workers and whether \code{earlySignal} is TRUE (more
 frequently) or FALSE (less frequently).
-\emph{Some types of futures ignore this argument.}}
+\emph{Some future backends may ignore this argument.}}
 
 \item{assign.env}{The \link[base]{environment} to which the variable
 should be assigned.}

@@ -11,7 +11,7 @@
 #' Backends' vignette and \url{https://www.futureverse.org/backends.html}.
 #'
 #' @keywords internal
-#' @rdname FutureBackend
+#' @rdname FutureBackend-class
 #' @export
 MultisessionFutureBackend <- function(workers = availableCores(constraints = "connections-16"), rscript_libs = .libPaths(), interrupts = TRUE, gc = FALSE, earlySignal = FALSE, ...) {
   debug <- isTRUE(getOption("future.debug"))
@@ -84,8 +84,6 @@ print.MultisessionFutureBackend <- function(x, validate = TRUE, ...) {
 #'
 #' @inheritParams multicore
 #' @inheritParams cluster
-#' @inheritParams Future-class
-#' @inheritParams future
 #' 
 #' @param \ldots Additional arguments passed to [Future()].
 #'
@@ -129,7 +127,7 @@ print.MultisessionFutureBackend <- function(x, validate = TRUE, ...) {
 #'
 #' @aliases MultisessionFuture
 #' @export
-multisession <- function(..., workers = availableCores(constraints = "connections-16"), lazy = FALSE, rscript_libs = .libPaths(), gc = FALSE, earlySignal = FALSE, envir = parent.frame()) {
+multisession <- function(..., workers = availableCores(constraints = "connections-16"), rscript_libs = .libPaths()) {
   stop("INTERNAL ERROR: The future::multisession() must never be called directly")
 }
 class(multisession) <- c("multisession", "cluster", "multiprocess", "future", "function")

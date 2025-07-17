@@ -9,11 +9,7 @@
 multisession(
   ...,
   workers = availableCores(constraints = "connections-16"),
-  lazy = FALSE,
-  rscript_libs = .libPaths(),
-  gc = FALSE,
-  earlySignal = FALSE,
-  envir = parent.frame()
+  rscript_libs = .libPaths()
 )
 }
 \arguments{
@@ -24,9 +20,6 @@ If \code{workers == 1}, then all processing using done in the
 current/main \R session and we therefore fall back to using a
 sequential future. To override this fallback, use \code{workers = I(1)}.}
 
-\item{lazy}{If FALSE (default), the future is resolved
-eagerly (starting immediately), otherwise not.}
-
 \item{rscript_libs}{A character vector of \R package library folders that
 the workers should use.  The default is \code{.libPaths()} so that multisession
 workers inherits the same library path as the main \R session.
@@ -36,19 +29,6 @@ created, i.e. when \code{plan(multisession)} is called.  Any changes to
 \code{.libPaths()} in the main R session after the workers have been created
 will have no effect.}
 This is passed down as-is to \code{\link[parallelly:makeClusterPSOCK]{parallelly::makeClusterPSOCK()}}.}
-
-\item{gc}{If TRUE, the garbage collector run (in the process that
-evaluated the future) only after the value of the future is collected.
-Exactly when the values are collected may depend on various factors such
-as number of free workers and whether \code{earlySignal} is TRUE (more
-frequently) or FALSE (less frequently).
-\emph{Some types of futures ignore this argument.}}
-
-\item{earlySignal}{Specified whether conditions should be signaled as soon
-as possible or not.}
-
-\item{envir}{The \link{environment} from where global objects should be
-identified.}
 
 \item{\ldots}{Additional arguments passed to \code{\link[=Future]{Future()}}.}
 }

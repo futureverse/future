@@ -132,7 +132,7 @@ requestCore <- function(await, workers = availableCores(constraints = "multicore
 #' `plan(multicore, workers = workers)`.
 #'
 #' @keywords internal
-#' @rdname FutureBackend
+#' @rdname FutureBackend-class
 #' @export
 MulticoreFutureBackend <- function(workers = availableCores(constraints = "multicore"), maxSizeOfObjects = +Inf, ...) {
   default_workers <- missing(workers)
@@ -617,6 +617,7 @@ interruptFuture.MulticoreFutureBackend <- function(backend, future, ...) {
 #'
 #' @inheritParams future
 #' @inheritParams Future-class
+#' @inheritParams FutureBackend-class
 #'
 #' @param workers The number of parallel processes to use.
 #' If a function, it is called without arguments _when the future
@@ -625,7 +626,7 @@ interruptFuture.MulticoreFutureBackend <- function(backend, future, ...) {
 #' current/main \R session and we therefore fall back to using a
 #' sequential future. To override this fallback, use `workers = I(1)`.
 #'
-#' @param \ldots Additional named elements to [Future()].
+#' @param \ldots Not used.
 #'
 #' @example incl/multicore.R
 #'
@@ -665,7 +666,7 @@ interruptFuture.MulticoreFutureBackend <- function(backend, future, ...) {
 #'
 #' @aliases MulticoreFuture
 #' @export
-multicore <- function(..., workers = availableCores(constraints = "multicore"), gc = FALSE, earlySignal = FALSE, envir = parent.frame()) {
+multicore <- function(..., workers = availableCores(constraints = "multicore")) {
   stop("INTERNAL ERROR: The future::multicore() function must never be called directly")
 }
 class(multicore) <- c("multicore", "multiprocess", "future", "function")

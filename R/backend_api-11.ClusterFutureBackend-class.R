@@ -1,6 +1,6 @@
 #' A ClusterFutureBackend resolves futures in parallel using any PSOCK cluster
 #'
-#' @inheritParams FutureBackend
+#' @inheritParams FutureBackend-class
 #'
 #' @param workers ...
 #'
@@ -11,7 +11,7 @@
 #' `plan(cluster, workers = workers)`.
 #'
 #' @keywords internal
-#' @rdname FutureBackend
+#' @rdname FutureBackend-class
 #'
 #' @importFrom parallelly as.cluster availableWorkers
 #' @export
@@ -1604,7 +1604,7 @@ handleInterruptedFuture <- local({
 #'
 #' @inheritParams Future-class
 #' @inheritParams future
-#' @inheritParams FutureBackend
+#' @inheritParams FutureBackend-class
 #'
 #' @param workers A \code{\link[parallel:makeCluster]{cluster}} object,
 #' a character vector of host names, a positive numeric scalar,
@@ -1621,7 +1621,7 @@ handleInterruptedFuture <- local({
 #' @param persistent If FALSE, the evaluation environment is cleared
 #' from objects prior to the evaluation of the future.
 #' 
-#' @param \ldots Additional named elements passed to [Future()].
+#' @param \ldots Not used.
 #'
 #' @example incl/cluster.R
 #'
@@ -1630,7 +1630,7 @@ handleInterruptedFuture <- local({
 #' Backends' vignette and \url{https://www.futureverse.org/backends.html}.
 #'
 #' @export
-cluster <- function(..., workers = availableWorkers(constraints = "connections"), gc = FALSE, earlySignal = FALSE, persistent = FALSE, envir = parent.frame()) {
+cluster <- function(..., workers = availableWorkers(constraints = "connections"), persistent = FALSE) {
   stop("INTERNAL ERROR: The future::cluster() function must never be called directly")
 }
 class(cluster) <- c("cluster", "multiprocess", "future", "function")

@@ -7,10 +7,7 @@
 cluster(
   ...,
   workers = availableWorkers(constraints = "connections"),
-  gc = FALSE,
-  earlySignal = FALSE,
-  persistent = FALSE,
-  envir = parent.frame()
+  persistent = FALSE
 )
 }
 \arguments{
@@ -26,23 +23,10 @@ If \code{workers == 1}, then all processing using done in the
 current/main \R session and we therefore fall back to using a
 sequential future. To override this fallback, use \code{workers = I(1)}.}
 
-\item{gc}{If TRUE, the garbage collector run (in the process that
-evaluated the future) only after the value of the future is collected.
-Exactly when the values are collected may depend on various factors such
-as number of free workers and whether \code{earlySignal} is TRUE (more
-frequently) or FALSE (less frequently).
-\emph{Some types of futures ignore this argument.}}
-
-\item{earlySignal}{Specified whether conditions should be signaled as soon
-as possible or not.}
-
 \item{persistent}{If FALSE, the evaluation environment is cleared
 from objects prior to the evaluation of the future.}
 
-\item{envir}{The \link{environment} from where global objects should be
-identified.}
-
-\item{\ldots}{Additional named elements passed to \code{\link[=Future]{Future()}}.}
+\item{\ldots}{Not used.}
 }
 \description{
 \emph{WARNING: This function must never be called.
