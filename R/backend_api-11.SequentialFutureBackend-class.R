@@ -181,7 +181,7 @@ getFutureBackendConfigs.UniprocessFuture <- function(future, ...) {
 #'
 #' @aliases uniprocess
 #' @export
-sequential <- function(...) {
+sequential <- function(..., envir = parent.frame()) {
   ## WORKAROUNDS:
   ## (1) fiery calls sequential() directly
   ##     https://github.com/thomasp85/fiery/issues/53

@@ -5,9 +5,12 @@
 \alias{uniprocess}
 \title{Create a sequential future whose value will be in the current \R session}
 \usage{
-sequential(...)
+sequential(..., envir = parent.frame())
 }
 \arguments{
+\item{envir}{The \link{environment} from where global objects should be
+identified.}
+
 \item{\ldots}{Not used.}
 }
 \description{
