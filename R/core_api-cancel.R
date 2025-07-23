@@ -88,7 +88,7 @@ cancel.Future <- function(x, interrupt = TRUE, ...) {
   ## Only running futures can be canceled, ignore everything else
   if (future[["state"]] != "running") {
     if (debug) mdebug("Skipping, because a non-running future")
-    return(future)
+    return(invisible(future))
   }
 
   if (interrupt) {
