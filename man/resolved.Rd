@@ -53,7 +53,8 @@ The default method always returns TRUE.
 Check whether a future is resolved or not
 }
 \details{
-Checking a lazy future, triggers it to be launched, unless \code{run = FALSE}.
+\code{resolved()} attempts to launch a lazy future, if possible and unless
+\code{run = FALSE}.
 
 \code{resolved()} methods must always return \code{TRUE} or \code{FALSE} values, must
 always launch lazy futures by default (\code{run = TRUE}), and must never block
@@ -67,7 +68,6 @@ significant, often unrecoverable infrastructure problem, or an interrupt).
 }
 \section{Behavior of cluster and multisession futures}{
 
-\code{resolved()} will always attempt to launch a lazy future, if possible.
 If all worker slots are occupied, \code{resolved()} for \code{ClusterFuture} and
 \code{MultisessionFuture} will attempt to free one up by checking whether
 one of the futures is \emph{resolved}. If it is, then its result is collected

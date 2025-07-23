@@ -90,7 +90,7 @@ is resolved. Regardlessly, the values are always returned in the same
 order as \code{x}.}
 
 \item{force}{(internal) If TRUE, captured standard output and captured
-\link[base]{conditions} already relayed is relayed again, otherwise not.}
+\link[base]{conditions} already relayed are relayed again, otherwise not.}
 
 \item{sleep}{Number of seconds to wait before checking if futures have been
 resolved since last time.}

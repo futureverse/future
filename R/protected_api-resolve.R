@@ -25,7 +25,7 @@
 #' otherwise not.
 #' 
 #' @param force (internal) If TRUE, captured standard output and captured
-#' \link[base]{conditions} already relayed is relayed again, otherwise not.
+#' \link[base]{conditions} already relayed are relayed again, otherwise not.
 #' 
 #' @param sleep Number of seconds to wait before checking if futures have been
 #' resolved since last time.

@@ -567,7 +567,6 @@ getSocketSelectTimeout <- function(future, timeout = NULL) {
 #' where `<type>` corresponds to the type of future, e.g. `cluster` and `multicore`.
 #'
 #' @section Behavior of cluster and multisession futures:
-#' `resolved()` will always attempt to launch a lazy future, if possible.
 #' If all worker slots are occupied, `resolved()` for `ClusterFuture` and
 #' `MultisessionFuture` will attempt to free one up by checking whether
 #' one of the futures is _resolved_. If it is, then its result is collected
