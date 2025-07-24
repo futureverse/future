@@ -23,7 +23,7 @@ further notice."><meta property="og:image" content="https://future.futureverse.o
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.58.0-9024</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.58.0-9026</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -246,7 +246,7 @@ produced.  If <code>"ignore"</code>, no check is performed.
 
 <dl><dt><span class="option">future.startup.script</span>:</dt>
 <dd><p>(character vector or a logical) Specifies zero of more future startup scripts to be sourced when the <span class="pkg">future</span> package is <em>attached</em>. It is only the first existing script that is sourced. If none of the specified files exist, nothing is sourced—there will be neither a warning nor an error.
-If this option is not specified, environment variable <code class="env">R_FUTURE_STARTUP_SCRIPT</code> is considered, where multiple scripts may be separated by either a colon (<code>:</code>) or a semicolon (<code>;</code>). If neither is set, or either is set to <code>TRUE</code>, the default is to look for a <code class="file">.future.R</code> script in the current directory and then in the user's home directory.  To disable future startup scripts, set the option or the environment variable to <code>FALSE</code>.  <em>Importantly</em>, this option is <em>always</em> set to <code>FALSE</code> if the <span class="pkg">future</span> package is loaded as part of a future expression being evaluated, e.g. in a background process. In order words, they are sourced in the main <span style="R">R</span> process but not in future processes. (Default: <code>TRUE</code> in main <span style="R">R</span> process and <code>FALSE</code> in future processes / during future evaluation)</p></dd>
+If this option is not specified, environment variable <code class="env">R_FUTURE_STARTUP_SCRIPT</code> is considered, where multiple scripts may be separated by either a colon (<code>:</code>) or a semicolon (<code>;</code>). If neither is set, or either is set to <code>TRUE</code>, the default is to look for a <code class="file">.future.R</code> script in the current directory and then in the user's home directory.  To disable future startup scripts, set the option or the environment variable to <code>FALSE</code>.  <em>Importantly</em>, this option is <em>always</em> set to <code>FALSE</code> if the <span class="pkg">future</span> package is loaded as part of a future expression being evaluated, e.g. in a background process. In other words, they are sourced in the main <span style="R">R</span> process but not in future processes. (Default: <code>TRUE</code> in main <span style="R">R</span> process and <code>FALSE</code> in future processes / during future evaluation)</p></dd>
 
 
 <dt><span class="option">future.cmdargs</span>:</dt>
