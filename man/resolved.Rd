@@ -62,7 +62,7 @@ indefinitely. This is because it should always be possible to poll futures
 until they are resolved using \code{resolved()}, e.g.
 \code{while (!all(resolved(futures))) Sys.sleep(5)}.
 
-Each future backend must implement a \code{resolved()} method that returns
+Each future backend must implement a \code{resolved()} method. It should return
 either TRUE or FALSE, or throw a \link{FutureError} (which indicate a
 significant, often unrecoverable infrastructure problem, or an interrupt).
 }

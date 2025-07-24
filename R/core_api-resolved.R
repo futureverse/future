@@ -23,7 +23,7 @@
 #' until they are resolved using `resolved()`, e.g.
 #' `while (!all(resolved(futures))) Sys.sleep(5)`.
 #'
-#' Each future backend must implement a `resolved()` method that returns
+#' Each future backend must implement a `resolved()` method. It should return
 #' either TRUE or FALSE, or throw a [FutureError] (which indicate a
 #' significant, often unrecoverable infrastructure problem, or an interrupt).
 #'
