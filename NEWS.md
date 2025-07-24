@@ -7,6 +7,10 @@
    the default for `plan(multisession)` work also on computers with a
    large number of CPU cores (e.g. 192 and 256 cores) while leaving 16
    connection slots available for other needs.
+   
+ * Futures now muffle any `packageStartupMessage` conditions produced
+   when pre-loading and pre-attaching packages, e.g. as specified by
+   the `packages` argument or those needed by global objects.
 
 ## Performance
 

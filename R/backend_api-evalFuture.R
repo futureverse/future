@@ -29,11 +29,15 @@ attachPackages <- function(packages) {
   ## call library(), which attaches the package. /HB 2016-06-16
   lib.loc <- .libPaths()
   tryCatch({
-    for (pkg in packages) {
-      loadNamespace(pkg)
-      library(pkg, character.only = TRUE, lib.loc = lib.loc, warn.conflicts = FALSE, quietly = FALSE, mask.ok = character(0L), exclude = character(0L), attach.required = TRUE)
-    }
-    NULL
+    withCallingHandlers({
+      for (pkg in packages) {
+        loadNamespace(pkg)
+        library(pkg, character.only = TRUE, lib.loc = lib.loc, warn.conflicts = FALSE, quietly = FALSE, mask.ok = character(0L), exclude = character(0L), attach.required = TRUE)
+      }
+      NULL
+    }, packageStartupMessage = function(m) {
+      invokeRestart("muffleMessage")
+    })
   }, error = identity)
 } ## attachPackages()
 
