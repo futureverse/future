@@ -14,8 +14,8 @@
 #' non-resolved future in case it is FALSE.
 #'
 #' @details
-#' `resolved()` attempts to launch a lazy future, if possible and unless
-#' `run = FALSE`.
+#' `resolved(..., run = TRUE)` attempts to launch a lazy future, if there is
+#' an available worker, otherwise not.
 #'
 #' `resolved()` methods must always return `TRUE` or `FALSE` values, must
 #' always launch lazy futures by default (`run = TRUE`), and must never block

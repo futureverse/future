@@ -569,8 +569,8 @@ getSocketSelectTimeout <- function(future, timeout = NULL) {
 #' @section Behavior of cluster and multisession futures:
 #' If all worker slots are occupied, `resolved()` for `ClusterFuture` and
 #' `MultisessionFuture` will attempt to free one up by checking whether
-#' one of the futures is _resolved_. If it is, then its result is collected
-#' in order to free up one worker slot.
+#' one of the futures is _resolved_. If there is one, then its result is
+#' collected in order to free up one worker slot.
 #'
 #' `resolved()` for `ClusterFuture` may receive immediate condition objects, rather
 #' than a [FutureResult], when polling the worker for results. In such cases, the
@@ -595,35 +595,24 @@ resolved.ClusterFuture <- function(x, run = TRUE, timeout = NULL, ...) {
     if (run) {
       nworkers <- length(workers)
       
-      ## 1. Are there available worker slots? Can we launch it immediately?
-      futures <- FutureRegistry(reg, action = "list", earlySignal = FALSE, debug = debug)
-
-      ## 2. No, all worker slots are occupied. Try to collect one
-      ## *resolved* future, if available, to free up one slot
-      if (length(futures) >= nworkers) {
-        ## Collect one resolved future, if one exists
-        FutureRegistry(reg, action = "collect-first", earlySignal = TRUE, debug = debug)
-        futures <- FutureRegistry(reg, action = "list", earlySignal = FALSE, debug = debug)
-      }
-
-      ## 3. Now, there should be available worker slots. Assert this
+      ## Collect one resolved future, if one exists
+      FutureRegistry(reg, action = "collect-first", earlySignal = TRUE, debug = debug)
+      
+      ## Are there available worker slots?
       avail <- rep(TRUE, times = length(workers))
-      if (length(futures) > 0 && length(futures) < nworkers) {
-        ## a. Get indices for all busy cluster nodes
-        nodes <- unlist(lapply(futures, FUN = function(f) f[["node"]]), use.names = FALSE)
-        stop_if_not(
-          length(nodes) == length(futures),
-          is.numeric(nodes), all(is.finite(nodes)),
-          all(nodes >= 1), all(nodes <= length(workers)),
-          length(unique(nodes)) == length(nodes)
-        )
-        avail[nodes] <- FALSE
-      }
+      futures <- FutureRegistry(reg, action = "list", earlySignal = FALSE, debug = debug)
+      nodes <- unlist(lapply(futures, FUN = function(f) f[["node"]]), use.names = FALSE)
+      stop_if_not(
+        length(nodes) == length(futures),
+        is.numeric(nodes), all(is.finite(nodes)),
+        all(nodes >= 1), all(nodes <= length(workers)),
+        length(unique(nodes)) == length(nodes)
+      )
+      avail[nodes] <- FALSE
       if (debug) mdebugf("avail: [n=%d] %s", length(avail), commaq(which(avail)))
-      stop_if_not(any(avail))
 
       ## 4. Launch this lazy future
-      future <- run(future)
+      if (any(avail)) future <- run(future)
     } ## if (run)
 
     ## Consider future non-resolved
