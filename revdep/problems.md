@@ -6,7 +6,7 @@
 * GitHub: NA
 * Source code: https://github.com/cran/adestr
 * Date/Publication: 2024-07-12 13:50:09 UTC
-* Number of recursive dependencies: 122
+* Number of recursive dependencies: 121
 
 Run `revdepcheck::revdep_details(, "adestr")` for more info
 
@@ -34,7 +34,7 @@ Run `revdepcheck::revdep_details(, "adestr")` for more info
 * GitHub: https://github.com/Sustainscapes/AICcPerm
 * Source code: https://github.com/cran/AICcPermanova
 * Date/Publication: 2023-04-11 13:40:06 UTC
-* Number of recursive dependencies: 101
+* Number of recursive dependencies: 100
 
 Run `revdepcheck::revdep_details(, "AICcPermanova")` for more info
 
@@ -75,6 +75,47 @@ Run `revdepcheck::revdep_details(, "alphaci")` for more info
         ‘inference.R’ ‘transformers.R’ ‘variance.R’
     ```
 
+# altdoc
+
+<details>
+
+* Version: 0.5.0
+* GitHub: https://github.com/etiennebacher/altdoc
+* Source code: https://github.com/cran/altdoc
+* Date/Publication: 2025-01-23 16:40:07 UTC
+* Number of recursive dependencies: 80
+
+Run `revdepcheck::revdep_details(, "altdoc")` for more info
+
+</details>
+
+## In both
+
+*   checking tests ...
+    ```
+      Running ‘spelling.R’
+      Running ‘testthat.R’
+     ERROR
+    Running the tests in ‘tests/testthat.R’ failed.
+    Last 50 lines of output:
+        5. │     │ └─base::withCallingHandlers(...)
+        6. │     └─rlang::eval_bare(quo_get_expr(.quo), quo_get_env(.quo))
+        7. └─altdoc::render_docs(path = getwd())
+        8.   └─altdoc:::.import_vignettes(...)
+        9.     └─base::vapply(...)
+    ...
+       2.   └─altdoc:::.import_vignettes(...)
+       3.     └─base::vapply(...)
+       4.       └─altdoc (local) FUN(X[[i]], ...)
+       5.         └─altdoc:::.render_one_vignette(...)
+       6.           └─altdoc:::.qmd2md(origin, tar_dir, verbose = verbose, preamble = pre)
+       7.             └─base::cat(out[[2]])
+      
+      [ FAIL 8 | WARN 0 | SKIP 8 | PASS 55 ]
+      Error: Test failures
+      Execution halted
+    ```
+
 # bamm
 
 <details>
@@ -83,38 +124,13 @@ Run `revdepcheck::revdep_details(, "alphaci")` for more info
 * GitHub: https://github.com/luismurao/bamm
 * Source code: https://github.com/cran/bamm
 * Date/Publication: 2024-07-06 20:22:11 UTC
-* Number of recursive dependencies: 101
+* Number of recursive dependencies: 100
 
 Run `revdepcheck::revdep_details(, "bamm")` for more info
 
 </details>
 
 ## In both
-
-*   checking tests ...
-    ```
-      Running ‘testthat.R’
-     ERROR
-    Running the tests in ‘tests/testthat.R’ failed.
-    Last 50 lines of output:
-        |                                                                            
-        |=====================================                                 |  52%
-        |                                                                            
-        |========================================                              |  57%
-        |                                                                            
-        |===========================================                           |  62%
-    ...
-      Backtrace:
-          ▆
-       1. └─bamm::sim2Animation(...) at test-bam.R:773:3
-       2.   └─animation::saveHTML(...) at bamm/R/sim2Animation.R:156:5
-       3.     └─bamm (local) ani.dev(img.fmt, width = ani.options("ani.width"), height = ani.options("ani.height"))
-       4.       └─grDevices::png(res = ani.res, ...) at bamm/R/sim2Animation.R:204:29
-      
-      [ FAIL 2 | WARN 2 | SKIP 0 | PASS 61 ]
-      Error: Test failures
-      Execution halted
-    ```
 
 *   checking dependencies in R code ... NOTE
     ```
@@ -131,7 +147,7 @@ Run `revdepcheck::revdep_details(, "bamm")` for more info
 * GitHub: https://github.com/BillPetti/baseballr
 * Source code: https://github.com/cran/baseballr
 * Date/Publication: 2024-01-16 12:50:02 UTC
-* Number of recursive dependencies: 118
+* Number of recursive dependencies: 117
 
 Run `revdepcheck::revdep_details(, "baseballr")` for more info
 
@@ -155,7 +171,7 @@ Run `revdepcheck::revdep_details(, "baseballr")` for more info
 * GitHub: https://github.com/mllg/batchtools
 * Source code: https://github.com/cran/batchtools
 * Date/Publication: 2023-04-20 14:20:06 UTC
-* Number of recursive dependencies: 81
+* Number of recursive dependencies: 80
 
 Run `revdepcheck::revdep_details(, "batchtools")` for more info
 
@@ -181,7 +197,7 @@ Run `revdepcheck::revdep_details(, "batchtools")` for more info
 * GitHub: https://github.com/joshcullen/bayesmove
 * Source code: https://github.com/cran/bayesmove
 * Date/Publication: 2021-10-22 08:50:09 UTC
-* Number of recursive dependencies: 163
+* Number of recursive dependencies: 161
 
 Run `revdepcheck::revdep_details(, "bayesmove")` for more info
 
@@ -204,7 +220,7 @@ Run `revdepcheck::revdep_details(, "bayesmove")` for more info
 * GitHub: https://github.com/dmolitor/bolasso
 * Source code: https://github.com/cran/bolasso
 * Date/Publication: 2024-12-08 22:20:12 UTC
-* Number of recursive dependencies: 70
+* Number of recursive dependencies: 69
 
 Run `revdepcheck::revdep_details(, "bolasso")` for more info
 
@@ -228,7 +244,7 @@ Run `revdepcheck::revdep_details(, "bolasso")` for more info
 * GitHub: https://github.com/paul-buerkner/brms
 * Source code: https://github.com/cran/brms
 * Date/Publication: 2024-09-23 13:00:29 UTC
-* Number of recursive dependencies: 206
+* Number of recursive dependencies: 205
 
 Run `revdepcheck::revdep_details(, "brms")` for more info
 
@@ -243,31 +259,70 @@ Run `revdepcheck::revdep_details(, "brms")` for more info
     See ‘/scratch/henrik/revdep/future/checks/brms/new/brms.Rcheck/00install.out’ for details.
     ```
 
-# canaper
+# caretSDM
 
 <details>
 
-* Version: 1.0.1
-* GitHub: https://github.com/ropensci/canaper
-* Source code: https://github.com/cran/canaper
-* Date/Publication: 2023-05-04 23:00:06 UTC
-* Number of recursive dependencies: 151
+* Version: 1.1.0.1
+* GitHub: https://github.com/luizesser/caretSDM
+* Source code: https://github.com/cran/caretSDM
+* Date/Publication: 2025-07-10 13:30:02 UTC
+* Number of recursive dependencies: 183
 
-Run `revdepcheck::revdep_details(, "canaper")` for more info
+Run `revdepcheck::revdep_details(, "caretSDM")` for more info
 
 </details>
 
 ## In both
 
-*   checking package dependencies ... ERROR
+*   checking examples ... ERROR
     ```
-    Packages required but not available: 'phyloregion', 'vegan'
+    Running examples in ‘caretSDM-Ex.R’ failed
+    The error most likely occurred in:
     
-    Packages suggested but not available for checking:
-      'picante', 'colorBlindness'
-    
-    See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
-    manual.
+    > ### Name: add_scenarios
+    > ### Title: Add scenarios to 'sdm_area'
+    > ### Aliases: add_scenarios set_scenarios_names scenarios_names
+    > ###   get_scenarios_data select_scenarios
+    > 
+    > ### ** Examples
+    > 
+    ...
+    Backtrace:
+        ▆
+     1. ├─caretSDM::select_predictors(...)
+     2. │ └─dplyr::select(x, ...)
+     3. ├─caretSDM::add_scenarios(sa, scen[1:2])
+     4. └─caretSDM:::add_scenarios.stars(sa, scen[1:2])
+     5.   └─caretSDM::set_variables_names(scen, sa)
+     6.     └─cli::cli_abort(...)
+     7.       └─rlang::abort(...)
+    Execution halted
+    ```
+
+*   checking tests ...
+    ```
+      Running ‘testthat.R’
+     ERROR
+    Running the tests in ‘tests/testthat.R’ failed.
+    Last 50 lines of output:
+        8. │       │ └─base::withCallingHandlers(...)
+        9. │       └─tidyselect:::vars_select_eval(...)
+       10. │         └─tidyselect:::walk_data_tree(expr, data_mask, context_mask)
+       11. │           └─tidyselect:::eval_c(expr, data_mask, context_mask)
+       12. │             └─tidyselect:::reduce_sels(node, data_mask, context_mask, init = init)
+       13. │               └─tidyselect:::walk_data_tree(new, data_mask, context_mask)
+    ...
+       20. │                             └─tidyselect:::chr_as_locations(x, vars, call = call, arg = arg)
+       21. │                               └─vctrs::vec_as_location(...)
+       22. └─vctrs (local) `<fn>`()
+       23.   └─vctrs:::stop_subscript_oob(...)
+       24.     └─vctrs:::stop_subscript(...)
+       25.       └─rlang::abort(...)
+      
+      [ FAIL 15 | WARN 120 | SKIP 23 | PASS 416 ]
+      Error: Test failures
+      Execution halted
     ```
 
 # ceRNAnetsim
@@ -278,7 +333,7 @@ Run `revdepcheck::revdep_details(, "canaper")` for more info
 * GitHub: https://github.com/selcenari/ceRNAnetsim
 * Source code: https://github.com/cran/ceRNAnetsim
 * Date/Publication: 2025-04-15
-* Number of recursive dependencies: 97
+* Number of recursive dependencies: 95
 
 Run `revdepcheck::revdep_details(, "ceRNAnetsim")` for more info
 
@@ -307,7 +362,7 @@ Run `revdepcheck::revdep_details(, "ceRNAnetsim")` for more info
 * GitHub: https://github.com/cobriniklab/chevreulShiny
 * Source code: https://github.com/cran/chevreulShiny
 * Date/Publication: 2025-04-15
-* Number of recursive dependencies: 267
+* Number of recursive dependencies: 266
 
 Run `revdepcheck::revdep_details(, "chevreulShiny")` for more info
 
@@ -328,7 +383,7 @@ Run `revdepcheck::revdep_details(, "chevreulShiny")` for more info
 * GitHub: https://github.com/vallotlab/ChromSCape
 * Source code: https://github.com/cran/ChromSCape
 * Date/Publication: 2024-10-29
-* Number of recursive dependencies: 229
+* Number of recursive dependencies: 228
 
 Run `revdepcheck::revdep_details(, "ChromSCape")` for more info
 
@@ -336,16 +391,105 @@ Run `revdepcheck::revdep_details(, "ChromSCape")` for more info
 
 ## In both
 
-*   checking package dependencies ... ERROR
+*   checking examples ... ERROR
     ```
-    Packages required but not available:
-      'shinydashboardPlus', 'kableExtra', 'batchelor', 'gggenes', 'scran',
-      'scater'
+    Running examples in ‘ChromSCape-Ex.R’ failed
+    The error most likely occurred in:
     
-    Packages suggested but not available for checking: 'Signac', 'bluster'
+    > ### Name: get_pathway_mat_scExp
+    > ### Title: Get pathway matrix
+    > ### Aliases: get_pathway_mat_scExp
+    > 
+    > ### ** Examples
+    > 
+    > data(scExp)
+    > mat = get_pathway_mat_scExp(scExp, pathways = "KEGG_T_CELL_RECEPTOR_SIGNALING_PATHWAY")
+    ChromSCape::gene_set_enrichment_analysis_scExp - Loading hg38 MSigDB gene sets.
+    Error: nchar(db_species) not equal to 2
+    Execution halted
+    ```
+
+*   checking dependencies in R code ... WARNING
+    ```
+    'library' or 'require' call not declared from: ‘dplyr’
+    'library' or 'require' call to ‘dplyr’ in package code.
+      Please use :: or requireNamespace() instead.
+      See section 'Suggested packages' in the 'Writing R Extensions' manual.
+    ```
+
+*   checking for code/documentation mismatches ... WARNING
+    ```
+    Codoc mismatches from Rd file 'generate_analysis.Rd':
+    generate_analysis
+      Code: function(input_data_folder, analysis_name = "Analysis_1",
+                     output_directory = "./", input_data_type = c("scBED",
+                     "DenseMatrix", "SparseMatrix", "scBAM")[1],
+                     feature_count_on = c("bins", "genebody", "peaks")[1],
+                     feature_count_parameter = 50000, rebin_sparse_matrix =
+                     FALSE, ref_genome = c("hg38", "mm10")[1], run =
+                     c("filter", "CNA", "cluster", "consensus", "coverage",
+                     "DA", "GSA", "report")[c(1, 3, 5, 6, 7, 8)],
+    ...
+      Mismatches in argument names:
+        Position: 5 Code: feature_count_on Docs: rebin_sparse_matrix
+        Position: 6 Code: feature_count_parameter Docs: feature_count_on
+        Position: 7 Code: rebin_sparse_matrix Docs: feature_count_parameter
+      Mismatches in argument default values:
+        Name: 'run'
+        Code: c("filter", "CNA", "cluster", "consensus", "coverage", "DA", 
+              "GSA", "report")[c(1, 3, 5, 6, 7, 8)]
+        Docs: c("filter", "CNA", "cluster", "consensus", "peak_call", "coverage", 
+              "DA", "GSA", "report")[c(1, 3, 6, 7, 8, 9)]
+    ```
+
+*   checking Rd \usage sections ... WARNING
+    ```
+    Undocumented arguments in Rd file 'rebin_matrix.Rd'
+      ‘rebin_function’
     
-    See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
-    manual.
+    Functions with \usage entries need to have the appropriate \alias
+    entries, and all their arguments documented.
+    The \usage entries must correspond to syntactically valid R code.
+    See chapter ‘Writing R documentation files’ in the ‘Writing R
+    Extensions’ manual.
+    ```
+
+*   checking for hidden files and directories ... NOTE
+    ```
+    Found the following hidden files and directories:
+      .BBSoptions
+    These were most likely included in error. See section ‘Package
+    structure’ in the ‘Writing R Extensions’ manual.
+    ```
+
+*   checking R code for possible problems ... NOTE
+    ```
+    bams_to_matrix_indexes: no visible binding for global variable
+      ‘files_dir_list’
+    enrich_TF_ChEA3_genes: no visible binding for global variable
+      ‘CheA3_TF_nTargets’
+    filter_correlated_cell_scExp: no visible binding for global variable
+      ‘run_tsne’
+    generate_analysis: no visible global function definition for ‘head’
+    generate_analysis: no visible binding for global variable ‘k’
+    generate_analysis: no visible binding for global variable
+      ‘clusterConsensus’
+    ...
+    subset_bam_call_peaks: no visible binding for global variable
+      ‘merged_bam’
+    Undefined global functions or variables:
+      CheA3_TF_nTargets Component Fri_cyto Gain_or_Loss Gene TF V1 V2
+      absolute_value cluster clusterConsensus cytoBand files_dir_list genes
+      group head k merged_bam molecule ncells new_row orientation
+      origin_value percent_active run_tsne sample_id total_counts
+    Consider adding
+      importFrom("utils", "head")
+    to your NAMESPACE file.
+    ```
+
+*   checking Rd files ... NOTE
+    ```
+    prepare_Rd: raw_counts_to_sparse_matrix.Rd:6-8: Dropping empty section \source
     ```
 
 # civis
@@ -356,7 +500,7 @@ Run `revdepcheck::revdep_details(, "ChromSCape")` for more info
 * GitHub: https://github.com/civisanalytics/civis-r
 * Source code: https://github.com/cran/civis
 * Date/Publication: 2023-03-31 08:00:03 UTC
-* Number of recursive dependencies: 86
+* Number of recursive dependencies: 85
 
 Run `revdepcheck::revdep_details(, "civis")` for more info
 
@@ -397,7 +541,7 @@ Run `revdepcheck::revdep_details(, "civis")` for more info
 * GitHub: https://github.com/snaketron/ClustIRR
 * Source code: https://github.com/cran/ClustIRR
 * Date/Publication: 2025-04-15
-* Number of recursive dependencies: 109
+* Number of recursive dependencies: 108
 
 Run `revdepcheck::revdep_details(, "ClustIRR")` for more info
 
@@ -505,7 +649,7 @@ Run `revdepcheck::revdep_details(, "collinear")` for more info
 * GitHub: https://github.com/FloSchuberth/cSEM
 * Source code: https://github.com/cran/cSEM
 * Date/Publication: 2025-05-16 09:40:14 UTC
-* Number of recursive dependencies: 144
+* Number of recursive dependencies: 143
 
 Run `revdepcheck::revdep_details(, "cSEM")` for more info
 
@@ -527,7 +671,7 @@ Run `revdepcheck::revdep_details(, "cSEM")` for more info
 * GitHub: https://github.com/adsoncostanzifilho/CSGo
 * Source code: https://github.com/cran/CSGo
 * Date/Publication: 2021-05-07 18:50:02 UTC
-* Number of recursive dependencies: 74
+* Number of recursive dependencies: 73
 
 Run `revdepcheck::revdep_details(, "CSGo")` for more info
 
@@ -542,31 +686,52 @@ Run `revdepcheck::revdep_details(, "CSGo")` for more info
       All declared Imports should be used.
     ```
 
-# dartR.popgen
+# ctsem
 
 <details>
 
-* Version: 1.0.0
-* GitHub: NA
-* Source code: https://github.com/cran/dartR.popgen
-* Date/Publication: 2024-06-27 23:20:04 UTC
-* Number of recursive dependencies: 174
+* Version: 3.10.4
+* GitHub: https://github.com/cdriveraus/ctsem
+* Source code: https://github.com/cran/ctsem
+* Date/Publication: 2025-06-30 16:40:11 UTC
+* Number of recursive dependencies: 164
 
-Run `revdepcheck::revdep_details(, "dartR.popgen")` for more info
+Run `revdepcheck::revdep_details(, "ctsem")` for more info
 
 </details>
 
 ## In both
 
-*   checking package dependencies ... ERROR
+*   checking whether package ‘ctsem’ can be installed ... WARNING
     ```
-    Packages required but not available: 'adegenet', 'dartR.base', 'dartR.data'
+    Found the following significant warnings:
+      Warning: namespace ‘colorspace’ is not available and has been replaced
+    See ‘/scratch/henrik/revdep/future/checks/ctsem/new/ctsem.Rcheck/00install.out’ for details.
+    ```
+
+*   checking re-building of vignette outputs ... WARNING
+    ```
+    Error(s) in re-building vignettes:
+      ...
+    --- re-building ‘hierarchicalmanual.rnw’ using knitr_notangle
+    Warning in texi2dvi(file = file, pdf = TRUE, clean = clean, quiet = quiet,  :
+      texi2dvi script/program not available, using emulation
+    Error: processing vignette 'hierarchicalmanual.rnw' failed with diagnostics:
+    unable to run pdflatex on 'hierarchicalmanual.tex'
+    LaTeX errors:
+    ! LaTeX Error: File `apacite.sty' not found.
     
-    Packages suggested but not available for checking:
-      'iterpc', 'snpStats', 'gsubfn'
+    ...
+    l.62 \bibliographystyle
+                           {apacite}     % Set bibliography style^^M
+    !  ==> Fatal error occurred, no output PDF file produced!
+    --- failed re-building ‘hierarchicalmanual.rnw’
     
-    See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
-    manual.
+    SUMMARY: processing the following file failed:
+      ‘hierarchicalmanual.rnw’
+    
+    Error: Vignette re-building failed.
+    Execution halted
     ```
 
 # dipsaus
@@ -583,12 +748,39 @@ Run `revdepcheck::revdep_details(, "dipsaus")` for more info
 
 </details>
 
+## Newly fixed
+
+*   checking examples ... ERROR
+    ```
+    Running examples in ‘dipsaus-Ex.R’ failed
+    The error most likely occurred in:
+    
+    > ### Name: lock
+    > ### Title: Create or Unlock a Lock
+    > ### Aliases: lock dipsaus_lock dipsaus_unlock dipsaus_resetlocks
+    > 
+    > ### ** Examples
+    > 
+    > 
+    ...
+    > dipsaus_unlock('testlocker', timeout = 0.01)
+    [1] TRUE
+    > 
+    > # Create a locker, return TRUE
+    > lock_success = dipsaus_lock('testlocker')
+    Warning in file(con, "w") :
+      cannot open file '/c4/home/henrik/.cache/R/dipsaus/file_locks/testlocker': No such file or directory
+    Error in file(con, "w") : cannot open the connection
+    Calls: dipsaus_lock -> writeLines -> file
+    Execution halted
+    ```
+
 ## In both
 
 *   checking compiled code ... NOTE
     ```
     File ‘dipsaus/libs/dipsaus.so’:
-      Found non-API calls to R: ‘CLOENV’, ‘ENCLOS’
+      Found non-API call to R: ‘ENCLOS’
     
     Compiled code should not call non-API entry points in R.
     
@@ -605,7 +797,7 @@ Run `revdepcheck::revdep_details(, "dipsaus")` for more info
 * GitHub: https://github.com/DiskFrame/disk.frame
 * Source code: https://github.com/cran/disk.frame
 * Date/Publication: 2023-08-24 16:20:10 UTC
-* Number of recursive dependencies: 96
+* Number of recursive dependencies: 95
 
 Run `revdepcheck::revdep_details(, "disk.frame")` for more info
 
@@ -664,40 +856,15 @@ Run `revdepcheck::revdep_details(, "dispositionEffect")` for more info
       Execution halted
     ```
 
-*   checking re-building of vignette outputs ... ERROR
-    ```
-    Error(s) in re-building vignettes:
-    --- re-building ‘de-analysis.Rmd’ using rmarkdown
-    Warning in png(..., res = dpi, units = "in") :
-      unable to open connection to X11 display ''
-    
-    Quitting from de-analysis.Rmd:48-56 [unnamed-chunk-2]
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    <error/rlang_error>
-    Error in `library()`:
-    ! there is no package called 'skimr'
-    ...
-    --- re-building ‘getting-started.Rmd’ using rmarkdown
-    Warning in png(..., res = dpi, units = "in") :
-      unable to open connection to X11 display ''
-    --- finished re-building ‘getting-started.Rmd’
-    
-    SUMMARY: processing the following file failed:
-      ‘de-analysis.Rmd’
-    
-    Error: Vignette re-building failed.
-    Execution halted
-    ```
-
 # EFAtools
 
 <details>
 
-* Version: 0.5.0
+* Version: 0.6.0
 * GitHub: https://github.com/mdsteiner/EFAtools
 * Source code: https://github.com/cran/EFAtools
-* Date/Publication: 2025-05-23 21:12:02 UTC
-* Number of recursive dependencies: 90
+* Date/Publication: 2025-06-19 08:30:02 UTC
+* Number of recursive dependencies: 89
 
 Run `revdepcheck::revdep_details(, "EFAtools")` for more info
 
@@ -719,7 +886,7 @@ Run `revdepcheck::revdep_details(, "EFAtools")` for more info
 * GitHub: https://github.com/lance-waller-lab/envi
 * Source code: https://github.com/cran/envi
 * Date/Publication: 2024-11-06 19:00:03 UTC
-* Number of recursive dependencies: 151
+* Number of recursive dependencies: 150
 
 Run `revdepcheck::revdep_details(, "envi")` for more info
 
@@ -731,9 +898,118 @@ Run `revdepcheck::revdep_details(, "envi")` for more info
     ```
     Found the following significant warnings:
       Warning: no DISPLAY variable so Tk is not available
-    See ‘/home/henrik/futureverse/future/revdep/checks/envi/new/envi.Rcheck/00install.out’ for details.
+    See ‘/scratch/henrik/revdep/future/checks/envi/new/envi.Rcheck/00install.out’ for details.
     ```
 
+# EQRN
+
+<details>
+
+* Version: 0.1.1
+* GitHub: https://github.com/opasche/EQRN
+* Source code: https://github.com/cran/EQRN
+* Date/Publication: 2025-03-17 20:40:02 UTC
+* Number of recursive dependencies: 39
+
+Run `revdepcheck::revdep_details(, "EQRN")` for more info
+
+</details>
+
+## In both
+
+*   checking examples ... ERROR
+    ```
+    Running examples in ‘EQRN-Ex.R’ failed
+    The error most likely occurred in:
+    
+    > ### Name: default_device
+    > ### Title: Default torch device
+    > ### Aliases: default_device
+    > 
+    > ### ** Examples
+    > 
+    > device <- default_device()
+    Error in cpp_cuda_is_available() : 
+      Lantern is not loaded. Please use `install_torch()` to install additional dependencies.
+    Calls: default_device -> <Anonymous> -> cpp_cuda_is_available
+    Execution halted
+    ```
+
+*   checking whether package ‘EQRN’ can be installed ... WARNING
+    ```
+    Found the following significant warnings:
+      Warning: ℹ torch failed to start, restart your R session to try again.
+    See ‘/scratch/henrik/revdep/future/checks/EQRN/new/EQRN.Rcheck/00install.out’ for details.
+    ```
+
+# FastRet
+
+<details>
+
+* Version: 1.1.4
+* GitHub: https://github.com/spang-lab/FastRet
+* Source code: https://github.com/cran/FastRet
+* Date/Publication: 2025-02-10 18:30:02 UTC
+* Number of recursive dependencies: 187
+
+Run `revdepcheck::revdep_details(, "FastRet")` for more info
+
+</details>
+
+## In both
+
+*   checking whether package ‘FastRet’ can be installed ... ERROR
+    ```
+    Installation failed.
+    See ‘/scratch/henrik/revdep/future/checks/FastRet/new/FastRet.Rcheck/00install.out’ for details.
+    ```
+
+## Installation
+
+### Devel
+
+```
+* installing *source* package ‘FastRet’ ...
+** this is package ‘FastRet’ version ‘1.1.4’
+** package ‘FastRet’ successfully unpacked and MD5 sums checked
+** using staged installation
+** R
+** data
+*** moving datasets to lazyload DB
+** inst
+** byte-compile and prepare package for lazy loading
+Error: .onLoad failed in loadNamespace() for 'rJava', details:
+  call: dyn.load(file, DLLpath = DLLpath, ...)
+  error: unable to load shared object '/scratch/henrik/revdep/future/library/FastRet/rJava/libs/rJava.so':
+  libjvm.so: cannot open shared object file: No such file or directory
+Execution halted
+ERROR: lazy loading failed for package ‘FastRet’
+* removing ‘/scratch/henrik/revdep/future/checks/FastRet/new/FastRet.Rcheck/FastRet’
+
+
+```
+### CRAN
+
+```
+* installing *source* package ‘FastRet’ ...
+** this is package ‘FastRet’ version ‘1.1.4’
+** package ‘FastRet’ successfully unpacked and MD5 sums checked
+** using staged installation
+** R
+** data
+*** moving datasets to lazyload DB
+** inst
+** byte-compile and prepare package for lazy loading
+Error: .onLoad failed in loadNamespace() for 'rJava', details:
+  call: dyn.load(file, DLLpath = DLLpath, ...)
+  error: unable to load shared object '/scratch/henrik/revdep/future/library/FastRet/rJava/libs/rJava.so':
+  libjvm.so: cannot open shared object file: No such file or directory
+Execution halted
+ERROR: lazy loading failed for package ‘FastRet’
+* removing ‘/scratch/henrik/revdep/future/checks/FastRet/old/FastRet.Rcheck/FastRet’
+
+
+```
 # fastRhockey
 
 <details>
@@ -742,7 +1018,7 @@ Run `revdepcheck::revdep_details(, "envi")` for more info
 * GitHub: https://github.com/sportsdataverse/fastRhockey
 * Source code: https://github.com/cran/fastRhockey
 * Date/Publication: 2022-10-25 20:55:15 UTC
-* Number of recursive dependencies: 113
+* Number of recursive dependencies: 112
 
 Run `revdepcheck::revdep_details(, "fastRhockey")` for more info
 
@@ -790,7 +1066,7 @@ Run `revdepcheck::revdep_details(, "fdacluster")` for more info
 * GitHub: NA
 * Source code: https://github.com/cran/fect
 * Date/Publication: 2022-10-14 09:52:32 UTC
-* Number of recursive dependencies: 67
+* Number of recursive dependencies: 66
 
 Run `revdepcheck::revdep_details(, "fect")` for more info
 
@@ -817,7 +1093,7 @@ Run `revdepcheck::revdep_details(, "fect")` for more info
 * GitHub: https://github.com/huizezhang-sherry/ferrn
 * Source code: https://github.com/cran/ferrn
 * Date/Publication: 2024-06-23 22:30:07 UTC
-* Number of recursive dependencies: 122
+* Number of recursive dependencies: 145
 
 Run `revdepcheck::revdep_details(, "ferrn")` for more info
 
@@ -850,16 +1126,61 @@ Run `revdepcheck::revdep_details(, "FLAMES")` for more info
 
 ## In both
 
-*   checking package dependencies ... ERROR
+*   checking examples ... ERROR
     ```
-    Packages required but not available:
-      'basilisk', 'circlize', 'ComplexHeatmap', 'DropletUtils',
-      'txdbmaker', 'ggbio', 'scater', 'scatterpie', 'scran'
+    Running examples in ‘FLAMES-Ex.R’ failed
+    The error most likely occurred in:
     
-    Packages suggested but not available for checking: 'GEOquery', 'ShortRead'
-    
-    See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
-    manual.
+    > ### Name: create_sce_from_dir
+    > ### Title: Create 'SingleCellExperiment' object from 'FLAMES' output folder
+    > ### Aliases: create_sce_from_dir
+    > 
+    > ### ** Examples
+    > 
+    > outdir <- tempfile()
+    ...
+        return _find_and_load(name, import_)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+      File "/scratch/henrik/revdep/future/checks/FLAMES/new/FLAMES.Rcheck/FLAMES/python/count_gene.py", line 8, in <module>
+        import pandas as pd
+      File "/scratch/henrik/revdep/future/library/FLAMES/reticulate/python/rpytools/loader.py", line 122, in _find_and_load_hook
+        return _run_hook(name, _hook)
+               ^^^^^^^^^^^^^^^^^^^^^^
+      File "/scratch/henrik/revdep/future/library/FLA
+    Calls: <Anonymous> ... tryCatch -> tryCatchList -> tryCatchOne -> <Anonymous>
+    Execution halted
+    ```
+
+*   checking whether package ‘FLAMES’ can be installed ... NOTE
+    ```
+    Found the following notes/warnings:
+      Non-staged installation was used
+    See ‘/scratch/henrik/revdep/future/checks/FLAMES/new/FLAMES.Rcheck/00install.out’ for details.
+    ```
+
+*   checking R code for possible problems ... NOTE
+    ```
+    addRowRanges: no visible global function definition for ‘head’
+    chisq_test_by_gene: no visible global function definition for
+      ‘chisq.test’
+    create_spe: no visible binding for global variable ‘barcode’
+    create_spe: no visible binding for global variable ‘in_tissue’
+    filter_coverage: no visible global function definition for
+      ‘starts_with’
+    filter_coverage: no visible binding for global variable ‘filter_res’
+    find_barcode: no visible binding for global variable ‘Sample’
+    find_barcode: no visible binding for global variable ‘Outfile’
+    ...
+      multi-matching reads mutation_index n_reads na.omit name nucleotide
+      output p.value pct pos read1_with_adapter read_counts ref
+      scale_alpha_continuous scale_colour_gradient single match reads
+      starts_with test total total reads total_counts tr_length transcript
+      undemultiplexted reads value which_label x y
+    Consider adding
+      importFrom("base", "match", "single")
+      importFrom("stats", "chisq.test", "na.omit")
+      importFrom("utils", "head")
+    to your NAMESPACE file.
     ```
 
 # flowGraph
@@ -870,7 +1191,7 @@ Run `revdepcheck::revdep_details(, "FLAMES")` for more info
 * GitHub: https://github.com/aya49/flowGraph
 * Source code: https://github.com/cran/flowGraph
 * Date/Publication: 2025-04-15
-* Number of recursive dependencies: 90
+* Number of recursive dependencies: 89
 
 Run `revdepcheck::revdep_details(, "flowGraph")` for more info
 
@@ -905,7 +1226,7 @@ Run `revdepcheck::revdep_details(, "flowGraph")` for more info
 * GitHub: https://github.com/nredell/forecastML
 * Source code: https://github.com/cran/forecastML
 * Date/Publication: 2020-05-07 15:10:17 UTC
-* Number of recursive dependencies: 101
+* Number of recursive dependencies: 100
 
 Run `revdepcheck::revdep_details(, "forecastML")` for more info
 
@@ -923,11 +1244,11 @@ Run `revdepcheck::revdep_details(, "forecastML")` for more info
 
 <details>
 
-* Version: 0.3.1
+* Version: 0.3.3
 * GitHub: https://github.com/emilioluissaenzguillen/GeDS
 * Source code: https://github.com/cran/GeDS
-* Date/Publication: 2025-04-22 07:30:06 UTC
-* Number of recursive dependencies: 74
+* Date/Publication: 2025-06-30 07:10:06 UTC
+* Number of recursive dependencies: 76
 
 Run `revdepcheck::revdep_details(, "GeDS")` for more info
 
@@ -940,6 +1261,47 @@ Run `revdepcheck::revdep_details(, "GeDS")` for more info
     Found the following significant warnings:
       Warning: no DISPLAY variable so Tk is not available
     See ‘/scratch/henrik/revdep/future/checks/GeDS/new/GeDS.Rcheck/00install.out’ for details.
+    ```
+
+# geocmeans
+
+<details>
+
+* Version: 0.3.4
+* GitHub: https://github.com/JeremyGelb/geocmeans
+* Source code: https://github.com/cran/geocmeans
+* Date/Publication: 2023-09-12 03:10:02 UTC
+* Number of recursive dependencies: 207
+
+Run `revdepcheck::revdep_details(, "geocmeans")` for more info
+
+</details>
+
+## In both
+
+*   checking re-building of vignette outputs ... ERROR
+    ```
+    Error(s) in re-building vignettes:
+    --- re-building ‘introduction.Rmd’ using rmarkdown
+    
+    Quitting from introduction.Rmd:487-489 [unnamed-chunk-38]
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    <error/rlang_error>
+    Error in `st_transform.bbox()`:
+    ! method not available for GDAL: 3.0.4
+    ---
+    Backtrace:
+    ...
+    
+    Error: processing vignette 'introduction.Rmd' failed with diagnostics:
+    method not available for GDAL: 3.0.4
+    --- failed re-building ‘introduction.Rmd’
+    
+    SUMMARY: processing the following file failed:
+      ‘introduction.Rmd’
+    
+    Error: Vignette re-building failed.
+    Execution halted
     ```
 
 # googleComputeEngineR
@@ -991,7 +1353,7 @@ Run `revdepcheck::revdep_details(, "googleComputeEngineR")` for more info
 * GitHub: NA
 * Source code: https://github.com/cran/googleTagManageR
 * Date/Publication: 2022-04-16 18:12:29 UTC
-* Number of recursive dependencies: 67
+* Number of recursive dependencies: 66
 
 Run `revdepcheck::revdep_details(, "googleTagManageR")` for more info
 
@@ -1014,7 +1376,7 @@ Run `revdepcheck::revdep_details(, "googleTagManageR")` for more info
 * GitHub: https://github.com/comeetie/greed
 * Source code: https://github.com/cran/greed
 * Date/Publication: 2022-10-03 22:00:05 UTC
-* Number of recursive dependencies: 94
+* Number of recursive dependencies: 93
 
 Run `revdepcheck::revdep_details(, "greed")` for more info
 
@@ -1035,7 +1397,7 @@ Run `revdepcheck::revdep_details(, "greed")` for more info
 * GitHub: NA
 * Source code: https://github.com/cran/gsynth
 * Date/Publication: 2021-08-06 07:50:05 UTC
-* Number of recursive dependencies: 63
+* Number of recursive dependencies: 62
 
 Run `revdepcheck::revdep_details(, "gsynth")` for more info
 
@@ -1048,30 +1410,6 @@ Run `revdepcheck::revdep_details(, "gsynth")` for more info
       Specified C++11: please drop specification unless essential
     ```
 
-# gtfs2emis
-
-<details>
-
-* Version: 0.1.1
-* GitHub: https://github.com/ipeaGIT/gtfs2emis
-* Source code: https://github.com/cran/gtfs2emis
-* Date/Publication: 2024-12-02 15:40:12 UTC
-* Number of recursive dependencies: 92
-
-Run `revdepcheck::revdep_details(, "gtfs2emis")` for more info
-
-</details>
-
-## In both
-
-*   checking package dependencies ... ERROR
-    ```
-    Package required but not available: ‘gtfs2gps’
-    
-    See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
-    manual.
-    ```
-
 # gtfs2gps
 
 <details>
@@ -1080,13 +1418,38 @@ Run `revdepcheck::revdep_details(, "gtfs2emis")` for more info
 * GitHub: https://github.com/ipeaGIT/gtfs2gps
 * Source code: https://github.com/cran/gtfs2gps
 * Date/Publication: 2024-10-08 07:00:06 UTC
-* Number of recursive dependencies: 87
+* Number of recursive dependencies: 86
 
 Run `revdepcheck::revdep_details(, "gtfs2gps")` for more info
 
 </details>
 
 ## In both
+
+*   checking tests ...
+    ```
+      Running ‘testthat.R’
+     ERROR
+    Running the tests in ‘tests/testthat.R’ failed.
+    Complete output:
+      > library(testthat)
+      > library(gtfs2gps)
+      gtfs2gps version 2.1-2 is now loaded
+      NOTE: All filter functions from gtfs2gps were removed
+      Please replace them by similar functions from gtfstools
+      > 
+    ...
+       4.     └─terra (local) .local(x, ...)
+       5.       ├─terra::makeValid(x)
+       6.       └─terra::makeValid(x)
+       7.         └─terra (local) .local(x, ...)
+       8.           └─terra:::messages(x)
+       9.             └─terra:::error(f, x@pntr$getError())
+      
+      [ FAIL 1 | WARN 0 | SKIP 0 | PASS 119 ]
+      Error: Test failures
+      Execution halted
+    ```
 
 *   checking DESCRIPTION meta-information ... NOTE
     ```
@@ -1121,29 +1484,6 @@ Run `revdepcheck::revdep_details(, "hero")` for more info
     checkRd: (-1) hero.Rd:69: Lost braces
         69 | code{package == "Rmpi"}, then \code{\link[Rmpi]{mpi.applyLB}} is used.}
            |     ^
-    ```
-
-# hwep
-
-<details>
-
-* Version: 2.0.2
-* GitHub: https://github.com/dcgerard/hwep
-* Source code: https://github.com/cran/hwep
-* Date/Publication: 2023-05-16 17:40:02 UTC
-* Number of recursive dependencies: 112
-
-Run `revdepcheck::revdep_details(, "hwep")` for more info
-
-</details>
-
-## In both
-
-*   checking Rd files ... NOTE
-    ```
-    checkRd: (-1) simgl.Rd:50: Lost braces; missing escapes or markup?
-        50 | Uses the {updog} R package for simulating read counts and generating
-           |          ^
     ```
 
 # hydroloom
@@ -1184,7 +1524,7 @@ Run `revdepcheck::revdep_details(, "hydroloom")` for more info
 * GitHub: https://github.com/broadinstitute/inferCNV
 * Source code: https://github.com/cran/infercnv
 * Date/Publication: 2025-04-15
-* Number of recursive dependencies: 201
+* Number of recursive dependencies: 200
 
 Run `revdepcheck::revdep_details(, "infercnv")` for more info
 
@@ -1262,7 +1602,7 @@ Run `revdepcheck::revdep_details(, "InPAS")` for more info
 * GitHub: NA
 * Source code: https://github.com/cran/interflex
 * Date/Publication: 2021-05-18 11:40:02 UTC
-* Number of recursive dependencies: 89
+* Number of recursive dependencies: 88
 
 Run `revdepcheck::revdep_details(, "interflex")` for more info
 
@@ -1283,7 +1623,7 @@ Run `revdepcheck::revdep_details(, "interflex")` for more info
 * GitHub: https://github.com/calabrialab/ISAnalytics
 * Source code: https://github.com/cran/ISAnalytics
 * Date/Publication: 2025-04-15
-* Number of recursive dependencies: 176
+* Number of recursive dependencies: 175
 
 Run `revdepcheck::revdep_details(, "ISAnalytics")` for more info
 
@@ -1306,7 +1646,7 @@ Run `revdepcheck::revdep_details(, "ISAnalytics")` for more info
 * GitHub: NA
 * Source code: https://github.com/cran/ivmte
 * Date/Publication: 2021-09-17 12:20:07 UTC
-* Number of recursive dependencies: 116
+* Number of recursive dependencies: 115
 
 Run `revdepcheck::revdep_details(, "ivmte")` for more info
 
@@ -1324,28 +1664,6 @@ Run `revdepcheck::revdep_details(, "ivmte")` for more info
            |                                               ^
     ```
 
-# JANE
-
-<details>
-
-* Version: 1.0.0
-* GitHub: https://github.com/a1arakkal/JANE
-* Source code: https://github.com/cran/JANE
-* Date/Publication: 2025-03-22 18:00:02 UTC
-* Number of recursive dependencies: 51
-
-Run `revdepcheck::revdep_details(, "JANE")` for more info
-
-</details>
-
-## In both
-
-*   checking dependencies in R code ... NOTE
-    ```
-    Namespace in Imports field not imported from: ‘progress’
-      All declared Imports should be used.
-    ```
-
 # JointAI
 
 <details>
@@ -1354,7 +1672,7 @@ Run `revdepcheck::revdep_details(, "JANE")` for more info
 * GitHub: https://github.com/nerler/JointAI
 * Source code: https://github.com/cran/JointAI
 * Date/Publication: 2024-04-02 18:25:00 UTC
-* Number of recursive dependencies: 125
+* Number of recursive dependencies: 124
 
 Run `revdepcheck::revdep_details(, "JointAI")` for more info
 
@@ -1378,7 +1696,7 @@ Run `revdepcheck::revdep_details(, "JointAI")` for more info
 * GitHub: NA
 * Source code: https://github.com/cran/kappaGold
 * Date/Publication: 2024-12-09 22:50:02 UTC
-* Number of recursive dependencies: 50
+* Number of recursive dependencies: 49
 
 Run `revdepcheck::revdep_details(, "kappaGold")` for more info
 
@@ -1394,6 +1712,84 @@ Run `revdepcheck::revdep_details(, "kappaGold")` for more info
         ‘kappa_inference.R’
     ```
 
+# kmeRtone
+
+<details>
+
+* Version: 1.0
+* GitHub: https://github.com/SahakyanLab/kmeRtone
+* Source code: https://github.com/cran/kmeRtone
+* Date/Publication: 2024-08-30 10:50:06 UTC
+* Number of recursive dependencies: 75
+
+Run `revdepcheck::revdep_details(, "kmeRtone")` for more info
+
+</details>
+
+## In both
+
+*   checking whether package ‘kmeRtone’ can be installed ... ERROR
+    ```
+    Installation failed.
+    See ‘/scratch/henrik/revdep/future/checks/kmeRtone/new/kmeRtone.Rcheck/00install.out’ for details.
+    ```
+
+## Installation
+
+### Devel
+
+```
+* installing *source* package ‘kmeRtone’ ...
+** this is package ‘kmeRtone’ version ‘1.0’
+** package ‘kmeRtone’ successfully unpacked and MD5 sums checked
+** using staged installation
+** libs
+using C++ compiler: ‘g++ (GCC) 13.3.1 20240611 (Red Hat 13.3.1-2)’
+Error in loadNamespace(x) : there is no package called ‘Rhtslib’
+Calls: loadNamespace -> withRestarts -> withOneRestart -> doWithOneRestart
+Execution halted
+g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG  -I'/scratch/henrik/revdep/future/library/kmeRtone/Rcpp/include' -I'/scratch/henrik/revdep/future/library/kmeRtone/stringi/include' -I/usr/local/include    -fpic  -g -O2   -c RcppExports.cpp -o RcppExports.o
+...
+*** moving datasets to lazyload DB
+** inst
+** byte-compile and prepare package for lazy loading
+Error: .onLoad failed in loadNamespace() for 'rJava', details:
+  call: dyn.load(file, DLLpath = DLLpath, ...)
+  error: unable to load shared object '/scratch/henrik/revdep/future/library/kmeRtone/rJava/libs/rJava.so':
+  libjvm.so: cannot open shared object file: No such file or directory
+Execution halted
+ERROR: lazy loading failed for package ‘kmeRtone’
+* removing ‘/scratch/henrik/revdep/future/checks/kmeRtone/new/kmeRtone.Rcheck/kmeRtone’
+
+
+```
+### CRAN
+
+```
+* installing *source* package ‘kmeRtone’ ...
+** this is package ‘kmeRtone’ version ‘1.0’
+** package ‘kmeRtone’ successfully unpacked and MD5 sums checked
+** using staged installation
+** libs
+using C++ compiler: ‘g++ (GCC) 13.3.1 20240611 (Red Hat 13.3.1-2)’
+Error in loadNamespace(x) : there is no package called ‘Rhtslib’
+Calls: loadNamespace -> withRestarts -> withOneRestart -> doWithOneRestart
+Execution halted
+g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG  -I'/scratch/henrik/revdep/future/library/kmeRtone/Rcpp/include' -I'/scratch/henrik/revdep/future/library/kmeRtone/stringi/include' -I/usr/local/include    -fpic  -g -O2   -c RcppExports.cpp -o RcppExports.o
+...
+*** moving datasets to lazyload DB
+** inst
+** byte-compile and prepare package for lazy loading
+Error: .onLoad failed in loadNamespace() for 'rJava', details:
+  call: dyn.load(file, DLLpath = DLLpath, ...)
+  error: unable to load shared object '/scratch/henrik/revdep/future/library/kmeRtone/rJava/libs/rJava.so':
+  libjvm.so: cannot open shared object file: No such file or directory
+Execution halted
+ERROR: lazy loading failed for package ‘kmeRtone’
+* removing ‘/scratch/henrik/revdep/future/checks/kmeRtone/old/kmeRtone.Rcheck/kmeRtone’
+
+
+```
 # latentcor
 
 <details>
@@ -1402,7 +1798,7 @@ Run `revdepcheck::revdep_details(, "kappaGold")` for more info
 * GitHub: NA
 * Source code: https://github.com/cran/latentcor
 * Date/Publication: 2022-09-05 20:50:02 UTC
-* Number of recursive dependencies: 142
+* Number of recursive dependencies: 141
 
 Run `revdepcheck::revdep_details(, "latentcor")` for more info
 
@@ -1443,7 +1839,7 @@ Run `revdepcheck::revdep_details(, "latentcor")` for more info
 * GitHub: https://github.com/kkholst/lava
 * Source code: https://github.com/cran/lava
 * Date/Publication: 2025-01-12 11:40:02 UTC
-* Number of recursive dependencies: 131
+* Number of recursive dependencies: 130
 
 Run `revdepcheck::revdep_details(, "lava")` for more info
 
@@ -1467,7 +1863,7 @@ Run `revdepcheck::revdep_details(, "lava")` for more info
 * GitHub: https://github.com/ntthung/ldsr
 * Source code: https://github.com/cran/ldsr
 * Date/Publication: 2020-05-04 14:40:09 UTC
-* Number of recursive dependencies: 74
+* Number of recursive dependencies: 73
 
 Run `revdepcheck::revdep_details(, "ldsr")` for more info
 
@@ -1480,6 +1876,47 @@ Run `revdepcheck::revdep_details(, "ldsr")` for more info
       Specified C++11: please drop specification unless essential
     ```
 
+# lidR
+
+<details>
+
+* Version: 4.2.1
+* GitHub: https://github.com/r-lidar/lidR
+* Source code: https://github.com/cran/lidR
+* Date/Publication: 2025-06-02 10:20:02 UTC
+* Number of recursive dependencies: 151
+
+Run `revdepcheck::revdep_details(, "lidR")` for more info
+
+</details>
+
+## In both
+
+*   checking tests ...
+    ```
+      Running ‘testthat.R’/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/bin/BATCH: line 60: 108660 Aborted                 (core dumped) ${R_HOME}/bin/R -f ${in} ${opts} ${R_BATCH_OPTIONS} > ${out} 2>&1
+    
+     ERROR
+    Running the tests in ‘tests/testthat.R’ failed.
+    Last 50 lines of output:
+                                                                                      
+      
+                                                                                      
+      
+                                                                                      
+    ...
+      
+                                                                                      
+      
+                                                                                      
+      
+                                                                                      
+      
+                                                                                      
+      terminate called after throwing an instance of 'std::length_error'
+        what():  basic_string::_M_create
+    ```
+
 # MAI
 
 <details>
@@ -1488,7 +1925,7 @@ Run `revdepcheck::revdep_details(, "ldsr")` for more info
 * GitHub: https://github.com/KechrisLab/MAI
 * Source code: https://github.com/cran/MAI
 * Date/Publication: 2025-04-15
-* Number of recursive dependencies: 174
+* Number of recursive dependencies: 173
 
 Run `revdepcheck::revdep_details(, "MAI")` for more info
 
@@ -1503,54 +1940,45 @@ Run `revdepcheck::revdep_details(, "MAI")` for more info
     is not mentioned in the DESCRIPTION file.
     ```
 
-# malariaAtlas
+# mapme.biodiversity
 
 <details>
 
-* Version: 1.6.3
-* GitHub: https://github.com/malaria-atlas-project/malariaAtlas
-* Source code: https://github.com/cran/malariaAtlas
-* Date/Publication: 2024-08-26 08:20:02 UTC
-* Number of recursive dependencies: 122
+* Version: 0.9.4
+* GitHub: https://github.com/mapme-initiative/mapme.biodiversity
+* Source code: https://github.com/cran/mapme.biodiversity
+* Date/Publication: 2025-04-28 13:00:08 UTC
+* Number of recursive dependencies: 103
 
-Run `revdepcheck::revdep_details(, "malariaAtlas")` for more info
+Run `revdepcheck::revdep_details(, "mapme.biodiversity")` for more info
 
 </details>
 
 ## In both
 
-*   checking package dependencies ... ERROR
+*   checking tests ...
     ```
-    Package required but not available: ‘ows4R’
-    
-    Package suggested but not available for checking: ‘rdhs’
-    
-    See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
-    manual.
-    ```
-
-# migraph
-
-<details>
-
-* Version: 1.4.5
-* GitHub: https://github.com/stocnet/migraph
-* Source code: https://github.com/cran/migraph
-* Date/Publication: 2024-12-02 10:00:10 UTC
-* Number of recursive dependencies: 96
-
-Run `revdepcheck::revdep_details(, "migraph")` for more info
-
-</details>
-
-## In both
-
-*   checking DESCRIPTION meta-information ... NOTE
-    ```
-      Missing dependency on R >= 4.1.0 because package code uses the pipe
-      |> or function shorthand \(...) syntax added in R 4.1.0.
-      File(s) using such syntax:
-        ‘model_tests.R’
+      Running ‘testthat.R’
+     ERROR
+    Running the tests in ‘tests/testthat.R’ failed.
+    Last 50 lines of output:
+      ══ Failed tests ════════════════════════════════════════════════════════════════
+      ── Failure ('test-calc_deforestation_drivers.R:16:3'): deforestation drivers works ──
+      `.check_single_asset(result)` produced warnings.
+      ── Failure ('test-calc_deforestation_drivers.R:17:3'): deforestation drivers works ──
+      unique(result$variable) (`actual`) not equal to c(...) (`expected`).
+      
+    ...
+       12. │               └─jsonlite:::parseJSON(txt, bigint_as_char)
+       13. │                 └─jsonlite:::parse_string(txt, bigint_as_char)
+       14. └─base::.handleSimpleError(...)
+       15.   └─purrr (local) h(simpleError(msg, call))
+       16.     └─cli::cli_abort(...)
+       17.       └─rlang::abort(...)
+      
+      [ FAIL 5 | WARN 1 | SKIP 38 | PASS 563 ]
+      Error: Test failures
+      Execution halted
     ```
 
 # mikropml
@@ -1561,7 +1989,7 @@ Run `revdepcheck::revdep_details(, "migraph")` for more info
 * GitHub: https://github.com/SchlossLab/mikropml
 * Source code: https://github.com/cran/mikropml
 * Date/Publication: 2023-08-21 15:10:05 UTC
-* Number of recursive dependencies: 128
+* Number of recursive dependencies: 127
 
 Run `revdepcheck::revdep_details(, "mikropml")` for more info
 
@@ -1596,7 +2024,7 @@ Run `revdepcheck::revdep_details(, "mikropml")` for more info
 * GitHub: NA
 * Source code: https://github.com/cran/MineICA
 * Date/Publication: 2025-04-15
-* Number of recursive dependencies: 219
+* Number of recursive dependencies: 218
 
 Run `revdepcheck::revdep_details(, "MineICA")` for more info
 
@@ -1604,25 +2032,136 @@ Run `revdepcheck::revdep_details(, "MineICA")` for more info
 
 ## In both
 
-*   checking package dependencies ... ERROR
+*   checking re-building of vignette outputs ... ERROR
     ```
-    Packages required but not available:
-      'GOstats', 'igraph', 'Hmisc', 'JADE', 'lumi', 'fpc'
+    Error(s) in re-building vignettes:
+    --- re-building ‘MineICA.Rnw’ using Sweave
+    Loading required package: BiocGenerics
+    Loading required package: generics
     
-    Packages suggested but not available for checking: 'GOstats', 'igraph'
+    Attaching package: ‘generics’
     
-    Package which this enhances but not available for checking: ‘doMC’
+    The following objects are masked from ‘package:base’:
     
-    Depends: includes the non-default packages:
-      'BiocGenerics', 'Biobase', 'plyr', 'ggplot2', 'scales', 'foreach',
-      'xtable', 'biomaRt', 'gtools', 'GOstats', 'cluster', 'marray',
-      'mclust', 'RColorBrewer', 'colorspace', 'igraph', 'Rgraphviz',
-      'graph', 'annotate', 'Hmisc', 'fastICA', 'JADE'
-    Adding so many packages to the search path is excessive and importing
-    selectively is preferable.
+        as.difftime, as.factor, as.ordered, intersect, is.element, setdiff,
+    ...
+    Error in { : task 3 failed - "Multiple cache results found.
+    Please clear your cache by running biomartCacheClear()"
     
-    See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
-    manual.
+    --- failed re-building ‘MineICA.Rnw’
+    
+    SUMMARY: processing the following file failed:
+      ‘MineICA.Rnw’
+    
+    Error: Vignette re-building failed.
+    Execution halted
+    ```
+
+*   checking dependencies in R code ... WARNING
+    ```
+    Namespace in Imports field not imported from: ‘lumiHumanAll.db’
+      All declared Imports should be used.
+    Packages in Depends field not imported from:
+      ‘GOstats’ ‘Hmisc’ ‘JADE’ ‘RColorBrewer’ ‘Rgraphviz’ ‘annotate’
+      ‘biomaRt’ ‘cluster’ ‘colorspace’ ‘fastICA’ ‘foreach’ ‘ggplot2’
+      ‘graph’ ‘gtools’ ‘igraph’ ‘marray’ ‘mclust’ ‘methods’ ‘plyr’ ‘scales’
+      ‘xtable’
+      These packages need to be imported from (in the NAMESPACE file)
+      for when this namespace is loaded but not attached.
+    Missing or unexported object: ‘GOstats::geneIdsByCategory’
+    ':::' calls which should be '::':
+      ‘Biobase:::annotation<-’ ‘Biobase:::validMsg’ ‘fpc:::pamk’
+      ‘lumi:::getChipInfo’ ‘mclust:::adjustedRandIndex’
+      See the note in ?`:::` about the use of this operator.
+    Unexported object imported by a ':::' call: ‘Biobase:::isValidVersion’
+      See the note in ?`:::` about the use of this operator.
+    ```
+
+*   checking Rd cross-references ... WARNING
+    ```
+    Missing link(s) in Rd file 'Alist.Rd':
+      ‘class-IcaSet’
+    
+    Missing link(s) in Rd file 'Slist.Rd':
+      ‘class-IcaSet’
+    
+    Missing link(s) in Rd file 'class-IcaSet.Rd':
+      ‘class-IcaSet’
+    
+    Missing link(s) in Rd file 'getComp.Rd':
+      ‘class-IcaSet’
+    
+    Missing link(s) in Rd file 'runAn.Rd':
+      ‘[Category:class-GOHyperGParams]{GOHyperGParams}’
+    
+    See section 'Cross-references' in the 'Writing R Extensions' manual.
+    ```
+
+*   checking for missing documentation entries ... WARNING
+    ```
+    Undocumented S4 classes:
+      ‘MineICAParams’
+    All user-level objects in a package (including S4 classes and methods)
+    should have documentation entries.
+    See chapter ‘Writing R documentation files’ in the ‘Writing R
+    Extensions’ manual.
+    ```
+
+*   checking DESCRIPTION meta-information ... NOTE
+    ```
+    Packages listed in more than one of Depends, Imports, Suggests, Enhances:
+      ‘biomaRt’ ‘GOstats’ ‘cluster’ ‘mclust’ ‘igraph’
+    A package should be listed in only one of these fields.
+    ```
+
+*   checking R code for possible problems ... NOTE
+    ```
+    addGenesToGoReport: no visible global function definition for
+      ‘conditional’
+    addGenesToGoReport: no visible global function definition for
+      ‘sigCategories’
+    annot2Color: no visible global function definition for ‘brewer.pal’
+    annot2Color: no visible global function definition for ‘heat_hcl’
+    annot2Color: no visible global function definition for ‘terrain_hcl’
+    annot2Color: no visible global function definition for ‘cm.colors’
+    annot2Color: no visible global function definition for ‘rainbow_hcl’
+    annotFeatures: no visible global function definition for ‘na.omit’
+    ...
+      importFrom("methods", "callNextMethod", "new", "validObject")
+      importFrom("stats", "aggregate", "as.dendrogram", "as.dist",
+                 "as.hclust", "chisq.test", "cor", "cor.test", "cutree",
+                 "dist", "hclust", "kmeans", "kruskal.test", "lm", "median",
+                 "na.omit", "order.dendrogram", "p.adjust", "quantile",
+                 "reorder", "shapiro.test", "wilcox.test")
+      importFrom("utils", "capture.output", "combn", "read.table",
+                 "write.table")
+    to your NAMESPACE file (and ensure that your DESCRIPTION Imports field
+    contains 'methods').
+    ```
+
+*   checking Rd files ... NOTE
+    ```
+    checkRd: (-1) clusterFastICARuns.Rd:47: Lost braces
+        47 |   \item{...}{Additional parameters for code{funClus}}
+           |                                            ^
+    checkRd: (-1) clusterFastICARuns.Rd:52: Lost braces
+        52 |   item{W}{the estimated unmixing matrix}, \item{Iq}{Iq
+           |       ^
+    checkRd: (-1) clusterFastICARuns.Rd:52: Lost braces
+        52 |   item{W}{the estimated unmixing matrix}, \item{Iq}{Iq
+           |          ^
+    checkRd: (-1) plotDensOneAnnotInAllComp.Rd:104: Lost braces
+    ...
+           |                                 ^
+    checkRd: (-1) runICA.Rd:44: Lost braces
+        44 |   item{W}{the estimated unmixing matrix}}
+           |       ^
+    checkRd: (-1) runICA.Rd:44: Lost braces
+        44 |   item{W}{the estimated unmixing matrix}}
+           |          ^
+    checkRd: (-1) writeProjByComp.Rd:38: Lost braces
+        38 | their annotations, please remember to modify code{genesPath(params)}, or
+           |                                                  ^
     ```
 
 # mistyR
@@ -1633,11 +2172,16 @@ Run `revdepcheck::revdep_details(, "MineICA")` for more info
 * GitHub: https://github.com/saezlab/mistyR
 * Source code: https://github.com/cran/mistyR
 * Date/Publication: 2025-04-15
-* Number of recursive dependencies: 151
+* Number of recursive dependencies: 150
 
 Run `revdepcheck::revdep_details(, "mistyR")` for more info
 
 </details>
+
+## Newly fixed
+
+*   R CMD check timed out
+    
 
 ## In both
 
@@ -1673,60 +2217,6 @@ Run `revdepcheck::revdep_details(, "mistyR")` for more info
            |                                                   ^
     ```
 
-# mlr3spatial
-
-<details>
-
-* Version: 0.5.0
-* GitHub: https://github.com/mlr-org/mlr3spatial
-* Source code: https://github.com/cran/mlr3spatial
-* Date/Publication: 2024-03-09 13:00:02 UTC
-* Number of recursive dependencies: 91
-
-Run `revdepcheck::revdep_details(, "mlr3spatial")` for more info
-
-</details>
-
-## In both
-
-*   checking package dependencies ... ERROR
-    ```
-    Packages required but not available: 'mlr3', 'data.table', 'terra'
-    
-    Packages suggested but not available for checking:
-      'mlr3learners', 'paradox'
-    
-    See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
-    manual.
-    ```
-
-# momentuHMM
-
-<details>
-
-* Version: 1.5.5
-* GitHub: https://github.com/bmcclintock/momentuHMM
-* Source code: https://github.com/cran/momentuHMM
-* Date/Publication: 2022-10-18 20:52:35 UTC
-* Number of recursive dependencies: 150
-
-Run `revdepcheck::revdep_details(, "momentuHMM")` for more info
-
-</details>
-
-## In both
-
-*   checking package dependencies ... ERROR
-    ```
-    Package required but not available: ‘MASS’
-    
-    Packages suggested but not available for checking:
-      'conicfit', 'ggmap', 'moveHMM', 'car'
-    
-    See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
-    manual.
-    ```
-
 # multitool
 
 <details>
@@ -1735,7 +2225,7 @@ Run `revdepcheck::revdep_details(, "momentuHMM")` for more info
 * GitHub: https://github.com/ethan-young/multitool
 * Source code: https://github.com/cran/multitool
 * Date/Publication: 2024-02-08 17:40:02 UTC
-* Number of recursive dependencies: 150
+* Number of recursive dependencies: 149
 
 Run `revdepcheck::revdep_details(, "multitool")` for more info
 
@@ -1760,7 +2250,7 @@ Run `revdepcheck::revdep_details(, "multitool")` for more info
 * GitHub: https://github.com/MUCollective/multiverse
 * Source code: https://github.com/cran/multiverse
 * Date/Publication: 2024-10-07 23:20:03 UTC
-* Number of recursive dependencies: 136
+* Number of recursive dependencies: 135
 
 Run `revdepcheck::revdep_details(, "multiverse")` for more info
 
@@ -1784,7 +2274,7 @@ Run `revdepcheck::revdep_details(, "multiverse")` for more info
 * GitHub: https://github.com/Nixtla/nixtlar
 * Source code: https://github.com/cran/nixtlar
 * Date/Publication: 2024-10-28 23:10:02 UTC
-* Number of recursive dependencies: 92
+* Number of recursive dependencies: 91
 
 Run `revdepcheck::revdep_details(, "nixtlar")` for more info
 
@@ -1812,7 +2302,7 @@ Run `revdepcheck::revdep_details(, "nixtlar")` for more info
 * GitHub: NA
 * Source code: https://github.com/cran/PAMpal
 * Date/Publication: 2025-03-04 00:20:02 UTC
-* Number of recursive dependencies: 121
+* Number of recursive dependencies: 120
 
 Run `revdepcheck::revdep_details(, "PAMpal")` for more info
 
@@ -1831,11 +2321,11 @@ Run `revdepcheck::revdep_details(, "PAMpal")` for more info
 
 <details>
 
-* Version: 0.11.3
+* Version: 0.14.0
 * GitHub: NA
 * Source code: https://github.com/cran/PAMscapes
-* Date/Publication: 2025-04-02 20:30:05 UTC
-* Number of recursive dependencies: 130
+* Date/Publication: 2025-06-11 05:20:02 UTC
+* Number of recursive dependencies: 129
 
 Run `revdepcheck::revdep_details(, "PAMscapes")` for more info
 
@@ -1858,7 +2348,7 @@ Run `revdepcheck::revdep_details(, "PAMscapes")` for more info
 * GitHub: https://github.com/cbg-ethz/pareg
 * Source code: https://github.com/cran/pareg
 * Date/Publication: 2024-04-30
-* Number of recursive dependencies: 0
+* Number of recursive dependencies: 319
 
 Run `revdepcheck::revdep_details(, "pareg")` for more info
 
@@ -1981,7 +2471,7 @@ Run `revdepcheck::revdep_details(, "pareg")` for more info
 * GitHub: https://github.com/mastoffel/partR2
 * Source code: https://github.com/cran/partR2
 * Date/Publication: 2024-03-04 13:20:02 UTC
-* Number of recursive dependencies: 93
+* Number of recursive dependencies: 92
 
 Run `revdepcheck::revdep_details(, "partR2")` for more info
 
@@ -2026,7 +2516,7 @@ Run `revdepcheck::revdep_details(, "pavo")` for more info
 * GitHub: https://github.com/progenetix/pgxRpi
 * Source code: https://github.com/cran/pgxRpi
 * Date/Publication: 2025-05-21
-* Number of recursive dependencies: 157
+* Number of recursive dependencies: 156
 
 Run `revdepcheck::revdep_details(, "pgxRpi")` for more info
 
@@ -2050,7 +2540,7 @@ Run `revdepcheck::revdep_details(, "pgxRpi")` for more info
 * GitHub: https://github.com/cdmuir/photosynthesis
 * Source code: https://github.com/cran/photosynthesis
 * Date/Publication: 2024-11-24 19:40:02 UTC
-* Number of recursive dependencies: 118
+* Number of recursive dependencies: 117
 
 Run `revdepcheck::revdep_details(, "photosynthesis")` for more info
 
@@ -2071,58 +2561,6 @@ Run `revdepcheck::revdep_details(, "photosynthesis")` for more info
         ‘simulate_error.R’ ‘simulate_error.Rd’ ‘utils.R’
     ```
 
-# phylospatial
-
-<details>
-
-* Version: 1.1.1
-* GitHub: https://github.com/matthewkling/phylospatial
-* Source code: https://github.com/cran/phylospatial
-* Date/Publication: 2025-05-02 14:00:02 UTC
-* Number of recursive dependencies: 173
-
-Run `revdepcheck::revdep_details(, "phylospatial")` for more info
-
-</details>
-
-## In both
-
-*   checking package dependencies ... ERROR
-    ```
-    Package required but not available: ‘vegan’
-    
-    Packages suggested but not available for checking:
-      'canaper', 'betapart', 'tmap', 'hillR', 'picante', 'phytools'
-    
-    See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
-    manual.
-    ```
-
-# pliman
-
-<details>
-
-* Version: 3.0.0
-* GitHub: https://github.com/NA/NA
-* Source code: https://github.com/cran/pliman
-* Date/Publication: 2024-11-06 10:30:02 UTC
-* Number of recursive dependencies: 133
-
-Run `revdepcheck::revdep_details(, "pliman")` for more info
-
-</details>
-
-## In both
-
-*   checking whether startup messages can be suppressed ... NOTE
-    ```
-    Package {EBImage} is required. Please install it following the directions at 'https://bioconductor.org/packages/EBImage'
-    To use viewer = 'mapview', first install the required packages:mapview, mapedit
-    
-    It looks like this package (or a package it requires) has a startup
-    message which cannot be suppressed: see ?packageStartupMessage.
-    ```
-
 # powRICLPM
 
 <details>
@@ -2131,7 +2569,7 @@ Run `revdepcheck::revdep_details(, "pliman")` for more info
 * GitHub: https://github.com/JeroenDMulder/powRICLPM
 * Source code: https://github.com/cran/powRICLPM
 * Date/Publication: 2024-10-26 13:50:03 UTC
-* Number of recursive dependencies: 72
+* Number of recursive dependencies: 71
 
 Run `revdepcheck::revdep_details(, "powRICLPM")` for more info
 
@@ -2155,7 +2593,7 @@ Run `revdepcheck::revdep_details(, "powRICLPM")` for more info
 * GitHub: https://github.com/edyp-lab/Prostar
 * Source code: https://github.com/cran/Prostar
 * Date/Publication: 2025-04-15
-* Number of recursive dependencies: 189
+* Number of recursive dependencies: 188
 
 Run `revdepcheck::revdep_details(, "Prostar")` for more info
 
@@ -2201,7 +2639,7 @@ Run `revdepcheck::revdep_details(, "Prostar")` for more info
 * GitHub: https://github.com/chris31415926535/pseudohouseholds
 * Source code: https://github.com/cran/pseudohouseholds
 * Date/Publication: 2023-07-19 09:30:02 UTC
-* Number of recursive dependencies: 101
+* Number of recursive dependencies: 100
 
 Run `revdepcheck::revdep_details(, "pseudohouseholds")` for more info
 
@@ -2225,7 +2663,7 @@ Run `revdepcheck::revdep_details(, "pseudohouseholds")` for more info
 * GitHub: NA
 * Source code: https://github.com/cran/qape
 * Date/Publication: 2023-08-21 14:10:12 UTC
-* Number of recursive dependencies: 42
+* Number of recursive dependencies: 41
 
 Run `revdepcheck::revdep_details(, "qape")` for more info
 
@@ -2281,6 +2719,125 @@ Run `revdepcheck::revdep_details(, "QDNAseq")` for more info
     Execution halted
     ```
 
+# Rcurvep
+
+<details>
+
+* Version: 1.3.2
+* GitHub: https://github.com/moggces/Rcurvep
+* Source code: https://github.com/cran/Rcurvep
+* Date/Publication: 2025-05-31 21:10:02 UTC
+* Number of recursive dependencies: 125
+
+Run `revdepcheck::revdep_details(, "Rcurvep")` for more info
+
+</details>
+
+## In both
+
+*   checking whether package ‘Rcurvep’ can be installed ... ERROR
+    ```
+    Installation failed.
+    See ‘/scratch/henrik/revdep/future/checks/Rcurvep/new/Rcurvep.Rcheck/00install.out’ for details.
+    ```
+
+## Installation
+
+### Devel
+
+```
+* installing *source* package ‘Rcurvep’ ...
+** this is package ‘Rcurvep’ version ‘1.3.2’
+** package ‘Rcurvep’ successfully unpacked and MD5 sums checked
+** using staged installation
+** R
+** data
+*** moving datasets to lazyload DB
+** inst
+** byte-compile and prepare package for lazy loading
+** help
+...
+ .onLoad failed in loadNamespace() for 'Rcurvep', details:
+  call: NULL
+  error: .onLoad failed in loadNamespace() for 'rJava', details:
+  call: dyn.load(file, DLLpath = DLLpath, ...)
+  error: unable to load shared object '/scratch/henrik/revdep/future/library/Rcurvep/rJava/libs/rJava.so':
+  libjvm.so: cannot open shared object file: No such file or directory
+Error: loading failed
+Execution halted
+ERROR: loading failed
+* removing ‘/scratch/henrik/revdep/future/checks/Rcurvep/new/Rcurvep.Rcheck/Rcurvep’
+
+
+```
+### CRAN
+
+```
+* installing *source* package ‘Rcurvep’ ...
+** this is package ‘Rcurvep’ version ‘1.3.2’
+** package ‘Rcurvep’ successfully unpacked and MD5 sums checked
+** using staged installation
+** R
+** data
+*** moving datasets to lazyload DB
+** inst
+** byte-compile and prepare package for lazy loading
+** help
+...
+ .onLoad failed in loadNamespace() for 'Rcurvep', details:
+  call: NULL
+  error: .onLoad failed in loadNamespace() for 'rJava', details:
+  call: dyn.load(file, DLLpath = DLLpath, ...)
+  error: unable to load shared object '/scratch/henrik/revdep/future/library/Rcurvep/rJava/libs/rJava.so':
+  libjvm.so: cannot open shared object file: No such file or directory
+Error: loading failed
+Execution halted
+ERROR: loading failed
+* removing ‘/scratch/henrik/revdep/future/checks/Rcurvep/old/Rcurvep.Rcheck/Rcurvep’
+
+
+```
+# receptiviti
+
+<details>
+
+* Version: 0.2.0
+* GitHub: https://github.com/Receptiviti/receptiviti-r
+* Source code: https://github.com/cran/receptiviti
+* Date/Publication: 2025-06-07 15:10:02 UTC
+* Number of recursive dependencies: 64
+
+Run `revdepcheck::revdep_details(, "receptiviti")` for more info
+
+</details>
+
+## In both
+
+*   checking tests ...
+    ```
+      Running ‘testthat.R’
+     ERROR
+    Running the tests in ‘tests/testthat.R’ failed.
+    Complete output:
+      > library(testthat)
+      > library(receptiviti)
+      > 
+      > test_check("receptiviti")
+      [ FAIL 1 | WARN 0 | SKIP 4 | PASS 5 ]
+      
+    ...
+       3. │   └─testthat:::quasi_capture(...)
+       4. │     ├─testthat (local) .capture(...)
+       5. │     │ └─base::withCallingHandlers(...)
+       6. │     └─rlang::eval_bare(quo_get_expr(.quo), quo_get_env(.quo))
+       7. └─receptiviti::receptiviti(...)
+       8.   └─receptiviti:::manage_request(...)
+      
+      [ FAIL 1 | WARN 0 | SKIP 4 | PASS 5 ]
+      Error: Test failures
+      Execution halted
+    ```
+
 # regmedint
 
 <details>
@@ -2289,7 +2846,7 @@ Run `revdepcheck::revdep_details(, "QDNAseq")` for more info
 * GitHub: https://github.com/kaz-yos/regmedint
 * Source code: https://github.com/cran/regmedint
 * Date/Publication: 2024-01-13 00:50:02 UTC
-* Number of recursive dependencies: 154
+* Number of recursive dependencies: 153
 
 Run `revdepcheck::revdep_details(, "regmedint")` for more info
 
@@ -2303,6 +2860,47 @@ Run `revdepcheck::revdep_details(, "regmedint")` for more info
       All declared Imports should be used.
     ```
 
+# reproducible
+
+<details>
+
+* Version: 2.1.2
+* GitHub: https://github.com/PredictiveEcology/reproducible
+* Source code: https://github.com/cran/reproducible
+* Date/Publication: 2024-12-12 06:30:02 UTC
+* Number of recursive dependencies: 103
+
+Run `revdepcheck::revdep_details(, "reproducible")` for more info
+
+</details>
+
+## In both
+
+*   checking tests ...
+    ```
+      Running ‘test-all.R’
+     ERROR
+    Running the tests in ‘tests/test-all.R’ failed.
+    Last 50 lines of output:
+        'test-preProcessWorks.R:328:3', 'test-preProcessWorks.R:348:3',
+        'test-preProcessWorks.R:361:3', 'test-preProcessWorks.R:374:3',
+        'test-preProcessWorks.R:391:3', 'test-preProcessWorks.R:409:3',
+        'test-preProcessWorks.R:438:3', 'test-preProcessWorks.R:459:3',
+        'test-preProcessWorks.R:487:3', 'test-preProcessWorks.R:543:3',
+        'test-preProcessWorks.R:569:3', 'test-preProcessWorks.R:672:3',
+    ...
+       4.       └─reproducible:::makeVal(x)
+       5.         ├─terra::makeValid(x)
+       6.         └─terra::makeValid(x)
+       7.           └─terra (local) .local(x, ...)
+       8.             └─terra:::messages(x)
+       9.               └─terra:::error(f, x@pntr$getError())
+      
+      [ FAIL 2 | WARN 0 | SKIP 90 | PASS 391 ]
+      Error: Test failures
+      Execution halted
+    ```
+
 # rgee
 
 <details>
@@ -2311,7 +2909,7 @@ Run `revdepcheck::revdep_details(, "regmedint")` for more info
 * GitHub: https://github.com/r-spatial/rgee
 * Source code: https://github.com/cran/rgee
 * Date/Publication: 2023-09-27 08:30:02 UTC
-* Number of recursive dependencies: 133
+* Number of recursive dependencies: 132
 
 Run `revdepcheck::revdep_details(, "rgee")` for more info
 
@@ -2352,7 +2950,7 @@ Run `revdepcheck::revdep_details(, "rgee")` for more info
 * GitHub: https://github.com/Permian-Global-Research/rsi
 * Source code: https://github.com/cran/rsi
 * Date/Publication: 2025-01-22 03:20:02 UTC
-* Number of recursive dependencies: 76
+* Number of recursive dependencies: 75
 
 Run `revdepcheck::revdep_details(, "rsi")` for more info
 
@@ -2360,12 +2958,13 @@ Run `revdepcheck::revdep_details(, "rsi")` for more info
 
 ## In both
 
-*   checking package dependencies ... ERROR
+*   checking DESCRIPTION meta-information ... NOTE
     ```
-    Package required but not available: ‘rstac’
-    
-    See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
-    manual.
+      Missing dependency on R >= 4.1.0 because package code uses the pipe
+      |> or function shorthand \(...) syntax added in R 4.1.0.
+      File(s) using such syntax:
+        ‘calculate_indices.Rd’ ‘get_stac_data.R’ ‘get_stac_data.Rd’
+        ‘landsat_mask_function.Rd’
     ```
 
 # SCArray.sat
@@ -2376,7 +2975,7 @@ Run `revdepcheck::revdep_details(, "rsi")` for more info
 * GitHub: https://github.com/AbbVie-ComputationalGenomics/SCArray
 * Source code: https://github.com/cran/SCArray.sat
 * Date/Publication: 2025-04-15
-* Number of recursive dependencies: 180
+* Number of recursive dependencies: 179
 
 Run `revdepcheck::revdep_details(, "SCArray.sat")` for more info
 
@@ -2401,7 +3000,7 @@ Run `revdepcheck::revdep_details(, "SCArray.sat")` for more info
 * GitHub: https://github.com/ShixiangWang/sigminer
 * Source code: https://github.com/cran/sigminer
 * Date/Publication: 2024-05-11 08:50:02 UTC
-* Number of recursive dependencies: 212
+* Number of recursive dependencies: 211
 
 Run `revdepcheck::revdep_details(, "sigminer")` for more info
 
@@ -2425,7 +3024,7 @@ Run `revdepcheck::revdep_details(, "sigminer")` for more info
 * GitHub: https://github.com/TojalLab/signeR
 * Source code: https://github.com/cran/signeR
 * Date/Publication: 2025-04-15
-* Number of recursive dependencies: 236
+* Number of recursive dependencies: 235
 
 Run `revdepcheck::revdep_details(, "signeR")` for more info
 
@@ -2504,28 +3103,6 @@ Run `revdepcheck::revdep_details(, "simhelpers")` for more info
         ‘utilities.R’
     ```
 
-# simtrial
-
-<details>
-
-* Version: 0.4.2
-* GitHub: https://github.com/Merck/simtrial
-* Source code: https://github.com/cran/simtrial
-* Date/Publication: 2024-11-18 15:10:02 UTC
-* Number of recursive dependencies: 113
-
-Run `revdepcheck::revdep_details(, "simtrial")` for more info
-
-</details>
-
-## In both
-
-*   checking dependencies in R code ... NOTE
-    ```
-    Namespace in Imports field not imported from: ‘gsDesign2’
-      All declared Imports should be used.
-    ```
-
 # SmCCNet
 
 <details>
@@ -2575,7 +3152,7 @@ Run `revdepcheck::revdep_details(, "SmCCNet")` for more info
 * GitHub: https://github.com/talegari/solitude
 * Source code: https://github.com/cran/solitude
 * Date/Publication: 2021-07-29 20:00:02 UTC
-* Number of recursive dependencies: 129
+* Number of recursive dependencies: 128
 
 Run `revdepcheck::revdep_details(, "solitude")` for more info
 
@@ -2590,61 +3167,6 @@ Run `revdepcheck::revdep_details(, "solitude")` for more info
       All declared Imports should be used.
     ```
 
-# SpaDES.core
-
-<details>
-
-* Version: 2.1.0
-* GitHub: https://github.com/PredictiveEcology/SpaDES.core
-* Source code: https://github.com/cran/SpaDES.core
-* Date/Publication: 2024-06-02 11:02:47 UTC
-* Number of recursive dependencies: 133
-
-Run `revdepcheck::revdep_details(, "SpaDES.core")` for more info
-
-</details>
-
-## In both
-
-*   checking package dependencies ... ERROR
-    ```
-    Packages required but not available: 'quickPlot', 'reproducible'
-    
-    Packages suggested but not available for checking:
-      'DiagrammeR', 'ggplotify', 'NLMR', 'SpaDES.tools'
-    
-    See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
-    manual.
-    ```
-
-# spaMM
-
-<details>
-
-* Version: 4.5.0
-* GitHub: NA
-* Source code: https://github.com/cran/spaMM
-* Date/Publication: 2024-06-09 22:20:02 UTC
-* Number of recursive dependencies: 88
-
-Run `revdepcheck::revdep_details(, "spaMM")` for more info
-
-</details>
-
-## In both
-
-*   checking compiled code ... NOTE
-    ```
-    File ‘spaMM/libs/spaMM.so’:
-      Found non-API call to R: ‘PRVALUE’
-    
-    Compiled code should not call non-API entry points in R.
-    
-    See ‘Writing portable packages’ in the ‘Writing R Extensions’ manual,
-    and section ‘Moving into C API compliance’ for issues with the use of
-    non-API entry points.
-    ```
-
 # sparrpowR
 
 <details>
@@ -2653,7 +3175,7 @@ Run `revdepcheck::revdep_details(, "spaMM")` for more info
 * GitHub: https://github.com/machiela-lab/sparrpowR
 * Source code: https://github.com/cran/sparrpowR
 * Date/Publication: 2024-01-23 15:20:02 UTC
-* Number of recursive dependencies: 128
+* Number of recursive dependencies: 127
 
 Run `revdepcheck::revdep_details(, "sparrpowR")` for more info
 
@@ -2665,7 +3187,7 @@ Run `revdepcheck::revdep_details(, "sparrpowR")` for more info
     ```
     Found the following significant warnings:
       Warning: no DISPLAY variable so Tk is not available
-    See ‘/home/henrik/futureverse/future/revdep/checks/sparrpowR/new/sparrpowR.Rcheck/00install.out’ for details.
+    See ‘/scratch/henrik/revdep/future/checks/sparrpowR/new/sparrpowR.Rcheck/00install.out’ for details.
     ```
 
 # SPARSEMODr
@@ -2676,7 +3198,7 @@ Run `revdepcheck::revdep_details(, "sparrpowR")` for more info
 * GitHub: https://github.com/NAU-CCL/SPARSEMODr
 * Source code: https://github.com/cran/SPARSEMODr
 * Date/Publication: 2022-07-19 20:50:02 UTC
-* Number of recursive dependencies: 124
+* Number of recursive dependencies: 123
 
 Run `revdepcheck::revdep_details(, "SPARSEMODr")` for more info
 
@@ -2699,7 +3221,7 @@ Run `revdepcheck::revdep_details(, "SPARSEMODr")` for more info
 * GitHub: https://github.com/edsandorf/spdesign
 * Source code: https://github.com/cran/spdesign
 * Date/Publication: 2024-10-18 13:40:02 UTC
-* Number of recursive dependencies: 60
+* Number of recursive dependencies: 59
 
 Run `revdepcheck::revdep_details(, "spdesign")` for more info
 
@@ -2723,7 +3245,7 @@ Run `revdepcheck::revdep_details(, "spdesign")` for more info
 * GitHub: https://github.com/giscience-fsu/sperrorest
 * Source code: https://github.com/cran/sperrorest
 * Date/Publication: 2022-10-16 12:50:02 UTC
-* Number of recursive dependencies: 73
+* Number of recursive dependencies: 72
 
 Run `revdepcheck::revdep_details(, "sperrorest")` for more info
 
@@ -2756,32 +3278,6 @@ Run `revdepcheck::revdep_details(, "sperrorest")` for more info
            |                                                             ^
     ```
 
-# spNetwork
-
-<details>
-
-* Version: 0.4.4.6
-* GitHub: https://github.com/JeremyGelb/spNetwork
-* Source code: https://github.com/cran/spNetwork
-* Date/Publication: 2025-03-29 16:00:02 UTC
-* Number of recursive dependencies: 155
-
-Run `revdepcheck::revdep_details(, "spNetwork")` for more info
-
-</details>
-
-## In both
-
-*   checking package dependencies ... ERROR
-    ```
-    Package required but not available: ‘spdep’
-    
-    Packages suggested but not available for checking: 'kableExtra', 'tmap'
-    
-    See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
-    manual.
-    ```
-
 # sRACIPE
 
 <details>
@@ -2790,7 +3286,7 @@ Run `revdepcheck::revdep_details(, "spNetwork")` for more info
 * GitHub: https://github.com/lusystemsbio/sRACIPE
 * Source code: https://github.com/cran/sRACIPE
 * Date/Publication: 2025-05-11
-* Number of recursive dependencies: 106
+* Number of recursive dependencies: 105
 
 Run `revdepcheck::revdep_details(, "sRACIPE")` for more info
 
@@ -2846,7 +3342,7 @@ Run `revdepcheck::revdep_details(, "sRACIPE")` for more info
 * GitHub: https://github.com/r-spatial/stars
 * Source code: https://github.com/cran/stars
 * Date/Publication: 2025-02-01 18:50:02 UTC
-* Number of recursive dependencies: 163
+* Number of recursive dependencies: 161
 
 Run `revdepcheck::revdep_details(, "stars")` for more info
 
@@ -2854,79 +3350,29 @@ Run `revdepcheck::revdep_details(, "stars")` for more info
 
 ## In both
 
-*   checking examples ... ERROR
-    ```
-    Running examples in ‘stars-Ex.R’ failed
-    The error most likely occurred in:
-    
-    > ### Name: read_ncdf
-    > ### Title: Read NetCDF into stars object
-    > ### Aliases: read_ncdf
-    > 
-    > ### ** Examples
-    > 
-    > f <- system.file("nc/reduced.nc", package = "stars")
-    ...
-    The following objects are masked from ‘package:stats’:
-    
-        filter, lag
-    
-    The following objects are masked from ‘package:base’:
-    
-        intersect, setdiff, setequal, union
-    
-    Error: object 'prec' not found
-    Execution halted
-    ```
-
 *   checking tests ...
     ```
       Running ‘aggregate.R’
-      Comparing ‘aggregate.Rout’ to ‘aggregate.Rout.save’ ...15a16,37
-    > stars object with 2 dimensions and 1 attribute
-    > attribute(s):
-    >       Min. 1st Qu. Median     Mean 3rd Qu.    Max.   NA's
-    > PM10     0   9.921 14.792 17.69728  21.992 274.333 157659
-    > dimension(s):
-    >         from   to     offset  delta refsys point
-    > station    1   70         NA     NA WGS 84  TRUE
-    > time       1 4383 1998-01-01 1 days   Date FALSE
+      Comparing ‘aggregate.Rout’ to ‘aggregate.Rout.save’ ... OK
+      Running ‘align.R’
+      Comparing ‘align.Rout’ to ‘align.Rout.save’ ... OK
+      Running ‘area.R’
+      Comparing ‘area.Rout’ to ‘area.Rout.save’ ... OK
+      Running ‘crop.R’
+      Comparing ‘crop.Rout’ to ‘crop.Rout.save’ ... OK
+      Running ‘curvilinear.R’
+      Comparing ‘curvilinear.Rout’ to ‘curvilinear.Rout.save’ ... OK
     ...
-      ══ Failed tests ════════════════════════════════════════════════════════════════
-      ── Error ('test-tidyverse.R:6:3'): slice ───────────────────────────────────────
-      Error in `read_ncdf(f, proxy = TRUE)`: package ncmeta required, please install it first
-      Backtrace:
-          ▆
-       1. └─stars::read_ncdf(f, proxy = TRUE) at test-tidyverse.R:6:3
-      
-      [ FAIL 1 | WARN 0 | SKIP 6 | PASS 42 ]
-      Error: Test failures
+      > 
+      > s = st_set_dimensions(s, st_dimensions(s), xy = NULL) 
+      > sfc = st_sfc(st_point(0:1), st_point(3:2))
+      > s = st_set_dimensions(s, 1, sfc) |> st_set_crs(4326)
+      > tm = as.POSIXct("2023-03-04 12:35") + c(0, 3600)
+      > s = st_set_dimensions(s, 2, tm)
+      > f = tempfile(fileext = ".nc")
+      > write_mdim(s, f, as_float = FALSE)
+      Error: requires GDAL >= 3.1.0 and 64-bit
       Execution halted
-    ```
-
-*   checking re-building of vignette outputs ... ERROR
-    ```
-    Error(s) in re-building vignettes:
-    --- re-building ‘stars1.Rmd’ using rmarkdown
-    Warning in png(..., res = dpi, units = "in") :
-      unable to open connection to X11 display ''
-    Warning in jpeg(..., res = dpi, units = "in") :
-      unable to open connection to X11 display ''
-    Warning: The device 'png' is not operational; falling back to 'svg'.
-    Warning: The device 'png' is not operational; falling back to 'svg'.
-    Warning: The device 'png' is not operational; falling back to 'svg'.
-    Warning in png(..., res = dpi, units = "in") :
-    ...
-    Error: processing vignette 'stars8.Rmd' failed with diagnostics:
-    package ncmeta required, please install it first
-    --- failed re-building ‘stars8.Rmd’
-    
-    SUMMARY: processing the following files failed:
-      ‘stars1.Rmd’ ‘stars2.Rmd’ ‘stars3.Rmd’ ‘stars4.Rmd’ ‘stars5.Rmd’
-      ‘stars8.Rmd’
-    
-    Error: Vignette re-building failed.
-    Execution halted
     ```
 
 *   checking DESCRIPTION meta-information ... NOTE
@@ -2937,30 +3383,6 @@ Run `revdepcheck::revdep_details(, "stars")` for more info
         ‘prcomp.Rd’
     ```
 
-# steps
-
-<details>
-
-* Version: 1.3.0
-* GitHub: https://github.com/steps-dev/steps
-* Source code: https://github.com/cran/steps
-* Date/Publication: 2022-10-04 23:30:02 UTC
-* Number of recursive dependencies: 71
-
-Run `revdepcheck::revdep_details(, "steps")` for more info
-
-</details>
-
-## In both
-
-*   checking package dependencies ... ERROR
-    ```
-    Package required but not available: ‘rasterVis’
-    
-    See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
-    manual.
-    ```
-
 # stppSim
 
 <details>
@@ -2969,7 +3391,7 @@ Run `revdepcheck::revdep_details(, "steps")` for more info
 * GitHub: https://github.com/Manalytics/stppSim
 * Source code: https://github.com/cran/stppSim
 * Date/Publication: 2024-07-24 13:30:02 UTC
-* Number of recursive dependencies: 129
+* Number of recursive dependencies: 128
 
 Run `revdepcheck::revdep_details(, "stppSim")` for more info
 
@@ -2977,12 +3399,11 @@ Run `revdepcheck::revdep_details(, "stppSim")` for more info
 
 ## In both
 
-*   checking package dependencies ... ERROR
+*   checking whether package ‘stppSim’ can be installed ... WARNING
     ```
-    Packages required but not available: 'SiMRiv', 'gstat'
-    
-    See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
-    manual.
+    Found the following significant warnings:
+      Warning: no DISPLAY variable so Tk is not available
+    See ‘/scratch/henrik/revdep/future/checks/stppSim/new/stppSim.Rcheck/00install.out’ for details.
     ```
 
 # survstan
@@ -2993,7 +3414,7 @@ Run `revdepcheck::revdep_details(, "stppSim")` for more info
 * GitHub: https://github.com/fndemarqui/survstan
 * Source code: https://github.com/cran/survstan
 * Date/Publication: 2024-04-12 16:50:02 UTC
-* Number of recursive dependencies: 114
+* Number of recursive dependencies: 113
 
 Run `revdepcheck::revdep_details(, "survstan")` for more info
 
@@ -3016,7 +3437,7 @@ Run `revdepcheck::revdep_details(, "survstan")` for more info
 * GitHub: NA
 * Source code: https://github.com/cran/synergyfinder
 * Date/Publication: 2025-04-15
-* Number of recursive dependencies: 197
+* Number of recursive dependencies: 196
 
 Run `revdepcheck::revdep_details(, "synergyfinder")` for more info
 
@@ -3101,6 +3522,74 @@ Run `revdepcheck::revdep_details(, "targeted")` for more info
         ‘alean.Rd’ ‘nondom.Rd’
     ```
 
+# text
+
+<details>
+
+* Version: 1.6
+* GitHub: https://github.com/OscarKjell/text
+* Source code: https://github.com/cran/text
+* Date/Publication: 2025-07-22 14:31:56 UTC
+* Number of recursive dependencies: 195
+
+Run `revdepcheck::revdep_details(, "text")` for more info
+
+</details>
+
+## In both
+
+*   checking whether package ‘text’ can be installed ... ERROR
+    ```
+    Installation failed.
+    See ‘/scratch/henrik/revdep/future/checks/text/new/text.Rcheck/00install.out’ for details.
+    ```
+
+## Installation
+
+### Devel
+
+```
+* installing *source* package ‘text’ ...
+** this is package ‘text’ version ‘1.6’
+** package ‘text’ successfully unpacked and MD5 sums checked
+** using staged installation
+** R
+** data
+*** moving datasets to lazyload DB
+** inst
+** byte-compile and prepare package for lazy loading
+Error: .onLoad failed in loadNamespace() for 'rJava', details:
+  call: dyn.load(file, DLLpath = DLLpath, ...)
+  error: unable to load shared object '/scratch/henrik/revdep/future/library/text/rJava/libs/rJava.so':
+  libjvm.so: cannot open shared object file: No such file or directory
+Execution halted
+ERROR: lazy loading failed for package ‘text’
+* removing ‘/scratch/henrik/revdep/future/checks/text/new/text.Rcheck/text’
+
+
+```
+### CRAN
+
+```
+* installing *source* package ‘text’ ...
+** this is package ‘text’ version ‘1.6’
+** package ‘text’ successfully unpacked and MD5 sums checked
+** using staged installation
+** R
+** data
+*** moving datasets to lazyload DB
+** inst
+** byte-compile and prepare package for lazy loading
+Error: .onLoad failed in loadNamespace() for 'rJava', details:
+  call: dyn.load(file, DLLpath = DLLpath, ...)
+  error: unable to load shared object '/scratch/henrik/revdep/future/library/text/rJava/libs/rJava.so':
+  libjvm.so: cannot open shared object file: No such file or directory
+Execution halted
+ERROR: lazy loading failed for package ‘text’
+* removing ‘/scratch/henrik/revdep/future/checks/text/old/text.Rcheck/text’
+
+
+```
 # tglkmeans
 
 <details>
@@ -3109,7 +3598,7 @@ Run `revdepcheck::revdep_details(, "targeted")` for more info
 * GitHub: https://github.com/tanaylab/tglkmeans
 * Source code: https://github.com/cran/tglkmeans
 * Date/Publication: 2024-05-15 08:40:02 UTC
-* Number of recursive dependencies: 87
+* Number of recursive dependencies: 86
 
 Run `revdepcheck::revdep_details(, "tglkmeans")` for more info
 
@@ -3131,7 +3620,7 @@ Run `revdepcheck::revdep_details(, "tglkmeans")` for more info
 * GitHub: NA
 * Source code: https://github.com/cran/tramvs
 * Date/Publication: 2025-01-31 10:10:02 UTC
-* Number of recursive dependencies: 103
+* Number of recursive dependencies: 102
 
 Run `revdepcheck::revdep_details(, "tramvs")` for more info
 
@@ -3164,6 +3653,47 @@ Run `revdepcheck::revdep_details(, "tramvs")` for more info
     Execution halted
     ```
 
+# TreeSearch
+
+<details>
+
+* Version: 1.6.1
+* GitHub: https://github.com/ms609/TreeSearch
+* Source code: https://github.com/cran/TreeSearch
+* Date/Publication: 2025-06-10 12:40:10 UTC
+* Number of recursive dependencies: 123
+
+Run `revdepcheck::revdep_details(, "TreeSearch")` for more info
+
+</details>
+
+## In both
+
+*   checking tests ...
+    ```
+      Running ‘spelling.R’
+      Running ‘testthat.R’
+     ERROR
+    Running the tests in ‘tests/testthat.R’ failed.
+    Last 50 lines of output:
+      
+      `actual`:   FALSE
+      `expected`: TRUE 
+      
+      [ FAIL 1 | WARN 0 | SKIP 4 | PASS 7331 ]
+    ...
+      • PlotCharacter/plotchar-iiiiii11iii1.svg
+      • PlotCharacter/plotchar-iiiiiiii0101.svg
+      • PlotCharacter/plotchar-iiiiiiiiiiii.svg
+      • PlotCharacter/plotchar-iiiiiiiqqqqq.svg
+      • PlotCharacter/plotchar-invar-ambig.svg
+      • PlotCharacter/plotchar-invariant.svg
+      • PlotCharacter/plotchar-qqqqiiii1qqq.svg
+      • PlotCharacter/plotchar-qqqqqqqqqqqq.svg
+      Error: Test failures
+      Execution halted
+    ```
+
 # TriDimRegression
 
 <details>
@@ -3172,7 +3702,7 @@ Run `revdepcheck::revdep_details(, "tramvs")` for more info
 * GitHub: https://github.com/alexander-pastukhov/tridim-regression
 * Source code: https://github.com/cran/TriDimRegression
 * Date/Publication: 2023-09-13 14:10:03 UTC
-* Number of recursive dependencies: 96
+* Number of recursive dependencies: 95
 
 Run `revdepcheck::revdep_details(, "TriDimRegression")` for more info
 
@@ -3180,14 +3710,44 @@ Run `revdepcheck::revdep_details(, "TriDimRegression")` for more info
 
 ## In both
 
-*   checking package dependencies ... ERROR
+*   checking whether package ‘TriDimRegression’ can be installed ... ERROR
     ```
-    Packages required but not available: 'loo', 'rstan', 'bayesplot'
-    
-    See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
-    manual.
+    Installation failed.
+    See ‘/scratch/henrik/revdep/future/checks/TriDimRegression/new/TriDimRegression.Rcheck/00install.out’ for details.
     ```
 
+## Installation
+
+### Devel
+
+```
+* installing *source* package ‘TriDimRegression’ ...
+** this is package ‘TriDimRegression’ version ‘1.0.2’
+** package ‘TriDimRegression’ successfully unpacked and MD5 sums checked
+** using staged installation
+Error in loadNamespace(x) : there is no package called ‘rstantools’
+Calls: loadNamespace -> withRestarts -> withOneRestart -> doWithOneRestart
+Execution halted
+ERROR: configuration failed for package ‘TriDimRegression’
+* removing ‘/scratch/henrik/revdep/future/checks/TriDimRegression/new/TriDimRegression.Rcheck/TriDimRegression’
+
+
+```
+### CRAN
+
+```
+* installing *source* package ‘TriDimRegression’ ...
+** this is package ‘TriDimRegression’ version ‘1.0.2’
+** package ‘TriDimRegression’ successfully unpacked and MD5 sums checked
+** using staged installation
+Error in loadNamespace(x) : there is no package called ‘rstantools’
+Calls: loadNamespace -> withRestarts -> withOneRestart -> doWithOneRestart
+Execution halted
+ERROR: configuration failed for package ‘TriDimRegression’
+* removing ‘/scratch/henrik/revdep/future/checks/TriDimRegression/old/TriDimRegression.Rcheck/TriDimRegression’
+
+
+```
 # tsdistributions
 
 <details>
@@ -3204,12 +3764,29 @@ Run `revdepcheck::revdep_details(, "tsdistributions")` for more info
 
 ## In both
 
-*   checking package dependencies ... ERROR
+*   checking re-building of vignette outputs ... ERROR
     ```
-    Packages required but not available: 'SkewHyperbolic', 'mev'
+    Error(s) in re-building vignettes:
+      ...
+    --- re-building ‘estimation_demo.Rmd’ using rmarkdown
+    --- finished re-building ‘estimation_demo.Rmd’
     
-    See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
-    manual.
+    --- re-building ‘location_scale_distributions.Rmd’ using rmarkdown
+    ! Undefined control sequence.
+    l.56 \NewDocumentCommand
+                            \citeproctext{}{} 
+    
+    ...
+    --- finished re-building ‘profile_demo.Rmd’
+    
+    --- re-building ‘spd_demo.Rmd’ using rmarkdown
+    --- finished re-building ‘spd_demo.Rmd’
+    
+    SUMMARY: processing the following file failed:
+      ‘location_scale_distributions.Rmd’
+    
+    Error: Vignette re-building failed.
+    Execution halted
     ```
 
 # tsgarch
@@ -3244,7 +3821,7 @@ Run `revdepcheck::revdep_details(, "tsgarch")` for more info
 * GitHub: https://github.com/tsmodels/tsmarch
 * Source code: https://github.com/cran/tsmarch
 * Date/Publication: 2024-11-18 13:30:02 UTC
-* Number of recursive dependencies: 148
+* Number of recursive dependencies: 147
 
 Run `revdepcheck::revdep_details(, "tsmarch")` for more info
 
@@ -3252,14 +3829,27 @@ Run `revdepcheck::revdep_details(, "tsmarch")` for more info
 
 ## In both
 
-*   checking package dependencies ... ERROR
+*   checking re-building of vignette outputs ... ERROR
     ```
-    Packages required but not available: 'tsgarch', 'tsdistributions'
+    Error(s) in re-building vignettes:
+      ...
+    --- re-building ‘feasible_multivariate_garch.Rmd’ using rmarkdown
+    ! Undefined control sequence.
+    l.97 \NewDocumentCommand
+                            \citeproctext{}{} 
     
-    Package suggested but not available for checking: ‘tstests’
+    Error: processing vignette 'feasible_multivariate_garch.Rmd' failed with diagnostics:
+    LaTeX failed to compile /scratch/henrik/revdep/future/checks/tsmarch/new/tsmarch.Rcheck/vign_test/tsmarch/vignettes/feasible_multivariate_garch.tex. See https://yihui.org/tinytex/r/#debugging for debugging tips. See feasible_multivariate_garch.log for more info.
+    --- failed re-building ‘feasible_multivariate_garch.Rmd’
     
-    See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
-    manual.
+    --- re-building ‘tsmarch_demo.Rmd’ using rmarkdown
+    --- finished re-building ‘tsmarch_demo.Rmd’
+    
+    SUMMARY: processing the following file failed:
+      ‘feasible_multivariate_garch.Rmd’
+    
+    Error: Vignette re-building failed.
+    Execution halted
     ```
 
 # txshift
@@ -3270,7 +3860,7 @@ Run `revdepcheck::revdep_details(, "tsmarch")` for more info
 * GitHub: https://github.com/nhejazi/txshift
 * Source code: https://github.com/cran/txshift
 * Date/Publication: 2022-02-09 22:30:02 UTC
-* Number of recursive dependencies: 109
+* Number of recursive dependencies: 110
 
 Run `revdepcheck::revdep_details(, "txshift")` for more info
 
@@ -3299,7 +3889,7 @@ Run `revdepcheck::revdep_details(, "txshift")` for more info
 * GitHub: NA
 * Source code: https://github.com/cran/vmeasur
 * Date/Publication: 2021-11-11 19:00:02 UTC
-* Number of recursive dependencies: 108
+* Number of recursive dependencies: 107
 
 Run `revdepcheck::revdep_details(, "vmeasur")` for more info
 
@@ -3328,7 +3918,7 @@ Run `revdepcheck::revdep_details(, "WeightedCluster")` for more info
 
 </details>
 
-## In both
+## Newly broken
 
 *   checking re-building of vignette outputs ... WARNING
     ```
@@ -3355,6 +3945,11 @@ Run `revdepcheck::revdep_details(, "WeightedCluster")` for more info
     Execution halted
     ```
 
+## Newly fixed
+
+*   R CMD check timed out
+    
+
 # wingen
 
 <details>
@@ -3371,14 +3966,12 @@ Run `revdepcheck::revdep_details(, "wingen")` for more info
 
 ## In both
 
-*   checking package dependencies ... ERROR
+*   checking DESCRIPTION meta-information ... NOTE
     ```
-    Packages required but not available: 'automap', 'hierfstat', 'vcfR'
-    
-    Package suggested but not available for checking: ‘adegenet’
-    
-    See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
-    manual.
+      Missing dependency on R >= 4.1.0 because package code uses the pipe
+      |> or function shorthand \(...) syntax added in R 4.1.0.
+      File(s) using such syntax:
+        ‘general_gd.R’ ‘plot_gd.R’ ‘window_gd.R’
     ```
 
 # wru
@@ -3389,7 +3982,7 @@ Run `revdepcheck::revdep_details(, "wingen")` for more info
 * GitHub: https://github.com/kosukeimai/wru
 * Source code: https://github.com/cran/wru
 * Date/Publication: 2024-05-24 18:00:02 UTC
-* Number of recursive dependencies: 95
+* Number of recursive dependencies: 94
 
 Run `revdepcheck::revdep_details(, "wru")` for more info
 
@@ -3420,33 +4013,65 @@ Run `revdepcheck::revdep_details(, "XNAString")` for more info
 
 ## In both
 
-*   checking compiled code ... WARNING
+*   checking whether package ‘XNAString’ can be installed ... ERROR
     ```
-    File ‘XNAString/libs/XNAString.so’:
-      Found ‘__sprintf_chk’, possibly from ‘sprintf’ (C)
-        Objects: ‘./ViennaRNA/part_func_up.o’, ‘./ViennaRNA/RNAstruct.o’,
-          ‘./ViennaRNA/model.o’
-      Found ‘rand’, possibly from ‘rand’ (C)
-        Object: ‘./ViennaRNA/utils/utils.o’
-      Found ‘srand’, possibly from ‘srand’ (C)
-        Object: ‘./ViennaRNA/utils/utils.o’
-    
-    Compiled code should not call entry points which might terminate R nor
-    write to stdout/stderr instead of to the console, nor use Fortran I/O
-    nor system RNGs nor [v]sprintf.
-    
-    See ‘Writing portable packages’ in the ‘Writing R Extensions’ manual.
+    Installation failed.
+    See ‘/scratch/henrik/revdep/future/checks/XNAString/new/XNAString.Rcheck/00install.out’ for details.
     ```
 
-*   checking C++ specification ... NOTE
-    ```
-      Specified C++11: please drop specification unless essential
-    ```
+## Installation
 
-*   checking top-level files ... NOTE
-    ```
-    File
-      LICENSE
-    is not mentioned in the DESCRIPTION file.
-    ```
+### Devel
 
+```
+* installing *source* package ‘XNAString’ ...
+** this is package ‘XNAString’ version ‘1.15.0’
+** using staged installation
+** libs
+using C++ compiler: ‘g++ (GCC) 13.3.1 20240611 (Red Hat 13.3.1-2)’
+using C++11
+gcc -std=gnu2x -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG -Dlibcaf_core_shared_EXPORTS -I../src -I../src -I'/scratch/henrik/revdep/future/library/XNAString/Rcpp/include' -I/usr/local/include    -fpic  -g -O2  -c ViennaRNA/utils/cpu.c -o ViennaRNA/utils/cpu.o
+gcc -std=gnu2x -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG -Dlibcaf_core_shared_EXPORTS -I../src -I../src -I'/scratch/henrik/revdep/future/library/XNAString/Rcpp/include' -I/usr/local/include    -fpic  -g -O2  -c ViennaRNA/utils/msa_utils.c -o ViennaRNA/utils/msa_utils.o
+gcc -std=gnu2x -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG -Dlibcaf_core_shared_EXPORTS -I../src -I../src -I'/scratch/henrik/revdep/future/library/XNAString/Rcpp/include' -I/usr/local/include    -fpic  -g -O2  -c ViennaRNA/utils/structure_tree.c -o ViennaRNA/utils/structure_tree.o
+gcc -std=gnu2x -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG -Dlibcaf_core_shared_EXPORTS -I../src -I../src -I'/scratch/henrik/revdep/future/library/XNAString/Rcpp/include' -I/usr/local/include    -fpic  -g -O2  -c ViennaRNA/utils/higher_order_functions.c -o ViennaRNA/utils/higher_order_functions.o
+...
+      |      ^~~~~~~~
+ViennaRNA/datastructures/lists.c:284:1: error: conflicting types for ‘lst_mergesort’; have ‘void(LIST *, int (*)(void *, void *))’
+  284 | lst_mergesort (LIST * l, int (*cmp_func) (void *, void *))
+      | ^~~~~~~~~~~~~
+../src/ViennaRNA/datastructures/lists.h:63:6: note: previous declaration of ‘lst_mergesort’ with type ‘void(LIST *, int (*)(void))’
+   63 | void lst_mergesort (LIST * l, int (*cmp_func) ());
+      |      ^~~~~~~~~~~~~
+make: *** [/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/etc/Makeconf:202: ViennaRNA/datastructures/lists.o] Error 1
+ERROR: compilation failed for package ‘XNAString’
+* removing ‘/scratch/henrik/revdep/future/checks/XNAString/new/XNAString.Rcheck/XNAString’
+
+
+```
+### CRAN
+
+```
+* installing *source* package ‘XNAString’ ...
+** this is package ‘XNAString’ version ‘1.15.0’
+** using staged installation
+** libs
+using C++ compiler: ‘g++ (GCC) 13.3.1 20240611 (Red Hat 13.3.1-2)’
+using C++11
+gcc -std=gnu2x -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG -Dlibcaf_core_shared_EXPORTS -I../src -I../src -I'/scratch/henrik/revdep/future/library/XNAString/Rcpp/include' -I/usr/local/include    -fpic  -g -O2  -c ViennaRNA/utils/cpu.c -o ViennaRNA/utils/cpu.o
+gcc -std=gnu2x -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG -Dlibcaf_core_shared_EXPORTS -I../src -I../src -I'/scratch/henrik/revdep/future/library/XNAString/Rcpp/include' -I/usr/local/include    -fpic  -g -O2  -c ViennaRNA/utils/msa_utils.c -o ViennaRNA/utils/msa_utils.o
+gcc -std=gnu2x -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG -Dlibcaf_core_shared_EXPORTS -I../src -I../src -I'/scratch/henrik/revdep/future/library/XNAString/Rcpp/include' -I/usr/local/include    -fpic  -g -O2  -c ViennaRNA/utils/structure_tree.c -o ViennaRNA/utils/structure_tree.o
+gcc -std=gnu2x -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG -Dlibcaf_core_shared_EXPORTS -I../src -I../src -I'/scratch/henrik/revdep/future/library/XNAString/Rcpp/include' -I/usr/local/include    -fpic  -g -O2  -c ViennaRNA/utils/higher_order_functions.c -o ViennaRNA/utils/higher_order_functions.o
+...
+      |      ^~~~~~~~
+ViennaRNA/datastructures/lists.c:284:1: error: conflicting types for ‘lst_mergesort’; have ‘void(LIST *, int (*)(void *, void *))’
+  284 | lst_mergesort (LIST * l, int (*cmp_func) (void *, void *))
+      | ^~~~~~~~~~~~~
+../src/ViennaRNA/datastructures/lists.h:63:6: note: previous declaration of ‘lst_mergesort’ with type ‘void(LIST *, int (*)(void))’
+   63 | void lst_mergesort (LIST * l, int (*cmp_func) ());
+      |      ^~~~~~~~~~~~~
+make: *** [/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/etc/Makeconf:202: ViennaRNA/datastructures/lists.o] Error 1
+ERROR: compilation failed for package ‘XNAString’
+* removing ‘/scratch/henrik/revdep/future/checks/XNAString/old/XNAString.Rcheck/XNAString’
+
+
+```

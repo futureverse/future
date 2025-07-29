@@ -1,6 +1,6 @@
 #' A ClusterFutureBackend resolves futures in parallel using any PSOCK cluster
 #'
-#' @inheritParams FutureBackend
+#' @inheritParams FutureBackend-class
 #'
 #' @param workers ...
 #'
@@ -11,7 +11,7 @@
 #' `plan(cluster, workers = workers)`.
 #'
 #' @keywords internal
-#' @rdname FutureBackend
+#' @rdname FutureBackend-class
 #'
 #' @importFrom parallelly as.cluster availableWorkers
 #' @export
@@ -209,6 +209,8 @@ launchFuture.ClusterFutureBackend <- function(backend, future, ...) {
   ## Get the index of a free cluster node, which has been validated to
   ## be functional. If the existing worker was found to be non-functional,
   ## it was re-launched by requestNode()
+  ## FIXME: Is this wrong? Does it get the future-registry slot index
+  ## rather than worker index? /HB 2025-07-04
   node_idx <- requestNode(await = function() {
     FutureRegistry(reg, action = "collect-first", earlySignal = TRUE, debug = debug)
   }, backend = backend, timeout = timeout, delta = delta, alpha = alpha)
@@ -443,6 +445,7 @@ nbrOfFreeWorkers.ClusterFutureBackend <- function(evaluator, ...) {
 }
 
 
+#' @importFrom parallel clusterCall clusterEvalQ
 .makeCluster <- function(workers, ...) {
   debug <- isTRUE(getOption("future.debug"))
   if (debug) {
@@ -473,6 +476,17 @@ nbrOfFreeWorkers.ClusterFutureBackend <- function(evaluator, ...) {
   
   cl <- do.call(makeClusterPSOCK, args = args, quote = TRUE)
   cl <- addCovrLibPath(cl)
+
+  ## Pre-load 'future' package
+  works <- clusterCall(cl = cl, fun = requireNamespace, "future", quietly = TRUE)
+  works <- unlist(works, use.names = FALSE)
+  
+  ## Pre-load 'RhpcBLASctl' package, if available
+  void <- clusterCall(cl = cl[works], fun = requireNamespace, "RhpcBLASctl", quietly = TRUE)
+
+  ## Pre-calculate parallelly::availableCores()
+  void <- clusterEvalQ(cl = cl[works], parallelly::availableCores())
+
   cl
 } ## .makeCluster()
 
@@ -545,6 +559,26 @@ getSocketSelectTimeout <- function(future, timeout = NULL) {
 } ## getSocketSelectTimeout()
 
 
+#' @param timeout (numeric) The maximum time (in seconds) for polling the worker
+#' for a response. If no response is available within this time limit, FALSE is
+#' returned assuming the future is still being processed.
+#' If NULL, the value defaults to `getOption("future.<type>.resolved.timeout")`,
+#' then `getOption("future.resolved.timeout")`, and finally 0.01 (seconds),
+#' where `<type>` corresponds to the type of future, e.g. `cluster` and `multicore`.
+#'
+#' @section Behavior of cluster and multisession futures:
+#' If all worker slots are occupied, `resolved()` for `ClusterFuture` and
+#' `MultisessionFuture` will attempt to free one up by checking whether
+#' one of the futures is _resolved_. If there is one, then its result is
+#' collected in order to free up one worker slot.
+#'
+#' `resolved()` for `ClusterFuture` may receive immediate condition objects, rather
+#' than a [FutureResult], when polling the worker for results. In such cases, the
+#' condition object is collected and another poll it performed. Up to 100 immediate
+#' conditions may be collected this way per `resolved()` call, before considering
+#' the future non-resolved and FALSE being returned.
+#'
+#' @rdname resolved
 #' @importFrom parallelly connectionId isConnectionValid
 #' @export
 resolved.ClusterFuture <- function(x, run = TRUE, timeout = NULL, ...) {
@@ -559,33 +593,29 @@ resolved.ClusterFuture <- function(x, run = TRUE, timeout = NULL, ...) {
   ## A lazy future not even launched?
   if (future[["state"]] == "created") {
     if (run) {
-      ## Can we launch it?  Are there available workers?
+      nworkers <- length(workers)
       
       ## Collect one resolved future, if one exists
       FutureRegistry(reg, action = "collect-first", earlySignal = TRUE, debug = debug)
-
-      ## Find which nodes are available
+      
+      ## Are there available worker slots?
       avail <- rep(TRUE, times = length(workers))
       futures <- FutureRegistry(reg, action = "list", earlySignal = FALSE, debug = debug)
-      if (length(futures) > 0) {
-        ## Get indices for all busy cluster nodes
-        nodes <- unlist(lapply(futures, FUN = function(f) f[["node"]]), use.names = FALSE)
-        stop_if_not(
-          length(nodes) == length(futures),
-          is.numeric(nodes), all(is.finite(nodes)),
-          all(nodes >= 1), all(nodes <= length(workers)),
-          length(unique(nodes)) == length(nodes)
-        )
-        avail[nodes] <- FALSE
-      }
+      nodes <- unlist(lapply(futures, FUN = function(f) f[["node"]]), use.names = FALSE)
+      stop_if_not(
+        length(nodes) == length(futures),
+        is.numeric(nodes), all(is.finite(nodes)),
+        all(nodes >= 1), all(nodes <= length(workers)),
+        length(unique(nodes)) == length(nodes)
+      )
+      avail[nodes] <- FALSE
       if (debug) mdebugf("avail: [n=%d] %s", length(avail), commaq(which(avail)))
 
-      ## Sanity check
-      stop_if_not(any(avail))
-
-      ## If at least one is available, then launch this lazy future
+      ## 4. Launch this lazy future
       if (any(avail)) future <- run(future)
-    }
+    } ## if (run)
+
+    ## Consider future non-resolved
     return(FALSE)
   }
 
@@ -836,7 +866,7 @@ receiveMessageFromWorker <- local({
     
     stop_if_not(isTRUE(ack))
     if (debug) {
-      mdebug("received data:")
+      mdebug("Received data:")
       mstr(data)
     }
 
@@ -997,7 +1027,7 @@ receiveMessageFromWorker <- local({
 ## to backend[["workers"]], before returning.
 #' @importFrom parallelly isConnectionValid isNodeAlive cloneNode
 #' @importFrom parallel clusterCall
-requestNode <- function(await, backend, timeout, delta, alpha) {
+requestNode <- function(await, backend, timeout, delta, alpha, validateWorker = TRUE) {
   debug <- isTRUE(getOption("future.debug"))
   if (debug) {
     mdebug_push("requestNode() ...")
@@ -1085,94 +1115,99 @@ requestNode <- function(await, backend, timeout, delta, alpha) {
   stop_if_not(is.numeric(node_idx), is.finite(node_idx), node_idx >= 1, node_idx <= length(workers))
   if (debug) mdebugf("Index of first available worker: %d", node_idx)
   
-  ## Validate that the cluster node is working
-  if (debug) mdebug_push("Validate that the worker is functional ...")
-  cl <- workers[node_idx]
-  stop_if_not(length(cl) == 1L, inherits(cl, "cluster"))
-
-  maxTries <- 3L
-  for (kk in maxTries:1) {
-    okay <- TRUE
+  ## Validate that the cluster node is working - if not, relaunch it
+  if (validateWorker) {
+    if (debug) mdebug_push("Validate that the worker is functional ...")
+    cl <- workers[node_idx]
+    stop_if_not(length(cl) == 1L, inherits(cl, "cluster"))
+  
     truth <- "future:::requestNode() validation call"
-    res <- tryCatch({
-      suppressWarnings({
-        clusterCall(cl = cl, function(x) x, truth)[[1]]
-      })
-    }, error = identity)
-    ## If not working, investigate why, and relaunch a new worker
-    if (inherits(res, "error") || !identical(res, truth)) {
-      if (debug) {
-        mdebug("Worker is non-functional")
-        if (inherits(res, "error")) {
-          mdebug("Error received: ", conditionMessage(res))
-        } else {
-          mdebug("Result received: ", sQuote(res))
-        }
-      }
-      okay <- FALSE
-  
-      ## Is the connection working?
-      node <- cl[[1]]
-      con <- node[["con"]]
-      connectionOkay <- NA
-      if (inherits(con, "connection")) {
-        connectionOkay <- isConnectionValid(con)
-        if (debug) mdebug("Connection is valid: ", connectionOkay)
-      }
-  
-      if (is.na(connectionOkay) || connectionOkay) {
-        ## If the node does not use a connection, or the connection is working,
-        ## we can only assume the worker is also alive. If so, we should try to
-        ## kill the worker.
-        res <- suppressWarnings(killNode(node))
-        if (debug) mdebugf("Killed %s: %s", class(node)[1], res)
-      } else {
-        ## If connection is not working, we could assume the worker is no longer
-        ## alive, but it could also be a network issues. In either case, we
-        ## should try to kill it, just in case.
-        res <- suppressWarnings(killNode(node))
-        if (debug) mdebugf("Killed %s: %s", class(node)[1], res)
-      }
-      if (kk == 1L) {
-        stop(FutureError(sprintf("Failed to find a functional cluster worker, after attempting to relaunch the parallel worker %d times", maxTries)))
-      }
-    } else {
-      if (debug) mdebug("Worker is functional")
-      break
-    }
     
-    ## Relaunch worker?
-    if (!okay) {
-      if (debug) mdebugf_push("Restarting non-alive cluster node %d ...", node_idx)
-      node2 <- tryCatch({
-        cloneNode(node)
+    maxTries <- 3L
+    for (kk in maxTries:1) {
+      okay <- TRUE
+      res <- tryCatch({
+        suppressWarnings({
+          clusterCall(cl = cl, identity, truth)[[1]]
+        })
       }, error = identity)
-      if (inherits(node2, "error")) {
-        msg <- sprintf("One of the future workers of class %s, part of a cluster of class %s, was interrupted and attempts to relaunch it failed", sQuote(class(node)[1]), sQuote(class(cl)[1]))
-        if (inherits(node, c("SOCKnode", "SOCK0node")) &&
-            !inherits(node, c("RichSOCKnode"))) {
-          msg <- sprintf("%s. If you created your cluster with parallel::makeCluster(), try with parallelly::makeClusterPSOCK() instead", msg)
+      
+      ## If not working, investigate why, and relaunch a new worker
+      if (inherits(res, "error") || !identical(res, truth)) {
+        if (debug) {
+          mdebug("Worker is non-functional")
+          if (inherits(res, "error")) {
+            mdebug("Error received: ", conditionMessage(res))
+          } else {
+            mdebug("Result received: ", sQuote(res))
+          }
         }
-        msg <- sprintf("%s. The reported reason was: %s", msg, conditionMessage(node2))
-        stop(FutureError(msg))
-      } else {
-        node <- node2
-      }
-      
-      cl[[1]] <- node
-      
-      workers[[node_idx]] <- node
-      backend[["workers"]] <- workers
-      
-      if (debug) {
-        mdebug("Re-launched cluster node:")
-        mprint(node)
-        mdebugf_pop()
-      }
-    }
+        okay <- FALSE
     
-    Sys.sleep(0.1)
-  } ##  for (kk in maxTries:1)
+        ## Is the connection working?
+        node <- cl[[1]]
+        con <- node[["con"]]
+        connectionOkay <- NA
+        if (inherits(con, "connection")) {
+          connectionOkay <- isConnectionValid(con)
+          if (debug) mdebug("Connection is valid: ", connectionOkay)
+        }
+    
+        if (is.na(connectionOkay) || connectionOkay) {
+          ## If the node does not use a connection, or the connection is working,
+          ## we can only assume the worker is also alive. If so, we should try to
+          ## kill the worker.
+          res <- suppressWarnings(killNode(node))
+          if (debug) mdebugf("Killed %s: %s", class(node)[1], res)
+        } else {
+          ## If connection is not working, we could assume the worker is no longer
+          ## alive, but it could also be a network issues. In either case, we
+          ## should try to kill it, just in case.
+          res <- suppressWarnings(killNode(node))
+          if (debug) mdebugf("Killed %s: %s", class(node)[1], res)
+        }
+        if (kk == 1L) {
+          stop(FutureError(sprintf("Failed to find a functional cluster worker, after attempting to relaunch the parallel worker %d times", maxTries)))
+        }
+      } else {
+        if (debug) mdebug("Worker is functional")
+        break
+      }
+      
+      ## Relaunch worker?
+      if (!okay) {
+        if (debug) mdebugf_push("Restarting non-alive cluster node %d ...", node_idx)
+        node2 <- tryCatch({
+          cloneNode(node)
+        }, error = identity)
+        if (inherits(node2, "error")) {
+          msg <- sprintf("One of the future workers of class %s, part of a cluster of class %s, was interrupted and attempts to relaunch it failed", sQuote(class(node)[1]), sQuote(class(cl)[1]))
+          if (inherits(node, c("SOCKnode", "SOCK0node")) &&
+              !inherits(node, c("RichSOCKnode"))) {
+            msg <- sprintf("%s. If you created your cluster with parallel::makeCluster(), try with parallelly::makeClusterPSOCK() instead", msg)
+          }
+          msg <- sprintf("%s. The reported reason was: %s", msg, conditionMessage(node2))
+          stop(FutureError(msg))
+        } else {
+          node <- node2
+        }
+        
+        cl[[1]] <- node
+        
+        workers[[node_idx]] <- node
+        backend[["workers"]] <- workers
+        
+        if (debug) {
+          mdebug("Re-launched cluster node:")
+          mprint(node)
+          mdebugf_pop()
+        }
+      }
+  
+      ## Try again
+      Sys.sleep(0.1)
+    } ##  for (kk in maxTries:1)
+  } ## if (validateWorker)
 
   ## Assert that there is no other registered future that is using
   ## the found node
@@ -1183,7 +1218,6 @@ requestNode <- function(await, backend, timeout, delta, alpha) {
       stop(FutureError(sprintf("[INTERNAL ERROR]: requestNode() found node #%d to be free, but it is used by future #%d (%s)", node_idx, kk, sQuoteLabel(future))))
     }
   }
-
 
   if (debug) mdebug_pop()
   
@@ -1558,7 +1592,7 @@ handleInterruptedFuture <- local({
 #'
 #' @inheritParams Future-class
 #' @inheritParams future
-#' @inheritParams FutureBackend
+#' @inheritParams FutureBackend-class
 #'
 #' @param workers A \code{\link[parallel:makeCluster]{cluster}} object,
 #' a character vector of host names, a positive numeric scalar,
@@ -1568,14 +1602,14 @@ handleInterruptedFuture <- local({
 #' If a function, it is called without arguments _when the future
 #' is created_ and its value is used to configure the workers.
 #' The function should return any of the above types.
+#' If `workers == 1`, then all processing using done in the
+#' current/main \R session and we therefore fall back to using a
+#' sequential future. To override this fallback, use `workers = I(1)`.
 #'
 #' @param persistent If FALSE, the evaluation environment is cleared
 #' from objects prior to the evaluation of the future.
 #' 
-#' @param \ldots Additional named elements passed to [Future()].
-#'
-#' @return
-#' A ClusterFuture.
+#' @param \ldots Not used.
 #'
 #' @example incl/cluster.R
 #'
@@ -1584,7 +1618,7 @@ handleInterruptedFuture <- local({
 #' Backends' vignette and \url{https://www.futureverse.org/backends.html}.
 #'
 #' @export
-cluster <- function(..., workers = availableWorkers(constraints = "connections"), gc = FALSE, earlySignal = FALSE, persistent = FALSE, envir = parent.frame()) {
+cluster <- function(..., workers = availableWorkers(constraints = "connections"), persistent = FALSE) {
   stop("INTERNAL ERROR: The future::cluster() function must never be called directly")
 }
 class(cluster) <- c("cluster", "multiprocess", "future", "function")

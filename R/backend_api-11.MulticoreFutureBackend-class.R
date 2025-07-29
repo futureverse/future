@@ -132,7 +132,7 @@ requestCore <- function(await, workers = availableCores(constraints = "multicore
 #' `plan(multicore, workers = workers)`.
 #'
 #' @keywords internal
-#' @rdname FutureBackend
+#' @rdname FutureBackend-class
 #' @export
 MulticoreFutureBackend <- function(workers = availableCores(constraints = "multicore"), maxSizeOfObjects = +Inf, ...) {
   default_workers <- missing(workers)
@@ -271,19 +271,11 @@ nbrOfFreeWorkers.MulticoreFutureBackend <- function(evaluator, background = FALS
 
 
 
-#' A multicore future is a future whose value will be resolved asynchronously in a parallel process
-#'
-#' @inheritParams MultiprocessFuture-class
-#' @inheritParams Future-class
-#'
-#' @return
-#' `MulticoreFuture()` returns an object of class `MulticoreFuture`.
-#'
-#' @section Usage:
-#' To use 'multicore' futures, use `plan(multicore, ...)`, cf. [multicore].
-#'
-#' @name MulticoreFuture-class
-#' @keywords internal
+#' @section Behavior of multicore futures:
+#' `resolved()` for `MulticoreFuture` may receive immediate condition objects, rather than a
+#' [FutureResult], when polling the worker for results. In such cases, _all_ such condition
+#' objects are collected, before considering the future non-resolved and FALSE being returned.
+#' @rdname resolved
 #' @export
 resolved.MulticoreFuture <- local({
   selectChildren <- import_parallel_fcn("selectChildren")
@@ -396,7 +388,11 @@ result.MulticoreFuture <- local({
 
     ## Sanity checks
     if (!inherits(result, "FutureResult")) {
-      if (debug) mdebugf_push("Detected non-FutureResult result ...")
+      if (debug) {
+        mdebugf_push("Detected non-FutureResult result ...")
+        mstr(result)
+        mdebugf("Future state: %s", sQuote(future[["state"]]))
+      }
 
       alive <- NA
       pid <- job[["pid"]]
@@ -414,6 +410,11 @@ result.MulticoreFuture <- local({
       ## https://github.com/futureverse/future/issues/35
       if (is.null(result) || identical(result, structure("fatal error in wrapper code", class = "try-error"))) {
         label <- sQuoteLabel(future)
+
+        ## HEURISTICS: If the forked process is no longer alive, assume it was interrupted
+        if (is.numeric(pid) && !is.na(alive) && !alive) {
+          future[["state"]] <- "interrupted"
+        }
 
         if (future[["state"]] %in% c("canceled", "interrupted")) {
           if (debug) mdebugf("Detected interrupted %s whose result cannot be retrieved", sQuote(class(future)[1]))
@@ -460,7 +461,7 @@ result.MulticoreFuture <- local({
   
         ## (d) Size of globals
         postmortem[["global_sizes"]] <- summarize_size_of_globals(future[["globals"]])
-  
+
         postmortem <- unlist(postmortem, use.names = FALSE)
         if (!is.null(postmortem)) {
            postmortem <- sprintf("Post-mortem diagnostic: %s",
@@ -488,7 +489,7 @@ result.MulticoreFuture <- local({
         alive <- NA  ## For now, don't remove future when there's an unexpected error /HB 2023-04-19
       }
       future[["result"]] <- ex
-      
+
       ## Remove future from FutureRegistry?
       if (!is.na(alive) && !alive) {
         reg <- sprintf("multicore-%s", session_uuid())
@@ -498,9 +499,11 @@ result.MulticoreFuture <- local({
           FutureRegistry(reg, action = "remove", future = future, earlySignal = TRUE)
         }
       }
-      
+
       if (debug) mdebugf_pop()
-  
+
+      if (debug) mdebugf("Throwing %s: %s", class(ex)[1], conditionMessage(ex))
+
       stop(ex)
     }
 
@@ -614,20 +617,16 @@ interruptFuture.MulticoreFutureBackend <- function(backend, future, ...) {
 #'
 #' @inheritParams future
 #' @inheritParams Future-class
+#' @inheritParams FutureBackend-class
 #'
 #' @param workers The number of parallel processes to use.
 #' If a function, it is called without arguments _when the future
 #' is created_ and its value is used to configure the workers.
-#'
-#' @param \ldots Additional named elements to [Future()].
-#'
-#' @return
-#' A [Future].
 #' If `workers == 1`, then all processing using done in the
 #' current/main \R session and we therefore fall back to using a
 #' sequential future. To override this fallback, use `workers = I(1)`.
-#' This is also the case whenever multicore processing is not supported,
-#' e.g. on Windows.
+#'
+#' @param \ldots Not used.
 #'
 #' @example incl/multicore.R
 #'
@@ -665,8 +664,9 @@ interruptFuture.MulticoreFutureBackend <- function(backend, future, ...) {
 #' whether multicore futures are supported or not on the current
 #' system.
 #'
+#' @aliases MulticoreFuture
 #' @export
-multicore <- function(..., workers = availableCores(constraints = "multicore"), gc = FALSE, earlySignal = FALSE, envir = parent.frame()) {
+multicore <- function(..., workers = availableCores(constraints = "multicore")) {
   stop("INTERNAL ERROR: The future::multicore() function must never be called directly")
 }
 class(multicore) <- c("multicore", "multiprocess", "future", "function")

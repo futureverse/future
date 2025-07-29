@@ -1,6 +1,6 @@
 #' A SequentialFutureBackend resolves futures sequentially in the current R session
 #'
-#' @inheritParams FutureBackend
+#' @inheritParams FutureBackend-class
 #'
 #' @details
 #' The `SequentialFutureBackend` is selected by `plan(sequential)`.
@@ -10,7 +10,7 @@
 #' Backends' vignette and \url{https://www.futureverse.org/backends.html}.
 #'
 #' @keywords internal
-#' @rdname FutureBackend
+#' @rdname FutureBackend-class
 #' @export
 SequentialFutureBackend <- function(..., maxSizeOfObjects = +Inf) {
   core <- FutureBackend(..., maxSizeOfObjects = maxSizeOfObjects, reg = "sequential")
@@ -173,17 +173,15 @@ getFutureBackendConfigs.UniprocessFuture <- function(future, ...) {
 #'
 #' @inheritParams future
 #' @inheritParams Future-class
+#' @inheritParams FutureBackend-class
 #' 
-#' @param \ldots Additional named elements to [Future()].
-#'
-#' @return
-#' A [Future].
+#' @param \ldots Not used.
 #'
 #' @example incl/sequential.R
 #'
 #' @aliases uniprocess
 #' @export
-sequential <- function(..., gc = FALSE, earlySignal = FALSE, envir = parent.frame()) {
+sequential <- function(..., envir = parent.frame()) {
   ## WORKAROUNDS:
   ## (1) fiery calls sequential() directly
   ##     https://github.com/thomasp85/fiery/issues/53

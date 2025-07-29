@@ -153,7 +153,12 @@ all.equal.FutureStrategyList <- function(target, current, ..., debug = FALSE) {
 
   plan_cleanup <- function(evaluator, cleanup = NA, debug = FALSE) {
     if (debug) {
-      mdebugf_push("plan(): plan_cleanup(%s, cleanup = %s) ...", commaq(class(evaluator)), cleanup)
+      if (inherits(evaluator, "character")) {
+        first <- sprintf('"%s"', evaluator)
+      } else {
+        first <- sprintf("<%s>", commaq(class(evaluator)))
+      }
+      mdebugf_push("plan(): plan_cleanup(%s, cleanup = %s) ...", first, cleanup)
       on.exit(mdebug_pop())
     }
 
@@ -262,9 +267,9 @@ all.equal.FutureStrategyList <- function(target, current, ..., debug = FALSE) {
 #'
 #' @param \ldots Additional arguments overriding the default arguments
 #' of the evaluation function.  Which additional arguments are supported
-#' depends on what evaluation function is used, e.g. several support
+#' depends on which future backend is used, e.g. several support
 #' argument `workers` but not all. For details, see the individual
-#' functions of which some are linked to below.
+#' backends of which some are linked to below.
 #"
 #' @param substitute If `TRUE`, the `strategy` expression is
 #' `substitute()`:d, otherwise not.
@@ -532,7 +537,12 @@ plan <- local({
 
     debug <- isTRUE(getOption("future.debug"))
     if (debug) {
-      mdebugf_push("plan(<%s>, .skip = %s, .cleanup = %s, .init = %s) ...", class(strategy)[1], .skip, .cleanup, .init)
+      if (inherits(strategy, "character")) {
+        first <- sprintf('"%s"', strategy)
+      } else {
+        first <- sprintf("<%s>", commaq(class(strategy)[1]))
+      }
+      mdebugf_push("plan(%s, .skip = %s, .cleanup = %s, .init = %s) ...", first, .skip, .cleanup, .init)
       on.exit(mdebug_pop())
     }
     

@@ -62,12 +62,24 @@ nbrOfWorkers.future <- function(evaluator) {
   workers
 }
 
+#' @importFrom utils tail
 #' @export
 nbrOfWorkers.NULL <- function(evaluator) {
   assert_no_positional_args_but_first()
+  res <- NA_integer_
+  debug <- isTRUE(getOption("future.debug"))
+  if (debug) {
+    mdebug_push("nbrOfWorkers(NULL) ...")
+    mstr(tail(sys.calls(), n = 4L))
+    on.exit({
+      mdebugf("Number of workers: %d", res)
+      mdebug_pop()
+    })
+  }
   backend <- plan("backend")
   if (!inherits(backend, "FutureBackend")) backend <- plan("next")
-  nbrOfWorkers(backend)
+  res <- nbrOfWorkers(backend)
+  res
 }
 
 
@@ -117,9 +129,20 @@ nbrOfFreeWorkers.future <- function(evaluator, background = FALSE, ...) {
 }
 
 
+#' @importFrom utils tail
 #' @export
 nbrOfFreeWorkers.NULL <- function(evaluator, background = FALSE, ...) {
   assert_no_positional_args_but_first()
+  res <- NA_integer_
+  debug <- isTRUE(getOption("future.debug"))
+  if (debug) {
+    mdebug_push("nbrOfFreeWorkers(NULL) ...")
+    mstr(tail(sys.calls(), n = 4L))
+    on.exit({
+      mdebugf("Number of free workers: %d", res)
+      mdebug_pop()
+    })
+  }
   backend <- plan("backend")
   if (!inherits(backend, "FutureBackend")) backend <- plan("next")
   nbrOfFreeWorkers(backend, background = background, ...)

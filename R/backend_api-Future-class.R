@@ -7,7 +7,7 @@
 #' value is not available.  As soon as it is _resolved_, the value
 #' is available via \code{\link[future]{value}()}.
 #'
-#' @inheritParams FutureBackend
+#' @inheritParams FutureBackend-class
 #'
 #' @param expr An \R \link[base]{expression}.
 #'
@@ -75,7 +75,7 @@
 #' Exactly when the values are collected may depend on various factors such
 #' as number of free workers and whether `earlySignal` is TRUE (more
 #' frequently) or FALSE (less frequently).
-#' _Some types of futures ignore this argument._
+#' _Some future backends may ignore this argument._
 #'
 #' @param earlySignal Specified whether conditions should be signaled as soon
 #' as possible or not.
@@ -722,6 +722,7 @@ result.Future <- function(future, ...) {
 }
 
 
+#' @rdname resolved
 #' @export
 resolved.Future <- function(x, run = TRUE, ...) {
   future <- x

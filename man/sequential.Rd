@@ -5,26 +5,13 @@
 \alias{uniprocess}
 \title{Create a sequential future whose value will be in the current \R session}
 \usage{
-sequential(..., gc = FALSE, earlySignal = FALSE, envir = parent.frame())
+sequential(..., envir = parent.frame())
 }
 \arguments{
-\item{gc}{If TRUE, the garbage collector run (in the process that
-evaluated the future) only after the value of the future is collected.
-Exactly when the values are collected may depend on various factors such
-as number of free workers and whether \code{earlySignal} is TRUE (more
-frequently) or FALSE (less frequently).
-\emph{Some types of futures ignore this argument.}}
-
-\item{earlySignal}{Specified whether conditions should be signaled as soon
-as possible or not.}
-
 \item{envir}{The \link{environment} from where global objects should be
 identified.}
 
-\item{\ldots}{Additional named elements to \code{\link[=Future]{Future()}}.}
-}
-\value{
-A \link{Future}.
+\item{\ldots}{Not used.}
 }
 \description{
 \emph{WARNING: This function must never be called.

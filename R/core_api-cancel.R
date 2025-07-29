@@ -88,21 +88,25 @@ cancel.Future <- function(x, interrupt = TRUE, ...) {
   ## Only running futures can be canceled, ignore everything else
   if (future[["state"]] != "running") {
     if (debug) mdebug("Skipping, because a non-running future")
-    return(future)
+    return(invisible(future))
   }
 
   if (interrupt) {
     backend <- future[["backend"]]
     if (is.null(backend)) {
-      stop(FutureError("Interruption of futures require a backend implementing the FutureBackend API: ", sQuote(class(future)[1])))
+      stop(FutureError(sprintf("Interruption of futures require a backend implementing the FutureBackend API: %s", sQuote(class(future)[1]))))
     }
-    local({
-      if (debug) {
-        mdebugf_push("interruptFuture(<%s>, future = <%s>, ...) ...", class(backend)[1], class(future)[1])
-        on.exit(mdebug_pop())
-      }
-      interruptFuture(backend, future = future, ...)
-    })
+    if (isTRUE(backend[["interrupts"]])) {
+      local({
+        if (debug) {
+          mdebugf_push("interruptFuture(<%s>, future = <%s>, ...) ...", class(backend)[1], class(future)[1])
+          on.exit(mdebug_pop())
+        }
+        interruptFuture(backend, future = future, ...)
+      })
+    } else {
+      if (debug) mdebugf("Ignoring the interrupt request, because interrupts have been disabled for this backend")
+    }
   }
 
   future[["state"]] <- "canceled"

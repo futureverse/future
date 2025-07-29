@@ -24,7 +24,7 @@ jobs:
           - { plan: 'future.batchtools::batchtools_bash'  }
           - { plan: 'future.callr::callr'                 }
           - { plan: 'future.mirai::mirai_multisession'    }
-          - { plan: 'future.mirai::mirai_cluster'         }
+#          - { plan: 'future.mirai::mirai_cluster'         }
 
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}

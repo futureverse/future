@@ -5,7 +5,8 @@
 %   R/backend_api-11.MulticoreFutureBackend-class.R,
 %   R/backend_api-11.SequentialFutureBackend-class.R,
 %   R/backend_api-13.MultisessionFutureBackend-class.R
-\name{FutureBackend}
+\name{FutureBackend-class}
+\alias{FutureBackend-class}
 \alias{FutureBackend}
 \alias{launchFuture}
 \alias{listFutures}
@@ -63,7 +64,7 @@ MulticoreFutureBackend(
 SequentialFutureBackend(..., maxSizeOfObjects = +Inf)
 
 MultisessionFutureBackend(
-  workers = availableCores(),
+  workers = availableCores(constraints = "connections-16"),
   rscript_libs = .libPaths(),
   interrupts = TRUE,
   gc = FALSE,

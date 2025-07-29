@@ -48,6 +48,7 @@
 #' The `FutureBackend` class specifies FutureBackend API,
 #' that all backends must implement and comply to. Specifically,
 #'
+#' @name FutureBackend-class
 #' @keywords internal
 #' @export
 FutureBackend <- function(..., earlySignal = FALSE, gc = FALSE, maxSizeOfObjects = getOption("future.globals.maxSize", +Inf), interrupts = TRUE, hooks = FALSE) {
@@ -175,7 +176,7 @@ print.FutureBackend <- function(x, ...) {
 #' @return
 #' `launchFuture()` returns the launched `Future` object.
 #'
-#' @rdname FutureBackend
+#' @rdname FutureBackend-class
 #' @export
 launchFuture <- function(backend, future, ...) {
   UseMethod("launchFuture")
@@ -188,7 +189,7 @@ launchFuture.FutureBackend <- function(backend, future, ...) {
 
 
 #'
-#' @rdname FutureBackend
+#' @rdname FutureBackend-class
 #' @export
 listFutures <- function(backend, ...) {
   UseMethod("listFutures")
@@ -212,7 +213,7 @@ listFutures.FutureBackend <- function(backend, ...) {
 #' `interruptFuture()` returns the interrupted `Future` object,
 #' if supported, other the unmodified future.
 #'
-#' @rdname FutureBackend
+#' @rdname FutureBackend-class
 #' @export
 interruptFuture <- function(backend, future, ...) {
   UseMethod("interruptFuture")
@@ -278,7 +279,7 @@ makeFutureBackend <- function(evaluator, ..., debug = FALSE) {
     mdebugf("Backend factory arguments: [n=%d]", length(args2))
     mstr(args2)
   }
-  backend <- do.call(factory, args = args)
+  backend <- do.call(factory, args = args, envir = environment(factory))
   if (debug) mdebugf("Backend: <%s>", commaq(class(backend)))
   stop_if_not(inherits(backend, "FutureBackend"))
   
@@ -290,7 +291,7 @@ makeFutureBackend <- function(evaluator, ..., debug = FALSE) {
 
 
 
-#' @rdname FutureBackend
+#' @rdname FutureBackend-class
 #' @export
 validateFutureGlobals <- function(backend, future, ...) {
   UseMethod("validateFutureGlobals")
@@ -372,7 +373,7 @@ getFutureBackendConfigs.Future <- function(future, ...) {
 #' `stopWorkers()` returns TRUE if the workers were shut down,
 #' otherwise FALSE.
 #'
-#' @rdname FutureBackend
+#' @rdname FutureBackend-class
 #' @export
 stopWorkers <- function(backend, ...) {
   UseMethod("stopWorkers")

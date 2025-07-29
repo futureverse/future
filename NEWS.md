@@ -1,3 +1,57 @@
+# Version 1.67.0 [2025-07-29]
+
+This is the fourth rollout out of several towards a near-future major
+release. This has been made possible due to a multi-year effort of
+internal re-designs, work with package maintainers, release, and
+repeat. This release fixes a few more regressions introduced in future
+1.40.0 (2025-04-10).
+
+## Significant Changes
+
+ * Now argument `workers` for `plan(multisession)` defaults to
+   `availableCores(constraints = "connections-16")`. This will make
+   the default for `plan(multisession)` work also on computers with a
+   large number of CPU cores (e.g. 192 and 256 cores) while leaving 16
+   connection slots available for other needs.
+   
+ * Futures now muffle any `packageStartupMessage` conditions produced
+   when pre-loading and pre-attaching packages, e.g. as specified by
+   the `packages` argument or those needed by global objects.
+
+## Performance
+
+ * The pre-validation of the cluster worker allotted to a future when
+   launched was unnecessarily expensive due to a thinko since
+   **future** 1.40.0 (2025-04-10), e.g. it would take ~0.1-0.2 seconds
+   for a multisession future, whereas after the fix it is effectly 0.0
+   seconds.
+
+ * Calling `resolved()` on a lazy `ClusterFuture` would collect the
+   result for the first _resolved_ future in order to free up one
+   worker slot. Now this is only done if all slots are occupied. The
+   net benefit is that lazy cluster futures will be launched faster,
+   unless all workers are busy.
+
+ * Cluster and multisession workers initiate more things when created,
+   e.g. pre-loading of packages and memoization of available
+   cores. Previously, such steps were performed only when the first
+   future was evaluated on a worker.
+
+## Bug Fixes
+
+ * If a multicore future that was terminated abruptly (e.g. via
+   `tools::pskill()` or by the operating system), then it was not
+   detected as such. Instead it resulted in an unexpected error that
+   could not be recovered from. Now it is detected and a
+   `FutureInterruptError` is signaled, which can then be handled and
+   the future may be `reset()`.
+ 
+ * Calls to `resolved()` were not registered by FutureJournal.
+
+ * Future backend factory was created via the calling environment
+   rather than via the namespace environment where it lives.
+ 
+
 # Version 1.58.0 [2025-06-05]
 
 This is the third rollout out of several towards a near-future major
