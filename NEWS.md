@@ -1,5 +1,11 @@
 # Version (development version)
 
+This is the fourth rollout out of several towards a near-future major
+release. This has been made possible due to a multi-year effort of
+internal re-designs, work with package maintainers, release, and
+repeat. This release fixes a few more regressions introduced in future
+1.40.0 (2025-04-10).
+
 ## Significant Changes
 
  * Now argument `workers` for `plan(multisession)` defaults to
