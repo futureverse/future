@@ -51,88 +51,6 @@ Run `revdepcheck::revdep_details(, "AICcPermanova")` for more info
         ‘select_models.R’
     ```
 
-# aifeducation
-
-<details>
-
-* Version: 1.0.2
-* GitHub: https://github.com/cran/aifeducation
-* Source code: https://github.com/cran/aifeducation
-* Date/Publication: 2025-02-05 13:00:02 UTC
-* Number of recursive dependencies: 140
-
-Run `revdepcheck::revdep_details(, "aifeducation")` for more info
-
-</details>
-
-## In both
-
-*   checking tests ...
-    ```
-      Running ‘testthat.R’
-     ERROR
-    Running the tests in ‘tests/testthat.R’ failed.
-    Last 50 lines of output:
-       $ base_exec_prefix    : chr "/c4/home/henrik/.cache/R/reticulate/uv/python/cpython-3.11.12-linux-x86_64-gnu"
-       $ virtualenv          : chr "/c4/home/henrik/.cache/R/reticulate/uv/cache/archive-v0/xwIZawJ8xbb6dwCvr6IR2"
-       $ virtualenv_activate : chr "/c4/home/henrik/.cache/R/reticulate/uv/cache/archive-v0/xwIZawJ8xbb6dwCvr6IR2/bin/activate_this.py"
-       $ executable          : chr "/c4/home/henrik/.cache/R/reticulate/uv/cache/archive-v0/xwIZawJ8xbb6dwCvr6IR2/bin/python3"
-       $ base_executable     : chr "/c4/home/henrik/.cache/R/reticulate/uv/python/cpython-3.11.12-linux-x86_64-gnu/bin/python3.11"
-       $ version_string      : chr "3.11.12 (main, May 17 2025, 13:48:36) [Clang 20.1.4 ]"
-    ...
-      Backtrace:
-          ▆
-       1. ├─transformers$logging at test-08_TEClassifierRegular.R:42:1
-       2. ├─reticulate:::`$.python.builtin.module`(transformers, logging) at test-08_TEClassifierRegular.R:42:1
-       3. │ └─reticulate::py_get_attr(x, name, TRUE)
-       4. └─reticulate (local) `<fn>`(`<python.builtin.module>`)
-      
-      [ FAIL 1 | WARN 0 | SKIP 11 | PASS 23 ]
-      Error: Test failures
-      Execution halted
-    ```
-
-# ale
-
-<details>
-
-* Version: 0.5.0
-* GitHub: https://github.com/tripartio/ale
-* Source code: https://github.com/cran/ale
-* Date/Publication: 2025-04-09 20:50:02 UTC
-* Number of recursive dependencies: 130
-
-Run `revdepcheck::revdep_details(, "ale")` for more info
-
-</details>
-
-## In both
-
-*   checking tests ...
-    ```
-      Running ‘testthat.R’
-     ERROR
-    Running the tests in ‘tests/testthat.R’ failed.
-    Last 50 lines of output:
-      ── Failure ('test-ALEpDist.R:117:5'): ALEpDist works with binary outcome ───────
-      Snapshot of code has changed:
-      old[17:32] vs new[17:32]
-          # A tibble: 10 x 6
-                 aled  aler_min aler_max naled naler_min naler_max
-                <dbl>     <dbl>    <dbl> <dbl>     <dbl>     <dbl>
-    ...
-          
-          
-          attr(,"params")$y_col
-      
-      * Run `testthat::snapshot_accept('ALEpDist')` to accept the change.
-      * Run `testthat::snapshot_review('ALEpDist')` to interactively review the change.
-      
-      [ FAIL 22 | WARN 13 | SKIP 0 | PASS 95 ]
-      Error: Test failures
-      Execution halted
-    ```
-
 # alphaci
 
 <details>
@@ -176,7 +94,6 @@ Run `revdepcheck::revdep_details(, "altdoc")` for more info
 *   checking tests ...
     ```
       Running ‘spelling.R’
-      Comparing ‘spelling.Rout’ to ‘spelling.Rout.save’ ... OK
       Running ‘testthat.R’
      ERROR
     Running the tests in ‘tests/testthat.R’ failed.
@@ -185,6 +102,7 @@ Run `revdepcheck::revdep_details(, "altdoc")` for more info
         6. │     └─rlang::eval_bare(quo_get_expr(.quo), quo_get_env(.quo))
         7. └─altdoc::render_docs(path = getwd())
         8.   └─altdoc:::.import_vignettes(...)
+        9.     └─base::vapply(...)
     ...
        2.   └─altdoc:::.import_vignettes(...)
        3.     └─base::vapply(...)
@@ -193,7 +111,7 @@ Run `revdepcheck::revdep_details(, "altdoc")` for more info
        6.           └─altdoc:::.qmd2md(origin, tar_dir, verbose = verbose, preamble = pre)
        7.             └─base::cat(out[[2]])
       
-      [ FAIL 14 | WARN 1 | SKIP 3 | PASS 55 ]
+      [ FAIL 8 | WARN 0 | SKIP 8 | PASS 55 ]
       Error: Test failures
       Execution halted
     ```
@@ -236,31 +154,6 @@ Run `revdepcheck::revdep_details(, "baseballr")` for more info
 </details>
 
 ## In both
-
-*   checking tests ...
-    ```
-      Running ‘testthat.R’
-     ERROR
-    Running the tests in ‘tests/testthat.R’ failed.
-    Last 50 lines of output:
-      Error in `mlb_homerun_derby_bracket(game_pk = 511101)`: object 'bracket' not found
-      Backtrace:
-          ▆
-       1. └─baseballr::mlb_homerun_derby_bracket(game_pk = 511101) at test-mlb_homerun_derby_bracket.R:26:3
-      ── Failure ('test-mlb_pitch_codes.R:20:3'): MLB Pitch Codes ────────────────────
-      colnames(x) not equal to `cols`.
-    ...
-       1. └─baseballr::statcast_search(start_date = "2022-11-04", end_date = "2022-11-06") at test-statcast_search.R:31:3
-       2.   ├─base::`names<-`(...)
-       3.   └─data.table:::`names<-.data.table`(...)
-       4.     └─data.table::setnames(x, value)
-       5.       └─data.table:::stopf(...)
-       6.         └─data.table:::raise_condition(...)
-      
-      [ FAIL 24 | WARN 1 | SKIP 0 | PASS 164 ]
-      Error: Test failures
-      Execution halted
-    ```
 
 *   checking DESCRIPTION meta-information ... NOTE
     ```
@@ -319,47 +212,6 @@ Run `revdepcheck::revdep_details(, "bayesmove")` for more info
            |                                                                                                                                                      ^
     ```
 
-# bcmaps
-
-<details>
-
-* Version: 2.2.1
-* GitHub: https://github.com/bcgov/bcmaps
-* Source code: https://github.com/cran/bcmaps
-* Date/Publication: 2024-12-21 00:00:08 UTC
-* Number of recursive dependencies: 122
-
-Run `revdepcheck::revdep_details(, "bcmaps")` for more info
-
-</details>
-
-## In both
-
-*   checking tests ...
-    ```
-      Running ‘testthat.R’
-     ERROR
-    Running the tests in ‘tests/testthat.R’ failed.
-    Complete output:
-      > library(testthat)
-      > library(bcmaps)
-      Loading required package: sf
-      Linking to GEOS 3.7.2, GDAL 3.0.4, PROJ 6.3.2; sf_use_s2() is TRUE
-      Support for Spatial objects (`sp`) was removed in {bcmaps} v2.0.0. Please use `sf` objects with {bcmaps}.
-      > 
-    ...
-        7.   ├─bcdata::bcdc_get_data(...)
-        8.   └─bcdata:::bcdc_get_data.character(...)
-        9.     ├─bcdata::bcdc_get_data(x, resource, verbose = verbose, ...)
-       10.     └─bcdata:::bcdc_get_data.bcdc_record(...)
-       11.       └─bcdata:::read_from_url(...)
-       12.         └─r$raise_for_status()
-      
-      [ FAIL 1 | WARN 0 | SKIP 0 | PASS 237 ]
-      Error: Test failures
-      Execution halted
-    ```
-
 # bolasso
 
 <details>
@@ -400,80 +252,11 @@ Run `revdepcheck::revdep_details(, "brms")` for more info
 
 ## In both
 
-*   checking tests ...
-    ```
-      Running ‘testthat.R’
-     ERROR
-    Running the tests in ‘tests/testthat.R’ failed.
-    Complete output:
-      > library(testthat)
-      > library(brms)
-      Loading required package: Rcpp
-      Loading 'brms' package (version 2.22.0). Useful instructions
-      can be found by typing help('brms'). A more detailed introduction
-      to the package is available through vignette('brms_overview').
-    ...
-          ▆
-       1. ├─base (local) SW(pp_check(fit1, type = "loo_pit", cores = 1)) at tests.brmsfit-methods.R:673:3
-       2. │ └─base::withCallingHandlers(...)
-       3. ├─bayesplot::pp_check(fit1, type = "loo_pit", cores = 1)
-       4. └─brms:::pp_check.brmsfit(fit1, type = "loo_pit", cores = 1)
-       5.   └─brms:::stop2(...)
-      
-      [ FAIL 1 | WARN 0 | SKIP 8 | PASS 3026 ]
-      Error: Test failures
-      Execution halted
-    ```
-
-*   R CMD check timed out
-    
-
 *   checking whether package ‘brms’ can be installed ... WARNING
     ```
     Found the following significant warnings:
       Warning: namespace ‘colorspace’ is not available and has been replaced
     See ‘/scratch/henrik/revdep/future/checks/brms/new/brms.Rcheck/00install.out’ for details.
-    ```
-
-# bslib
-
-<details>
-
-* Version: 0.9.0
-* GitHub: https://github.com/rstudio/bslib
-* Source code: https://github.com/cran/bslib
-* Date/Publication: 2025-01-30 23:20:02 UTC
-* Number of recursive dependencies: 75
-
-Run `revdepcheck::revdep_details(, "bslib")` for more info
-
-</details>
-
-## In both
-
-*   checking tests ...
-    ```
-      Running ‘testthat.R’
-     ERROR
-    Running the tests in ‘tests/testthat.R’ failed.
-    Complete output:
-      > library(testthat)
-      > library(bslib)
-      
-      Attaching package: 'bslib'
-      
-      The following object is masked from 'package:utils':
-    ...
-      Backtrace:
-          ▆
-       1. ├─withr::with_tempdir(...) at test-page.R:92:3
-       2. │ └─withr::with_dir(tmp, code)
-       3. │   └─base::force(code)
-       4. └─testthat::expect_snapshot_file("modern-page.html") at test-page.R:100:5
-      
-      [ FAIL 2 | WARN 0 | SKIP 0 | PASS 683 ]
-      Error: Test failures
-      Execution halted
     ```
 
 # caretSDM
@@ -537,7 +320,7 @@ Run `revdepcheck::revdep_details(, "caretSDM")` for more info
        24.     └─vctrs:::stop_subscript(...)
        25.       └─rlang::abort(...)
       
-      [ FAIL 21 | WARN 133 | SKIP 0 | PASS 437 ]
+      [ FAIL 15 | WARN 120 | SKIP 23 | PASS 416 ]
       Error: Test failures
       Execution halted
     ```
@@ -569,68 +352,6 @@ Run `revdepcheck::revdep_details(, "ceRNAnetsim")` for more info
     Undefined global functions or variables:
       avg_count_current avg_count_pre perturbation_efficiency
       perturbed_count
-    ```
-
-# cft
-
-<details>
-
-* Version: 1.0.0
-* GitHub: https://github.com/earthlab/cft-CRAN
-* Source code: https://github.com/cran/cft
-* Date/Publication: 2022-10-03 07:12:18 UTC
-* Number of recursive dependencies: 89
-
-Run `revdepcheck::revdep_details(, "cft")` for more info
-
-</details>
-
-## In both
-
-*   checking tests ...
-    ```
-      Running ‘testthat.R’
-     ERROR
-    Running the tests in ‘tests/testthat.R’ failed.
-    Last 50 lines of output:
-      Attaching package: 'magrittr'
-      
-      The following objects are masked from 'package:testthat':
-      
-          equals, is_less_than, not
-      
-    ...
-      Error in `RNetCDF::open.nc(x)`: NetCDF: Malformed or inaccessible DAP DDS
-      Backtrace:
-          ▆
-       1. └─cft::available_data() at test_single_point_firehose.R:19:3
-       2.   ├─tidync::tidync(web_link)
-       3.   └─tidync:::tidync.character(web_link)
-      
-      [ FAIL 2 | WARN 0 | SKIP 0 | PASS 0 ]
-      Error: Test failures
-      Execution halted
-    ```
-
-*   checking re-building of vignette outputs ... ERROR
-    ```
-    Error(s) in re-building vignettes:
-      ...
-    --- re-building ‘available-data.Rmd’ using rmarkdown
-    Error: processing vignette 'available-data.Rmd' failed with diagnostics:
-    there is no package called ‘rmarkdown’
-    --- failed re-building ‘available-data.Rmd’
-    
-    --- re-building ‘firehose.Rmd’ using rmarkdown
-    Error: processing vignette 'firehose.Rmd' failed with diagnostics:
-    there is no package called ‘rmarkdown’
-    --- failed re-building ‘firehose.Rmd’
-    
-    SUMMARY: processing the following files failed:
-      ‘available-data.Rmd’ ‘firehose.Rmd’
-    
-    Error: Vignette re-building failed.
-    Execution halted
     ```
 
 # chevreulShiny
@@ -981,9 +702,6 @@ Run `revdepcheck::revdep_details(, "ctsem")` for more info
 
 ## In both
 
-*   R CMD check timed out
-    
-
 *   checking whether package ‘ctsem’ can be installed ... WARNING
     ```
     Found the following significant warnings:
@@ -991,64 +709,29 @@ Run `revdepcheck::revdep_details(, "ctsem")` for more info
     See ‘/scratch/henrik/revdep/future/checks/ctsem/new/ctsem.Rcheck/00install.out’ for details.
     ```
 
-# dataquieR
-
-<details>
-
-* Version: 2.5.1
-* GitHub: NA
-* Source code: https://github.com/cran/dataquieR
-* Date/Publication: 2025-03-05 18:10:02 UTC
-* Number of recursive dependencies: 196
-
-Run `revdepcheck::revdep_details(, "dataquieR")` for more info
-
-</details>
-
-## In both
-
-*   R CMD check timed out
-    
-
-# DeclareDesign
-
-<details>
-
-* Version: 1.0.10
-* GitHub: https://github.com/DeclareDesign/DeclareDesign
-* Source code: https://github.com/cran/DeclareDesign
-* Date/Publication: 2024-04-21 20:52:45 UTC
-* Number of recursive dependencies: 141
-
-Run `revdepcheck::revdep_details(, "DeclareDesign")` for more info
-
-</details>
-
-## In both
-
-*   checking tests ...
+*   checking re-building of vignette outputs ... WARNING
     ```
-      Running ‘testthat.R’
-     ERROR
-    Running the tests in ‘tests/testthat.R’ failed.
-    Last 50 lines of output:
-      ══ Skipped tests (1) ═══════════════════════════════════════════════════════════
-      • Skipped bootstrap SE test for speed (1): 'test-bootstrap-diagnosands.R:43:3'
-      
-      ══ Warnings ════════════════════════════════════════════════════════════════════
-      ── Warning ('test-conduct-custom.R:36:3'): test error messages in run_design ───
-      Caught simpleError. Canceling all iterations ...
+    Error(s) in re-building vignettes:
+      ...
+    --- re-building ‘hierarchicalmanual.rnw’ using knitr_notangle
+    Warning in texi2dvi(file = file, pdf = TRUE, clean = clean, quiet = quiet,  :
+      texi2dvi script/program not available, using emulation
+    Error: processing vignette 'hierarchicalmanual.rnw' failed with diagnostics:
+    unable to run pdflatex on 'hierarchicalmanual.tex'
+    LaTeX errors:
+    ! LaTeX Error: File `apacite.sty' not found.
+    
     ...
-      
-      ══ Failed tests ════════════════════════════════════════════════════════════════
-      ── Failure ('test-reshape-diagnosis.R:133:3'): groups with factors ─────────────
-      `expect_equal(...)` did not produce any warnings.
-      ── Failure ('test-reshape-diagnosis.R:141:3'): groups with factors ─────────────
-      `expect_equal(...)` did not produce any warnings.
-      
-      [ FAIL 2 | WARN 2 | SKIP 1 | PASS 566 ]
-      Error: Test failures
-      Execution halted
+    l.62 \bibliographystyle
+                           {apacite}     % Set bibliography style^^M
+    !  ==> Fatal error occurred, no output PDF file produced!
+    --- failed re-building ‘hierarchicalmanual.rnw’
+    
+    SUMMARY: processing the following file failed:
+      ‘hierarchicalmanual.rnw’
+    
+    Error: Vignette re-building failed.
+    Execution halted
     ```
 
 # dipsaus
@@ -1064,6 +747,33 @@ Run `revdepcheck::revdep_details(, "DeclareDesign")` for more info
 Run `revdepcheck::revdep_details(, "dipsaus")` for more info
 
 </details>
+
+## Newly fixed
+
+*   checking examples ... ERROR
+    ```
+    Running examples in ‘dipsaus-Ex.R’ failed
+    The error most likely occurred in:
+    
+    > ### Name: lock
+    > ### Title: Create or Unlock a Lock
+    > ### Aliases: lock dipsaus_lock dipsaus_unlock dipsaus_resetlocks
+    > 
+    > ### ** Examples
+    > 
+    > 
+    ...
+    > dipsaus_unlock('testlocker', timeout = 0.01)
+    [1] TRUE
+    > 
+    > # Create a locker, return TRUE
+    > lock_success = dipsaus_lock('testlocker')
+    Warning in file(con, "w") :
+      cannot open file '/c4/home/henrik/.cache/R/dipsaus/file_locks/testlocker': No such file or directory
+    Error in file(con, "w") : cannot open the connection
+    Calls: dipsaus_lock -> writeLines -> file
+    Execution halted
+    ```
 
 ## In both
 
@@ -1146,47 +856,6 @@ Run `revdepcheck::revdep_details(, "dispositionEffect")` for more info
       Execution halted
     ```
 
-# easyalluvial
-
-<details>
-
-* Version: 0.3.2
-* GitHub: https://github.com/erblast/easyalluvial
-* Source code: https://github.com/cran/easyalluvial
-* Date/Publication: 2023-12-07 13:40:06 UTC
-* Number of recursive dependencies: 148
-
-Run `revdepcheck::revdep_details(, "easyalluvial")` for more info
-
-</details>
-
-## In both
-
-*   checking tests ...
-    ```
-      Running ‘testthat.R’
-     ERROR
-    Running the tests in ‘tests/testthat.R’ failed.
-    Last 50 lines of output:
-       1. └─easyalluvial:::expect_doppelganger(...) at test_plot_marginal_histograms.R:48:3
-       2.   └─vdiffr::expect_doppelganger(title, fig, path = path, ...)
-       3.     ├─base::withCallingHandlers(...)
-       4.     └─testthat::expect_snapshot_file(...)
-      ── Failure ('test_plot_marginal_histograms.R:52:3'): plot_hist_as_margins ──────
-      Snapshot of `testcase` to 'plot_marginal_histograms/plot-hist-long-num-is-fill.svg' has changed
-    ...
-      Backtrace:
-          ▆
-       1. └─easyalluvial:::expect_doppelganger("mod_num_pred_train", p) at test_plot_marginal_histograms.R:117:3
-       2.   └─vdiffr::expect_doppelganger(title, fig, path = path, ...)
-       3.     ├─base::withCallingHandlers(...)
-       4.     └─testthat::expect_snapshot_file(...)
-      
-      [ FAIL 37 | WARN 4 | SKIP 2 | PASS 91 ]
-      Error: Test failures
-      Execution halted
-    ```
-
 # EFAtools
 
 <details>
@@ -1232,72 +901,6 @@ Run `revdepcheck::revdep_details(, "envi")` for more info
     See ‘/scratch/henrik/revdep/future/checks/envi/new/envi.Rcheck/00install.out’ for details.
     ```
 
-# EpiNow2
-
-<details>
-
-* Version: 1.7.1
-* GitHub: https://github.com/epiforecasts/EpiNow2
-* Source code: https://github.com/cran/EpiNow2
-* Date/Publication: 2025-02-19 23:40:09 UTC
-* Number of recursive dependencies: 128
-
-Run `revdepcheck::revdep_details(, "EpiNow2")` for more info
-
-</details>
-
-## In both
-
-*   checking tests ...
-    ```
-      Running ‘spelling.R’
-      Comparing ‘spelling.Rout’ to ‘spelling.Rout.save’ ...9,65c9
-    < Potential spelling errors:
-    <   WORD              FOUND IN
-    < Charniga          discrete_pmf.Rd:53
-    <                   discretise.Rd:57
-    < Matérn           gp_opts.Rd:63,68
-    <                   NEWS.md:75,81
-    <                   gaussian_process_implementation_details.Rmd:44,59,65,97
-    < Ornstein          gp_opts.Rd:60
-    ...
-        5. ├─base::suppressWarnings(sims <- forecast_infections(out, backend = "cmdstanr"))
-        6. │ └─base::withCallingHandlers(...)
-        7. └─EpiNow2::forecast_infections(out, backend = "cmdstanr")
-        8.   └─EpiNow2::stan_opts(...)
-        9.     └─cli::cli_abort(...)
-       10.       └─rlang::abort(...)
-      
-      [ FAIL 7 | WARN 0 | SKIP 0 | PASS 552 ]
-      Error: Test failures
-      Execution halted
-    ```
-
-*   checking re-building of vignette outputs ... ERROR
-    ```
-    Error(s) in re-building vignettes:
-    --- re-building ‘EpiNow2.Rmd’ using rmarkdown
-    Could not fetch https://raw.githubusercontent.com/citation-style-language/styles/master/apa-numeric-superscript-brackets.csl
-    HttpExceptionRequest Request {
-      host                 = "raw.githubusercontent.com"
-      port                 = 443
-      secure               = True
-      requestHeaders       = []
-      path                 = "/citation-style-language/styles/master/apa-numeric-superscript-brackets.csl"
-      queryString          = ""
-    ...
-    --- re-building ‘gaussian_process_implementation_details.Rmd’ using rmarkdown
-    --- finished re-building ‘gaussian_process_implementation_details.Rmd’
-    
-    SUMMARY: processing the following files failed:
-      ‘EpiNow2.Rmd’ ‘epinow.Rmd’ ‘estimate_infections.Rmd’
-      ‘estimate_infections_options.Rmd’ ‘estimate_infections_workflow.Rmd’
-      ‘estimate_secondary.Rmd’ ‘estimate_truncation.Rmd’
-    
-    Error: Vignette re-building failed.
-    Execution halted
-    ```
-
 # EQRN
 
 <details>
@@ -1339,6 +942,74 @@ Run `revdepcheck::revdep_details(, "EQRN")` for more info
     See ‘/scratch/henrik/revdep/future/checks/EQRN/new/EQRN.Rcheck/00install.out’ for details.
     ```
 
+# FastRet
+
+<details>
+
+* Version: 1.1.4
+* GitHub: https://github.com/spang-lab/FastRet
+* Source code: https://github.com/cran/FastRet
+* Date/Publication: 2025-02-10 18:30:02 UTC
+* Number of recursive dependencies: 187
+
+Run `revdepcheck::revdep_details(, "FastRet")` for more info
+
+</details>
+
+## In both
+
+*   checking whether package ‘FastRet’ can be installed ... ERROR
+    ```
+    Installation failed.
+    See ‘/scratch/henrik/revdep/future/checks/FastRet/new/FastRet.Rcheck/00install.out’ for details.
+    ```
+
+## Installation
+
+### Devel
+
+```
+* installing *source* package ‘FastRet’ ...
+** this is package ‘FastRet’ version ‘1.1.4’
+** package ‘FastRet’ successfully unpacked and MD5 sums checked
+** using staged installation
+** R
+** data
+*** moving datasets to lazyload DB
+** inst
+** byte-compile and prepare package for lazy loading
+Error: .onLoad failed in loadNamespace() for 'rJava', details:
+  call: dyn.load(file, DLLpath = DLLpath, ...)
+  error: unable to load shared object '/scratch/henrik/revdep/future/library/FastRet/rJava/libs/rJava.so':
+  libjvm.so: cannot open shared object file: No such file or directory
+Execution halted
+ERROR: lazy loading failed for package ‘FastRet’
+* removing ‘/scratch/henrik/revdep/future/checks/FastRet/new/FastRet.Rcheck/FastRet’
+
+
+```
+### CRAN
+
+```
+* installing *source* package ‘FastRet’ ...
+** this is package ‘FastRet’ version ‘1.1.4’
+** package ‘FastRet’ successfully unpacked and MD5 sums checked
+** using staged installation
+** R
+** data
+*** moving datasets to lazyload DB
+** inst
+** byte-compile and prepare package for lazy loading
+Error: .onLoad failed in loadNamespace() for 'rJava', details:
+  call: dyn.load(file, DLLpath = DLLpath, ...)
+  error: unable to load shared object '/scratch/henrik/revdep/future/library/FastRet/rJava/libs/rJava.so':
+  libjvm.so: cannot open shared object file: No such file or directory
+Execution halted
+ERROR: lazy loading failed for package ‘FastRet’
+* removing ‘/scratch/henrik/revdep/future/checks/FastRet/old/FastRet.Rcheck/FastRet’
+
+
+```
 # fastRhockey
 
 <details>
@@ -1354,31 +1025,6 @@ Run `revdepcheck::revdep_details(, "fastRhockey")` for more info
 </details>
 
 ## In both
-
-*   checking tests ...
-    ```
-      Running ‘testthat.R’
-     ERROR
-    Running the tests in ‘tests/testthat.R’ failed.
-    Last 50 lines of output:
-      <curl_error_recv_error/curl_error/error/condition>
-      Error in `curl::curl_fetch_memory(url, handle = handle)`: Failure when receiving data from the peer [statsapi.web.nhl.com]:
-      CONNECT tunnel failed, response 404
-      Backtrace:
-          ▆
-       1. └─fastRhockey::nhl_teams_roster(team_id = 14) at test-nhl_teams_roster.R:3:3
-    ...
-      ── Failure ('test-phf_team_box.R:39:3'): phf_team_box ──────────────────────────
-      `x` is not an S3 object
-      ── Failure ('test-phf_team_box.R:40:3'): phf_team_box ──────────────────────────
-      `y` is not an S3 object
-      ── Failure ('test-phf_team_box.R:41:3'): phf_team_box ──────────────────────────
-      `z` is not an S3 object
-      
-      [ FAIL 25 | WARN 1 | SKIP 0 | PASS 4 ]
-      Error: Test failures
-      Execution halted
-    ```
 
 *   checking Rd files ... NOTE
     ```
@@ -1403,31 +1049,6 @@ Run `revdepcheck::revdep_details(, "fdacluster")` for more info
 </details>
 
 ## In both
-
-*   checking tests ...
-    ```
-      Running ‘testthat.R’
-     ERROR
-    Running the tests in ‘tests/testthat.R’ failed.
-    Last 50 lines of output:
-      Backtrace:
-           ▆
-        1. ├─fdacluster::fdakmeans(...) at test-fdakmeans.R:774:3
-        2. │ └─fdacluster::fdadist(...)
-        3. │   └─fdacluster (local) .pairwise_distances(index_table)
-        4. │     └─fdacluster:::future_map2_dbl(...)
-    ...
-       16.   └─future::ClusterFutureBackend(...)
-       17.     └─clusterRegistry$startCluster(...)
-       18.       └─future (local) makeCluster(workers, ...)
-       19.         ├─base::do.call(makeClusterPSOCK, args = args, quote = TRUE)
-       20.         └─parallelly (local) `<fn>`(base::quote(47L), rscript_libs = base::quote(`<chr>`))
-       21.           └─parallelly:::checkNumberOfLocalWorkers(workers)
-      
-      [ FAIL 17 | WARN 0 | SKIP 0 | PASS 88 ]
-      Error: Test failures
-      Execution halted
-    ```
 
 *   checking DESCRIPTION meta-information ... NOTE
     ```
@@ -1487,47 +1108,6 @@ Run `revdepcheck::revdep_details(, "ferrn")` for more info
       File(s) using such syntax:
         ‘calc-squintability.R’ ‘get.R’ ‘pipe-sine-boa.Rd’ ‘plot-projection.R’
         ‘projection.Rd’
-    ```
-
-# finbif
-
-<details>
-
-* Version: 0.9.10
-* GitHub: https://github.com/luomus/finbif
-* Source code: https://github.com/cran/finbif
-* Date/Publication: 2025-04-15 10:10:02 UTC
-* Number of recursive dependencies: 68
-
-Run `revdepcheck::revdep_details(, "finbif")` for more info
-
-</details>
-
-## In both
-
-*   checking tests ...
-    ```
-      Running ‘testthat.R’
-     ERROR
-    Running the tests in ‘tests/testthat.R’ failed.
-    Last 50 lines of output:
-      ── Error ('test-finbif_taxa.R:23:7'): searching for taxa works ─────────────────
-      Error: Access token for FinBIF has not been set. Use finbif_get_token() to 
-      have an access token sent to your email address. Then set it as the 
-      environment variable FINBIF_ACCESS_TOKEN with 
-      Sys.setenv(FINBIF_ACCESS_TOKEN = "<access_token_sent_to_your_email>")
-      Backtrace:
-    ...
-       6.       └─finbif:::records(fb_records_obj)
-       7.         └─finbif:::request(fb_records_obj)
-       8.           └─finbif:::api_get(fb_records_obj)
-       9.             └─finbif:::get_token()
-      
-      [ FAIL 15 | WARN 0 | SKIP 0 | PASS 8 ]
-      Error: Test failures
-      In addition: Warning message:
-      call dbDisconnect() when finished working with a connection 
-      Execution halted
     ```
 
 # FLAMES
@@ -1660,47 +1240,6 @@ Run `revdepcheck::revdep_details(, "forecastML")` for more info
       All declared Imports should be used.
     ```
 
-# furrr
-
-<details>
-
-* Version: 0.3.1
-* GitHub: https://github.com/DavisVaughan/furrr
-* Source code: https://github.com/cran/furrr
-* Date/Publication: 2022-08-15 19:40:02 UTC
-* Number of recursive dependencies: 67
-
-Run `revdepcheck::revdep_details(, "furrr")` for more info
-
-</details>
-
-## In both
-
-*   checking tests ...
-    ```
-      Running ‘testthat.R’
-     ERROR
-    Running the tests in ‘tests/testthat.R’ failed.
-    Last 50 lines of output:
-       39. │                 │   │ └─base (local) doTryCatch(return(expr), name, parentenv, handler)
-       40. │                 │   └─base (local) tryCatchList(expr, names[-nh], parentenv, handlers[-nh])
-       41. │                 │     └─base (local) tryCatchOne(expr, names, parentenv, handlers[[1L]])
-       42. │                 │       └─base (local) doTryCatch(return(expr), name, parentenv, handler)
-       43. │                 ├─base::tryCatch(...)
-       44. │                 │ └─base (local) tryCatchList(expr, classes, parentenv, handlers)
-    ...
-      [ FAIL 1 | WARN 175 | SKIP 0 | PASS 855 ]
-      Error: Test failures
-      In addition: Warning messages:
-      1: In .Internal(gc(verbose, reset, full)) :
-        closing unused connection 4 (<-localhost:37577)
-      2: In .Internal(gc(verbose, reset, full)) :
-        closing unused connection 4 (<-localhost:36069)
-      3: In .Internal(gc(verbose, reset, full)) :
-        closing unused connection 4 (<-localhost:32474)
-      Execution halted
-    ```
-
 # GeDS
 
 <details>
@@ -1806,47 +1345,6 @@ Run `revdepcheck::revdep_details(, "googleComputeEngineR")` for more info
            |                                                                                           ^
     ```
 
-# googlePubsubR
-
-<details>
-
-* Version: 0.0.4
-* GitHub: https://github.com/andodet/googlePubsubR
-* Source code: https://github.com/cran/googlePubsubR
-* Date/Publication: 2023-03-03 01:00:02 UTC
-* Number of recursive dependencies: 62
-
-Run `revdepcheck::revdep_details(, "googlePubsubR")` for more info
-
-</details>
-
-## In both
-
-*   checking tests ...
-    ```
-      Running ‘testthat.R’
-     ERROR
-    Running the tests in ‘tests/testthat.R’ failed.
-    Last 50 lines of output:
-       3. │   └─testthat:::quasi_capture(...)
-       4. │     ├─testthat (local) .capture(...)
-       5. │     │ └─base::withCallingHandlers(...)
-       6. │     └─rlang::eval_bare(quo_get_expr(.quo), quo_get_env(.quo))
-       7. └─googlePubsubR::topics_delete(topic = topic_name)
-       8.   └─googleAuthR (local) f()
-    ...
-       3. │   └─testthat:::quasi_capture(...)
-       4. │     ├─testthat (local) .capture(...)
-       5. │     │ └─base::withCallingHandlers(...)
-       6. │     └─rlang::eval_bare(quo_get_expr(.quo), quo_get_env(.quo))
-       7. └─googlePubsubR::snapshots_delete(snapshot = snap_name)
-       8.   └─googleAuthR (local) f()
-      
-      [ FAIL 27 | WARN 0 | SKIP 0 | PASS 7 ]
-      Error: Test failures
-      Execution halted
-    ```
-
 # googleTagManageR
 
 <details>
@@ -1862,31 +1360,6 @@ Run `revdepcheck::revdep_details(, "googleTagManageR")` for more info
 </details>
 
 ## In both
-
-*   checking tests ...
-    ```
-      Running ‘testthat.R’
-     ERROR
-    Running the tests in ‘tests/testthat.R’ failed.
-    Complete output:
-      > library("testthat")
-      > library("googleTagManageR")
-      > test_check("googleTagManageR")
-      [ FAIL 3 | WARN 0 | SKIP 0 | PASS 0 ]
-      
-      ══ Failed tests ════════════════════════════════════════════════════════════════
-    ...
-      Backtrace:
-          ▆
-       1. └─googleTagManageR::gtm_accounts_get(account_id) at test_accounts.R:15:3
-       2.   └─googleTagManageR:::gtm_get(path_args = path_args)
-       3.     └─googleAuthR::gar_api_page(get, page_f = get_attr_nextLink)
-       4.       └─googleAuthR (local) f()
-      
-      [ FAIL 3 | WARN 0 | SKIP 0 | PASS 0 ]
-      Error: Test failures
-      Execution halted
-    ```
 
 *   checking dependencies in R code ... NOTE
     ```
@@ -2013,47 +1486,6 @@ Run `revdepcheck::revdep_details(, "hero")` for more info
            |     ^
     ```
 
-# hoopR
-
-<details>
-
-* Version: 2.1.0
-* GitHub: https://github.com/sportsdataverse/hoopR
-* Source code: https://github.com/cran/hoopR
-* Date/Publication: 2023-11-25 23:40:20 UTC
-* Number of recursive dependencies: 112
-
-Run `revdepcheck::revdep_details(, "hoopR")` for more info
-
-</details>
-
-## In both
-
-*   checking tests ...
-    ```
-      Running ‘testthat.R’
-     ERROR
-    Running the tests in ‘tests/testthat.R’ failed.
-    Last 50 lines of output:
-      x[24]: "TOV"
-      y[24]: "Team_ID"
-      ── Failure ('test-nba_playercareerstats.R:264:3'): NBA Player Career Stats ─────
-      sort(colnames(x[[6]])) not equal to sort(cols_x6).
-      2/24 mismatches
-      x[23]: "TEAM_ID"
-    ...
-      ── Failure ('test-nba_videodetails.R:42:3'): NBA Video Details ─────────────────
-      sort(colnames(x[[1]])) not equal to sort(cols_x1).
-      Lengths differ: 0 is not 14
-      ── Failure ('test-nba_videodetails.R:44:3'): NBA Video Details ─────────────────
-      sort(colnames(x[[2]])) not equal to sort(cols_x2).
-      Lengths differ: 0 is not 15
-      
-      [ FAIL 38 | WARN 0 | SKIP 38 | PASS 841 ]
-      Error: Test failures
-      Execution halted
-    ```
-
 # hydroloom
 
 <details>
@@ -2082,47 +1514,6 @@ Run `revdepcheck::revdep_details(, "hydroloom")` for more info
         ‘make_index_ids.R’ ‘make_node_topology.R’
         ‘navigate_connected_paths.R’ ‘navigation_network.R’ ‘sort_network.R’
         ‘to_flownetwork.R’ ‘utils.R’
-    ```
-
-# imagefluency
-
-<details>
-
-* Version: 0.2.5
-* GitHub: https://github.com/stm/imagefluency
-* Source code: https://github.com/cran/imagefluency
-* Date/Publication: 2024-02-22 14:50:02 UTC
-* Number of recursive dependencies: 93
-
-Run `revdepcheck::revdep_details(, "imagefluency")` for more info
-
-</details>
-
-## Newly broken
-
-*   checking re-building of vignette outputs ... ERROR
-    ```
-    Error(s) in re-building vignettes:
-    --- re-building ‘getting-started.Rmd’ using rmarkdown
-    Could not fetch https://www.zotero.org/styles/springer-socpsych-brackets
-    HttpExceptionRequest Request {
-      host                 = "www.zotero.org"
-      port                 = 443
-      secure               = True
-      requestHeaders       = []
-      path                 = "/styles/springer-socpsych-brackets"
-      queryString          = ""
-    ...
-     (ConnectionFailure Network.Socket.getAddrInfo (called with preferred socket type/protocol: AddrInfo {addrFlags = [AI_ADDRCONFIG], addrFamily = AF_UNSPEC, addrSocketType = Stream, addrProtocol = 0, addrAddress = 0.0.0.0:0, addrCanonName = Nothing}, host name: "c4-yum1", service name: "3128"): does not exist (Name does not resolve))
-    Error: processing vignette 'getting-started.Rmd' failed with diagnostics:
-    pandoc document conversion failed with error 61
-    --- failed re-building ‘getting-started.Rmd’
-    
-    SUMMARY: processing the following file failed:
-      ‘getting-started.Rmd’
-    
-    Error: Vignette re-building failed.
-    Execution halted
     ```
 
 # infercnv
@@ -2224,47 +1615,6 @@ Run `revdepcheck::revdep_details(, "interflex")` for more info
       Specified C++11: please drop specification unless essential
     ```
 
-# InterpolateR
-
-<details>
-
-* Version: 1.3-4
-* GitHub: https://github.com/Jonnathan-Landi/InterpolateR
-* Source code: https://github.com/cran/InterpolateR
-* Date/Publication: 2025-05-02 18:50:06 UTC
-* Number of recursive dependencies: 67
-
-Run `revdepcheck::revdep_details(, "InterpolateR")` for more info
-
-</details>
-
-## In both
-
-*   checking tests ...
-    ```
-      Running ‘testthat.R’
-     ERROR
-    Running the tests in ‘tests/testthat.R’ failed.
-    Last 50 lines of output:
-          ▆
-       1. └─InterpolateR::RFplus(...) at test-RFplus.R:89:3
-       2.   ├─stats::setNames(...)
-       3.   └─base::lapply(...)
-       4.     └─InterpolateR (local) FUN(X[[i]], ...)
-       5.       ├─terra::distance(DEM, Points_VectTrain[i, ], rasterize = FALSE)
-    ...
-       10.     └─InterpolateR (local) FUN(X[[i]], ...)
-       11.       ├─terra::distance(DEM, Points_VectTrain[i, ], rasterize = FALSE)
-       12.       └─terra::distance(DEM, Points_VectTrain[i, ], rasterize = FALSE)
-       13.         └─terra (local) .local(x, y, ...)
-       14.           └─terra:::messages(x, "distance")
-       15.             └─terra:::error(f, x@pntr$getError())
-      
-      [ FAIL 14 | WARN 20 | SKIP 0 | PASS 50 ]
-      Error: Test failures
-      Execution halted
-    ```
-
 # ISAnalytics
 
 <details>
@@ -2314,47 +1664,6 @@ Run `revdepcheck::revdep_details(, "ivmte")` for more info
            |                                               ^
     ```
 
-# jlmerclusterperm
-
-<details>
-
-* Version: 1.1.4
-* GitHub: https://github.com/yjunechoe/jlmerclusterperm
-* Source code: https://github.com/cran/jlmerclusterperm
-* Date/Publication: 2024-06-30 14:20:08 UTC
-* Number of recursive dependencies: 110
-
-Run `revdepcheck::revdep_details(, "jlmerclusterperm")` for more info
-
-</details>
-
-## In both
-
-*   checking tests ...
-    ```
-      Running ‘testthat.R’
-     ERROR
-    Running the tests in ‘tests/testthat.R’ failed.
-    Last 50 lines of output:
-      ── Error ('test-julia_rng.R:3:1'): (code run outside of `test_that()`) ─────────
-      Error in `jlmerclusterperm_setup(cache_dir = tempdir(), restart = FALSE, 
-          verbose = FALSE)`: No Julia installation detected.
-      Backtrace:
-          ▆
-       1. └─jlmerclusterperm::jlmerclusterperm_setup(cache_dir = tempdir(), restart = FALSE, verbose = FALSE) at test-julia_rng.R:3:1
-    ...
-          verbose = FALSE)`: No Julia installation detected.
-      Backtrace:
-          ▆
-       1. └─jlmerclusterperm::jlmerclusterperm_setup(cache_dir = tempdir(), restart = FALSE, verbose = FALSE) at test-timewise_statistics.R:3:1
-       2.   └─cli::cli_abort("No Julia installation detected.")
-       3.     └─rlang::abort(...)
-      
-      [ FAIL 7 | WARN 0 | SKIP 3 | PASS 5 ]
-      Error: Test failures
-      Execution halted
-    ```
-
 # JointAI
 
 <details>
@@ -2370,31 +1679,6 @@ Run `revdepcheck::revdep_details(, "JointAI")` for more info
 </details>
 
 ## In both
-
-*   checking tests ...
-    ```
-      Running ‘testthat.R’
-     ERROR
-    Running the tests in ‘tests/testthat.R’ failed.
-    Last 50 lines of output:
-        4. └─JointAI::mlogitmm_imp(...)
-        5.   ├─base::do.call(model_imp, arglist)
-        6.   └─JointAI (local) `<fn>`(...)
-        7.     └─JointAI:::divide_matrices(...)
-        8.       └─base::mapply(...)
-        9.         └─JointAI (local) `<fn>`(...)
-    ...
-      ── Failure ('test-clm.R:247:3'): wrong models give errors ──────────────────────
-      clm_imp(O2 ~ I(O1^2) + C1 + C2, data = wideDF, warn = FALSE) inherits from 'JointAI' not 'JointAI_errored'.
-      ── Failure ('test-clmm.R:307:5'): wrong models give errors ─────────────────────
-      clmm_imp(o2 ~ I(O1^2) + C1 + C2 + (1 | id), warn = FALSE, data = longDF) inherits from 'JointAI' not 'JointAI_errored'.
-      ── Failure ('test-mlogitmm.R:236:3'): wrong models give errors ─────────────────
-      mlogitmm_imp(...) inherits from 'JointAI' not 'JointAI_errored'.
-      
-      [ FAIL 3 | WARN 44 | SKIP 4 | PASS 2166 ]
-      Error: Test failures
-      Execution halted
-    ```
 
 *   checking DESCRIPTION meta-information ... NOTE
     ```
@@ -2428,6 +1712,84 @@ Run `revdepcheck::revdep_details(, "kappaGold")` for more info
         ‘kappa_inference.R’
     ```
 
+# kmeRtone
+
+<details>
+
+* Version: 1.0
+* GitHub: https://github.com/SahakyanLab/kmeRtone
+* Source code: https://github.com/cran/kmeRtone
+* Date/Publication: 2024-08-30 10:50:06 UTC
+* Number of recursive dependencies: 75
+
+Run `revdepcheck::revdep_details(, "kmeRtone")` for more info
+
+</details>
+
+## In both
+
+*   checking whether package ‘kmeRtone’ can be installed ... ERROR
+    ```
+    Installation failed.
+    See ‘/scratch/henrik/revdep/future/checks/kmeRtone/new/kmeRtone.Rcheck/00install.out’ for details.
+    ```
+
+## Installation
+
+### Devel
+
+```
+* installing *source* package ‘kmeRtone’ ...
+** this is package ‘kmeRtone’ version ‘1.0’
+** package ‘kmeRtone’ successfully unpacked and MD5 sums checked
+** using staged installation
+** libs
+using C++ compiler: ‘g++ (GCC) 13.3.1 20240611 (Red Hat 13.3.1-2)’
+Error in loadNamespace(x) : there is no package called ‘Rhtslib’
+Calls: loadNamespace -> withRestarts -> withOneRestart -> doWithOneRestart
+Execution halted
+g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG  -I'/scratch/henrik/revdep/future/library/kmeRtone/Rcpp/include' -I'/scratch/henrik/revdep/future/library/kmeRtone/stringi/include' -I/usr/local/include    -fpic  -g -O2   -c RcppExports.cpp -o RcppExports.o
+...
+*** moving datasets to lazyload DB
+** inst
+** byte-compile and prepare package for lazy loading
+Error: .onLoad failed in loadNamespace() for 'rJava', details:
+  call: dyn.load(file, DLLpath = DLLpath, ...)
+  error: unable to load shared object '/scratch/henrik/revdep/future/library/kmeRtone/rJava/libs/rJava.so':
+  libjvm.so: cannot open shared object file: No such file or directory
+Execution halted
+ERROR: lazy loading failed for package ‘kmeRtone’
+* removing ‘/scratch/henrik/revdep/future/checks/kmeRtone/new/kmeRtone.Rcheck/kmeRtone’
+
+
+```
+### CRAN
+
+```
+* installing *source* package ‘kmeRtone’ ...
+** this is package ‘kmeRtone’ version ‘1.0’
+** package ‘kmeRtone’ successfully unpacked and MD5 sums checked
+** using staged installation
+** libs
+using C++ compiler: ‘g++ (GCC) 13.3.1 20240611 (Red Hat 13.3.1-2)’
+Error in loadNamespace(x) : there is no package called ‘Rhtslib’
+Calls: loadNamespace -> withRestarts -> withOneRestart -> doWithOneRestart
+Execution halted
+g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/include" -DNDEBUG  -I'/scratch/henrik/revdep/future/library/kmeRtone/Rcpp/include' -I'/scratch/henrik/revdep/future/library/kmeRtone/stringi/include' -I/usr/local/include    -fpic  -g -O2   -c RcppExports.cpp -o RcppExports.o
+...
+*** moving datasets to lazyload DB
+** inst
+** byte-compile and prepare package for lazy loading
+Error: .onLoad failed in loadNamespace() for 'rJava', details:
+  call: dyn.load(file, DLLpath = DLLpath, ...)
+  error: unable to load shared object '/scratch/henrik/revdep/future/library/kmeRtone/rJava/libs/rJava.so':
+  libjvm.so: cannot open shared object file: No such file or directory
+Execution halted
+ERROR: lazy loading failed for package ‘kmeRtone’
+* removing ‘/scratch/henrik/revdep/future/checks/kmeRtone/old/kmeRtone.Rcheck/kmeRtone’
+
+
+```
 # latentcor
 
 <details>
@@ -2514,17 +1876,17 @@ Run `revdepcheck::revdep_details(, "ldsr")` for more info
       Specified C++11: please drop specification unless essential
     ```
 
-# LLMR
+# lidR
 
 <details>
 
-* Version: 0.5.0
-* GitHub: https://github.com/asanaei/LLMR
-* Source code: https://github.com/cran/LLMR
-* Date/Publication: 2025-07-17 00:10:02 UTC
-* Number of recursive dependencies: 89
+* Version: 4.2.1
+* GitHub: https://github.com/r-lidar/lidR
+* Source code: https://github.com/cran/lidR
+* Date/Publication: 2025-06-02 10:20:02 UTC
+* Number of recursive dependencies: 151
 
-Run `revdepcheck::revdep_details(, "LLMR")` for more info
+Run `revdepcheck::revdep_details(, "lidR")` for more info
 
 </details>
 
@@ -2532,27 +1894,27 @@ Run `revdepcheck::revdep_details(, "LLMR")` for more info
 
 *   checking tests ...
     ```
-      Running ‘testthat.R’
+      Running ‘testthat.R’/software/c4/cbi/software/_rocky8/R-4.5.0-gcc13/lib64/R/bin/BATCH: line 60: 108660 Aborted                 (core dumped) ${R_HOME}/bin/R -f ${in} ${opts} ${R_BATCH_OPTIONS} > ${out} 2>&1
+    
      ERROR
     Running the tests in ‘tests/testthat.R’ failed.
-    Complete output:
-      > # This file is part of the standard setup for testthat.
-      > # It is recommended that you do not modify it.
-      > #
-      > # Where should you do additional test configuration?
-      > # Learn more about the roles of various files in:
-      > # * https://r-pkgs.org/testing-design.html#sec-tests-files-overview
-    ...
-        9.           │ ├─base::tryCatch(...)
-       10.           │ │ └─base (local) tryCatchList(expr, classes, parentenv, handlers)
-       11.           │ │   └─base (local) tryCatchOne(expr, names, parentenv, handlers[[1L]])
-       12.           │ │     └─base (local) doTryCatch(return(expr), name, parentenv, handler)
-       13.           │ └─base::force(expr)
-       14.           └─rlang::abort(...)
+    Last 50 lines of output:
+                                                                                      
       
-      [ FAIL 1 | WARN 0 | SKIP 1 | PASS 0 ]
-      Error: Test failures
-      Execution halted
+                                                                                      
+      
+                                                                                      
+    ...
+      
+                                                                                      
+      
+                                                                                      
+      
+                                                                                      
+      
+                                                                                      
+      terminate called after throwing an instance of 'std::length_error'
+        what():  basic_string::_M_create
     ```
 
 # MAI
@@ -2578,47 +1940,6 @@ Run `revdepcheck::revdep_details(, "MAI")` for more info
     is not mentioned in the DESCRIPTION file.
     ```
 
-# malariaAtlas
-
-<details>
-
-* Version: 1.6.4
-* GitHub: https://github.com/malaria-atlas-project/malariaAtlas
-* Source code: https://github.com/cran/malariaAtlas
-* Date/Publication: 2025-06-11 11:00:06 UTC
-* Number of recursive dependencies: 121
-
-Run `revdepcheck::revdep_details(, "malariaAtlas")` for more info
-
-</details>
-
-## In both
-
-*   checking tests ...
-    ```
-      Running ‘testthat.R’
-     ERROR
-    Running the tests in ‘tests/testthat.R’ failed.
-    Last 50 lines of output:
-       3. │   ├─testthat (local) .capture(...)
-       4. │   │ └─base::withCallingHandlers(...)
-       5. │   └─rlang::eval_bare(quo_get_expr(.quo), quo_get_env(.quo))
-       6. └─malariaAtlas::extractRaster(...)
-       7.   └─base::lapply(...)
-       8.     └─malariaAtlas (local) FUN(X[[i]], ...)
-    ...
-       2.   └─base::sapply(...)
-       3.     └─base::lapply(X = X, FUN = FUN, ...)
-       4.       └─malariaAtlas (local) FUN(X[[i]], ...)
-       5.         └─malariaAtlas:::download_rst(...)
-       6.           └─wcs_client$getCoverage(...)
-       7.             └─cov$getCoverage(...)
-      
-      [ FAIL 21 | WARN 13 | SKIP 1 | PASS 268 ]
-      Error: Test failures
-      Execution halted
-    ```
-
 # mapme.biodiversity
 
 <details>
@@ -2641,103 +1962,21 @@ Run `revdepcheck::revdep_details(, "mapme.biodiversity")` for more info
      ERROR
     Running the tests in ‘tests/testthat.R’ failed.
     Last 50 lines of output:
-                           (right here) ------^
-      Backtrace:
-           ▆
-        1. ├─mapme.biodiversity::make_footprints(tifs, what = "raster") at test-get_resources.R:72:3
-        2. │ └─purrr::map2(srcs, oo, function(src, opt) .raster_footprint(src, opt))
-        3. │   └─purrr:::map2_("list", .x, .y, .f, ..., .progress = .progress)
+      ══ Failed tests ════════════════════════════════════════════════════════════════
+      ── Failure ('test-calc_deforestation_drivers.R:16:3'): deforestation drivers works ──
+      `.check_single_asset(result)` produced warnings.
+      ── Failure ('test-calc_deforestation_drivers.R:17:3'): deforestation drivers works ──
+      unique(result$variable) (`actual`) not equal to c(...) (`expected`).
+      
     ...
-       13. │                 └─jsonlite:::parseJSON(txt, bigint_as_char)
-       14. │                   └─jsonlite:::parse_string(txt, bigint_as_char)
-       15. └─base::.handleSimpleError(...)
-       16.   └─purrr (local) h(simpleError(msg, call))
-       17.     └─cli::cli_abort(...)
-       18.       └─rlang::abort(...)
+       12. │               └─jsonlite:::parseJSON(txt, bigint_as_char)
+       13. │                 └─jsonlite:::parse_string(txt, bigint_as_char)
+       14. └─base::.handleSimpleError(...)
+       15.   └─purrr (local) h(simpleError(msg, call))
+       16.     └─cli::cli_abort(...)
+       17.       └─rlang::abort(...)
       
-      [ FAIL 7 | WARN 2 | SKIP 7 | PASS 684 ]
-      Error: Test failures
-      Execution halted
-    ```
-
-# merTools
-
-<details>
-
-* Version: 0.6.2
-* GitHub: https://github.com/jknowles/merTools
-* Source code: https://github.com/cran/merTools
-* Date/Publication: 2024-02-08 07:20:07 UTC
-* Number of recursive dependencies: 142
-
-Run `revdepcheck::revdep_details(, "merTools")` for more info
-
-</details>
-
-## In both
-
-*   checking tests ...
-    ```
-      Running ‘testthat-a_m.R’
-      Running ‘testthat-m_z.R’
-     ERROR
-    Running the tests in ‘tests/testthat-m_z.R’ failed.
-    Complete output:
-      > library(testthat)
-      > library(merTools)
-      Loading required package: arm
-      Loading required package: MASS
-      Loading required package: Matrix
-    ...
-      -   7   0.008824320 1.433124 -1.449002
-      +   7   0.008823944 1.433126 -1.449003
-      and 3 more ...
-      
-      * Run `testthat::snapshot_accept('predict2')` to accept the change.
-      * Run `testthat::snapshot_review('predict2')` to interactively review the change.
-      
-      [ FAIL 2 | WARN 0 | SKIP 0 | PASS 487 ]
-      Error: Test failures
-      Execution halted
-    ```
-
-# MIC
-
-<details>
-
-* Version: 1.1.0
-* GitHub: https://github.com/agerada/MIC
-* Source code: https://github.com/cran/MIC
-* Date/Publication: 2025-06-05 04:20:06 UTC
-* Number of recursive dependencies: 144
-
-Run `revdepcheck::revdep_details(, "MIC")` for more info
-
-</details>
-
-## In both
-
-*   checking tests ...
-    ```
-      Running ‘testthat.R’
-     ERROR
-    Running the tests in ‘tests/testthat.R’ failed.
-    Last 50 lines of output:
-          ▆
-       1. └─MIC::download_patric_db(tmp_path_db) at test-patric.R:34:3
-       2.   └─utils::download.file(ftp_path, save_path, mode = "wb")
-      ── Warning ('test-patric.R:42:3'): check can download genomes ──────────────────
-      cannot open URL 'ftp://ftp.bvbrc.org/RELEASE_NOTES/PATRIC_genomes_AMR.txt': FTP status was '400 Unknown Error'
-      Backtrace:
-    ...
-       2. │ └─MIC::load_patric_db(database)
-       3. │   └─readr::read_delim(x, delim = "\t", col_types = readr::cols(.default = "c"))
-       4. │     └─vroom::vroom(...)
-       5. │       └─vroom:::vroom_(...)
-       6. ├─base (local) `<fn>`(`<url>`, "rb")
-       7. └─base::open.connection(`<url>`, "rb")
-      
-      [ FAIL 3 | WARN 3 | SKIP 0 | PASS 218 ]
+      [ FAIL 5 | WARN 1 | SKIP 38 | PASS 563 ]
       Error: Test failures
       Execution halted
     ```
@@ -2793,31 +2032,6 @@ Run `revdepcheck::revdep_details(, "MineICA")` for more info
 
 ## In both
 
-*   checking examples ... ERROR
-    ```
-    Running examples in ‘MineICA-Ex.R’ failed
-    The error most likely occurred in:
-    
-    > ### Name: IcaSet
-    > ### Title: Class to Contain and Describe an ICA decomposition of
-    > ###   High-Throughput Data.
-    > ### Aliases: class:IcaSet IcaSet IcaSet-class [ [,ANY,ANY,IcaSet-method
-    > ###   [,IcaSet,ANY-method [,IcaSet,ANY,ANY-method
-    > ###   [,IcaSet,ANY,ANY,ANY-method [<- [<-,IcaSet,ANY,ANY,ANY,ANY-method
-    > ###   [<-,IcaSet,ANY,ANY,ANY-method [<-,IcaSet,ANY,ANY-method organism
-    ...
-    > ###   Slist,IcaSet-method SlistByGene,IcaSet-method Alist,IcaSet-method
-    > ### Keywords: classes
-    > 
-    > ### ** Examples
-    > 
-    > # create an instance of IcaSet
-    > new("IcaSet")
-    Error: Your query has been redirected to http://status.ensembl.org indicating this Ensembl service is currently unavailable.
-    Look at ?useEnsembl for details on how to try a mirror site.
-    Execution halted
-    ```
-
 *   checking re-building of vignette outputs ... ERROR
     ```
     Error(s) in re-building vignettes:
@@ -2831,8 +2045,8 @@ Run `revdepcheck::revdep_details(, "MineICA")` for more info
     
         as.difftime, as.factor, as.ordered, intersect, is.element, setdiff,
     ...
-    Error : Your query has been redirected to http://status.ensembl.org indicating this Ensembl service is currently unavailable.
-    Look at ?useEnsembl for details on how to try a mirror site.
+    Error in { : task 3 failed - "Multiple cache results found.
+    Please clear your cache by running biomartCacheClear()"
     
     --- failed re-building ‘MineICA.Rnw’
     
@@ -2964,6 +2178,11 @@ Run `revdepcheck::revdep_details(, "mistyR")` for more info
 
 </details>
 
+## Newly fixed
+
+*   R CMD check timed out
+    
+
 ## In both
 
 *   checking R code for possible problems ... NOTE
@@ -2997,66 +2216,6 @@ Run `revdepcheck::revdep_details(, "mistyR")` for more info
         32 |             for all performance measures for each {target} over all samples.}
            |                                                   ^
     ```
-
-# mlr3tuning
-
-<details>
-
-* Version: 1.4.0
-* GitHub: https://github.com/mlr-org/mlr3tuning
-* Source code: https://github.com/cran/mlr3tuning
-* Date/Publication: 2025-06-04 11:10:02 UTC
-* Number of recursive dependencies: 100
-
-Run `revdepcheck::revdep_details(, "mlr3tuning")` for more info
-
-</details>
-
-## In both
-
-*   checking tests ...
-    ```
-      Running ‘testthat.R’
-     ERROR
-    Running the tests in ‘tests/testthat.R’ failed.
-    Last 50 lines of output:
-       3.     └─redux::redis_connection(config)
-       4.       └─redux:::redis_connect(config)
-       5.         └─redux:::redis_connect_tcp(config$host, config$port, config$timeout)
-      ── Error ('test_mlr_callbacks.R:480:3'): async freeze archive callback works ───
-      Error in `redis_connect_tcp(config$host, config$port, config$timeout)`: Failed to create context: Connection refused
-      Backtrace:
-    ...
-          ▆
-       1. └─global flush_redis() at test_ti_async.R:44:3
-       2.   └─redux::hiredis(config)
-       3.     └─redux::redis_connection(config)
-       4.       └─redux:::redis_connect(config)
-       5.         └─redux:::redis_connect_tcp(config$host, config$port, config$timeout)
-      
-      [ FAIL 63 | WARN 5 | SKIP 0 | PASS 4664 ]
-      Error: Test failures
-      Execution halted
-    ```
-
-# multilevelmediation
-
-<details>
-
-* Version: 0.4.1
-* GitHub: https://github.com/falkcarl/multilevelmediation
-* Source code: https://github.com/cran/multilevelmediation
-* Date/Publication: 2025-01-10 12:10:02 UTC
-* Number of recursive dependencies: 102
-
-Run `revdepcheck::revdep_details(, "multilevelmediation")` for more info
-
-</details>
-
-## In both
-
-*   R CMD check timed out
-    
 
 # multitool
 
@@ -3135,88 +2294,6 @@ Run `revdepcheck::revdep_details(, "nixtlar")` for more info
         ‘validate_exogenous.R’
     ```
 
-# oncomsm
-
-<details>
-
-* Version: 0.1.4
-* GitHub: https://github.com/Boehringer-Ingelheim/oncomsm
-* Source code: https://github.com/cran/oncomsm
-* Date/Publication: 2023-04-17 07:00:02 UTC
-* Number of recursive dependencies: 122
-
-Run `revdepcheck::revdep_details(, "oncomsm")` for more info
-
-</details>
-
-## In both
-
-*   checking tests ...
-    ```
-      Running ‘testthat.R’
-     ERROR
-    Running the tests in ‘tests/testthat.R’ failed.
-    Last 50 lines of output:
-       1. └─vdiffr::expect_doppelganger("plot.srp_model_1", plt) at test-plots.R:20:3
-       2.   ├─base::withCallingHandlers(...)
-       3.   └─testthat::expect_snapshot_file(...)
-      ── Failure ('test-plots.R:31:3'): default plotting works as intended ───────────
-      Snapshot of `testcase` to 'plots/plot-srp-model-2.svg' has changed
-      * Locate check directory
-    ...
-       3.   └─testthat::expect_snapshot_file(...)
-      ── Failure ('test-simulate_decision.R:54:3'): decision rules can be simulated ──
-      mean(tbl_decisions$go) < 0.5 is not TRUE
-      
-      `actual`:   FALSE
-      `expected`: TRUE 
-      
-      [ FAIL 6 | WARN 0 | SKIP 0 | PASS 61 ]
-      Error: Test failures
-      Execution halted
-    ```
-
-# onemapsgapi
-
-<details>
-
-* Version: 2.0.0
-* GitHub: NA
-* Source code: https://github.com/cran/onemapsgapi
-* Date/Publication: 2025-05-30 09:20:02 UTC
-* Number of recursive dependencies: 65
-
-Run `revdepcheck::revdep_details(, "onemapsgapi")` for more info
-
-</details>
-
-## In both
-
-*   checking re-building of vignette outputs ... ERROR
-    ```
-    Error(s) in re-building vignettes:
-      ...
-    --- re-building ‘onemapsgapi_vignette.Rmd’ using rmarkdown
-    
-    Quitting from onemapsgapi_vignette.Rmd:49-51 [unnamed-chunk-5]
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    <error/rlang_error>
-    Error in `get_token()`:
-    ! The request returned an error message: Your email field is empty. Status Code: 400
-    ---
-    ...
-    
-    Error: processing vignette 'onemapsgapi_vignette.Rmd' failed with diagnostics:
-    The request returned an error message: Your email field is empty. Status Code: 400
-    --- failed re-building ‘onemapsgapi_vignette.Rmd’
-    
-    SUMMARY: processing the following file failed:
-      ‘onemapsgapi_vignette.Rmd’
-    
-    Error: Vignette re-building failed.
-    Execution halted
-    ```
-
 # PAMpal
 
 <details>
@@ -3263,46 +2340,14 @@ Run `revdepcheck::revdep_details(, "PAMscapes")` for more info
     See ‘/scratch/henrik/revdep/future/checks/PAMscapes/new/PAMscapes.Rcheck/00install.out’ for details.
     ```
 
-# paramsim
-
-<details>
-
-* Version: 0.1.0
-* GitHub: NA
-* Source code: https://github.com/cran/paramsim
-* Date/Publication: 2023-01-23 07:50:06 UTC
-* Number of recursive dependencies: 71
-
-Run `revdepcheck::revdep_details(, "paramsim")` for more info
-
-</details>
-
-## In both
-
-*   checking re-building of vignette outputs ... ERROR
-    ```
-    Error(s) in re-building vignettes:
-      ...
-    --- re-building ‘paramsim.Rmd’ using rmarkdown
-    Error: processing vignette 'paramsim.Rmd' failed with diagnostics:
-    there is no package called ‘rmarkdown’
-    --- failed re-building ‘paramsim.Rmd’
-    
-    SUMMARY: processing the following file failed:
-      ‘paramsim.Rmd’
-    
-    Error: Vignette re-building failed.
-    Execution halted
-    ```
-
 # pareg
 
 <details>
 
-* Version: 1.6.0
+* Version: 1.8.0
 * GitHub: https://github.com/cbg-ethz/pareg
 * Source code: https://github.com/cran/pareg
-* Date/Publication: 2023-10-24
+* Date/Publication: 2024-04-30
 * Number of recursive dependencies: 319
 
 Run `revdepcheck::revdep_details(, "pareg")` for more info
@@ -3342,22 +2387,22 @@ Run `revdepcheck::revdep_details(, "pareg")` for more info
      ERROR
     Running the tests in ‘tests/testthat.R’ failed.
     Last 50 lines of output:
-        xorg-libx11        anaconda/linux-64::xorg-libx11-1.8.12-h9b100fa_1 
-        xorg-libxau        anaconda/linux-64::xorg-libxau-1.0.12-h9b100fa_0 
-        xorg-libxdmcp      anaconda/linux-64::xorg-libxdmcp-1.1.5-h9b100fa_0 
-        xorg-xorgproto     anaconda/linux-64::xorg-xorgproto-2024.1-h5eee18b_1 
-        xz                 anaconda/linux-64::xz-5.6.4-h5eee18b_1 
         zlib               anaconda/linux-64::zlib-1.2.13-h5eee18b_1 
+      
+      
+      Preparing transaction: ...working... done
+      Verifying transaction: ...working... done
+      Executing transaction: ...working... done
     ...
-         │     └─ python >=3.10,<3.11.0a0 , which conflicts with any installable versions previously reported;
-         ├─ tensorflow 2.10.0 would require
-         │  └─ tensorflow-base [2.10.0 eigen_py38h1969d1f_0|2.10.0 gpu_py38h6559e04_0|2.10.0 mkl_py38hb9daa73_0], which requires
-         │     └─ python >=3.8,<3.9.0a0 , which conflicts with any installable versions previously reported;
-         └─ tensorflow 2.10.0 would require
             └─ tensorflow-base [2.10.0 eigen_py39h1969d1f_0|2.10.0 gpu_py39h6559e04_0|2.10.0 mkl_py39hb9daa73_0], which requires
                └─ python >=3.9,<3.10.0a0 , which conflicts with any installable versions previously reported.
       
       Error: one or more Python packages failed to install [error code 1]
+      In addition: Warning messages:
+      1: In check_forbidden_install("Python packages") :
+        cannot install Python packages during R CMD check
+      2: In check_forbidden_install("Conda Environments") :
+        cannot install Conda Environments during R CMD check
       Execution halted
     ```
 
@@ -3418,47 +2463,6 @@ Run `revdepcheck::revdep_details(, "pareg")` for more info
     See ‘/scratch/henrik/revdep/future/checks/pareg/new/pareg.Rcheck/00install.out’ for details.
     ```
 
-# parseRPDR
-
-<details>
-
-* Version: 1.1.2
-* GitHub: https://github.com/martonkolossvary/parseRPDR
-* Source code: https://github.com/cran/parseRPDR
-* Date/Publication: 2025-01-19 18:10:02 UTC
-* Number of recursive dependencies: 85
-
-Run `revdepcheck::revdep_details(, "parseRPDR")` for more info
-
-</details>
-
-## In both
-
-*   checking tests ...
-    ```
-      Running ‘covr.R’
-      Running ‘testthat.R’
-     ERROR
-    Running the tests in ‘tests/testthat.R’ failed.
-    Last 50 lines of output:
-        2. │ └─base::withCallingHandlers(...)
-        3. └─parseRPDR::load_prc(d_fname, nThread = 2)
-        4.   └─base::lapply(...)
-        5.     └─parseRPDR (local) FUN(X[[i]], ...)
-        6.       ├─base::suppressMessages(...)
-    ...
-       3. ├─parseRPDR::load_notes(...)
-       4. │ └─readr::read_lines(...)
-       5. │   └─vroom::vroom_lines(...)
-       6. │     └─vroom:::vroom_(...)
-       7. └─vroom (local) `<fn>`(NA_character_)
-       8.   └─vroom:::split_path_ext(basename_utf8(path))
-      
-      [ FAIL 33 | WARN 3 | SKIP 0 | PASS 66 ]
-      Error: Test failures
-      Execution halted
-    ```
-
 # partR2
 
 <details>
@@ -3502,38 +2506,6 @@ Run `revdepcheck::revdep_details(, "pavo")` for more info
     Found the following significant warnings:
       Warning: no DISPLAY variable so Tk is not available
     See ‘/scratch/henrik/revdep/future/checks/pavo/new/pavo.Rcheck/00install.out’ for details.
-    ```
-
-# pGRN
-
-<details>
-
-* Version: 0.3.5
-* GitHub: NA
-* Source code: https://github.com/cran/pGRN
-* Date/Publication: 2023-01-17 17:20:02 UTC
-* Number of recursive dependencies: 89
-
-Run `revdepcheck::revdep_details(, "pGRN")` for more info
-
-</details>
-
-## In both
-
-*   checking re-building of vignette outputs ... ERROR
-    ```
-    Error(s) in re-building vignettes:
-      ...
-    --- re-building ‘pGRN.Rmd’ using knitr
-    Error: processing vignette 'pGRN.Rmd' failed with diagnostics:
-    there is no package called ‘markdown’
-    --- failed re-building ‘pGRN.Rmd’
-    
-    SUMMARY: processing the following file failed:
-      ‘pGRN.Rmd’
-    
-    Error: Vignette re-building failed.
-    Execution halted
     ```
 
 # pgxRpi
@@ -3589,25 +2561,6 @@ Run `revdepcheck::revdep_details(, "photosynthesis")` for more info
         ‘simulate_error.R’ ‘simulate_error.Rd’ ‘utils.R’
     ```
 
-# POMADE
-
-<details>
-
-* Version: 0.2.0
-* GitHub: https://github.com/MikkelVembye/POMADE
-* Source code: https://github.com/cran/POMADE
-* Date/Publication: 2024-02-13 20:41:20 UTC
-* Number of recursive dependencies: 73
-
-Run `revdepcheck::revdep_details(, "POMADE")` for more info
-
-</details>
-
-## In both
-
-*   R CMD check timed out
-    
-
 # powRICLPM
 
 <details>
@@ -3630,47 +2583,6 @@ Run `revdepcheck::revdep_details(, "powRICLPM")` for more info
       |> or function shorthand \(...) syntax added in R 4.1.0.
       File(s) using such syntax:
         ‘save.R’
-    ```
-
-# projpred
-
-<details>
-
-* Version: 2.9.0
-* GitHub: https://github.com/stan-dev/projpred
-* Source code: https://github.com/cran/projpred
-* Date/Publication: 2025-07-08 22:00:02 UTC
-* Number of recursive dependencies: 160
-
-Run `revdepcheck::revdep_details(, "projpred")` for more info
-
-</details>
-
-## In both
-
-*   checking tests ...
-    ```
-      Running ‘testthat.R’
-     ERROR
-    Running the tests in ‘tests/testthat.R’ failed.
-    Last 50 lines of output:
-      Setting 'K' to the number of folds (2)
-      Fitting model 1 out of 2
-      Fitting model 2 out of 2
-      Setting 'K' to the number of folds (2)
-      Fitting model 1 out of 2
-      Fitting model 2 out of 2
-    ...
-       28. │                                               ├─utils::capture.output(tryCatch(expr, error = throw_err), type = "message")
-       29. │                                               │ └─base::withVisible(...elt(i))
-       30. │                                               └─base::tryCatch(expr, error = throw_err)
-       31. │                                                 └─base (local) tryCatchList(expr, classes, parentenv, handlers)
-       32. │                                                   └─base (local) tryCatchOne(expr, names, parentenv, handlers[[1L]])
-       33. │                                                     └─value[[3L]](cond)
-       34. │                                                       └─base::stop(e)
-       35. └─testthat (local) `<fn>`(`<std::rn_>`)
-       36.   └─rlang::abort(...)
-      Execution halted
     ```
 
 # Prostar
@@ -3807,88 +2719,84 @@ Run `revdepcheck::revdep_details(, "QDNAseq")` for more info
     Execution halted
     ```
 
-# R4GoodPersonalFinances
+# Rcurvep
 
 <details>
 
-* Version: 1.0.0
-* GitHub: https://github.com/R4GoodAcademy/R4GoodPersonalFinances
-* Source code: https://github.com/cran/R4GoodPersonalFinances
-* Date/Publication: 2025-06-04 11:00:09 UTC
-* Number of recursive dependencies: 107
+* Version: 1.3.2
+* GitHub: https://github.com/moggces/Rcurvep
+* Source code: https://github.com/cran/Rcurvep
+* Date/Publication: 2025-05-31 21:10:02 UTC
+* Number of recursive dependencies: 125
 
-Run `revdepcheck::revdep_details(, "R4GoodPersonalFinances")` for more info
+Run `revdepcheck::revdep_details(, "Rcurvep")` for more info
 
 </details>
 
 ## In both
 
-*   checking tests ...
+*   checking whether package ‘Rcurvep’ can be installed ... ERROR
     ```
-      Running ‘spelling.R’
-      Comparing ‘spelling.Rout’ to ‘spelling.Rout.save’ ... OK
-      Running ‘testthat.R’
-     ERROR
-    Running the tests in ‘tests/testthat.R’ failed.
-    Last 50 lines of output:
-        9.         ├─base::tryCatch(fun(libname, pkgname), error = identity)
-       10.         │ └─base (local) tryCatchList(expr, classes, parentenv, handlers)
-       11.         │   └─base (local) tryCatchOne(expr, names, parentenv, handlers[[1L]])
-       12.         │     └─base (local) doTryCatch(return(expr), name, parentenv, handler)
-    ...
-      -    5       0.02          450343. -1395305.                   -79051.
-      +    5       0.02          450343. -1395305.                -79051.         -7051.
-      and 308 more ...
-      
-      * Run `testthat::snapshot_accept('simulate_single_scenario')` to accept the change.
-      * Run `testthat::snapshot_review('simulate_single_scenario')` to interactively review the change.
-      
-      [ FAIL 1 | WARN 2 | SKIP 1 | PASS 335 ]
-      Error: Test failures
-      Execution halted
+    Installation failed.
+    See ‘/scratch/henrik/revdep/future/checks/Rcurvep/new/Rcurvep.Rcheck/00install.out’ for details.
     ```
 
-# rBiasCorrection
+## Installation
 
-<details>
+### Devel
 
-* Version: 0.3.5
-* GitHub: https://github.com/kapsner/rBiasCorrection
-* Source code: https://github.com/cran/rBiasCorrection
-* Date/Publication: 2025-04-05 13:50:02 UTC
-* Number of recursive dependencies: 120
+```
+* installing *source* package ‘Rcurvep’ ...
+** this is package ‘Rcurvep’ version ‘1.3.2’
+** package ‘Rcurvep’ successfully unpacked and MD5 sums checked
+** using staged installation
+** R
+** data
+*** moving datasets to lazyload DB
+** inst
+** byte-compile and prepare package for lazy loading
+** help
+...
+ .onLoad failed in loadNamespace() for 'Rcurvep', details:
+  call: NULL
+  error: .onLoad failed in loadNamespace() for 'rJava', details:
+  call: dyn.load(file, DLLpath = DLLpath, ...)
+  error: unable to load shared object '/scratch/henrik/revdep/future/library/Rcurvep/rJava/libs/rJava.so':
+  libjvm.so: cannot open shared object file: No such file or directory
+Error: loading failed
+Execution halted
+ERROR: loading failed
+* removing ‘/scratch/henrik/revdep/future/checks/Rcurvep/new/Rcurvep.Rcheck/Rcurvep’
 
-Run `revdepcheck::revdep_details(, "rBiasCorrection")` for more info
 
-</details>
+```
+### CRAN
 
-## In both
+```
+* installing *source* package ‘Rcurvep’ ...
+** this is package ‘Rcurvep’ version ‘1.3.2’
+** package ‘Rcurvep’ successfully unpacked and MD5 sums checked
+** using staged installation
+** R
+** data
+*** moving datasets to lazyload DB
+** inst
+** byte-compile and prepare package for lazy loading
+** help
+...
+ .onLoad failed in loadNamespace() for 'Rcurvep', details:
+  call: NULL
+  error: .onLoad failed in loadNamespace() for 'rJava', details:
+  call: dyn.load(file, DLLpath = DLLpath, ...)
+  error: unable to load shared object '/scratch/henrik/revdep/future/library/Rcurvep/rJava/libs/rJava.so':
+  libjvm.so: cannot open shared object file: No such file or directory
+Error: loading failed
+Execution halted
+ERROR: loading failed
+* removing ‘/scratch/henrik/revdep/future/checks/Rcurvep/old/Rcurvep.Rcheck/Rcurvep’
 
-*   checking tests ...
-    ```
-      Running ‘testthat.R’
-     ERROR
-    Running the tests in ‘tests/testthat.R’ failed.
-    Last 50 lines of output:
-       13.           ├─future::value(fs)
-       14.           └─future:::value.list(fs)
-       15.             └─future (local) signalConditionsASAP(...)
-       16.               └─future:::signalConditions(...)
-      ── Warning ('test-plotting.R:128:5'): createbarerrorplots ──────────────────────
-      lmdif: info = -1. Number of iterations has reached `maxiter' == 50.
-    ...
-      and 3 more ...
-      
-      * Run `testthat::snapshot_accept('algorithm_minmax_FALSE')` to accept the change.
-      * Run `testthat::snapshot_review('algorithm_minmax_FALSE')` to interactively review the change.
-      
-      [ FAIL 1 | WARN 122 | SKIP 1 | PASS 102 ]
-      Error: Test failures
-      Execution halted
-      Error in deferred_run(env) : could not find function "deferred_run"
-      Calls: <Anonymous>
-    ```
 
+```
 # receptiviti
 
 <details>
@@ -3974,21 +2882,21 @@ Run `revdepcheck::revdep_details(, "reproducible")` for more info
      ERROR
     Running the tests in ‘tests/test-all.R’ failed.
     Last 50 lines of output:
-      <cmdError/error/condition>
-      Error in `system("apt -qq list p7zip-rar", intern = TRUE, ignore.stderr = TRUE)`: error in running command
-      Backtrace:
-          ▆
-       1. └─reproducible:::.archiveExtractBinary() at test-prepInputsInNestedArchives.R:146:5
-       2.   └─base::system("apt -qq list p7zip-rar", intern = TRUE, ignore.stderr = TRUE)
+        'test-preProcessWorks.R:328:3', 'test-preProcessWorks.R:348:3',
+        'test-preProcessWorks.R:361:3', 'test-preProcessWorks.R:374:3',
+        'test-preProcessWorks.R:391:3', 'test-preProcessWorks.R:409:3',
+        'test-preProcessWorks.R:438:3', 'test-preProcessWorks.R:459:3',
+        'test-preProcessWorks.R:487:3', 'test-preProcessWorks.R:543:3',
+        'test-preProcessWorks.R:569:3', 'test-preProcessWorks.R:672:3',
     ...
-       1. ├─sf::st_union(...) at test-symlinks.R:47:5
-       2. ├─sf::st_transform(...)
-       3. └─reproducible::prepInputs(...)
-       4.   └─reproducible::preProcess(...)
-       5.     └─reproducible::downloadFile(...)
-       6.       └─reproducible:::dlErrorHandling(...)
+       4.       └─reproducible:::makeVal(x)
+       5.         ├─terra::makeValid(x)
+       6.         └─terra::makeValid(x)
+       7.           └─terra (local) .local(x, ...)
+       8.             └─terra:::messages(x)
+       9.               └─terra:::error(f, x@pntr$getError())
       
-      [ FAIL 9 | WARN 0 | SKIP 34 | PASS 625 ]
+      [ FAIL 2 | WARN 0 | SKIP 90 | PASS 391 ]
       Error: Test failures
       Execution halted
     ```
@@ -4034,25 +2942,6 @@ Run `revdepcheck::revdep_details(, "rgee")` for more info
     checkRd: (-1) ee_install.Rd:46: Lost braces in \itemize; meant \describe ?
     ```
 
-# robust2sls
-
-<details>
-
-* Version: 0.2.3
-* GitHub: https://github.com/jkurle/robust2sls
-* Source code: https://github.com/cran/robust2sls
-* Date/Publication: 2025-05-20 22:30:02 UTC
-* Number of recursive dependencies: 123
-
-Run `revdepcheck::revdep_details(, "robust2sls")` for more info
-
-</details>
-
-## In both
-
-*   R CMD check timed out
-    
-
 # rsi
 
 <details>
@@ -4068,9 +2957,6 @@ Run `revdepcheck::revdep_details(, "rsi")` for more info
 </details>
 
 ## In both
-
-*   R CMD check timed out
-    
 
 *   checking DESCRIPTION meta-information ... NOTE
     ```
@@ -4104,113 +2990,6 @@ Run `revdepcheck::revdep_details(, "SCArray.sat")` for more info
       ‘Seurat:::FastExpMean’ ‘Seurat:::FastLogVMR’ ‘Seurat:::NBResiduals’
       ‘Seurat:::UpdateKey’ ‘Seurat:::ValidateDataForMerge’
       See the note in ?`:::` about the use of this operator.
-    ```
-
-# scStability
-
-<details>
-
-* Version: 1.0.3
-* GitHub: NA
-* Source code: https://github.com/cran/scStability
-* Date/Publication: 2025-06-23 15:50:02 UTC
-* Number of recursive dependencies: 229
-
-Run `revdepcheck::revdep_details(, "scStability")` for more info
-
-</details>
-
-## In both
-
-*   checking tests ...
-    ```
-      Running ‘spelling.R’
-      Comparing ‘spelling.Rout’ to ‘spelling.Rout.save’ ... OK
-      Running ‘testthat.R’
-     ERROR
-    Running the tests in ‘tests/testthat.R’ failed.
-    Last 50 lines of output:
-       11.         ├─base::do.call(makeClusterPSOCK, args = args, quote = TRUE)
-       12.         └─parallelly (local) `<fn>`(base::quote(8L), rscript_libs = base::quote(`<chr>`))
-       13.           └─parallelly:::checkNumberOfLocalWorkers(workers)
-      ── Error ('test-createEmb.R:3:3'): All embeddings are generated correctly ──────
-    ...
-       14.   └─future::ClusterFutureBackend(...)
-       15.     └─clusterRegistry$startCluster(...)
-       16.       └─future (local) makeCluster(workers, ...)
-       17.         ├─base::do.call(makeClusterPSOCK, args = args, quote = TRUE)
-       18.         └─parallelly (local) `<fn>`(base::quote(8L), rscript_libs = base::quote(`<chr>`))
-       19.           └─parallelly:::checkNumberOfLocalWorkers(workers)
-      
-      [ FAIL 4 | WARN 1 | SKIP 0 | PASS 0 ]
-      Error: Test failures
-      Execution halted
-    ```
-
-*   checking re-building of vignette outputs ... ERROR
-    ```
-    Error(s) in re-building vignettes:
-    --- re-building ‘Introduction-to-scStability.Rmd’ using rmarkdown
-    Performing log-normalization
-    0%   10   20   30   40   50   60   70   80   90   100%
-    [----|----|----|----|----|----|----|----|----|----|
-    **************************************************|
-    Calculating gene variances
-    0%   10   20   30   40   50   60   70   80   90   100%
-    [----|----|----|----|----|----|----|----|----|----|
-    **************************************************|
-    ...
-    
-    Error: processing vignette 'Introduction-to-scStability.Rmd' failed with diagnostics:
-    Attempting to set up 8 localhost parallel workers with only 2 CPU cores available for this R process (per 'fallback'), which could result in a 400% load. The hard limit is set to 300%. Overusing the CPUs has negative impact on the current R process, but also on all other processes of yours and others running on the same machine. See help("parallelly.maxWorkers.localhost", package = "parallelly") for further explanations and how to override the hard limit that triggered this error
-    --- failed re-building ‘Introduction-to-scStability.Rmd’
-    
-    SUMMARY: processing the following file failed:
-      ‘Introduction-to-scStability.Rmd’
-    
-    Error: Vignette re-building failed.
-    Execution halted
-    ```
-
-# sdmTMB
-
-<details>
-
-* Version: 0.7.2
-* GitHub: https://github.com/pbs-assess/sdmTMB
-* Source code: https://github.com/cran/sdmTMB
-* Date/Publication: 2025-06-19 21:20:02 UTC
-* Number of recursive dependencies: 150
-
-Run `revdepcheck::revdep_details(, "sdmTMB")` for more info
-
-</details>
-
-## In both
-
-*   checking tests ...
-    ```
-      Running ‘testthat.R’
-     ERROR
-    Running the tests in ‘tests/testthat.R’ failed.
-    Complete output:
-      > options(Matrix.warnDeprecatedCoerce = 2)
-      > 
-      > library(testthat)
-      > library(sdmTMB)
-      > 
-      > test_check("sdmTMB")
-    ...
-      
-      ══ Failed tests ════════════════════════════════════════════════════════════════
-      ── Failure ('test-nonstationary.R:277:3'): Test that non-stationary model works without spatial field and random effects in epsilon ──
-      as.numeric(par) not equal to -14.
-      1/1 mismatches
-      [1] -14.3 - -14 == -0.285
-      
-      [ FAIL 1 | WARN 0 | SKIP 3 | PASS 1122 ]
-      Error: Test failures
-      Execution halted
     ```
 
 # sigminer
@@ -4296,47 +3075,6 @@ Run `revdepcheck::revdep_details(, "signeR")` for more info
     prepare_Rd: tcga_tumors.Rd:21-23: Dropping empty section \source
     prepare_Rd: tcga_tumors.Rd:24-26: Dropping empty section \references
     prepare_Rd: tcga_tumors.Rd:27-28: Dropping empty section \examples
-    ```
-
-# SimDesign
-
-<details>
-
-* Version: 2.20.0
-* GitHub: https://github.com/philchalmers/SimDesign
-* Source code: https://github.com/cran/SimDesign
-* Date/Publication: 2025-07-16 19:30:14 UTC
-* Number of recursive dependencies: 136
-
-Run `revdepcheck::revdep_details(, "SimDesign")` for more info
-
-</details>
-
-## Newly broken
-
-*   checking re-building of vignette outputs ... ERROR
-    ```
-    Error(s) in re-building vignettes:
-    --- re-building ‘Catch_errors.Rmd’ using rmarkdown
-    --- finished re-building ‘Catch_errors.Rmd’
-    
-    --- re-building ‘Fixed_obj_fun.Rmd’ using rmarkdown
-    
-    Quitting from Fixed_obj_fun.Rmd:64-69 [unnamed-chunk-5]
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    <error/rlang_error>
-    Error in `serverSocket()`:
-    ...
-    --- finished re-building ‘Saving-results.Rmd’
-    
-    --- re-building ‘SimDesign-intro.Rmd’ using rmarkdown
-    --- finished re-building ‘SimDesign-intro.Rmd’
-    
-    SUMMARY: processing the following file failed:
-      ‘Fixed_obj_fun.Rmd’
-    
-    Error: Vignette re-building failed.
-    Execution halted
     ```
 
 # simhelpers
@@ -4540,88 +3278,6 @@ Run `revdepcheck::revdep_details(, "sperrorest")` for more info
            |                                                             ^
     ```
 
-# sphunif
-
-<details>
-
-* Version: 1.4.0
-* GitHub: https://github.com/egarpor/sphunif
-* Source code: https://github.com/cran/sphunif
-* Date/Publication: 2024-05-24 21:50:01 UTC
-* Number of recursive dependencies: 71
-
-Run `revdepcheck::revdep_details(, "sphunif")` for more info
-
-</details>
-
-## In both
-
-*   checking tests ...
-    ```
-      Running ‘testthat.R’
-     ERROR
-    Running the tests in ‘tests/testthat.R’ failed.
-    Complete output:
-      > library(testthat)
-      > library(sphunif)
-      Loading required package: Rcpp
-      > 
-      > test_check("sphunif")
-      data is an array with more than one slice, only the first one is employed.
-    ...
-      Series truncated from 10000 to 10000 terms (difference <= 0 with the HBE tail probability; last weight = 0.000e+00).
-      [ FAIL 1 | WARN 0 | SKIP 0 | PASS 2398 ]
-      
-      ══ Failed tests ════════════════════════════════════════════════════════════════
-      ── Failure ('test_int_sph_MC.R:104:3'): Parallelization is faster ──────────────
-      `t1` is not strictly more than `t2`. Difference: -1.16
-      
-      [ FAIL 1 | WARN 0 | SKIP 0 | PASS 2398 ]
-      Error: Test failures
-      Execution halted
-    ```
-
-# squat
-
-<details>
-
-* Version: 0.4.0
-* GitHub: https://github.com/LMJL-Alea/squat
-* Source code: https://github.com/cran/squat
-* Date/Publication: 2025-05-20 08:30:02 UTC
-* Number of recursive dependencies: 137
-
-Run `revdepcheck::revdep_details(, "squat")` for more info
-
-</details>
-
-## In both
-
-*   checking tests ...
-    ```
-      Running ‘testthat.R’
-     ERROR
-    Running the tests in ‘tests/testthat.R’ failed.
-    Complete output:
-      > # This file is part of the standard setup for testthat.
-      > # It is recommended that you do not modify it.
-      > #
-      > # Where should you do additional test configuration?
-      > # Learn more about the roles of various files in:
-      > # * https://r-pkgs.org/tests.html
-    ...
-      * Run `testthat::snapshot_review('qts-prcomp/')` to review changes
-      Backtrace:
-          ▆
-       1. └─vdiffr::expect_doppelganger(...) at test-qts-prcomp.R:25:3
-       2.   ├─base::withCallingHandlers(...)
-       3.   └─testthat::expect_snapshot_file(...)
-      
-      [ FAIL 1 | WARN 0 | SKIP 0 | PASS 79 ]
-      Error: Test failures
-      Execution halted
-    ```
-
 # sRACIPE
 
 <details>
@@ -4676,47 +3332,6 @@ Run `revdepcheck::revdep_details(, "sRACIPE")` for more info
     checkRd: (-1) sracipeHeatmapSimilarity.Rd:32: Lost braces
         32 | and /code{distance  = (1-cor(x, method = "spear"))/2} will be used to 
            |          ^
-    ```
-
-# stacks
-
-<details>
-
-* Version: 1.1.1
-* GitHub: https://github.com/tidymodels/stacks
-* Source code: https://github.com/cran/stacks
-* Date/Publication: 2025-05-27 20:00:02 UTC
-* Number of recursive dependencies: 136
-
-Run `revdepcheck::revdep_details(, "stacks")` for more info
-
-</details>
-
-## In both
-
-*   checking tests ...
-    ```
-      Running ‘testthat.R’
-     ERROR
-    Running the tests in ‘tests/testthat.R’ failed.
-    Last 50 lines of output:
-      ── Error ('test-blend_predictions.R:8:5'): (code run outside of `test_that()`) ──
-      Error in `readChar(con, 5L, useBytes = TRUE)`: cannot open the connection
-      Backtrace:
-          ▆
-       1. └─base::load(test_path("helper_data.Rda")) at test-blend_predictions.R:8:5
-       2.   └─base::readChar(con, 5L, useBytes = TRUE)
-    ...
-      ── Error ('test-utils.R:8:5'): (code run outside of `test_that()`) ─────────────
-      Error in `readChar(con, 5L, useBytes = TRUE)`: cannot open the connection
-      Backtrace:
-          ▆
-       1. └─base::load(test_path("helper_data.Rda")) at test-utils.R:8:5
-       2.   └─base::readChar(con, 5L, useBytes = TRUE)
-      
-      [ FAIL 9 | WARN 9 | SKIP 0 | PASS 6 ]
-      Error: Test failures
-      Execution halted
     ```
 
 # stars
@@ -4923,31 +3538,58 @@ Run `revdepcheck::revdep_details(, "text")` for more info
 
 ## In both
 
-*   checking tests ...
+*   checking whether package ‘text’ can be installed ... ERROR
     ```
-      Running ‘testthat.R’
-     ERROR
-    Running the tests in ‘tests/testthat.R’ failed.
-    Last 50 lines of output:
-       3.     └─reticulate::py_run_file(file, local = FALSE, convert = convert)
-       4.       └─reticulate:::py_run_file_impl(file, local, convert)
-      ── Error ('test_5_Tasks.R:266:3'): textTranslate test ──────────────────────────
-      <python.builtin.ModuleNotFoundError/python.builtin.ImportError/python.builtin.Exception/python.builtin.BaseException/python.builtin.object/error/condition>
-      Error in `py_run_file_impl(file, local, convert)`: ModuleNotFoundError: No module named 'transformers'
-      Run `reticulate::py_last_error()` for details.
-    ...
-       3.     └─reticulate::py_run_file(file, local = FALSE, convert = convert)
-       4.       └─reticulate:::py_run_file_impl(file, local, convert)
-      
-      [ FAIL 46 | WARN 528 | SKIP 3 | PASS 205 ]
-      Deleting unused snapshots:
-      • 2_9_textTrainExamples/examples-error-plot.svg
-      • 2_9_textTrainExamples/examples-histogram-plot.svg
-      • 2_9_textTrainExamples/examples-scatter-plot.svg
-      Error: Test failures
-      Execution halted
+    Installation failed.
+    See ‘/scratch/henrik/revdep/future/checks/text/new/text.Rcheck/00install.out’ for details.
     ```
 
+## Installation
+
+### Devel
+
+```
+* installing *source* package ‘text’ ...
+** this is package ‘text’ version ‘1.6’
+** package ‘text’ successfully unpacked and MD5 sums checked
+** using staged installation
+** R
+** data
+*** moving datasets to lazyload DB
+** inst
+** byte-compile and prepare package for lazy loading
+Error: .onLoad failed in loadNamespace() for 'rJava', details:
+  call: dyn.load(file, DLLpath = DLLpath, ...)
+  error: unable to load shared object '/scratch/henrik/revdep/future/library/text/rJava/libs/rJava.so':
+  libjvm.so: cannot open shared object file: No such file or directory
+Execution halted
+ERROR: lazy loading failed for package ‘text’
+* removing ‘/scratch/henrik/revdep/future/checks/text/new/text.Rcheck/text’
+
+
+```
+### CRAN
+
+```
+* installing *source* package ‘text’ ...
+** this is package ‘text’ version ‘1.6’
+** package ‘text’ successfully unpacked and MD5 sums checked
+** using staged installation
+** R
+** data
+*** moving datasets to lazyload DB
+** inst
+** byte-compile and prepare package for lazy loading
+Error: .onLoad failed in loadNamespace() for 'rJava', details:
+  call: dyn.load(file, DLLpath = DLLpath, ...)
+  error: unable to load shared object '/scratch/henrik/revdep/future/library/text/rJava/libs/rJava.so':
+  libjvm.so: cannot open shared object file: No such file or directory
+Execution halted
+ERROR: lazy loading failed for package ‘text’
+* removing ‘/scratch/henrik/revdep/future/checks/text/old/text.Rcheck/text’
+
+
+```
 # tglkmeans
 
 <details>
@@ -4991,13 +3633,13 @@ Run `revdepcheck::revdep_details(, "tramvs")` for more info
     Error(s) in re-building vignettes:
       ...
     --- re-building ‘tramvs.Rnw’ using knitr
+    Warning in texi2dvi(file = file, pdf = TRUE, clean = clean, quiet = quiet,  :
+      texi2dvi script/program not available, using emulation
     Error: processing vignette 'tramvs.Rnw' failed with diagnostics:
-    Running 'texi2dvi' on 'tramvs.tex' failed.
+    unable to run pdflatex on 'tramvs.tex'
     LaTeX errors:
     ! LaTeX Error: File `wrapfig.sty' not found.
     
-    Type X to quit or <RETURN> to proceed,
-    or enter new name. (Default extension: sty)
     ...
     l.68 \usepackage
                     {float}^^M
@@ -5030,24 +3672,24 @@ Run `revdepcheck::revdep_details(, "TreeSearch")` for more info
 *   checking tests ...
     ```
       Running ‘spelling.R’
-      Comparing ‘spelling.Rout’ to ‘spelling.Rout.save’ ... OK
       Running ‘testthat.R’
      ERROR
     Running the tests in ‘tests/testthat.R’ failed.
-    Complete output:
-      > library("testthat")
-      > library("TreeSearch")
-      > 
-      > test_check("TreeSearch")
-    ...
-      ══ Failed tests ════════════════════════════════════════════════════════════════
-      ── Failure ('test-CustomSearch.R:32:3'): Tree can be found ─────────────────────
-      all.equal(...) is not TRUE
+    Last 50 lines of output:
       
       `actual`:   FALSE
       `expected`: TRUE 
       
-      [ FAIL 1 | WARN 0 | SKIP 0 | PASS 7379 ]
+      [ FAIL 1 | WARN 0 | SKIP 4 | PASS 7331 ]
+    ...
+      • PlotCharacter/plotchar-iiiiii11iii1.svg
+      • PlotCharacter/plotchar-iiiiiiii0101.svg
+      • PlotCharacter/plotchar-iiiiiiiiiiii.svg
+      • PlotCharacter/plotchar-iiiiiiiqqqqq.svg
+      • PlotCharacter/plotchar-invar-ambig.svg
+      • PlotCharacter/plotchar-invariant.svg
+      • PlotCharacter/plotchar-qqqqiiii1qqq.svg
+      • PlotCharacter/plotchar-qqqqqqqqqqqq.svg
       Error: Test failures
       Execution halted
     ```
@@ -5210,47 +3852,6 @@ Run `revdepcheck::revdep_details(, "tsmarch")` for more info
     Execution halted
     ```
 
-# tune
-
-<details>
-
-* Version: 1.3.0
-* GitHub: https://github.com/tidymodels/tune
-* Source code: https://github.com/cran/tune
-* Date/Publication: 2025-02-21 17:50:03 UTC
-* Number of recursive dependencies: 133
-
-Run `revdepcheck::revdep_details(, "tune")` for more info
-
-</details>
-
-## In both
-
-*   checking tests ...
-    ```
-      Running ‘spelling.R’
-      Comparing ‘spelling.Rout’ to ‘spelling.Rout.save’ ... OK
-      Running ‘testthat.R’
-     ERROR
-    Running the tests in ‘tests/testthat.R’ failed.
-    Last 50 lines of output:
-      old vs new
-        Code
-          int_res_1 <- int_pctl(lm_res, times = 500)
-        Condition
-    ...
-      -   Warning:
-      +   Warning in `rsample::int_pctl()`:
-          Recommend at least 1000 non-missing bootstrap resamples for term `mae`.
-      
-      * Run `testthat::snapshot_accept('int_pctl')` to accept the change.
-      * Run `testthat::snapshot_review('int_pctl')` to interactively review the change.
-      
-      [ FAIL 4 | WARN 4 | SKIP 15 | PASS 2246 ]
-      Error: Test failures
-      Execution halted
-    ```
-
 # txshift
 
 <details>
@@ -5317,7 +3918,7 @@ Run `revdepcheck::revdep_details(, "WeightedCluster")` for more info
 
 </details>
 
-## In both
+## Newly broken
 
 *   checking re-building of vignette outputs ... WARNING
     ```
@@ -5344,46 +3945,10 @@ Run `revdepcheck::revdep_details(, "WeightedCluster")` for more info
     Execution halted
     ```
 
-# whitewater
+## Newly fixed
 
-<details>
-
-* Version: 0.1.3
-* GitHub: https://github.com/joshualerickson/whitewater
-* Source code: https://github.com/cran/whitewater
-* Date/Publication: 2023-04-01 18:00:02 UTC
-* Number of recursive dependencies: 126
-
-Run `revdepcheck::revdep_details(, "whitewater")` for more info
-
-</details>
-
-## In both
-
-*   checking tests ...
-    ```
-      Running ‘testthat.R’
-     ERROR
-    Running the tests in ‘tests/testthat.R’ failed.
-    Last 50 lines of output:
-       26. │             └─rlang::eval_tidy(xs[[j]], mask)
-       27. ├─readNWISsite(site_no) %>% select(dec_long_va) %>% ...
-       28. ├─dplyr::select(., dec_long_va)
-       29. └─dataRetrieval::readNWISsite(site_no)
-       30.   └─base::.Deprecated(...)
-      ── Warning ('test-usgs.R:314:3'): usgs peaks ───────────────────────────────────
-    ...
-      Error in `class(data) <- "data.frame"`: attempt to set an attribute on NULL
-      Backtrace:
-          ▆
-       1. ├─whitewater:::ww_reportUSGSdv(yaak_dv, days = 11) at test-usgs.R:28:1
-       2. │ └─... %>% dt_to_tibble()
-       3. └─whitewater:::dt_to_tibble(.)
-      
-      [ FAIL 1 | WARN 59 | SKIP 0 | PASS 41 ]
-      Error: Test failures
-      Execution halted
-    ```
+*   R CMD check timed out
+    
 
 # wingen
 
