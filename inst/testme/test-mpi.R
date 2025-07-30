@@ -4,6 +4,7 @@
 
 library(future)
 stopCluster <- parallel::stopCluster
+makeClusterMPI <- parallelly::makeClusterMPI
 
 message("*** MPI ...")
 
