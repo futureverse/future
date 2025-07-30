@@ -234,7 +234,6 @@ launchFuture.ClusterFutureBackend <- function(backend, future, ...) {
   
   ## Does the cluster node communicate with a connection?
   ## (if not, it's likely via MPI)
-  stop_if_not(inherits(node, c("SOCK0node", "SOCKnode")))
   con <- node[["con"]]
   future[["nodeHasConnection"]] <- !is.null(con)
 
@@ -1469,7 +1468,7 @@ getFutureBackendConfigs.ClusterFuture <- function(future, ..., debug = isTRUE(ge
   
   ## Does the cluster node communicate with a connection?
   ## (if not, it's via MPI)
-  if (!future[["nodeHasConnection"]]) return(list())
+  if (!isTRUE(future[["nodeHasConnection"]])) return(list())
 
   capture <- list(
     immediateConditionHandlers = list(
