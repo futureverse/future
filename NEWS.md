@@ -1,6 +1,10 @@
 # Version (development version)
 
- * ...
+## Bug Fixes
+
+ * The `cluster` backend failed when used with an `MPIcluster` as
+   created by `parallel::makeCluster(..., type = "MPI")`. This bug was
+   introduced in **future** (>= 1.40.0) [2025-04-10].
 
 
 # Version 1.67.0 [2025-07-29]
