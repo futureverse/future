@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.67.0-9003</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.67.0-9007</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -79,14 +79,16 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="version-development-version">Version (development version)<a class="anchor" aria-label="anchor" href="#version-development-version"></a></h2>
+<p>This is the fifth rollout out of several towards a near-future major release. This has been made possible due to a multi-year effort of internal re-designs, work with package maintainers, release, and repeat. This release fixes a few more regressions introduced in <strong>future</strong> 1.40.0 (2025-04-10) and 1.67.0 (2025-07-29).</p>
 <div class="section level3">
 <h3 id="bug-fixes-development-version">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h3>
-<ul><li>The <code>cluster</code> backend failed when used with an <code>MPIcluster</code> as created by <code>parallel::makeCluster(..., type = "MPI")</code>. This bug was introduced in <strong>future</strong> (&gt;= 1.40.0) [2025-04-10].</li>
+<ul><li><p>The <code>cluster</code> backend failed when used with an <code>MPIcluster</code> as created by <code>parallel::makeCluster(..., type = "MPI")</code>. This bug was introduced in <strong>future</strong> (&gt;= 1.40.0) [2025-04-10].</p></li>
+<li><p>Setting <code>R_FUTURE_PLAN=multisession</code> in an Renviron file, or a shell startup script, would result in a “fork bomb” when loading the <strong>future</strong> package. This happened because the setup of the future backend happened eagerly when the <strong>future</strong> package was loaded instead of being deferred to when the first future launched. This resulted in new, nested R workers being created recursively, until the machine ran out of resources. This bug was introduced in <strong>future</strong> (&gt;= 1.67.0) [2025-07-29].</p></li>
 </ul></div>
 </div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.67.0" id="version-1670">Version 1.67.0<a class="anchor" aria-label="anchor" href="#version-1670"></a></h2><p class="text-muted">CRAN release: 2025-07-29</p>
-<p>This is the fourth rollout out of several towards a near-future major release. This has been made possible due to a multi-year effort of internal re-designs, work with package maintainers, release, and repeat. This release fixes a few more regressions introduced in future 1.40.0 (2025-04-10).</p>
+<p>This is the fourth rollout out of several towards a near-future major release. This has been made possible due to a multi-year effort of internal re-designs, work with package maintainers, release, and repeat. This release fixes a few more regressions introduced in <strong>future</strong> 1.40.0 (2025-04-10).</p>
 <div class="section level3">
 <h3 id="significant-changes-1-67-0">Significant Changes<a class="anchor" aria-label="anchor" href="#significant-changes-1-67-0"></a></h3>
 <ul><li><p>Now argument <code>workers</code> for <code>plan(multisession)</code> defaults to <code>availableCores(constraints = "connections-16")</code>. This will make the default for <code>plan(multisession)</code> work also on computers with a large number of CPU cores (e.g. 192 and 256 cores) while leaving 16 connection slots available for other needs.</p></li>
@@ -107,7 +109,7 @@
 </div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.58.0" id="version-1580">Version 1.58.0<a class="anchor" aria-label="anchor" href="#version-1580"></a></h2><p class="text-muted">CRAN release: 2025-06-05</p>
-<p>This is the third rollout out of several towards a near-future major release that I am really excited about. This has been made possible due to a multi-year effort of internal re-designs, work with package maintainers, release, and repeat. This release fixes a few regressions introduced in future 1.40.0 (2025-04-10), despite passing <a href="https://www.futureverse.org/quality.html" class="external-link">all unit, regression, and system tests</a>.</p>
+<p>This is the third rollout out of several towards a near-future major release that I am really excited about. This has been made possible due to a multi-year effort of internal re-designs, work with package maintainers, release, and repeat. This release fixes a few regressions introduced in <strong>future</strong> 1.40.0 (2025-04-10), despite passing <a href="https://www.futureverse.org/quality.html" class="external-link">all unit, regression, and system tests</a>.</p>
 <div class="section level3">
 <h3 id="new-features-1-58-0">New Features<a class="anchor" aria-label="anchor" href="#new-features-1-58-0"></a></h3>
 <ul><li>Now futures produce a warning when they detect that the <em>default</em> graphics device, as defined by R option <code>"device"</code>, is opened by, for instance, a <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code> call without explicitly opening a graphics device. The reason for this check is that we rarely want to plot to the <em>default</em> graphics device in parallel processing, which typically ends up plotting to a <code>Rplots.pdf</code> file that is local to the parallel worker. If that is truly wanted, please open a graphics devices explicitly (e.g. <code><a href="https://rdrr.io/r/grDevices/pdf.html" class="external-link">pdf()</a></code> or <code><a href="https://rdrr.io/r/grDevices/png.html" class="external-link">png()</a></code>) before plotting. Alternatively, explicitly set R option <code>device</code> inside the future expression.</li>
@@ -129,7 +131,7 @@
 </div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.49.0" id="version-1490">Version 1.49.0<a class="anchor" aria-label="anchor" href="#version-1490"></a></h2><p class="text-muted">CRAN release: 2025-05-09</p>
-<p>This is the second rollout out of three-four major updates, which is now possible due to a multi-year effort of internal re-designs, work with package maintainers, release, and repeat. This release fixes two regressions introduced in future 1.40.0 (2025-04-10), despite passing <a href="https://www.futureverse.org/quality.html" class="external-link">all unit, regression, and system tests</a> of the Future API that we have built up over the years. On the upside, fixing these issues led to a greatly improved static-code analyzer for automatically finding global variables in future expressions. Also, with this release, we can now move on top releasing modern versions of future backends <strong>future.callr</strong> and <strong>future.mirai</strong> that support interrupting futures and near-live progress updates using the <strong>progressr</strong> package. In addition, map-reduce packages such as <strong>future.apply</strong>, <strong>furrr</strong>, and <strong>doFuture</strong> can be updated to take advantage of early exiting on errors via cancellation of futures.</p>
+<p>This is the second rollout out of three-four major updates, which is now possible due to a multi-year effort of internal re-designs, work with package maintainers, release, and repeat. This release fixes two regressions introduced in <strong>future</strong> 1.40.0 (2025-04-10), despite passing <a href="https://www.futureverse.org/quality.html" class="external-link">all unit, regression, and system tests</a> of the Future API that we have built up over the years. On the upside, fixing these issues led to a greatly improved static-code analyzer for automatically finding global variables in future expressions. Also, with this release, we can now move on top releasing modern versions of future backends <strong>future.callr</strong> and <strong>future.mirai</strong> that support interrupting futures and near-live progress updates using the <strong>progressr</strong> package. In addition, map-reduce packages such as <strong>future.apply</strong>, <strong>furrr</strong>, and <strong>doFuture</strong> can be updated to take advantage of early exiting on errors via cancellation of futures.</p>
 <div class="section level3">
 <h3 id="new-features-1-49-0">New Features<a class="anchor" aria-label="anchor" href="#new-features-1-49-0"></a></h3>
 <ul><li><p><code><a href="../reference/future.html">future()</a></code> does a better job in identifying global variables in the future expression. This is achieved by the static-code analysis now walks the abstract syntax tree (AST) of the future expression using a strategy that better emulates how the R engine identifies global variables at run-time.</p></li>
