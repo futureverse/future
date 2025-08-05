@@ -1,5 +1,5 @@
 Package: future
-Version: 1.67.0-9004
+Version: 1.67.0-9005
 Title: Unified Parallel and Distributed Processing in R for Everyone
 Depends:
     R (>= 3.2.0)
@@ -13,7 +13,7 @@ Imports:
 Suggests:
     methods,
     RhpcBLASctl,
-    Rmpi,
+    Rmpi, snow,
     R.rsp,
     markdown
 VignetteBuilder: R.rsp

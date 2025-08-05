@@ -76,7 +76,12 @@ jobs:
           r-version: ${{ matrix.config.r }}
           http-user-agent: ${{ matrix.config.http-user-agent }}
           use-public-rspm: true
-          
+
+      - name: Install system dependencies for Rmpi (OpenMPI)
+        if: runner.os == 'Linux'
+        run: |
+           sudo apt install -y libopenmpi-dev openmpi-bin
+	  
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
           extra-packages: |
