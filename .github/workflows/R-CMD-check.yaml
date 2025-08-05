@@ -157,6 +157,14 @@ jobs:
           )
         shell: Rscript {0}
 
+      - name: Check MPI clusters (not macOS)
+        if: runner.os != 'macOS'
+	env:
+	  NOT_CRAN=true
+        run: |
+	  install.packages(c("Rmpi", "snow"))
+	  future:::testme("mpi")
+
       - name: Upload check results
         if: failure()
         uses: actions/upload-artifact@v4
