@@ -396,7 +396,12 @@ resolveMPI <- local({
           mpi.any.tag <- get("mpi.any.tag", mode = "function", envir = ns,
                              inherits = FALSE)
           resolveMPI <- function(future) {
-            node <- future[["workers"]][[future[["node"]]]]
+            backend <- future[["backend"]]
+	    stopifnot(inherits(backend, "FutureBackend"))
+            workers <- backend[["workers"]]
+	    stopifnot(inherits(workers, "cluster"))
+            node <- workers[[future[["node"]]]]
+	    stopifnot(!is.null(node))
             mpi.iprobe(source = node[["rank"]], comm = node[["comm"]], tag = mpi.any.tag())
           }
         }
