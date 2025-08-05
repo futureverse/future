@@ -32,7 +32,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.67.0-9001</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.67.0-9003</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -512,7 +512,7 @@ e.g.</p>
 <span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>future.globals.onReference <span class="op">=</span> <span class="st">"error"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/plan.html">plan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dbi.r-dbi.org" class="external-link">DBI</a></span><span class="op">)</span></span>
-<span><span class="va">con</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dbi.r-dbi.org/reference/dbConnect.html" class="external-link">dbConnect</a></span><span class="op">(</span><span class="fu">RSQLite</span><span class="fu">::</span><span class="fu"><a href="https://rsqlite.r-dbi.org/reference/SQLite.html" class="external-link">SQLite</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">":memory:"</span><span class="op">)</span></span>
+<span><span class="va">con</span> <span class="op">&lt;-</span> <span class="fu">dbConnect</span><span class="op">(</span><span class="fu">RSQLite</span><span class="fu">::</span><span class="fu">SQLite</span><span class="op">(</span><span class="op">)</span>, <span class="st">":memory:"</span><span class="op">)</span></span>
 <span><span class="va">dummy</span> <span class="op"><a href="../reference/futureAssign.html">%&lt;-%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">con</span><span class="op">)</span></span>
 <span><span class="co">## Error: Detected a non-exportable reference ('externalptr') in one of the globals</span></span>
 <span><span class="co">## ('con' of class 'SQLiteConnection') used in the future expression</span></span></code></pre></div>
@@ -529,7 +529,7 @@ and C++, e.g.</p>
 <span><span class="st">  int i;</span></span>
 <span><span class="st">  for (i = 0; i &lt; *n; i++) x[0] = x[0] + (i+1);</span></span>
 <span><span class="st">"</span></span>
-<span><span class="va">sum_1_to_n</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/inline/man/cfunction.html" class="external-link">cfunction</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/methods/GenericFunctions.html" class="external-link">signature</a></span><span class="op">(</span>n<span class="op">=</span><span class="st">"integer"</span>, x<span class="op">=</span><span class="st">"numeric"</span><span class="op">)</span>, <span class="va">code</span>, language <span class="op">=</span> <span class="st">"C"</span>, convention <span class="op">=</span> <span class="st">".C"</span><span class="op">)</span></span>
+<span><span class="va">sum_1_to_n</span> <span class="op">&lt;-</span> <span class="fu">cfunction</span><span class="op">(</span><span class="fu">signature</span><span class="op">(</span>n<span class="op">=</span><span class="st">"integer"</span>, x<span class="op">=</span><span class="st">"numeric"</span><span class="op">)</span>, <span class="va">code</span>, language <span class="op">=</span> <span class="st">"C"</span>, convention <span class="op">=</span> <span class="st">".C"</span><span class="op">)</span></span>
 <span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu">sum_1_to_n</span><span class="op">(</span><span class="fl">10</span>, <span class="fl">0</span><span class="op">)</span><span class="op">$</span><span class="va">x</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span></span>
 <span><span class="co">## 55</span></span></code></pre></div>
@@ -618,8 +618,8 @@ another R process, e.g.</p>
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://future.futureverse.org">future</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/plan.html">plan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://docs.ropensci.org/magick/" class="external-link">magick</a></span><span class="op">)</span></span>
-<span><span class="va">frink</span> <span class="op">&lt;-</span> <span class="fu">magick</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/magick/reference/editing.html" class="external-link">image_read</a></span><span class="op">(</span><span class="st">"https://jeroen.github.io/images/frink.png"</span><span class="op">)</span></span>
-<span><span class="va">f</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/future.html">future</a></span><span class="op">(</span><span class="fu"><a href="https://docs.ropensci.org/magick/reference/painting.html" class="external-link">image_fill</a></span><span class="op">(</span><span class="va">frink</span>, <span class="st">"orange"</span>, <span class="st">"+100+200"</span>, <span class="fl">20</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">frink</span> <span class="op">&lt;-</span> <span class="fu">magick</span><span class="fu">::</span><span class="fu">image_read</span><span class="op">(</span><span class="st">"https://jeroen.github.io/images/frink.png"</span><span class="op">)</span></span>
+<span><span class="va">f</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/future.html">future</a></span><span class="op">(</span><span class="fu">image_fill</span><span class="op">(</span><span class="va">frink</span>, <span class="st">"orange"</span>, <span class="st">"+100+200"</span>, <span class="fl">20</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">v</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/value.html">value</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span></span>
 <span><span class="co">## Error: Image pointer is dead. You cannot save or cache image objects</span></span>
 <span><span class="co">## between R sessions.</span></span></code></pre></div>
@@ -735,7 +735,7 @@ package, we get errors like:</p>
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://future.futureverse.org">future</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/plan.html">plan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rstudio.github.io/reticulate/" class="external-link">reticulate</a></span><span class="op">)</span></span>
-<span><span class="va">os</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rstudio.github.io/reticulate/reference/import.html" class="external-link">import</a></span><span class="op">(</span><span class="st">"os"</span><span class="op">)</span></span>
+<span><span class="va">os</span> <span class="op">&lt;-</span> <span class="fu">import</span><span class="op">(</span><span class="st">"os"</span><span class="op">)</span></span>
 <span><span class="va">pwd</span> <span class="op"><a href="../reference/futureAssign.html">%&lt;-%</a></span> <span class="va">os</span><span class="op">$</span><span class="fu">getcwd</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">pwd</span></span>
 <span><span class="co">## Error in eval(quote(os$getcwd()), new.env()) :</span></span>
@@ -751,7 +751,7 @@ globals further, we get:</p>
 that we create ourselves as in:</p>
 <div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"def twice(x):\n    return 2*x\n"</span>, file <span class="op">=</span> <span class="st">"twice.py"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rstudio.github.io/reticulate/reference/source_python.html" class="external-link">source_python</a></span><span class="op">(</span><span class="st">"twice.py"</span><span class="op">)</span></span>
+<span><span class="fu">source_python</span><span class="op">(</span><span class="st">"twice.py"</span><span class="op">)</span></span>
 <span><span class="fu">twice</span><span class="op">(</span><span class="fl">1.2</span><span class="op">)</span></span>
 <span><span class="co">## [1] 2.4</span></span>
 <span><span class="va">y</span> <span class="op"><a href="../reference/futureAssign.html">%&lt;-%</a></span> <span class="fu">twice</span><span class="op">(</span><span class="fl">1.2</span><span class="op">)</span></span>
@@ -778,13 +778,13 @@ objects cannot be exported to external R processes.</p>
 <span><span class="fu">.jinit</span><span class="op">(</span><span class="op">)</span> <span class="co">## Initialize Java VM on master</span></span>
 <span></span>
 <span><span class="va">Double</span> <span class="op">&lt;-</span> <span class="fu">J</span><span class="op">(</span><span class="st">"java.lang.Double"</span><span class="op">)</span></span>
-<span><span class="va">d0</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/methods/new.html" class="external-link">new</a></span><span class="op">(</span><span class="va">Double</span>, <span class="st">"3.14"</span><span class="op">)</span></span>
+<span><span class="va">d0</span> <span class="op">&lt;-</span> <span class="fu">new</span><span class="op">(</span><span class="va">Double</span>, <span class="st">"3.14"</span><span class="op">)</span></span>
 <span><span class="va">d0</span></span>
 <span><span class="co">## [1] "Java-Object{3.14}"</span></span>
 <span></span>
 <span><span class="va">f</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/future.html">future</a></span><span class="op">(</span><span class="op">{</span></span>
 <span>  <span class="fu">.jinit</span><span class="op">(</span><span class="op">)</span> <span class="co">## Initialize Java VM on worker</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/methods/new.html" class="external-link">new</a></span><span class="op">(</span><span class="va">Double</span>, <span class="st">"3.14"</span><span class="op">)</span></span>
+<span>  <span class="fu">new</span><span class="op">(</span><span class="va">Double</span>, <span class="st">"3.14"</span><span class="op">)</span></span>
 <span><span class="op">}</span><span class="op">)</span></span>
 <span><span class="va">d1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/value.html">value</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span></span>
 <span><span class="va">d1</span></span>
@@ -795,7 +795,7 @@ is a Java NULL Object. As before, we can catch this by using:</p>
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>future.globals.onReference <span class="op">=</span> <span class="st">"error"</span><span class="op">)</span></span>
 <span><span class="va">f</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/future.html">future</a></span><span class="op">(</span><span class="op">{</span></span>
 <span>  <span class="fu">.jinit</span><span class="op">(</span><span class="op">)</span> <span class="co">## Initialize Java VM on worker</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/methods/new.html" class="external-link">new</a></span><span class="op">(</span><span class="va">Double</span>, <span class="st">"3.14"</span><span class="op">)</span></span>
+<span>  <span class="fu">new</span><span class="op">(</span><span class="va">Double</span>, <span class="st">"3.14"</span><span class="op">)</span></span>
 <span><span class="op">}</span><span class="op">)</span></span>
 <span><span class="co">## Error: Detected a non-exportable reference ('externalptr') in one of the</span></span>
 <span><span class="co">## globals ('Double' of class 'jclassName') used in the future expression</span></span></code></pre></div>
@@ -840,10 +840,10 @@ we do as before;</p>
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://future.futureverse.org">future</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/plan.html">plan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://spark.posit.co/" class="external-link">sparklyr</a></span><span class="op">)</span></span>
-<span><span class="va">sc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/sparklyr/man/spark-connections.html" class="external-link">spark_connect</a></span><span class="op">(</span>master <span class="op">=</span> <span class="st">"local"</span><span class="op">)</span></span>
+<span><span class="va">sc</span> <span class="op">&lt;-</span> <span class="fu">spark_connect</span><span class="op">(</span>master <span class="op">=</span> <span class="st">"local"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"misc"</span>, <span class="st">"exDIF.csv"</span>, package <span class="op">=</span> <span class="st">"utils"</span><span class="op">)</span></span>
-<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/sparklyr/man/spark_read_csv.html" class="external-link">spark_read_csv</a></span><span class="op">(</span><span class="va">sc</span>, <span class="st">"exDIF"</span>, <span class="va">file</span><span class="op">)</span></span>
+<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu">spark_read_csv</span><span class="op">(</span><span class="va">sc</span>, <span class="st">"exDIF"</span>, <span class="va">file</span><span class="op">)</span></span>
 <span><span class="va">d</span> <span class="op"><a href="../reference/futureAssign.html">%&lt;-%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span>
 <span><span class="va">d</span></span>
 <span><span class="co">## Error in unserialize(node$con) :</span></span>
@@ -919,7 +919,7 @@ unmarshal non-exportable <strong>terra</strong> objects, e.g.</p>
 <span id="cb46-9"><a href="#cb46-9" tabindex="-1"></a>dr</span>
 <span id="cb46-10"><a href="#cb46-10" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">90</span> <span class="dv">95</span>  <span class="dv">1</span></span></code></pre></div>
 <p>For more details, see
-<code><a href="https://rspatial.github.io/terra/reference/wrap.html" class="external-link">help("wrap", package = "terra")</a></code>.</p>
+<code>help("wrap", package = "terra")</code>.</p>
 </div>
 <div class="section level4">
 <h4 id="package-udpipe">Package: udpipe<a class="anchor" aria-label="anchor" href="#package-udpipe"></a>
@@ -957,7 +957,7 @@ structures use external pointers. For example,</p>
 <span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/dmlc/xgboost" class="external-link">xgboost</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">agaricus.train</span>, package <span class="op">=</span> <span class="st">"xgboost"</span><span class="op">)</span></span>
-<span><span class="va">train</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/xgboost/man/xgb.DMatrix.html" class="external-link">xgb.DMatrix</a></span><span class="op">(</span><span class="va">agaricus.train</span><span class="op">$</span><span class="va">data</span>, label <span class="op">=</span> <span class="va">agaricus.train</span><span class="op">$</span><span class="va">label</span><span class="op">)</span></span>
+<span><span class="va">train</span> <span class="op">&lt;-</span> <span class="fu">xgb.DMatrix</span><span class="op">(</span><span class="va">agaricus.train</span><span class="op">$</span><span class="va">data</span>, label <span class="op">=</span> <span class="va">agaricus.train</span><span class="op">$</span><span class="va">label</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">train</span><span class="op">)</span></span>
 <span><span class="co">## [1] "xgb.DMatrix"</span></span>
 <span></span>
@@ -991,9 +991,9 @@ another R process, e.g.</p>
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://future.futureverse.org">future</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/plan.html">plan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://www.omegahat.net/RSXML/" class="external-link">XML</a></span><span class="op">)</span></span>
-<span><span class="va">doc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/XML/man/xmlTreeParse.html" class="external-link">xmlParse</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"exampleData"</span>, <span class="st">"tagnames.xml"</span>, package <span class="op">=</span> <span class="st">"XML"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/XML/man/getNodeSet.html" class="external-link">getNodeSet</a></span><span class="op">(</span><span class="va">doc</span>, <span class="st">"/doc//a[@status]"</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
-<span><span class="va">f</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/future.html">future</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/XML/man/xmlGetAttr.html" class="external-link">xmlGetAttr</a></span><span class="op">(</span><span class="va">a</span>, <span class="st">"status"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">doc</span> <span class="op">&lt;-</span> <span class="fu">xmlParse</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"exampleData"</span>, <span class="st">"tagnames.xml"</span>, package <span class="op">=</span> <span class="st">"XML"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">a</span> <span class="op">&lt;-</span> <span class="fu">getNodeSet</span><span class="op">(</span><span class="va">doc</span>, <span class="st">"/doc//a[@status]"</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
+<span><span class="va">f</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/future.html">future</a></span><span class="op">(</span><span class="fu">xmlGetAttr</span><span class="op">(</span><span class="va">a</span>, <span class="st">"status"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/value.html">value</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span></span>
 <span><span class="co">## Error in unserialize(node$con) :</span></span>
 <span><span class="co">##   MultisessionFuture (&lt;none&gt;) failed to receive results from cluster</span></span>
@@ -1008,7 +1008,7 @@ another R process, e.g.</p>
 <p>This is an example, where we end up exporting an
 <code>XMLInternalElementNode</code> object to another R process, where
 it is no longer valid. When we try to use it there by calling
-<code><a href="https://rdrr.io/pkg/XML/man/xmlGetAttr.html" class="external-link">xmlGetAttr()</a></code> on it, <strong>XML</strong> causes R to crash
+<code>xmlGetAttr()</code> on it, <strong>XML</strong> causes R to crash
 and abort. To illustrate what’s going on the parallel workers, if we
 save the object to file using <code>saveRDS(a, "a.rds")</code>, and try
 to use it in <em>another</em> R session, the following happens:</p>
@@ -1041,15 +1041,15 @@ them before working with them there. For example,</p>
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://future.futureverse.org">future</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/plan.html">plan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://www.omegahat.net/RSXML/" class="external-link">XML</a></span><span class="op">)</span></span>
-<span><span class="va">doc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/XML/man/xmlTreeParse.html" class="external-link">xmlParse</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"exampleData"</span>, <span class="st">"tagnames.xml"</span>, package <span class="op">=</span> <span class="st">"XML"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/XML/man/getNodeSet.html" class="external-link">getNodeSet</a></span><span class="op">(</span><span class="va">doc</span>, <span class="st">"/doc//a[@status]"</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
+<span><span class="va">doc</span> <span class="op">&lt;-</span> <span class="fu">xmlParse</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"exampleData"</span>, <span class="st">"tagnames.xml"</span>, package <span class="op">=</span> <span class="st">"XML"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">a</span> <span class="op">&lt;-</span> <span class="fu">getNodeSet</span><span class="op">(</span><span class="va">doc</span>, <span class="st">"/doc//a[@status]"</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
 <span></span>
 <span><span class="co">## Marshall the non-exportable XMLInternalElementNode object</span></span>
-<span><span class="va">.a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/XML/man/xmlSerializeHook.html" class="external-link">xmlSerializeHook</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>      <span class="co">## marshal</span></span>
+<span><span class="va">.a</span> <span class="op">&lt;-</span> <span class="fu">xmlSerializeHook</span><span class="op">(</span><span class="va">a</span><span class="op">)</span>      <span class="co">## marshal</span></span>
 <span></span>
 <span><span class="va">f</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/future.html">future</a></span><span class="op">(</span><span class="op">{</span></span>
-<span>  <span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/XML/man/xmlSerializeHook.html" class="external-link">xmlDeserializeHook</a></span><span class="op">(</span><span class="va">.a</span><span class="op">)</span>  <span class="co">## unmarshal</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/pkg/XML/man/xmlGetAttr.html" class="external-link">xmlGetAttr</a></span><span class="op">(</span><span class="va">a</span>, <span class="st">"status"</span><span class="op">)</span></span>
+<span>  <span class="va">a</span> <span class="op">&lt;-</span> <span class="fu">xmlDeserializeHook</span><span class="op">(</span><span class="va">.a</span><span class="op">)</span>  <span class="co">## unmarshal</span></span>
+<span>  <span class="fu">xmlGetAttr</span><span class="op">(</span><span class="va">a</span>, <span class="st">"status"</span><span class="op">)</span></span>
 <span><span class="op">}</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/value.html">value</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span></span>
 <span><span class="co">## [1] "xyz"</span></span></code></pre></div>
@@ -1062,9 +1062,9 @@ the parallel workers, i.e.</p>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://www.omegahat.net/RSXML/" class="external-link">XML</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">f</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/future.html">future</a></span><span class="op">(</span><span class="op">{</span></span>
-<span>  <span class="va">doc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/XML/man/xmlTreeParse.html" class="external-link">xmlParse</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"exampleData"</span>, <span class="st">"tagnames.xml"</span>, package <span class="op">=</span> <span class="st">"XML"</span><span class="op">)</span><span class="op">)</span></span>
-<span>  <span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/XML/man/getNodeSet.html" class="external-link">getNodeSet</a></span><span class="op">(</span><span class="va">doc</span>, <span class="st">"/doc//a[@status]"</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/pkg/XML/man/xmlGetAttr.html" class="external-link">xmlGetAttr</a></span><span class="op">(</span><span class="va">a</span>, <span class="st">"status"</span><span class="op">)</span></span>
+<span>  <span class="va">doc</span> <span class="op">&lt;-</span> <span class="fu">xmlParse</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"exampleData"</span>, <span class="st">"tagnames.xml"</span>, package <span class="op">=</span> <span class="st">"XML"</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="va">a</span> <span class="op">&lt;-</span> <span class="fu">getNodeSet</span><span class="op">(</span><span class="va">doc</span>, <span class="st">"/doc//a[@status]"</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
+<span>  <span class="fu">xmlGetAttr</span><span class="op">(</span><span class="va">a</span>, <span class="st">"status"</span><span class="op">)</span></span>
 <span><span class="op">}</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/value.html">value</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span></span>
 <span><span class="co">## [1] "xyz"</span></span></code></pre></div>
@@ -1246,11 +1246,11 @@ state. Consider the following example from
 <span></span>
 <span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">20</span><span class="op">)</span></span>
 <span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>N <span class="op">=</span> <span class="fl">20</span>, y <span class="op">=</span> <span class="va">y</span><span class="op">)</span></span>
-<span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/rstan/reference/stan.html" class="external-link">stan</a></span><span class="op">(</span>model_code <span class="op">=</span> <span class="va">code</span>, model_name <span class="op">=</span> <span class="st">"example"</span>,</span>
+<span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu">stan</span><span class="op">(</span>model_code <span class="op">=</span> <span class="va">code</span>, model_name <span class="op">=</span> <span class="st">"example"</span>,</span>
 <span>            data <span class="op">=</span> <span class="va">data</span>, iter <span class="op">=</span> <span class="fl">2012L</span>, chains <span class="op">=</span> <span class="fl">3L</span>,</span>
 <span>            sample_file <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"norm.csv"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">e</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/rstan/reference/stanfit-method-extract.html" class="external-link">extract</a></span><span class="op">(</span><span class="va">fit</span>, permuted <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">e</span> <span class="op">&lt;-</span> <span class="fu">extract</span><span class="op">(</span><span class="va">fit</span>, permuted <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <p>If we would try the last step with a future with strict checking for
 references enabled, we would get an error:</p>
 <div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" tabindex="-1"></a><span class="fu">library</span>(future)</span>
@@ -1266,7 +1266,7 @@ R process, e.g.</p>
 <div class="sourceCode" id="cb68"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>future.globals.onReference <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">e</span> <span class="op"><a href="../reference/futureAssign.html">%&lt;-%</a></span> <span class="fu"><a href="https://mc-stan.org/rstan/reference/stanfit-method-extract.html" class="external-link">extract</a></span><span class="op">(</span><span class="va">fit</span>, permuted <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">e</span> <span class="op"><a href="../reference/futureAssign.html">%&lt;-%</a></span> <span class="fu">extract</span><span class="op">(</span><span class="va">fit</span>, permuted <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">e</span><span class="op">)</span></span>
 <span><span class="co">#&gt;  num [1:1006, 1:3, 1:2] -0.3028 -0.4017 -0.3379 -0.2358 0.0443 ...</span></span>
 <span><span class="co">#&gt;  - attr(*, "dimnames")=List of 3</span></span>
