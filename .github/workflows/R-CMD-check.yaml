@@ -81,7 +81,7 @@ jobs:
         if: runner.os == 'Linux'
         run: |
            sudo apt install -y libopenmpi-dev openmpi-bin
-	  
+  
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
           extra-packages: |
