@@ -164,6 +164,7 @@ jobs:
         run: |
           install.packages(c("Rmpi", "snow"))
           future:::testme("mpi")
+        shell: Rscript {0}
 
       - name: Upload check results
         if: failure()
