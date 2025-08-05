@@ -160,7 +160,7 @@ jobs:
       - name: Check MPI clusters (not macOS)
         if: runner.os != 'macOS'
         env:
-          NOT_CRAN=true
+          NOT_CRAN: true
         run: |
           install.packages(c("Rmpi", "snow"))
           future:::testme("mpi")
