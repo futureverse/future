@@ -1,10 +1,25 @@
 # Version (development version)
 
+This is the fifth rollout out of several towards a near-future major
+release. This has been made possible due to a multi-year effort of
+internal re-designs, work with package maintainers, release, and
+repeat. This release fixes a few more regressions introduced in
+**future** 1.40.0 (2025-04-10) and 1.67.0 (2025-07-29).
+
 ## Bug Fixes
 
  * The `cluster` backend failed when used with an `MPIcluster` as
    created by `parallel::makeCluster(..., type = "MPI")`. This bug was
    introduced in **future** (>= 1.40.0) [2025-04-10].
+
+ * Setting `R_FUTURE_PLAN=multisession` in an Renviron file, or a
+   shell startup script, would result in a "fork bomb" when loading
+   the **future** package. This happened because the setup of the
+   future backend happened eagerly when the **future** package was
+   loaded instead of being deferred to when the first future launched.
+   This resulted in new, nested R workers being created recursively,
+   until the machine ran out of resources. This bug was introduced in
+   **future** (>= 1.67.0) [2025-07-29].
 
 
 # Version 1.67.0 [2025-07-29]
@@ -12,8 +27,8 @@
 This is the fourth rollout out of several towards a near-future major
 release. This has been made possible due to a multi-year effort of
 internal re-designs, work with package maintainers, release, and
-repeat. This release fixes a few more regressions introduced in future
-1.40.0 (2025-04-10).
+repeat. This release fixes a few more regressions introduced in
+**future** 1.40.0 (2025-04-10).
 
 ## Significant Changes
 
@@ -66,9 +81,9 @@ repeat. This release fixes a few more regressions introduced in future
 This is the third rollout out of several towards a near-future major
 release that I am really excited about. This has been made possible
 due to a multi-year effort of internal re-designs, work with package
-maintainers, release, and repeat. This release fixes a few
-regressions introduced in future 1.40.0 (2025-04-10), despite passing
-[all unit, regression, and system
+maintainers, release, and repeat. This release fixes a few regressions
+introduced in **future** 1.40.0 (2025-04-10), despite passing [all
+unit, regression, and system
 tests](https://www.futureverse.org/quality.html).
 
 ## New Features
@@ -142,8 +157,8 @@ tests](https://www.futureverse.org/quality.html).
 This is the second rollout out of three-four major updates, which is
 now possible due to a multi-year effort of internal re-designs, work
 with package maintainers, release, and repeat. This release fixes two
-regressions introduced in future 1.40.0 (2025-04-10), despite passing
-[all unit, regression, and system
+regressions introduced in **future** 1.40.0 (2025-04-10), despite
+passing [all unit, regression, and system
 tests](https://www.futureverse.org/quality.html) of the Future API
 that we have built up over the years. On the upside, fixing these
 issues led to a greatly improved static-code analyzer for

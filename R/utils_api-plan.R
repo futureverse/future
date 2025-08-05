@@ -511,19 +511,21 @@ plan <- local({
     } ## if (init)
     
     ## Initiate future workers?
-    if (init) stack[[1]] <<- plan_init(stack[[1]], debug = debug)
+    if (init) {
+      stack[[1]] <<- plan_init(stack[[1]], debug = debug)
 
-    ## Sanity checks
-    with_assert({
-      nbrOfWorkers <- nbrOfWorkers()
-      if (debug) mdebugf(sprintf("plan(): nbrOfWorkers() = %.0f", nbrOfWorkers))
+      ## Sanity checks
+      with_assert({
+        nbrOfWorkers <- nbrOfWorkers()
+        if (debug) mdebugf(sprintf("plan(): nbrOfWorkers() = %.0f", nbrOfWorkers))
 
-      stop_if_not(
-        is.numeric(nbrOfWorkers), length(nbrOfWorkers) == 1L, 
-        !is.na(nbrOfWorkers), nbrOfWorkers >= 1L
-      )
-    })
-
+        stop_if_not(
+          is.numeric(nbrOfWorkers), length(nbrOfWorkers) == 1L, 
+          !is.na(nbrOfWorkers), nbrOfWorkers >= 1L
+        )
+      })
+    }
+    
     invisible(oldStack)
   } ## plan_set()
 
