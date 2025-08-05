@@ -161,7 +161,7 @@ jobs:
         if: runner.os != 'macOS'
         env:
           NOT_CRAN: true
-	  OMPI_MCA_rmaps_base_oversubscribe: 1
+          OMPI_MCA_rmaps_base_oversubscribe: 1
         run: |
           install.packages(c("Rmpi", "snow"))
           future:::testme("mpi")
