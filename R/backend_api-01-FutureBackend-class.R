@@ -253,33 +253,34 @@ makeFutureBackend <- function(evaluator, ..., debug = FALSE) {
   ## Apply future plan tweaks
   args <- attr(evaluator, "tweaks")
   if (is.null(args)) args <- list()
-
   if (debug) {
     mdebugf("Evaluator tweak arguments: [n=%d]", length(args))
     mstr(args)
   }
 
   args2 <- formals(evaluator)
-  args2[["..."]] <- NULL
-  args2$lazy <- NULL         ## bc multisession; should be removed
-  names2 <- names(args2)
-  if ("envir" %in% names2) {
-    args2[["envir"]] <- NULL
-    names2 <- names(args2)
-  }
+  ## Drop never-used arguments
+  args2$`...` <- NULL
+  args2$envir <- NULL  # legacy
+  args2$lazy <- NULL   # bc multisession; should be removed
   if (debug) {
     mdebugf("Evaluator formal arguments: [n=%d]", length(args2))
-    mstr(args)
-  }
-  for (name in names2) {
-    args[[name]] <- args2[[name]]
-  }
-
-  if (debug) {
-    mdebugf("Backend factory arguments: [n=%d]", length(args2))
     mstr(args2)
   }
-  backend <- do.call(factory, args = args, envir = environment(factory))
+
+  ## Merge tweaked arguments and future-backend evaluator arguments
+  for (name in names(args2)) args[[name]] <- args2[[name]]
+  if (debug) {
+    mdebugf("Arguments passed to the future-backend factory: [n=%d]", length(args))
+    mstr(args)
+  }
+
+  ## Make tweaked arguments and future-backend evaluator arguments
+  ## available when calling the factory function
+  envir <- new.env(parent = environment(factory))
+  for (name in names(args)) envir[[name]] <- args[[name]]
+
+  backend <- do.call(factory, args = args, envir = envir)
   if (debug) mdebugf("Backend: <%s>", commaq(class(backend)))
   stop_if_not(inherits(backend, "FutureBackend"))
   
