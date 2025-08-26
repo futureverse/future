@@ -31,7 +31,7 @@ The **future** package comes with built-in future backends that leverage the **p
 | **[future.callr]**<br> `callr`                    | 📶<br>♻️<br> | parallelly via transient **[callr]** background R sessions on current machine; all memory is returned when as each future is resolved<br>Examples: `plan(callr)` and `plan(callr, workers = 2)`
 | **[future.mirai]**<br> `mirai_multisession`       | 📶<br>♻️<br> | parallelly via **[mirai]** background R sessions on current machine; low latency<br>Examples: `plan(mirai_multisession)` and `plan(mirai_multisession, workers = 2)`
 | **[future.mirai]**<br> `mirai_cluster`            |♻️<br> | parallelly via **[mirai]** daemons running locally or remotely<br>Example: `plan(mirai_cluster)`
-| **[future.batchtools]**<br> `batchtools_lsf`<br>`batchtools_openlava`<br>`batchtools_sge`<br>`batchtools_slurm`<br>`batchtools_torque` | 📶(soon)<br> ♻️(next) | parallelly on HPC job schedulers (Load Sharing Facility [LSF], OpenLava, TORQUE/PBS, Son/Sun/Oracle/Univa Grid Engine [SGE], Slurm) via **[batchtools]**; for long-running tasks; high latency |
+| **[future.batchtools]**<br> `batchtools_lsf`<br>`batchtools_openlava`<br>`batchtools_sge`<br>`batchtools_slurm`<br>`batchtools_torque` | 📶(soon)<br> ♻️<br> | parallelly on HPC job schedulers (Load Sharing Facility [LSF], OpenLava, TORQUE/PBS, Son/Sun/Oracle/Univa Grid Engine [SGE], Slurm) via **[batchtools]**; for long-running tasks; high latency |
 
 📶: futures relay progress updates in real-time, e.g. **[progressr]**<br>
 ♻️: futures are interruptible and restartable; * interrupts are disabled by default<br>
