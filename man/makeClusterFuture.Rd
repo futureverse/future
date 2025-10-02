@@ -84,7 +84,7 @@ for all futures created there on.
 }
 
 \examples{
-\dontshow{if ((getRversion() >= "4.4.0")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if ((getRversion() >= "4.4.0")) withAutoprint(\{ # examplesIf}
 plan(multisession)
 cl <- makeClusterFuture()
 

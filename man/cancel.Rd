@@ -24,7 +24,7 @@ Canceling a lazy or a finished future has no effect.
 Cancels futures, with the option to interrupt running ones.
 }
 \examples{
-\dontshow{if ((interactive() || .Platform[["OS.type"]] != "windows")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if ((interactive() || .Platform[["OS.type"]] != "windows")) withAutoprint(\{ # examplesIf}
 ## Set up two parallel workers
 plan(multisession, workers = 2)
 
