@@ -278,10 +278,10 @@ muffleCondition <- function(cond, pattern = "^muffle") {
   muffled <- FALSE
   if (inherits(cond, "message")) {
     muffled <- grepl(pattern, "muffleMessage")
-    if (muffled) invokeRestart("muffleMessage")
+    if (muffled) tryInvokeRestart("muffleMessage")
   } else if (inherits(cond, "warning")) {
     muffled <- grepl(pattern, "muffleWarning")
-    if (muffled) invokeRestart("muffleWarning")
+    if (muffled) tryInvokeRestart("muffleWarning")
   } else if (inherits(cond, "condition")) {
     if (!is.null(pattern)) {
       ## If there is a "muffle" restart for this condition,
@@ -291,7 +291,7 @@ muffleCondition <- function(cond, pattern = "^muffle") {
         name <- restart[["name"]]
         if (is.null(name)) next
         if (!grepl(pattern, name)) next
-        invokeRestart(restart)
+        tryInvokeRestart(restart)
         muffled <- TRUE
         break
       }

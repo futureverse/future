@@ -36,7 +36,7 @@ attachPackages <- function(packages) {
       }
       NULL
     }, packageStartupMessage = function(m) {
-      invokeRestart("muffleMessage")
+      tryInvokeRestart("muffleMessage")
     })
   }, error = identity)
 } ## attachPackages()
