@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.67.0-9009</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.67.0-9013</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -80,6 +80,10 @@
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="version-development-version">Version (development version)<a class="anchor" aria-label="anchor" href="#version-development-version"></a></h2>
 <p>This is the fifth rollout out of several towards a near-future major release. This has been made possible due to a multi-year effort of internal re-designs, work with package maintainers, release, and repeat. This release fixes a few more regressions introduced in <strong>future</strong> 1.40.0 (2025-04-10) and 1.67.0 (2025-07-29).</p>
+<div class="section level3">
+<h3 id="beta-features-development-version">Beta Features<a class="anchor" aria-label="anchor" href="#beta-features-development-version"></a></h3>
+<ul><li>Calling <code>clusterEvalQ()</code> on a FutureCluster is now an error by default - it used to be just a warning.</li>
+</ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-development-version">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h3>
 <ul><li><p>The <code>cluster</code> backend failed when used with an <code>MPIcluster</code> as created by <code>parallel::makeCluster(..., type = "MPI")</code>. This bug was introduced in <strong>future</strong> (&gt;= 1.40.0) [2025-04-10].</p></li>
