@@ -6,6 +6,11 @@ internal re-designs, work with package maintainers, release, and
 repeat. This release fixes a few more regressions introduced in
 **future** 1.40.0 (2025-04-10) and 1.67.0 (2025-07-29).
 
+## Beta Features
+
+ * Calling `clusterEvalQ()` on a FutureCluster is now an error by
+   default - it used to be just a warning.
+
 ## Bug Fixes
 
  * The `cluster` backend failed when used with an `MPIcluster` as

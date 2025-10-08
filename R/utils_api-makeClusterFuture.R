@@ -1,7 +1,7 @@
 #' Create a Future Cluster of Stateless Workers for Parallel Processing
 #'
 #' _WARNING: Please note that this sets up a stateless set of cluster nodes,
-#' which means that `clusterEvalQ(cl, { a <- 3.14 })` will have no effect.
+#' which means that `clusterEvalQ(cl, { a <- 3.14 })` will not work.
 #' Consider this a first beta version and use it with great care,
 #' particularly because of the stateless nature of the cluster.
 #' For now, I recommend to manually validate that you can get identical
@@ -66,8 +66,6 @@
 #' Exceptions to the latter limitation are `clusterSetRNGStream()`
 #' and `clusterExport()`, which can be safely used with future clusters.
 #' See below for more details.
-#' If `clusterEvalQ()` is called, the call is ignored, and a warning
-#' is produced.
 #'
 #' @section clusterSetRNGStream:
 #' [parallel::clusterSetRNGStream()] distributes "L'Ecuyer-CMRG" RNG
@@ -82,6 +80,11 @@
 #' [parallel::clusterExport()] assign values to the cluster nodes.
 #' Specifically, these values are recorded and are used as globals
 #' for all futures created there on.
+#'
+#' @section clusterEvalQ:
+#' If `clusterEvalQ()` is called, the call is ignored, and an error
+#' is produced. The error can be de-escalated to a warning by setting
+#' R option `future.ClusterFuture.clusterEvalQ` to `"warning"`.
 #'
 #' @aliases FUTURE
 #' @keywords internal
@@ -284,7 +287,7 @@ sendData.FutureNode <- function(node, data) {
         cluster_env[["clusterEvalQs"]] <- clusterEvalQs
   
         ## Warn about ignored clusterEvalQ() call?
-        action <- getOption("future.ClusterFuture.clusterEvalQ", "warning")
+        action <- getOption("future.ClusterFuture.clusterEvalQ", "error")
         if (action != "ignore") {
           cluster <- cluster_env[["cluster"]]
           code <- deparse(expr)
