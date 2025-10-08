@@ -1024,7 +1024,7 @@ getExpression.Future <- local({
 #' @export
 `$<-.Future` <- function(x, name, value) {
   if (name == "state") {
-    if (!is.element(value, c("created", "running", "finished", "failed", "canceled", "interrupted"))) {
+    if (!is.element(value, c("created", "submitted", "running", "finished", "failed", "canceled", "interrupted"))) {
       action <- getOption("future.state.onInvalid", "warning")
       
       if (action != "ignore") {

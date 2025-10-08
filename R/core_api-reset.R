@@ -65,13 +65,14 @@ reset.environment <- function(x, ...) {
 reset.Future <- function(x, ...) {
   future <- x
 
-  if (future[["state"]] == "running") {
+  if (future[["state"]] %in% c("submitted", "running")) {
+    msg <- sprintf("Cannot reset a %s future", future[["state"]])
     backend <- future[["backend"]]
     if (!inherits(backend, "FutureBackend")) {
-      warning(FutureWarning("Cannot reset a running future", future = future))
+      warning(FutureWarning(msg, future = future))
       return(future)
     }
-    stop(FutureError("Cannot reset a running future", future = future))
+    stop(FutureError(msg, future = future))
   }
   
   core_fields <- c(

@@ -659,7 +659,7 @@ value.list <- function(x, idxs = NULL, recursive = 0, reduce = NULL, stdout = TR
         ## so that future can be resolved in the asynchronously
         if (inherits(obj, "Future")) {
           ## Lazy future that is not yet launched?
-          if (obj[["state"]] == 'created') obj <- run(obj)
+          if (obj[["state"]] == "created") obj <- run(obj)
           
           if (!resolved(obj)) {
             next
