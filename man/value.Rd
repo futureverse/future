@@ -145,10 +145,10 @@ vs <- unlist(vs)
 message("The ten averages are: ", paste(vs, collapse = ", "))
 
 ## The values as a vector (by reducing)
-vs <- value(fs, reduce = `c`)
+vs <- value(fs, reduce = c)
 message("The ten averages are: ", paste(vs, collapse = ", "))
 
 ## Calculate the sum of the averages (by reducing)
-total <- value(fs, reduce = `sum`)
+total <- value(fs, reduce = `+`)
 message("The sum of the ten averages is: ", total)
 }
