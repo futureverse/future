@@ -1,5 +1,10 @@
 # Version (development version)
 
+## Significant Changes
+
+ * Now `cancel()` always invalidates the future, including if it was
+   not started or already has been resolved.
+ 
 ## New Features
 
  * Add `conditionMessage()` for `FutureCondition`, which appends

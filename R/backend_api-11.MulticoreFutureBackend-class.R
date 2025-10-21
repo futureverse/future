@@ -375,7 +375,7 @@ result.MulticoreFuture <- local({
 
     ## NOTE: mccollect() produces a "1 parallel job did not deliver a result"
     ## warning, if the parallel worker has been interrupted and terminated.
-    if (future[["state"]] %in% c("canceled", "interrupted")) {
+    if ("interrupt" %in% future[["actions"]]) {
       result <- suppressWarnings(mccollect(jobs = jobs, wait = TRUE)[[1L]])
     } else {
       result <- mccollect(jobs = jobs, wait = TRUE)[[1L]]
@@ -413,13 +413,17 @@ result.MulticoreFuture <- local({
 
         ## HEURISTICS: If the forked process is no longer alive, assume it was interrupted
         if (is.numeric(pid) && !is.na(alive) && !alive) {
-          future[["state"]] <- "interrupted"
+          if ("interrupt" %in% future[["actions"]]) {
+            future[["state"]] <- "finished"
+          } else {
+            future[["state"]] <- "failed"
+          }
         }
 
-        if (future[["state"]] %in% c("canceled", "interrupted")) {
+        if ((future[["state"]] %in% c("finished") && ("interrupt" %in% future[["actions"]]))) {
           if (debug) mdebugf("Detected interrupted %s whose result cannot be retrieved", sQuote(class(future)[1]))
           msg <- sprintf("A future (%s) of class %s was interrupted, while running on localhost (pid %d)", label, class(future)[1], pid)
-          if (future[["state"]] %in% "canceled") {
+          if ("canceled" %in% future[["actions"]]) {
             result <- FutureCanceledError(msg, future = future)
           } else {
             result <- FutureInterruptError(msg, future = future)
@@ -439,7 +443,7 @@ result.MulticoreFuture <- local({
 
         pid_info <- if (is.numeric(pid)) sprintf("PID %.0f", pid) else NULL
         info <- pid_info
-        msg <- sprintf("Failed to retrieve the result of %s (%s) from the forked worker (on localhost; %s)", class(future)[1], label, info)
+        msg <- sprintf("Failed to retrieve the result of %s (%s) in state %s (actions %s) from the forked worker (on localhost; %s)", class(future)[1], label, sQuote(future[["state"]]), commaq(future[["actions"]]), info)
   
         if (identical(result, structure("fatal error in wrapper code", class = "try-error"))) {
           msg <- c(msg, sprintf("Error %s was reported by the 'parallel' package, which could be because the forked R process that evaluates the future was terminated before it was completed", sQuote(result)))
@@ -477,7 +481,7 @@ result.MulticoreFuture <- local({
         ex <- FutureError(msg, future = future) 
       } else if (inherits(result, "FutureInterruptError")) {
         ex <- result
-        future[["state"]] <- "interrupted"
+        future[["state"]] <- "finished"
       } else if (inherits(result, "FutureLaunchError")) {
         ex <- result
         future[["state"]] <- "failed"
@@ -590,7 +594,6 @@ interruptFuture.MulticoreFutureBackend <- function(backend, future, ...) {
   job <- future[["job"]]
   pid <- job[["pid"]]
   void <- tools::pskill(pid)
-  future[["state"]] <- "interrupted"
   
   future
 }

@@ -39,6 +39,7 @@ signalConditions <- function(future, include = "condition", exclude = NULL, resi
   }
 
   result <- result(future)
+  if (!inherits(result, "FutureResult")) utils::str(list(result = result))
   stop_if_not(inherits(result, "FutureResult"))
 
   conditions <- result[["conditions"]]
@@ -102,7 +103,7 @@ signalConditions <- function(future, include = "condition", exclude = NULL, resi
       }
       stop(condition)
     } else if (inherits(condition, "interrupt")) {
-      future[["state"]] <- "interrupted"
+      future[["state"]] <- "finished"
       label <- sQuoteLabel(future)
       result <- future[["result"]]
       when <- result[["finished"]]

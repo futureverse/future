@@ -367,8 +367,6 @@ interruptFuture.ClusterFutureBackend <- function(backend, future, ...) {
     void <- suppressWarnings(killNode(node))
   })
   
-  future[["state"]] <- "interrupted"
-  
   future
 }
 
@@ -653,6 +651,11 @@ resolved.ClusterFuture <- function(x, run = TRUE, timeout = NULL, ...) {
       future <- handleInterruptedFuture(backend, future = future)
       return(TRUE)
     }
+
+    if (!isValid && "interrupt" %in% future[["actions"]]) {
+      future[["state"]] <- "finished"
+      return(TRUE)
+    }
     
     assertValidConnection(future)
 
@@ -770,7 +773,7 @@ result.ClusterFuture <- function(future, ...) {
   if (!is.null(con <- node[["con"]])) {
     ## Broken connection due to interruption?
     isValid <- isConnectionValid(con)
-    if (!isValid && future[["state"]] %in% c("canceled", "interrupted", "running")) {
+    if (!isValid && future[["state"]] %in% c("canceled", "interrupted", "running", "finished")) {
       ## Did it fail because we interrupted a future, which resulted in the
       ## worker also shutting done? If so, turn the error into a run-time
       ## FutureInterruptError and revive the worker
@@ -1448,7 +1451,7 @@ assertValidConnection <- function(future) {
   isValid <- isConnectionValid(con)
   if (!isValid) {
     ex <- simpleError("Connection to the worker is corrupt")
-    msg <- post_mortem_cluster_failure(ex, when = "receiving message from", node = node, future = future)
+    msg <- post_mortem_cluster_failure(ex, when = "receive message from", node = node, future = future)
     stop(FutureError(msg, future = future))
   }
 } ## assertValidConnection()
@@ -1504,7 +1507,7 @@ handleInterruptedFuture <- local({
     }
 
     state <- future[["state"]]
-    stop_if_not(state %in% c("canceled", "interrupted", "running"))
+    stop_if_not(state %in% c("canceled", "interrupted", "running", "finished"))
   
     label <- sQuoteLabel(future)
     workers <- backend[["workers"]]
@@ -1514,7 +1517,11 @@ handleInterruptedFuture <- local({
     host <- node[["host"]]
     event <- if (state %in% "running") {
       event <- sprintf("failed for unknown reason while %s", state)
-      future[["state"]] <- "interrupted"
+      if ("interrupted" %in% future[["actions"]]) {
+        future[["state"]] <- "finished"
+      } else {
+        future[["state"]] <- "failed"
+      }
     } else {
       event <- sprintf("was %s", state)
     }

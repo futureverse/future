@@ -363,7 +363,8 @@ print.Future <- function(x, ...) {
       msg
     },
     finished = {
-      stop_if_not(inherits(result, "FutureResult"))
+      if (!inherits(result, "FutureResult")) utils::str(list(result = result))
+#      stop_if_not(inherits(result, "FutureResult"))
       
       if ("cancel" %in% actions) {
         if ("interrupt" %in% actions) {
@@ -976,23 +977,26 @@ getExpression.Future <- local({
 #  4. `finished`:
 #     The evaluation of the future has completed.
 #     Examples:
-#       A future submitted to a queue may be in this state.
+#       A future evaluated without producing a run-time error.
+#       A future evaluated and produced a run-time error.
+#       A future evaluated but was interrupted.
 #
 #  5. `failed`:
 #     The evaluation of the future has terminated, but failed before being
-#     completed.
+#     completed. Note, this state is _not_ for futures producing a run-time
+#     error when evaluated; those are still considered 'finished'.
 #     Examples:
 #       A future that failed to launch.
 #       An internal error occured while evaluating the future.
 #       An internal error occured after finishing future evaluation, but
 #       before return the results.
 #
-#  6. `interrupted`:
+#  6. `interrupted` (DEPRECATED):
 #     The evaluation of the future has terminated, but was interrupted before
 #     being completed.
 #     Examples:
 #
-#  7. `canceled`:
+#  7. `canceled` (DEPRECATED):
 #     The evaluation of the future has terminated, but was canceled.
 #     Examples:
 #

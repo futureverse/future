@@ -76,18 +76,45 @@ drop_future <- function(future) {
 #' @rdname value
 #' @export
 value.Future <- function(future, stdout = TRUE, signal = TRUE, drop = FALSE, ...) {
+  state <- future[["state"]]
   debug <- isTRUE(getOption("future.debug"))
   if (debug) {
     mdebugf_push("value() for %s (%s) ...", class(future)[1], sQuoteLabel(future))
+    mdebugf("state: %s", sQuote(state))
+    mdebugf("stdout: %s", sQuote(stdout))
+    mdebugf("signal: %s", sQuote(signal))
+    mdebugf("drop: %s", sQuote(drop))
     on.exit(mdebugf_pop())
   }
   
-  if (future[["state"]] == "created") {
+  if (state == "created") {
     future <- run(future)
   }
 
   result <- result(future)
+  if (!inherits(result, "FutureResult")) utils::str(list(result = result))
   stop_if_not(inherits(result, "FutureResult"))
+
+  ## Was future canceled?
+  if (state %in% c("canceled")) {
+    conditions <- result[["conditions"]]
+    n <- length(conditions)
+    if (n > 0) {
+      condition <- conditions[[n]]
+      cond <- condition[["condition"]]
+    } else {
+      cond <- NULL
+    }
+    if (!inherits(cond, "FutureInterruptError")) {
+      msg <- sprintf("Future in state %s was canceled on host %s at %s", sQuote(state), sQuote(Sys.info()[["nodename"]]), format(Sys.time()))
+      error <- FutureInterruptError(msg, future = future)
+      condition <- list(condition = error, signaled = 0L)
+      conditions[[n + 1]] <- condition
+      result[["conditions"]] <- conditions
+      future[["result"]] <- result
+    }
+    future[["state"]] <- state
+  }
 
   value <- result[["value"]]
   visible <- result[["visible"]]
@@ -360,14 +387,13 @@ value.Future <- function(future, stdout = TRUE, signal = TRUE, drop = FALSE, ...
   if (debug) mdebugf_pop()
 
 
-
   ## Signal captured conditions?
   conditions <- result[["conditions"]]
   if (length(conditions) > 0) {
     if (signal) {
       if (debug) {
         mdebugf_push("relay conditions ...")
-        mdebugf("Future state: %s", sQuote(future[["state"]]))
+        mdebugf("Future state: %s", sQuote(state))
       }
       ## Will signal an (eval) error, iff exists
 

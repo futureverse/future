@@ -18,6 +18,7 @@ signalEarly <- function(future, collect = TRUE, .signalEarly = TRUE, ...) {
   }
   
   result <- result(future)
+  if (!inherits(result, "FutureResult")) utils::str(list(result = result))
   stop_if_not(inherits(result, "FutureResult"))
   
   conditions <- result[["conditions"]]

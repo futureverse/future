@@ -17,11 +17,11 @@ future backend supports it.}
 \value{
 \code{cancel()} returns (invisibly) the canceled \link{Future}s after
 flagging them as "canceled" and possibly interrupting them as well.
-
-Canceling a lazy or a finished future has no effect.
 }
 \description{
 Cancels futures, with the option to interrupt running ones.
+A future can be canceled regardless of it is resolved or not.
+Calling \code{value()} on a canceled future throws a \link{FutureInterruptError}.
 }
 \examples{
 \dontshow{if ((interactive() || .Platform[["OS.type"]] != "windows")) withAutoprint(\{ # examplesIf}
