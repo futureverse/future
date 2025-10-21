@@ -642,6 +642,9 @@ result <- function(future, ...) {
 #' @param \ldots Not used.
 #'
 #' @return The [FutureResult] object.
+#' It may signal a [FutureError], if there is a significant orchestration
+#' error. For example, if the parallel worker process terminated abruptly
+#' ("crashed"), then a [FutureInterruptError] is signaled.
 #'
 #' @details
 #' This function is only part of the _backend_ Future API.
