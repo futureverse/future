@@ -26,11 +26,12 @@ repeat. This release fixes a few more regressions introduced in
    until the machine ran out of resources. This bug was introduced in
    **future** (>= 1.67.0) [2025-07-29].
 
- * `value(..., reduce = structure(`+`, init = 42))` is not supported,
-   because `+` is a primitive function and one must not set attributes
-   on primitive functions. `value()` detects this and produces an
-   error suggestion to use `reduce = structure("+", init = 42)`
-   instead. The latter still gave the same error, which is now fixed.
+ * ``value(..., reduce = structure(`+`, init = 42))`` is not
+   supported, because `` `+` `` is a primitive function and one must
+   not set attributes on primitive functions. `value()` detects this
+   and produces an error suggestion to use `reduce = structure("+",
+   init = 42)` instead. The latter still gave the same error, which is
+   now fixed.
 
 
 # Version 1.67.0 [2025-07-29]
