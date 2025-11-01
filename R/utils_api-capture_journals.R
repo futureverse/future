@@ -8,13 +8,13 @@
 #'
 #' @details
 #' This function evaluates an R expression and capture the journals
-#' signaled by futures as they are completed. A future [journal] comprise
+#' signaled by futures as they are completed. A future journal comprise
 #' a log of events appearing during the life-span of a future, e.g.
 #' the timestamps when the future was created, launched, queried,
 #' resolved, and its results are collected.
 #'
 #' @return
-#' A list of \link[=journal]{FutureJournal}:s.
+#' A list of `FutureJournal`:s.
 #'
 #' @example incl/capture_journals.R
 #'
