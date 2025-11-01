@@ -60,7 +60,13 @@ for (strategy in strategies) {
     f <- cancel(f)
   }
 
-  message("  Create another future")
+  message("  Create another canceled future")
+  f <- future({ Sys.sleep(0.5); 42 })
+  f <- cancel(f)
+  v <- tryCatch(value(f), FutureInterruptError = identity)
+  stopifnot(is.numeric(v) || inherits(v, "FutureInterruptError"))
+
+  message("  Create yet another future")
   ## Create another future
   f <- future(42)
   v <- value(f)

@@ -775,7 +775,11 @@ result.ClusterFuture <- function(future, ...) {
       ## worker also shutting done? If so, turn the error into a run-time
       ## FutureInterruptError and revive the worker
       future <- handleInterruptedFuture(backend, future = future)
-      return(future)
+      stop_if_not(inherits(future, "Future"))
+      result <- future[["result"]]
+      if (inherits(result, "FutureError")) stop(result)
+      stop_if_not(inherits(future, "FutureResult"))
+      return(result)
     }
     assertValidConnection(future)
   }

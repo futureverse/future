@@ -13,6 +13,9 @@ repeat. This release fixes a few more regressions introduced in
 
 ## Bug Fixes
 
+ * `result()` on a canceled and interrupted cluster future returned
+   the future instead of producing a FutureInterruptError.
+
  * The `cluster` backend failed when used with an `MPIcluster` as
    created by `parallel::makeCluster(..., type = "MPI")`. This bug was
    introduced in **future** (>= 1.40.0) [2025-04-10].
