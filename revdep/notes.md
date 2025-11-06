@@ -38,12 +38,12 @@ their examples or tests require a working internet connection:
 * BatchGetSymbols
 * datapackage.r
 * GetBCBData
+* greenSD
 * GSODR
 * hackeRnews
 * iml
 * tableschema.r
 * tsfeatures
-
 
 ### Packages that fail if tested in parallel
 
@@ -54,5 +54,16 @@ processes are writing to it at the same time.
 
 * ...
 
+Also, the following packages fail on hosts with many CPUs, because
+they use detectCores() or more workers than there are connections:
 
+* ale
+* dar
+* fmeffects
+* FracFixR
+* gtfs2emis
+* gtfs2gps
+* signeR
+* simIDM
+* uci
 
