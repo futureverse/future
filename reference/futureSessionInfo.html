@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.67.0-9018</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.67.0-9019</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -110,13 +110,18 @@ and validate their information.</p></dd>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="plan.html">plan</a></span><span class="op">(</span><span class="va">multisession</span>, workers <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">futureSessionInfo</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> *** Package versions</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> future 1.67.0.9018, parallelly 1.45.1.9009, parallel 4.5.2, globals 0.18.0, listenv 0.9.1</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> future 1.67.0.9019, parallelly 1.45.1.9011, parallel 4.5.2, globals 0.18.0, listenv 0.10.0</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> *** Allocations</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> availableCores():</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>            system /proc/self/status             nproc </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>                 8                 8                 8 </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>                system     /proc/self/status                 nproc </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>                     8                     8                     8 </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> _R_CHECK_LIMIT_CORES_ </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>                     2 </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> availableWorkers():</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> $`_R_CHECK_LIMIT_CORES_`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [1] "localhost" "localhost"</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> $nproc</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> [1] "localhost" "localhost" "localhost" "localhost" "localhost" "localhost"</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> [7] "localhost" "localhost"</span>
@@ -147,19 +152,19 @@ and validate their information.</p></dd>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> *** Basic tests</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Main R session details:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>     pid     r sysname           release</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 1 69078 4.5.2   Linux 6.14.0-34-generic</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>      pid     r sysname           release</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 1 272565 4.5.2   Linux 6.14.0-35-generic</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>                                                            version nodename</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 1 #34~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Tue Sep 23 15:35:20 UTC 2  host001</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 1 #35~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Tue Oct 14 13:55:17 UTC 2  host001</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   machine   login    user effective_user</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 1  x86_64 user001 user001        user001</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Worker R session details:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   worker   pid     r sysname           release</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 1      1 71760 4.5.2   Linux 6.14.0-34-generic</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 2      2 71761 4.5.2   Linux 6.14.0-34-generic</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   worker    pid     r sysname           release</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 1      1 273396 4.5.2   Linux 6.14.0-35-generic</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2      2 273395 4.5.2   Linux 6.14.0-35-generic</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>                                                            version nodename</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 1 #34~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Tue Sep 23 15:35:20 UTC 2  host001</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 2 #34~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Tue Sep 23 15:35:20 UTC 2  host001</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 1 #35~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Tue Oct 14 13:55:17 UTC 2  host001</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2 #35~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Tue Oct 14 13:55:17 UTC 2  host001</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   machine   login    user effective_user</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 1  x86_64 user001 user001        user001</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 2  x86_64 user001 user001        user001</span>
@@ -176,7 +181,7 @@ and validate their information.</p></dd>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3</p> and <a href="https://github.com/HenrikBengtsson/pkgdown.extras/">pkgdown.extras</a> 0.0.0.9007.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0</p> and <a href="https://github.com/HenrikBengtsson/pkgdown.extras/">pkgdown.extras</a> 0.0.0.9007.</p>
 </div>
 
     </footer></div>

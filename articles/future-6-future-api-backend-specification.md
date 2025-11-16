@@ -1,0 +1,265 @@
+# A Future for R: Future API Backend Specification
+
+## Future API Backend Specification
+
+Version 0.1.9-9000
+
+*WARNING: Starting with **future** 1.40.0 (2025-04-10), we are migrating
+to a new way to write future backends. This is work in progress, so some
+of the below is subject to change for the next few release cycles.*
+
+### Introduction
+
+This document is written to serve as a reference for developers who are
+developing a future backend to the future framework as implemented in
+the **[future](https://future.futureverse.org)** package for R that
+available on CRAN. The Future Application Programming Interface (API)
+has three fundamental functions at its core:
+
+- `f <- future(expr)` - create a future from an R expression
+  (non-blocking but may be blocking)
+
+- `r <- resolved(f)` - check whether a future is resolved or not
+  (non-blocking)
+
+- `v <- value(f)` - retrieve the value of a future (blocking)
+
+With these three functions alone, it is possible to evaluate one or more
+R expressions synchronously and asynchronously. How and where these
+expressions are resolved depends on which “future backend” is in use.
+For example, one backend may evaluated the expressions sequentially
+(synchronously) while another may evaluated them in parallel
+(asynchronously). Regardless of backend, the value of a future
+expression is always the same.
+
+It is fundamental to the future ecosystem that all future backends
+conform to the Future API specification. Conformance serves as a
+guarantor of correctness and behavior for both the developer who use
+futures in their software as well as the end-user of their software. A
+future backend that meets the requirements can be used in any software
+that use futures internally.
+
+For example, the above three functions serve as building blocks in
+several higher-level map-reduce APIs. One example is the
+**[future.apply](https://future.apply.futureverse.org)** package on CRAN
+that provides
+[`future_lapply()`](https://future.apply.futureverse.org/reference/future_lapply.html),
+which is a futurized version of
+[`lapply()`](https://rdrr.io/r/base/lapply.html) available in the
+**base** package. This function can be used to perform the lapply-like
+processing in parallel using a parallel backend. The implementation of
+the **future.apply** package is 100% invariant to the parallel backend
+used. This is possible because all future backends conform to a set of
+rules. Rules that are documented below.
+
+A supplement to the specification herein is the ‘Test Suite for Future
+API Backends’, which consists of a set of tests that can be used to
+validated that a future backend meets the minimal requirements of the
+Future API. These tests run from the command-line, from the R prompt, or
+as part of the package tests of a backend package. This test suite is
+documented and implemented in the
+**[future.tests](https://future.tests.futureverse.org)** package
+available on CRAN.
+
+### Feedback
+
+If you find that something in this document to be missing, unclear, or
+faulty, please report your feedback using the official issue tracker for
+the **future** package at <https://github.com/futureverse/future>. If
+you have feedback that is specific to the test suite, please use the
+official issue tracker for the **future.tests** package at
+<https://github.com/futureverse/future.tests>.
+
+### Overview of the Future API
+
+The Future API has three fundamental functions at its core:
+
+- `f <- future(expr)` - create a future from an R expression
+  (non-blocking but may be blocking)
+
+- `r <- resolved(f)` - check whether a future is resolved or not
+  (non-blocking)
+
+- `v <- value(f)` - retrieve the value of a future (blocking)
+
+The implementation of a future backend for these involves several steps.
+For simplicity, lets say we call our future backend ‘myparallel’. As a
+broad summary, a future backend needs to implement the following
+components:
+
+- A `myparallel` function that inherits class `future`. This function
+  must never be called - it is used as a no-op placeholder for setting
+  the future backend via
+  [`plan()`](https://future.futureverse.org/reference/plan.md).
+
+- A `MyParallelFutureBackend` function that returns and an object of
+  class `MyParallelFutureBackend` inheriting the `FutureBackend`. This
+  function should be set as attribute `factory` for the above
+  `myparallel` function.
+
+- A
+  [`launchFuture()`](https://future.futureverse.org/reference/FutureBackend-class.md)
+  method for the `MyParallelFutureBackend` class taking arguments
+  `backend` and `future`. This method is responsible for starting the
+  concurrent evaluation of the `Future` object and returning it as an
+  instance of class `MyParallelFuture` inheriting the `Future` class.
+  This method is often non-blocking for parallel backends, but may be
+  blocking if all compute resources are exhausted. It is typically
+  blocking for sequential backends.
+
+- An S3 method of
+  [`resolved()`](https://future.futureverse.org/reference/resolved.md)
+  for `MyParallelFuture` that, in a non-blocking fashion, returns `TRUE`
+  if the future is resolved and `FALSE` if not.
+
+- An S3 method of
+  [`result()`](https://future.futureverse.org/reference/result.md) for
+  `MyParallelFuture` that returns a `FutureResult` object (as defined by
+  the **[future](https://future.futureverse.org)** package) when the
+  future is resolved or otherwise fails to resolve. If the future is not
+  yet resolved, this method should block until the future is resolved.
+
+With this in place, the selection of using this backend as the future
+plan, will be done as `plan(myparallel)` with the option of specifying
+certain arguments to be passed to `myparallel()`. With the plan set, a
+call to `f <- future(expr)` will then launch the evaluation of the
+future via the
+[`launchFuture()`](https://future.futureverse.org/reference/FutureBackend-class.md)
+method for the current set future backend and return then launch the
+future now inheriting `MyParallelFuture`. When calling `resolved(f)` to
+query whether the future expression is resolved or not, the underlying
+S3 method for this class will then check in with the parallel worker
+whether the expression is resolved or not. When calling `value(f)`, the
+S3 method for the `Future` class calls `result(f)`, which will return
+the `FutureResult` object for this future. If the future is not yet
+resolved, this call will block until it is. If no errors occurred while
+resolving the future expression, then `value(f)` will return the value
+of the expression, which is recorded by the backend in the
+`FutureResult` object. If there was an evaluation error, then `value(f)`
+will resignal (“relayed”) that error. Any captured conditions or
+standard output will also be relayed at this point.
+
+### Requirements for the backend Future API
+
+This section describes in detail what the requirements of the above four
+components are. The requirements are given as a continuation of the
+above ‘myparallel’ example. If otherwise not specified, all functions
+mentioned below are from the
+**[future](https://future.futureverse.org)** package.
+
+#### Constructor function creating a Future
+
+The place-holder function `myparallel()` that is used by
+[`plan()`](https://future.futureverse.org/reference/plan.md) must
+inherits from class `future` such that `inherits(myparallel, "future")`
+is true. It must also have attribute `factory` set to the corresponding
+`FutureBackend` function, i.e. `MyParallelFutureBackend`.
+
+#### launchFuture() method of the FutureBackend class
+
+An S3 method
+[`launchFuture()`](https://future.futureverse.org/reference/FutureBackend-class.md)
+for `MyParallelFutureBackend` that takes a `FutureBackend` object as its
+first argument and a `Future` object as the second is required. It
+should accept additional arguments via `...`, which are currently not
+used.
+
+The
+[`launchFuture()`](https://future.futureverse.org/reference/FutureBackend-class.md)
+method should invisibly return the `Future` object of desired class,
+e.g. `MyParallelFuture`.
+
+The
+[`launchFuture()`](https://future.futureverse.org/reference/FutureBackend-class.md)
+method is responsible for evaluation the `Future` object. The evaluation
+of the future expression should respect any global variables in the
+`FutureGlobals` object returned by `globals()` with the `Future` object
+as the first argument. The evaluation should also respect any package
+names returned by `packages()` with the `Future` object as the first
+argument.
+
+If the backend provides parallel processing, then
+[`launchFuture()`](https://future.futureverse.org/reference/FutureBackend-class.md)
+should return the future as soon as possible and without waiting for it
+to be resolved. If all workers are occupied, then
+[`launchFuture()`](https://future.futureverse.org/reference/FutureBackend-class.md)
+is responsible for waiting until a worker becomes available and then
+launch the future on that worker and immediatedly return the future.
+
+The
+[`launchFuture()`](https://future.futureverse.org/reference/FutureBackend-class.md)
+method may produce an error of class `FutureError` in case it fails to
+launch the future on the worker or the worker has terminated
+unexpectedly.
+
+The
+[`launchFuture()`](https://future.futureverse.org/reference/FutureBackend-class.md)
+method must not update the RNG state.
+
+#### resolved() method for the Future class
+
+An S3 method
+[`resolved()`](https://future.futureverse.org/reference/resolved.md) for
+`MyParallelFuture` that takes a `Future` object as its first argument
+and return either `TRUE` or `FALSE` is required. It should accept
+additional arguments via `...`, which are currently not used.
+
+The method may be called zero or more times.
+
+The method should return `FALSE` as long as the future is unresolved. It
+may also return `FALSE` if it fail to establish the state of the future
+within a reasonable time period (“timeout”). It should return `TRUE` as
+soon as it can be established that the future is resolved. After it has
+returned `TRUE` once, any succeeding calls should return `TRUE`.
+
+If [`resolved()`](https://future.futureverse.org/reference/resolved.md)
+is called on a future that yet has not been launched, it should launch
+the future by calling
+[`run()`](https://future.futureverse.org/reference/run.md). This is the
+only occasion when
+[`resolved()`](https://future.futureverse.org/reference/resolved.md) may
+block. In all other cases, it should return promptly.
+
+The [`resolved()`](https://future.futureverse.org/reference/resolved.md)
+method may produce `FutureError` error as created by
+[`FutureError()`](https://future.futureverse.org/reference/FutureCondition.md)
+in case communication with the worker has broken down or the worker has
+terminated unexpectedly.
+
+The [`resolved()`](https://future.futureverse.org/reference/resolved.md)
+method must not update the RNG state.
+
+#### result() method for the Future class
+
+An S3 method
+[`result()`](https://future.futureverse.org/reference/result.md) for
+`MyParallelFuture` that takes a `Future` object as its first argument
+and return a `FutureResult` object is required. It should accept
+additional arguments via `...`, which are currently not used.
+
+The method may be called zero or more times.
+
+If [`result()`](https://future.futureverse.org/reference/result.md) is
+called on a future that yet has not been launched, it should launch the
+future by calling
+[`run()`](https://future.futureverse.org/reference/run.md).
+
+If [`result()`](https://future.futureverse.org/reference/result.md) is
+called on a future that is not yet resolved, it should block until the
+future is resolved.
+
+The value of
+[`result()`](https://future.futureverse.org/reference/result.md) should
+be the value from evaluating the
+[`getExpression()`](https://future.futureverse.org/reference/getExpression.md)
+expression that
+[`run()`](https://future.futureverse.org/reference/run.md) launched.
+
+The [`result()`](https://future.futureverse.org/reference/result.md)
+method may produce `FutureError` error as created by
+[`FutureError()`](https://future.futureverse.org/reference/FutureCondition.md)
+in case communication with the worker has broken down or the worker has
+terminated unexpectedly.
+
+The [`result()`](https://future.futureverse.org/reference/result.md)
+method must not update the RNG state.

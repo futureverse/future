@@ -1,0 +1,85 @@
+# A Future for R: Controlling Default Future Strategy
+
+The default is to use synchronous futures, but this *default* can be
+overridden via R options, system environment variables and command-line
+options as explained below as well as in
+[`help("future.options", package = "future")`](https://future.futureverse.org/reference/zzz-future.options.md).
+
+## R options
+
+The default future backend can be controlled via R option `future.plan`.
+For instance, if we add
+
+``` r
+
+options(future.plan = "multisession")
+```
+
+to our `~/.Rprofile` startup script, the **future** package will resolve
+futures in parallel (asynchronously using all available cores), i.e.
+
+``` sh
+$ Rscript -e "class(future::plan())"
+[1] "multisession" "future"       "function"
+```
+
+Option `future.plan` is ignored if command-line option `--parallel`
+(`-p`) is specified.
+
+## Environment variables
+
+An alternative to using
+[`options()`](https://rdrr.io/r/base/options.html) for setting option
+`future.plan` is to specify system environment variable `R_FUTURE_PLAN`.
+If set, then the future package will set `future.plan` accordingly *when
+loaded*. For example,
+
+``` sh
+$ export R_FUTURE_PLAN=multisession
+$ Rscript -e "class(future::plan())"
+[1] "multisession" "future"       "function"
+```
+
+Environment variable `R_FUTURE_PLAN` is ignored if either option
+`future.plan` or command-line option `--parallel` (`-p`) is specified.
+
+## Command-line options
+
+When loaded, the **future** package checks for the command-line option
+`--parallel=ncores` (short `-p ncores`) and sets the future backend (via
+option `future.plan`) and the number of available cores (via option
+`mc.cores`) accordingly. This provides a convenient mechanism for
+specifying parallel future processing from the command line. For
+example, if we start R with
+
+``` sh
+$ R --quiet --args --parallel=2
+```
+
+then future will interpret this as we wish to resolve futures in
+parallel using 2 cores. More specifically, we get that
+
+``` r
+> availableCores()
+mc.cores
+       2
+> class(future::plan())
+[1] "FutureStrategy" "tweaked"        "multisession"   "future"         "function"
+```
+
+We can use this command-line option also with `Rscript`, which provides
+a convenient mechanism for launching future-enhanced R scripts such that
+they run in parallel, e.g.
+
+``` sh
+$ Rscript analysis.R --parallel=4
+```
+
+This does, of course, require that the script uses futures and the
+**future** package.
+
+If `--parallel=1` is specified, or equivalently `-p 1`, then futures are
+resolved using a single process.
+
+Specifying these command-line options override any other startup
+settings.

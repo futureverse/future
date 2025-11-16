@@ -1,0 +1,361 @@
+# Plan how to resolve a future
+
+This function allows *the user* to plan the future, more specifically,
+it specifies how
+[`future()`](https://future.futureverse.org/reference/future.md):s are
+resolved, e.g. sequentially or in parallel.
+
+## Usage
+
+``` r
+plan(
+  strategy = NULL,
+  ...,
+  substitute = TRUE,
+  .skip = FALSE,
+  .call = TRUE,
+  .cleanup = NA,
+  .init = TRUE
+)
+
+# S3 method for class 'FutureStrategyList'
+with(data, expr, ..., local = FALSE, envir = parent.frame(), .cleanup = NA)
+
+tweak(strategy, ..., penvir = parent.frame())
+```
+
+## Arguments
+
+- strategy:
+
+  A future backend or the name of one.
+
+- substitute:
+
+  If `TRUE`, the `strategy` expression is
+  [`substitute()`](https://rdrr.io/r/base/substitute.html):d, otherwise
+  not.
+
+- .skip:
+
+  (internal) If `TRUE`, then attempts to set a future backend that is
+  the same as what is currently in use, will be skipped.
+
+- .call:
+
+  (internal) Used for recording the call to this function.
+
+- .cleanup:
+
+  (internal) Used to stop implicitly started clusters.
+
+- .init:
+
+  (internal) Used to initiate workers.
+
+- data:
+
+  The future plan to use temporarily, e.g. `plan(multisession)`.
+
+- expr:
+
+  The R expression to be evaluated.
+
+- local:
+
+  If TRUE, then the future plan specified by `data` is applied
+  temporarily in the calling frame. Argument `expr` must not be
+  specified if `local = TRUE`.
+
+- envir:
+
+  The environment where the future plan should be set and the expression
+  evaluated.
+
+- penvir:
+
+  The environment used when searching for a future function by its name.
+
+- ...:
+
+  Additional arguments overriding the default arguments of the
+  evaluation function. Which additional arguments are supported depends
+  on which future backend is used, e.g. several support argument
+  `workers` but not all. For details, see the individual backends of
+  which some are linked to below.
+
+## Value
+
+`plan()` returns a the previous plan invisibly if a new future backend
+is chosen, otherwise it returns the current one visibly.
+
+The value of the expression evaluated (invisibly).
+
+a future function.
+
+## Details
+
+The default backend is
+[`sequential`](https://future.futureverse.org/reference/sequential.md),
+but another one can be set using `plan()`, e.g. `plan(multisession)`
+will launch parallel workers running in the background, which then will
+be used to resolve future. To shut down background workers launched this
+way, call `plan(sequential)`.
+
+## Built-in evaluation strategies
+
+The future package provides the following built-in backends:
+
+- [`sequential`](https://future.futureverse.org/reference/sequential.md)::
+
+  Resolves futures sequentially in the current R process, e.g.
+  `plan(sequential)`.
+
+- [`multisession`](https://future.futureverse.org/reference/multisession.md)::
+
+  Resolves futures asynchronously (in parallel) in separate R sessions
+  running in the background on the same machine, e.g.
+  `plan(multisession)` and `plan(multisession, workers = 2)`.
+
+- [`multicore`](https://future.futureverse.org/reference/multicore.md)::
+
+  Resolves futures asynchronously (in parallel) in separate *forked* R
+  processes running in the background on the same machine, e.g.
+  `plan(multicore)` and `plan(multicore, workers = 2)`. This backend is
+  not supported on Windows.
+
+- [`cluster`](https://future.futureverse.org/reference/cluster.md)::
+
+  Resolves futures asynchronously (in parallel) in separate R sessions
+  running typically on one or more machines, e.g. `plan(cluster)`,
+  `plan(cluster, workers = 2)`, and
+  `plan(cluster, workers = c("n1", "n1", "n2", "server.remote.org"))`.
+
+## Other evaluation strategies available
+
+In addition to the built-in ones, additional parallel backends are
+implemented in future-backend packages future.callr and future.mirai
+that leverage R package callr and mirai:
+
+- `callr`::
+
+  Similar to `multisession`, this resolved futures in parallel in
+  background R sessions on the local machine via the callr package, e.g.
+  `plan(future.callr::callr)` and
+  `plan(future.callr::callr, workers = 2)`. The difference is that each
+  future is processed in a fresh parallel R worker, which is
+  automatically shut down as soon as the future is resolved. This can
+  help decrease the overall memory. Moreover, contrary to
+  `multisession`, `callr` does not rely on socket connections, which
+  means it is not limited by the number of connections that R can have
+  open at any time.
+
+- `mirai_multisession`::
+
+  Similar to `multisession`, this resolved futures in parallel in
+  background R sessions on the local machine via the mirai package, e.g.
+  `plan(future.mirai::mirai_multisession)` and
+  `plan(future.mirai::mirai_multisession, workers = 2)`.
+
+- `mirai_cluster`::
+
+  Similar to `cluster`, this resolved futures in parallel via
+  pre-configured R mirai daemon processes, e.g.
+  `plan(future.mirai::mirai_cluster)`.
+
+Another example is the future.batchtools package, which leverages
+batchtools package, to resolve futures via high-performance compute
+(HPC) job schedulers, e.g. LSF, Slurm, TORQUE/PBS, Grid Engine, and
+OpenLava;
+
+- `batchtools_slurm`::
+
+  The backend resolved futures via the Slurm scheduler, e.g.
+  `plan(future.batchtools::batchtools_slurm)`.
+
+- `batchtools_torque`::
+
+  The backend resolved futures via the TORQUE/PBS scheduler, e.g.
+  `plan(future.batchtools::batchtools_torque)`.
+
+- `batchtools_sge`::
+
+  The backend resolved futures via the Grid Engine (SGE, AGE) scheduler,
+  e.g. `plan(future.batchtools::batchtools_sge)`.
+
+- `batchtools_lsf`::
+
+  The backend resolved futures via the Load Sharing Facility (LSF)
+  scheduler, e.g. `plan(future.batchtools::batchtools_lsf)`.
+
+- `batchtools_openlava`::
+
+  The backend resolved futures via the OpenLava scheduler, e.g.
+  `plan(future.batchtools::batchtools_openlava)`.
+
+## For package developers
+
+Please refrain from modifying the future backend inside your packages /
+functions, i.e. do not call `plan()` in your code. Instead, leave the
+control on what backend to use to the end user. This idea is part of the
+core philosophy of the future framework—as a developer you can never
+know what future backends the user have access to. Moreover, by not
+making any assumptions about what backends are available, your code will
+also work automatically with any new backends developed after you wrote
+your code.
+
+If you think it is necessary to modify the future backend within a
+function, then make sure to undo the changes when exiting the function.
+This can be achieved by using `with(plan(...), local = TRUE)`, e.g.
+
+
+      my_fcn <- function(x) {
+        with(plan(multisession), local = TRUE)
+        y <- analyze(x)
+        summarize(y)
+      }
+
+This is important because the end-user might have already set the future
+strategy elsewhere for other purposes and will most likely not known
+that calling your function will break their setup. *Remember, your
+package and its functions might be used in a greater context where
+multiple packages and functions are involved and those might also rely
+on the future framework, so it is important to avoid stepping on others'
+toes.*
+
+## Using plan() in scripts and vignettes
+
+When writing scripts or vignettes that use futures, try to place any
+call to `plan()` as far up (i.e. as early on) in the code as possible.
+This will help users to quickly identify where the future plan is set up
+and allow them to modify it to their computational resources. Even
+better is to leave it to the user to set the `plan()` prior to
+[`source()`](https://rdrr.io/r/base/source.html):ing the script or
+running the vignette. If a
+[`.future.R`](https://future.futureverse.org/reference/zzz-future.options.md)
+exists in the current directory and / or in the user's home directory,
+it is sourced when the future package is *loaded*. Because of this, the
+`.future.R` file provides a convenient place for users to set the
+`plan()`. This behavior can be controlled via an R option—see [future
+options](https://future.futureverse.org/reference/zzz-future.options.md)
+for more details.
+
+## See also
+
+Use `plan()` to set a future to become the new default strategy.
+
+## Examples
+
+``` r
+a <- b <- c <- NA_real_
+
+# An sequential future
+plan(sequential)
+f <- future({
+  a <- 7
+  b <- 3
+  c <- 2
+  a * b * c
+})
+y <- value(f)
+print(y)
+#> [1] 42
+str(list(a = a, b = b, c = c)) ## All NAs
+#> List of 3
+#>  $ a: num NA
+#>  $ b: num NA
+#>  $ c: num NA
+
+
+# A sequential future with lazy evaluation
+plan(sequential)
+f <- future({
+  a <- 7
+  b <- 3
+  c <- 2
+  a * b * c
+}, lazy = TRUE)
+y <- value(f)
+print(y)
+#> [1] 42
+str(list(a = a, b = b, c = c)) ## All NAs
+#> List of 3
+#>  $ a: num NA
+#>  $ b: num NA
+#>  $ c: num NA
+
+
+# A multicore future (specified as a string)
+plan("multicore")
+f <- future({
+  a <- 7
+  b <- 3
+  c <- 2
+  a * b * c
+})
+y <- value(f)
+print(y)
+#> [1] 42
+str(list(a = a, b = b, c = c)) ## All NAs
+#> List of 3
+#>  $ a: num NA
+#>  $ b: num NA
+#>  $ c: num NA
+
+## Multisession futures gives an error on R CMD check on
+## Windows (but not Linux or macOS) for unknown reasons.
+## The same code works in package tests.
+# \donttest{
+
+# A multisession future (specified via a string variable)
+plan("future::multisession")
+f <- future({
+  a <- 7
+  b <- 3
+  c <- 2
+  a * b * c
+})
+y <- value(f)
+print(y)
+#> [1] 42
+str(list(a = a, b = b, c = c)) ## All NAs
+#> List of 3
+#>  $ a: num NA
+#>  $ b: num NA
+#>  $ c: num NA
+
+# }
+
+
+## Explicitly specifying number of workers
+## (default is parallelly::availableCores())
+plan(multicore, workers = 2)
+message("Number of parallel workers: ", nbrOfWorkers())
+#> Number of parallel workers: 2
+
+
+## Explicitly close multisession workers by switching plan
+plan(sequential)
+# Evaluate a future using the 'multisession' plan
+with(plan(multisession, workers = 2), {
+  f <- future(Sys.getpid())
+  w_pid <- value(f)
+})
+print(c(main = Sys.getpid(), worker = w_pid))
+#>   main worker 
+#> 272565 274168 
+
+
+
+# Evaluate a future locally using the 'multisession' plan
+local({
+  with(plan(multisession, workers = 2), local = TRUE)
+
+  f <- future(Sys.getpid())
+  w_pid <- value(f)
+  print(c(main = Sys.getpid(), worker = w_pid))
+})
+#>   main worker 
+#> 272565 274293 
+
+```

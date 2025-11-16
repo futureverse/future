@@ -1,0 +1,325 @@
+# A Future for R: Best Practices for Package Developers
+
+Using future code in package is not much different from other type of
+package code or when using futures in R scripts. However, there are a
+few things that are useful to know about in order to minimize the risk
+for surprises to the end user.
+
+## The future smell test
+
+The by far most common and popular future backend is to parallelize on
+the local machine, e.g. `plan(multisession)`. This is often good enough
+in most situations but note that some end-users have access to multiple
+machines and might want to run your code using all of them to speed it
+up beyond what a single machine can do. Because of this, avoid as far as
+possible making assumption about your code will only run on the local
+machine. A good “smell test” is to ask yourself:
+
+*- Will my future code work if it ends up running on the other side of
+the world?*
+
+Regardless of performance, if you answer “Yes”, you have already
+embraced the core philosophy of the future framework. If you answer
+“Maybe” or “No”, see if you can rewrite it.
+
+For instance, if your future code made an assumption that it will have
+access to our local file system, as in:
+
+``` r
+
+f <- future({
+  data <- read_tsv(file)
+  analyze(data)
+})
+```
+
+you can rewrite the code to load the content of the file before you set
+up the future, as in:
+
+``` r
+
+data <- read_tsv(file)
+f <- future({
+  analyze(data)
+})
+```
+
+Similarly, we should avoid having the future code write to the local
+file system because the parent R session might not have access to that
+file system.
+
+By keeping the future smell test in mind when writing future code, we
+increase the chances that the code can be parallelized in more ways than
+on just the local computer. Properly written future code will work
+regardless of what future backend the end-user picks, e.g.
+
+``` r
+
+plan(sequential)
+plan(multisession)
+plan(cluster, workers = rep(c("n1.remote.org", "n2.remote.org", "n3.remote.org"), each = 32))
+```
+
+Remember, as developers we never know what compute resources the
+end-user has access to right now or they will have access to in six
+month. Who knows, your code might even end up running on 2,000 cores
+located on The Moon twenty years from now.
+
+## Avoid changing the future backend
+
+For reasons like the ones mentioned above, refrain from setting
+[`plan()`](https://future.futureverse.org/reference/plan.md) in a
+function. It is better to leave it to the end-user to decided how they
+want to parallelize. One reason for this is that we can never know how
+and in what context our code will run. For example, they might use
+futures to parallelize a function call in some other package and that
+package code calls your package internally. If you set
+`plan(multisession)` internally without undoing, you might mess up the
+[`plan()`](https://future.futureverse.org/reference/plan.md) that is
+already set breaking any further parallelization.
+
+If you still think it is necessary to set
+[`plan()`](https://future.futureverse.org/reference/plan.md), make sure
+to undo when the function exits, also on errors. This can be done by
+using `with(plan(...), local = TRUE)`, e.g.
+
+``` r
+
+my_fcn <- function(x) {
+  with(plan(multisession), local = TRUE)
+  y <- analyze(x)
+  summarize(y)
+}
+```
+
+The need for setting the future backend within a function often comes
+from developers wanting to add an argument to their function that allows
+the end-user to specify whether they want to run the function in
+parallel or sequentially. This often result in code like:
+
+``` r
+
+my_fcn <- function(x, parallel = FALSE) {
+  if (parallel) {
+    with(plan(multisession), local = TRUE)
+    y <- future_lapply(x, FUN = analyze) ## from future.apply package
+  } else {
+    y <- lapply(x, FUN = analyze)
+  }
+  summarize(y)
+}
+```
+
+This way the user can use:
+
+``` r
+
+y <- my_fcn(x, parallel = FALSE)
+```
+
+or
+
+``` r
+
+y <- my_fcn(x, parallel = TRUE)
+```
+
+depending on their needs. However, if another package developer decide
+to call your function in their function, they now have to expose that
+`parallel` argument to the users of their function, e.g.
+
+``` r
+
+their_fcn <- function(x, parallel = FALSE) {
+  x2 <- preprocess(x)
+  y <- my_fcn(x2, parallel = parallel)
+  z <- another_fcn(y)
+  z
+}
+```
+
+Exposing and passing a “parallel” argument along can become quite
+cumbersome. Instead, it is neater to use:
+
+``` r
+
+my_fcn <- function(x) {
+  y <- future_lapply(x, FUN = analyze) ## from future.apply package
+  summarize(y)
+}
+```
+
+and let the user control whether or not they want to parallelize via
+[`plan()`](https://future.futureverse.org/reference/plan.md),
+e.g. `plan(multisession)` and `plan(sequential)`.
+
+## Avoid changing the future options
+
+Just like for other R options, you must not change any of the R
+`future.*` options. Only the end-user should set these.
+
+If you find yourself having to tweak one of the options, make sure to
+undo your changes immediately afterward. For example, if you want to
+bump up the `future.globals.maxSize` limit when creating a future, use
+something like the following inside your function:
+
+``` r
+
+oopts <- options(future.globals.maxSize = 1.0 * 1e9)  ## 1.0 GB
+on.exit(options(oopts))
+f <- future({ expr })  ## Launch a future with large objects
+```
+
+## Writing examples
+
+If your example sets the future backend at the beginning, make sure to
+reset the future backend to `plan(sequential)` at the end of the
+example. The reason for this is that when switching plan, the previous
+one will be cleaned up. This is particularly important for multisession
+and cluster futures where `plan(sequential)` will shut down the
+underlying PSOCK clusters.
+
+For instance, here is an example:
+
+``` r
+
+## Run the analysis in parallel on the local computer
+future::plan("multisession")
+
+y <- analyze("path/to/file.csv")
+
+## Shut down parallel workers
+future::plan("sequential")
+```
+
+If you forget to shut down the PSOCK cluster, then
+`R CMD check --as-cran`, or `R CMD check` with environment variable
+`_R_CHECK_CONNECTIONS_LEFT_OPEN_=true` set, will produce an error on
+
+``` r
+$ R CMD check --as-cran mypkg_1.0.tar.gz
+...
+* checking examples ... ERROR
+Running examples in 'analyze-Ex.R' failed
+...
+> cleanEx()
+Error: connections left open:
+      <-localhost:37400 (sockconn)
+      <-localhost:37400 (sockconn)
+Execution halted
+```
+
+If you for some reason do not like to display reset of the future
+backend in the help documentation, but you still want it run, wrap the
+statement in an Rd `\dontshow{}` statement.
+
+## Writing vignettes
+
+Importantly, if you use the `multisession` backend in a vignette, you
+must manually specify the number of workers, i.e.
+
+``` r
+
+plan(multisession, workers = 2)
+```
+
+The reason for having to manually limit the number workers in vignettes,
+while it is automatically limited for us in package examples and package
+tests, is that `R CMD check --as-cran` does *not* set environment
+variable `_R_CHECK_LIMIT_CORES_` when re-building vignettes, resulting
+in the default `workers = availableCores()` to use whatever number of
+cores that the operating system has given our R process.
+
+Don’t forget to stop the parallel workers by calling
+
+``` r
+
+plan(sequential)
+```
+
+at the end of you vignette.
+
+## Testing a package that relies on futures
+
+If you want to make sure your code works when running sequentially as
+well as when running in parallel, it is often good enough to have
+package tests that run the code with:
+
+``` r
+
+plan(multisession)
+```
+
+If the code works with this setup, you can be sure that all global
+variables are properly identified and exported to the workers and that
+the required packages are loaded on the workers.
+
+Always make sure to shut down your parallel ‘multisession’ workers at
+the end of each package test by calling:
+
+``` r
+
+plan(sequential)
+```
+
+If not all of your tests are written this way, you can set environment
+variable `R_FUTURE_PLAN=multisession` before you call `R CMD check`.
+This will make the default future backend to become ‘multisession’
+instead of ‘sequential’. For example,
+
+``` sh
+$ export R_FUTURE_PLAN=multisession
+$ R CMD check --as-cran mypkg_1.0.tar.gz
+```
+
+## Making sure to stop parallel workers
+
+When creating a `cluster` object, for instance via `plan(multisession)`,
+in a package help example, in a package vignette, or in a package test,
+we must \_remember to stop the cluster at the end of all examples(\*),
+vignettes, and unit tests\_. This is required in order to not leave
+behind stray parallel `cluster` workers after our main R session
+terminates. On Linux and macOS, the operating system often takes care of
+terminating the worker processes if we forget, but on MS Windows such
+processes will keep running in the background until they time out
+themselves, which takes 30 days (sic!).
+
+`R CMD check --as-cran` will indirectly detect these stray worker
+processes on MS Windows when running R (\>= 4.3.0). They are detected,
+because they result in placeholder `Rscript<hexcode>` files being left
+behind in the temporary directory. The check NOTE to look out for (only
+in R (\>= 4.3.0)) is:
+
+    * checking for detritus in the temp directory ... NOTE
+    Found the following files/directories:
+      'Rscript1058267d0c10' 'Rscriptbd4267d0c10'
+
+Those `Rscript<hexcode>` files are from background R worker processes,
+which almost always are parallel `cluster`:s that we forgot to stop at
+the end. To stop ‘multisession’ workers, call:
+
+``` r
+
+plan(sequential)
+```
+
+at the end of your examples(\*), vignettes, and package tests.
+
+If you create the `cluster` manually using
+
+``` r
+
+cl <- parallelly::makeClusterPSOCK(2)
+plan(cluster, workers = cl)
+```
+
+make sure to stop such clusters at the end using
+
+``` r
+
+plan(sequential)
+parallel::stopCluster(cl)
+```
+
+(\*) Currently, examples are excluded from the detritus checks. This was
+the validated with R-devel revision 82991 (2022-10-02).
