@@ -8,8 +8,9 @@ repeat. This release fixes a few more regressions introduced in
 
 ## Beta Features
 
- * Calling `clusterEvalQ()` on a FutureCluster is now an error by
-   default - it used to be just a warning.
+ * Calling `clusterEvalQ()` on a FutureCluster, introduced in
+   **future** 1.58.0 (2025-06-05), is now an error by default - it
+   used to be just a warning.
 
 ## Bug Fixes
 
