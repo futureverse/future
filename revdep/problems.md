@@ -122,27 +122,6 @@ Run `revdepcheck::revdep_details(, "baseballr")` for more info
         ‘chadwick_installation.R’
     ```
 
-# BatchGetSymbols
-
-<details>
-
-* Version: 2.6.4
-* GitHub: NA
-* Source code: https://github.com/cran/BatchGetSymbols
-* Date/Publication: 2022-05-01 15:40:11 UTC
-* Number of recursive dependencies: 85
-
-Run `revdepcheck::revdep_details(, "BatchGetSymbols")` for more info
-
-</details>
-
-## In both
-
-*   checking dependencies in R code ... NOTE
-    ```
-    Failed to query server: Failed to activate service 'org.freedesktop.timedate1': timed out (service_start_timeout=25000ms)
-    ```
-
 # ceRNAnetsim
 
 <details>
@@ -537,22 +516,22 @@ Run `revdepcheck::revdep_details(, "dispositionEffect")` for more info
      ERROR
     Running the tests in ‘tests/testthat.R’ failed.
     Last 50 lines of output:
-      ── Failure ('test-realized_duration.R:113:2'): realized_duration works (realized_only = TRUE) ──
-      realized_duration(...) not equal to c(...).
       1/4 mismatches
       [2] 34 - 28 == 6
-      ── Failure ('test-realized_duration.R:116:2'): realized_duration works (realized_only = TRUE) ──
-      realized_duration(...) not equal to c(...).
+      ── Failure ('test-realized_duration.R:122:2'): realized_duration works (realized_only = TRUE) ──
+      Expected `realized_duration(...)` to equal `c(...)`.
+      Differences:
+      1/4 mismatches
     ...
-      1/4 mismatches
-      [2] 34 - 28 == 6
       ── Failure ('test-realized_duration.R:161:2'): realized_duration works (realized_only = TRUE) ──
-      realized_duration(...) not equal to c(...).
+      Expected `realized_duration(...)` to equal `c(...)`.
+      Differences:
       1/4 mismatches
       [1] 34 - 28 == 6
       
       [ FAIL 36 | WARN 0 | SKIP 0 | PASS 331 ]
-      Error: Test failures
+      Error:
+      ! Test failures.
       Execution halted
     ```
 
@@ -730,29 +709,6 @@ Run `revdepcheck::revdep_details(, "ferrn")` for more info
         ‘projection.Rd’
     ```
 
-# fiery
-
-<details>
-
-* Version: 1.3.0
-* GitHub: https://github.com/thomasp85/fiery
-* Source code: https://github.com/cran/fiery
-* Date/Publication: 2025-08-20 17:00:20 UTC
-* Number of recursive dependencies: 70
-
-Run `revdepcheck::revdep_details(, "fiery")` for more info
-
-</details>
-
-## In both
-
-*   checking dependencies in R code ... NOTE
-    ```
-    Namespaces in Imports field not imported from:
-      ‘parallelly’ ‘promises’
-      All declared Imports should be used.
-    ```
-
 # flowGraph
 
 <details>
@@ -786,47 +742,6 @@ Run `revdepcheck::revdep_details(, "flowGraph")` for more info
     checkRd: (-1) ggdf.Rd:22: Lost braces
         22 | code{ggdf} adds to the data frames \code{v} and \code{e} in slot
            |     ^
-    ```
-
-# fmeffects
-
-<details>
-
-* Version: 0.1.4
-* GitHub: https://github.com/holgstr/fmeffects
-* Source code: https://github.com/cran/fmeffects
-* Date/Publication: 2024-11-05 18:50:02 UTC
-* Number of recursive dependencies: 182
-
-Run `revdepcheck::revdep_details(, "fmeffects")` for more info
-
-</details>
-
-## In both
-
-*   checking re-building of vignette outputs ... ERROR
-    ```
-    Error(s) in re-building vignettes:
-      ...
-    --- re-building ‘fme_theory.Rmd’ using rmarkdown
-    [WARNING] Deprecated: --highlight-style. Use --syntax-highlighting instead.
-    --- finished re-building ‘fme_theory.Rmd’
-    
-    --- re-building ‘fmeffects.Rmd’ using rmarkdown
-    
-    Quitting from fmeffects.Rmd:121-127 [unnamed-chunk-11]
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    ...
-    ℹ In index: 1.
-    Caused by error in `.__Task__col_roles()`:
-    ! Assertion on 'names(rhs)' failed: Names must be a permutation of set {'feature','target','name','order','stratum','group','offset','weights_learner','weights_measure'}, but has extra elements {'always_included'}.
-    --- failed re-building ‘fmeffects.Rmd’
-    
-    SUMMARY: processing the following file failed:
-      ‘fmeffects.Rmd’
-    
-    Error: Vignette re-building failed.
-    Execution halted
     ```
 
 # forecastML
@@ -876,13 +791,13 @@ Run `revdepcheck::revdep_details(, "FracFixR")` for more info
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     <error/rlang_error>
     Error in `checkNumberOfLocalWorkers()`:
-    ! Attempting to set up 255 localhost parallel workers with only 48 CPU cores available for this R process (per 'SGE'), which could result in a 531% load. The hard limit is set to 300%. Overusing the CPUs has negative impact on the current R process, but also on all other processes of yours and others running on the same machine. See help("parallelly.maxWorkers.localhost", package = "parallelly") for further explanations and how to override the hard limit that triggered this error
+    ! Attempting to set up 47 localhost parallel workers with only 2 CPU cores available for this R process (per 'N/A'), which could result in a 2350% load. The hard limit is set to 300%. Overusing the CPUs has negative impact on the current R process, but also on all other processes of yours and others running on the same machine. See help("parallelly.maxWorkers.localhost", package = "parallelly") for further explanations and how to override the hard limit that triggered this error
     ---
     Backtrace:
     ...
     
     Error: processing vignette 'FracFixR-intro.Rmd' failed with diagnostics:
-    Attempting to set up 255 localhost parallel workers with only 48 CPU cores available for this R process (per 'SGE'), which could result in a 531% load. The hard limit is set to 300%. Overusing the CPUs has negative impact on the current R process, but also on all other processes of yours and others running on the same machine. See help("parallelly.maxWorkers.localhost", package = "parallelly") for further explanations and how to override the hard limit that triggered this error
+    Attempting to set up 47 localhost parallel workers with only 2 CPU cores available for this R process (per 'N/A'), which could result in a 2350% load. The hard limit is set to 300%. Overusing the CPUs has negative impact on the current R process, but also on all other processes of yours and others running on the same machine. See help("parallelly.maxWorkers.localhost", package = "parallelly") for further explanations and how to override the hard limit that triggered this error
     --- failed re-building ‘FracFixR-intro.Rmd’
     
     SUMMARY: processing the following file failed:
@@ -987,7 +902,7 @@ Run `revdepcheck::revdep_details(, "googleTagManageR")` for more info
 * GitHub: https://github.com/billbillbilly/greenSD
 * Source code: https://github.com/cran/greenSD
 * Date/Publication: 2025-10-30 19:50:02 UTC
-* Number of recursive dependencies: 120
+* Number of recursive dependencies: 121
 
 Run `revdepcheck::revdep_details(, "greenSD")` for more info
 
@@ -1136,39 +1051,52 @@ Run `revdepcheck::revdep_details(, "InPAS")` for more info
 
 ## In both
 
-*   checking Rd cross-references ... WARNING
+*   checking whether package ‘InPAS’ can be installed ... ERROR
     ```
-    Missing link(s) in Rd file 'get_ssRleCov.Rd':
-      ‘[BSgenome:BSgenomeForge]{BSgenome::forgeBSgenomeDataPkg()}’
-    
-    Missing link(s) in Rd file 'set_globals.Rd':
-      ‘[BSgenome:BSgenomeForge]{BSgenome::forgeBSgenomeDataPkg()}’
-    
-    See section 'Cross-references' in the 'Writing R Extensions' manual.
+    Installation failed.
+    See ‘/scratch/henrik/revdep/future/checks/InPAS/new/InPAS.Rcheck/00install.out’ for details.
     ```
 
-*   checking dependencies in R code ... NOTE
-    ```
-    There are ::: calls to the package's namespace in its code. A package
-      almost never needs to use ::: for its own objects:
-      ‘adjust_distalCPs’ ‘adjust_proximalCPs’ ‘adjust_proximalCPsByNBC’
-      ‘adjust_proximalCPsByPWM’ ‘calculate_mse’ ‘find_valleyBySpline’
-      ‘get_PAscore’ ‘get_PAscore2’ ‘remove_convergentUTR3s’
-      ‘search_distalCPs’ ‘search_proximalCPs’
-    ```
+## Installation
 
-*   checking Rd \usage sections ... NOTE
-    ```
-    Documented arguments not in \usage in Rd file 'get_UTR3TotalCov.Rd':
-      ‘gcCompensationensation’
-    
-    Functions with \usage entries need to have the appropriate \alias
-    entries, and all their arguments documented.
-    The \usage entries must correspond to syntactically valid R code.
-    See chapter ‘Writing R documentation files’ in the ‘Writing R
-    Extensions’ manual.
-    ```
+### Devel
 
+```
+* installing *source* package ‘InPAS’ ...
+** this is package ‘InPAS’ version ‘2.18.0’
+** package ‘InPAS’ successfully unpacked and MD5 sums checked
+** using staged installation
+** R
+** data
+*** moving datasets to lazyload DB
+** inst
+** byte-compile and prepare package for lazy loading
+Error: object ‘filter’ is not exported by 'namespace:plyranges'
+Execution halted
+ERROR: lazy loading failed for package ‘InPAS’
+* removing ‘/scratch/henrik/revdep/future/checks/InPAS/new/InPAS.Rcheck/InPAS’
+
+
+```
+### CRAN
+
+```
+* installing *source* package ‘InPAS’ ...
+** this is package ‘InPAS’ version ‘2.18.0’
+** package ‘InPAS’ successfully unpacked and MD5 sums checked
+** using staged installation
+** R
+** data
+*** moving datasets to lazyload DB
+** inst
+** byte-compile and prepare package for lazy loading
+Error: object ‘filter’ is not exported by 'namespace:plyranges'
+Execution halted
+ERROR: lazy loading failed for package ‘InPAS’
+* removing ‘/scratch/henrik/revdep/future/checks/InPAS/old/InPAS.Rcheck/InPAS’
+
+
+```
 # interflex
 
 <details>
@@ -1350,22 +1278,22 @@ Run `revdepcheck::revdep_details(, "ldaPrototype")` for more info
      ERROR
     Running the tests in ‘tests/testthat.R’ failed.
     Last 50 lines of output:
-      ── Error ('test_jaccardTopics.R:6:1'): (code run outside of `test_that()`) ─────
       Error in `defaultCluster(cl)`: no cluster 'cl' supplied and none is registered
       Backtrace:
           ▆
        1. ├─ldaPrototype::mergeTopics(...) at test_jaccardTopics.R:6:1
        2. └─ldaPrototype::LDARep(...)
+       3.   ├─base::suppressWarnings(parallelMap::parallelExport("docs", "vocab"))
     ...
-       4.   │ └─base::withCallingHandlers(...)
        5.   └─parallelMap::parallelExport("docs", "vocab")
        6.     └─parallelMap:::exportToSlavePkgParallel(n, get(n, envir = sys.parent()))
        7.       └─parallel::clusterCall(...)
        8.         └─parallel:::defaultCluster(cl)
       
       [ FAIL 8 | WARN 0 | SKIP 0 | PASS 132 ]
-      Error: Test failures
-      In addition: There were 50 or more warnings (use warnings() to see the first 50)
+      Error:
+      ! Test failures.
+      There were 50 or more warnings (use warnings() to see the first 50)
       Execution halted
     ```
 
@@ -1394,11 +1322,11 @@ Run `revdepcheck::revdep_details(, "ldsr")` for more info
 
 <details>
 
-* Version: 4.2.1
+* Version: 4.2.2
 * GitHub: https://github.com/r-lidar/lidR
 * Source code: https://github.com/cran/lidR
-* Date/Publication: 2025-06-02 10:20:02 UTC
-* Number of recursive dependencies: 152
+* Date/Publication: 2025-11-06 06:10:40 UTC
+* Number of recursive dependencies: 153
 
 Run `revdepcheck::revdep_details(, "lidR")` for more info
 
@@ -1408,7 +1336,7 @@ Run `revdepcheck::revdep_details(, "lidR")` for more info
 
 *   checking tests ...
     ```
-      Running ‘testthat.R’/software/c4/cbi/software/_rocky8/R-4.5.2-gcc13/lib64/R/bin/BATCH: line 60: 2681924 Aborted                 (core dumped) ${R_HOME}/bin/R -f ${in} ${opts} ${R_BATCH_OPTIONS} > ${out} 2>&1
+      Running ‘testthat.R’/software/c4/cbi/software/_rocky8/R-4.5.2-gcc13/lib64/R/bin/BATCH: line 60: 868671 Aborted                 (core dumped) ${R_HOME}/bin/R -f ${in} ${opts} ${R_BATCH_OPTIONS} > ${out} 2>&1
     
      ERROR
     Running the tests in ‘tests/testthat.R’ failed.
@@ -1475,23 +1403,64 @@ Run `revdepcheck::revdep_details(, "mapme.biodiversity")` for more info
       Running ‘testthat.R’
      ERROR
     Running the tests in ‘tests/testthat.R’ failed.
-    Complete output:
-      > library(testthat)
+    Last 50 lines of output:
       > library(mapme.biodiversity)
       > 
       > options(pillar.advice = FALSE)
       > mapme_options(verbose = FALSE)
       > test_check("mapme.biodiversity")
+      You agreed to abide to ACLED's Terms of Use (https://acleddata.com/terms-of-use/).
     ...
-      `x2 <- .split_dateline(x)` produced warnings.
-      ── Failure ('test-chunking.R:8:3'): .crosses_dateline and .split_dateline works ──
-      nrow(x2) (`actual`) not equal to 2 (`expected`).
-      
+      Expected `nrow(x2)` to equal 2.
+      Differences:
         `actual`: 1.0
       `expected`: 2.0
       
-      [ FAIL 2 | WARN 0 | SKIP 43 | PASS 532 ]
-      Error: Test failures
+      
+      [ FAIL 2 | WARN 0 | SKIP 43 | PASS 543 ]
+      Error:
+      ! Test failures.
+      Execution halted
+    ```
+
+# mbbe
+
+<details>
+
+* Version: 0.1.0
+* GitHub: https://github.com/certara/mbbe
+* Source code: https://github.com/cran/mbbe
+* Date/Publication: 2024-02-03 11:20:02 UTC
+* Number of recursive dependencies: 80
+
+Run `revdepcheck::revdep_details(, "mbbe")` for more info
+
+</details>
+
+## In both
+
+*   checking tests ...
+    ```
+      Running ‘testthat.R’
+     ERROR
+    Running the tests in ‘tests/testthat.R’ failed.
+    Complete output:
+      > # This file is part of the standard setup for testthat.
+      > # It is recommended that you do not modify it.
+      > #
+      > # Where should you do additional test configuration?
+      > # Learn more about the roles of various files in:
+      > # * https://r-pkgs.org/testing-design.html#sec-tests-files-overview
+    ...
+          ▆
+       1. └─testthat::with_mock(...) at test-check_requirements.R:39:3
+       2.   └─lifecycle::deprecate_stop("3.2.0", "with_mock()", "with_mocked_bindings()")
+       3.     └─lifecycle:::deprecate_stop0(msg)
+       4.       └─rlang::cnd_signal(...)
+      
+      [ FAIL 1 | WARN 0 | SKIP 0 | PASS 11 ]
+      Error:
+      ! Test failures.
       Execution halted
     ```
 
@@ -1704,33 +1673,6 @@ Run `revdepcheck::revdep_details(, "mistyR")` for more info
 
 </details>
 
-## Newly fixed
-
-*   checking tests ...
-    ```
-      Running ‘testthat.R’
-     ERROR
-    Running the tests in ‘tests/testthat.R’ failed.
-    Last 50 lines of output:
-      Training models
-      
-      Collecting improvements
-      
-      Collecting contributions
-      
-    ...
-      Generating paraview
-      [ FAIL 1 | WARN 4 | SKIP 0 | PASS 172 ]
-      
-      ══ Failed tests ════════════════════════════════════════════════════════════════
-      ── Failure ('test-misty.R:51:3'): run_misty handles evaluation parameters correctly ──
-      `subset.time` is not strictly less than `default.time`. Difference: 113
-      
-      [ FAIL 1 | WARN 4 | SKIP 0 | PASS 172 ]
-      Error: Test failures
-      Execution halted
-    ```
-
 ## In both
 
 *   checking R code for possible problems ... NOTE
@@ -1787,6 +1729,47 @@ Run `revdepcheck::revdep_details(, "multiverse")` for more info
       |> or function shorthand \(...) syntax added in R 4.1.0.
       File(s) using such syntax:
         ‘accessors.R’ ‘export_json.R’ ‘extract.R’
+    ```
+
+# nhdplusTools
+
+<details>
+
+* Version: 1.3.2
+* GitHub: https://github.com/doi-usgs/nhdplusTools
+* Source code: https://github.com/cran/nhdplusTools
+* Date/Publication: 2025-06-10 13:00:14 UTC
+* Number of recursive dependencies: 134
+
+Run `revdepcheck::revdep_details(, "nhdplusTools")` for more info
+
+</details>
+
+## In both
+
+*   checking tests ...
+    ```
+      Running ‘testthat.R’
+     ERROR
+    Running the tests in ‘tests/testthat.R’ failed.
+    Last 50 lines of output:
+      Loading required package: nhdplusTools
+      Starting 2 test processes.
+      > test_02_subset.R: All intersections performed in latitude/longitude.
+      > test_02_subset.R: All intersections performed in latitude/longitude.
+      > test_02_subset.R: All intersections performed in latitude/longitude.
+      > test_02_subset.R: All intersections performed in latitude/longitude.
+    ...
+          ▆
+       1. └─testthat::expect(ok = nrow(out)) at test_02_subset_extras.R:75:3
+       2.   └─testthat:::check_bool(ok)
+       3.     └─testthat:::stop_input_type(...)
+       4.       └─rlang::abort(message, ..., call = call, arg = arg)
+      
+      [ FAIL 1 | WARN 0 | SKIP 58 | PASS 315 ]
+      Error:
+      ! Test failures.
+      Execution halted
     ```
 
 # nixtlar
@@ -2054,6 +2037,47 @@ Run `revdepcheck::revdep_details(, "pavo")` for more info
     See ‘/scratch/henrik/revdep/future/checks/pavo/new/pavo.Rcheck/00install.out’ for details.
     ```
 
+# PCRedux
+
+<details>
+
+* Version: 1.2-0
+* GitHub: https://github.com/PCRuniversum/PCRedux
+* Source code: https://github.com/cran/PCRedux
+* Date/Publication: 2025-06-13 05:00:02 UTC
+* Number of recursive dependencies: 150
+
+Run `revdepcheck::revdep_details(, "PCRedux")` for more info
+
+</details>
+
+## In both
+
+*   checking tests ...
+    ```
+      Running ‘testthat.R’
+     ERROR
+    Running the tests in ‘tests/testthat.R’ failed.
+    Last 50 lines of output:
+      Saving _problems/test_mblrr-10.R
+      Saving _problems/test_pcrfit_single-9.R
+      Saving _problems/test_performeR-11.R
+      Saving _problems/test_qPCR2fdata-11.R
+      [ FAIL 8 | WARN 0 | SKIP 0 | PASS 23 ]
+      
+    ...
+      ── Error ('test_qPCR2fdata.R:11:3'): qPCR2fdata gives the correct dimensions and properties ──
+      Error in `is_true()`: could not find function "is_true"
+      Backtrace:
+          ▆
+       1. └─testthat::expect_that(...) at test_qPCR2fdata.R:11:3
+      
+      [ FAIL 8 | WARN 0 | SKIP 0 | PASS 23 ]
+      Error:
+      ! Test failures.
+      Execution halted
+    ```
+
 # pgxRpi
 
 <details>
@@ -2069,6 +2093,31 @@ Run `revdepcheck::revdep_details(, "pgxRpi")` for more info
 </details>
 
 ## In both
+
+*   checking tests ...
+    ```
+      Running ‘testthat.R’
+     ERROR
+    Running the tests in ‘tests/testthat.R’ failed.
+    Last 50 lines of output:
+      
+       trying: https://progenetix.org/services/variantsbedfile/?output=igv&biosampleIds=pgxbs-kftvlaih,pgxbs-kftvjgcc 
+      
+       trying: https://progenetix.org/services/samplematrix/?biosampleIds=pgxbs-kftvlaih,pgxbs-kftvjgcc 
+      
+       trying: https://progenetix.org/services/samplematrix/?individualIds=pgxind-kftx3565,pgxind-kftx5g4v 
+    ...
+      target is NULL, current is logical
+      ── Failure ('test_variants.R:76:5'): retrieve fraction variant with biosample id ──
+      Expected `nrow(table)` > 0.
+      Actual comparison: 0.0 <= 0.0
+      Difference: 0.0 <= 0
+      
+      [ FAIL 5 | WARN 0 | SKIP 0 | PASS 37 ]
+      Error:
+      ! Test failures.
+      Execution halted
+    ```
 
 *   checking R code for possible problems ... NOTE
     ```
@@ -2291,10 +2340,9 @@ Run `revdepcheck::revdep_details(, "receptiviti")` for more info
       > library(receptiviti)
       > 
       > test_check("receptiviti")
+      Saving _problems/test-receptiviti-18.R
       [ FAIL 1 | WARN 0 | SKIP 4 | PASS 5 ]
-      
     ...
-       3. │   └─testthat:::quasi_capture(...)
        4. │     ├─testthat (local) .capture(...)
        5. │     │ └─base::withCallingHandlers(...)
        6. │     └─rlang::eval_bare(quo_get_expr(.quo), quo_get_env(.quo))
@@ -2302,7 +2350,8 @@ Run `revdepcheck::revdep_details(, "receptiviti")` for more info
        8.   └─receptiviti:::manage_request(...)
       
       [ FAIL 1 | WARN 0 | SKIP 4 | PASS 5 ]
-      Error: Test failures
+      Error:
+      ! Test failures.
       Execution halted
     ```
 
@@ -2321,6 +2370,31 @@ Run `revdepcheck::revdep_details(, "regmedint")` for more info
 </details>
 
 ## In both
+
+*   checking tests ...
+    ```
+      Running ‘testthat.R’
+     ERROR
+    Running the tests in ‘tests/testthat.R’ failed.
+    Last 50 lines of output:
+      [ FAIL 4 | WARN 0 | SKIP 2 | PASS 4128 ]
+      
+      ══ Skipped tests (2) ═══════════════════════════════════════════════════════════
+      • empty test (2): 'test-01_regmedint_class_ui.R:402:9',
+        'test-01_regmedint_class_ui.R:421:9'
+      
+    ...
+          ▆
+       1. └─testthat::with_mock(...) at test-05_calc_myreg.R:235:9
+       2.   └─lifecycle::deprecate_stop("3.2.0", "with_mock()", "with_mocked_bindings()")
+       3.     └─lifecycle:::deprecate_stop0(msg)
+       4.       └─rlang::cnd_signal(...)
+      
+      [ FAIL 4 | WARN 0 | SKIP 2 | PASS 4128 ]
+      Error:
+      ! Test failures.
+      Execution halted
+    ```
 
 *   checking dependencies in R code ... NOTE
     ```
@@ -2426,6 +2500,47 @@ Run `revdepcheck::revdep_details(, "SCArray.sat")` for more info
       ‘Seurat:::FastExpMean’ ‘Seurat:::FastLogVMR’ ‘Seurat:::NBResiduals’
       ‘Seurat:::UpdateKey’ ‘Seurat:::ValidateDataForMerge’
       See the note in ?`:::` about the use of this operator.
+    ```
+
+# shinyOAuth
+
+<details>
+
+* Version: 0.1.3
+* GitHub: https://github.com/lukakoning/shinyOAuth
+* Source code: https://github.com/cran/shinyOAuth
+* Date/Publication: 2025-11-10 13:20:02 UTC
+* Number of recursive dependencies: 76
+
+Run `revdepcheck::revdep_details(, "shinyOAuth")` for more info
+
+</details>
+
+## In both
+
+*   checking tests ...
+    ```
+      Running ‘testthat.R’
+     ERROR
+    Running the tests in ‘tests/testthat.R’ failed.
+    Last 50 lines of output:
+        4. │     ├─testthat (local) .capture(...)
+        5. │     │ └─base::withCallingHandlers(...)
+        6. │     └─rlang::eval_bare(quo_get_expr(.quo), quo_get_env(.quo))
+        7. └─shinyOAuth::oauth_provider_oidc_discover(issuer = issuer, jwks_host_issuer_match = TRUE)
+        8.   └─shinyOAuth:::.discover_fetch_response(req, issuer)
+        9.     └─shinyOAuth:::err_http(c(x = "Failed to fetch OIDC discovery document"), resp, context = list(issuer = issuer))
+    ...
+        [shinyOAuth] - HTTP request failed
+        x Failed to fetch OIDC discovery document
+        x Status 503: Service Unavailable.
+        i URL: http://127.0.0.1:36677/.well-known/openid-configuration
+        i Trace ID: szwzPwgToHJ7
+      
+      [ FAIL 23 | WARN 0 | SKIP 12 | PASS 671 ]
+      Error:
+      ! Test failures.
+      Execution halted
     ```
 
 # sigminer
@@ -3075,7 +3190,7 @@ Run `revdepcheck::revdep_details(, "tsdistributions")` for more info
 * GitHub: https://github.com/tsmodels/tsgarch
 * Source code: https://github.com/cran/tsgarch
 * Date/Publication: 2024-10-12 00:50:02 UTC
-* Number of recursive dependencies: 94
+* Number of recursive dependencies: 104
 
 Run `revdepcheck::revdep_details(, "tsgarch")` for more info
 
