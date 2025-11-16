@@ -1,3 +1,65 @@
+# InPAS
+
+<details>
+
+* Version: 2.18.0
+* GitHub: NA
+* Source code: https://github.com/cran/InPAS
+* Date/Publication: 2025-10-29
+* Number of recursive dependencies: 164
+
+Run `revdepcheck::revdep_details(, "InPAS")` for more info
+
+</details>
+
+## In both
+
+*   checking whether package ‘InPAS’ can be installed ... ERROR
+    ```
+    Installation failed.
+    See ‘/scratch/henrik/revdep/future/checks/InPAS/new/InPAS.Rcheck/00install.out’ for details.
+    ```
+
+## Installation
+
+### Devel
+
+```
+* installing *source* package ‘InPAS’ ...
+** this is package ‘InPAS’ version ‘2.18.0’
+** package ‘InPAS’ successfully unpacked and MD5 sums checked
+** using staged installation
+** R
+** data
+*** moving datasets to lazyload DB
+** inst
+** byte-compile and prepare package for lazy loading
+Error: object ‘filter’ is not exported by 'namespace:plyranges'
+Execution halted
+ERROR: lazy loading failed for package ‘InPAS’
+* removing ‘/scratch/henrik/revdep/future/checks/InPAS/new/InPAS.Rcheck/InPAS’
+
+
+```
+### CRAN
+
+```
+* installing *source* package ‘InPAS’ ...
+** this is package ‘InPAS’ version ‘2.18.0’
+** package ‘InPAS’ successfully unpacked and MD5 sums checked
+** using staged installation
+** R
+** data
+*** moving datasets to lazyload DB
+** inst
+** byte-compile and prepare package for lazy loading
+Error: object ‘filter’ is not exported by 'namespace:plyranges'
+Execution halted
+ERROR: lazy loading failed for package ‘InPAS’
+* removing ‘/scratch/henrik/revdep/future/checks/InPAS/old/InPAS.Rcheck/InPAS’
+
+
+```
 # TriDimRegression
 
 <details>
