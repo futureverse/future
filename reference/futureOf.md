@@ -69,15 +69,15 @@ print(f)
 #> Local evaluation: TRUE
 #> Asynchronous evaluation: TRUE
 #> Early signaling: FALSE
-#> Environment: 0x5ed183eba498
+#> Environment: 0x59d3d0af3e10
 #> State: ‘finished’
 #> Resolved: TRUE
-#> Unique identifier: bdf5ea10c9cc98ada990f3839373a6a6-12
-#> Owner process: bdf5ea10c9cc98ada990f3839373a6a6
+#> Unique identifier: 3bd491eaf03ca2abce34bb5737239409-12
+#> Owner process: 3bd491eaf03ca2abce34bb5737239409
 #> Class: ‘SequentialFuture’, ‘UniprocessFuture’, ‘Future’
 #> Value: 39 bytes of class ‘numeric’
-#> Duration: 0.002858639 secs (started 2025-11-16 13:07:47.106104)
-#> Worker process: bdf5ea10c9cc98ada990f3839373a6a6
+#> Duration: 0.003979206 secs (started 2025-11-17 06:58:21.53898)
+#> Worker process: 3bd491eaf03ca2abce34bb5737239409
 
 b %<-% { 2 }
 
@@ -99,15 +99,15 @@ print(f)
 #> Local evaluation: TRUE
 #> Asynchronous evaluation: TRUE
 #> Early signaling: FALSE
-#> Environment: 0x5ed183eba498
+#> Environment: 0x59d3d0af3e10
 #> State: ‘finished’
 #> Resolved: TRUE
-#> Unique identifier: bdf5ea10c9cc98ada990f3839373a6a6-13
-#> Owner process: bdf5ea10c9cc98ada990f3839373a6a6
+#> Unique identifier: 3bd491eaf03ca2abce34bb5737239409-13
+#> Owner process: 3bd491eaf03ca2abce34bb5737239409
 #> Class: ‘SequentialFuture’, ‘UniprocessFuture’, ‘Future’
 #> Value: 39 bytes of class ‘numeric’
-#> Duration: 0.002756119 secs (started 2025-11-16 13:07:47.117258)
-#> Worker process: bdf5ea10c9cc98ada990f3839373a6a6
+#> Duration: 0.004582882 secs (started 2025-11-17 06:58:21.553169)
+#> Worker process: 3bd491eaf03ca2abce34bb5737239409
 
 ## All futures
 fs <- futureOf()
@@ -129,15 +129,15 @@ print(fs)
 #> Local evaluation: TRUE
 #> Asynchronous evaluation: TRUE
 #> Early signaling: FALSE
-#> Environment: 0x5ed183eba498
+#> Environment: 0x59d3d0af3e10
 #> State: ‘finished’
 #> Resolved: TRUE
-#> Unique identifier: bdf5ea10c9cc98ada990f3839373a6a6-12
-#> Owner process: bdf5ea10c9cc98ada990f3839373a6a6
+#> Unique identifier: 3bd491eaf03ca2abce34bb5737239409-12
+#> Owner process: 3bd491eaf03ca2abce34bb5737239409
 #> Class: ‘SequentialFuture’, ‘UniprocessFuture’, ‘Future’
 #> Value: 39 bytes of class ‘numeric’
-#> Duration: 0.002858639 secs (started 2025-11-16 13:07:47.106104)
-#> Worker process: bdf5ea10c9cc98ada990f3839373a6a6
+#> Duration: 0.003979206 secs (started 2025-11-17 06:58:21.53898)
+#> Worker process: 3bd491eaf03ca2abce34bb5737239409
 #> 
 #> $b
 #> SequentialFuture:
@@ -156,15 +156,15 @@ print(fs)
 #> Local evaluation: TRUE
 #> Asynchronous evaluation: TRUE
 #> Early signaling: FALSE
-#> Environment: 0x5ed183eba498
+#> Environment: 0x59d3d0af3e10
 #> State: ‘finished’
 #> Resolved: TRUE
-#> Unique identifier: bdf5ea10c9cc98ada990f3839373a6a6-13
-#> Owner process: bdf5ea10c9cc98ada990f3839373a6a6
+#> Unique identifier: 3bd491eaf03ca2abce34bb5737239409-13
+#> Owner process: 3bd491eaf03ca2abce34bb5737239409
 #> Class: ‘SequentialFuture’, ‘UniprocessFuture’, ‘Future’
 #> Value: 39 bytes of class ‘numeric’
-#> Duration: 0.002756119 secs (started 2025-11-16 13:07:47.117258)
-#> Worker process: bdf5ea10c9cc98ada990f3839373a6a6
+#> Duration: 0.004582882 secs (started 2025-11-17 06:58:21.553169)
+#> Worker process: 3bd491eaf03ca2abce34bb5737239409
 #> 
 #> $f
 #> SequentialFuture:
@@ -183,15 +183,15 @@ print(fs)
 #> Local evaluation: TRUE
 #> Asynchronous evaluation: TRUE
 #> Early signaling: FALSE
-#> Environment: 0x5ed183eba498
+#> Environment: 0x59d3d0af3e10
 #> State: ‘finished’
 #> Resolved: TRUE
-#> Unique identifier: bdf5ea10c9cc98ada990f3839373a6a6-13
-#> Owner process: bdf5ea10c9cc98ada990f3839373a6a6
+#> Unique identifier: 3bd491eaf03ca2abce34bb5737239409-13
+#> Owner process: 3bd491eaf03ca2abce34bb5737239409
 #> Class: ‘SequentialFuture’, ‘UniprocessFuture’, ‘Future’
 #> Value: 39 bytes of class ‘numeric’
-#> Duration: 0.002756119 secs (started 2025-11-16 13:07:47.117258)
-#> Worker process: bdf5ea10c9cc98ada990f3839373a6a6
+#> Duration: 0.004582882 secs (started 2025-11-17 06:58:21.553169)
+#> Worker process: 3bd491eaf03ca2abce34bb5737239409
 #> 
 
 
@@ -217,15 +217,15 @@ print(f)
 #> Local evaluation: TRUE
 #> Asynchronous evaluation: TRUE
 #> Early signaling: FALSE
-#> Environment: 0x5ed183eba498
+#> Environment: 0x59d3d0af3e10
 #> State: ‘finished’
 #> Resolved: TRUE
-#> Unique identifier: bdf5ea10c9cc98ada990f3839373a6a6-14
-#> Owner process: bdf5ea10c9cc98ada990f3839373a6a6
+#> Unique identifier: 3bd491eaf03ca2abce34bb5737239409-14
+#> Owner process: 3bd491eaf03ca2abce34bb5737239409
 #> Class: ‘SequentialFuture’, ‘UniprocessFuture’, ‘Future’
 #> Value: 39 bytes of class ‘numeric’
-#> Duration: 0.002637148 secs (started 2025-11-16 13:07:47.131231)
-#> Worker process: bdf5ea10c9cc98ada990f3839373a6a6
+#> Duration: 0.00332427 secs (started 2025-11-17 06:58:21.573143)
+#> Worker process: 3bd491eaf03ca2abce34bb5737239409
 
 f2 <- futureOf(c, envir = env)
 print(f2)
@@ -245,15 +245,15 @@ print(f2)
 #> Local evaluation: TRUE
 #> Asynchronous evaluation: TRUE
 #> Early signaling: FALSE
-#> Environment: 0x5ed183eba498
+#> Environment: 0x59d3d0af3e10
 #> State: ‘finished’
 #> Resolved: TRUE
-#> Unique identifier: bdf5ea10c9cc98ada990f3839373a6a6-14
-#> Owner process: bdf5ea10c9cc98ada990f3839373a6a6
+#> Unique identifier: 3bd491eaf03ca2abce34bb5737239409-14
+#> Owner process: 3bd491eaf03ca2abce34bb5737239409
 #> Class: ‘SequentialFuture’, ‘UniprocessFuture’, ‘Future’
 #> Value: 39 bytes of class ‘numeric’
-#> Duration: 0.002637148 secs (started 2025-11-16 13:07:47.131231)
-#> Worker process: bdf5ea10c9cc98ada990f3839373a6a6
+#> Duration: 0.00332427 secs (started 2025-11-17 06:58:21.573143)
+#> Worker process: 3bd491eaf03ca2abce34bb5737239409
 
 f3 <- futureOf("c", envir = env)
 print(f3)
@@ -273,15 +273,15 @@ print(f3)
 #> Local evaluation: TRUE
 #> Asynchronous evaluation: TRUE
 #> Early signaling: FALSE
-#> Environment: 0x5ed183eba498
+#> Environment: 0x59d3d0af3e10
 #> State: ‘finished’
 #> Resolved: TRUE
-#> Unique identifier: bdf5ea10c9cc98ada990f3839373a6a6-14
-#> Owner process: bdf5ea10c9cc98ada990f3839373a6a6
+#> Unique identifier: 3bd491eaf03ca2abce34bb5737239409-14
+#> Owner process: 3bd491eaf03ca2abce34bb5737239409
 #> Class: ‘SequentialFuture’, ‘UniprocessFuture’, ‘Future’
 #> Value: 39 bytes of class ‘numeric’
-#> Duration: 0.002637148 secs (started 2025-11-16 13:07:47.131231)
-#> Worker process: bdf5ea10c9cc98ada990f3839373a6a6
+#> Duration: 0.00332427 secs (started 2025-11-17 06:58:21.573143)
+#> Worker process: 3bd491eaf03ca2abce34bb5737239409
 
 fs <- futureOf(envir = env)
 print(fs)
@@ -302,14 +302,14 @@ print(fs)
 #> Local evaluation: TRUE
 #> Asynchronous evaluation: TRUE
 #> Early signaling: FALSE
-#> Environment: 0x5ed183eba498
+#> Environment: 0x59d3d0af3e10
 #> State: ‘finished’
 #> Resolved: TRUE
-#> Unique identifier: bdf5ea10c9cc98ada990f3839373a6a6-14
-#> Owner process: bdf5ea10c9cc98ada990f3839373a6a6
+#> Unique identifier: 3bd491eaf03ca2abce34bb5737239409-14
+#> Owner process: 3bd491eaf03ca2abce34bb5737239409
 #> Class: ‘SequentialFuture’, ‘UniprocessFuture’, ‘Future’
 #> Value: 39 bytes of class ‘numeric’
-#> Duration: 0.002637148 secs (started 2025-11-16 13:07:47.131231)
-#> Worker process: bdf5ea10c9cc98ada990f3839373a6a6
+#> Duration: 0.00332427 secs (started 2025-11-17 06:58:21.573143)
+#> Worker process: 3bd491eaf03ca2abce34bb5737239409
 #> 
 ```

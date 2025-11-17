@@ -2,6 +2,12 @@
 
 ## Version (development version)
 
+- …
+
+## Version 1.68.0
+
+CRAN release: 2025-11-17
+
 This is the fifth rollout out of several towards a near-future major
 release. This has been made possible due to a multi-year effort of
 internal re-designs, work with package maintainers, release, and repeat.
@@ -22,7 +28,7 @@ This release fixes a few more regressions introduced in **future**
 
 - The `cluster` backend failed when used with an `MPIcluster` as created
   by `parallel::makeCluster(..., type = "MPI")`. This bug was introduced
-  in **future** (\>= 1.40.0) \[2025-04-10\].
+  in **future** 1.40.0 \[2025-04-10\].
 
 - Setting `R_FUTURE_PLAN=multisession` in an Renviron file, or a shell
   startup script, would result in a “fork bomb” when loading the
@@ -31,7 +37,7 @@ This release fixes a few more regressions introduced in **future**
   instead of being deferred to when the first future launched. This
   resulted in new, nested R workers being created recursively, until the
   machine ran out of resources. This bug was introduced in **future**
-  (\>= 1.67.0) \[2025-07-29\].
+  1.67.0 \[2025-07-29\].
 
 - `` value(..., reduce = structure(`+`, init = 42)) `` is not supported,
   because `` `+` `` is a primitive function and one must not set

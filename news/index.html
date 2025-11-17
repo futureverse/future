@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.67.0-9019</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.68.0-9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -79,16 +79,20 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="version-development-version">Version (development version)<a class="anchor" aria-label="anchor" href="#version-development-version"></a></h2>
+<ul><li>…</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="1.68.0" id="version-1680">Version 1.68.0<a class="anchor" aria-label="anchor" href="#version-1680"></a></h2><p class="text-muted">CRAN release: 2025-11-17</p>
 <p>This is the fifth rollout out of several towards a near-future major release. This has been made possible due to a multi-year effort of internal re-designs, work with package maintainers, release, and repeat. This release fixes a few more regressions introduced in <strong>future</strong> 1.40.0 (2025-04-10) and 1.67.0 (2025-07-29).</p>
 <div class="section level3">
-<h3 id="beta-features-development-version">Beta Features<a class="anchor" aria-label="anchor" href="#beta-features-development-version"></a></h3>
+<h3 id="beta-features-1-68-0">Beta Features<a class="anchor" aria-label="anchor" href="#beta-features-1-68-0"></a></h3>
 <ul><li>Calling <code>clusterEvalQ()</code> on a FutureCluster, introduced in <strong>future</strong> 1.58.0 (2025-06-05), is now an error by default - it used to be just a warning.</li>
 </ul></div>
 <div class="section level3">
-<h3 id="bug-fixes-development-version">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h3>
+<h3 id="bug-fixes-1-68-0">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-1-68-0"></a></h3>
 <ul><li><p><code><a href="../reference/result.html">result()</a></code> on a canceled and interrupted cluster future returned the future instead of producing a FutureInterruptError.</p></li>
-<li><p>The <code>cluster</code> backend failed when used with an <code>MPIcluster</code> as created by <code>parallel::makeCluster(..., type = "MPI")</code>. This bug was introduced in <strong>future</strong> (&gt;= 1.40.0) [2025-04-10].</p></li>
-<li><p>Setting <code>R_FUTURE_PLAN=multisession</code> in an Renviron file, or a shell startup script, would result in a “fork bomb” when loading the <strong>future</strong> package. This happened because the setup of the future backend happened eagerly when the <strong>future</strong> package was loaded instead of being deferred to when the first future launched. This resulted in new, nested R workers being created recursively, until the machine ran out of resources. This bug was introduced in <strong>future</strong> (&gt;= 1.67.0) [2025-07-29].</p></li>
+<li><p>The <code>cluster</code> backend failed when used with an <code>MPIcluster</code> as created by <code>parallel::makeCluster(..., type = "MPI")</code>. This bug was introduced in <strong>future</strong> 1.40.0 [2025-04-10].</p></li>
+<li><p>Setting <code>R_FUTURE_PLAN=multisession</code> in an Renviron file, or a shell startup script, would result in a “fork bomb” when loading the <strong>future</strong> package. This happened because the setup of the future backend happened eagerly when the <strong>future</strong> package was loaded instead of being deferred to when the first future launched. This resulted in new, nested R workers being created recursively, until the machine ran out of resources. This bug was introduced in <strong>future</strong> 1.67.0 [2025-07-29].</p></li>
 <li><p><code>value(..., reduce = structure(`+`, init = 42))</code> is not supported, because <code>`+`</code> is a primitive function and one must not set attributes on primitive functions. <code><a href="../reference/value.html">value()</a></code> detects this and produces an error suggestion to use <code>reduce = structure("+", init = 42)</code> instead. The latter still gave the same error, which is now fixed.</p></li>
 </ul></div>
 </div>
