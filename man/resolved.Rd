@@ -46,6 +46,7 @@ where \verb{<type>} corresponds to the type of future, e.g. \code{cluster} and \
 A logical vector of the same length and dimensions as \code{x}.
 Each element is TRUE unless the corresponding element is a
 non-resolved future in case it is FALSE.
+It never signals an error.
 
 The default method always returns TRUE.
 }

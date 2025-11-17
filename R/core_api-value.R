@@ -44,6 +44,8 @@
 #' If `signal` is TRUE and one of the futures produces an error, then
 #' that error is relayed. Any remaining, non-resolved futures in `x` are
 #' canceled, prior to signaling such an error.
+#' If the future was interrupted, canceled, or the parallel worker terminated
+#' abruptly ("crashed"), then a [FutureInterruptError] is signaled.
 #'
 #' @example incl/value.R
 #'
@@ -470,27 +472,27 @@ value.list <- function(x, idxs = NULL, recursive = 0, reduce = NULL, stdout = TR
       reduce <- fcn
     } else if (is.function(reduce)) {
       stop_if_not(is.function(reduce))
-      if (!is.primitive(reduce)) {
+      if (is.primitive(reduce)) {
+        ## SPECIAL CASE: Protect against mistakes
+        ## See R-devel thread '[Rd] structure(<primitive function>, ...) is
+        ## sticky: a bug, or should it be an error?' on 2025-03-19
+        ## <https://stat.ethz.ch/pipermail/r-devel/2025-March/083892.html>
+        if (is.primitive(reduce) && !is.null(attr(reduce, "init", exact = TRUE))) {
+          ## FIXME?: At least in R 4.4.3, none of the primitive functions have
+          ## attributes. Because of that, we could do attributes(reduce) <- NULL
+          ## here before throwing the error. But is that a safe assumption?
+          name <- name_of_function(reduce)
+          nameq <- name
+          if (!grepl("^[[:alpha:]]", nameq)) nameq <- sprintf("`%s`", nameq)
+          stop(sprintf("You must not set an 'init' reduce value on 'base' function %s(), because it is a primitive function. You can use 'reduce = structure(\"%s\", init = <value>)' instead", nameq, name))
+        }
+      } else {
         args <- names(formals(reduce))
         if (length(args) == 0) {
           stop("The 'reduce' function must take at least one argument")
         }
       }
-    }
-    
-    ## SPECIAL CASE: Protect against mistakes
-    ## See R-devel thread '[Rd] structure(<primitive function>, ...) is
-    ## sticky: a bug, or should it be an error?' on 2025-03-19
-    ## <https://stat.ethz.ch/pipermail/r-devel/2025-March/083892.html>
-    if (is.primitive(reduce) && !is.null(attr(reduce, "init", exact = TRUE))) {
-      ## FIXME?: At least in R 4.4.3, none of the primitive functions have
-      ## attributes. Because of that, we could do attributes(reduce) <- NULL
-      ## here before throwing the error. But is that a safe assumption?
-      name <- name_of_function(reduce)
-      nameq <- name
-      if (!grepl("^[[:alpha:]]", nameq)) nameq <- sprintf("`%s`", nameq)
-      stop(sprintf("You must not set an 'init' reduce value on 'base' function %s(), because it is a primitive function. You can use 'reduce = structure(\"%s\", init = <value>)' instead", nameq, name))
-    }
+    }    
   } ## if (do_reduce)
 
   stop_if_not(
@@ -659,7 +661,7 @@ value.list <- function(x, idxs = NULL, recursive = 0, reduce = NULL, stdout = TR
         ## so that future can be resolved in the asynchronously
         if (inherits(obj, "Future")) {
           ## Lazy future that is not yet launched?
-          if (obj[["state"]] == 'created') obj <- run(obj)
+          if (obj[["state"]] == "created") obj <- run(obj)
           
           if (!resolved(obj)) {
             next

@@ -21,7 +21,7 @@ Returns a \pkg{parallel} \code{cluster} object of class \code{FutureCluster}.
 }
 \description{
 \emph{WARNING: Please note that this sets up a stateless set of cluster nodes,
-which means that \code{clusterEvalQ(cl, { a <- 3.14 })} will have no effect.
+which means that \code{clusterEvalQ(cl, { a <- 3.14 })} will not work.
 Consider this a first beta version and use it with great care,
 particularly because of the stateless nature of the cluster.
 For now, I recommend to manually validate that you can get identical
@@ -61,8 +61,6 @@ the above example will all give an error.
 Exceptions to the latter limitation are \code{clusterSetRNGStream()}
 and \code{clusterExport()}, which can be safely used with future clusters.
 See below for more details.
-If \code{clusterEvalQ()} is called, the call is ignored, and a warning
-is produced.
 }
 
 \section{clusterSetRNGStream}{
@@ -83,8 +81,15 @@ Specifically, these values are recorded and are used as globals
 for all futures created there on.
 }
 
+\section{clusterEvalQ}{
+
+If \code{clusterEvalQ()} is called, the call is ignored, and an error
+is produced. The error can be de-escalated to a warning by setting
+R option \code{future.ClusterFuture.clusterEvalQ} to \code{"warning"}.
+}
+
 \examples{
-\dontshow{if ((getRversion() >= "4.4.0")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if ((getRversion() >= "4.4.0")) withAutoprint(\{ # examplesIf}
 plan(multisession)
 cl <- makeClusterFuture()
 

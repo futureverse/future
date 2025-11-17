@@ -14,6 +14,9 @@
 }
 \value{
 The \link{FutureResult} object.
+It may signal a \link{FutureError}, if there is a significant orchestration
+error. For example, if the parallel worker process terminated abruptly
+("crashed"), then a \link{FutureInterruptError} is signaled.
 }
 \description{
 Get the results of a resolved future

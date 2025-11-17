@@ -38,11 +38,18 @@ their examples or tests require a working internet connection:
 * BatchGetSymbols
 * datapackage.r
 * GetBCBData
+* greenSD
 * GSODR
 * hackeRnews
 * iml
 * tableschema.r
 * tsfeatures
+
+
+### Packages that fail due to spotty internet downloads
+
+* pgxRpi
+
 
 
 ### Packages that fail if tested in parallel
@@ -52,7 +59,56 @@ compete with themselves for resources.  For example, several Bioconductor
 package assumes their BiocFileCache folder is empty, or no other R
 processes are writing to it at the same time.
 
-* ...
+Workaround is to clear file caches and check one package at the time;
+
+```sh
+rm -rf ~/.cache/R/
+R_REVDEPCHECK_NUM_WORKERS=1 revdep/run.R
+```
 
 
 
+
+### More 'multisession' workers than connectes
+
+Also, the below packages fail on hosts with many CPUs, because
+they use `availableCores()` in their vignettes, which falls back
+to `detectCores() when built via `R CMD check`.
+
+The workaround is to check with:
+
+```
+R_PARALLELLY_AVAILABLECORES_MAX=96 revdep/run.R
+```
+
+Note that this will be automatically limited to two (2) in
+**parallelly** (>= 1.46.0).
+
+Problematic packages:
+
+* ale
+* dar
+* gtfs2emis
+* gtfs2gps
+* signeR
+* simIDM
+* uci
+
+
+### Uses `detectCores()`
+
+The following packages uses 'multisession' and defaults to
+`parallel::detectCores()` workers. This fails on machines with > 125
+CPU cores. 
+
+The workaround is to check these package on a machine with fewer cores
+and setting R option 'parallelly.maxWorkers.localhost=c(100,100)' as;
+
+```sh
+R_PARALLELLY_MAXWORKERS_LOCALHOST="100,100" revdep/run.R
+```
+
+Problematic packages:
+
+* fmeffects
+* FracFixR

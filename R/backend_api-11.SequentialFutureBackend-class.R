@@ -182,16 +182,7 @@ getFutureBackendConfigs.UniprocessFuture <- function(future, ...) {
 #' @aliases uniprocess
 #' @export
 sequential <- function(..., envir = parent.frame()) {
-  ## WORKAROUNDS:
-  ## (1) fiery calls sequential() directly
-  ##     https://github.com/thomasp85/fiery/issues/53
-  if (!"fiery" %in% loadedNamespaces()) {
-    stop("The future::sequential() function must never be called directly")
-  }
-  
-  f <- Future(..., envir = envir)
-  class(f) <- c("SequentialFuture", "UniprocessFuture", "Future")
-  f  
+  stop("The future::sequential() function must never be called directly")
 }
 class(sequential) <- c("sequential", "uniprocess", "future", "function")
 attr(sequential, "init") <- TRUE

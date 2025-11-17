@@ -23,7 +23,7 @@ UniprocessFuture <- function(expr = NULL, substitute = TRUE, envir = parent.fram
 run.UniprocessFuture <- function(future, ...) {
   debug <- isTRUE(getOption("future.debug"))
    
-  if (future[["state"]] != 'created') {
+  if (future[["state"]] != "created") {
     label <- sQuoteLabel(future)
     stop(FutureError(sprintf("A future (%s) can only be launched once", label), future = future))
   }
@@ -33,10 +33,10 @@ run.UniprocessFuture <- function(future, ...) {
   assertOwner(future)
 
   ## Run future
-  future[["state"]] <- 'running'
+  future[["state"]] <- "running"
   data <- getFutureData(future, debug = debug)
   future[["result"]] <- evalFuture(data)
-  future[["state"]] <- 'finished'
+  future[["state"]] <- "finished"
 
   if (debug) mdebugf("%s started (and completed)", class(future)[1])
 

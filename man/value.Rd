@@ -110,6 +110,8 @@ For all other elements, the existing object is kept as-is.
 If \code{signal} is TRUE and one of the futures produces an error, then
 that error is relayed. Any remaining, non-resolved futures in \code{x} are
 canceled, prior to signaling such an error.
+If the future was interrupted, canceled, or the parallel worker terminated
+abruptly ("crashed"), then a \link{FutureInterruptError} is signaled.
 }
 \description{
 Gets the value of a future or the values of all elements (including futures)
@@ -145,10 +147,10 @@ vs <- unlist(vs)
 message("The ten averages are: ", paste(vs, collapse = ", "))
 
 ## The values as a vector (by reducing)
-vs <- value(fs, reduce = `c`)
+vs <- value(fs, reduce = c)
 message("The ten averages are: ", paste(vs, collapse = ", "))
 
 ## Calculate the sum of the averages (by reducing)
-total <- value(fs, reduce = `sum`)
+total <- value(fs, reduce = `+`)
 message("The sum of the ten averages is: ", total)
 }

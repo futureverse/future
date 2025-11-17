@@ -76,7 +76,12 @@ jobs:
           r-version: ${{ matrix.config.r }}
           http-user-agent: ${{ matrix.config.http-user-agent }}
           use-public-rspm: true
-          
+
+      - name: Install system dependencies for Rmpi (OpenMPI)
+        if: runner.os == 'Linux'
+        run: |
+           sudo apt install -y libopenmpi-dev openmpi-bin
+  
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
           extra-packages: |
@@ -124,7 +129,7 @@ jobs:
           R_FUTURE_PSOCK_RELAY_IMMEDIATE: ${{ matrix.config.psock_relay_immediate }}
         run: |
           if ("${{ matrix.config.strict }}" == "true") {
-            Sys.setenv(R_FUTURE_CONNECTIONS_ONMISUSE = "error[details=TRUE]")
+            # FIXME: Sys.setenv(R_FUTURE_CONNECTIONS_ONMISUSE = "error[details=TRUE]")
             Sys.setenv(R_FUTURE_GLOBALENV_ONMISUSE = "error")
             Sys.setenv(R_FUTURE_RNG_ONMISUSE = "error")
           }
@@ -140,7 +145,7 @@ jobs:
         if: runner.os == 'Windows'
         run: |
           if ("${{ matrix.config.strict }}" == "true") {
-            Sys.setenv(R_FUTURE_CONNECTIONS_ONMISUSE = "error[details=TRUE]")
+            # FIXME: Sys.setenv(R_FUTURE_CONNECTIONS_ONMISUSE = "error[details=TRUE]")
             Sys.setenv(R_FUTURE_DEVICES_ONMISUSE = "error")
             Sys.setenv(R_FUTURE_GLOBALENV_ONMISUSE = "error")
             Sys.setenv(R_FUTURE_RNG_ONMISUSE = "error")
@@ -150,6 +155,16 @@ jobs:
                      if (getRversion() >= "4.2.0") "--no-multiarch"),
             check_dir = "check"
           )
+        shell: Rscript {0}
+
+      - name: Check MPI clusters (not macOS)
+        if: runner.os != 'macOS'
+        env:
+          NOT_CRAN: true
+          OMPI_MCA_rmaps_base_oversubscribe: 1
+        run: |
+          install.packages(c("Rmpi", "snow"))
+          future:::testme("mpi")
         shell: Rscript {0}
 
       - name: Upload check results

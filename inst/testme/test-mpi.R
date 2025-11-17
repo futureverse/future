@@ -4,26 +4,28 @@
 
 library(future)
 stopCluster <- parallel::stopCluster
+makeClusterMPI <- parallelly::makeClusterMPI
 
 message("*** MPI ...")
 
 pkg <- "Rmpi"
-if (fullTest && requireNamespace(pkg, quietly = TRUE)) {
+if (requireNamespace(pkg, quietly = TRUE)) {
   cl <- makeClusterMPI(availableCores())
   str(cl)
   
   plan(cluster, workers = cl)
 
-  fs <- lapply(1:2, FUN = function(x) future({
+  xs <- seq_len(nbrOfWorkers() + 1)
+  fs <- lapply(xs, FUN = function(x) future({
     printf("Hostname: %s\n", Sys.info()[["nodename"]])
     printf("PID: %d\n", Sys.getpid())
     Sys.sleep(0.5)
-    x^2
+    -x
   }))
   print(fs)
   vs <- value(fs)
   print(vs)
-  stopifnot(all(unlist(vs) == c(1, 4)))
+  stopifnot(all(unlist(vs) == -xs))
 
   stopCluster(cl)
   str(cl)

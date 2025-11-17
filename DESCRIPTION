@@ -1,5 +1,5 @@
 Package: future
-Version: 1.67.0
+Version: 1.68.0
 Title: Unified Parallel and Distributed Processing in R for Everyone
 Depends:
     R (>= 3.2.0)
@@ -43,7 +43,7 @@ URL: https://future.futureverse.org, https://github.com/futureverse/future
 BugReports: https://github.com/futureverse/future/issues
 Language: en-US
 Encoding: UTF-8
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3
 Roxygen: list(markdown = TRUE)
 Collate: 
     '000.bquote.R'

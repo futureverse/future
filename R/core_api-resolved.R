@@ -12,6 +12,7 @@
 #' A logical vector of the same length and dimensions as `x`.
 #' Each element is TRUE unless the corresponding element is a
 #' non-resolved future in case it is FALSE.
+#' It never signals an error.
 #'
 #' @details
 #' `resolved(..., run = TRUE)` attempts to launch a lazy future, if there is

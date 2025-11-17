@@ -234,7 +234,6 @@ launchFuture.ClusterFutureBackend <- function(backend, future, ...) {
   
   ## Does the cluster node communicate with a connection?
   ## (if not, it's likely via MPI)
-  stop_if_not(inherits(node, c("SOCK0node", "SOCKnode")))
   con <- node[["con"]]
   future[["nodeHasConnection"]] <- !is.null(con)
 
@@ -776,7 +775,11 @@ result.ClusterFuture <- function(future, ...) {
       ## worker also shutting done? If so, turn the error into a run-time
       ## FutureInterruptError and revive the worker
       future <- handleInterruptedFuture(backend, future = future)
-      return(future)
+      stop_if_not(inherits(future, "Future"))
+      result <- future[["result"]]
+      if (inherits(result, "FutureError")) stop(result)
+      stop_if_not(inherits(future, "FutureResult"))
+      return(result)
     }
     assertValidConnection(future)
   }
@@ -1469,7 +1472,7 @@ getFutureBackendConfigs.ClusterFuture <- function(future, ..., debug = isTRUE(ge
   
   ## Does the cluster node communicate with a connection?
   ## (if not, it's via MPI)
-  if (!future[["nodeHasConnection"]]) return(list())
+  if (!isTRUE(future[["nodeHasConnection"]])) return(list())
 
   capture <- list(
     immediateConditionHandlers = list(

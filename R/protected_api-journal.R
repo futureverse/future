@@ -58,7 +58,7 @@
 #' @example incl/journal.R
 #'
 #' @seealso
-#' Use [capture_journals()] to capture journals from all futures.
+#' Use `future.tools::capture_journals()` to capture journals from all futures.
 #'
 #' @keywords internal
 #' @noRd
