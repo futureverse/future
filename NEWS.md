@@ -72,8 +72,8 @@ repeat. This release fixes a few more regressions introduced in
  * The pre-validation of the cluster worker allotted to a future when
    launched was unnecessarily expensive due to a thinko since
    **future** 1.40.0 (2025-04-10), e.g. it would take ~0.1-0.2 seconds
-   for a multisession future, whereas after the fix it is effectly 0.0
-   seconds.
+   for a multisession future, whereas after the fix it is effectively
+   0.0 seconds.
 
  * Calling `resolved()` on a lazy `ClusterFuture` would collect the
    result for the first _resolved_ future in order to free up one
