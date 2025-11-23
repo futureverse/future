@@ -1,7 +1,11 @@
 # Version (development version)
 
- * ...
+## Bug Fixes
 
+ * `plan(..., interrupts = ...)` would produce a warning on "Detected
+   1 unknown future arguments: 'interrupts'" for third-party future
+   backends.
+   
 
 # Version 1.68.0 [2025-11-16]
 
