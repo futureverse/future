@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.68.0-9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.68.0-9001</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -79,8 +79,12 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="version-development-version">Version (development version)<a class="anchor" aria-label="anchor" href="#version-development-version"></a></h2>
-<ul><li>…</li>
+<div class="section level3">
+<h3 id="bug-fixes-development-version">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h3>
+<ul><li>
+<code>plan(..., interrupts = ...)</code> would produce a warning on “Detected 1 unknown future arguments: ‘interrupts’” for third-party future backends.</li>
 </ul></div>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.68.0" id="version-1680">Version 1.68.0<a class="anchor" aria-label="anchor" href="#version-1680"></a></h2><p class="text-muted">CRAN release: 2025-11-17</p>
 <p>This is the fifth rollout out of several towards a near-future major release. This has been made possible due to a multi-year effort of internal re-designs, work with package maintainers, release, and repeat. This release fixes a few more regressions introduced in <strong>future</strong> 1.40.0 (2025-04-10) and 1.67.0 (2025-07-29).</p>
@@ -106,7 +110,7 @@
 </ul></div>
 <div class="section level3">
 <h3 id="performance-1-67-0">Performance<a class="anchor" aria-label="anchor" href="#performance-1-67-0"></a></h3>
-<ul><li><p>The pre-validation of the cluster worker allotted to a future when launched was unnecessarily expensive due to a thinko since <strong>future</strong> 1.40.0 (2025-04-10), e.g. it would take ~0.1-0.2 seconds for a multisession future, whereas after the fix it is effectly 0.0 seconds.</p></li>
+<ul><li><p>The pre-validation of the cluster worker allotted to a future when launched was unnecessarily expensive due to a thinko since <strong>future</strong> 1.40.0 (2025-04-10), e.g. it would take ~0.1-0.2 seconds for a multisession future, whereas after the fix it is effectively 0.0 seconds.</p></li>
 <li><p>Calling <code><a href="../reference/resolved.html">resolved()</a></code> on a lazy <code>ClusterFuture</code> would collect the result for the first <em>resolved</em> future in order to free up one worker slot. Now this is only done if all slots are occupied. The net benefit is that lazy cluster futures will be launched faster, unless all workers are busy.</p></li>
 <li><p>Cluster and multisession workers initiate more things when created, e.g. pre-loading of packages and memoization of available cores. Previously, such steps were performed only when the first future was evaluated on a worker.</p></li>
 </ul></div>

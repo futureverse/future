@@ -2,7 +2,11 @@
 
 ## Version (development version)
 
-- …
+### Bug Fixes
+
+- `plan(..., interrupts = ...)` would produce a warning on “Detected 1
+  unknown future arguments: ‘interrupts’” for third-party future
+  backends.
 
 ## Version 1.68.0
 
@@ -74,7 +78,8 @@ This release fixes a few more regressions introduced in **future**
 - The pre-validation of the cluster worker allotted to a future when
   launched was unnecessarily expensive due to a thinko since **future**
   1.40.0 (2025-04-10), e.g. it would take ~0.1-0.2 seconds for a
-  multisession future, whereas after the fix it is effectly 0.0 seconds.
+  multisession future, whereas after the fix it is effectively 0.0
+  seconds.
 
 - Calling
   [`resolved()`](https://future.futureverse.org/reference/resolved.md)
