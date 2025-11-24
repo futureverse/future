@@ -407,6 +407,12 @@ evalFuture <- function(
       }
     }
     msg <- sprintf("%s. Possible other reasons: %s", msg, conditionMessage(ex))
+    call <- conditionCall(ex)
+    if (!is.null(call)) {
+      call <- deparse(call, width.cutoff = 500L)
+      call <- paste(call, collapse = " -> ")
+      msg <- sprintf("%s [in %s]", msg, call)
+    }
     ex <- simpleError(msg)
     class(ex) <- c("FutureLaunchError", "FutureError", class(ex))
     ex
