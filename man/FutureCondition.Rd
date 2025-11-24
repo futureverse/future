@@ -36,7 +36,8 @@ FutureCondition(
   when = NULL,
   uuid = future[["uuid"]],
   label = future[["label"]],
-  future = NULL
+  future = NULL,
+  drop = FALSE
 )
 
 FutureMessage(
@@ -155,6 +156,9 @@ associated with this FutureCondition.}
 \item{label}{(optional) A future label.}
 
 \item{future}{(optional) The \link{Future} involved.}
+
+\item{drop}{If TRUE, the \code{future} argument is only used to populate
+future metadata, but is not stored in the condition object created.}
 
 \item{hint}{(optional) A string with a suggestion on what might be wrong.}
 }
