@@ -2,6 +2,8 @@
 #' @tags listenv
 #' @tags sequential multisession multicore
 
+options(future.debug = FALSE)
+
 library(future)
 library(listenv)
 
@@ -152,15 +154,23 @@ for (cores in 1:availCores) {
       for (misuse in c("ignore", "warning", "error")) {
         options(future.rng.onMisuse = misuse)
 
-        y3 <- tryCatch({
-	  ## WORKAROUND: fsample() triggers a R_FUTURE_GLOBALS_ONREFERENCE
-	  ##             warning.  Not sure why. /HB 2019-12-27
-	  ovalue <- Sys.getenv("R_FUTURE_GLOBALS_ONREFERENCE")
-	  on.exit(Sys.setenv("R_FUTURE_GLOBALS_ONREFERENCE" = ovalue))
-	  Sys.setenv("R_FUTURE_GLOBALS_ONREFERENCE" = "ignore")
-	  
-          fsample(0:3, what = what, seed = FALSE)
-        }, warning = identity, error = identity)
+        y3 <- tryCatch(
+          {
+            ## WORKAROUND: fsample() triggers a R_FUTURE_GLOBALS_ONREFERENCE
+            ##             warning.  Not sure why. /HB 2019-12-27
+            ovalue <- Sys.getenv("R_FUTURE_GLOBALS_ONREFERENCE")
+            on.exit(Sys.setenv("R_FUTURE_GLOBALS_ONREFERENCE" = ovalue))
+            Sys.setenv("R_FUTURE_GLOBALS_ONREFERENCE" = "ignore")
+            fsample(0:3, what = what, seed = FALSE)
+          },
+          FutureWarning = identity,
+          FutureError = identity,
+          warning = function(w) {
+            message("Caught an unexpected regular warning - escalating to an error")
+            utils::str(w)
+            stop(w)
+          }
+        )
         print(y3)
         if (misuse %in% c("warning", "error")) {
           stopifnot(
