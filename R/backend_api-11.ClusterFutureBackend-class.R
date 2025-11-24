@@ -1523,7 +1523,11 @@ handleInterruptedFuture <- local({
       pid <- node[["session_info"]][["process"]][["pid"]]
       if (!is.null(pid)) msg <- sprintf("%s (pid %s)", msg, pid)
     }
-    result <- FutureInterruptError(msg, future = future)
+    if (state %in% "canceled") {
+      result <- FutureCanceledError(msg, future = future)
+    } else {
+      result <- FutureInterruptError(msg, future = future)
+    }
     future[["result"]] <- result
   
     ## Remove from backend

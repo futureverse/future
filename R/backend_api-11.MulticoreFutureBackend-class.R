@@ -419,7 +419,11 @@ result.MulticoreFuture <- local({
         if (future[["state"]] %in% c("canceled", "interrupted")) {
           if (debug) mdebugf("Detected interrupted %s whose result cannot be retrieved", sQuote(class(future)[1]))
           msg <- sprintf("A future (%s) of class %s was interrupted, while running on localhost (pid %d)", label, class(future)[1], pid)
-          result <- FutureInterruptError(msg, future = future)
+          if (future[["state"]] %in% "canceled") {
+            result <- FutureCanceledError(msg, future = future)
+          } else {
+            result <- FutureInterruptError(msg, future = future)
+          }
           future[["result"]] <- result
 
           ## Remove from backend
