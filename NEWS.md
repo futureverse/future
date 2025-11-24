@@ -1,5 +1,14 @@
 # Version (development version)
 
+## New Features
+
+ * Add `conditionMessage()` for `FutureCondition`, which appends
+   meta-data information to the original message.
+
+ * Add more metadata to `FutureCondition` objects by default, e.g. in
+   which session (including UUID, hostname, and PID) and when the
+   condition was created.
+
 ## Bug Fixes
 
  * `plan(..., interrupts = ...)` would produce a warning on "Detected

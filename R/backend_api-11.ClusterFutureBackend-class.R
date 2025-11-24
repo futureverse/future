@@ -1518,7 +1518,7 @@ handleInterruptedFuture <- local({
     } else {
       event <- sprintf("was %s", state)
     }
-    msg <- sprintf("Future (%s) of class %s %s, while running on %s", label, class(future)[1], event, sQuote(host))
+    msg <- sprintf("Future (%s) of class %s %s", label, class(future)[1], event)
     if (inherits(node, "RichSOCKnode")) {
       pid <- node[["session_info"]][["process"]][["pid"]]
       if (!is.null(pid)) msg <- sprintf("%s (pid %s)", msg, pid)
