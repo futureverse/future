@@ -22,6 +22,9 @@
 #' 
 #' @param future (optional) The [Future] involved.
 #' 
+#' @param drop If TRUE, the `future` argument is only used to populate
+#' future metadata, but is not stored in the condition object created.
+#' 
 #' @return An object of class FutureCondition which inherits from class
 #' \link[base:conditions]{condition} and FutureMessage, FutureWarning,
 #' and FutureError all inherits from FutureCondition.
@@ -31,7 +34,7 @@
 #'
 #' @export
 #' @keywords internal
-FutureCondition <- function(message, call = NULL, by = session_uuid(), when = NULL, uuid = future[["uuid"]], label = future[["label"]], future = NULL) {
+FutureCondition <- function(message, call = NULL, by = session_uuid(), when = NULL, uuid = future[["uuid"]], label = future[["label"]], future = NULL, drop = FALSE) {
   ## Support different types of input
   if (inherits(message, "condition")) {
     cond <- message
@@ -56,7 +59,7 @@ FutureCondition <- function(message, call = NULL, by = session_uuid(), when = NU
     if (!is.null(future)) stop_if_not(inherits(future, "Future"))
   })
 
-  if (!getOption("future.onFutureCondition.keepFuture", TRUE)) {
+  if (drop && !getOption("future.onFutureCondition.keepFuture", TRUE)) {
     future <- NULL
   }
   
