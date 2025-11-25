@@ -86,6 +86,7 @@ Collate:
     'protected_api-globals.R'
     'protected_api-journal.R'
     'protected_api-resolve.R'
+    'protected_api-result.R'
     'protected_api-signalConditions.R'
     'testme.R'
     'utils-basic.R'

@@ -118,3 +118,47 @@ resolved.environment <- function(x, ...) {
   stop_if_not(length(fs) == n_fs)
   fs
 }
+
+
+#' @rdname resolved
+#' @export
+resolved.Future <- function(x, run = TRUE, ...) {
+  future <- x
+  debug <- isTRUE(getOption("future.debug"))
+  if (debug) {
+    mdebugf_push("resolved() for %s (%s) ...", class(future)[1], sQuoteLabel(future))
+    on.exit(mdebug_pop())
+    mdebug("state: ", sQuote(future[["state"]]))
+    mdebug("run: ", run)
+  }
+  
+  ## A lazy future not even launched?
+  if (future[["state"]] == "created") {
+    if (!run) return(FALSE)
+    if (debug) mdebug_push("run() ...")
+    future <- run(future)
+    if (debug) {
+      mdebug_pop()
+      mdebug_push("resolved() ...")
+    }
+    res <- resolved(future, ...)
+    if (debug) {
+      mdebug("resolved: ", res)
+      mdebug_pop()
+    }
+    return(res)
+  }
+
+  ## Signal conditions early, iff specified for the given future
+  ## Note, collect = TRUE will block here, which is intentional
+  signalEarly(future, collect = TRUE, ...)
+
+  if (debug) mdebug("result: ", sQuote(class(future[["result"]])[1]))
+  if (inherits(future[["result"]], "FutureResult")) return(TRUE)
+  
+  res <- (future[["state"]] %in% c("finished", "failed", "canceled", "interrupted"))
+
+  if (debug) mdebug("resolved: ", res)
+
+  res
+}
