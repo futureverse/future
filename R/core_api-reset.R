@@ -109,6 +109,7 @@ reset.Future <- function(x, ...) {
 
   future[["state"]] <- "created"
   future[["lazy"]] <- TRUE
+  future[["actions"]] <- character(0L)
   
   future
 } ## reset() for Future

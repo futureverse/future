@@ -66,6 +66,8 @@ result.Future <- function(future, ...) {
     if (inherits(result, "FutureError")) stop(result)
     return(result)
   }
+
+  future[["actions"]] <- c(future[["actions"]], "result")
   
   if (future[["state"]] == "created") {
     future <- run(future)

@@ -237,6 +237,7 @@ Future <- function(expr = NULL, envir = parent.frame(), substitute = TRUE, stdou
   ## The current state of the future, e.g.
   ## 'created', 'running', 'finished', 'failed', 'canceled', 'interrupted'
   core[["state"]] <- "created"
+  core[["actions"]] <- character(0L)
 
   ## Additional named arguments
   for (key in args_names) core[[key]] <- args[[key]]
@@ -337,6 +338,10 @@ print.Future <- function(x, ...) {
   cat(sprintf("Early signaling: %s\n", isTRUE(future[["earlySignal"]])))
   cat(sprintf("Environment: %s\n", envname(future[["envir"]])))
 
+  actions <- future[["actions"]]
+  cat(sprintf("Actions: [n=%d] %s\n", length(actions), commaq(actions)))
+
+  actions <- future[["actions"]]
   result <- future[["result"]]
   state <- future[["state"]]
   description <- switch(state,
@@ -347,10 +352,30 @@ print.Future <- function(x, ...) {
       "Future has been submitted, but it is not known if it has been started"
     },
     running = {
-      "Future is being evaluated"
+      msg <- "Future is being evaluated"
+      if ("cancel" %in% actions) {
+        if ("interrupt" %in% actions) {
+          msg <- sprintf("%s, but has been canceled and interrupted", msg)
+        } else {
+          msg <- sprintf("%s, but has been canceled without being interrupted", msg)
+        }
+      }
+      msg
     },
     finished = {
       stop_if_not(inherits(result, "FutureResult"))
+      
+      if ("cancel" %in% actions) {
+        if ("interrupt" %in% actions) {
+          msg <- "Future was canceled and interrupted"
+        } else {
+          msg <- "Future was canceled but not interrupted"
+        }
+        msg <- sprintf("%s, while being evaluated", msg)
+      } else {
+        msg <- "Future was resolved"
+      }
+      
       conditions <- result[["conditions"]]
       n <- length(conditions)
       if (n == 0L) {
@@ -361,23 +386,42 @@ print.Future <- function(x, ...) {
       }
       if (inherits(cond, "error")) {
         if (inherits(cond, "FutureInterruptError")) {
-          sprintf("Future was interrupted during evaluation, resulting in a %s", sQuote(class(cond)[1]))
+          if (!"interrupt" %in% actions) {
+            msg <- sprintf("%s, but was interrupted via an external method", msg)
+          }
+          msg <- sprintf("%s, resulting in a %s", msg, sQuote(class(cond)[1]))
         } else if (inherits(cond, "FutureError")) {
-          sprintf("Future was resolved, but produced a %s", sQuote(class(cond)[1]))
+          msg <- sprintf("%s, but produced a %s", msg, sQuote(class(cond)[1]))
         } else {
-          "Future was resolved, but produced a run-time error"
+          msg <- sprintf("%s, but produced a run-time %s error", msg, sQuote(class(cond)[1]))
         }
       } else if (inherits(cond, "interrupt")) {
-        "Future was interrupted during evaluation"
+        msg <- sprintf("%s, which was interrupted during evaluation via a user interrupt", msg)
       } else {
-        "Future was resolved successfully"
+        msg <- sprintf("%s successfully", msg)
       }
     },
     interrupted = {
-      "Future was interrupted during evaluation"
+      msg <- "Future was interrupted during evaluation"
+      if ("cancel" %in% actions) {
+        if ("interrupt" %in% actions) {
+          msg <- sprintf("%s, because it was canceled and interrupted", msg)
+        } else {
+          msg <- sprintf("%s, because it was canceled but not interrupted", msg)
+        }
+      }
+      msg      
     },
     canceled = {
-      "Future was canceled"
+      if ("cancel" %in% actions) {
+        if ("interrupt" %in% actions) {
+          "Future was canceled and interrupted"
+        } else {
+          "Future was canceled, but not interrupted"
+        }
+      } else {
+        "Future was canceled"
+      }
     },
     failed = {
       "Future failed due to an unexpected, internal error during launch, evaluation, or while returning the results"
@@ -650,6 +694,8 @@ run <- function(future, ...) {
       )
     })
   }
+  
+  future[["actions"]] <- c(future[["actions"]], "run")
   UseMethod("run")
 }
 
