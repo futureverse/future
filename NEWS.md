@@ -9,6 +9,8 @@
    which session (including UUID, hostname, and PID) and when the
    condition was created.
 
+ * `print()` on a Future outpus a description of the current state.
+
 ## Bug Fixes
 
  * `plan(..., interrupts = ...)` would produce a warning on "Detected

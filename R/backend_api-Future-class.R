@@ -337,10 +337,55 @@ print.Future <- function(x, ...) {
   cat(sprintf("Early signaling: %s\n", isTRUE(future[["earlySignal"]])))
   cat(sprintf("Environment: %s\n", envname(future[["envir"]])))
 
-  state <- future[["state"]]
-  cat(sprintf("State: %s\n", commaq(state)))
-  
   result <- future[["result"]]
+  state <- future[["state"]]
+  description <- switch(state,
+    created = {
+      "Future was created, but is yet to be submitted"
+    },
+    submitted = {
+      "Future has been submitted, but it is not known if it has been started"
+    },
+    running = {
+      "Future is being evaluated"
+    },
+    finished = {
+      stop_if_not(inherits(result, "FutureResult"))
+      conditions <- result[["conditions"]]
+      n <- length(conditions)
+      if (n == 0L) {
+        cond <- NULL
+      } else {
+        condition <- conditions[[n]]
+        cond <- condition[["condition"]]
+      }
+      if (inherits(cond, "error")) {
+        if (inherits(cond, "FutureInterruptError")) {
+          sprintf("Future was interrupted during evaluation, resulting in a %s", sQuote(class(cond)[1]))
+        } else if (inherits(cond, "FutureError")) {
+          sprintf("Future was resolved, but produced a %s", sQuote(class(cond)[1]))
+        } else {
+          "Future was resolved, but produced a run-time error"
+        }
+      } else if (inherits(cond, "interrupt")) {
+        "Future was interrupted during evaluation"
+      } else {
+        "Future was resolved successfully"
+      }
+    },
+    interrupted = {
+      "Future was interrupted during evaluation"
+    },
+    canceled = {
+      "Future was canceled"
+    },
+    failed = {
+      "Future failed due to an unexpected, internal error during launch, evaluation, or while returning the results"
+    },
+    NA_character_
+  )
+  cat(sprintf("State: %s (\"%s\")\n", commaq(state), description))
+  
   hasResult <- inherits(result, "FutureResult")
   ## BACKWARD COMPATIBILITY
   hasResult <- hasResult || exists("value", envir = future, inherits = FALSE)
@@ -477,9 +522,10 @@ run.Future <- function(future, ...) {
     if (debug) mdebug_push("Launching futures ...")
     future[["backend"]] <- backend
     future[["start"]] <- proc.time()[[3]]
-    future2 <- tryCatch(
+    future2 <- tryCatch({
       launchFuture(backend, future = future)
-    , FutureError = function(ex) {
+    }, FutureError = function(ex) {
+      future[["state"]] <- "failed"
       ## Known error caught by the future backend
       stop(ex)
     }, error = function(ex) {
@@ -487,6 +533,7 @@ run.Future <- function(future, ...) {
       msg <- conditionMessage(ex)
       label <- sQuoteLabel(future)
       msg <- sprintf("Caught an unexpected error of class %s when trying to launch future (%s) on backend of class %s. The reason was: %s", class(ex)[1], label, class(backend)[1], msg)
+      future[["state"]] <- "failed"
       stop(FutureLaunchError(msg, future = future))
     })
     if (debug) mdebug_pop()
@@ -861,6 +908,48 @@ getExpression.Future <- local({
 }) ## getExpression()
 
 
+# Future states:
+#
+#  1. `created`:
+#     The future has been created, but not yet been submitted.
+#     Examples:
+#       A future created with `lazy = TRUE` is in this state.
+#
+#  2. `submitted`:
+#     The future has been submitted for evaluation.
+#     There is no evidence yet that the future is being evaluated.
+#     Examples:
+#       A future submitted to a queue may be in this state.
+#                
+#  3. `running`:
+#     The future is currently being evaluated.
+#     There is no evidence yet that the evaluation of the future has finished.
+#     Examples:
+#       Future being processed by a worker is typically in this state.
+#                
+#  4. `finished`:
+#     The evaluation of the future has completed.
+#     Examples:
+#       A future submitted to a queue may be in this state.
+#
+#  5. `failed`:
+#     The evaluation of the future has terminated, but failed before being
+#     completed.
+#     Examples:
+#       A future that failed to launch.
+#       An internal error occured while evaluating the future.
+#       An internal error occured after finishing future evaluation, but
+#       before return the results.
+#
+#  6. `interrupted`:
+#     The evaluation of the future has terminated, but was interrupted before
+#     being completed.
+#     Examples:
+#
+#  7. `canceled`:
+#     The evaluation of the future has terminated, but was canceled.
+#     Examples:
+#
 #' @export
 `$<-.Future` <- function(x, name, value) {
   if (name == "state") {
