@@ -440,34 +440,6 @@ Run `revdepcheck::revdep_details(, "ctsem")` for more info
     Execution halted
     ```
 
-# dipsaus
-
-<details>
-
-* Version: 0.3.1
-* GitHub: https://github.com/dipterix/dipsaus
-* Source code: https://github.com/cran/dipsaus
-* Date/Publication: 2025-04-03 16:50:02 UTC
-* Number of recursive dependencies: 63
-
-Run `revdepcheck::revdep_details(, "dipsaus")` for more info
-
-</details>
-
-## In both
-
-*   checking compiled code ... NOTE
-    ```
-    File ‘dipsaus/libs/dipsaus.so’:
-      Found non-API call to R: ‘ENCLOS’
-    
-    Compiled code should not call non-API entry points in R.
-    
-    See ‘Writing portable packages’ in the ‘Writing R Extensions’ manual,
-    and section ‘Moving into C API compliance’ for issues with the use of
-    non-API entry points.
-    ```
-
 # disk.frame
 
 <details>
@@ -580,48 +552,6 @@ Run `revdepcheck::revdep_details(, "envi")` for more info
     See ‘/scratch/henrik/revdep/future/checks/envi/new/envi.Rcheck/00install.out’ for details.
     ```
 
-# EQRN
-
-<details>
-
-* Version: 0.1.1
-* GitHub: https://github.com/opasche/EQRN
-* Source code: https://github.com/cran/EQRN
-* Date/Publication: 2025-03-17 20:40:02 UTC
-* Number of recursive dependencies: 39
-
-Run `revdepcheck::revdep_details(, "EQRN")` for more info
-
-</details>
-
-## In both
-
-*   checking examples ... ERROR
-    ```
-    Running examples in ‘EQRN-Ex.R’ failed
-    The error most likely occurred in:
-    
-    > ### Name: default_device
-    > ### Title: Default torch device
-    > ### Aliases: default_device
-    > 
-    > ### ** Examples
-    > 
-    > device <- default_device()
-    Error in cpp_cuda_is_available() : 
-      Lantern is not loaded. Please use `install_torch()` to install additional dependencies.
-    Calls: default_device -> <Anonymous> -> cpp_cuda_is_available
-    Execution halted
-    ```
-
-*   checking whether startup messages can be suppressed ... NOTE
-    ```
-    Torch libraries are installed but loading them was unsuccessful.
-    
-    It looks like this package (or a package it requires) has a startup
-    message which cannot be suppressed: see ?packageStartupMessage.
-    ```
-
 # fastRhockey
 
 <details>
@@ -682,31 +612,6 @@ Run `revdepcheck::revdep_details(, "fdacluster")` for more info
       placeholder syntax added in R 4.2.0.
       File(s) using such syntax:
         ‘caps-plot.R’ ‘utils.R’
-    ```
-
-# ferrn
-
-<details>
-
-* Version: 0.1.0
-* GitHub: https://github.com/huizezhang-sherry/ferrn
-* Source code: https://github.com/cran/ferrn
-* Date/Publication: 2024-06-23 22:30:07 UTC
-* Number of recursive dependencies: 146
-
-Run `revdepcheck::revdep_details(, "ferrn")` for more info
-
-</details>
-
-## In both
-
-*   checking DESCRIPTION meta-information ... NOTE
-    ```
-      Missing dependency on R >= 4.1.0 because package code uses the pipe
-      |> or function shorthand \(...) syntax added in R 4.1.0.
-      File(s) using such syntax:
-        ‘calc-squintability.R’ ‘get.R’ ‘pipe-sine-boa.Rd’ ‘plot-projection.R’
-        ‘projection.Rd’
     ```
 
 # flowGraph
@@ -791,13 +696,13 @@ Run `revdepcheck::revdep_details(, "FracFixR")` for more info
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     <error/rlang_error>
     Error in `checkNumberOfLocalWorkers()`:
-    ! Attempting to set up 47 localhost parallel workers with only 2 CPU cores available for this R process (per 'N/A'), which could result in a 2350% load. The hard limit is set to 300%. Overusing the CPUs has negative impact on the current R process, but also on all other processes of yours and others running on the same machine. See help("parallelly.maxWorkers.localhost", package = "parallelly") for further explanations and how to override the hard limit that triggered this error
+    ! Attempting to set up 255 localhost parallel workers with only 32 CPU cores available for this R process (per 'N/A'), which could result in a 797% load. The hard limit is set to 300%. Overusing the CPUs has negative impact on the current R process, but also on all other processes of yours and others running on the same machine. See help("parallelly.maxWorkers.localhost", package = "parallelly") for further explanations and how to override the hard limit that triggered this error
     ---
     Backtrace:
     ...
     
     Error: processing vignette 'FracFixR-intro.Rmd' failed with diagnostics:
-    Attempting to set up 47 localhost parallel workers with only 2 CPU cores available for this R process (per 'N/A'), which could result in a 2350% load. The hard limit is set to 300%. Overusing the CPUs has negative impact on the current R process, but also on all other processes of yours and others running on the same machine. See help("parallelly.maxWorkers.localhost", package = "parallelly") for further explanations and how to override the hard limit that triggered this error
+    Attempting to set up 255 localhost parallel workers with only 32 CPU cores available for this R process (per 'N/A'), which could result in a 797% load. The hard limit is set to 300%. Overusing the CPUs has negative impact on the current R process, but also on all other processes of yours and others running on the same machine. See help("parallelly.maxWorkers.localhost", package = "parallelly") for further explanations and how to override the hard limit that triggered this error
     --- failed re-building ‘FracFixR-intro.Rmd’
     
     SUMMARY: processing the following file failed:
@@ -1256,47 +1161,6 @@ Run `revdepcheck::revdep_details(, "latentcor")` for more info
     checkRd: (-1) latentcor.Rd:42: Lost braces in \itemize; \value handles \item{}{} directly
     ```
 
-# ldaPrototype
-
-<details>
-
-* Version: 0.3.1
-* GitHub: https://github.com/JonasRieger/ldaPrototype
-* Source code: https://github.com/cran/ldaPrototype
-* Date/Publication: 2021-09-02 11:20:02 UTC
-* Number of recursive dependencies: 91
-
-Run `revdepcheck::revdep_details(, "ldaPrototype")` for more info
-
-</details>
-
-## In both
-
-*   checking tests ...
-    ```
-      Running ‘testthat.R’
-     ERROR
-    Running the tests in ‘tests/testthat.R’ failed.
-    Last 50 lines of output:
-      Error in `defaultCluster(cl)`: no cluster 'cl' supplied and none is registered
-      Backtrace:
-          ▆
-       1. ├─ldaPrototype::mergeTopics(...) at test_jaccardTopics.R:6:1
-       2. └─ldaPrototype::LDARep(...)
-       3.   ├─base::suppressWarnings(parallelMap::parallelExport("docs", "vocab"))
-    ...
-       5.   └─parallelMap::parallelExport("docs", "vocab")
-       6.     └─parallelMap:::exportToSlavePkgParallel(n, get(n, envir = sys.parent()))
-       7.       └─parallel::clusterCall(...)
-       8.         └─parallel:::defaultCluster(cl)
-      
-      [ FAIL 8 | WARN 0 | SKIP 0 | PASS 132 ]
-      Error:
-      ! Test failures.
-      There were 50 or more warnings (use warnings() to see the first 50)
-      Execution halted
-    ```
-
 # ldsr
 
 <details>
@@ -1316,47 +1180,6 @@ Run `revdepcheck::revdep_details(, "ldsr")` for more info
 *   checking C++ specification ... NOTE
     ```
       Specified C++11: please drop specification unless essential
-    ```
-
-# lidR
-
-<details>
-
-* Version: 4.2.2
-* GitHub: https://github.com/r-lidar/lidR
-* Source code: https://github.com/cran/lidR
-* Date/Publication: 2025-11-06 06:10:40 UTC
-* Number of recursive dependencies: 153
-
-Run `revdepcheck::revdep_details(, "lidR")` for more info
-
-</details>
-
-## In both
-
-*   checking tests ...
-    ```
-      Running ‘testthat.R’/software/c4/cbi/software/_rocky8/R-4.5.2-gcc13/lib64/R/bin/BATCH: line 60: 868671 Aborted                 (core dumped) ${R_HOME}/bin/R -f ${in} ${opts} ${R_BATCH_OPTIONS} > ${out} 2>&1
-    
-     ERROR
-    Running the tests in ‘tests/testthat.R’ failed.
-    Last 50 lines of output:
-                                                                                      
-      
-                                                                                      
-      
-                                                                                      
-    ...
-      
-                                                                                      
-      
-                                                                                      
-      
-                                                                                      
-      
-                                                                                      
-      terminate called after throwing an instance of 'std::length_error'
-        what():  basic_string::_M_create
     ```
 
 # MAI
@@ -1707,6 +1530,47 @@ Run `revdepcheck::revdep_details(, "mistyR")` for more info
            |                                                   ^
     ```
 
+# mlr3resampling
+
+<details>
+
+* Version: 2025.11.19
+* GitHub: https://github.com/tdhock/mlr3resampling
+* Source code: https://github.com/cran/mlr3resampling
+* Date/Publication: 2025-11-20 19:10:02 UTC
+* Number of recursive dependencies: 100
+
+Run `revdepcheck::revdep_details(, "mlr3resampling")` for more info
+
+</details>
+
+## In both
+
+*   checking dependencies in R code ... NOTE
+    ```
+    c4-n43:pid3572606: PSM3 can't open nic unit: 0 (err=23)
+    c4-n43:pid3572606.R: Unable to create UDP socket for ens13f0np0: Address family not supported by protocol
+    c4-n43:pid3572606.R: Unable to initialize sockets NIC /sys/class/net/ens13f0np0 (unit 0:0)
+    c4-n43:pid3572606: PSM3 can't open nic unit: 0 (err=23)
+    c4-n43:pid3572606.R: Unable to create UDP socket for ens13f0np0: Address family not supported by protocol
+    c4-n43:pid3572606.R: Unable to initialize sockets NIC /sys/class/net/ens13f0np0 (unit 0:0)
+    c4-n43:pid3572606: PSM3 can't open nic unit: 1 (err=23)
+    c4-n43:pid3572606.R: Unable to create UDP socket for ens13f1np1: Address family not supported by protocol
+    c4-n43:pid3572606.R: Unable to initialize sockets NIC /sys/class/net/ens13f1np1 (unit 1:0)
+    c4-n43:pid3572606: PSM3 can't open nic unit: 0 (err=23)
+    ...
+    c4-n43:pid3572606.R: Unable to create UDP socket for ens13f0np0: Address family not supported by protocol
+    c4-n43:pid3572606.R: Unable to initialize sockets NIC /sys/class/net/ens13f0np0 (unit 0:0)
+    --------------------------------------------------------------------------
+    Open MPI failed an OFI Libfabric library call (fi_endpoint).  This is highly
+    unusual; your job may behave unpredictably (and/or abort) after this.
+    
+      Local host: c4-n43
+      Location: mtl_ofi_component.c:513
+      Error: Invalid argument (22)
+    --------------------------------------------------------------------------
+    ```
+
 # multiverse
 
 <details>
@@ -1729,47 +1593,6 @@ Run `revdepcheck::revdep_details(, "multiverse")` for more info
       |> or function shorthand \(...) syntax added in R 4.1.0.
       File(s) using such syntax:
         ‘accessors.R’ ‘export_json.R’ ‘extract.R’
-    ```
-
-# nhdplusTools
-
-<details>
-
-* Version: 1.3.2
-* GitHub: https://github.com/doi-usgs/nhdplusTools
-* Source code: https://github.com/cran/nhdplusTools
-* Date/Publication: 2025-06-10 13:00:14 UTC
-* Number of recursive dependencies: 134
-
-Run `revdepcheck::revdep_details(, "nhdplusTools")` for more info
-
-</details>
-
-## In both
-
-*   checking tests ...
-    ```
-      Running ‘testthat.R’
-     ERROR
-    Running the tests in ‘tests/testthat.R’ failed.
-    Last 50 lines of output:
-      Loading required package: nhdplusTools
-      Starting 2 test processes.
-      > test_02_subset.R: All intersections performed in latitude/longitude.
-      > test_02_subset.R: All intersections performed in latitude/longitude.
-      > test_02_subset.R: All intersections performed in latitude/longitude.
-      > test_02_subset.R: All intersections performed in latitude/longitude.
-    ...
-          ▆
-       1. └─testthat::expect(ok = nrow(out)) at test_02_subset_extras.R:75:3
-       2.   └─testthat:::check_bool(ok)
-       3.     └─testthat:::stop_input_type(...)
-       4.       └─rlang::abort(message, ..., call = call, arg = arg)
-      
-      [ FAIL 1 | WARN 0 | SKIP 58 | PASS 315 ]
-      Error:
-      ! Test failures.
-      Execution halted
     ```
 
 # nixtlar
@@ -2037,47 +1860,6 @@ Run `revdepcheck::revdep_details(, "pavo")` for more info
     See ‘/scratch/henrik/revdep/future/checks/pavo/new/pavo.Rcheck/00install.out’ for details.
     ```
 
-# PCRedux
-
-<details>
-
-* Version: 1.2-0
-* GitHub: https://github.com/PCRuniversum/PCRedux
-* Source code: https://github.com/cran/PCRedux
-* Date/Publication: 2025-06-13 05:00:02 UTC
-* Number of recursive dependencies: 150
-
-Run `revdepcheck::revdep_details(, "PCRedux")` for more info
-
-</details>
-
-## In both
-
-*   checking tests ...
-    ```
-      Running ‘testthat.R’
-     ERROR
-    Running the tests in ‘tests/testthat.R’ failed.
-    Last 50 lines of output:
-      Saving _problems/test_mblrr-10.R
-      Saving _problems/test_pcrfit_single-9.R
-      Saving _problems/test_performeR-11.R
-      Saving _problems/test_qPCR2fdata-11.R
-      [ FAIL 8 | WARN 0 | SKIP 0 | PASS 23 ]
-      
-    ...
-      ── Error ('test_qPCR2fdata.R:11:3'): qPCR2fdata gives the correct dimensions and properties ──
-      Error in `is_true()`: could not find function "is_true"
-      Backtrace:
-          ▆
-       1. └─testthat::expect_that(...) at test_qPCR2fdata.R:11:3
-      
-      [ FAIL 8 | WARN 0 | SKIP 0 | PASS 23 ]
-      Error:
-      ! Test failures.
-      Execution halted
-    ```
-
 # pgxRpi
 
 <details>
@@ -2093,31 +1875,6 @@ Run `revdepcheck::revdep_details(, "pgxRpi")` for more info
 </details>
 
 ## In both
-
-*   checking tests ...
-    ```
-      Running ‘testthat.R’
-     ERROR
-    Running the tests in ‘tests/testthat.R’ failed.
-    Last 50 lines of output:
-      
-       trying: https://progenetix.org/services/variantsbedfile/?output=igv&biosampleIds=pgxbs-kftvlaih,pgxbs-kftvjgcc 
-      
-       trying: https://progenetix.org/services/samplematrix/?biosampleIds=pgxbs-kftvlaih,pgxbs-kftvjgcc 
-      
-       trying: https://progenetix.org/services/samplematrix/?individualIds=pgxind-kftx3565,pgxind-kftx5g4v 
-    ...
-      target is NULL, current is logical
-      ── Failure ('test_variants.R:76:5'): retrieve fraction variant with biosample id ──
-      Expected `nrow(table)` > 0.
-      Actual comparison: 0.0 <= 0.0
-      Difference: 0.0 <= 0
-      
-      [ FAIL 5 | WARN 0 | SKIP 0 | PASS 37 ]
-      Error:
-      ! Test failures.
-      Execution halted
-    ```
 
 *   checking R code for possible problems ... NOTE
     ```
@@ -2355,6 +2112,47 @@ Run `revdepcheck::revdep_details(, "receptiviti")` for more info
       Execution halted
     ```
 
+# recforest
+
+<details>
+
+* Version: 1.0.0
+* GitHub: NA
+* Source code: https://github.com/cran/recforest
+* Date/Publication: 2024-12-05 18:30:02 UTC
+* Number of recursive dependencies: 110
+
+Run `revdepcheck::revdep_details(, "recforest")` for more info
+
+</details>
+
+## In both
+
+*   checking tests ...
+    ```
+      Running ‘testthat.R’
+     ERROR
+    Running the tests in ‘tests/testthat.R’ failed.
+    Last 50 lines of output:
+       3. └─testthat::expect_equal(...) at test-train_forest.R:285:5
+      ── Failure ('test-train_forest.R:301:5'): train_forest and predict_forest works with method GL ──
+      Expected `trained_forest$tree_metrics` to equal `list(...)`.
+      Differences:
+        `actual[[1]]$c_index`: 0.794279
+      `expected[[1]]$c_index`: 0.794180
+    ...
+      Backtrace:
+          ▆
+       1. ├─withr::with_seed(...) at test-train_forest.R:251:3
+       2. │ └─withr::with_preserve_seed(...)
+       3. └─testthat::expect_equal(...) at test-train_forest.R:323:5
+      
+      [ FAIL 3 | WARN 0 | SKIP 1 | PASS 61 ]
+      Error:
+      ! Test failures.
+      Execution halted
+    ```
+
 # regmedint
 
 <details>
@@ -2506,10 +2304,10 @@ Run `revdepcheck::revdep_details(, "SCArray.sat")` for more info
 
 <details>
 
-* Version: 0.1.3
+* Version: 0.1.4
 * GitHub: https://github.com/lukakoning/shinyOAuth
 * Source code: https://github.com/cran/shinyOAuth
-* Date/Publication: 2025-11-10 13:20:02 UTC
+* Date/Publication: 2025-11-24 20:10:02 UTC
 * Number of recursive dependencies: 76
 
 Run `revdepcheck::revdep_details(, "shinyOAuth")` for more info
@@ -2534,8 +2332,8 @@ Run `revdepcheck::revdep_details(, "shinyOAuth")` for more info
         [shinyOAuth] - HTTP request failed
         x Failed to fetch OIDC discovery document
         x Status 503: Service Unavailable.
-        i URL: http://127.0.0.1:36677/.well-known/openid-configuration
-        i Trace ID: szwzPwgToHJ7
+        i URL: http://127.0.0.1:32881/.well-known/openid-configuration
+        i Trace ID: BcecmlPivn-P
       
       [ FAIL 23 | WARN 0 | SKIP 12 | PASS 671 ]
       Error:
@@ -3050,10 +2848,10 @@ Run `revdepcheck::revdep_details(, "tglkmeans")` for more info
 
 <details>
 
-* Version: 0.0-7
+* Version: 0.0-8
 * GitHub: NA
 * Source code: https://github.com/cran/tramvs
-* Date/Publication: 2025-01-31 10:10:02 UTC
+* Date/Publication: 2025-11-18 18:00:02 UTC
 * Number of recursive dependencies: 103
 
 Run `revdepcheck::revdep_details(, "tramvs")` for more info
