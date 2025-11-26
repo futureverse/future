@@ -138,7 +138,7 @@ MulticoreFutureBackend <- function(workers = availableCores(constraints = "multi
   default_workers <- missing(workers)
   if (is.function(workers)) workers <- workers()
   stop_if_not(is.numeric(workers))
-  workers <- structure(as.integer(workers), class = setdiff(class(workers), typeof(workers)))
+  workers <- structure(as.integer(workers), class = setdiff(class(workers), mode(workers)))
   stop_if_not(length(workers) == 1, is.finite(workers), workers >= 1)
   
   ## Fall back to sequential futures if only a single additional R process
