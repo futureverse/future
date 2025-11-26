@@ -1018,6 +1018,20 @@ getExpression.Future <- local({
         }
       }
     }
+
+    ## FIXME: Automatically remap 'interrupted' and 'canceled' to 'finished'
+    ## Could also set 'actions' to 'cancel' and 'interrupt' accordingly,
+    ## if not already done
+
+    ## Validate that 'actions' field is consistent with legacy 'state' values
+    if (is.element(value, c("canceled", "interrupted"))) {
+      actions <- future[["actions"]]
+      if (value == "interrupted") {
+        stop_if_not("interrupt" %in% actions)
+      } else if (value == "canceled") {
+        stop_if_not("cancel" %in% actions)
+      }
+    }
   }
   
   NextMethod()
