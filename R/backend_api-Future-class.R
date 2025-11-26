@@ -363,10 +363,6 @@ print.Future <- function(x, ...) {
       msg
     },
     finished = {
-      if (!inherits(result, "FutureResult")) {
-        stop(FutureError(sprintf("[INTERNAL ERROR in print() for Future] result() on %s did not return a FutureResult object: %s", class(future)[1], class(result)[1])))
-      }
-      
       if ("cancel" %in% actions) {
         if ("interrupt" %in% actions) {
           msg <- "Future was canceled and interrupted"
@@ -377,30 +373,36 @@ print.Future <- function(x, ...) {
       } else {
         msg <- "Future was resolved"
       }
-      
-      conditions <- result[["conditions"]]
-      n <- length(conditions)
-      if (n == 0L) {
-        cond <- NULL
-      } else {
-        condition <- conditions[[n]]
-        cond <- condition[["condition"]]
-      }
-      if (inherits(cond, "error")) {
-        if (inherits(cond, "FutureInterruptError")) {
-          if (!"interrupt" %in% actions) {
-            msg <- sprintf("%s, but was interrupted via an external method", msg)
-          }
-          msg <- sprintf("%s, resulting in a %s", msg, sQuote(class(cond)[1]))
-        } else if (inherits(cond, "FutureError")) {
-          msg <- sprintf("%s, but produced a %s", msg, sQuote(class(cond)[1]))
+
+      if (inherits(result, "FutureLaunchError")) {
+        msg <- sprintf("%s, but produced a %s", msg, sQuote(class(cond)[1]))
+      } else if (is.null(result)) {
+        msg <- sprintf("%s, but the result has not been collected", msg)
+      } else if (inherits(result, "FutureResult")) {
+        conditions <- result[["conditions"]]
+        n <- length(conditions)
+        if (n == 0L) {
+          cond <- NULL
         } else {
-          msg <- sprintf("%s, but produced a run-time %s error", msg, sQuote(class(cond)[1]))
+          condition <- conditions[[n]]
+          cond <- condition[["condition"]]
         }
-      } else if (inherits(cond, "interrupt")) {
-        msg <- sprintf("%s, which was interrupted during evaluation via a user interrupt", msg)
-      } else {
-        msg <- sprintf("%s successfully", msg)
+        if (inherits(cond, "error")) {
+          if (inherits(cond, "FutureInterruptError")) {
+            if (!"interrupt" %in% actions) {
+              msg <- sprintf("%s, but was interrupted via an external method", msg)
+            }
+            msg <- sprintf("%s, resulting in a %s", msg, sQuote(class(cond)[1]))
+          } else if (inherits(cond, "FutureError")) {
+            msg <- sprintf("%s, but produced a %s", msg, sQuote(class(cond)[1]))
+          } else {
+            msg <- sprintf("%s, but produced a run-time %s error", msg, sQuote(class(cond)[1]))
+          }
+        } else if (inherits(cond, "interrupt")) {
+          msg <- sprintf("%s, which was interrupted during evaluation via a user interrupt", msg)
+        } else {
+          msg <- sprintf("%s successfully", msg)
+        }
       }
     },
     interrupted = {
@@ -1016,10 +1018,6 @@ getExpression.Future <- local({
         }
       }
     }
-
-    ## FIXME: Automatically remap 'interrupted' and 'canceled' to 'finished'
-    ## Could also set 'actions' to 'cancel' and 'interrupt' accordingly,
-    ## if not already done
   }
   
   NextMethod()
