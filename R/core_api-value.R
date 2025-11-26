@@ -92,8 +92,10 @@ value.Future <- function(future, stdout = TRUE, signal = TRUE, drop = FALSE, ...
   }
 
   result <- result(future)
-  if (!inherits(result, "FutureResult")) utils::str(list(result = result))
-  stop_if_not(inherits(result, "FutureResult"))
+  
+  if (!inherits(result, "FutureResult")) {
+    stop(FutureError(sprintf("[INTERNAL ERROR in value() for Future] result() on %s did not return a FutureResult object: %s", class(future)[1], class(result)[1])))
+  }
 
   ## Was future canceled?
   if (state %in% c("canceled")) {

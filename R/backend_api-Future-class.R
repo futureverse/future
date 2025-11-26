@@ -363,8 +363,9 @@ print.Future <- function(x, ...) {
       msg
     },
     finished = {
-      if (!inherits(result, "FutureResult")) utils::str(list(result = result))
-#      stop_if_not(inherits(result, "FutureResult"))
+      if (!inherits(result, "FutureResult")) {
+        stop(FutureError(sprintf("[INTERNAL ERROR in print() for Future] result() on %s did not return a FutureResult object: %s", class(future)[1], class(result)[1])))
+      }
       
       if ("cancel" %in% actions) {
         if ("interrupt" %in% actions) {
@@ -1015,6 +1016,10 @@ getExpression.Future <- local({
         }
       }
     }
+
+    ## FIXME: Automatically remap 'interrupted' and 'canceled' to 'finished'
+    ## Could also set 'actions' to 'cancel' and 'interrupt' accordingly,
+    ## if not already done
   }
   
   NextMethod()
