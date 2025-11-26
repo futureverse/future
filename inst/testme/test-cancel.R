@@ -29,10 +29,7 @@ for (strategy in strategies) {
 
   message("  Cancel future, which also interrupts the future, if supported")
   f <- cancel(f)
-  stopifnot({
-     f[["state"]] %in% c("canceled", "interrupted") ||
-    (f[["state"]] == "finished" && inherits(f, "SequentialFuture"))
-  })
+  stopifnot(f[["state"]] %in% "finished")
   
   n <- nbrOfFreeWorkers()
   message("  Number of free workers (after cancel + interupt): ", n)
@@ -40,10 +37,7 @@ for (strategy in strategies) {
   message("  Check if canceled + interrupted future is resolved")
   f <- resolve(f)
   stopifnot(resolved(f))
-  stopifnot({
-     f[["state"]] %in% c("canceled", "interrupted") ||
-    (f[["state"]] == "finished" && inherits(f, "SequentialFuture"))
-  })
+  stopifnot(f[["state"]] == "finished")
   
   n <- nbrOfFreeWorkers()
   message("  Number of free workers (after resolve): ", n)
