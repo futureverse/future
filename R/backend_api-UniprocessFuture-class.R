@@ -13,7 +13,7 @@
 UniprocessFuture <- function(expr = NULL, substitute = TRUE, envir = parent.frame(), ...) {
   if (substitute) expr <- substitute(expr)
 
-  future <- Future(expr = expr, substitute = FALSE, envir = envir, asynchronous = FALSE, ...)
+  future <- Future(expr = expr, substitute = FALSE, envir = envir, ...)
   future <- structure(future, class = c("UniprocessFuture", class(future)))
   future
 }

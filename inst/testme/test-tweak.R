@@ -192,9 +192,6 @@ stopifnot(inherits(res, "try-error"))
 res <- try(tweak(sequential, lazy = TRUE), silent = TRUE)
 stopifnot(inherits(res, "try-error"))
 
-res <- try(tweak(sequential, asynchronous = FALSE), silent = TRUE)
-stopifnot(inherits(res, "try-error"))
-
 res <- try(tweak(sequential, seed = 42L), silent = TRUE)
 stopifnot(inherits(res, "try-error"))
 

@@ -85,7 +85,6 @@ reset.Future <- function(x, ...) {
     "packages",
     "seed",
     "lazy",
-    "asynchronous",
     "local",
     "reset",
     "label",

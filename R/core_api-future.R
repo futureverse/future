@@ -225,7 +225,6 @@ future <- function(expr, envir = parent.frame(), substitute = TRUE, lazy = FALSE
 
 ## Arguments to 'future' strategies that must not be tweaked
 attr(future, "untweakable") <- c(
-  "asynchronous",  ## reserved
   "conditions",
   "envir",
   "expr",

@@ -212,7 +212,6 @@ Future <- function(expr = NULL, envir = parent.frame(), substitute = TRUE, stdou
   core[["packages"]] <- packages
   core[["seed"]] <- seed
   core[["lazy"]] <- lazy
-  core[["asynchronous"]] <- TRUE  ## Reserved for future version (Issue #109)
 
   ## 'local' is now defunct and always TRUE, unless persistent = TRUE,
   ## which in turn may only be used for cluster futures. /HB 2023-01-11
@@ -334,7 +333,6 @@ print.Future <- function(x, ...) {
 
   cat(sprintf("Lazy evaluation: %s\n", future[["lazy"]]))
   cat(sprintf("Local evaluation: %s\n", future[["local"]]))
-  cat(sprintf("Asynchronous evaluation: %s\n", future[["asynchronous"]]))
   cat(sprintf("Early signaling: %s\n", isTRUE(future[["earlySignal"]])))
   cat(sprintf("Environment: %s\n", envname(future[["envir"]])))
 
