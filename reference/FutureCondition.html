@@ -21,7 +21,7 @@ evaluation of the future."><meta property="og:image" content="https://future.fut
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.68.0-9001</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.68.0-9009</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -96,17 +96,39 @@ class to help distinguish them from conditions that occur due to the
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">FutureCondition</span><span class="op">(</span><span class="va">message</span>, call <span class="op">=</span> <span class="cn">NULL</span>, uuid <span class="op">=</span> <span class="va">future</span><span class="op">[[</span><span class="st">"uuid"</span><span class="op">]</span><span class="op">]</span>, future <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">FutureCondition</span><span class="op">(</span></span>
+<span>  <span class="va">message</span>,</span>
+<span>  call <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  by <span class="op">=</span> <span class="fu">session_uuid</span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  when <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  uuid <span class="op">=</span> <span class="va">future</span><span class="op">[[</span><span class="st">"uuid"</span><span class="op">]</span><span class="op">]</span>,</span>
+<span>  label <span class="op">=</span> <span class="va">future</span><span class="op">[[</span><span class="st">"label"</span><span class="op">]</span><span class="op">]</span>,</span>
+<span>  future <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  drop <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">FutureMessage</span><span class="op">(</span><span class="va">message</span>, call <span class="op">=</span> <span class="cn">NULL</span>, uuid <span class="op">=</span> <span class="va">future</span><span class="op">[[</span><span class="st">"uuid"</span><span class="op">]</span><span class="op">]</span>, future <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
+<span><span class="fu">FutureMessage</span><span class="op">(</span></span>
+<span>  <span class="va">message</span>,</span>
+<span>  call <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">...</span>,</span>
+<span>  uuid <span class="op">=</span> <span class="va">future</span><span class="op">[[</span><span class="st">"uuid"</span><span class="op">]</span><span class="op">]</span>,</span>
+<span>  future <span class="op">=</span> <span class="cn">NULL</span></span>
+<span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">FutureWarning</span><span class="op">(</span><span class="va">message</span>, call <span class="op">=</span> <span class="cn">NULL</span>, uuid <span class="op">=</span> <span class="va">future</span><span class="op">[[</span><span class="st">"uuid"</span><span class="op">]</span><span class="op">]</span>, future <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
+<span><span class="fu">FutureWarning</span><span class="op">(</span></span>
+<span>  <span class="va">message</span>,</span>
+<span>  call <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">...</span>,</span>
+<span>  uuid <span class="op">=</span> <span class="va">future</span><span class="op">[[</span><span class="st">"uuid"</span><span class="op">]</span><span class="op">]</span>,</span>
+<span>  future <span class="op">=</span> <span class="cn">NULL</span></span>
+<span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">FutureError</span><span class="op">(</span><span class="va">message</span>, call <span class="op">=</span> <span class="cn">NULL</span>, uuid <span class="op">=</span> <span class="va">future</span><span class="op">[[</span><span class="st">"uuid"</span><span class="op">]</span><span class="op">]</span>, future <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
+<span><span class="fu">FutureError</span><span class="op">(</span><span class="va">message</span>, call <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span>, uuid <span class="op">=</span> <span class="va">future</span><span class="op">[[</span><span class="st">"uuid"</span><span class="op">]</span><span class="op">]</span>, future <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">RngFutureCondition</span><span class="op">(</span></span>
 <span>  message <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  call <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">...</span>,</span>
 <span>  uuid <span class="op">=</span> <span class="va">future</span><span class="op">[[</span><span class="st">"uuid"</span><span class="op">]</span><span class="op">]</span>,</span>
 <span>  future <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span>
@@ -120,6 +142,7 @@ class to help distinguish them from conditions that occur due to the
 <span><span class="fu">GlobalEnvMisuseFutureCondition</span><span class="op">(</span></span>
 <span>  message <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  call <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">...</span>,</span>
 <span>  differences <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  uuid <span class="op">=</span> <span class="va">future</span><span class="op">[[</span><span class="st">"uuid"</span><span class="op">]</span><span class="op">]</span>,</span>
 <span>  future <span class="op">=</span> <span class="cn">NULL</span></span>
@@ -132,6 +155,7 @@ class to help distinguish them from conditions that occur due to the
 <span><span class="fu">ConnectionMisuseFutureCondition</span><span class="op">(</span></span>
 <span>  message <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  call <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">...</span>,</span>
 <span>  differences <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  uuid <span class="op">=</span> <span class="va">future</span><span class="op">[[</span><span class="st">"uuid"</span><span class="op">]</span><span class="op">]</span>,</span>
 <span>  future <span class="op">=</span> <span class="cn">NULL</span></span>
@@ -144,6 +168,7 @@ class to help distinguish them from conditions that occur due to the
 <span><span class="fu">DeviceMisuseFutureCondition</span><span class="op">(</span></span>
 <span>  message <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  call <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">...</span>,</span>
 <span>  differences <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  uuid <span class="op">=</span> <span class="va">future</span><span class="op">[[</span><span class="st">"uuid"</span><span class="op">]</span><span class="op">]</span>,</span>
 <span>  future <span class="op">=</span> <span class="cn">NULL</span></span>
@@ -155,8 +180,9 @@ class to help distinguish them from conditions that occur due to the
 <span></span>
 <span><span class="fu">DefaultDeviceMisuseFutureCondition</span><span class="op">(</span></span>
 <span>  message <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  incidents <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  call <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">...</span>,</span>
+<span>  incidents <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  uuid <span class="op">=</span> <span class="va">future</span><span class="op">[[</span><span class="st">"uuid"</span><span class="op">]</span><span class="op">]</span>,</span>
 <span>  future <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span>
@@ -167,7 +193,7 @@ class to help distinguish them from conditions that occur due to the
 <span></span>
 <span><span class="fu">FutureLaunchError</span><span class="op">(</span><span class="va">...</span>, future <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">FutureInterruptError</span><span class="op">(</span><span class="va">...</span>, future <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
+<span><span class="fu">FutureInterruptError</span><span class="op">(</span><span class="va">...</span>, when <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.time</a></span><span class="op">(</span><span class="op">)</span>, future <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">FutureCanceledError</span><span class="op">(</span><span class="va">...</span>, future <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
 <span></span>
@@ -191,16 +217,34 @@ class to help distinguish them from conditions that occur due to the
 
 
 <dt id="arg-call">call<a class="anchor" aria-label="anchor" href="#arg-call"></a></dt>
-<dd><p>The call stack that led up to the condition.</p></dd>
+<dd><p>(optional) The call stack that led up to the condition.</p></dd>
+
+
+<dt id="arg-by">by<a class="anchor" aria-label="anchor" href="#arg-by"></a></dt>
+<dd><p>(optional) A session UUID object.</p></dd>
+
+
+<dt id="arg-when">when<a class="anchor" aria-label="anchor" href="#arg-when"></a></dt>
+<dd><p>(optional) A <a href="https://rdrr.io/r/base/DateTimeClasses.html" class="external-link">POSIXct</a> timestamp for when the condition was
+created.</p></dd>
 
 
 <dt id="arg-uuid">uuid<a class="anchor" aria-label="anchor" href="#arg-uuid"></a></dt>
-<dd><p>A universally unique identifier for the future associated with
-this FutureCondition.</p></dd>
+<dd><p>(optional) A universally unique identifier for the future
+associated with this FutureCondition.</p></dd>
+
+
+<dt id="arg-label">label<a class="anchor" aria-label="anchor" href="#arg-label"></a></dt>
+<dd><p>(optional) A future label.</p></dd>
 
 
 <dt id="arg-future">future<a class="anchor" aria-label="anchor" href="#arg-future"></a></dt>
-<dd><p>The <a href="Future-class.html">Future</a> involved.</p></dd>
+<dd><p>(optional) The <a href="Future-class.html">Future</a> involved.</p></dd>
+
+
+<dt id="arg-drop">drop<a class="anchor" aria-label="anchor" href="#arg-drop"></a></dt>
+<dd><p>If TRUE, the <code>future</code> argument is only used to populate
+future metadata, but is not stored in the condition object created.</p></dd>
 
 
 <dt id="arg-hint">hint<a class="anchor" aria-label="anchor" href="#arg-hint"></a></dt>

@@ -22,7 +22,6 @@ Future(
   seed = FALSE,
   lazy = FALSE,
   gc = FALSE,
-  earlySignal = FALSE,
   label = NULL,
   ...
 )
@@ -115,15 +114,9 @@ Future(
 
   If TRUE, the garbage collector run (in the process that evaluated the
   future) only after the value of the future is collected. Exactly when
-  the values are collected may depend on various factors such as number
-  of free workers and whether `earlySignal` is TRUE (more frequently) or
-  FALSE (less frequently). *Some future backends may ignore this
+  the values are collected may depend on various factors, including the
+  number of free workers. *Some future backends may ignore this
   argument.*
-
-- earlySignal:
-
-  Specified whether conditions should be signaled as soon as possible or
-  not.
 
 - label:
 

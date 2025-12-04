@@ -67,17 +67,17 @@ print(f)
 #> Immediate condition classes: ‘immediateCondition’
 #> Lazy evaluation: FALSE
 #> Local evaluation: TRUE
-#> Asynchronous evaluation: TRUE
-#> Early signaling: FALSE
-#> Environment: 0x636874ab0138
-#> State: ‘finished’
+#> Early signaling (deprecated): FALSE
+#> Environment: 0x585c2405f9c8
+#> Actions: [n=1] ‘run’
+#> State: ‘finished’ ("Future was resolved successfully")
 #> Resolved: TRUE
-#> Unique identifier: b3f9b94cbc24675860235ff0e5568892-12
-#> Owner process: b3f9b94cbc24675860235ff0e5568892
+#> Unique identifier: ebabaf1475084325fea830e05678bfbb-12
+#> Owner process: ebabaf1475084325fea830e05678bfbb
 #> Class: ‘SequentialFuture’, ‘UniprocessFuture’, ‘Future’
 #> Value: 39 bytes of class ‘numeric’
-#> Duration: 0.003064871 secs (started 2025-11-22 19:34:09.158731)
-#> Worker process: b3f9b94cbc24675860235ff0e5568892
+#> Duration: 0.003485918 secs (started 2025-12-04 15:19:46.78779)
+#> Worker process: ebabaf1475084325fea830e05678bfbb
 
 b %<-% { 2 }
 
@@ -97,17 +97,17 @@ print(f)
 #> Immediate condition classes: ‘immediateCondition’
 #> Lazy evaluation: FALSE
 #> Local evaluation: TRUE
-#> Asynchronous evaluation: TRUE
-#> Early signaling: FALSE
-#> Environment: 0x636874ab0138
-#> State: ‘finished’
+#> Early signaling (deprecated): FALSE
+#> Environment: 0x585c2405f9c8
+#> Actions: [n=1] ‘run’
+#> State: ‘finished’ ("Future was resolved successfully")
 #> Resolved: TRUE
-#> Unique identifier: b3f9b94cbc24675860235ff0e5568892-13
-#> Owner process: b3f9b94cbc24675860235ff0e5568892
+#> Unique identifier: ebabaf1475084325fea830e05678bfbb-13
+#> Owner process: ebabaf1475084325fea830e05678bfbb
 #> Class: ‘SequentialFuture’, ‘UniprocessFuture’, ‘Future’
 #> Value: 39 bytes of class ‘numeric’
-#> Duration: 0.003118992 secs (started 2025-11-22 19:34:09.172489)
-#> Worker process: b3f9b94cbc24675860235ff0e5568892
+#> Duration: 0.002989769 secs (started 2025-12-04 15:19:46.80016)
+#> Worker process: ebabaf1475084325fea830e05678bfbb
 
 ## All futures
 fs <- futureOf()
@@ -127,17 +127,17 @@ print(fs)
 #> Immediate condition classes: ‘immediateCondition’
 #> Lazy evaluation: FALSE
 #> Local evaluation: TRUE
-#> Asynchronous evaluation: TRUE
-#> Early signaling: FALSE
-#> Environment: 0x636874ab0138
-#> State: ‘finished’
+#> Early signaling (deprecated): FALSE
+#> Environment: 0x585c2405f9c8
+#> Actions: [n=1] ‘run’
+#> State: ‘finished’ ("Future was resolved successfully")
 #> Resolved: TRUE
-#> Unique identifier: b3f9b94cbc24675860235ff0e5568892-12
-#> Owner process: b3f9b94cbc24675860235ff0e5568892
+#> Unique identifier: ebabaf1475084325fea830e05678bfbb-12
+#> Owner process: ebabaf1475084325fea830e05678bfbb
 #> Class: ‘SequentialFuture’, ‘UniprocessFuture’, ‘Future’
 #> Value: 39 bytes of class ‘numeric’
-#> Duration: 0.003064871 secs (started 2025-11-22 19:34:09.158731)
-#> Worker process: b3f9b94cbc24675860235ff0e5568892
+#> Duration: 0.003485918 secs (started 2025-12-04 15:19:46.78779)
+#> Worker process: ebabaf1475084325fea830e05678bfbb
 #> 
 #> $b
 #> SequentialFuture:
@@ -154,17 +154,17 @@ print(fs)
 #> Immediate condition classes: ‘immediateCondition’
 #> Lazy evaluation: FALSE
 #> Local evaluation: TRUE
-#> Asynchronous evaluation: TRUE
-#> Early signaling: FALSE
-#> Environment: 0x636874ab0138
-#> State: ‘finished’
+#> Early signaling (deprecated): FALSE
+#> Environment: 0x585c2405f9c8
+#> Actions: [n=1] ‘run’
+#> State: ‘finished’ ("Future was resolved successfully")
 #> Resolved: TRUE
-#> Unique identifier: b3f9b94cbc24675860235ff0e5568892-13
-#> Owner process: b3f9b94cbc24675860235ff0e5568892
+#> Unique identifier: ebabaf1475084325fea830e05678bfbb-13
+#> Owner process: ebabaf1475084325fea830e05678bfbb
 #> Class: ‘SequentialFuture’, ‘UniprocessFuture’, ‘Future’
 #> Value: 39 bytes of class ‘numeric’
-#> Duration: 0.003118992 secs (started 2025-11-22 19:34:09.172489)
-#> Worker process: b3f9b94cbc24675860235ff0e5568892
+#> Duration: 0.002989769 secs (started 2025-12-04 15:19:46.80016)
+#> Worker process: ebabaf1475084325fea830e05678bfbb
 #> 
 #> $f
 #> SequentialFuture:
@@ -181,17 +181,17 @@ print(fs)
 #> Immediate condition classes: ‘immediateCondition’
 #> Lazy evaluation: FALSE
 #> Local evaluation: TRUE
-#> Asynchronous evaluation: TRUE
-#> Early signaling: FALSE
-#> Environment: 0x636874ab0138
-#> State: ‘finished’
+#> Early signaling (deprecated): FALSE
+#> Environment: 0x585c2405f9c8
+#> Actions: [n=1] ‘run’
+#> State: ‘finished’ ("Future was resolved successfully")
 #> Resolved: TRUE
-#> Unique identifier: b3f9b94cbc24675860235ff0e5568892-13
-#> Owner process: b3f9b94cbc24675860235ff0e5568892
+#> Unique identifier: ebabaf1475084325fea830e05678bfbb-13
+#> Owner process: ebabaf1475084325fea830e05678bfbb
 #> Class: ‘SequentialFuture’, ‘UniprocessFuture’, ‘Future’
 #> Value: 39 bytes of class ‘numeric’
-#> Duration: 0.003118992 secs (started 2025-11-22 19:34:09.172489)
-#> Worker process: b3f9b94cbc24675860235ff0e5568892
+#> Duration: 0.002989769 secs (started 2025-12-04 15:19:46.80016)
+#> Worker process: ebabaf1475084325fea830e05678bfbb
 #> 
 
 
@@ -215,17 +215,17 @@ print(f)
 #> Immediate condition classes: ‘immediateCondition’
 #> Lazy evaluation: FALSE
 #> Local evaluation: TRUE
-#> Asynchronous evaluation: TRUE
-#> Early signaling: FALSE
-#> Environment: 0x636874ab0138
-#> State: ‘finished’
+#> Early signaling (deprecated): FALSE
+#> Environment: 0x585c2405f9c8
+#> Actions: [n=1] ‘run’
+#> State: ‘finished’ ("Future was resolved successfully")
 #> Resolved: TRUE
-#> Unique identifier: b3f9b94cbc24675860235ff0e5568892-14
-#> Owner process: b3f9b94cbc24675860235ff0e5568892
+#> Unique identifier: ebabaf1475084325fea830e05678bfbb-14
+#> Owner process: ebabaf1475084325fea830e05678bfbb
 #> Class: ‘SequentialFuture’, ‘UniprocessFuture’, ‘Future’
 #> Value: 39 bytes of class ‘numeric’
-#> Duration: 0.003127337 secs (started 2025-11-22 19:34:09.190034)
-#> Worker process: b3f9b94cbc24675860235ff0e5568892
+#> Duration: 0.002804756 secs (started 2025-12-04 15:19:46.815153)
+#> Worker process: ebabaf1475084325fea830e05678bfbb
 
 f2 <- futureOf(c, envir = env)
 print(f2)
@@ -243,17 +243,17 @@ print(f2)
 #> Immediate condition classes: ‘immediateCondition’
 #> Lazy evaluation: FALSE
 #> Local evaluation: TRUE
-#> Asynchronous evaluation: TRUE
-#> Early signaling: FALSE
-#> Environment: 0x636874ab0138
-#> State: ‘finished’
+#> Early signaling (deprecated): FALSE
+#> Environment: 0x585c2405f9c8
+#> Actions: [n=1] ‘run’
+#> State: ‘finished’ ("Future was resolved successfully")
 #> Resolved: TRUE
-#> Unique identifier: b3f9b94cbc24675860235ff0e5568892-14
-#> Owner process: b3f9b94cbc24675860235ff0e5568892
+#> Unique identifier: ebabaf1475084325fea830e05678bfbb-14
+#> Owner process: ebabaf1475084325fea830e05678bfbb
 #> Class: ‘SequentialFuture’, ‘UniprocessFuture’, ‘Future’
 #> Value: 39 bytes of class ‘numeric’
-#> Duration: 0.003127337 secs (started 2025-11-22 19:34:09.190034)
-#> Worker process: b3f9b94cbc24675860235ff0e5568892
+#> Duration: 0.002804756 secs (started 2025-12-04 15:19:46.815153)
+#> Worker process: ebabaf1475084325fea830e05678bfbb
 
 f3 <- futureOf("c", envir = env)
 print(f3)
@@ -271,17 +271,17 @@ print(f3)
 #> Immediate condition classes: ‘immediateCondition’
 #> Lazy evaluation: FALSE
 #> Local evaluation: TRUE
-#> Asynchronous evaluation: TRUE
-#> Early signaling: FALSE
-#> Environment: 0x636874ab0138
-#> State: ‘finished’
+#> Early signaling (deprecated): FALSE
+#> Environment: 0x585c2405f9c8
+#> Actions: [n=1] ‘run’
+#> State: ‘finished’ ("Future was resolved successfully")
 #> Resolved: TRUE
-#> Unique identifier: b3f9b94cbc24675860235ff0e5568892-14
-#> Owner process: b3f9b94cbc24675860235ff0e5568892
+#> Unique identifier: ebabaf1475084325fea830e05678bfbb-14
+#> Owner process: ebabaf1475084325fea830e05678bfbb
 #> Class: ‘SequentialFuture’, ‘UniprocessFuture’, ‘Future’
 #> Value: 39 bytes of class ‘numeric’
-#> Duration: 0.003127337 secs (started 2025-11-22 19:34:09.190034)
-#> Worker process: b3f9b94cbc24675860235ff0e5568892
+#> Duration: 0.002804756 secs (started 2025-12-04 15:19:46.815153)
+#> Worker process: ebabaf1475084325fea830e05678bfbb
 
 fs <- futureOf(envir = env)
 print(fs)
@@ -300,16 +300,16 @@ print(fs)
 #> Immediate condition classes: ‘immediateCondition’
 #> Lazy evaluation: FALSE
 #> Local evaluation: TRUE
-#> Asynchronous evaluation: TRUE
-#> Early signaling: FALSE
-#> Environment: 0x636874ab0138
-#> State: ‘finished’
+#> Early signaling (deprecated): FALSE
+#> Environment: 0x585c2405f9c8
+#> Actions: [n=1] ‘run’
+#> State: ‘finished’ ("Future was resolved successfully")
 #> Resolved: TRUE
-#> Unique identifier: b3f9b94cbc24675860235ff0e5568892-14
-#> Owner process: b3f9b94cbc24675860235ff0e5568892
+#> Unique identifier: ebabaf1475084325fea830e05678bfbb-14
+#> Owner process: ebabaf1475084325fea830e05678bfbb
 #> Class: ‘SequentialFuture’, ‘UniprocessFuture’, ‘Future’
 #> Value: 39 bytes of class ‘numeric’
-#> Duration: 0.003127337 secs (started 2025-11-22 19:34:09.190034)
-#> Worker process: b3f9b94cbc24675860235ff0e5568892
+#> Duration: 0.002804756 secs (started 2025-12-04 15:19:46.815153)
+#> Worker process: ebabaf1475084325fea830e05678bfbb
 #> 
 ```

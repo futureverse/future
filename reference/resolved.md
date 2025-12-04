@@ -11,9 +11,6 @@ resolved(x, run = TRUE, timeout = NULL, ...)
 # S3 method for class 'MulticoreFuture'
 resolved(x, run = TRUE, timeout = NULL, ...)
 
-# S3 method for class 'Future'
-resolved(x, run = TRUE, ...)
-
 resolved(x, ...)
 
 # Default S3 method
@@ -24,6 +21,9 @@ resolved(x, ...)
 
 # S3 method for class 'environment'
 resolved(x, ...)
+
+# S3 method for class 'Future'
+resolved(x, run = TRUE, ...)
 ```
 
 ## Arguments

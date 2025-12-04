@@ -2,11 +2,34 @@
 
 ## Version (development version)
 
+### New Features
+
+- Add [`conditionMessage()`](https://rdrr.io/r/base/conditions.html) for
+  `FutureCondition`, which appends meta-data information to the original
+  message.
+
+- Add more metadata to `FutureCondition` objects by default, e.g. in
+  which session (including UUID, hostname, and PID) and when the
+  condition was created.
+
+- [`print()`](https://rdrr.io/r/base/print.html) on a Future outputs a
+  description of the current state.
+
 ### Bug Fixes
 
 - `plan(..., interrupts = ...)` would produce a warning on “Detected 1
   unknown future arguments: ‘interrupts’” for third-party future
   backends.
+
+### Deprecated and Defunct
+
+- Remove argument `earlySignal` from
+  [`future()`](https://future.futureverse.org/reference/future.md),
+  [`futureAssign()`](https://future.futureverse.org/reference/futureAssign.md),
+  and
+  [`futureCall()`](https://future.futureverse.org/reference/future.md).
+  Attempts to set it is now ignored and will produce a deprecation
+  warning.
 
 ## Version 1.68.0
 

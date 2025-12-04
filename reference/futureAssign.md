@@ -23,7 +23,6 @@ futureAssign(
   packages = NULL,
   stdout = TRUE,
   conditions = "condition",
-  earlySignal = FALSE,
   label = NULL,
   gc = FALSE,
   ...,
@@ -138,11 +137,6 @@ fassignment %tweak% tweaks
   unhandled conditions depends on the future backend and the environment
   from which R runs.
 
-- earlySignal:
-
-  Specified whether conditions should be signaled as soon as possible or
-  not.
-
 - label:
 
   A character string label attached to the future.
@@ -151,9 +145,8 @@ fassignment %tweak% tweaks
 
   If TRUE, the garbage collector run (in the process that evaluated the
   future) only after the value of the future is collected. Exactly when
-  the values are collected may depend on various factors such as number
-  of free workers and whether `earlySignal` is TRUE (more frequently) or
-  FALSE (less frequently). *Some future backends may ignore this
+  the values are collected may depend on various factors, including the
+  number of free workers. *Some future backends may ignore this
   argument.*
 
 - assign.env:

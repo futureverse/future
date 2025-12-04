@@ -31,7 +31,7 @@ switching from, say, sequential to parallel processing."><meta property="og:imag
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.68.0-9001</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.68.0-9009</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -123,7 +123,6 @@ switching from, say, sequential to parallel processing.</p>
 <span>  conditions <span class="op">=</span> <span class="st">"condition"</span>,</span>
 <span>  label <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  gc <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  earlySignal <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span>
 <span></span>
@@ -137,7 +136,6 @@ switching from, say, sequential to parallel processing.</p>
 <span>  packages <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  stdout <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  conditions <span class="op">=</span> <span class="st">"condition"</span>,</span>
-<span>  earlySignal <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  label <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  gc <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  <span class="va">...</span></span>
@@ -245,15 +243,9 @@ future backend and the environment from which R runs.</p></dd>
 <dt id="arg-gc">gc<a class="anchor" aria-label="anchor" href="#arg-gc"></a></dt>
 <dd><p>If TRUE, the garbage collector run (in the process that
 evaluated the future) only after the value of the future is collected.
-Exactly when the values are collected may depend on various factors such
-as number of free workers and whether <code>earlySignal</code> is TRUE (more
-frequently) or FALSE (less frequently).
+Exactly when the values are collected may depend on various factors,
+including the number of free workers.
 <em>Some future backends may ignore this argument.</em></p></dd>
-
-
-<dt id="arg-earlysignal">earlySignal<a class="anchor" aria-label="anchor" href="#arg-earlysignal"></a></dt>
-<dd><p>Specified whether conditions should be signaled as soon
-as possible or not.</p></dd>
 
 
 <dt id="arg-fun">FUN<a class="anchor" aria-label="anchor" href="#arg-fun"></a></dt>

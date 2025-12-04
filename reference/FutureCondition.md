@@ -9,17 +9,39 @@ class to help distinguish them from conditions that occur due to the
 ## Usage
 
 ``` r
-FutureCondition(message, call = NULL, uuid = future[["uuid"]], future = NULL)
+FutureCondition(
+  message,
+  call = NULL,
+  by = session_uuid(),
+  when = NULL,
+  uuid = future[["uuid"]],
+  label = future[["label"]],
+  future = NULL,
+  drop = FALSE
+)
 
-FutureMessage(message, call = NULL, uuid = future[["uuid"]], future = NULL)
+FutureMessage(
+  message,
+  call = NULL,
+  ...,
+  uuid = future[["uuid"]],
+  future = NULL
+)
 
-FutureWarning(message, call = NULL, uuid = future[["uuid"]], future = NULL)
+FutureWarning(
+  message,
+  call = NULL,
+  ...,
+  uuid = future[["uuid"]],
+  future = NULL
+)
 
-FutureError(message, call = NULL, uuid = future[["uuid"]], future = NULL)
+FutureError(message, call = NULL, ..., uuid = future[["uuid"]], future = NULL)
 
 RngFutureCondition(
   message = NULL,
   call = NULL,
+  ...,
   uuid = future[["uuid"]],
   future = NULL
 )
@@ -33,6 +55,7 @@ UnexpectedFutureResultError(future, hint = NULL)
 GlobalEnvMisuseFutureCondition(
   message = NULL,
   call = NULL,
+  ...,
   differences = NULL,
   uuid = future[["uuid"]],
   future = NULL
@@ -45,6 +68,7 @@ GlobalEnvMisuseFutureError(...)
 ConnectionMisuseFutureCondition(
   message = NULL,
   call = NULL,
+  ...,
   differences = NULL,
   uuid = future[["uuid"]],
   future = NULL
@@ -57,6 +81,7 @@ ConnectionMisuseFutureError(...)
 DeviceMisuseFutureCondition(
   message = NULL,
   call = NULL,
+  ...,
   differences = NULL,
   uuid = future[["uuid"]],
   future = NULL
@@ -68,8 +93,9 @@ DeviceMisuseFutureError(...)
 
 DefaultDeviceMisuseFutureCondition(
   message = NULL,
-  incidents = NULL,
   call = NULL,
+  ...,
+  incidents = NULL,
   uuid = future[["uuid"]],
   future = NULL
 )
@@ -80,7 +106,7 @@ DefaultDeviceMisuseFutureError(...)
 
 FutureLaunchError(..., future = NULL)
 
-FutureInterruptError(..., future = NULL)
+FutureInterruptError(..., when = Sys.time(), future = NULL)
 
 FutureCanceledError(..., future = NULL)
 
@@ -103,17 +129,36 @@ FutureJournalCondition(
 
 - call:
 
-  The call stack that led up to the condition.
+  (optional) The call stack that led up to the condition.
+
+- by:
+
+  (optional) A session UUID object.
+
+- when:
+
+  (optional) A [POSIXct](https://rdrr.io/r/base/DateTimeClasses.html)
+  timestamp for when the condition was created.
 
 - uuid:
 
-  A universally unique identifier for the future associated with this
-  FutureCondition.
+  (optional) A universally unique identifier for the future associated
+  with this FutureCondition.
+
+- label:
+
+  (optional) A future label.
 
 - future:
 
-  The [Future](https://future.futureverse.org/reference/Future-class.md)
+  (optional) The
+  [Future](https://future.futureverse.org/reference/Future-class.md)
   involved.
+
+- drop:
+
+  If TRUE, the `future` argument is only used to populate future
+  metadata, but is not stored in the condition object created.
 
 - hint:
 

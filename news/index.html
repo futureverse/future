@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.68.0-9001</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.68.0-9009</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -80,9 +80,19 @@
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="version-development-version">Version (development version)<a class="anchor" aria-label="anchor" href="#version-development-version"></a></h2>
 <div class="section level3">
+<h3 id="new-features-development-version">New Features<a class="anchor" aria-label="anchor" href="#new-features-development-version"></a></h3>
+<ul><li><p>Add <code><a href="https://rdrr.io/r/base/conditions.html" class="external-link">conditionMessage()</a></code> for <code>FutureCondition</code>, which appends meta-data information to the original message.</p></li>
+<li><p>Add more metadata to <code>FutureCondition</code> objects by default, e.g. in which session (including UUID, hostname, and PID) and when the condition was created.</p></li>
+<li><p><code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> on a Future outputs a description of the current state.</p></li>
+</ul></div>
+<div class="section level3">
 <h3 id="bug-fixes-development-version">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h3>
 <ul><li>
 <code>plan(..., interrupts = ...)</code> would produce a warning on “Detected 1 unknown future arguments: ‘interrupts’” for third-party future backends.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="deprecated-and-defunct-development-version">Deprecated and Defunct<a class="anchor" aria-label="anchor" href="#deprecated-and-defunct-development-version"></a></h3>
+<ul><li>Remove argument <code>earlySignal</code> from <code><a href="../reference/future.html">future()</a></code>, <code><a href="../reference/futureAssign.html">futureAssign()</a></code>, and <code><a href="../reference/future.html">futureCall()</a></code>. Attempts to set it is now ignored and will produce a deprecation warning.</li>
 </ul></div>
 </div>
     <div class="section level2">
