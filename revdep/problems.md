@@ -481,45 +481,26 @@ Run `revdepcheck::revdep_details(, "ctsem")` for more info
     Execution halted
     ```
 
-# dipsaus
+# delimtools
 
 <details>
 
-* Version: 0.3.2
-* GitHub: https://github.com/dipterix/dipsaus
-* Source code: https://github.com/cran/dipsaus
-* Date/Publication: 2025-11-17 06:10:17 UTC
-* Number of recursive dependencies: 63
+* Version: 0.2.1
+* GitHub: https://github.com/legalLab/delimtools
+* Source code: https://github.com/cran/delimtools
+* Date/Publication: 2025-09-29 22:10:02 UTC
+* Number of recursive dependencies: 101
 
-Run `revdepcheck::revdep_details(, "dipsaus")` for more info
+Run `revdepcheck::revdep_details(, "delimtools")` for more info
 
 </details>
 
-## Newly broken
+## In both
 
-*   checking examples ... ERROR
+*   checking Rd cross-references ... NOTE
     ```
-    Running examples in ‘dipsaus-Ex.R’ failed
-    The error most likely occurred in:
-    
-    > ### Name: PersistContainer
-    > ### Title: Wrapper to cache key-value pairs and persist across sessions
-    > ### Aliases: PersistContainer
-    > 
-    > ### ** Examples
-    > 
-    > 
-    ...
-    Error in force(value) : no function to return from, jumping to top level
-    Warning in save_item() : restarting interrupted promise evaluation
-    [1] 123
-    Error in save_item() : no function to return from, jumping to top level
-    Warning in container$cache(key = "a", value = { :
-      restarting interrupted promise evaluation
-    [1] 123
-    Error in container$cache(key = "a", value = { : 
-      no function to return from, jumping to top level
-    Execution halted
+    Package unavailable to check Rd xrefs: ‘bGMYC’
+    Unknown package ‘splits’ in Rd xrefs
     ```
 
 # disk.frame
@@ -656,12 +637,12 @@ Run `revdepcheck::revdep_details(, "FastRet")` for more info
      ERROR
     Running the tests in ‘tests/testthat.R’ failed.
     Last 50 lines of output:
-      > test-adjust_frm.R: [1;30m2025-12-07 08:56:40.41[0m Estimating performance of adjusted model in CV
-      > test-adjust_frm.R: [1;30m2025-12-07 08:56:40.46[0m Fitting adjustment model on full new data set
-      > test-adjust_frm.R: [1;30m2025-12-07 08:56:40.46[0m Returning adjusted frm object
-      > test-adjust_frm.R: [1;30m2025-12-07 08:56:40.46[0m Starting model Adjustment
-      > test-adjust_frm.R: [1;30m2025-12-07 08:56:40.46[0m dim(original_data): 442 x 126
-      > test-adjust_frm.R: [1;30m2025-12-07 08:56:40.46[0m dim(new_data): 25 x 3
+      > test-adjust_frm.R: [1;30m2025-12-03 11:47:36.67[0m Preprocessing data
+      > test-adjust_frm.R: [1;30m2025-12-03 11:47:36.67[0m Formula: RT_ADJ ~ RT + I(RT^2) + I(RT^3) + log(RT) + exp(RT) + sqrt(RT)
+      > test-adjust_frm.R: [1;30m2025-12-03 11:47:36.67[0m Estimating performance of adjusted model in CV
+      > test-adjust_frm.R: [1;30m2025-12-03 11:47:36.70[0m Fitting adjustment model on full new data set
+      > test-adjust_frm.R: [1;30m2025-12-03 11:47:36.70[0m Returning adjusted frm object
+      > test-plot_frm.R: [1;30m2025-12-03 11:47:36.06[0m dim(new_data): 25 x 3
     ...
       Backtrace:
           ▆
@@ -1517,6 +1498,77 @@ Run `revdepcheck::revdep_details(, "mbbe")` for more info
       Execution halted
     ```
 
+# MIC
+
+<details>
+
+* Version: 1.2.0
+* GitHub: https://github.com/agerada/MIC
+* Source code: https://github.com/cran/MIC
+* Date/Publication: 2025-10-12 16:40:14 UTC
+* Number of recursive dependencies: 141
+
+Run `revdepcheck::revdep_details(, "MIC")` for more info
+
+</details>
+
+## In both
+
+*   checking examples ... ERROR
+    ```
+    Running examples in ‘MIC-Ex.R’ failed
+    The error most likely occurred in:
+    
+    > ### Name: xgb.cv.lowmem
+    > ### Title: Low memory cross-validation wrapper for XGBoost
+    > ### Aliases: xgb.cv.lowmem
+    > 
+    > ### ** Examples
+    > 
+    > train <- list(data = matrix(rnorm(20), ncol = 2),
+    ...
+    +                    params = list(objective = "binary:logistic"),
+    +                    nrounds = 2,
+    +                    nfold = 3,
+    +                    prediction = TRUE,
+    +                    nthread = 1)
+    Warning: `xgb.cv.lowmem()` was deprecated in MIC 1.2.0.
+    ℹ Please use `faLearn::xgb.cv.lowmem()` instead.
+    ℹ This function has been moved to the faLearn package.
+    Error: 'slice' is not an exported object from 'namespace:xgboost'
+    Execution halted
+    ```
+
+*   checking tests ...
+    ```
+      Running ‘testthat.R’
+     ERROR
+    Running the tests in ‘tests/testthat.R’ failed.
+    Complete output:
+      > # This file is part of the standard setup for testthat.
+      > # It is recommended that you do not modify it.
+      > #
+      > # Where should you do additional test configuration?
+      > # Learn more about the roles of various files in:
+      > # * https://r-pkgs.org/tests.html
+    ...
+      ── Error ('test-cv.R:148:3'): iris example ─────────────────────────────────────
+      Error in `apply(model$pred, 1, which.max)`: dim(X) must have a positive length
+      Backtrace:
+          ▆
+       1. └─base::apply(model$pred, 1, which.max) at test-cv.R:148:3
+      
+      [ FAIL 1 | WARN 420 | SKIP 4 | PASS 231 ]
+      Error:
+      ! Test failures.
+      Execution halted
+    ```
+
+*   checking dependencies in R code ... WARNING
+    ```
+    Missing or unexported object: ‘xgboost::slice’
+    ```
+
 # mice
 
 <details>
@@ -1869,7 +1921,19 @@ Run `revdepcheck::revdep_details(, "mlr3resampling")` for more info
 
 *   checking dependencies in R code ... NOTE
     ```
-    [c4-n43:2046495] OPAL ERROR: Not initialized in file ext2x_client.c at line 112
+    c4-n43:pid1631597: PSM3 can't open nic unit: 0 (err=23)
+    c4-n43:pid1631597.R: Unable to create UDP socket for ens13f0np0: Address family not supported by protocol
+    c4-n43:pid1631597.R: Unable to initialize sockets NIC /sys/class/net/ens13f0np0 (unit 0:0)
+    c4-n43:pid1631597: PSM3 can't open nic unit: 0 (err=23)
+    c4-n43:pid1631597.R: Unable to create UDP socket for ens13f0np0: Address family not supported by protocol
+    c4-n43:pid1631597.R: Unable to initialize sockets NIC /sys/class/net/ens13f0np0 (unit 0:0)
+    c4-n43:pid1631597: PSM3 can't open nic unit: 1 (err=23)
+    c4-n43:pid1631597.R: Unable to create UDP socket for ens13f1np1: Address family not supported by protocol
+    c4-n43:pid1631597.R: Unable to initialize sockets NIC /sys/class/net/ens13f1np1 (unit 1:0)
+    c4-n43:pid1631597: PSM3 can't open nic unit: 0 (err=23)
+    ...
+    c4-n43:pid1631597.R: Unable to create UDP socket for ens13f1np1: Address family not supported by protocol
+    c4-n43:pid1631597.R: Unable to initialize sockets NIC /sys/class/net/ens13f1np1 (unit 1:0)
     --------------------------------------------------------------------------
     The application appears to have been direct launched using "srun",
     but OMPI was not built with SLURM's PMI support and therefore cannot
@@ -2337,6 +2401,47 @@ Run `revdepcheck::revdep_details(, "photosynthesis")` for more info
         ‘simulate_error.R’ ‘simulate_error.Rd’ ‘utils.R’
     ```
 
+# polle
+
+<details>
+
+* Version: 1.6.1
+* GitHub: https://github.com/AndreasNordland/polle
+* Source code: https://github.com/cran/polle
+* Date/Publication: 2025-12-01 15:40:08 UTC
+* Number of recursive dependencies: 109
+
+Run `revdepcheck::revdep_details(, "polle")` for more info
+
+</details>
+
+## In both
+
+*   checking tests ...
+    ```
+      Running ‘test-all.R’
+     ERROR
+    Running the tests in ‘tests/test-all.R’ failed.
+    Last 50 lines of output:
+        argument "y" is missing, with no default
+      Error in xgboost::xgboost(data = xgmat, objective = objective, nrounds = ntrees,  : 
+        argument "y" is missing, with no default
+      Saving _problems/test-q_xgboost-32.R
+      [ FAIL 4 | WARN 202 | SKIP 0 | PASS 935 ]
+      
+    ...
+      Backtrace:
+          ▆
+       1. └─xgboost::xgboost(...) at test-q_xgboost.R:28:3
+       2.   └─xgboost:::process.y.margin.and.objective(...)
+       3.     └─base::NROW(y)
+      
+      [ FAIL 4 | WARN 202 | SKIP 0 | PASS 935 ]
+      Error:
+      ! Test failures.
+      Execution halted
+    ```
+
 # powRICLPM
 
 <details>
@@ -2756,8 +2861,8 @@ Run `revdepcheck::revdep_details(, "shinyOAuth")` for more info
         [shinyOAuth] - HTTP request failed
         x Failed to fetch OIDC discovery document
         x Status 503: Service Unavailable.
-        i URL: http://127.0.0.1:43109/.well-known/openid-configuration
-        i Trace ID: WrxKcuNIBFWT
+        i URL: http://127.0.0.1:46755/.well-known/openid-configuration
+        i Trace ID: 24nRmVprZbsn
       
       [ FAIL 23 | WARN 0 | SKIP 12 | PASS 671 ]
       Error:
@@ -3298,7 +3403,7 @@ Run `revdepcheck::revdep_details(, "targeted")` for more info
       test_learner_stratify.R.......    0 tests    
       test_learner_stratify.R.......    3 tests [0;32mOK[0m 
       test_learner_stratify.R.......    3 tests [0;32mOK[0m 
-      test_learner_stratify.R.......    5 tests [0;32mOK[0m [0;36m29ms[0m
+      test_learner_stratify.R.......    5 tests [0;32mOK[0m [0;36m43ms[0m
     ...
       In addition: Warning messages:
       1: In throw_err_or_depr_msg("Passed unrecognized parameters: ", paste(head(names_unrecognized),  :
