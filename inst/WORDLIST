@@ -140,6 +140,7 @@ SpatVector
 Sys
 Topologies
 UDPipe
+UUID
 UnexpectedFutureResultError
 UniprocessFuture
 Univa

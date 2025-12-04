@@ -9,7 +9,7 @@
    which session (including UUID, hostname, and PID) and when the
    condition was created.
 
- * `print()` on a Future outpus a description of the current state.
+ * `print()` on a Future outputs a description of the current state.
 
 ## Bug Fixes
 
