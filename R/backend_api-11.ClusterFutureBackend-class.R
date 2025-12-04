@@ -254,7 +254,7 @@ launchFuture.ClusterFutureBackend <- function(backend, future, ...) {
     if (length(packages) > 0L) { 
       t_start <- Sys.time()
   
-      ## (ii) Attach packages that needs to be attached
+      ## (ii) Attach packages that need to be attached
       ##      NOTE: Already take care of by evalFuture().
       ##      However, if we need to get an early error about missing packages,
       ##      we can get the error here before launching the future.
@@ -1266,8 +1266,8 @@ cluster_call_blocking <- function(cl, ..., when = "call function on", future, ex
     if (!is.null(expected)) {
       value <- ans[[1]]
       if (length(value) != 1L || !is.character(value) || 
-          is.na(value) || value != "future-grmall") {
-        utils::str(list(ans = ans, expected = expected))
+          is.na(value) || value != expected) {
+        utils::str(list(value = value, expected = expected))
         stop(sprintf("parallel::clusterCall() did not return string %s as expected. Received a %s object instead: %s", sQuote(expected), class(value)[1], paste(deparse(value), collapse = "; ")))
       }
     }
