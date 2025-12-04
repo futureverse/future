@@ -205,7 +205,6 @@ Future <- function(expr = NULL, envir = parent.frame(), substitute = TRUE, stdou
 
   ## Future evaluation
   core[["expr"]] <- expr
-  core[["envir"]] <- envir
   core[["stdout"]] <- stdout
   core[["conditions"]] <- conditions
   core[["globals"]] <- globals
@@ -334,7 +333,6 @@ print.Future <- function(x, ...) {
   cat(sprintf("Lazy evaluation: %s\n", future[["lazy"]]))
   cat(sprintf("Local evaluation: %s\n", future[["local"]]))
   cat(sprintf("Early signaling: %s\n", isTRUE(future[["earlySignal"]])))
-  cat(sprintf("Environment: %s\n", envname(future[["envir"]])))
 
   actions <- future[["actions"]]
   cat(sprintf("Actions: [n=%d] %s\n", length(actions), commaq(actions)))
@@ -604,7 +602,6 @@ run.Future <- function(future, ...) {
   args <- list(
     quote(future[["expr"]]),
     substitute = FALSE,
-    envir = future[["envir"]],
     lazy = TRUE,
     stdout = future[["stdout"]],
     conditions = future[["conditions"]],

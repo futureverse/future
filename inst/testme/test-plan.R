@@ -362,10 +362,6 @@ plan(sequential, split = FALSE)
 f <- future(42L)
 v <- value(f)
 stopifnot(v == 42L)
-stopifnot(
-  inherits(f$envir, "environment"),
-  identical(f$envir, globalenv())
-)
 
 message("*** plan() - odds'n'ends ... DONE")
 
