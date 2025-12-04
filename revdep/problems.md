@@ -6,7 +6,7 @@
 * GitHub: NA
 * Source code: https://github.com/cran/adestr
 * Date/Publication: 2024-07-12 13:50:09 UTC
-* Number of recursive dependencies: 122
+* Number of recursive dependencies: 135
 
 Run `revdepcheck::revdep_details(, "adestr")` for more info
 
@@ -34,7 +34,7 @@ Run `revdepcheck::revdep_details(, "adestr")` for more info
 * GitHub: https://github.com/Sustainscapes/AICcPerm
 * Source code: https://github.com/cran/AICcPermanova
 * Date/Publication: 2023-04-11 13:40:06 UTC
-* Number of recursive dependencies: 101
+* Number of recursive dependencies: 114
 
 Run `revdepcheck::revdep_details(, "AICcPermanova")` for more info
 
@@ -49,6 +49,47 @@ Run `revdepcheck::revdep_details(, "AICcPermanova")` for more info
       File(s) using such syntax:
         ‘akaike_adjusted_rsq.R’ ‘filter_vif.R’ ‘fit_models.R’
         ‘select_models.R’
+    ```
+
+# alookr
+
+<details>
+
+* Version: 0.4.0
+* GitHub: https://github.com/choonghyunryu/alookr
+* Source code: https://github.com/cran/alookr
+* Date/Publication: 2025-09-16 02:50:02 UTC
+* Number of recursive dependencies: 149
+
+Run `revdepcheck::revdep_details(, "alookr")` for more info
+
+</details>
+
+## In both
+
+*   checking examples ... ERROR
+    ```
+    Running examples in ‘alookr-Ex.R’ failed
+    The error most likely occurred in:
+    
+    > ### Name: run_models
+    > ### Title: Fit binary classification model
+    > ### Aliases: run_models
+    > 
+    > ### ** Examples
+    > 
+    > library(dplyr)
+    ...
+     10. │   ├─purrr:::call_with_cleanup(...)
+     11. │   └─alookr (local) .f(.x[[i]], ...)
+     12. │     ├─future::value(.x)
+     13. │     └─future:::value.Future(.x)
+     14. │       └─future:::signalConditions(...)
+     15. │         └─base::stop(condition)
+     16. └─purrr (local) `<fn>`(`<smplErrr>`)
+     17.   └─cli::cli_abort(...)
+     18.     └─rlang::abort(...)
+    Execution halted
     ```
 
 # alphaci
@@ -248,6 +289,53 @@ Run `revdepcheck::revdep_details(, "ChromSCape")` for more info
     Consider adding
       importFrom("utils", "head")
     to your NAMESPACE file.
+    ```
+
+# CimpleG
+
+<details>
+
+* Version: 1.0.0
+* GitHub: https://github.com/CostaLab/CimpleG
+* Source code: https://github.com/cran/CimpleG
+* Date/Publication: 2025-12-03 20:50:17 UTC
+* Number of recursive dependencies: 318
+
+Run `revdepcheck::revdep_details(, "CimpleG")` for more info
+
+</details>
+
+## In both
+
+*   checking tests ...
+    ```
+      Running ‘spelling.R’
+      Running ‘testthat.R’
+     ERROR
+    Running the tests in ‘tests/testthat.R’ failed.
+    Last 50 lines of output:
+      > test-CimpleG.R: Warning: stack imbalance in '<-', 113 then 115
+      > test-CimpleG.R: Setting options('download.file.method.GEOquery'='auto')
+      > test-CimpleG.R: Setting options('GEOquery.inmemory.gpl'=FALSE)
+      > test-CimpleG.R: Warning: stack imbalance in '{', 109 then 111
+      Saving _problems/test3-CimpleG-xgboost-13.R
+    ...
+       22. │   └─butcher:::axe_env.xgb.Booster(x$fit, verbose = verbose, ...)
+       23. └─base::.handleSimpleError(...)
+       24.   └─purrr (local) h(simpleError(msg, call))
+       25.     └─cli::cli_abort(...)
+       26.       └─rlang::abort(...)
+      
+      [ FAIL 1 | WARN 0 | SKIP 4 | PASS 62 ]
+      Error:
+      ! Test failures.
+      Execution halted
+    ```
+
+*   checking dependencies in R code ... NOTE
+    ```
+    Namespace in Imports field not imported from: ‘devtools’
+      All declared Imports should be used.
     ```
 
 # ClustIRR
@@ -552,6 +640,47 @@ Run `revdepcheck::revdep_details(, "envi")` for more info
     See ‘/scratch/henrik/revdep/future/checks/envi/new/envi.Rcheck/00install.out’ for details.
     ```
 
+# FastRet
+
+<details>
+
+* Version: 1.1.4
+* GitHub: https://github.com/spang-lab/FastRet
+* Source code: https://github.com/cran/FastRet
+* Date/Publication: 2025-02-10 18:30:02 UTC
+* Number of recursive dependencies: 188
+
+Run `revdepcheck::revdep_details(, "FastRet")` for more info
+
+</details>
+
+## In both
+
+*   checking tests ...
+    ```
+      Running ‘testthat.R’
+     ERROR
+    Running the tests in ‘tests/testthat.R’ failed.
+    Last 50 lines of output:
+      > test-adjust_frm.R: [1;30m2025-12-04 12:58:12.59[0m Preprocessing data
+      > test-adjust_frm.R: [1;30m2025-12-04 12:58:12.60[0m Formula: RT_ADJ ~ RT + I(RT^2) + I(RT^3) + log(RT) + exp(RT) + sqrt(RT)
+      > test-adjust_frm.R: [1;30m2025-12-04 12:58:12.60[0m Estimating performance of adjusted model in CV
+      > test-plot_frm.R: [1;30m2025-12-04 12:58:12.05[0m dim(new_data): 25 x 3
+      > test-plot_frm.R: [1;30m2025-12-04 12:58:12.61[0m predictors: 1, 2, 3, 4, 5, 6
+      > test-plot_frm.R: [1;30m2025-12-04 12:58:12.61[0m nfolds: 5
+    ...
+      Backtrace:
+          ▆
+       1. └─FastRet:::fit_gbtree(df, verbose = 0) at test-fit_gbtree.R:16:5
+       2.   └─FastRet:::fit_gbtree_grid(...)
+       3.     └─xgboost::xgb.train(...)
+      
+      [ FAIL 3 | WARN 5 | SKIP 0 | PASS 19 ]
+      Error:
+      ! Test failures.
+      Execution halted
+    ```
+
 # fastRhockey
 
 <details>
@@ -664,6 +793,31 @@ Run `revdepcheck::revdep_details(, "forecastML")` for more info
 </details>
 
 ## In both
+
+*   checking re-building of vignette outputs ... ERROR
+    ```
+    Error(s) in re-building vignettes:
+    --- re-building ‘combine_forecasts.Rmd’ using rmarkdown
+    [WARNING] Deprecated: --highlight-style. Use --syntax-highlighting instead.
+    --- finished re-building ‘combine_forecasts.Rmd’
+    
+    --- re-building ‘custom_functions.Rmd’ using rmarkdown
+    [WARNING] Deprecated: --highlight-style. Use --syntax-highlighting instead.
+    --- finished re-building ‘custom_functions.Rmd’
+    
+    --- re-building ‘grouped_forecast.Rmd’ using rmarkdown
+    ...
+    
+    --- re-building ‘package_overview.Rmd’ using rmarkdown
+    [WARNING] Deprecated: --highlight-style. Use --syntax-highlighting instead.
+    --- finished re-building ‘package_overview.Rmd’
+    
+    SUMMARY: processing the following file failed:
+      ‘grouped_forecast.Rmd’
+    
+    Error: Vignette re-building failed.
+    Execution halted
+    ```
 
 *   checking dependencies in R code ... NOTE
     ```
@@ -944,10 +1098,10 @@ Run `revdepcheck::revdep_details(, "infercnv")` for more info
 
 <details>
 
-* Version: 2.18.0
+* Version: 2.18.1
 * GitHub: NA
 * Source code: https://github.com/cran/InPAS
-* Date/Publication: 2025-10-29
+* Date/Publication: 2025-11-25
 * Number of recursive dependencies: 164
 
 Run `revdepcheck::revdep_details(, "InPAS")` for more info
@@ -956,52 +1110,34 @@ Run `revdepcheck::revdep_details(, "InPAS")` for more info
 
 ## In both
 
-*   checking whether package ‘InPAS’ can be installed ... ERROR
+*   checking dependencies in R code ... NOTE
     ```
-    Installation failed.
-    See ‘/scratch/henrik/revdep/future/checks/InPAS/new/InPAS.Rcheck/00install.out’ for details.
+    There are ::: calls to the package's namespace in its code. A package
+      almost never needs to use ::: for its own objects:
+      ‘adjust_distalCPs’ ‘adjust_proximalCPs’ ‘adjust_proximalCPsByNBC’
+      ‘adjust_proximalCPsByPWM’ ‘calculate_mse’ ‘find_valleyBySpline’
+      ‘get_PAscore’ ‘get_PAscore2’ ‘remove_convergentUTR3s’
+      ‘search_distalCPs’ ‘search_proximalCPs’
     ```
 
-## Installation
+*   checking Rd metadata ... NOTE
+    ```
+    Invalid package aliases in Rd file 'InPAS.Rd':
+      ‘-package’
+    ```
 
-### Devel
+*   checking Rd \usage sections ... NOTE
+    ```
+    Documented arguments not in \usage in Rd file 'get_UTR3TotalCov.Rd':
+      ‘gcCompensationensation’
+    
+    Functions with \usage entries need to have the appropriate \alias
+    entries, and all their arguments documented.
+    The \usage entries must correspond to syntactically valid R code.
+    See chapter ‘Writing R documentation files’ in the ‘Writing R
+    Extensions’ manual.
+    ```
 
-```
-* installing *source* package ‘InPAS’ ...
-** this is package ‘InPAS’ version ‘2.18.0’
-** package ‘InPAS’ successfully unpacked and MD5 sums checked
-** using staged installation
-** R
-** data
-*** moving datasets to lazyload DB
-** inst
-** byte-compile and prepare package for lazy loading
-Error: object ‘filter’ is not exported by 'namespace:plyranges'
-Execution halted
-ERROR: lazy loading failed for package ‘InPAS’
-* removing ‘/scratch/henrik/revdep/future/checks/InPAS/new/InPAS.Rcheck/InPAS’
-
-
-```
-### CRAN
-
-```
-* installing *source* package ‘InPAS’ ...
-** this is package ‘InPAS’ version ‘2.18.0’
-** package ‘InPAS’ successfully unpacked and MD5 sums checked
-** using staged installation
-** R
-** data
-*** moving datasets to lazyload DB
-** inst
-** byte-compile and prepare package for lazy loading
-Error: object ‘filter’ is not exported by 'namespace:plyranges'
-Execution halted
-ERROR: lazy loading failed for package ‘InPAS’
-* removing ‘/scratch/henrik/revdep/future/checks/InPAS/old/InPAS.Rcheck/InPAS’
-
-
-```
 # interflex
 
 <details>
@@ -1010,7 +1146,7 @@ ERROR: lazy loading failed for package ‘InPAS’
 * GitHub: NA
 * Source code: https://github.com/cran/interflex
 * Date/Publication: 2021-05-18 11:40:02 UTC
-* Number of recursive dependencies: 89
+* Number of recursive dependencies: 101
 
 Run `revdepcheck::revdep_details(, "interflex")` for more info
 
@@ -1054,7 +1190,7 @@ Run `revdepcheck::revdep_details(, "ISAnalytics")` for more info
 * GitHub: NA
 * Source code: https://github.com/cran/ivmte
 * Date/Publication: 2021-09-17 12:20:07 UTC
-* Number of recursive dependencies: 116
+* Number of recursive dependencies: 127
 
 Run `revdepcheck::revdep_details(, "ivmte")` for more info
 
@@ -1080,7 +1216,7 @@ Run `revdepcheck::revdep_details(, "ivmte")` for more info
 * GitHub: https://github.com/nerler/JointAI
 * Source code: https://github.com/cran/JointAI
 * Date/Publication: 2024-04-02 18:25:00 UTC
-* Number of recursive dependencies: 125
+* Number of recursive dependencies: 137
 
 Run `revdepcheck::revdep_details(, "JointAI")` for more info
 
@@ -1120,45 +1256,70 @@ Run `revdepcheck::revdep_details(, "kappaGold")` for more info
         ‘kappa_inference.R’
     ```
 
-# latentcor
+# ldmppr
 
 <details>
 
-* Version: 2.0.1
-* GitHub: NA
-* Source code: https://github.com/cran/latentcor
-* Date/Publication: 2022-09-05 20:50:02 UTC
-* Number of recursive dependencies: 143
+* Version: 1.0.4
+* GitHub: https://github.com/lanedrew/ldmppr
+* Source code: https://github.com/cran/ldmppr
+* Date/Publication: 2025-02-24 21:00:02 UTC
+* Number of recursive dependencies: 128
 
-Run `revdepcheck::revdep_details(, "latentcor")` for more info
+Run `revdepcheck::revdep_details(, "ldmppr")` for more info
 
 </details>
 
 ## In both
 
-*   checking Rd files ... NOTE
+*   checking examples ... ERROR
     ```
-    checkRd: (-1) evaluation.Rd:38: Lost braces in \itemize; \value handles \item{}{} directly
-    checkRd: (-1) evaluation.Rd:39: Lost braces in \itemize; \value handles \item{}{} directly
-    checkRd: (-1) evaluation.Rd:40: Lost braces in \itemize; \value handles \item{}{} directly
-    checkRd: (-1) evaluation.Rd:41: Lost braces in \itemize; \value handles \item{}{} directly
-    checkRd: (-1) evaluation.Rd:42: Lost braces in \itemize; \value handles \item{}{} directly
-    checkRd: (-1) evaluation.Rd:43: Lost braces in \itemize; \value handles \item{}{} directly
-    checkRd: (-1) evaluation.Rd:44: Lost braces in \itemize; \value handles \item{}{} directly
-    checkRd: (-1) evaluation.Rd:45: Lost braces in \itemize; \value handles \item{}{} directly
-    checkRd: (-1) evaluation.Rd:46: Lost braces in \itemize; \value handles \item{}{} directly
-    checkRd: (-1) evaluation.Rd:47: Lost braces in \itemize; \value handles \item{}{} directly
+    Running examples in ‘ldmppr-Ex.R’ failed
+    The error most likely occurred in:
+    
+    > ### Name: predict_marks
+    > ### Title: Predict values from the mark distribution
+    > ### Aliases: predict_marks
+    > 
+    > ### ** Examples
+    > 
+    > # Simulate a realization
     ...
-    checkRd: (-1) gen_data.Rd:35: Lost braces in \itemize; \value handles \item{}{} directly
-    checkRd: (-1) gen_data.Rd:36-37: Lost braces in \itemize; \value handles \item{}{} directly
-    checkRd: (-1) get_types.Rd:17: Lost braces in \itemize; \value handles \item{}{} directly
-    checkRd: (-1) interpolation.Rd:23: Lost braces in \itemize; \value handles \item{}{} directly
-    checkRd: (-1) interpolation.Rd:24: Lost braces in \itemize; \value handles \item{}{} directly
-    checkRd: (-1) latentcor.Rd:38: Lost braces in \itemize; \value handles \item{}{} directly
-    checkRd: (-1) latentcor.Rd:39: Lost braces in \itemize; \value handles \item{}{} directly
-    checkRd: (-1) latentcor.Rd:40: Lost braces in \itemize; \value handles \item{}{} directly
-    checkRd: (-1) latentcor.Rd:41: Lost braces in \itemize; \value handles \item{}{} directly
-    checkRd: (-1) latentcor.Rd:42: Lost braces in \itemize; \value handles \item{}{} directly
+    > # Load the example mark model
+    > file_path <- system.file("extdata", "example_mark_model.rds", package = "ldmppr")
+    > example_mark_model <- readRDS(file_path)
+    > 
+    > # Unbundle the model
+    > mark_model <- bundle::unbundle(example_mark_model)
+    Error in xgboost::xgb.load.raw(object, as_booster = TRUE) : 
+      unused argument (as_booster = TRUE)
+    Calls: <Anonymous> ... <Anonymous> -> unbundle -> unbundle.bundle -> <Anonymous>
+    Execution halted
+    ```
+
+*   checking re-building of vignette outputs ... ERROR
+    ```
+    Error(s) in re-building vignettes:
+    --- re-building ‘ldmppr_howto.Rmd’ using rmarkdown
+    
+    Quitting from ldmppr_howto.Rmd:100-130 [train_mark_model]
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    <error/rlang_error>
+    Error in `xgboost::xgb.load.raw()`:
+    ! unused argument (as_booster = TRUE)
+    ---
+    Backtrace:
+    ...
+    
+    Error: processing vignette 'ldmppr_howto.Rmd' failed with diagnostics:
+    unused argument (as_booster = TRUE)
+    --- failed re-building ‘ldmppr_howto.Rmd’
+    
+    SUMMARY: processing the following file failed:
+      ‘ldmppr_howto.Rmd’
+    
+    Error: Vignette re-building failed.
+    Execution halted
     ```
 
 # ldsr
@@ -1282,6 +1443,118 @@ Run `revdepcheck::revdep_details(, "mbbe")` for more info
        4.       └─rlang::cnd_signal(...)
       
       [ FAIL 1 | WARN 0 | SKIP 0 | PASS 11 ]
+      Error:
+      ! Test failures.
+      Execution halted
+    ```
+
+# MIC
+
+<details>
+
+* Version: 1.2.0
+* GitHub: https://github.com/agerada/MIC
+* Source code: https://github.com/cran/MIC
+* Date/Publication: 2025-10-12 16:40:14 UTC
+* Number of recursive dependencies: 83
+
+Run `revdepcheck::revdep_details(, "MIC")` for more info
+
+</details>
+
+## In both
+
+*   checking examples ... ERROR
+    ```
+    Running examples in ‘MIC-Ex.R’ failed
+    The error most likely occurred in:
+    
+    > ### Name: xgb.cv.lowmem
+    > ### Title: Low memory cross-validation wrapper for XGBoost
+    > ### Aliases: xgb.cv.lowmem
+    > 
+    > ### ** Examples
+    > 
+    > train <- list(data = matrix(rnorm(20), ncol = 2),
+    ...
+    +                    params = list(objective = "binary:logistic"),
+    +                    nrounds = 2,
+    +                    nfold = 3,
+    +                    prediction = TRUE,
+    +                    nthread = 1)
+    Warning: `xgb.cv.lowmem()` was deprecated in MIC 1.2.0.
+    ℹ Please use `faLearn::xgb.cv.lowmem()` instead.
+    ℹ This function has been moved to the faLearn package.
+    Error: 'slice' is not an exported object from 'namespace:xgboost'
+    Execution halted
+    ```
+
+*   checking tests ...
+    ```
+      Running ‘testthat.R’
+     ERROR
+    Running the tests in ‘tests/testthat.R’ failed.
+    Complete output:
+      > # This file is part of the standard setup for testthat.
+      > # It is recommended that you do not modify it.
+      > #
+      > # Where should you do additional test configuration?
+      > # Learn more about the roles of various files in:
+      > # * https://r-pkgs.org/tests.html
+    ...
+      ── Error ('test-cv.R:148:3'): iris example ─────────────────────────────────────
+      Error in `apply(model$pred, 1, which.max)`: dim(X) must have a positive length
+      Backtrace:
+          ▆
+       1. └─base::apply(model$pred, 1, which.max) at test-cv.R:148:3
+      
+      [ FAIL 1 | WARN 420 | SKIP 4 | PASS 231 ]
+      Error:
+      ! Test failures.
+      Execution halted
+    ```
+
+*   checking dependencies in R code ... WARNING
+    ```
+    Missing or unexported object: ‘xgboost::slice’
+    ```
+
+# mice
+
+<details>
+
+* Version: 3.18.0
+* GitHub: https://github.com/amices/mice
+* Source code: https://github.com/cran/mice
+* Date/Publication: 2025-05-27 10:40:02 UTC
+* Number of recursive dependencies: 132
+
+Run `revdepcheck::revdep_details(, "mice")` for more info
+
+</details>
+
+## In both
+
+*   checking tests ...
+    ```
+      Running ‘testthat.R’
+     ERROR
+    Running the tests in ‘tests/testthat.R’ failed.
+    Complete output:
+      > library(testthat)
+      > library(mice)
+      
+      Attaching package: 'mice'
+      
+      The following object is masked from 'package:stats':
+    ...
+       5. └─tidyr:::complete.data.frame(toenail, ID, visit)
+       6.   ├─tidyr::expand(data, ...)
+       7.   └─tidyr:::expand.data.frame(data, ...)
+       8.     └─tidyr:::grid_dots(..., `_data` = data)
+       9.       └─rlang::eval_tidy(dot, data = mask)
+      
+      [ FAIL 1 | WARN 0 | SKIP 2 | PASS 379 ]
       Error:
       ! Test failures.
       Execution halted
@@ -1548,19 +1821,19 @@ Run `revdepcheck::revdep_details(, "mlr3resampling")` for more info
 
 *   checking dependencies in R code ... NOTE
     ```
-    c4-n43:pid3572606: PSM3 can't open nic unit: 0 (err=23)
-    c4-n43:pid3572606.R: Unable to create UDP socket for ens13f0np0: Address family not supported by protocol
-    c4-n43:pid3572606.R: Unable to initialize sockets NIC /sys/class/net/ens13f0np0 (unit 0:0)
-    c4-n43:pid3572606: PSM3 can't open nic unit: 0 (err=23)
-    c4-n43:pid3572606.R: Unable to create UDP socket for ens13f0np0: Address family not supported by protocol
-    c4-n43:pid3572606.R: Unable to initialize sockets NIC /sys/class/net/ens13f0np0 (unit 0:0)
-    c4-n43:pid3572606: PSM3 can't open nic unit: 1 (err=23)
-    c4-n43:pid3572606.R: Unable to create UDP socket for ens13f1np1: Address family not supported by protocol
-    c4-n43:pid3572606.R: Unable to initialize sockets NIC /sys/class/net/ens13f1np1 (unit 1:0)
-    c4-n43:pid3572606: PSM3 can't open nic unit: 0 (err=23)
+    c4-n43:pid220660: PSM3 can't open nic unit: 0 (err=23)
+    c4-n43:pid220660.R: Unable to create UDP socket for ens13f0np0: Address family not supported by protocol
+    c4-n43:pid220660.R: Unable to initialize sockets NIC /sys/class/net/ens13f0np0 (unit 0:0)
+    c4-n43:pid220660: PSM3 can't open nic unit: 0 (err=23)
+    c4-n43:pid220660.R: Unable to create UDP socket for ens13f0np0: Address family not supported by protocol
+    c4-n43:pid220660.R: Unable to initialize sockets NIC /sys/class/net/ens13f0np0 (unit 0:0)
+    c4-n43:pid220660: PSM3 can't open nic unit: 1 (err=23)
+    c4-n43:pid220660.R: Unable to create UDP socket for ens13f1np1: Address family not supported by protocol
+    c4-n43:pid220660.R: Unable to initialize sockets NIC /sys/class/net/ens13f1np1 (unit 1:0)
+    c4-n43:pid220660: PSM3 can't open nic unit: 0 (err=23)
     ...
-    c4-n43:pid3572606.R: Unable to create UDP socket for ens13f0np0: Address family not supported by protocol
-    c4-n43:pid3572606.R: Unable to initialize sockets NIC /sys/class/net/ens13f0np0 (unit 0:0)
+    c4-n43:pid220660.R: Unable to create UDP socket for ens13f0np0: Address family not supported by protocol
+    c4-n43:pid220660.R: Unable to initialize sockets NIC /sys/class/net/ens13f0np0 (unit 0:0)
     --------------------------------------------------------------------------
     Open MPI failed an OFI Libfabric library call (fi_endpoint).  This is highly
     unusual; your job may behave unpredictably (and/or abort) after this.
@@ -1569,6 +1842,113 @@ Run `revdepcheck::revdep_details(, "mlr3resampling")` for more info
       Location: mtl_ofi_component.c:513
       Error: Invalid argument (22)
     --------------------------------------------------------------------------
+    ```
+
+# mlr3tuning
+
+<details>
+
+* Version: 1.5.0
+* GitHub: https://github.com/mlr-org/mlr3tuning
+* Source code: https://github.com/cran/mlr3tuning
+* Date/Publication: 2025-11-07 12:40:09 UTC
+* Number of recursive dependencies: 100
+
+Run `revdepcheck::revdep_details(, "mlr3tuning")` for more info
+
+</details>
+
+## In both
+
+*   checking examples ... ERROR
+    ```
+    Running examples in ‘mlr3tuning-Ex.R’ failed
+    The error most likely occurred in:
+    
+    > ### Name: mlr_tuners_internal
+    > ### Title: Hyperparameter Tuning with Internal Tuning
+    > ### Aliases: mlr_tuners_internal TunerBatchInternal
+    > 
+    > ### ** Examples
+    > 
+    > ## Don't show: 
+    ...
+      Argument 'objective' is only for custom objectives. For built-in objectives, pass the objective under 'params'. This warning will become an error in a future version.
+    Warning in check.deprecation(deprecated_train_params, match.call(), ...) :
+      Passed invalid function arguments: eval_metric, nthread, num_class. These should be passed as a list to argument 'params'. Conversion from argument to 'params' entry will be done automatically, but this behavior will become an error in a future version.
+    Warning in throw_err_or_depr_msg("Parameter '", match_old, "' has been renamed to '",  :
+      Parameter 'watchlist' has been renamed to 'evals'. This warning will become an error in a future version.
+    Warning in check.custom.obj(params, objective) :
+      Argument 'objective' is only for custom objectives. For built-in objectives, pass the objective under 'params'. This warning will become an error in a future version.
+    Error in names(x) <- nm : attempt to set an attribute on NULL
+    Calls: withAutoprint ... tryCatchList -> tryCatchOne -> <Anonymous> -> onError
+    Execution halted
+    ```
+
+# modeltime
+
+<details>
+
+* Version: 1.3.2
+* GitHub: https://github.com/business-science/modeltime
+* Source code: https://github.com/cran/modeltime
+* Date/Publication: 2025-08-28 23:40:09 UTC
+* Number of recursive dependencies: 237
+
+Run `revdepcheck::revdep_details(, "modeltime")` for more info
+
+</details>
+
+## In both
+
+*   checking tests ...
+    ```
+      Running ‘testthat.R’
+     ERROR
+    Running the tests in ‘tests/testthat.R’ failed.
+    Last 50 lines of output:
+        'test-algo-seasonal_decomp_ets.R:10:5',
+        'test-algo-seasonal_reg_tbats.R:20:5', 'test-algo-seasonal_reg_tbats.R:35:5',
+        'test-algo-seasonal_reg_tbats.R:93:5', 'test-algo-temporal_hierarchy.R:8:5',
+        'test-algo-window_reg.R:24:5', 'test-algo-window_reg.R:69:5',
+        'test-algo-window_reg.R:100:5', 'test-algo-window_reg.R:153:5',
+        'test-algo-window_reg.R:206:5', 'test-algo-window_reg.R:241:5',
+    ...
+       5. │   └─parsnip:::xy_xy(...)
+       6. │     └─parsnip:::eval_mod(...)
+       7. │       └─rlang::eval_tidy(e, env = envir, ...)
+       8. └─modeltime::prophet_xgboost_fit_impl(...)
+       9.   └─modeltime::xgboost_predict(fit_xgboost, newdata = xreg_tbl)
+      
+      [ FAIL 1 | WARN 0 | SKIP 80 | PASS 0 ]
+      Error:
+      ! Test failures.
+      Execution halted
+    ```
+
+*   checking re-building of vignette outputs ... ERROR
+    ```
+    Error(s) in re-building vignettes:
+    --- re-building ‘getting-started-with-modeltime.Rmd’ using rmarkdown
+    
+    Quitting from getting-started-with-modeltime.Rmd:162-171 [unnamed-chunk-9]
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    <error/rlang_error>
+    Error in `switch()`:
+    ! EXPR must be a length 1 vector
+    ---
+    Backtrace:
+    ...
+    
+    Error: processing vignette 'getting-started-with-modeltime.Rmd' failed with diagnostics:
+    EXPR must be a length 1 vector
+    --- failed re-building ‘getting-started-with-modeltime.Rmd’
+    
+    SUMMARY: processing the following file failed:
+      ‘getting-started-with-modeltime.Rmd’
+    
+    Error: Vignette re-building failed.
+    Execution halted
     ```
 
 # multiverse
@@ -1700,7 +2080,7 @@ Run `revdepcheck::revdep_details(, "PAMscapes")` for more info
 * GitHub: https://github.com/cbg-ethz/pareg
 * Source code: https://github.com/cran/pareg
 * Date/Publication: 2024-04-30
-* Number of recursive dependencies: 322
+* Number of recursive dependencies: 323
 
 Run `revdepcheck::revdep_details(, "pareg")` for more info
 
@@ -1868,7 +2248,7 @@ Run `revdepcheck::revdep_details(, "pavo")` for more info
 * GitHub: https://github.com/progenetix/pgxRpi
 * Source code: https://github.com/cran/pgxRpi
 * Date/Publication: 2025-10-29
-* Number of recursive dependencies: 155
+* Number of recursive dependencies: 166
 
 Run `revdepcheck::revdep_details(, "pgxRpi")` for more info
 
@@ -2120,7 +2500,7 @@ Run `revdepcheck::revdep_details(, "receptiviti")` for more info
 * GitHub: NA
 * Source code: https://github.com/cran/recforest
 * Date/Publication: 2024-12-05 18:30:02 UTC
-* Number of recursive dependencies: 110
+* Number of recursive dependencies: 124
 
 Run `revdepcheck::revdep_details(, "recforest")` for more info
 
@@ -2332,8 +2712,8 @@ Run `revdepcheck::revdep_details(, "shinyOAuth")` for more info
         [shinyOAuth] - HTTP request failed
         x Failed to fetch OIDC discovery document
         x Status 503: Service Unavailable.
-        i URL: http://127.0.0.1:32881/.well-known/openid-configuration
-        i Trace ID: BcecmlPivn-P
+        i URL: http://127.0.0.1:37887/.well-known/openid-configuration
+        i Trace ID: 3rVzsDHNM_i7
       
       [ FAIL 23 | WARN 0 | SKIP 12 | PASS 671 ]
       Error:
@@ -2349,7 +2729,7 @@ Run `revdepcheck::revdep_details(, "shinyOAuth")` for more info
 * GitHub: https://github.com/ShixiangWang/sigminer
 * Source code: https://github.com/cran/sigminer
 * Date/Publication: 2024-05-11 08:50:02 UTC
-* Number of recursive dependencies: 210
+* Number of recursive dependencies: 221
 
 Run `revdepcheck::revdep_details(, "sigminer")` for more info
 
@@ -2373,7 +2753,7 @@ Run `revdepcheck::revdep_details(, "sigminer")` for more info
 * GitHub: https://github.com/TojalLab/signeR
 * Source code: https://github.com/cran/signeR
 * Date/Publication: 2025-10-29
-* Number of recursive dependencies: 233
+* Number of recursive dependencies: 243
 
 Run `revdepcheck::revdep_details(, "signeR")` for more info
 
@@ -2761,7 +3141,7 @@ Run `revdepcheck::revdep_details(, "survstan")` for more info
 * GitHub: NA
 * Source code: https://github.com/cran/synergyfinder
 * Date/Publication: 2025-10-29
-* Number of recursive dependencies: 198
+* Number of recursive dependencies: 209
 
 Run `revdepcheck::revdep_details(, "synergyfinder")` for more info
 
@@ -2820,6 +3200,97 @@ Run `revdepcheck::revdep_details(, "synergyfinder")` for more info
     checkRd: (-1) PlotDoseResponseCurve.Rd:84: Lost braces
         84 | link[drc]{plot.drc} function. For example, use xlim = c(0.5, 500) or
            |          ^
+    ```
+
+# targeted
+
+<details>
+
+* Version: 0.6
+* GitHub: https://github.com/kkholst/targeted
+* Source code: https://github.com/cran/targeted
+* Date/Publication: 2025-10-30 07:50:09 UTC
+* Number of recursive dependencies: 159
+
+Run `revdepcheck::revdep_details(, "targeted")` for more info
+
+</details>
+
+## In both
+
+*   checking examples ... ERROR
+    ```
+    Running examples in ‘targeted-Ex.R’ failed
+    The error most likely occurred in:
+    
+    > ### Name: learner_xgboost
+    > ### Title: Construct a learner
+    > ### Aliases: learner_xgboost
+    > 
+    > ### ** Examples
+    > 
+    > n  <- 1e3
+    ...
+    Warning in throw_err_or_depr_msg("Parameter '", match_old, "' has been renamed to '",  :
+      Parameter 'data' has been renamed to 'x'. This warning will become an error in a future version.
+    Warning in throw_err_or_depr_msg("Parameter '", match_old, "' has been renamed to '",  :
+      Parameter 'eta' has been renamed to 'learning_rate'. This warning will become an error in a future version.
+    Warning in throw_err_or_depr_msg("Parameter '", match_old, "' has been renamed to '",  :
+      Parameter 'lambda' has been renamed to 'reg_lambda'. This warning will become an error in a future version.
+    Error in (function (x, y, objective = NULL, nrounds = 100L, max_depth = NULL,  : 
+      argument "y" is missing, with no default
+    Calls: <Anonymous> ... <Anonymous> -> process.y.margin.and.objective -> NROW
+    Execution halted
+    ```
+
+*   checking tests ...
+    ```
+      Running ‘tinytest.R’
+     ERROR
+    Running the tests in ‘tests/tinytest.R’ failed.
+    Last 50 lines of output:
+      test_learner_stratify.R.......    0 tests    
+      test_learner_stratify.R.......    0 tests    
+      test_learner_stratify.R.......    0 tests    
+      test_learner_stratify.R.......    3 tests [0;32mOK[0m 
+      test_learner_stratify.R.......    3 tests [0;32mOK[0m 
+      test_learner_stratify.R.......    5 tests [0;32mOK[0m [0;36m28ms[0m
+    ...
+      In addition: Warning messages:
+      1: In throw_err_or_depr_msg("Passed unrecognized parameters: ", paste(head(names_unrecognized),  :
+        Passed unrecognized parameters: verbose. This warning will become an error in a future version.
+      2: In throw_err_or_depr_msg("Parameter '", match_old, "' has been renamed to '",  :
+        Parameter 'data' has been renamed to 'x'. This warning will become an error in a future version.
+      3: In throw_err_or_depr_msg("Parameter '", match_old, "' has been renamed to '",  :
+        Parameter 'eta' has been renamed to 'learning_rate'. This warning will become an error in a future version.
+      4: In throw_err_or_depr_msg("Parameter '", match_old, "' has been renamed to '",  :
+        Parameter 'lambda' has been renamed to 'reg_lambda'. This warning will become an error in a future version.
+      Execution halted
+    ```
+
+*   checking re-building of vignette outputs ... ERROR
+    ```
+    Error(s) in re-building vignettes:
+    --- re-building ‘predictionclass.Rmd’ using rmarkdown
+    
+    Quitting from predictionclass.Rmd:143-145 [unnamed-chunk-5]
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    <error/rlang_error>
+    Error:
+    ! argument "y" is missing, with no default
+    ---
+    Backtrace:
+    ...
+    --- failed re-building ‘predictionclass.Rmd’
+    
+    --- re-building ‘riskregression.Rmd’ using rmarkdown
+    --- finished re-building ‘riskregression.Rmd’
+    
+    SUMMARY: processing the following file failed:
+      ‘predictionclass.Rmd’
+    
+    Error: Vignette re-building failed.
+    Execution halted
     ```
 
 # tglkmeans
@@ -3012,7 +3483,7 @@ Run `revdepcheck::revdep_details(, "tsgarch")` for more info
 * GitHub: https://github.com/tsmodels/tsmarch
 * Source code: https://github.com/cran/tsmarch
 * Date/Publication: 2024-11-18 13:30:02 UTC
-* Number of recursive dependencies: 148
+* Number of recursive dependencies: 159
 
 Run `revdepcheck::revdep_details(, "tsmarch")` for more info
 
@@ -3082,7 +3553,7 @@ Run `revdepcheck::revdep_details(, "txshift")` for more info
 * GitHub: NA
 * Source code: https://github.com/cran/vmeasur
 * Date/Publication: 2021-11-11 19:00:02 UTC
-* Number of recursive dependencies: 108
+* Number of recursive dependencies: 122
 
 Run `revdepcheck::revdep_details(, "vmeasur")` for more info
 
