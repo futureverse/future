@@ -24,7 +24,7 @@ jobs:
           - { r: "release", pkg: "furrr", not_cran: false }
           - { r: "release", pkg: "future.tests"      }
           - { r: "release", pkg: "promises"          , force_suggests: false }
-          - { r: "release", pkg: "shiny", not_cran: false }
+          - { r: "release", pkg: "shiny"             , force_suggests: false , not_cran: false }
           - { r: "release", pkg: "plumber"           }
           - { r: "release", pkg: "future.batchtools" , globals: develop, label: 'globals develop' }
           - { r: "release", pkg: "future.callr"      , globals: develop, label: 'globals develop' }
