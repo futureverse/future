@@ -261,7 +261,6 @@ makeFutureBackend <- function(evaluator, ..., debug = FALSE) {
   args2 <- formals(evaluator)
   ## Drop never-used arguments
   args2$`...` <- NULL
-  args2$envir <- NULL  # legacy
   args2$lazy <- NULL   # bc multisession; should be removed
   if (debug) {
     mdebugf("Evaluator formal arguments: [n=%d]", length(args2))
