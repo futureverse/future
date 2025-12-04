@@ -291,6 +291,94 @@ Run `revdepcheck::revdep_details(, "ChromSCape")` for more info
     to your NAMESPACE file.
     ```
 
+# CimpleG
+
+<details>
+
+* Version: 1.0.0
+* GitHub: https://github.com/CostaLab/CimpleG
+* Source code: https://github.com/cran/CimpleG
+* Date/Publication: 2025-12-03 20:50:17 UTC
+* Number of recursive dependencies: 318
+
+Run `revdepcheck::revdep_details(, "CimpleG")` for more info
+
+</details>
+
+## In both
+
+*   checking tests ...
+    ```
+      Running ‘spelling.R’
+      Running ‘testthat.R’
+     ERROR
+    Running the tests in ‘tests/testthat.R’ failed.
+    Last 50 lines of output:
+      > test-CimpleG.R: Warning: stack imbalance in '<-', 113 then 115
+      > test-CimpleG.R: Setting options('download.file.method.GEOquery'='auto')
+      > test-CimpleG.R: Setting options('GEOquery.inmemory.gpl'=FALSE)
+      > test-CimpleG.R: Warning: stack imbalance in '{', 109 then 111
+      Saving _problems/test3-CimpleG-xgboost-13.R
+    ...
+       22. │   └─butcher:::axe_env.xgb.Booster(x$fit, verbose = verbose, ...)
+       23. └─base::.handleSimpleError(...)
+       24.   └─purrr (local) h(simpleError(msg, call))
+       25.     └─cli::cli_abort(...)
+       26.       └─rlang::abort(...)
+      
+      [ FAIL 1 | WARN 0 | SKIP 4 | PASS 62 ]
+      Error:
+      ! Test failures.
+      Execution halted
+    ```
+
+*   checking dependencies in R code ... NOTE
+    ```
+    Namespace in Imports field not imported from: ‘devtools’
+      All declared Imports should be used.
+    ```
+
+# civis
+
+<details>
+
+* Version: 3.1.3
+* GitHub: https://github.com/civisanalytics/civis-r
+* Source code: https://github.com/cran/civis
+* Date/Publication: 2025-08-29 08:40:31 UTC
+* Number of recursive dependencies: 81
+
+Run `revdepcheck::revdep_details(, "civis")` for more info
+
+</details>
+
+## Newly broken
+
+*   checking tests ...
+    ```
+      Running ‘testthat.R’
+     ERROR
+    Running the tests in ‘tests/testthat.R’ failed.
+    Complete output:
+      > library(testthat)
+      > library(civis)
+      > 
+      > test_check("civis")
+      Saving _problems/test_civis_future-98.R
+      [ FAIL 2 | WARN 5 | SKIP 0 | PASS 1055 ]
+    ...
+       3. └─civis (local) mock_r_eval(fut)
+      ── Failure ('test_civis_future.R:98:2'): CivisFuture has the right stuff ───────
+      Expected `fut$envir$a` to equal 5.
+      Differences:
+      target is NULL, current is numeric
+      
+      [ FAIL 2 | WARN 5 | SKIP 0 | PASS 1055 ]
+      Error:
+      ! Test failures.
+      Execution halted
+    ```
+
 # ClustIRR
 
 <details>
@@ -481,28 +569,6 @@ Run `revdepcheck::revdep_details(, "ctsem")` for more info
     Execution halted
     ```
 
-# delimtools
-
-<details>
-
-* Version: 0.2.1
-* GitHub: https://github.com/legalLab/delimtools
-* Source code: https://github.com/cran/delimtools
-* Date/Publication: 2025-09-29 22:10:02 UTC
-* Number of recursive dependencies: 101
-
-Run `revdepcheck::revdep_details(, "delimtools")` for more info
-
-</details>
-
-## In both
-
-*   checking Rd cross-references ... NOTE
-    ```
-    Package unavailable to check Rd xrefs: ‘bGMYC’
-    Unknown package ‘splits’ in Rd xrefs
-    ```
-
 # disk.frame
 
 <details>
@@ -637,12 +703,12 @@ Run `revdepcheck::revdep_details(, "FastRet")` for more info
      ERROR
     Running the tests in ‘tests/testthat.R’ failed.
     Last 50 lines of output:
-      > test-adjust_frm.R: [1;30m2025-12-03 11:47:36.67[0m Preprocessing data
-      > test-adjust_frm.R: [1;30m2025-12-03 11:47:36.67[0m Formula: RT_ADJ ~ RT + I(RT^2) + I(RT^3) + log(RT) + exp(RT) + sqrt(RT)
-      > test-adjust_frm.R: [1;30m2025-12-03 11:47:36.67[0m Estimating performance of adjusted model in CV
-      > test-adjust_frm.R: [1;30m2025-12-03 11:47:36.70[0m Fitting adjustment model on full new data set
-      > test-adjust_frm.R: [1;30m2025-12-03 11:47:36.70[0m Returning adjusted frm object
-      > test-plot_frm.R: [1;30m2025-12-03 11:47:36.06[0m dim(new_data): 25 x 3
+      > test-adjust_frm.R: [1;30m2025-12-03 19:09:23.57[0m Preprocessing data
+      > test-adjust_frm.R: [1;30m2025-12-03 19:09:23.57[0m Formula: RT_ADJ ~ RT + I(RT^2) + I(RT^3) + log(RT) + exp(RT) + sqrt(RT)
+      > test-adjust_frm.R: [1;30m2025-12-03 19:09:23.57[0m Estimating performance of adjusted model in CV
+      > test-adjust_frm.R: [1;30m2025-12-03 19:09:23.60[0m Fitting adjustment model on full new data set
+      > test-adjust_frm.R: [1;30m2025-12-03 19:09:23.61[0m Returning adjusted frm object
+      > test-plot_frm.R: [1;30m2025-12-03 19:09:23.16[0m dim(new_data): 25 x 3
     ...
       Backtrace:
           ▆
@@ -1921,19 +1987,19 @@ Run `revdepcheck::revdep_details(, "mlr3resampling")` for more info
 
 *   checking dependencies in R code ... NOTE
     ```
-    c4-n43:pid1631597: PSM3 can't open nic unit: 0 (err=23)
-    c4-n43:pid1631597.R: Unable to create UDP socket for ens13f0np0: Address family not supported by protocol
-    c4-n43:pid1631597.R: Unable to initialize sockets NIC /sys/class/net/ens13f0np0 (unit 0:0)
-    c4-n43:pid1631597: PSM3 can't open nic unit: 0 (err=23)
-    c4-n43:pid1631597.R: Unable to create UDP socket for ens13f0np0: Address family not supported by protocol
-    c4-n43:pid1631597.R: Unable to initialize sockets NIC /sys/class/net/ens13f0np0 (unit 0:0)
-    c4-n43:pid1631597: PSM3 can't open nic unit: 1 (err=23)
-    c4-n43:pid1631597.R: Unable to create UDP socket for ens13f1np1: Address family not supported by protocol
-    c4-n43:pid1631597.R: Unable to initialize sockets NIC /sys/class/net/ens13f1np1 (unit 1:0)
-    c4-n43:pid1631597: PSM3 can't open nic unit: 0 (err=23)
+    c4-n43:pid2164536: PSM3 can't open nic unit: 0 (err=23)
+    c4-n43:pid2164536.R: Unable to create UDP socket for ens13f0np0: Address family not supported by protocol
+    c4-n43:pid2164536.R: Unable to initialize sockets NIC /sys/class/net/ens13f0np0 (unit 0:0)
+    c4-n43:pid2164536: PSM3 can't open nic unit: 0 (err=23)
+    c4-n43:pid2164536.R: Unable to create UDP socket for ens13f0np0: Address family not supported by protocol
+    c4-n43:pid2164536.R: Unable to initialize sockets NIC /sys/class/net/ens13f0np0 (unit 0:0)
+    c4-n43:pid2164536: PSM3 can't open nic unit: 1 (err=23)
+    c4-n43:pid2164536.R: Unable to create UDP socket for ens13f1np1: Address family not supported by protocol
+    c4-n43:pid2164536.R: Unable to initialize sockets NIC /sys/class/net/ens13f1np1 (unit 1:0)
+    c4-n43:pid2164536: PSM3 can't open nic unit: 0 (err=23)
     ...
-    c4-n43:pid1631597.R: Unable to create UDP socket for ens13f1np1: Address family not supported by protocol
-    c4-n43:pid1631597.R: Unable to initialize sockets NIC /sys/class/net/ens13f1np1 (unit 1:0)
+    c4-n43:pid2164536.R: Unable to create UDP socket for ens13f0np0: Address family not supported by protocol
+    c4-n43:pid2164536.R: Unable to initialize sockets NIC /sys/class/net/ens13f0np0 (unit 0:0)
     --------------------------------------------------------------------------
     The application appears to have been direct launched using "srun",
     but OMPI was not built with SLURM's PMI support and therefore cannot
@@ -2861,8 +2927,8 @@ Run `revdepcheck::revdep_details(, "shinyOAuth")` for more info
         [shinyOAuth] - HTTP request failed
         x Failed to fetch OIDC discovery document
         x Status 503: Service Unavailable.
-        i URL: http://127.0.0.1:46755/.well-known/openid-configuration
-        i Trace ID: 24nRmVprZbsn
+        i URL: http://127.0.0.1:45907/.well-known/openid-configuration
+        i Trace ID: 1WMjsEQF_rup
       
       [ FAIL 23 | WARN 0 | SKIP 12 | PASS 671 ]
       Error:
@@ -3403,7 +3469,7 @@ Run `revdepcheck::revdep_details(, "targeted")` for more info
       test_learner_stratify.R.......    0 tests    
       test_learner_stratify.R.......    3 tests [0;32mOK[0m 
       test_learner_stratify.R.......    3 tests [0;32mOK[0m 
-      test_learner_stratify.R.......    5 tests [0;32mOK[0m [0;36m43ms[0m
+      test_learner_stratify.R.......    5 tests [0;32mOK[0m [0;36m35ms[0m
     ...
       In addition: Warning messages:
       1: In throw_err_or_depr_msg("Passed unrecognized parameters: ", paste(head(names_unrecognized),  :
