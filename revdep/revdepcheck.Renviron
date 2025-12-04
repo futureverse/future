@@ -10,5 +10,11 @@ R_PARALLELLY_AVAILABLECORES_FALLBACK=2
 ## detectCores() when check vignettes
 R_PARALLELLY_AVAILABLECORES_MAX=32
 
+## Allow for at most 8 threads
+OMP_NUM_THREADS=8
+OPENBLAS_NUM_THREADS=8
+MKL_NUM_THREADS=8
+GOTO_NUM_THREADS=8
+
 ## Turn on more checks
 #NOT_CRAN=true
