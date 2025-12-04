@@ -209,9 +209,6 @@ future <- function(expr, envir = parent.frame(), substitute = TRUE, lazy = FALSE
     if (is.element("earlySignal", args_names)) {
       deprecate_future_earlySignal(future[["earlySignal"]])
     }
-  } else {
-    ## Backward compatibility
-    future[["earlySignal"]] <- FALSE
   }
 
   ## WORKAROUND: Was argument 'local' specified?
