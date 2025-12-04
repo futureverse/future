@@ -185,31 +185,6 @@ stopifnot(identical(v, 42L))
 plan(sequential)
 
 
-message("*** plan(cluster, earlySignal = TRUE)")
-oplan <- plan(cluster, earlySignal = TRUE)
-f <- future(42L)
-v <- value(f)
-print(v)
-stopifnot(identical(v, 42L))
-plan(sequential)
-
-message("*** plan(cluster, earlySignal = TRUE)")
-oplan <- plan(cluster, earlySignal = TRUE)
-f <- future(42L)
-v <- value(f)
-print(v)
-stopifnot(identical(v, 42L))
-plan(sequential)
-
-message("*** plan(cluster, earlySignal = TRUE)")
-oplan <- plan(cluster, earlySignal = TRUE)
-f <- future(42L)
-v <- value(f)
-print(v)
-stopifnot(identical(v, 42L))
-plan(sequential)
-
-
 
 message("*** old <- plan(new)")
 truth <- plan("list")

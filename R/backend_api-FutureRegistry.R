@@ -212,7 +212,7 @@ FutureRegistry <- local({
     if (earlySignal && length(futures) > 0L) {
       if (debug) mdebugf("Early signaling of %d future candidates ...", length(futures))
       ## Which futures have early signaling enabled?
-      idxs <- lapply(futures, FUN = function(f) f[["earlySignal"]])
+      idxs <- lapply(futures, FUN = function(f) isTRUE(f[["earlySignal"]]))
       idxs <- which(unlist(idxs, use.names = FALSE))
 
       if (debug) mdebugf("Number of futures with early signaling requested: %d", length(idxs))

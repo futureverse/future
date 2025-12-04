@@ -111,36 +111,9 @@ if (supportsMulticore()) {
     print(r)
     v <- tryCatch(value(f), error = identity)
     stopifnot(inherits(v, "error"))
-  
-    ## Errors
-    f <- future({ stop("bang!") }, earlySignal = TRUE)
-    Sys.sleep(0.2)
-    r <- tryCatch(resolved(f), error = identity)
-    print(r)
-    stopifnot(inherits(r, "error") || inherits(f, "SequentialFuture"))
-    v <- tryCatch(value(f), error = identity)
-    stopifnot(inherits(v, "error"))
   } else {
     message("- Skipping earlySignal = TRUE with 'multicore' because availableCores() == 1")
   }
-  
-  ## Warnings
-  f <- future({ warning("careful!") }, earlySignal = TRUE)
-  Sys.sleep(0.2)
-  res <- tryCatch({ r <- resolved(f) }, condition = function(w) w)
-  print(res)
-  
-  ## Messages
-  f <- future({ message("hey!") }, earlySignal = TRUE)
-  Sys.sleep(0.2)
-  res <- tryCatch({ r <- resolved(f) }, condition = function(w) w)
-  print(res)
-  
-  ## Condition
-  f <- future({ signalCondition(simpleCondition("hmm")) }, earlySignal = TRUE)
-  Sys.sleep(0.2)
-  res <- tryCatch({ r <- resolved(f) }, condition = function(w) w)
-  print(res)
   
   message("*** Early signaling of conditions with multicore futures ... DONE")
 }

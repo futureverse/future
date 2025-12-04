@@ -160,7 +160,7 @@
 #' @aliases futureCall
 #' @rdname future
 #' @export
-future <- function(expr, envir = parent.frame(), substitute = TRUE, lazy = FALSE, seed = FALSE, globals = TRUE, packages = NULL, stdout = TRUE, conditions = "condition", label = NULL, gc = FALSE, earlySignal = FALSE, ...) {
+future <- function(expr, envir = parent.frame(), substitute = TRUE, lazy = FALSE, seed = FALSE, globals = TRUE, packages = NULL, stdout = TRUE, conditions = "condition", label = NULL, gc = FALSE, ...) {
   debug <- isTRUE(getOption("future.debug"))
   if (debug) {
     mdebugf_push("future(..., label = %s) ...", sQuoteLabel(label))
@@ -168,7 +168,6 @@ future <- function(expr, envir = parent.frame(), substitute = TRUE, lazy = FALSE
     mdebugf("stdout: %s", stdout)
     mdebugf("conditions: [n=%d] %s", length(conditions), commaq(conditions))
     mdebugf("gc: %s", gc)
-    mdebugf("earlySignal: %s", earlySignal)
     on.exit(mdebugf_pop())
   }
   
@@ -198,15 +197,26 @@ future <- function(expr, envir = parent.frame(), substitute = TRUE, lazy = FALSE
                    packages = packages,
                    stdout = stdout,
                    conditions = conditions,
-                   earlySignal = earlySignal,
                    label = label,
                    gc = gc,
                    onReference = onReference,
                    ...)
 
+  args_names <- names(list(...))
+  
+  ## Deprecation of 'earlySignal'
+  if (!is.null(future[["earlySignal"]])) {
+    if (is.element("earlySignal", args_names)) {
+      deprecate_future_earlySignal(future[["earlySignal"]])
+    }
+  } else {
+    ## Backward compatibility
+    future[["earlySignal"]] <- FALSE
+  }
+
   ## WORKAROUND: Was argument 'local' specified?
   ## Comment: Only allowed for persistent 'cluster' futures
-  future[[".defaultLocal"]] <- !is.element("local", names(list(...)))
+  future[[".defaultLocal"]] <- !is.element("local", args_names)
 
   ## Enable journaling?
   if (isTRUE(getOption("future.journal"))) {

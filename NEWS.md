@@ -17,6 +17,12 @@
    1 unknown future arguments: 'interrupts'" for third-party future
    backends.
 
+## Deprecated and Defunct
+
+ * Remove argument `earlySignal` from `future()`, `futureAssign()`,
+   and `futureCall()`.  Attempts to set it is now ignored and will
+   produce a deprecation warning.
+
  
 # Version 1.68.0 [2025-11-16]
 

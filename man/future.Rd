@@ -19,7 +19,6 @@ future(
   conditions = "condition",
   label = NULL,
   gc = FALSE,
-  earlySignal = FALSE,
   ...
 )
 
@@ -33,7 +32,6 @@ futureCall(
   packages = NULL,
   stdout = TRUE,
   conditions = "condition",
-  earlySignal = FALSE,
   label = NULL,
   gc = FALSE,
   ...
@@ -116,13 +114,9 @@ future backend and the environment from which R runs.}
 
 \item{gc}{If TRUE, the garbage collector run (in the process that
 evaluated the future) only after the value of the future is collected.
-Exactly when the values are collected may depend on various factors such
-as number of free workers and whether \code{earlySignal} is TRUE (more
-frequently) or FALSE (less frequently).
+Exactly when the values are collected may depend on various factors,
+including the number of free workers.
 \emph{Some future backends may ignore this argument.}}
-
-\item{earlySignal}{Specified whether conditions should be signaled as soon
-as possible or not.}
 
 \item{FUN}{A \link[base]{function} to be evaluated.}
 

@@ -72,13 +72,9 @@
 #'
 #' @param gc If TRUE, the garbage collector run (in the process that
 #' evaluated the future) only after the value of the future is collected.
-#' Exactly when the values are collected may depend on various factors such
-#' as number of free workers and whether `earlySignal` is TRUE (more
-#' frequently) or FALSE (less frequently).
+#' Exactly when the values are collected may depend on various factors,
+#' including the number of free workers.
 #' _Some future backends may ignore this argument._
-#'
-#' @param earlySignal Specified whether conditions should be signaled as soon
-#' as possible or not.
 #'
 #' @param label A character string label attached to the future.
 #'
@@ -101,7 +97,7 @@
 #' @export
 #' @keywords internal
 #' @name Future-class
-Future <- function(expr = NULL, envir = parent.frame(), substitute = TRUE, stdout = TRUE, conditions = "condition", globals = list(), packages = NULL, seed = FALSE, lazy = FALSE, gc = FALSE, earlySignal = FALSE, label = NULL, ...) {
+Future <- function(expr = NULL, envir = parent.frame(), substitute = TRUE, stdout = TRUE, conditions = "condition", globals = list(), packages = NULL, seed = FALSE, lazy = FALSE, gc = FALSE, label = NULL, ...) {
   if (substitute) expr <- substitute(expr)
   t_start <- Sys.time()
 
@@ -224,7 +220,6 @@ Future <- function(expr = NULL, envir = parent.frame(), substitute = TRUE, stdou
 
   ## Future miscellaneous
   core[["label"]] <- label
-  core[["earlySignal"]] <- earlySignal
   core[["gc"]] <- gc
   
   core[["onReference"]] <- onReference
@@ -333,7 +328,7 @@ print.Future <- function(x, ...) {
 
   cat(sprintf("Lazy evaluation: %s\n", future[["lazy"]]))
   cat(sprintf("Local evaluation: %s\n", future[["local"]]))
-  cat(sprintf("Early signaling: %s\n", isTRUE(future[["earlySignal"]])))
+  cat(sprintf("Early signaling (deprecated): %s\n", isTRUE(future[["earlySignal"]])))
   cat(sprintf("Environment: %s\n", envname(future[["envir"]])))
 
   actions <- future[["actions"]]
@@ -633,11 +628,6 @@ run.Future <- function(future, ...) {
   }
 
   if (debug) mdebug("Future class: ", commaq(class(tmpFuture)))
-
-  ## AD HOC/SPECIAL:
-  ## If 'earlySignal=TRUE' was set explicitly when creating the future,
-  ## then override the plan, otherwise use what the plan() says
-  if (isTRUE(future[["earlySignal"]])) tmpFuture[["earlySignal"]] <- TRUE
 
   ## If 'gc=TRUE' was set explicitly when creating the future,
   ## then override the plan, otherwise use what the plan() says
