@@ -528,26 +528,45 @@ Run `revdepcheck::revdep_details(, "ctsem")` for more info
     Execution halted
     ```
 
-# delimtools
+# dipsaus
 
 <details>
 
-* Version: 0.2.1
-* GitHub: https://github.com/legalLab/delimtools
-* Source code: https://github.com/cran/delimtools
-* Date/Publication: 2025-09-29 22:10:02 UTC
-* Number of recursive dependencies: 101
+* Version: 0.3.2
+* GitHub: https://github.com/dipterix/dipsaus
+* Source code: https://github.com/cran/dipsaus
+* Date/Publication: 2025-11-17 06:10:17 UTC
+* Number of recursive dependencies: 63
 
-Run `revdepcheck::revdep_details(, "delimtools")` for more info
+Run `revdepcheck::revdep_details(, "dipsaus")` for more info
 
 </details>
 
-## In both
+## Newly broken
 
-*   checking Rd cross-references ... NOTE
+*   checking examples ... ERROR
     ```
-    Package unavailable to check Rd xrefs: ‘bGMYC’
-    Unknown package ‘splits’ in Rd xrefs
+    Running examples in ‘dipsaus-Ex.R’ failed
+    The error most likely occurred in:
+    
+    > ### Name: PersistContainer
+    > ### Title: Wrapper to cache key-value pairs and persist across sessions
+    > ### Aliases: PersistContainer
+    > 
+    > ### ** Examples
+    > 
+    > 
+    ...
+    Error in force(value) : no function to return from, jumping to top level
+    Warning in save_item() : restarting interrupted promise evaluation
+    [1] 123
+    Error in save_item() : no function to return from, jumping to top level
+    Warning in container$cache(key = "a", value = { :
+      restarting interrupted promise evaluation
+    [1] 123
+    Error in container$cache(key = "a", value = { : 
+      no function to return from, jumping to top level
+    Execution halted
     ```
 
 # disk.frame
@@ -676,6 +695,42 @@ Run `revdepcheck::revdep_details(, "FastRet")` for more info
 
 </details>
 
+## Newly broken
+
+*   checking replacement functions ... WARNING
+    ```
+    Warning in dir.create(cache_dir, recursive = TRUE) :
+      '/c4/home/henrik/.cache/R/FastRet' already exists
+    The argument of a replacement function which corresponds to the right
+    hand side must be named ‘value’.
+    ```
+
+*   checking dependencies in R code ... NOTE
+    ```
+    Warning in dir.create(cache_dir, recursive = TRUE) :
+      '/c4/home/henrik/.cache/R/FastRet' already exists
+    ```
+
+## Newly fixed
+
+*   checking S3 generic/method consistency ... WARNING
+    ```
+    Warning in dir.create(cache_dir, recursive = TRUE) :
+      '/c4/home/henrik/.cache/R/FastRet' already exists
+    See section ‘Generic functions and methods’ in the ‘Writing R
+    Extensions’ manual.
+    ```
+
+*   checking whether startup messages can be suppressed ... NOTE
+    ```
+    Warning message:
+    In dir.create(cache_dir, recursive = TRUE) :
+      '/c4/home/henrik/.cache/R/FastRet' already exists
+    
+    It looks like this package (or a package it requires) has a startup
+    message which cannot be suppressed: see ?packageStartupMessage.
+    ```
+
 ## In both
 
 *   checking tests ...
@@ -684,12 +739,12 @@ Run `revdepcheck::revdep_details(, "FastRet")` for more info
      ERROR
     Running the tests in ‘tests/testthat.R’ failed.
     Last 50 lines of output:
-      > test-adjust_frm.R: [1;30m2025-12-05 09:45:05.02[0m Estimating performance of adjusted model in CV
-      > test-adjust_frm.R: [1;30m2025-12-05 09:45:05.09[0m Fitting adjustment model on full new data set
-      > test-adjust_frm.R: [1;30m2025-12-05 09:45:05.09[0m Returning adjusted frm object
-      > test-adjust_frm.R: [1;30m2025-12-05 09:45:05.09[0m Starting model Adjustment
-      > test-adjust_frm.R: [1;30m2025-12-05 09:45:05.09[0m dim(original_data): 442 x 126
-      > test-adjust_frm.R: [1;30m2025-12-05 09:45:05.09[0m dim(new_data): 25 x 3
+      > test-selective_measuring.R: [1;30m2025-12-05 14:01:46.99[0m Scaling features by coefficients of Ridge Regression model
+      > test-selective_measuring.R: [1;30m2025-12-05 14:01:46.99[0m Applying PAM clustering
+      > test-adjust_frm.R: [1;30m2025-12-05 14:01:47.14[0m Starting model Adjustment
+      > test-adjust_frm.R: [1;30m2025-12-05 14:01:47.14[0m dim(original_data): 442 x 126
+      > test-adjust_frm.R: [1;30m2025-12-05 14:01:47.14[0m dim(new_data): 25 x 3
+      > test-adjust_frm.R: [1;30m2025-12-05 14:01:47.14[0m predictors: 1, 2
     ...
       Backtrace:
           ▆
@@ -765,6 +820,47 @@ Run `revdepcheck::revdep_details(, "fdacluster")` for more info
         ‘caps-plot.R’ ‘utils.R’
     ```
 
+# fiery
+
+<details>
+
+* Version: 1.4.1
+* GitHub: https://github.com/thomasp85/fiery
+* Source code: https://github.com/cran/fiery
+* Date/Publication: 2025-11-18 11:10:09 UTC
+* Number of recursive dependencies: 70
+
+Run `revdepcheck::revdep_details(, "fiery")` for more info
+
+</details>
+
+## In both
+
+*   checking tests ...
+    ```
+      Running ‘testthat.R’
+     ERROR
+    Running the tests in ‘tests/testthat.R’ failed.
+    Last 50 lines of output:
+          ▆
+       1. └─app$ignite(silent = TRUE) at test-Fire.R:209:3
+       2.   └─private$run(block = block, showcase = showcase, ..., silent = silent)
+       3.     └─private$run_blocking_server(showcase = showcase)
+       4.       └─httpuv::startServer(...)
+       5.         └─WebServer$new(host, port, app, quiet)
+    ...
+       2.   └─private$run(block = block, showcase = showcase, ..., silent = silent)
+       3.     └─private$run_blocking_server(showcase = showcase)
+       4.       └─httpuv::startServer(...)
+       5.         └─WebServer$new(host, port, app, quiet)
+       6.           └─httpuv (local) initialize(...)
+      
+      [ FAIL 5 | WARN 0 | SKIP 27 | PASS 126 ]
+      Error:
+      ! Test failures.
+      Execution halted
+    ```
+
 # flowGraph
 
 <details>
@@ -798,6 +894,47 @@ Run `revdepcheck::revdep_details(, "flowGraph")` for more info
     checkRd: (-1) ggdf.Rd:22: Lost braces
         22 | code{ggdf} adds to the data frames \code{v} and \code{e} in slot
            |     ^
+    ```
+
+# fmeffects
+
+<details>
+
+* Version: 0.1.4
+* GitHub: https://github.com/holgstr/fmeffects
+* Source code: https://github.com/cran/fmeffects
+* Date/Publication: 2024-11-05 18:50:02 UTC
+* Number of recursive dependencies: 182
+
+Run `revdepcheck::revdep_details(, "fmeffects")` for more info
+
+</details>
+
+## In both
+
+*   checking re-building of vignette outputs ... ERROR
+    ```
+    Error(s) in re-building vignettes:
+      ...
+    --- re-building ‘fme_theory.Rmd’ using rmarkdown
+    [WARNING] Deprecated: --highlight-style. Use --syntax-highlighting instead.
+    --- finished re-building ‘fme_theory.Rmd’
+    
+    --- re-building ‘fmeffects.Rmd’ using rmarkdown
+    
+    Quitting from fmeffects.Rmd:121-127 [unnamed-chunk-11]
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    ℹ In index: 1.
+    Caused by error in `.__Task__col_roles()`:
+    ! Assertion on 'names(rhs)' failed: Names must be a permutation of set {'feature','target','name','order','stratum','group','offset','weights_learner','weights_measure'}, but has extra elements {'always_included'}.
+    --- failed re-building ‘fmeffects.Rmd’
+    
+    SUMMARY: processing the following file failed:
+      ‘fmeffects.Rmd’
+    
+    Error: Vignette re-building failed.
+    Execution halted
     ```
 
 # forecastML
@@ -872,13 +1009,13 @@ Run `revdepcheck::revdep_details(, "FracFixR")` for more info
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     <error/rlang_error>
     Error in `checkNumberOfLocalWorkers()`:
-    ! Attempting to set up 255 localhost parallel workers with only 32 CPU cores available for this R process (per 'N/A'), which could result in a 797% load. The hard limit is set to 300%. Overusing the CPUs has negative impact on the current R process, but also on all other processes of yours and others running on the same machine. See help("parallelly.maxWorkers.localhost", package = "parallelly") for further explanations and how to override the hard limit that triggered this error
+    ! Attempting to set up 255 localhost parallel workers with only 5 CPU cores available for this R process (per 'N/A'), which could result in a 5100% load. The hard limit is set to 300%. Overusing the CPUs has negative impact on the current R process, but also on all other processes of yours and others running on the same machine. See help("parallelly.maxWorkers.localhost", package = "parallelly") for further explanations and how to override the hard limit that triggered this error
     ---
     Backtrace:
     ...
     
     Error: processing vignette 'FracFixR-intro.Rmd' failed with diagnostics:
-    Attempting to set up 255 localhost parallel workers with only 32 CPU cores available for this R process (per 'N/A'), which could result in a 797% load. The hard limit is set to 300%. Overusing the CPUs has negative impact on the current R process, but also on all other processes of yours and others running on the same machine. See help("parallelly.maxWorkers.localhost", package = "parallelly") for further explanations and how to override the hard limit that triggered this error
+    Attempting to set up 255 localhost parallel workers with only 5 CPU cores available for this R process (per 'N/A'), which could result in a 5100% load. The hard limit is set to 300%. Overusing the CPUs has negative impact on the current R process, but also on all other processes of yours and others running on the same machine. See help("parallelly.maxWorkers.localhost", package = "parallelly") for further explanations and how to override the hard limit that triggered this error
     --- failed re-building ‘FracFixR-intro.Rmd’
     
     SUMMARY: processing the following file failed:
@@ -1407,8 +1544,26 @@ Run `revdepcheck::revdep_details(, "malariaAtlas")` for more info
 *   checking re-building of vignette outputs ... ERROR
     ```
     Error(s) in re-building vignettes:
-      ...
     --- re-building ‘overview.Rmd’ using rmarkdown
+    
+    Quitting from overview.Rmd:199-201 [unnamed-chunk-25]
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    <error/rlang_error>
+    Error:
+    ! Cannot open "/scratch/henrik/941415/RtmpDRHMN3/file1dbb7c555ddf9e.json"; The source could be corrupt or not supported. See `st_drivers()` for a list of supported formats.
+    ---
+    Backtrace:
+    ...
+    
+    Error: processing vignette 'overview.Rmd' failed with diagnostics:
+    Cannot open "/scratch/henrik/941415/RtmpDRHMN3/file1dbb7c555ddf9e.json"; The source could be corrupt or not supported. See `st_drivers()` for a list of supported formats.
+    --- failed re-building ‘overview.Rmd’
+    
+    SUMMARY: processing the following file failed:
+      ‘overview.Rmd’
+    
+    Error: Vignette re-building failed.
+    Execution halted
     ```
 
 # mapme.biodiversity
@@ -1793,28 +1948,74 @@ Run `revdepcheck::revdep_details(, "mlr3resampling")` for more info
 
 ## In both
 
+*   checking examples ... ERROR
+    ```
+    Running examples in ‘mlr3resampling-Ex.R’ failed
+    The error most likely occurred in:
+    
+    > ### Name: proj_compute
+    > ### Title: Compute resampling results in a project
+    > ### Aliases: proj_compute
+    > 
+    > ### ** Examples
+    > 
+    > 
+    ...
+      version 16.05 or later: you can use SLURM's PMIx support. This
+      requires that you configure and build SLURM --with-pmix.
+    
+      Versions earlier than 16.05: you must use either SLURM's PMI-1 or
+      PMI-2 support. SLURM builds PMI-1 by default, or you can manually
+      install PMI-2. You must then build Open MPI using --with-pmi pointing
+      to the SLURM PMI library location.
+    
+    Please configure as appropriate and try again.
+    --------------------------------------------------------------------------
+    ```
+
+*   checking tests ...
+    ```
+      Running ‘testthat.R’
+     ERROR
+    Running the tests in ‘tests/testthat.R’ failed.
+    Complete output:
+      > data.table::setDTthreads(1L)
+      > if(require(testthat))test_check("mlr3resampling")
+      Loading required package: testthat
+      Loading required package: mlr3resampling
+      [c4-n43:1964029] OPAL ERROR: Not initialized in file ext2x_client.c at line 112
+      --------------------------------------------------------------------------
+    ...
+        install PMI-2. You must then build Open MPI using --with-pmi pointing
+        to the SLURM PMI library location.
+      
+      Please configure as appropriate and try again.
+      --------------------------------------------------------------------------
+      *** An error occurred in MPI_Init
+      *** on a NULL communicator
+      *** MPI_ERRORS_ARE_FATAL (processes in this communicator will now abort,
+      ***    and potentially your MPI job)
+      [c4-n43:1964029] Local abort before MPI_INIT completed completed successfully, but am not able to aggregate error messages, and not able to guarantee that all other processes were killed!
+    ```
+
 *   checking dependencies in R code ... NOTE
     ```
-    c4-n43:pid2902775: PSM3 can't open nic unit: 0 (err=23)
-    c4-n43:pid2902775.R: Unable to create UDP socket for ens13f0np0: Address family not supported by protocol
-    c4-n43:pid2902775.R: Unable to initialize sockets NIC /sys/class/net/ens13f0np0 (unit 0:0)
-    c4-n43:pid2902775: PSM3 can't open nic unit: 0 (err=23)
-    c4-n43:pid2902775.R: Unable to create UDP socket for ens13f0np0: Address family not supported by protocol
-    c4-n43:pid2902775.R: Unable to initialize sockets NIC /sys/class/net/ens13f0np0 (unit 0:0)
-    c4-n43:pid2902775: PSM3 can't open nic unit: 1 (err=23)
-    c4-n43:pid2902775.R: Unable to create UDP socket for ens13f1np1: Address family not supported by protocol
-    c4-n43:pid2902775.R: Unable to initialize sockets NIC /sys/class/net/ens13f1np1 (unit 1:0)
-    c4-n43:pid2902775: PSM3 can't open nic unit: 0 (err=23)
-    ...
-    c4-n43:pid2902775.R: Unable to create UDP socket for ens13f1np1: Address family not supported by protocol
-    c4-n43:pid2902775.R: Unable to initialize sockets NIC /sys/class/net/ens13f1np1 (unit 1:0)
+    [c4-n43:1941075] OPAL ERROR: Not initialized in file ext2x_client.c at line 112
     --------------------------------------------------------------------------
-    Open MPI failed an OFI Libfabric library call (fi_endpoint).  This is highly
-    unusual; your job may behave unpredictably (and/or abort) after this.
+    The application appears to have been direct launched using "srun",
+    but OMPI was not built with SLURM's PMI support and therefore cannot
+    execute. There are several options for building PMI support under
+    SLURM, depending upon the SLURM version you are using:
     
-      Local host: c4-n43
-      Location: mtl_ofi_component.c:513
-      Error: Invalid argument (22)
+      version 16.05 or later: you can use SLURM's PMIx support. This
+      requires that you configure and build SLURM --with-pmix.
+    
+      Versions earlier than 16.05: you must use either SLURM's PMI-1 or
+      PMI-2 support. SLURM builds PMI-1 by default, or you can manually
+      install PMI-2. You must then build Open MPI using --with-pmi pointing
+      to the SLURM PMI library location.
+    
+    Please configure as appropriate and try again.
     --------------------------------------------------------------------------
     ```
 
@@ -1962,7 +2163,7 @@ Run `revdepcheck::revdep_details(, "modeltuning")` for more info
     Loading required package: rpart
     Loading required package: yardstick
     Warning: Caught FutureLaunchError. Canceling all iterations ...
-    Error: Caught an unexpected error of class FutureLaunchError when trying to launch future (‘future_lapply-1’) on backend of class SequentialFutureBackend. The reason was: future::evalFuture() failed on c4-n43 (pid 733107) at 2025-12-05T09:52:46. Using package 'future' v1.68.0.9020. Possible other reasons: Failed to attach one or more packages: there is no package called ‘Matrix’ [future <unnamed>; on bfec534416eb9f05756cc43d4abd3af5@c4-dev4<733107>] [future ‘future_lapply-1’ (bfec534416eb9f05756cc43d4abd3af5-1); on bfec534416eb9f05756cc43d4abd3af5@c4-dev4<733107>]
+    Error: Caught an unexpected error of class FutureLaunchError when trying to launch future (‘future_lapply-1’) on backend of class SequentialFutureBackend. The reason was: future::evalFuture() failed on c4-n43 (pid 2010007) at 2025-12-05T14:13:29. Using package 'future' v1.68.0.9021. Possible other reasons: Failed to attach one or more packages: there is no package called ‘Matrix’ [future <unnamed>; on be671610270935a3427ee91bd8bc3cf1@c4-dev4<2010007>] [future ‘future_lapply-1’ (be671610270935a3427ee91bd8bc3cf1-1); on be671610270935a3427ee91bd8bc3cf1@c4-dev4<2010007>]
     Execution halted
     ```
 
@@ -1975,13 +2176,13 @@ Run `revdepcheck::revdep_details(, "modeltuning")` for more info
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     <error/rlang_error>
     Error:
-    ! Caught an unexpected error of class FutureLaunchError when trying to launch future ('future_lapply-1') on backend of class SequentialFutureBackend. The reason was: future::evalFuture() failed on c4-n43 (pid 739585) at 2025-12-05T09:52:49. Using package 'future' v1.68.0.9020. Possible other reasons: Failed to attach one or more packages: there is no package called 'Matrix' [future <unnamed>; on 028d822f2c9cd32d362379a0ab230aea@c4-dev4<739585>] [future 'future_lapply-1' (028d822f2c9cd32d362379a0ab230aea-1); on 028d822f2c9cd32d362379a0ab230aea@c4-dev4<739585>]
+    ! Caught an unexpected error of class FutureLaunchError when trying to launch future ('future_lapply-1') on backend of class SequentialFutureBackend. The reason was: future::evalFuture() failed on c4-n43 (pid 2011962) at 2025-12-05T14:13:33. Using package 'future' v1.68.0.9021. Possible other reasons: Failed to attach one or more packages: there is no package called 'Matrix' [future <unnamed>; on ce8306d7fa78680df9b5520066b31d32@c4-dev4<2011962>] [future 'future_lapply-1' (ce8306d7fa78680df9b5520066b31d32-1); on ce8306d7fa78680df9b5520066b31d32@c4-dev4<2011962>]
     ---
     Backtrace:
     ...
     
     Error: processing vignette 'scaling-with-aws.Rmd' failed with diagnostics:
-    Caught an unexpected error of class FutureLaunchError when trying to launch future ('future_lapply-1') on backend of class SequentialFutureBackend. The reason was: future::evalFuture() failed on c4-n43 (pid 757226) at 2025-12-05T09:52:55. Using package 'future' v1.68.0.9020. Possible other reasons: Failed to attach one or more packages: there is no package called 'Matrix' [future <unnamed>; on 621a1ba2a825156ee2b2b53fa9fbcb05@c4-dev4<757226>] [future ‘future_lapply-1’ (621a1ba2a825156ee2b2b53fa9fbcb05-1); on 621a1ba2a825156ee2b2b53fa9fbcb05@c4-dev4<757226>]
+    Caught an unexpected error of class FutureLaunchError when trying to launch future ('future_lapply-1') on backend of class SequentialFutureBackend. The reason was: future::evalFuture() failed on c4-n43 (pid 2029133) at 2025-12-05T14:13:37. Using package 'future' v1.68.0.9021. Possible other reasons: Failed to attach one or more packages: there is no package called 'Matrix' [future <unnamed>; on c996c65267dbb1a035a79c51587be47c@c4-dev4<2029133>] [future ‘future_lapply-1’ (c996c65267dbb1a035a79c51587be47c-1); on c996c65267dbb1a035a79c51587be47c@c4-dev4<2029133>]
     --- failed re-building ‘scaling-with-aws.Rmd’
     
     SUMMARY: processing the following files failed:
@@ -2752,8 +2953,8 @@ Run `revdepcheck::revdep_details(, "shinyOAuth")` for more info
         [shinyOAuth] - HTTP request failed
         x Failed to fetch OIDC discovery document
         x Status 503: Service Unavailable.
-        i URL: http://127.0.0.1:45231/.well-known/openid-configuration
-        i Trace ID: ryutncq4jwVw
+        i URL: http://127.0.0.1:44387/.well-known/openid-configuration
+        i Trace ID: i-aLCz5e0OTb
       
       [ FAIL 23 | WARN 0 | SKIP 12 | PASS 671 ]
       Error:
@@ -3294,7 +3495,7 @@ Run `revdepcheck::revdep_details(, "targeted")` for more info
       test_learner_stratify.R.......    0 tests    
       test_learner_stratify.R.......    3 tests [0;32mOK[0m 
       test_learner_stratify.R.......    3 tests [0;32mOK[0m 
-      test_learner_stratify.R.......    5 tests [0;32mOK[0m [0;36m34ms[0m
+      test_learner_stratify.R.......    5 tests [0;32mOK[0m [0;36m46ms[0m
     ...
       In addition: Warning messages:
       1: In throw_err_or_depr_msg("Passed unrecognized parameters: ", paste(head(names_unrecognized),  :
