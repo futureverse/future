@@ -684,12 +684,12 @@ Run `revdepcheck::revdep_details(, "FastRet")` for more info
      ERROR
     Running the tests in ‘tests/testthat.R’ failed.
     Last 50 lines of output:
-      > test-adjust_frm.R: [1;30m2025-12-04 19:27:15.73[0m Preprocessing data
-      > test-adjust_frm.R: [1;30m2025-12-04 19:27:15.73[0m Formula: RT_ADJ ~ RT + I(RT^2) + I(RT^3) + log(RT) + exp(RT) + sqrt(RT)
-      > test-adjust_frm.R: [1;30m2025-12-04 19:27:15.73[0m Estimating performance of adjusted model in CV
-      > test-adjust_frm.R: [1;30m2025-12-04 19:27:15.77[0m Fitting adjustment model on full new data set
-      > test-adjust_frm.R: [1;30m2025-12-04 19:27:15.77[0m Returning adjusted frm object
-      > test-selective_measuring.R: [1;30m2025-12-04 19:27:15.95[0m Starting Selective Measuring
+      > test-adjust_frm.R: [1;30m2025-12-04 21:00:00.42[0m Estimating performance of adjusted model in CV
+      > test-adjust_frm.R: [1;30m2025-12-04 21:00:00.44[0m Fitting adjustment model on full new data set
+      > test-adjust_frm.R: [1;30m2025-12-04 21:00:00.45[0m Returning adjusted frm object
+      > test-adjust_frm.R: [1;30m2025-12-04 21:00:00.45[0m Starting model Adjustment
+      > test-adjust_frm.R: [1;30m2025-12-04 21:00:00.45[0m dim(original_data): 442 x 126
+      > test-adjust_frm.R: [1;30m2025-12-04 21:00:00.45[0m dim(new_data): 25 x 3
     ...
       Backtrace:
           ▆
@@ -1772,19 +1772,19 @@ Run `revdepcheck::revdep_details(, "mlr3resampling")` for more info
 
 *   checking dependencies in R code ... NOTE
     ```
-    c4-n43:pid763826: PSM3 can't open nic unit: 0 (err=23)
-    c4-n43:pid763826.R: Unable to create UDP socket for ens13f0np0: Address family not supported by protocol
-    c4-n43:pid763826.R: Unable to initialize sockets NIC /sys/class/net/ens13f0np0 (unit 0:0)
-    c4-n43:pid763826: PSM3 can't open nic unit: 0 (err=23)
-    c4-n43:pid763826.R: Unable to create UDP socket for ens13f0np0: Address family not supported by protocol
-    c4-n43:pid763826.R: Unable to initialize sockets NIC /sys/class/net/ens13f0np0 (unit 0:0)
-    c4-n43:pid763826: PSM3 can't open nic unit: 1 (err=23)
-    c4-n43:pid763826.R: Unable to create UDP socket for ens13f1np1: Address family not supported by protocol
-    c4-n43:pid763826.R: Unable to initialize sockets NIC /sys/class/net/ens13f1np1 (unit 1:0)
-    c4-n43:pid763826: PSM3 can't open nic unit: 0 (err=23)
+    c4-n43:pid1272045: PSM3 can't open nic unit: 0 (err=23)
+    c4-n43:pid1272045.R: Unable to create UDP socket for ens13f0np0: Address family not supported by protocol
+    c4-n43:pid1272045.R: Unable to initialize sockets NIC /sys/class/net/ens13f0np0 (unit 0:0)
+    c4-n43:pid1272045: PSM3 can't open nic unit: 0 (err=23)
+    c4-n43:pid1272045.R: Unable to create UDP socket for ens13f0np0: Address family not supported by protocol
+    c4-n43:pid1272045.R: Unable to initialize sockets NIC /sys/class/net/ens13f0np0 (unit 0:0)
+    c4-n43:pid1272045: PSM3 can't open nic unit: 1 (err=23)
+    c4-n43:pid1272045.R: Unable to create UDP socket for ens13f1np1: Address family not supported by protocol
+    c4-n43:pid1272045.R: Unable to initialize sockets NIC /sys/class/net/ens13f1np1 (unit 1:0)
+    c4-n43:pid1272045: PSM3 can't open nic unit: 0 (err=23)
     ...
-    c4-n43:pid763826.R: Unable to create UDP socket for ens13f0np0: Address family not supported by protocol
-    c4-n43:pid763826.R: Unable to initialize sockets NIC /sys/class/net/ens13f0np0 (unit 0:0)
+    c4-n43:pid1272045.R: Unable to create UDP socket for ens13f1np1: Address family not supported by protocol
+    c4-n43:pid1272045.R: Unable to initialize sockets NIC /sys/class/net/ens13f1np1 (unit 1:0)
     --------------------------------------------------------------------------
     Open MPI failed an OFI Libfabric library call (fi_endpoint).  This is highly
     unusual; your job may behave unpredictably (and/or abort) after this.
@@ -1939,7 +1939,7 @@ Run `revdepcheck::revdep_details(, "modeltuning")` for more info
     Loading required package: rpart
     Loading required package: yardstick
     Warning: Caught FutureLaunchError. Canceling all iterations ...
-    Error: Caught an unexpected error of class FutureLaunchError when trying to launch future (‘future_lapply-1’) on backend of class SequentialFutureBackend. The reason was: future::evalFuture() failed on c4-n43 (pid 2726564) at 2025-12-04T19:36:46. Using package 'future' v1.68.0.9018. Possible other reasons: Failed to attach one or more packages: there is no package called ‘Matrix’ [future <unnamed>; on b8fd5833ed0401cb68d80b81477b56c2@c4-dev4<2726564>] [future ‘future_lapply-1’ (b8fd5833ed0401cb68d80b81477b56c2-1); on b8fd5833ed0401cb68d80b81477b56c2@c4-dev4<2726564>]
+    Error: Caught an unexpected error of class FutureLaunchError when trying to launch future (‘future_lapply-1’) on backend of class SequentialFutureBackend. The reason was: future::evalFuture() failed on c4-n43 (pid 3283309) at 2025-12-04T21:07:59. Using package 'future' v1.68.0.9018. Possible other reasons: Failed to attach one or more packages: there is no package called ‘Matrix’ [future <unnamed>; on e507602b2ed095a799ee713a6dc0a579@c4-dev4<3283309>] [future ‘future_lapply-1’ (e507602b2ed095a799ee713a6dc0a579-1); on e507602b2ed095a799ee713a6dc0a579@c4-dev4<3283309>]
     Execution halted
     ```
 
@@ -1952,13 +1952,13 @@ Run `revdepcheck::revdep_details(, "modeltuning")` for more info
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     <error/rlang_error>
     Error:
-    ! Caught an unexpected error of class FutureLaunchError when trying to launch future ('future_lapply-1') on backend of class SequentialFutureBackend. The reason was: future::evalFuture() failed on c4-n43 (pid 2730141) at 2025-12-04T19:36:49. Using package 'future' v1.68.0.9018. Possible other reasons: Failed to attach one or more packages: there is no package called 'Matrix' [future <unnamed>; on b171bef94eae11dbda4597c1eb0452bc@c4-dev4<2730141>] [future 'future_lapply-1' (b171bef94eae11dbda4597c1eb0452bc-1); on b171bef94eae11dbda4597c1eb0452bc@c4-dev4<2730141>]
+    ! Caught an unexpected error of class FutureLaunchError when trying to launch future ('future_lapply-1') on backend of class SequentialFutureBackend. The reason was: future::evalFuture() failed on c4-n43 (pid 3286946) at 2025-12-04T21:08:02. Using package 'future' v1.68.0.9018. Possible other reasons: Failed to attach one or more packages: there is no package called 'Matrix' [future <unnamed>; on 792d055910925f2f94f082b1d582b9da@c4-dev4<3286946>] [future 'future_lapply-1' (792d055910925f2f94f082b1d582b9da-1); on 792d055910925f2f94f082b1d582b9da@c4-dev4<3286946>]
     ---
     Backtrace:
     ...
     
     Error: processing vignette 'scaling-with-aws.Rmd' failed with diagnostics:
-    Caught an unexpected error of class FutureLaunchError when trying to launch future ('future_lapply-1') on backend of class SequentialFutureBackend. The reason was: future::evalFuture() failed on c4-n43 (pid 2736364) at 2025-12-04T19:36:54. Using package 'future' v1.68.0.9018. Possible other reasons: Failed to attach one or more packages: there is no package called 'Matrix' [future <unnamed>; on aff58cf5b619516c62768e107f365bd3@c4-dev4<2736364>] [future ‘future_lapply-1’ (aff58cf5b619516c62768e107f365bd3-1); on aff58cf5b619516c62768e107f365bd3@c4-dev4<2736364>]
+    Caught an unexpected error of class FutureLaunchError when trying to launch future ('future_lapply-1') on backend of class SequentialFutureBackend. The reason was: future::evalFuture() failed on c4-n43 (pid 3293138) at 2025-12-04T21:08:07. Using package 'future' v1.68.0.9018. Possible other reasons: Failed to attach one or more packages: there is no package called 'Matrix' [future <unnamed>; on f58bdf077e6fb02089804439f40f314d@c4-dev4<3293138>] [future ‘future_lapply-1’ (f58bdf077e6fb02089804439f40f314d-1); on f58bdf077e6fb02089804439f40f314d@c4-dev4<3293138>]
     --- failed re-building ‘scaling-with-aws.Rmd’
     
     SUMMARY: processing the following files failed:
@@ -2729,8 +2729,8 @@ Run `revdepcheck::revdep_details(, "shinyOAuth")` for more info
         [shinyOAuth] - HTTP request failed
         x Failed to fetch OIDC discovery document
         x Status 503: Service Unavailable.
-        i URL: http://127.0.0.1:38747/.well-known/openid-configuration
-        i Trace ID: 2qVn5eYSvs7A
+        i URL: http://127.0.0.1:33463/.well-known/openid-configuration
+        i Trace ID: d50M25AiRKc7
       
       [ FAIL 23 | WARN 0 | SKIP 12 | PASS 671 ]
       Error:
@@ -3271,7 +3271,7 @@ Run `revdepcheck::revdep_details(, "targeted")` for more info
       test_learner_stratify.R.......    0 tests    
       test_learner_stratify.R.......    3 tests [0;32mOK[0m 
       test_learner_stratify.R.......    3 tests [0;32mOK[0m 
-      test_learner_stratify.R.......    5 tests [0;32mOK[0m [0;36m38ms[0m
+      test_learner_stratify.R.......    5 tests [0;32mOK[0m [0;36m31ms[0m
     ...
       In addition: Warning messages:
       1: In throw_err_or_depr_msg("Passed unrecognized parameters: ", paste(head(names_unrecognized),  :
