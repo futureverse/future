@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.68.0-9009</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.68.0-9019</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -87,12 +87,13 @@
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-development-version">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h3>
-<ul><li>
-<code>plan(..., interrupts = ...)</code> would produce a warning on “Detected 1 unknown future arguments: ‘interrupts’” for third-party future backends.</li>
+<ul><li><p><code>plan(..., interrupts = ...)</code> would produce a warning on “Detected 1 unknown future arguments: ‘interrupts’” for third-party future backends.</p></li>
+<li><p><code>future(..., packages = "missing-package")</code> did result in an error despite requesting a non-installed package.</p></li>
 </ul></div>
 <div class="section level3">
 <h3 id="deprecated-and-defunct-development-version">Deprecated and Defunct<a class="anchor" aria-label="anchor" href="#deprecated-and-defunct-development-version"></a></h3>
-<ul><li>Remove argument <code>earlySignal</code> from <code><a href="../reference/future.html">future()</a></code>, <code><a href="../reference/futureAssign.html">futureAssign()</a></code>, and <code><a href="../reference/future.html">futureCall()</a></code>. Attempts to set it is now ignored and will produce a deprecation warning.</li>
+<ul><li><p>Remove arguments <code>earlySignal</code> and <code>gc</code> from <code><a href="../reference/future.html">future()</a></code>, <code><a href="../reference/futureAssign.html">futureAssign()</a></code>, and <code><a href="../reference/future.html">futureCall()</a></code>. Attempts to set them are now ignored and will produce deprecation warnings.</p></li>
+<li><p>The <code>cluster</code> backend now defaults to <code>earlySignal = FALSE</code>. This was effectively already the case, because of an internal thinko bug.</p></li>
 </ul></div>
 </div>
     <div class="section level2">

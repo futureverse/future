@@ -21,15 +21,21 @@
   unknown future arguments: ‘interrupts’” for third-party future
   backends.
 
+- `future(..., packages = "missing-package")` did result in an error
+  despite requesting a non-installed package.
+
 ### Deprecated and Defunct
 
-- Remove argument `earlySignal` from
+- Remove arguments `earlySignal` and `gc` from
   [`future()`](https://future.futureverse.org/reference/future.md),
   [`futureAssign()`](https://future.futureverse.org/reference/futureAssign.md),
   and
   [`futureCall()`](https://future.futureverse.org/reference/future.md).
-  Attempts to set it is now ignored and will produce a deprecation
-  warning.
+  Attempts to set them are now ignored and will produce deprecation
+  warnings.
+
+- The `cluster` backend now defaults to `earlySignal = FALSE`. This was
+  effectively already the case, because of an internal thinko bug.
 
 ## Version 1.68.0
 

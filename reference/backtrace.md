@@ -42,9 +42,9 @@ res <- tryCatch({
 #> [[1]]
 #> base::tryCatch(base::withCallingHandlers({
 #>     NULL
-#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpRr9ttr/callr-fun-124bbd6ccb7b"), 
+#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpS2wbfr/callr-fun-383d4425c67e5"), 
 #>         base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
-#>         quote = TRUE), file = "/tmp/hb/RtmpRr9ttr/callr-res-124bb5378ffc4", 
+#>         quote = TRUE), file = "/tmp/hb/RtmpS2wbfr/callr-res-383d4697299c9", 
 #>         compress = FALSE)
 #>     base::flush(base::stdout())
 #>     base::flush(base::stderr())
@@ -70,7 +70,7 @@ res <- tryCatch({
 #>         if (!base::is.na(cut)) {
 #>             e2$trace <- e2$trace[-(1:cut), ]
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpRr9ttr/callr-res-124bb5378ffc4", 
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpS2wbfr/callr-res-383d4697299c9", 
 #>             ".error"))
 #>     }
 #> }, interrupt = function(e) {
@@ -93,7 +93,7 @@ res <- tryCatch({
 #>         if (!base::is.na(cut)) {
 #>             e2$trace <- e2$trace[-(1:cut), ]
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpRr9ttr/callr-res-124bb5378ffc4", 
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpS2wbfr/callr-res-383d4697299c9", 
 #>             ".error"))
 #>     }
 #> }, callr_message = function(e) {
@@ -138,9 +138,9 @@ res <- tryCatch({
 #> [[8]]
 #> base::withCallingHandlers({
 #>     NULL
-#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpRr9ttr/callr-fun-124bbd6ccb7b"), 
+#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpS2wbfr/callr-fun-383d4425c67e5"), 
 #>         base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
-#>         quote = TRUE), file = "/tmp/hb/RtmpRr9ttr/callr-res-124bb5378ffc4", 
+#>         quote = TRUE), file = "/tmp/hb/RtmpS2wbfr/callr-res-383d4697299c9", 
 #>         compress = FALSE)
 #>     base::flush(base::stdout())
 #>     base::flush(base::stderr())
@@ -166,7 +166,7 @@ res <- tryCatch({
 #>         if (!base::is.na(cut)) {
 #>             e2$trace <- e2$trace[-(1:cut), ]
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpRr9ttr/callr-res-124bb5378ffc4", 
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpS2wbfr/callr-res-383d4697299c9", 
 #>             ".error"))
 #>     }
 #> }, interrupt = function(e) {
@@ -189,7 +189,7 @@ res <- tryCatch({
 #>         if (!base::is.na(cut)) {
 #>             e2$trace <- e2$trace[-(1:cut), ]
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpRr9ttr/callr-res-124bb5378ffc4", 
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpS2wbfr/callr-res-383d4697299c9", 
 #>             ".error"))
 #>     }
 #> }, callr_message = function(e) {
@@ -197,13 +197,13 @@ res <- tryCatch({
 #> })
 #> 
 #> [[9]]
-#> base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpRr9ttr/callr-fun-124bbd6ccb7b"), 
+#> base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpS2wbfr/callr-fun-383d4425c67e5"), 
 #>     base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
-#>     quote = TRUE), file = "/tmp/hb/RtmpRr9ttr/callr-res-124bb5378ffc4", 
+#>     quote = TRUE), file = "/tmp/hb/RtmpS2wbfr/callr-res-383d4697299c9", 
 #>     compress = FALSE)
 #> 
 #> [[10]]
-#> base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpRr9ttr/callr-fun-124bbd6ccb7b"), 
+#> base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpS2wbfr/callr-fun-383d4425c67e5"), 
 #>     base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
 #>     quote = TRUE)
 #> 
@@ -220,8 +220,8 @@ res <- tryCatch({
 #>     options(cli.num_colors = cli_colors, cli.hyperlink = hyperlinks, 
 #>         cli.hyperlink_run = hyperlinks)
 #>     pkgdown::build_site(...)
-#> }), base::quote(list(pkg = list(package = "future", version = "1.68.0-9009", 
-#>     src_path = "/tmp/hb/RtmpRr9ttr/future", meta = list(url = "https://future.futureverse.org", 
+#> }), base::quote(list(pkg = list(package = "future", version = "1.68.0-9019", 
+#>     src_path = "/tmp/hb/RtmpS2wbfr/future", meta = list(url = "https://future.futureverse.org", 
 #>         home = list(links = list(list(text = "Roadmap/Milestones", 
 #>             href = "https://github.com/futureverse/future/milestones"), 
 #>             list(text = "The Futureverse Project", href = "https://www.futureverse.org/"), 
@@ -256,7 +256,7 @@ res <- tryCatch({
 #>             bootstrap = 5L, `light-switch` = TRUE)), desc = <environment>, 
 #>     bs_version = 5L, development = list(destination = "dev", 
 #>         mode = "default", version_label = "muted", in_dev = FALSE, 
-#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/RtmpRr9ttr/future/docs", 
+#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/RtmpS2wbfr/future/docs", 
 #>     lang = "en-US", install_metadata = FALSE, figures = list(
 #>         dev = "ragg::agg_png", dpi = 96L, dev.args = list(), 
 #>         fig.ext = "png", fig.width = 7.29166666666667, fig.height = NULL, 
@@ -476,16 +476,15 @@ res <- tryCatch({
 #>                 "  envir = parent.frame(),\n", "  substitute = TRUE,\n", 
 #>                 "  stdout = TRUE,\n", "  conditions = \"condition\",\n", 
 #>                 "  globals = list(),\n", "  packages = NULL,\n", 
-#>                 "  seed = FALSE,\n", "  lazy = FALSE,\n", "  gc = FALSE,\n", 
-#>                 "  label = NULL,\n", "  ...\n", ")\n"), "\n", 
-#>             list("\n", list(list("expr"), list("An ", list(), 
-#>                 " ", list("expression"), ".")), "\n", "\n", list(
-#>                 list("envir"), list("The ", list("environment"), 
-#>                   " from where global objects should be\n", "identified.")), 
-#>                 "\n", "\n", list(list("substitute"), list("If TRUE, argument ", 
-#>                   list("expr"), " is\n", list(list("substitute"), 
-#>                     "()"), ":ed, otherwise not.")), "\n", "\n", 
-#>                 list(list("stdout"), list("If TRUE (default), then the standard output is captured,\n", 
+#>                 "  seed = FALSE,\n", "  lazy = FALSE,\n", "  label = NULL,\n", 
+#>                 "  ...\n", ")\n"), "\n", list("\n", list(list(
+#>                 "expr"), list("An ", list(), " ", list("expression"), 
+#>                 ".")), "\n", "\n", list(list("envir"), list("The ", 
+#>                 list("environment"), " from where global objects should be\n", 
+#>                 "identified.")), "\n", "\n", list(list("substitute"), 
+#>                 list("If TRUE, argument ", list("expr"), " is\n", 
+#>                   list(list("substitute"), "()"), ":ed, otherwise not.")), 
+#>                 "\n", "\n", list(list("stdout"), list("If TRUE (default), then the standard output is captured,\n", 
 #>                   "and re-outputted when ", list("value()"), 
 #>                   " is called.\n", "If FALSE, any output is silenced (by sinking it to the null device as\n", 
 #>                   "it is outputted).\n", "Using ", list("stdout = structure(TRUE, drop = TRUE)"), 
@@ -532,11 +531,6 @@ res <- tryCatch({
 #>                   list("seed = FALSE"), "\n", "but without the RNG check being performed.")), 
 #>                 "\n", "\n", list(list("lazy"), list("If FALSE (default), the future is resolved\n", 
 #>                   "eagerly (starting immediately), otherwise not.")), 
-#>                 "\n", "\n", list(list("gc"), list("If TRUE, the garbage collector run (in the process that\n", 
-#>                   "evaluated the future) only after the value of the future is collected.\n", 
-#>                   "Exactly when the values are collected may depend on various factors,\n", 
-#>                   "including the number of free workers.\n", 
-#>                   list("Some future backends may ignore this argument."))), 
 #>                 "\n", "\n", list(list("label"), list("A character string label attached to the future.")), 
 #>                 "\n", "\n", list(list(list()), list("Additional named elements of the future.")), 
 #>                 "\n"), "\n", list("\n", list("Future()"), " returns an object of class ", 
@@ -584,7 +578,7 @@ res <- tryCatch({
 #>                 "  wait.interval = getOption(\"future.wait.interval\", 0.01),\n", 
 #>                 "  wait.alpha = getOption(\"future.wait.alpha\", 1.01)\n", 
 #>                 ")\n", "\n", "ClusterFutureBackend(\n", "  workers = availableWorkers(constraints = \"connections\"),\n", 
-#>                 "  gc = TRUE,\n", "  earlySignal = TRUE,\n", 
+#>                 "  gc = TRUE,\n", "  earlySignal = FALSE,\n", 
 #>                 "  interrupts = FALSE,\n", "  persistent = FALSE,\n", 
 #>                 "  ...\n", ")\n", "\n", "MulticoreFutureBackend(\n", 
 #>                 "  workers = availableCores(constraints = \"multicore\"),\n", 
@@ -721,8 +715,9 @@ res <- tryCatch({
 #>                 ")\n", "\n", "DefaultDeviceMisuseFutureWarning(...)\n", 
 #>                 "\n", "DefaultDeviceMisuseFutureError(...)\n", 
 #>                 "\n", "FutureLaunchError(..., future = NULL)\n", 
-#>                 "\n", "FutureInterruptError(..., when = Sys.time(), future = NULL)\n", 
-#>                 "\n", "FutureCanceledError(..., future = NULL)\n", 
+#>                 "\n", "FutureInterruptError(\n", "  message = \"A future was interrupted\",\n", 
+#>                 "  when = Sys.time(),\n", "  future = NULL\n", 
+#>                 ")\n", "\n", "FutureCanceledError(..., future = NULL)\n", 
 #>                 "\n", "FutureDroppedError(..., future = NULL)\n", 
 #>                 "\n", "FutureJournalCondition(\n", "  message,\n", 
 #>                 "  journal,\n", "  call = NULL,\n", "  uuid = future[[\"uuid\"]],\n", 
@@ -1002,26 +997,26 @@ res <- tryCatch({
 #>                   "  seed = FALSE,\n", "  globals = TRUE,\n", 
 #>                   "  packages = NULL,\n", "  stdout = TRUE,\n", 
 #>                   "  conditions = \"condition\",\n", "  label = NULL,\n", 
-#>                   "  gc = FALSE,\n", "  ...\n", ")\n", "\n", 
-#>                   "futureCall(\n", "  FUN,\n", "  args = list(),\n", 
-#>                   "  envir = parent.frame(),\n", "  lazy = FALSE,\n", 
-#>                   "  seed = FALSE,\n", "  globals = TRUE,\n", 
+#>                   "  ...\n", ")\n", "\n", "futureCall(\n", "  FUN,\n", 
+#>                   "  args = list(),\n", "  envir = parent.frame(),\n", 
+#>                   "  lazy = FALSE,\n", "  seed = FALSE,\n", "  globals = TRUE,\n", 
 #>                   "  packages = NULL,\n", "  stdout = TRUE,\n", 
 #>                   "  conditions = \"condition\",\n", "  label = NULL,\n", 
-#>                   "  gc = FALSE,\n", "  ...\n", ")\n", "\n", 
-#>                   "minifuture(\n", "  expr,\n", "  substitute = TRUE,\n", 
-#>                   "  globals = NULL,\n", "  packages = NULL,\n", 
-#>                   "  stdout = NA,\n", "  conditions = NULL,\n", 
-#>                   "  seed = NULL,\n", "  ...,\n", "  envir = parent.frame()\n", 
-#>                   ")\n"), "\n", list("\n", list(list("expr"), 
-#>                   list("An ", list(), " ", list("expression"), 
-#>                     ".")), "\n", "\n", list(list("envir"), list(
-#>                   "The ", list("environment"), " from where global objects should be\n", 
-#>                   "identified.")), "\n", "\n", list(list("substitute"), 
-#>                   list("If TRUE, argument ", list("expr"), " is\n", 
-#>                     list(list("substitute"), "()"), ":ed, otherwise not.")), 
-#>                   "\n", "\n", list(list("lazy"), list("If FALSE (default), the future is resolved\n", 
-#>                     "eagerly (starting immediately), otherwise not.")), 
+#>                   "  ...\n", ")\n", "\n", "minifuture(\n", "  expr,\n", 
+#>                   "  substitute = TRUE,\n", "  globals = NULL,\n", 
+#>                   "  packages = NULL,\n", "  stdout = NA,\n", 
+#>                   "  conditions = NULL,\n", "  seed = NULL,\n", 
+#>                   "  ...,\n", "  envir = parent.frame()\n", ")\n"), 
+#>                 "\n", list("\n", list(list("expr"), list("An ", 
+#>                   list(), " ", list("expression"), ".")), "\n", 
+#>                   "\n", list(list("envir"), list("The ", list(
+#>                     "environment"), " from where global objects should be\n", 
+#>                     "identified.")), "\n", "\n", list(list("substitute"), 
+#>                     list("If TRUE, argument ", list("expr"), 
+#>                       " is\n", list(list("substitute"), "()"), 
+#>                       ":ed, otherwise not.")), "\n", "\n", list(
+#>                     list("lazy"), list("If FALSE (default), the future is resolved\n", 
+#>                       "eagerly (starting immediately), otherwise not.")), 
 #>                   "\n", "\n", list(list("seed"), list("(optional) If TRUE, the random seed, that is, the state of the\n", 
 #>                     "random number generator (RNG) will be set such that statistically sound\n", 
 #>                     "random numbers are produced (also during parallelization).\n", 
@@ -1071,11 +1066,6 @@ res <- tryCatch({
 #>                     "except from errors; behavior of such unhandled conditions depends on the\n", 
 #>                     "future backend and the environment from which R runs.")), 
 #>                   "\n", "\n", list(list("label"), list("A character string label attached to the future.")), 
-#>                   "\n", "\n", list(list("gc"), list("If TRUE, the garbage collector run (in the process that\n", 
-#>                     "evaluated the future) only after the value of the future is collected.\n", 
-#>                     "Exactly when the values are collected may depend on various factors,\n", 
-#>                     "including the number of free workers.\n", 
-#>                     list("Some future backends may ignore this argument."))), 
 #>                   "\n", "\n", list(list("FUN"), list("A ", list(
 #>                     "function"), " to be evaluated.")), "\n", 
 #>                   "\n", list(list("args"), list("A ", list("list"), 
@@ -1250,8 +1240,8 @@ res <- tryCatch({
 #>                   "  seed = FALSE,\n", "  globals = TRUE,\n", 
 #>                   "  packages = NULL,\n", "  stdout = TRUE,\n", 
 #>                   "  conditions = \"condition\",\n", "  label = NULL,\n", 
-#>                   "  gc = FALSE,\n", "  ...,\n", "  assign.env = envir\n", 
-#>                   ")\n", "\n", "x %<-% value\n", "\n", "fassignment %globals% globals\n", 
+#>                   "  ...,\n", "  assign.env = envir\n", ")\n", 
+#>                   "\n", "x %<-% value\n", "\n", "fassignment %globals% globals\n", 
 #>                   "fassignment %packages% packages\n", "\n", 
 #>                   "fassignment %seed% seed\n", "\n", "fassignment %stdout% capture\n", 
 #>                   "\n", "fassignment %conditions% capture\n", 
@@ -1319,11 +1309,6 @@ res <- tryCatch({
 #>                     "except from errors; behavior of such unhandled conditions depends on the\n", 
 #>                     "future backend and the environment from which R runs.")), 
 #>                   "\n", "\n", list(list("label"), list("A character string label attached to the future.")), 
-#>                   "\n", "\n", list(list("gc"), list("If TRUE, the garbage collector run (in the process that\n", 
-#>                     "evaluated the future) only after the value of the future is collected.\n", 
-#>                     "Exactly when the values are collected may depend on various factors,\n", 
-#>                     "including the number of free workers.\n", 
-#>                     list("Some future backends may ignore this argument."))), 
 #>                   "\n", "\n", list(list("assign.env"), list("The ", 
 #>                     list("environment"), " to which the variable\n", 
 #>                     "should be assigned.")), "\n", "\n", list(
@@ -3001,8 +2986,8 @@ res <- tryCatch({
 #>     options(cli.num_colors = cli_colors, cli.hyperlink = hyperlinks, 
 #>         cli.hyperlink_run = hyperlinks)
 #>     pkgdown::build_site(...)
-#> })(pkg = base::quote(list(package = "future", version = "1.68.0-9009", 
-#>     src_path = "/tmp/hb/RtmpRr9ttr/future", meta = list(url = "https://future.futureverse.org", 
+#> })(pkg = base::quote(list(package = "future", version = "1.68.0-9019", 
+#>     src_path = "/tmp/hb/RtmpS2wbfr/future", meta = list(url = "https://future.futureverse.org", 
 #>         home = list(links = list(list(text = "Roadmap/Milestones", 
 #>             href = "https://github.com/futureverse/future/milestones"), 
 #>             list(text = "The Futureverse Project", href = "https://www.futureverse.org/"), 
@@ -3037,7 +3022,7 @@ res <- tryCatch({
 #>             bootstrap = 5L, `light-switch` = TRUE)), desc = <environment>, 
 #>     bs_version = 5L, development = list(destination = "dev", 
 #>         mode = "default", version_label = "muted", in_dev = FALSE, 
-#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/RtmpRr9ttr/future/docs", 
+#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/RtmpS2wbfr/future/docs", 
 #>     lang = "en-US", install_metadata = FALSE, figures = list(
 #>         dev = "ragg::agg_png", dpi = 96L, dev.args = list(), 
 #>         fig.ext = "png", fig.width = 7.29166666666667, fig.height = NULL, 
@@ -3257,16 +3242,15 @@ res <- tryCatch({
 #>                 "  envir = parent.frame(),\n", "  substitute = TRUE,\n", 
 #>                 "  stdout = TRUE,\n", "  conditions = \"condition\",\n", 
 #>                 "  globals = list(),\n", "  packages = NULL,\n", 
-#>                 "  seed = FALSE,\n", "  lazy = FALSE,\n", "  gc = FALSE,\n", 
-#>                 "  label = NULL,\n", "  ...\n", ")\n"), "\n", 
-#>             list("\n", list(list("expr"), list("An ", list(), 
-#>                 " ", list("expression"), ".")), "\n", "\n", list(
-#>                 list("envir"), list("The ", list("environment"), 
-#>                   " from where global objects should be\n", "identified.")), 
-#>                 "\n", "\n", list(list("substitute"), list("If TRUE, argument ", 
-#>                   list("expr"), " is\n", list(list("substitute"), 
-#>                     "()"), ":ed, otherwise not.")), "\n", "\n", 
-#>                 list(list("stdout"), list("If TRUE (default), then the standard output is captured,\n", 
+#>                 "  seed = FALSE,\n", "  lazy = FALSE,\n", "  label = NULL,\n", 
+#>                 "  ...\n", ")\n"), "\n", list("\n", list(list(
+#>                 "expr"), list("An ", list(), " ", list("expression"), 
+#>                 ".")), "\n", "\n", list(list("envir"), list("The ", 
+#>                 list("environment"), " from where global objects should be\n", 
+#>                 "identified.")), "\n", "\n", list(list("substitute"), 
+#>                 list("If TRUE, argument ", list("expr"), " is\n", 
+#>                   list(list("substitute"), "()"), ":ed, otherwise not.")), 
+#>                 "\n", "\n", list(list("stdout"), list("If TRUE (default), then the standard output is captured,\n", 
 #>                   "and re-outputted when ", list("value()"), 
 #>                   " is called.\n", "If FALSE, any output is silenced (by sinking it to the null device as\n", 
 #>                   "it is outputted).\n", "Using ", list("stdout = structure(TRUE, drop = TRUE)"), 
@@ -3313,11 +3297,6 @@ res <- tryCatch({
 #>                   list("seed = FALSE"), "\n", "but without the RNG check being performed.")), 
 #>                 "\n", "\n", list(list("lazy"), list("If FALSE (default), the future is resolved\n", 
 #>                   "eagerly (starting immediately), otherwise not.")), 
-#>                 "\n", "\n", list(list("gc"), list("If TRUE, the garbage collector run (in the process that\n", 
-#>                   "evaluated the future) only after the value of the future is collected.\n", 
-#>                   "Exactly when the values are collected may depend on various factors,\n", 
-#>                   "including the number of free workers.\n", 
-#>                   list("Some future backends may ignore this argument."))), 
 #>                 "\n", "\n", list(list("label"), list("A character string label attached to the future.")), 
 #>                 "\n", "\n", list(list(list()), list("Additional named elements of the future.")), 
 #>                 "\n"), "\n", list("\n", list("Future()"), " returns an object of class ", 
@@ -3365,7 +3344,7 @@ res <- tryCatch({
 #>                 "  wait.interval = getOption(\"future.wait.interval\", 0.01),\n", 
 #>                 "  wait.alpha = getOption(\"future.wait.alpha\", 1.01)\n", 
 #>                 ")\n", "\n", "ClusterFutureBackend(\n", "  workers = availableWorkers(constraints = \"connections\"),\n", 
-#>                 "  gc = TRUE,\n", "  earlySignal = TRUE,\n", 
+#>                 "  gc = TRUE,\n", "  earlySignal = FALSE,\n", 
 #>                 "  interrupts = FALSE,\n", "  persistent = FALSE,\n", 
 #>                 "  ...\n", ")\n", "\n", "MulticoreFutureBackend(\n", 
 #>                 "  workers = availableCores(constraints = \"multicore\"),\n", 
@@ -3502,8 +3481,9 @@ res <- tryCatch({
 #>                 ")\n", "\n", "DefaultDeviceMisuseFutureWarning(...)\n", 
 #>                 "\n", "DefaultDeviceMisuseFutureError(...)\n", 
 #>                 "\n", "FutureLaunchError(..., future = NULL)\n", 
-#>                 "\n", "FutureInterruptError(..., when = Sys.time(), future = NULL)\n", 
-#>                 "\n", "FutureCanceledError(..., future = NULL)\n", 
+#>                 "\n", "FutureInterruptError(\n", "  message = \"A future was interrupted\",\n", 
+#>                 "  when = Sys.time(),\n", "  future = NULL\n", 
+#>                 ")\n", "\n", "FutureCanceledError(..., future = NULL)\n", 
 #>                 "\n", "FutureDroppedError(..., future = NULL)\n", 
 #>                 "\n", "FutureJournalCondition(\n", "  message,\n", 
 #>                 "  journal,\n", "  call = NULL,\n", "  uuid = future[[\"uuid\"]],\n", 
@@ -3783,26 +3763,26 @@ res <- tryCatch({
 #>                   "  seed = FALSE,\n", "  globals = TRUE,\n", 
 #>                   "  packages = NULL,\n", "  stdout = TRUE,\n", 
 #>                   "  conditions = \"condition\",\n", "  label = NULL,\n", 
-#>                   "  gc = FALSE,\n", "  ...\n", ")\n", "\n", 
-#>                   "futureCall(\n", "  FUN,\n", "  args = list(),\n", 
-#>                   "  envir = parent.frame(),\n", "  lazy = FALSE,\n", 
-#>                   "  seed = FALSE,\n", "  globals = TRUE,\n", 
+#>                   "  ...\n", ")\n", "\n", "futureCall(\n", "  FUN,\n", 
+#>                   "  args = list(),\n", "  envir = parent.frame(),\n", 
+#>                   "  lazy = FALSE,\n", "  seed = FALSE,\n", "  globals = TRUE,\n", 
 #>                   "  packages = NULL,\n", "  stdout = TRUE,\n", 
 #>                   "  conditions = \"condition\",\n", "  label = NULL,\n", 
-#>                   "  gc = FALSE,\n", "  ...\n", ")\n", "\n", 
-#>                   "minifuture(\n", "  expr,\n", "  substitute = TRUE,\n", 
-#>                   "  globals = NULL,\n", "  packages = NULL,\n", 
-#>                   "  stdout = NA,\n", "  conditions = NULL,\n", 
-#>                   "  seed = NULL,\n", "  ...,\n", "  envir = parent.frame()\n", 
-#>                   ")\n"), "\n", list("\n", list(list("expr"), 
-#>                   list("An ", list(), " ", list("expression"), 
-#>                     ".")), "\n", "\n", list(list("envir"), list(
-#>                   "The ", list("environment"), " from where global objects should be\n", 
-#>                   "identified.")), "\n", "\n", list(list("substitute"), 
-#>                   list("If TRUE, argument ", list("expr"), " is\n", 
-#>                     list(list("substitute"), "()"), ":ed, otherwise not.")), 
-#>                   "\n", "\n", list(list("lazy"), list("If FALSE (default), the future is resolved\n", 
-#>                     "eagerly (starting immediately), otherwise not.")), 
+#>                   "  ...\n", ")\n", "\n", "minifuture(\n", "  expr,\n", 
+#>                   "  substitute = TRUE,\n", "  globals = NULL,\n", 
+#>                   "  packages = NULL,\n", "  stdout = NA,\n", 
+#>                   "  conditions = NULL,\n", "  seed = NULL,\n", 
+#>                   "  ...,\n", "  envir = parent.frame()\n", ")\n"), 
+#>                 "\n", list("\n", list(list("expr"), list("An ", 
+#>                   list(), " ", list("expression"), ".")), "\n", 
+#>                   "\n", list(list("envir"), list("The ", list(
+#>                     "environment"), " from where global objects should be\n", 
+#>                     "identified.")), "\n", "\n", list(list("substitute"), 
+#>                     list("If TRUE, argument ", list("expr"), 
+#>                       " is\n", list(list("substitute"), "()"), 
+#>                       ":ed, otherwise not.")), "\n", "\n", list(
+#>                     list("lazy"), list("If FALSE (default), the future is resolved\n", 
+#>                       "eagerly (starting immediately), otherwise not.")), 
 #>                   "\n", "\n", list(list("seed"), list("(optional) If TRUE, the random seed, that is, the state of the\n", 
 #>                     "random number generator (RNG) will be set such that statistically sound\n", 
 #>                     "random numbers are produced (also during parallelization).\n", 
@@ -3852,11 +3832,6 @@ res <- tryCatch({
 #>                     "except from errors; behavior of such unhandled conditions depends on the\n", 
 #>                     "future backend and the environment from which R runs.")), 
 #>                   "\n", "\n", list(list("label"), list("A character string label attached to the future.")), 
-#>                   "\n", "\n", list(list("gc"), list("If TRUE, the garbage collector run (in the process that\n", 
-#>                     "evaluated the future) only after the value of the future is collected.\n", 
-#>                     "Exactly when the values are collected may depend on various factors,\n", 
-#>                     "including the number of free workers.\n", 
-#>                     list("Some future backends may ignore this argument."))), 
 #>                   "\n", "\n", list(list("FUN"), list("A ", list(
 #>                     "function"), " to be evaluated.")), "\n", 
 #>                   "\n", list(list("args"), list("A ", list("list"), 
@@ -4031,8 +4006,8 @@ res <- tryCatch({
 #>                   "  seed = FALSE,\n", "  globals = TRUE,\n", 
 #>                   "  packages = NULL,\n", "  stdout = TRUE,\n", 
 #>                   "  conditions = \"condition\",\n", "  label = NULL,\n", 
-#>                   "  gc = FALSE,\n", "  ...,\n", "  assign.env = envir\n", 
-#>                   ")\n", "\n", "x %<-% value\n", "\n", "fassignment %globals% globals\n", 
+#>                   "  ...,\n", "  assign.env = envir\n", ")\n", 
+#>                   "\n", "x %<-% value\n", "\n", "fassignment %globals% globals\n", 
 #>                   "fassignment %packages% packages\n", "\n", 
 #>                   "fassignment %seed% seed\n", "\n", "fassignment %stdout% capture\n", 
 #>                   "\n", "fassignment %conditions% capture\n", 
@@ -4100,11 +4075,6 @@ res <- tryCatch({
 #>                     "except from errors; behavior of such unhandled conditions depends on the\n", 
 #>                     "future backend and the environment from which R runs.")), 
 #>                   "\n", "\n", list(list("label"), list("A character string label attached to the future.")), 
-#>                   "\n", "\n", list(list("gc"), list("If TRUE, the garbage collector run (in the process that\n", 
-#>                     "evaluated the future) only after the value of the future is collected.\n", 
-#>                     "Exactly when the values are collected may depend on various factors,\n", 
-#>                     "including the number of free workers.\n", 
-#>                     list("Some future backends may ignore this argument."))), 
 #>                   "\n", "\n", list(list("assign.env"), list("The ", 
 #>                     list("environment"), " to which the variable\n", 
 #>                     "should be assigned.")), "\n", "\n", list(
@@ -5955,7 +5925,7 @@ res <- tryCatch({
 #> [[45]]
 #> Future(expr, substitute = FALSE, envir = envir, lazy = TRUE, 
 #>     seed = seed, globals = globals, packages = packages, stdout = stdout, 
-#>     conditions = conditions, label = label, gc = gc, onReference = onReference, 
+#>     conditions = conditions, label = label, onReference = onReference, 
 #>     ...)
 #> 
 #> [[46]]

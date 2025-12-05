@@ -24,7 +24,6 @@ future(
   stdout = TRUE,
   conditions = "condition",
   label = NULL,
-  gc = FALSE,
   ...
 )
 
@@ -39,7 +38,6 @@ futureCall(
   stdout = TRUE,
   conditions = "condition",
   label = NULL,
-  gc = FALSE,
   ...
 )
 
@@ -141,14 +139,6 @@ minifuture(
 - label:
 
   A character string label attached to the future.
-
-- gc:
-
-  If TRUE, the garbage collector run (in the process that evaluated the
-  future) only after the value of the future is collected. Exactly when
-  the values are collected may depend on various factors, including the
-  number of free workers. *Some future backends may ignore this
-  argument.*
 
 - FUN:
 

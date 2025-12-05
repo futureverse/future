@@ -23,7 +23,7 @@ is available via value()."><meta property="og:image" content="https://future.fut
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.68.0-9009</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.68.0-9019</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -109,7 +109,6 @@ is available via <code><a href="value.html">value()</a></code>.</p>
 <span>  packages <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  seed <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  lazy <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  gc <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  label <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -195,14 +194,6 @@ but without the RNG check being performed.</p></dd>
 <dt id="arg-lazy">lazy<a class="anchor" aria-label="anchor" href="#arg-lazy"></a></dt>
 <dd><p>If FALSE (default), the future is resolved
 eagerly (starting immediately), otherwise not.</p></dd>
-
-
-<dt id="arg-gc">gc<a class="anchor" aria-label="anchor" href="#arg-gc"></a></dt>
-<dd><p>If TRUE, the garbage collector run (in the process that
-evaluated the future) only after the value of the future is collected.
-Exactly when the values are collected may depend on various factors,
-including the number of free workers.
-<em>Some future backends may ignore this argument.</em></p></dd>
 
 
 <dt id="arg-label">label<a class="anchor" aria-label="anchor" href="#arg-label"></a></dt>

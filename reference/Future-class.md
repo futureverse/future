@@ -21,7 +21,6 @@ Future(
   packages = NULL,
   seed = FALSE,
   lazy = FALSE,
-  gc = FALSE,
   label = NULL,
   ...
 )
@@ -109,14 +108,6 @@ Future(
 
   If FALSE (default), the future is resolved eagerly (starting
   immediately), otherwise not.
-
-- gc:
-
-  If TRUE, the garbage collector run (in the process that evaluated the
-  future) only after the value of the future is collected. Exactly when
-  the values are collected may depend on various factors, including the
-  number of free workers. *Some future backends may ignore this
-  argument.*
 
 - label:
 
