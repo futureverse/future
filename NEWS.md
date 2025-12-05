@@ -27,6 +27,9 @@
    deprecation warnings. Deprecated also hidden argument 'local',
    which was been there for legacy reasons.
 
+ * Use of `plan(..., earlySignal = ...)` is now defunct and produces a
+   deprecation warning.
+
  * The `cluster` backend now defaults to `earlySignal = FALSE`. This
    was effectively already the case, because of an internal thinko
    bug.
