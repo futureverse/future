@@ -244,7 +244,7 @@ launchFuture.ClusterFutureBackend <- function(backend, future, ...) {
   ##     NOTE: Already take care of by evalFuture().
   ##     However, if we need to get an early error about missing packages,
   ##     we can get the error here before launching the future.
-  if (isTRUE(future[["earlySignal"]])) {
+  if (isTRUE(backend[["earlySignal"]])) {
     if (debug) mdebug_push("requirePackages() ...")
     
     packages <- future[["packages"]]
