@@ -684,12 +684,12 @@ Run `revdepcheck::revdep_details(, "FastRet")` for more info
      ERROR
     Running the tests in ‘tests/testthat.R’ failed.
     Last 50 lines of output:
-      > test-adjust_frm.R: [1;30m2025-12-04 21:00:00.42[0m Estimating performance of adjusted model in CV
-      > test-adjust_frm.R: [1;30m2025-12-04 21:00:00.44[0m Fitting adjustment model on full new data set
-      > test-adjust_frm.R: [1;30m2025-12-04 21:00:00.45[0m Returning adjusted frm object
-      > test-adjust_frm.R: [1;30m2025-12-04 21:00:00.45[0m Starting model Adjustment
-      > test-adjust_frm.R: [1;30m2025-12-04 21:00:00.45[0m dim(original_data): 442 x 126
-      > test-adjust_frm.R: [1;30m2025-12-04 21:00:00.45[0m dim(new_data): 25 x 3
+      > test-adjust_frm.R: [1;30m2025-12-05 09:45:05.02[0m Estimating performance of adjusted model in CV
+      > test-adjust_frm.R: [1;30m2025-12-05 09:45:05.09[0m Fitting adjustment model on full new data set
+      > test-adjust_frm.R: [1;30m2025-12-05 09:45:05.09[0m Returning adjusted frm object
+      > test-adjust_frm.R: [1;30m2025-12-05 09:45:05.09[0m Starting model Adjustment
+      > test-adjust_frm.R: [1;30m2025-12-05 09:45:05.09[0m dim(original_data): 442 x 126
+      > test-adjust_frm.R: [1;30m2025-12-05 09:45:05.09[0m dim(new_data): 25 x 3
     ...
       Backtrace:
           ▆
@@ -1388,6 +1388,29 @@ Run `revdepcheck::revdep_details(, "MAI")` for more info
     is not mentioned in the DESCRIPTION file.
     ```
 
+# malariaAtlas
+
+<details>
+
+* Version: 1.6.4
+* GitHub: https://github.com/malaria-atlas-project/malariaAtlas
+* Source code: https://github.com/cran/malariaAtlas
+* Date/Publication: 2025-06-11 11:00:06 UTC
+* Number of recursive dependencies: 118
+
+Run `revdepcheck::revdep_details(, "malariaAtlas")` for more info
+
+</details>
+
+## In both
+
+*   checking re-building of vignette outputs ... ERROR
+    ```
+    Error(s) in re-building vignettes:
+      ...
+    --- re-building ‘overview.Rmd’ using rmarkdown
+    ```
+
 # mapme.biodiversity
 
 <details>
@@ -1772,19 +1795,19 @@ Run `revdepcheck::revdep_details(, "mlr3resampling")` for more info
 
 *   checking dependencies in R code ... NOTE
     ```
-    c4-n43:pid1272045: PSM3 can't open nic unit: 0 (err=23)
-    c4-n43:pid1272045.R: Unable to create UDP socket for ens13f0np0: Address family not supported by protocol
-    c4-n43:pid1272045.R: Unable to initialize sockets NIC /sys/class/net/ens13f0np0 (unit 0:0)
-    c4-n43:pid1272045: PSM3 can't open nic unit: 0 (err=23)
-    c4-n43:pid1272045.R: Unable to create UDP socket for ens13f0np0: Address family not supported by protocol
-    c4-n43:pid1272045.R: Unable to initialize sockets NIC /sys/class/net/ens13f0np0 (unit 0:0)
-    c4-n43:pid1272045: PSM3 can't open nic unit: 1 (err=23)
-    c4-n43:pid1272045.R: Unable to create UDP socket for ens13f1np1: Address family not supported by protocol
-    c4-n43:pid1272045.R: Unable to initialize sockets NIC /sys/class/net/ens13f1np1 (unit 1:0)
-    c4-n43:pid1272045: PSM3 can't open nic unit: 0 (err=23)
+    c4-n43:pid2902775: PSM3 can't open nic unit: 0 (err=23)
+    c4-n43:pid2902775.R: Unable to create UDP socket for ens13f0np0: Address family not supported by protocol
+    c4-n43:pid2902775.R: Unable to initialize sockets NIC /sys/class/net/ens13f0np0 (unit 0:0)
+    c4-n43:pid2902775: PSM3 can't open nic unit: 0 (err=23)
+    c4-n43:pid2902775.R: Unable to create UDP socket for ens13f0np0: Address family not supported by protocol
+    c4-n43:pid2902775.R: Unable to initialize sockets NIC /sys/class/net/ens13f0np0 (unit 0:0)
+    c4-n43:pid2902775: PSM3 can't open nic unit: 1 (err=23)
+    c4-n43:pid2902775.R: Unable to create UDP socket for ens13f1np1: Address family not supported by protocol
+    c4-n43:pid2902775.R: Unable to initialize sockets NIC /sys/class/net/ens13f1np1 (unit 1:0)
+    c4-n43:pid2902775: PSM3 can't open nic unit: 0 (err=23)
     ...
-    c4-n43:pid1272045.R: Unable to create UDP socket for ens13f1np1: Address family not supported by protocol
-    c4-n43:pid1272045.R: Unable to initialize sockets NIC /sys/class/net/ens13f1np1 (unit 1:0)
+    c4-n43:pid2902775.R: Unable to create UDP socket for ens13f1np1: Address family not supported by protocol
+    c4-n43:pid2902775.R: Unable to initialize sockets NIC /sys/class/net/ens13f1np1 (unit 1:0)
     --------------------------------------------------------------------------
     Open MPI failed an OFI Libfabric library call (fi_endpoint).  This is highly
     unusual; your job may behave unpredictably (and/or abort) after this.
@@ -1939,7 +1962,7 @@ Run `revdepcheck::revdep_details(, "modeltuning")` for more info
     Loading required package: rpart
     Loading required package: yardstick
     Warning: Caught FutureLaunchError. Canceling all iterations ...
-    Error: Caught an unexpected error of class FutureLaunchError when trying to launch future (‘future_lapply-1’) on backend of class SequentialFutureBackend. The reason was: future::evalFuture() failed on c4-n43 (pid 3283309) at 2025-12-04T21:07:59. Using package 'future' v1.68.0.9018. Possible other reasons: Failed to attach one or more packages: there is no package called ‘Matrix’ [future <unnamed>; on e507602b2ed095a799ee713a6dc0a579@c4-dev4<3283309>] [future ‘future_lapply-1’ (e507602b2ed095a799ee713a6dc0a579-1); on e507602b2ed095a799ee713a6dc0a579@c4-dev4<3283309>]
+    Error: Caught an unexpected error of class FutureLaunchError when trying to launch future (‘future_lapply-1’) on backend of class SequentialFutureBackend. The reason was: future::evalFuture() failed on c4-n43 (pid 733107) at 2025-12-05T09:52:46. Using package 'future' v1.68.0.9020. Possible other reasons: Failed to attach one or more packages: there is no package called ‘Matrix’ [future <unnamed>; on bfec534416eb9f05756cc43d4abd3af5@c4-dev4<733107>] [future ‘future_lapply-1’ (bfec534416eb9f05756cc43d4abd3af5-1); on bfec534416eb9f05756cc43d4abd3af5@c4-dev4<733107>]
     Execution halted
     ```
 
@@ -1952,13 +1975,13 @@ Run `revdepcheck::revdep_details(, "modeltuning")` for more info
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     <error/rlang_error>
     Error:
-    ! Caught an unexpected error of class FutureLaunchError when trying to launch future ('future_lapply-1') on backend of class SequentialFutureBackend. The reason was: future::evalFuture() failed on c4-n43 (pid 3286946) at 2025-12-04T21:08:02. Using package 'future' v1.68.0.9018. Possible other reasons: Failed to attach one or more packages: there is no package called 'Matrix' [future <unnamed>; on 792d055910925f2f94f082b1d582b9da@c4-dev4<3286946>] [future 'future_lapply-1' (792d055910925f2f94f082b1d582b9da-1); on 792d055910925f2f94f082b1d582b9da@c4-dev4<3286946>]
+    ! Caught an unexpected error of class FutureLaunchError when trying to launch future ('future_lapply-1') on backend of class SequentialFutureBackend. The reason was: future::evalFuture() failed on c4-n43 (pid 739585) at 2025-12-05T09:52:49. Using package 'future' v1.68.0.9020. Possible other reasons: Failed to attach one or more packages: there is no package called 'Matrix' [future <unnamed>; on 028d822f2c9cd32d362379a0ab230aea@c4-dev4<739585>] [future 'future_lapply-1' (028d822f2c9cd32d362379a0ab230aea-1); on 028d822f2c9cd32d362379a0ab230aea@c4-dev4<739585>]
     ---
     Backtrace:
     ...
     
     Error: processing vignette 'scaling-with-aws.Rmd' failed with diagnostics:
-    Caught an unexpected error of class FutureLaunchError when trying to launch future ('future_lapply-1') on backend of class SequentialFutureBackend. The reason was: future::evalFuture() failed on c4-n43 (pid 3293138) at 2025-12-04T21:08:07. Using package 'future' v1.68.0.9018. Possible other reasons: Failed to attach one or more packages: there is no package called 'Matrix' [future <unnamed>; on f58bdf077e6fb02089804439f40f314d@c4-dev4<3293138>] [future ‘future_lapply-1’ (f58bdf077e6fb02089804439f40f314d-1); on f58bdf077e6fb02089804439f40f314d@c4-dev4<3293138>]
+    Caught an unexpected error of class FutureLaunchError when trying to launch future ('future_lapply-1') on backend of class SequentialFutureBackend. The reason was: future::evalFuture() failed on c4-n43 (pid 757226) at 2025-12-05T09:52:55. Using package 'future' v1.68.0.9020. Possible other reasons: Failed to attach one or more packages: there is no package called 'Matrix' [future <unnamed>; on 621a1ba2a825156ee2b2b53fa9fbcb05@c4-dev4<757226>] [future ‘future_lapply-1’ (621a1ba2a825156ee2b2b53fa9fbcb05-1); on 621a1ba2a825156ee2b2b53fa9fbcb05@c4-dev4<757226>]
     --- failed re-building ‘scaling-with-aws.Rmd’
     
     SUMMARY: processing the following files failed:
@@ -2729,8 +2752,8 @@ Run `revdepcheck::revdep_details(, "shinyOAuth")` for more info
         [shinyOAuth] - HTTP request failed
         x Failed to fetch OIDC discovery document
         x Status 503: Service Unavailable.
-        i URL: http://127.0.0.1:33463/.well-known/openid-configuration
-        i Trace ID: d50M25AiRKc7
+        i URL: http://127.0.0.1:45231/.well-known/openid-configuration
+        i Trace ID: ryutncq4jwVw
       
       [ FAIL 23 | WARN 0 | SKIP 12 | PASS 671 ]
       Error:
@@ -3271,7 +3294,7 @@ Run `revdepcheck::revdep_details(, "targeted")` for more info
       test_learner_stratify.R.......    0 tests    
       test_learner_stratify.R.......    3 tests [0;32mOK[0m 
       test_learner_stratify.R.......    3 tests [0;32mOK[0m 
-      test_learner_stratify.R.......    5 tests [0;32mOK[0m [0;36m31ms[0m
+      test_learner_stratify.R.......    5 tests [0;32mOK[0m [0;36m34ms[0m
     ...
       In addition: Warning messages:
       1: In throw_err_or_depr_msg("Passed unrecognized parameters: ", paste(head(names_unrecognized),  :

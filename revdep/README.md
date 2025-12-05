@@ -10,7 +10,7 @@
 |collate  |en_US.UTF-8                                                   |
 |ctype    |en_US.UTF-8                                                   |
 |tz       |America/Los_Angeles                                           |
-|date     |2025-12-04                                                    |
+|date     |2025-12-05                                                    |
 |pandoc   |3.8.2.1 @ /software/c4/cbi/software/pandoc-3.8.2.1/bin/pandoc |
 |quarto   |1.8.26 @ /software/c4/cbi/software/quarto-1.8.26/bin/quarto   |
 
@@ -18,7 +18,7 @@
 
 |package    |old    |new         |Δ  |
 |:----------|:------|:-----------|:--|
-|future     |1.68.0 |1.68.0-9018 |*  |
+|future     |1.68.0 |1.68.0-9020 |*  |
 |codetools  |0.2-20 |0.2-20      |   |
 |digest     |0.6.39 |0.6.39      |   |
 |globals    |0.18.0 |0.18.0      |   |
@@ -40,7 +40,7 @@
 |:-----------|:-------|:------|:-------|:----|
 |[modeltuning](problems.md#modeltuning)|0.1.2   |__+2__ |        |     |
 
-## All (507)
+## All (506)
 
 |package                      |version    |error  |warning |note |
 |:----------------------------|:----------|:------|:-------|:----|
@@ -180,7 +180,6 @@
 |fEGarch                      |1.0.3      |       |        |     |
 |ferrn                        |0.3.0      |       |        |     |
 |fiery                        |1.4.1      |       |        |     |
-|filibustr                    |0.4.1      |       |        |     |
 |finbif                       |0.9.11     |       |        |     |
 |fitlandr                     |0.1.0      |       |        |     |
 |flassomsm                    |0.1.0      |       |        |     |
@@ -284,7 +283,7 @@
 |LWFBrook90R                  |0.6.3      |       |        |     |
 |maestro                      |0.7.0      |       |        |     |
 |[MAI](problems.md#mai)       |1.16.0     |       |        |1    |
-|malariaAtlas                 |1.6.4      |       |        |     |
+|[malariaAtlas](problems.md#malariaatlas)|1.6.4      |1      |        |     |
 |MAMS                         |3.0.3      |       |        |     |
 |[mapme.biodiversity](problems.md#mapmebiodiversity)|0.9.5      |1      |        |     |
 |marginaleffects              |0.31.0     |       |        |     |
@@ -335,7 +334,7 @@
 |nfl4th                       |1.0.4      |       |        |     |
 |nflfastR                     |5.1.0      |       |        |     |
 |nflseedR                     |2.0.2      |       |        |     |
-|nhdplusTools                 |1.4.0      |       |        |     |
+|nhdplusTools                 |1.4.1      |       |        |     |
 |[nixtlar](problems.md#nixtlar)|0.6.2      |       |        |1    |
 |nncc                         |2.0.0      |       |        |     |
 |normref                      |0.0.0.1    |       |        |     |
