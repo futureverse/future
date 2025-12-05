@@ -207,7 +207,7 @@ future <- function(expr, envir = parent.frame(), substitute = TRUE, lazy = FALSE
   ## Deprecation of 'earlySignal'
   if (!is.null(future[["earlySignal"]])) {
     if (is.element("earlySignal", args_names)) {
-      deprecate_future_earlySignal(future[["earlySignal"]])
+      deprecateFutureArgument("earlySignal", future[["earlySignal"]])
     }
   }
 
