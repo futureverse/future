@@ -49,7 +49,7 @@ MultiprocessFutureBackend(
 ClusterFutureBackend(
   workers = availableWorkers(constraints = "connections"),
   gc = TRUE,
-  earlySignal = TRUE,
+  earlySignal = FALSE,
   interrupts = FALSE,
   persistent = FALSE,
   ...

@@ -21,7 +21,7 @@ ClusterFutureBackend <- local({
   ## Most recent 'workers' set up
   last <- NULL
 
-  function(workers = availableWorkers(constraints = "connections"), gc = TRUE, earlySignal = TRUE, interrupts = FALSE, persistent = FALSE, ...) {
+  function(workers = availableWorkers(constraints = "connections"), gc = TRUE, earlySignal = FALSE, interrupts = FALSE, persistent = FALSE, ...) {
     debug <- isTRUE(getOption("future.debug"))
     if (debug) {
       mdebugf_push("ClusterFutureBackend(..., persistent = %s, gc = %s, earlySignal = %s) ...", persistent, gc, earlySignal)

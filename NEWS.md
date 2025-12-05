@@ -23,6 +23,10 @@
    and `futureCall()`.  Attempts to set it is now ignored and will
    produce a deprecation warning.
 
+ * The `cluster` backend now defaults to `earlySignal = FALSE`. This
+   was effectively already the case, because of an internal thinko
+   bug.
+
  
 # Version 1.68.0 [2025-11-16]
 
