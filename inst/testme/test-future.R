@@ -31,15 +31,6 @@ local({
 
 message("*** future() w/ lazy = TRUE in local() ... DONE")
 
-message("*** future() w/ gc = TRUE ...")
-
-f <- future(42L, gc = TRUE, lazy = TRUE)
-print(f)
-y <- value(f)
-print(y)
-stopifnot(y == 42L)
-
-message("*** future() w/ gc = TRUE ... DONE")
 message("*** future() ... DONE")
 
 message("*** future() ...")
@@ -52,17 +43,6 @@ print(resolved(f))
 y <- value(f)
 print(y)
 stopifnot(y == 42L)
-
-
-message("*** future() w/ gc = TRUE ...")
-
-f <- future(42L, gc = TRUE, lazy = TRUE)
-print(f)
-y <- value(f)
-print(y)
-stopifnot(y == 42L)
-
-message("*** future() w/ gc = TRUE ... DONE")
 
 
 message("*** future() - exceptions ...")

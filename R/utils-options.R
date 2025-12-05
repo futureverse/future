@@ -468,4 +468,5 @@ update_package_options <- function(debug = FALSE) {
 
   ## future (> 1.68.0)
   update_package_option("future.future.earlySignal", mode = "character", debug = debug)
+  update_package_option("future.future.gc", mode = "character", debug = debug)
 }

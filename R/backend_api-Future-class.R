@@ -70,12 +70,6 @@
 #' @param lazy If FALSE (default), the future is resolved
 #' eagerly (starting immediately), otherwise not.
 #'
-#' @param gc If TRUE, the garbage collector run (in the process that
-#' evaluated the future) only after the value of the future is collected.
-#' Exactly when the values are collected may depend on various factors,
-#' including the number of free workers.
-#' _Some future backends may ignore this argument._
-#'
 #' @param label A character string label attached to the future.
 #'
 #' @param \ldots Additional named elements of the future.
@@ -97,7 +91,7 @@
 #' @export
 #' @keywords internal
 #' @name Future-class
-Future <- function(expr = NULL, envir = parent.frame(), substitute = TRUE, stdout = TRUE, conditions = "condition", globals = list(), packages = NULL, seed = FALSE, lazy = FALSE, gc = FALSE, label = NULL, ...) {
+Future <- function(expr = NULL, envir = parent.frame(), substitute = TRUE, stdout = TRUE, conditions = "condition", globals = list(), packages = NULL, seed = FALSE, lazy = FALSE, label = NULL, ...) {
   if (substitute) expr <- substitute(expr)
   t_start <- Sys.time()
 
@@ -220,7 +214,6 @@ Future <- function(expr = NULL, envir = parent.frame(), substitute = TRUE, stdou
 
   ## Future miscellaneous
   core[["label"]] <- label
-  core[["gc"]] <- gc
   
   core[["onReference"]] <- onReference
   core[["owner"]] <- session_uuid()

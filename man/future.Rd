@@ -18,7 +18,6 @@ future(
   stdout = TRUE,
   conditions = "condition",
   label = NULL,
-  gc = FALSE,
   ...
 )
 
@@ -33,7 +32,6 @@ futureCall(
   stdout = TRUE,
   conditions = "condition",
   label = NULL,
-  gc = FALSE,
   ...
 )
 
@@ -111,12 +109,6 @@ except from errors; behavior of such unhandled conditions depends on the
 future backend and the environment from which R runs.}
 
 \item{label}{A character string label attached to the future.}
-
-\item{gc}{If TRUE, the garbage collector run (in the process that
-evaluated the future) only after the value of the future is collected.
-Exactly when the values are collected may depend on various factors,
-including the number of free workers.
-\emph{Some future backends may ignore this argument.}}
 
 \item{FUN}{A \link[base]{function} to be evaluated.}
 
