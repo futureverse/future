@@ -202,8 +202,8 @@ future <- function(expr, envir = parent.frame(), substitute = TRUE, lazy = FALSE
 
   args_names <- names(list(...))
   
-  ## Deprecation of arguments 'earlySignal' and 'gc'
-  for (name in c("earlySignal", "gc")) {
+  ## Deprecation of arguments 'earlySignal', 'gc', and 'local'
+  for (name in c("earlySignal", "gc", "local")) {
     if (!is.null(future[[name]])) {
       if (is.element(name, args_names)) {
         deprecateFutureArgument(name, future[[name]])
