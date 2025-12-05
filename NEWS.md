@@ -24,7 +24,8 @@
 
  * Remove arguments `earlySignal` and `gc` from `future()`,
    `futureAssign()`, and `futureCall()`. Attempts to set them produce
-   deprecation warnings.
+   deprecation warnings. Deprecated also hidden argument 'local',
+   which was been there for legacy reasons.
 
  * The `cluster` backend now defaults to `earlySignal = FALSE`. This
    was effectively already the case, because of an internal thinko
