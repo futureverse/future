@@ -31,8 +31,8 @@
   [`futureAssign()`](https://future.futureverse.org/reference/futureAssign.md),
   and
   [`futureCall()`](https://future.futureverse.org/reference/future.md).
-  Attempts to set them are now ignored and will produce deprecation
-  warnings.
+  Attempts to set them produce deprecation warnings. Deprecated also
+  hidden argument ‘local’, which was been there for legacy reasons.
 
 - The `cluster` backend now defaults to `earlySignal = FALSE`. This was
   effectively already the case, because of an internal thinko bug.
