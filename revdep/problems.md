@@ -528,6 +528,28 @@ Run `revdepcheck::revdep_details(, "ctsem")` for more info
     Execution halted
     ```
 
+# delimtools
+
+<details>
+
+* Version: 0.2.1
+* GitHub: https://github.com/legalLab/delimtools
+* Source code: https://github.com/cran/delimtools
+* Date/Publication: 2025-09-29 22:10:02 UTC
+* Number of recursive dependencies: 101
+
+Run `revdepcheck::revdep_details(, "delimtools")` for more info
+
+</details>
+
+## In both
+
+*   checking Rd cross-references ... NOTE
+    ```
+    Package unavailable to check Rd xrefs: ‘bGMYC’
+    Unknown package ‘splits’ in Rd xrefs
+    ```
+
 # disk.frame
 
 <details>
@@ -662,12 +684,12 @@ Run `revdepcheck::revdep_details(, "FastRet")` for more info
      ERROR
     Running the tests in ‘tests/testthat.R’ failed.
     Last 50 lines of output:
-      > test-adjust_frm.R: [1;30m2025-12-04 12:58:12.59[0m Preprocessing data
-      > test-adjust_frm.R: [1;30m2025-12-04 12:58:12.60[0m Formula: RT_ADJ ~ RT + I(RT^2) + I(RT^3) + log(RT) + exp(RT) + sqrt(RT)
-      > test-adjust_frm.R: [1;30m2025-12-04 12:58:12.60[0m Estimating performance of adjusted model in CV
-      > test-plot_frm.R: [1;30m2025-12-04 12:58:12.05[0m dim(new_data): 25 x 3
-      > test-plot_frm.R: [1;30m2025-12-04 12:58:12.61[0m predictors: 1, 2, 3, 4, 5, 6
-      > test-plot_frm.R: [1;30m2025-12-04 12:58:12.61[0m nfolds: 5
+      > test-adjust_frm.R: [1;30m2025-12-04 21:00:00.42[0m Estimating performance of adjusted model in CV
+      > test-adjust_frm.R: [1;30m2025-12-04 21:00:00.44[0m Fitting adjustment model on full new data set
+      > test-adjust_frm.R: [1;30m2025-12-04 21:00:00.45[0m Returning adjusted frm object
+      > test-adjust_frm.R: [1;30m2025-12-04 21:00:00.45[0m Starting model Adjustment
+      > test-adjust_frm.R: [1;30m2025-12-04 21:00:00.45[0m dim(original_data): 442 x 126
+      > test-adjust_frm.R: [1;30m2025-12-04 21:00:00.45[0m dim(new_data): 25 x 3
     ...
       Backtrace:
           ▆
@@ -1448,77 +1470,6 @@ Run `revdepcheck::revdep_details(, "mbbe")` for more info
       Execution halted
     ```
 
-# MIC
-
-<details>
-
-* Version: 1.2.0
-* GitHub: https://github.com/agerada/MIC
-* Source code: https://github.com/cran/MIC
-* Date/Publication: 2025-10-12 16:40:14 UTC
-* Number of recursive dependencies: 83
-
-Run `revdepcheck::revdep_details(, "MIC")` for more info
-
-</details>
-
-## In both
-
-*   checking examples ... ERROR
-    ```
-    Running examples in ‘MIC-Ex.R’ failed
-    The error most likely occurred in:
-    
-    > ### Name: xgb.cv.lowmem
-    > ### Title: Low memory cross-validation wrapper for XGBoost
-    > ### Aliases: xgb.cv.lowmem
-    > 
-    > ### ** Examples
-    > 
-    > train <- list(data = matrix(rnorm(20), ncol = 2),
-    ...
-    +                    params = list(objective = "binary:logistic"),
-    +                    nrounds = 2,
-    +                    nfold = 3,
-    +                    prediction = TRUE,
-    +                    nthread = 1)
-    Warning: `xgb.cv.lowmem()` was deprecated in MIC 1.2.0.
-    ℹ Please use `faLearn::xgb.cv.lowmem()` instead.
-    ℹ This function has been moved to the faLearn package.
-    Error: 'slice' is not an exported object from 'namespace:xgboost'
-    Execution halted
-    ```
-
-*   checking tests ...
-    ```
-      Running ‘testthat.R’
-     ERROR
-    Running the tests in ‘tests/testthat.R’ failed.
-    Complete output:
-      > # This file is part of the standard setup for testthat.
-      > # It is recommended that you do not modify it.
-      > #
-      > # Where should you do additional test configuration?
-      > # Learn more about the roles of various files in:
-      > # * https://r-pkgs.org/tests.html
-    ...
-      ── Error ('test-cv.R:148:3'): iris example ─────────────────────────────────────
-      Error in `apply(model$pred, 1, which.max)`: dim(X) must have a positive length
-      Backtrace:
-          ▆
-       1. └─base::apply(model$pred, 1, which.max) at test-cv.R:148:3
-      
-      [ FAIL 1 | WARN 420 | SKIP 4 | PASS 231 ]
-      Error:
-      ! Test failures.
-      Execution halted
-    ```
-
-*   checking dependencies in R code ... WARNING
-    ```
-    Missing or unexported object: ‘xgboost::slice’
-    ```
-
 # mice
 
 <details>
@@ -1821,19 +1772,19 @@ Run `revdepcheck::revdep_details(, "mlr3resampling")` for more info
 
 *   checking dependencies in R code ... NOTE
     ```
-    c4-n43:pid220660: PSM3 can't open nic unit: 0 (err=23)
-    c4-n43:pid220660.R: Unable to create UDP socket for ens13f0np0: Address family not supported by protocol
-    c4-n43:pid220660.R: Unable to initialize sockets NIC /sys/class/net/ens13f0np0 (unit 0:0)
-    c4-n43:pid220660: PSM3 can't open nic unit: 0 (err=23)
-    c4-n43:pid220660.R: Unable to create UDP socket for ens13f0np0: Address family not supported by protocol
-    c4-n43:pid220660.R: Unable to initialize sockets NIC /sys/class/net/ens13f0np0 (unit 0:0)
-    c4-n43:pid220660: PSM3 can't open nic unit: 1 (err=23)
-    c4-n43:pid220660.R: Unable to create UDP socket for ens13f1np1: Address family not supported by protocol
-    c4-n43:pid220660.R: Unable to initialize sockets NIC /sys/class/net/ens13f1np1 (unit 1:0)
-    c4-n43:pid220660: PSM3 can't open nic unit: 0 (err=23)
+    c4-n43:pid1272045: PSM3 can't open nic unit: 0 (err=23)
+    c4-n43:pid1272045.R: Unable to create UDP socket for ens13f0np0: Address family not supported by protocol
+    c4-n43:pid1272045.R: Unable to initialize sockets NIC /sys/class/net/ens13f0np0 (unit 0:0)
+    c4-n43:pid1272045: PSM3 can't open nic unit: 0 (err=23)
+    c4-n43:pid1272045.R: Unable to create UDP socket for ens13f0np0: Address family not supported by protocol
+    c4-n43:pid1272045.R: Unable to initialize sockets NIC /sys/class/net/ens13f0np0 (unit 0:0)
+    c4-n43:pid1272045: PSM3 can't open nic unit: 1 (err=23)
+    c4-n43:pid1272045.R: Unable to create UDP socket for ens13f1np1: Address family not supported by protocol
+    c4-n43:pid1272045.R: Unable to initialize sockets NIC /sys/class/net/ens13f1np1 (unit 1:0)
+    c4-n43:pid1272045: PSM3 can't open nic unit: 0 (err=23)
     ...
-    c4-n43:pid220660.R: Unable to create UDP socket for ens13f0np0: Address family not supported by protocol
-    c4-n43:pid220660.R: Unable to initialize sockets NIC /sys/class/net/ens13f0np0 (unit 0:0)
+    c4-n43:pid1272045.R: Unable to create UDP socket for ens13f1np1: Address family not supported by protocol
+    c4-n43:pid1272045.R: Unable to initialize sockets NIC /sys/class/net/ens13f1np1 (unit 1:0)
     --------------------------------------------------------------------------
     Open MPI failed an OFI Libfabric library call (fi_endpoint).  This is highly
     unusual; your job may behave unpredictably (and/or abort) after this.
@@ -1946,6 +1897,72 @@ Run `revdepcheck::revdep_details(, "modeltime")` for more info
     
     SUMMARY: processing the following file failed:
       ‘getting-started-with-modeltime.Rmd’
+    
+    Error: Vignette re-building failed.
+    Execution halted
+    ```
+
+# modeltuning
+
+<details>
+
+* Version: 0.1.2
+* GitHub: NA
+* Source code: https://github.com/cran/modeltuning
+* Date/Publication: 2025-10-28 12:50:02 UTC
+* Number of recursive dependencies: 82
+
+Run `revdepcheck::revdep_details(, "modeltuning")` for more info
+
+</details>
+
+## Newly broken
+
+*   checking examples ... ERROR
+    ```
+    Running examples in ‘modeltuning-Ex.R’ failed
+    The error most likely occurred in:
+    
+    > ### Name: CV
+    > ### Title: Predictive Models with Cross Validation
+    > ### Aliases: CV
+    > 
+    > ### ** Examples
+    > 
+    > 
+    ...
+    +     x = mtcars_x,
+    +     y = mtcars_y
+    +   )
+    + }
+    Loading required package: e1071
+    Loading required package: rpart
+    Loading required package: yardstick
+    Warning: Caught FutureLaunchError. Canceling all iterations ...
+    Error: Caught an unexpected error of class FutureLaunchError when trying to launch future (‘future_lapply-1’) on backend of class SequentialFutureBackend. The reason was: future::evalFuture() failed on c4-n43 (pid 3283309) at 2025-12-04T21:07:59. Using package 'future' v1.68.0.9018. Possible other reasons: Failed to attach one or more packages: there is no package called ‘Matrix’ [future <unnamed>; on e507602b2ed095a799ee713a6dc0a579@c4-dev4<3283309>] [future ‘future_lapply-1’ (e507602b2ed095a799ee713a6dc0a579-1); on e507602b2ed095a799ee713a6dc0a579@c4-dev4<3283309>]
+    Execution halted
+    ```
+
+*   checking re-building of vignette outputs ... ERROR
+    ```
+    Error(s) in re-building vignettes:
+    --- re-building ‘basic-usage.Rmd’ using rmarkdown
+    
+    Quitting from basic-usage.Rmd:128-143 [CV]
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    <error/rlang_error>
+    Error:
+    ! Caught an unexpected error of class FutureLaunchError when trying to launch future ('future_lapply-1') on backend of class SequentialFutureBackend. The reason was: future::evalFuture() failed on c4-n43 (pid 3286946) at 2025-12-04T21:08:02. Using package 'future' v1.68.0.9018. Possible other reasons: Failed to attach one or more packages: there is no package called 'Matrix' [future <unnamed>; on 792d055910925f2f94f082b1d582b9da@c4-dev4<3286946>] [future 'future_lapply-1' (792d055910925f2f94f082b1d582b9da-1); on 792d055910925f2f94f082b1d582b9da@c4-dev4<3286946>]
+    ---
+    Backtrace:
+    ...
+    
+    Error: processing vignette 'scaling-with-aws.Rmd' failed with diagnostics:
+    Caught an unexpected error of class FutureLaunchError when trying to launch future ('future_lapply-1') on backend of class SequentialFutureBackend. The reason was: future::evalFuture() failed on c4-n43 (pid 3293138) at 2025-12-04T21:08:07. Using package 'future' v1.68.0.9018. Possible other reasons: Failed to attach one or more packages: there is no package called 'Matrix' [future <unnamed>; on f58bdf077e6fb02089804439f40f314d@c4-dev4<3293138>] [future ‘future_lapply-1’ (f58bdf077e6fb02089804439f40f314d-1); on f58bdf077e6fb02089804439f40f314d@c4-dev4<3293138>]
+    --- failed re-building ‘scaling-with-aws.Rmd’
+    
+    SUMMARY: processing the following files failed:
+      ‘basic-usage.Rmd’ ‘data-masking.Rmd’ ‘scaling-with-aws.Rmd’
     
     Error: Vignette re-building failed.
     Execution halted
@@ -2712,8 +2729,8 @@ Run `revdepcheck::revdep_details(, "shinyOAuth")` for more info
         [shinyOAuth] - HTTP request failed
         x Failed to fetch OIDC discovery document
         x Status 503: Service Unavailable.
-        i URL: http://127.0.0.1:37887/.well-known/openid-configuration
-        i Trace ID: 3rVzsDHNM_i7
+        i URL: http://127.0.0.1:33463/.well-known/openid-configuration
+        i Trace ID: d50M25AiRKc7
       
       [ FAIL 23 | WARN 0 | SKIP 12 | PASS 671 ]
       Error:
@@ -3254,7 +3271,7 @@ Run `revdepcheck::revdep_details(, "targeted")` for more info
       test_learner_stratify.R.......    0 tests    
       test_learner_stratify.R.......    3 tests [0;32mOK[0m 
       test_learner_stratify.R.......    3 tests [0;32mOK[0m 
-      test_learner_stratify.R.......    5 tests [0;32mOK[0m [0;36m28ms[0m
+      test_learner_stratify.R.......    5 tests [0;32mOK[0m [0;36m31ms[0m
     ...
       In addition: Warning messages:
       1: In throw_err_or_depr_msg("Passed unrecognized parameters: ", paste(head(names_unrecognized),  :
