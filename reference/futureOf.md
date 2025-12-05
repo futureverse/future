@@ -68,16 +68,16 @@ print(f)
 #> Lazy evaluation: FALSE
 #> Local evaluation: TRUE
 #> Early signaling (deprecated): FALSE
-#> Environment: 0x57a8dea94458
+#> Environment: 0x5865fb00cdb0
 #> Actions: [n=1] ‘run’
 #> State: ‘finished’ ("Future was resolved successfully")
 #> Resolved: TRUE
-#> Unique identifier: 9b5e3d7fa232c7553db47a41ddb617d3-12
-#> Owner process: 9b5e3d7fa232c7553db47a41ddb617d3
+#> Unique identifier: 1eee192e1ece128c99dc6cdb8dd45508-12
+#> Owner process: 1eee192e1ece128c99dc6cdb8dd45508
 #> Class: ‘SequentialFuture’, ‘UniprocessFuture’, ‘Future’
 #> Value: 39 bytes of class ‘numeric’
-#> Duration: 0.003370285 secs (started 2025-12-05 12:04:12.465935)
-#> Worker process: 9b5e3d7fa232c7553db47a41ddb617d3
+#> Duration: 0.003661394 secs (started 2025-12-05 15:08:09.176468)
+#> Worker process: 1eee192e1ece128c99dc6cdb8dd45508
 
 b %<-% { 2 }
 
@@ -98,16 +98,16 @@ print(f)
 #> Lazy evaluation: FALSE
 #> Local evaluation: TRUE
 #> Early signaling (deprecated): FALSE
-#> Environment: 0x57a8dea94458
+#> Environment: 0x5865fb00cdb0
 #> Actions: [n=1] ‘run’
 #> State: ‘finished’ ("Future was resolved successfully")
 #> Resolved: TRUE
-#> Unique identifier: 9b5e3d7fa232c7553db47a41ddb617d3-13
-#> Owner process: 9b5e3d7fa232c7553db47a41ddb617d3
+#> Unique identifier: 1eee192e1ece128c99dc6cdb8dd45508-13
+#> Owner process: 1eee192e1ece128c99dc6cdb8dd45508
 #> Class: ‘SequentialFuture’, ‘UniprocessFuture’, ‘Future’
 #> Value: 39 bytes of class ‘numeric’
-#> Duration: 0.003222704 secs (started 2025-12-05 12:04:12.478718)
-#> Worker process: 9b5e3d7fa232c7553db47a41ddb617d3
+#> Duration: 0.00308609 secs (started 2025-12-05 15:08:09.189553)
+#> Worker process: 1eee192e1ece128c99dc6cdb8dd45508
 
 ## All futures
 fs <- futureOf()
@@ -128,16 +128,16 @@ print(fs)
 #> Lazy evaluation: FALSE
 #> Local evaluation: TRUE
 #> Early signaling (deprecated): FALSE
-#> Environment: 0x57a8dea94458
+#> Environment: 0x5865fb00cdb0
 #> Actions: [n=1] ‘run’
 #> State: ‘finished’ ("Future was resolved successfully")
 #> Resolved: TRUE
-#> Unique identifier: 9b5e3d7fa232c7553db47a41ddb617d3-12
-#> Owner process: 9b5e3d7fa232c7553db47a41ddb617d3
+#> Unique identifier: 1eee192e1ece128c99dc6cdb8dd45508-12
+#> Owner process: 1eee192e1ece128c99dc6cdb8dd45508
 #> Class: ‘SequentialFuture’, ‘UniprocessFuture’, ‘Future’
 #> Value: 39 bytes of class ‘numeric’
-#> Duration: 0.003370285 secs (started 2025-12-05 12:04:12.465935)
-#> Worker process: 9b5e3d7fa232c7553db47a41ddb617d3
+#> Duration: 0.003661394 secs (started 2025-12-05 15:08:09.176468)
+#> Worker process: 1eee192e1ece128c99dc6cdb8dd45508
 #> 
 #> $b
 #> SequentialFuture:
@@ -155,16 +155,16 @@ print(fs)
 #> Lazy evaluation: FALSE
 #> Local evaluation: TRUE
 #> Early signaling (deprecated): FALSE
-#> Environment: 0x57a8dea94458
+#> Environment: 0x5865fb00cdb0
 #> Actions: [n=1] ‘run’
 #> State: ‘finished’ ("Future was resolved successfully")
 #> Resolved: TRUE
-#> Unique identifier: 9b5e3d7fa232c7553db47a41ddb617d3-13
-#> Owner process: 9b5e3d7fa232c7553db47a41ddb617d3
+#> Unique identifier: 1eee192e1ece128c99dc6cdb8dd45508-13
+#> Owner process: 1eee192e1ece128c99dc6cdb8dd45508
 #> Class: ‘SequentialFuture’, ‘UniprocessFuture’, ‘Future’
 #> Value: 39 bytes of class ‘numeric’
-#> Duration: 0.003222704 secs (started 2025-12-05 12:04:12.478718)
-#> Worker process: 9b5e3d7fa232c7553db47a41ddb617d3
+#> Duration: 0.00308609 secs (started 2025-12-05 15:08:09.189553)
+#> Worker process: 1eee192e1ece128c99dc6cdb8dd45508
 #> 
 #> $f
 #> SequentialFuture:
@@ -182,16 +182,16 @@ print(fs)
 #> Lazy evaluation: FALSE
 #> Local evaluation: TRUE
 #> Early signaling (deprecated): FALSE
-#> Environment: 0x57a8dea94458
+#> Environment: 0x5865fb00cdb0
 #> Actions: [n=1] ‘run’
 #> State: ‘finished’ ("Future was resolved successfully")
 #> Resolved: TRUE
-#> Unique identifier: 9b5e3d7fa232c7553db47a41ddb617d3-13
-#> Owner process: 9b5e3d7fa232c7553db47a41ddb617d3
+#> Unique identifier: 1eee192e1ece128c99dc6cdb8dd45508-13
+#> Owner process: 1eee192e1ece128c99dc6cdb8dd45508
 #> Class: ‘SequentialFuture’, ‘UniprocessFuture’, ‘Future’
 #> Value: 39 bytes of class ‘numeric’
-#> Duration: 0.003222704 secs (started 2025-12-05 12:04:12.478718)
-#> Worker process: 9b5e3d7fa232c7553db47a41ddb617d3
+#> Duration: 0.00308609 secs (started 2025-12-05 15:08:09.189553)
+#> Worker process: 1eee192e1ece128c99dc6cdb8dd45508
 #> 
 
 
@@ -216,16 +216,16 @@ print(f)
 #> Lazy evaluation: FALSE
 #> Local evaluation: TRUE
 #> Early signaling (deprecated): FALSE
-#> Environment: 0x57a8dea94458
+#> Environment: 0x5865fb00cdb0
 #> Actions: [n=1] ‘run’
 #> State: ‘finished’ ("Future was resolved successfully")
 #> Resolved: TRUE
-#> Unique identifier: 9b5e3d7fa232c7553db47a41ddb617d3-14
-#> Owner process: 9b5e3d7fa232c7553db47a41ddb617d3
+#> Unique identifier: 1eee192e1ece128c99dc6cdb8dd45508-14
+#> Owner process: 1eee192e1ece128c99dc6cdb8dd45508
 #> Class: ‘SequentialFuture’, ‘UniprocessFuture’, ‘Future’
 #> Value: 39 bytes of class ‘numeric’
-#> Duration: 0.003050327 secs (started 2025-12-05 12:04:12.49486)
-#> Worker process: 9b5e3d7fa232c7553db47a41ddb617d3
+#> Duration: 0.002887964 secs (started 2025-12-05 15:08:09.205183)
+#> Worker process: 1eee192e1ece128c99dc6cdb8dd45508
 
 f2 <- futureOf(c, envir = env)
 print(f2)
@@ -244,16 +244,16 @@ print(f2)
 #> Lazy evaluation: FALSE
 #> Local evaluation: TRUE
 #> Early signaling (deprecated): FALSE
-#> Environment: 0x57a8dea94458
+#> Environment: 0x5865fb00cdb0
 #> Actions: [n=1] ‘run’
 #> State: ‘finished’ ("Future was resolved successfully")
 #> Resolved: TRUE
-#> Unique identifier: 9b5e3d7fa232c7553db47a41ddb617d3-14
-#> Owner process: 9b5e3d7fa232c7553db47a41ddb617d3
+#> Unique identifier: 1eee192e1ece128c99dc6cdb8dd45508-14
+#> Owner process: 1eee192e1ece128c99dc6cdb8dd45508
 #> Class: ‘SequentialFuture’, ‘UniprocessFuture’, ‘Future’
 #> Value: 39 bytes of class ‘numeric’
-#> Duration: 0.003050327 secs (started 2025-12-05 12:04:12.49486)
-#> Worker process: 9b5e3d7fa232c7553db47a41ddb617d3
+#> Duration: 0.002887964 secs (started 2025-12-05 15:08:09.205183)
+#> Worker process: 1eee192e1ece128c99dc6cdb8dd45508
 
 f3 <- futureOf("c", envir = env)
 print(f3)
@@ -272,16 +272,16 @@ print(f3)
 #> Lazy evaluation: FALSE
 #> Local evaluation: TRUE
 #> Early signaling (deprecated): FALSE
-#> Environment: 0x57a8dea94458
+#> Environment: 0x5865fb00cdb0
 #> Actions: [n=1] ‘run’
 #> State: ‘finished’ ("Future was resolved successfully")
 #> Resolved: TRUE
-#> Unique identifier: 9b5e3d7fa232c7553db47a41ddb617d3-14
-#> Owner process: 9b5e3d7fa232c7553db47a41ddb617d3
+#> Unique identifier: 1eee192e1ece128c99dc6cdb8dd45508-14
+#> Owner process: 1eee192e1ece128c99dc6cdb8dd45508
 #> Class: ‘SequentialFuture’, ‘UniprocessFuture’, ‘Future’
 #> Value: 39 bytes of class ‘numeric’
-#> Duration: 0.003050327 secs (started 2025-12-05 12:04:12.49486)
-#> Worker process: 9b5e3d7fa232c7553db47a41ddb617d3
+#> Duration: 0.002887964 secs (started 2025-12-05 15:08:09.205183)
+#> Worker process: 1eee192e1ece128c99dc6cdb8dd45508
 
 fs <- futureOf(envir = env)
 print(fs)
@@ -301,15 +301,15 @@ print(fs)
 #> Lazy evaluation: FALSE
 #> Local evaluation: TRUE
 #> Early signaling (deprecated): FALSE
-#> Environment: 0x57a8dea94458
+#> Environment: 0x5865fb00cdb0
 #> Actions: [n=1] ‘run’
 #> State: ‘finished’ ("Future was resolved successfully")
 #> Resolved: TRUE
-#> Unique identifier: 9b5e3d7fa232c7553db47a41ddb617d3-14
-#> Owner process: 9b5e3d7fa232c7553db47a41ddb617d3
+#> Unique identifier: 1eee192e1ece128c99dc6cdb8dd45508-14
+#> Owner process: 1eee192e1ece128c99dc6cdb8dd45508
 #> Class: ‘SequentialFuture’, ‘UniprocessFuture’, ‘Future’
 #> Value: 39 bytes of class ‘numeric’
-#> Duration: 0.003050327 secs (started 2025-12-05 12:04:12.49486)
-#> Worker process: 9b5e3d7fa232c7553db47a41ddb617d3
+#> Duration: 0.002887964 secs (started 2025-12-05 15:08:09.205183)
+#> Worker process: 1eee192e1ece128c99dc6cdb8dd45508
 #> 
 ```

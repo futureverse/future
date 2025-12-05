@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.68.0-9020</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.68.0-9021</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -92,7 +92,8 @@
 </ul></div>
 <div class="section level3">
 <h3 id="deprecated-and-defunct-development-version">Deprecated and Defunct<a class="anchor" aria-label="anchor" href="#deprecated-and-defunct-development-version"></a></h3>
-<ul><li><p>Remove arguments <code>earlySignal</code> and <code>gc</code> from <code><a href="../reference/future.html">future()</a></code>, <code><a href="../reference/futureAssign.html">futureAssign()</a></code>, and <code><a href="../reference/future.html">futureCall()</a></code>. Attempts to set them produce deprecation warnings. Deprecated also hidden argument ‘local’, which was been there for legacy reasons.</p></li>
+<ul><li><p>Remove arguments <code>earlySignal</code> and <code>gc</code> from <code><a href="../reference/future.html">future()</a></code>, <code><a href="../reference/futureAssign.html">futureAssign()</a></code>, and <code><a href="../reference/future.html">futureCall()</a></code>. Attempts to set them produce deprecation warnings. Deprecated also hidden argument <code>local</code>, which was kept around for legacy reasons.</p></li>
+<li><p>Use of <code>plan(..., earlySignal = ...)</code> is now defunct and produces a deprecation warning.</p></li>
 <li><p>The <code>cluster</code> backend now defaults to <code>earlySignal = FALSE</code>. This was effectively already the case, because of an internal thinko bug.</p></li>
 </ul></div>
 </div>
