@@ -126,7 +126,11 @@ DefaultDeviceMisuseFutureError(...)
 
 FutureLaunchError(..., future = NULL)
 
-FutureInterruptError(..., when = Sys.time(), future = NULL)
+FutureInterruptError(
+  message = "A future was interrupted",
+  when = Sys.time(),
+  future = NULL
+)
 
 FutureCanceledError(..., future = NULL)
 

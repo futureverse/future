@@ -445,8 +445,8 @@ FutureLaunchError <- function(..., future = NULL) {
 
 #' @rdname FutureCondition
 #' @export
-FutureInterruptError <- function(..., when = Sys.time(), future = NULL) {
-  cond <- FutureError(..., when = when, future = future)
+FutureInterruptError <- function(message = "A future was interrupted", when = Sys.time(), future = NULL) {
+  cond <- FutureError(message = message, when = when, future = future)
   class <- c("FutureInterruptError", class(cond))
   class(cond) <- class[!duplicated(class, fromLast = TRUE)]
   cond
