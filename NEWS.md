@@ -17,6 +17,9 @@
    1 unknown future arguments: 'interrupts'" for third-party future
    backends.
 
+ * `future(..., packages = "missing-package")` did result in an error
+   despite requesting a non-installed package.
+
 ## Deprecated and Defunct
 
  * Remove argument `earlySignal` from `future()`, `futureAssign()`,

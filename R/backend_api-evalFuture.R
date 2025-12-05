@@ -667,9 +667,12 @@ evalFutureInternal <- function(data) {
   ## -----------------------------------------------------------------
   ## Load and attached backend packages
   ## -----------------------------------------------------------------
-  withCallingHandlers({
+  res <- withCallingHandlers({
     attachPackages(backendPackages)
   }, condition = onEvalCondition)
+  if (inherits(res, "error")) {
+    stop(FutureEvalError(sprintf("Failed to attach one or more future-backend packages: %s", conditionMessage(res))))
+  }
 
 
   ## -----------------------------------------------------------------
@@ -682,9 +685,12 @@ evalFutureInternal <- function(data) {
   ...future.mc.cores.old <- getOption("mc.cores")
 
   ## Load and attached packages
-  withCallingHandlers({
+  res <- withCallingHandlers({
     attachPackages(packages)
   }, condition = onEvalCondition)
+  if (inherits(res, "error")) {
+    stop(FutureEvalError(sprintf("Failed to attach one or more packages: %s", conditionMessage(res))))
+  }
 
   ## Note, we record R options and environment variables _after_
   ## loading and attaching packages, in case they set options/env vars
