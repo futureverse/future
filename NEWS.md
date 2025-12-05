@@ -24,8 +24,8 @@
 
  * Remove arguments `earlySignal` and `gc` from `future()`,
    `futureAssign()`, and `futureCall()`. Attempts to set them produce
-   deprecation warnings. Deprecated also hidden argument 'local',
-   which was been there for legacy reasons.
+   deprecation warnings. Deprecated also hidden argument `local`,
+   which was kept around for legacy reasons.
 
  * Use of `plan(..., earlySignal = ...)` is now defunct and produces a
    deprecation warning.
