@@ -90,6 +90,7 @@ Problematic packages:
 * dar
 * gtfs2emis
 * gtfs2gps
+* mistyR
 * signeR
 * simIDM
 * uci
