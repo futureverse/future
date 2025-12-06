@@ -1,3 +1,30 @@
+#' Signals collected conditions for futures flagged for early signaling
+#'
+#' @param future A [Future] object.
+#'
+#' @param collect (logical) If TRUE, the future results are collected if
+#' the future is resolved and flagged for early signaling.
+#'
+#' @param .signalEarly (logical) If TRUE, and the future results have been
+#' collected, any non-signaled conditions are signaled.
+#'
+#' @param \ldots ... Not used.
+#'
+#' @return The `future` object.
+#'
+#' @details
+#' This function does nothing ("no-op"), if the future:
+#'   * is _not_ flagged for early signaling,
+#'   * is lazy, or
+#'   * is not resolved and `collect = FALSE`.
+#' Otherwise, the future results are collected, which blocks if the future is
+#' not resolved. After the results are collected, nothing is signaled, if:
+#'   * no conditions were captured, or
+#'   * `.signalEarly = FALSE`.
+#' Otherwise, captured conditions are signaled, unless they have been
+#' signaled previously.
+#'
+#' @noRd
 signalEarly <- function(future, collect = TRUE, .signalEarly = TRUE, ...) {
   ## Don't signal early?
   if (!isTRUE(future[["earlySignal"]])) return(future)
