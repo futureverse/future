@@ -45,7 +45,7 @@ run.UniprocessFuture <- function(future, ...) {
   signalImmediateConditions(future)
 
   ## Signal conditions early, iff specified for the given future
-  signalEarly(future, collect = FALSE)
+  signalEarly(future)
 
   future
 }
