@@ -1,6 +1,8 @@
 #' @tags early-signal
 #' @tags sequential multisession multicore
 #' @tags skip_on_cran
+#' @tags deprecated
+## plan(..., earlySignal = TRUE) is deprecated as of future (> 1.68.0)
 
 library(future)
 
@@ -24,6 +26,7 @@ print(r)
 v <- tryCatch(value(f), error = identity)
 stopifnot(inherits(v, "error"))
 
+## plan(..., earlySignal = TRUE) is deprecated as of future (> 1.68.0)
 plan(sequential, earlySignal = TRUE)
 f <- tryCatch(future({ stop("bang!") }), error = identity)
 stopifnot(inherits(f, "error"))
@@ -75,6 +78,7 @@ v <- tryCatch(value(f), error = identity)
 stopifnot(inherits(v, "error"))
 
 if (availableCores() > 1L) {
+  ## plan(..., earlySignal = TRUE) is deprecated as of future (> 1.68.0)
   plan(multisession, earlySignal = TRUE)
   f <- future({ stop("bang!") })
   Sys.sleep(0.2)
@@ -103,6 +107,7 @@ if (supportsMulticore()) {
   stopifnot(inherits(v, "error"))
   
   if (availableCores() > 1L) {
+    ## plan(..., earlySignal = TRUE) is deprecated as of future (> 1.68.0)
     plan(multicore, earlySignal = TRUE)
     f <- future({ stop("bang!") })
     Sys.sleep(0.2)
