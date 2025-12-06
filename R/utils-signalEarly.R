@@ -2,9 +2,6 @@
 #'
 #' @param future A [Future] object.
 #'
-#' @param collect (logical) If TRUE, the future results are collected if
-#' the future is resolved and flagged for early signaling.
-#'
 #' @param .signalEarly (logical) If TRUE, and the future results have been
 #' collected, any non-signaled conditions are signaled.
 #'
@@ -13,19 +10,16 @@
 #' @return The `future` object.
 #'
 #' @details
-#' This function does nothing ("no-op"), if the future:
-#'   * is _not_ flagged for early signaling,
-#'   * is lazy, or
-#'   * is not resolved and `collect = FALSE`.
-#' Otherwise, the future results are collected, which blocks if the future is
-#' not resolved. After the results are collected, nothing is signaled, if:
+#' This function returns immediately ("no-op"), if the future (i) is _not_
+#' flagged for early signaling, or (ii) not resolved.
+#' Otherwise, the future results are collected. Then, nothing is signaled, if:
 #'   * no conditions were captured, or
 #'   * `.signalEarly = FALSE`.
 #' Otherwise, captured conditions are signaled, unless they have been
 #' signaled previously.
 #'
 #' @noRd
-signalEarly <- function(future, collect = TRUE, .signalEarly = TRUE, ...) {
+signalEarly <- function(future, .signalEarly = TRUE, ...) {
   ## Don't signal early?
   if (!isTRUE(future[["earlySignal"]])) return(future)
 
@@ -36,9 +30,9 @@ signalEarly <- function(future, collect = TRUE, .signalEarly = TRUE, ...) {
   if (debug) mdebug_push("signalEarly() ...")
 
   ## Nothing to do?
-  if (!collect && !resolved(future, .signalEarly = FALSE)) {
+  if (!resolved(future, .signalEarly = FALSE)) {
     if (debug) {
-      mdebug("Future not resolved and collect = FALSE. Skipping")
+      mdebug("Future is not resolved. Skipping")
       mdebug_pop()
     }
     return(future)
