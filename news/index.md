@@ -17,12 +17,12 @@
 
 ### Bug Fixes
 
+- `future(..., packages = "missing-package")` did not result in an error
+  despite requesting a non-installed package.
+
 - `plan(..., interrupts = ...)` would produce a warning on “Detected 1
   unknown future arguments: ‘interrupts’” for third-party future
   backends.
-
-- `future(..., packages = "missing-package")` did result in an error
-  despite requesting a non-installed package.
 
 ### Deprecated and Defunct
 

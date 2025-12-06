@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.68.0-9021</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.68.0-9023</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -87,8 +87,8 @@
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-development-version">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h3>
-<ul><li><p><code>plan(..., interrupts = ...)</code> would produce a warning on “Detected 1 unknown future arguments: ‘interrupts’” for third-party future backends.</p></li>
-<li><p><code>future(..., packages = "missing-package")</code> did result in an error despite requesting a non-installed package.</p></li>
+<ul><li><p><code>future(..., packages = "missing-package")</code> did not result in an error despite requesting a non-installed package.</p></li>
+<li><p><code>plan(..., interrupts = ...)</code> would produce a warning on “Detected 1 unknown future arguments: ‘interrupts’” for third-party future backends.</p></li>
 </ul></div>
 <div class="section level3">
 <h3 id="deprecated-and-defunct-development-version">Deprecated and Defunct<a class="anchor" aria-label="anchor" href="#deprecated-and-defunct-development-version"></a></h3>
