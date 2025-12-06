@@ -206,7 +206,7 @@ future <- function(expr, envir = parent.frame(), substitute = TRUE, lazy = FALSE
   for (name in c("earlySignal", "gc", "local")) {
     if (!is.null(future[[name]])) {
       if (is.element(name, args_names)) {
-        deprecateFutureArgument(name, future[[name]])
+        deprecateArgument("future", name, future[[name]])
       }
     }
   }

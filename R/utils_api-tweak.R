@@ -111,7 +111,7 @@ tweak.future <- function(strategy, ..., penvir = parent.frame()) {
 
   ## Arguments 'earlySignal' is deprecated
   if ("earlySignal" %in% names) {
-    deprecatePlanArgument("earlySignal", args[["earlySignal"]])
+    deprecateArgument("plan", "earlySignal", args[["earlySignal"]])
   }
 
   ## formals()<- drops any attributes including class

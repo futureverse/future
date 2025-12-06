@@ -1,19 +1,10 @@
-deprecateFutureArgument <- function(name, value) {
-  option <- sprintf("future.future.%s", name)
+deprecateArgument <- function(fcn, name, value) {
+  fcn <- match.arg(fcn, choices = c("future", "plan"))
+  option <- sprintf("future.%s.%s", fcn, name)
   action <- getOption(option, "deprecated")
   action <- match.arg(action, choices = c("deprecated", "defunct", "ignore"))
   if (action == "ignore") return()
   dfcn <- if (action == "deprecated") .Deprecated else .Defunct
-  dfcn(msg = sprintf("future::future() no longer takes argument '%s'. Attempts to use will eventually be ignored and then become an error: %s = %s", name, name, deparse(value)[1]))
+  msg <- sprintf("future::%s() no longer takes argument '%s'. Attempts to use will eventually be ignored and then become an error: %s = %s", fcn, name, name, deparse(value)[1])
+  dfcn(msg = msg)
 }
-
-
-deprecatePlanArgument <- function(name, value) {
-  option <- sprintf("future.plan.%s", name)
-  action <- getOption(option, "deprecated")
-  action <- match.arg(action, choices = c("deprecated", "defunct", "ignore"))
-  if (action == "ignore") return()
-  dfcn <- if (action == "deprecated") .Deprecated else .Defunct
-  dfcn(msg = sprintf("future::plan() no longer takes argument '%s'. Attempts to use will eventually be ignored and then become an error: %s = %s", name, name, deparse(value)[1]))
-}
-
