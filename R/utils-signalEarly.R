@@ -22,15 +22,6 @@ signalEarly <- function(future, ...) {
 
   debug <- isTRUE(getOption("future.debug"))
   if (debug) mdebug_push("signalEarly() ...")
-
-  ## Nothing to do?
-  if (!resolved(future, .signalEarly = FALSE)) {
-    if (debug) {
-      mdebug("Future is not resolved. Skipping")
-      mdebug_pop()
-    }
-    return(future)
-  }
   
   result <- result(future)
   stop_if_not(inherits(result, "FutureResult"))
