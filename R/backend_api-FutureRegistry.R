@@ -15,7 +15,8 @@
 #'  If `"collect-all"`, find all active [Future] that are resolved
 #'  and collects their [FutureResult]:s.
 #'  Collecting the result of a future frees up the corresponding worker
-#'  and makes it available to the pool of free workers.
+#'  process, but the worker will not be available to take on new tasks
+#'  until the future has been removed from the registry.
 #'
 #'  If `"reset"`, drops a registered [Future]:s without any attempts
 #'  to collect their values etc.
@@ -23,9 +24,10 @@
 #' @param future ([Future] object; optional) Required when `action` is
 #' `"add"`, `"remove"`, or `"contains"`. Ignored otherwise.
 #'
-#' @param earlySignal (logical) If TRUE, the results of all resolved
-#' futures are collected for futures that are set up for early
+#' @param earlySignal (logical) If TRUE (default), the results of all
+#' resolved futures are collected for futures that are set up for early
 #' signalling (deprecated).
+#' This does not apply when `action = "collect-all"`.
 #'
 #' @param \ldots Not used.
 #'
@@ -234,6 +236,7 @@ FutureRegistry <- local({
       collectValues(where, futures = futures, firstOnly = TRUE, debug = debug)
     } else if (action == "collect-all") {
       collectValues(where, futures = futures, firstOnly = FALSE, debug = debug)
+      earlySignal <- FALSE ## Avoid second round of result collection
     } else if (action == "reset") {
       db[[where]] <<- list()
       if (debug) mdebug("Erased registry")
