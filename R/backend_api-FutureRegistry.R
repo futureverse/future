@@ -1,3 +1,40 @@
+#' Registry of Active Futures
+#'
+#' @param where (character string) The name of the registry, which is
+#' decided by the [FutureBackend].
+#'
+#' @param action (character string)
+#'  If `"add"`, add `future` to registry.
+#'  If `"remove"`, remove `future` to registry.
+#'  If `"contains"`, checks whether `future` is in registry.
+#'
+#'  If `"list"`, return a list of active [Future]:s.
+#'
+#'  If `"collect-first"`, find an active [Future] that is resolved
+#'  and collects its [FutureResult].
+#'  If `"collect-all"`, find all active [Future] that are resolved
+#'  and collects their [FutureResult]:s.
+#'  Collecting the result of a future frees up the corresponding worker
+#'  and makes it available to the pool of free workers.
+#'
+#'  If `"reset"`, drops a registered [Future]:s without any attempts
+#'  to collect their values etc.
+#'
+#' @param future ([Future] object; optional) Required when `action` is
+#' `"add"`, `"remove"`, or `"contains"`. Ignored otherwise.
+#'
+#' @param earlySignal (logical) If TRUE, the results of all resolved
+#' futures are collected for futures that are set up for early
+#' signalling (deprecated).
+#'
+#' @param \ldots Not used.
+#'
+#' @param debug (logical) If TRUE, debug messages are outputted.
+#'
+#' @return
+#' A list of active [Future]:s.
+#'
+#' @noRd
 FutureRegistry <- local({
   db <- list()
 
