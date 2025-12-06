@@ -2,9 +2,6 @@
 #'
 #' @param future A [Future] object.
 #'
-#' @param .signalEarly (logical) If TRUE, and the future results have been
-#' collected, any non-signaled conditions are signaled.
-#'
 #' @param \ldots ... Not used.
 #'
 #' @return The `future` object.
@@ -12,14 +9,11 @@
 #' @details
 #' This function returns immediately ("no-op"), if the future (i) is _not_
 #' flagged for early signaling, or (ii) not resolved.
-#' Otherwise, the future results are collected. Then, nothing is signaled, if:
-#'   * no conditions were captured, or
-#'   * `.signalEarly = FALSE`.
-#' Otherwise, captured conditions are signaled, unless they have been
-#' signaled previously.
+#' Otherwise, the future results are collected and any captured conditions
+#' are signaled, unless they have been signaled previously.
 #'
 #' @noRd
-signalEarly <- function(future, .signalEarly = TRUE, ...) {
+signalEarly <- function(future, ...) {
   ## Don't signal early?
   if (!isTRUE(future[["earlySignal"]])) return(future)
 
@@ -44,9 +38,8 @@ signalEarly <- function(future, .signalEarly = TRUE, ...) {
   conditions <- result[["conditions"]]
   
   ## Nothing to do?
-  if (!.signalEarly || length(conditions) == 0L) {
+  if (length(conditions) == 0L) {
     if (debug) {
-      if (!.signalEarly) mdebug("Skipping because .signalEarly = FALSE")
       if (length(conditions) == 0L) mdebug("No conditions to signal")
       mdebug_pop()
     }
