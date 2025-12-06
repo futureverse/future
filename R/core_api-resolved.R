@@ -150,8 +150,8 @@ resolved.Future <- function(x, run = TRUE, ...) {
   }
 
   ## Signal conditions early, iff specified for the given future
-  ## Note, collect = TRUE will block here, which is intentional
-  signalEarly(future, collect = TRUE, ...)
+  ## Note, this will block, which is intentional
+  signalEarly(future, ...)
 
   if (debug) mdebug("result: ", sQuote(class(future[["result"]])[1]))
   if (inherits(future[["result"]], "FutureResult")) return(TRUE)
