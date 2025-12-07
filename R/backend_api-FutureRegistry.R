@@ -87,7 +87,8 @@ FutureRegistry <- local({
       ## NOTE: It is when calling resolved() on a future with
       ##       early signaling is enabled that conditioned
       ##       may be signaled.
-      if (resolved(future, run = FALSE, .signalEarly = FALSE)) {
+      if ((!future[["state"]] %in% "created") &&
+          resolved(future, .signalEarly = FALSE)) {
         if (debug) mdebugf_push("Future at position #%d is resolved ...", ii)
         ## (a) Let future cleanup after itself, iff needed.
         ##     This, this may result in a call to
