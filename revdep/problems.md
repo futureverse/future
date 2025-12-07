@@ -291,53 +291,6 @@ Run `revdepcheck::revdep_details(, "ChromSCape")` for more info
     to your NAMESPACE file.
     ```
 
-# CimpleG
-
-<details>
-
-* Version: 1.0.0
-* GitHub: https://github.com/CostaLab/CimpleG
-* Source code: https://github.com/cran/CimpleG
-* Date/Publication: 2025-12-03 20:50:17 UTC
-* Number of recursive dependencies: 318
-
-Run `revdepcheck::revdep_details(, "CimpleG")` for more info
-
-</details>
-
-## In both
-
-*   checking tests ...
-    ```
-      Running ‘spelling.R’
-      Running ‘testthat.R’
-     ERROR
-    Running the tests in ‘tests/testthat.R’ failed.
-    Last 50 lines of output:
-      > test-CimpleG.R: Warning: stack imbalance in '<-', 113 then 115
-      > test-CimpleG.R: Setting options('download.file.method.GEOquery'='auto')
-      > test-CimpleG.R: Setting options('GEOquery.inmemory.gpl'=FALSE)
-      > test-CimpleG.R: Warning: stack imbalance in '{', 109 then 111
-      Saving _problems/test3-CimpleG-xgboost-13.R
-    ...
-       22. │   └─butcher:::axe_env.xgb.Booster(x$fit, verbose = verbose, ...)
-       23. └─base::.handleSimpleError(...)
-       24.   └─purrr (local) h(simpleError(msg, call))
-       25.     └─cli::cli_abort(...)
-       26.       └─rlang::abort(...)
-      
-      [ FAIL 1 | WARN 0 | SKIP 4 | PASS 62 ]
-      Error:
-      ! Test failures.
-      Execution halted
-    ```
-
-*   checking dependencies in R code ... NOTE
-    ```
-    Namespace in Imports field not imported from: ‘devtools’
-      All declared Imports should be used.
-    ```
-
 # ClustIRR
 
 <details>
@@ -695,40 +648,14 @@ Run `revdepcheck::revdep_details(, "FastRet")` for more info
 
 </details>
 
-## Newly broken
-
-*   checking replacement functions ... WARNING
-    ```
-    Warning in dir.create(cache_dir, recursive = TRUE) :
-      '/c4/home/henrik/.cache/R/FastRet' already exists
-    The argument of a replacement function which corresponds to the right
-    hand side must be named ‘value’.
-    ```
-
-*   checking dependencies in R code ... NOTE
-    ```
-    Warning in dir.create(cache_dir, recursive = TRUE) :
-      '/c4/home/henrik/.cache/R/FastRet' already exists
-    ```
-
 ## Newly fixed
 
-*   checking S3 generic/method consistency ... WARNING
+*   checking foreign function calls ... NOTE
     ```
     Warning in dir.create(cache_dir, recursive = TRUE) :
       '/c4/home/henrik/.cache/R/FastRet' already exists
-    See section ‘Generic functions and methods’ in the ‘Writing R
+    See chapter ‘System and foreign language interfaces’ in the ‘Writing R
     Extensions’ manual.
-    ```
-
-*   checking whether startup messages can be suppressed ... NOTE
-    ```
-    Warning message:
-    In dir.create(cache_dir, recursive = TRUE) :
-      '/c4/home/henrik/.cache/R/FastRet' already exists
-    
-    It looks like this package (or a package it requires) has a startup
-    message which cannot be suppressed: see ?packageStartupMessage.
     ```
 
 ## In both
@@ -739,12 +666,12 @@ Run `revdepcheck::revdep_details(, "FastRet")` for more info
      ERROR
     Running the tests in ‘tests/testthat.R’ failed.
     Last 50 lines of output:
-      > test-selective_measuring.R: [1;30m2025-12-05 14:01:46.99[0m Scaling features by coefficients of Ridge Regression model
-      > test-selective_measuring.R: [1;30m2025-12-05 14:01:46.99[0m Applying PAM clustering
-      > test-adjust_frm.R: [1;30m2025-12-05 14:01:47.14[0m Starting model Adjustment
-      > test-adjust_frm.R: [1;30m2025-12-05 14:01:47.14[0m dim(original_data): 442 x 126
-      > test-adjust_frm.R: [1;30m2025-12-05 14:01:47.14[0m dim(new_data): 25 x 3
-      > test-adjust_frm.R: [1;30m2025-12-05 14:01:47.14[0m predictors: 1, 2
+      > test-adjust_frm.R: [1;30m2025-12-06 20:19:39.26[0m dim(original_data): 442 x 126
+      > test-adjust_frm.R: [1;30m2025-12-06 20:19:39.26[0m dim(new_data): 25 x 3
+      > test-adjust_frm.R: [1;30m2025-12-06 20:19:39.26[0m predictors: 1, 2, 3, 4, 5, 6
+      > test-plot_frm.R: [1;30m2025-12-06 20:19:39.26[0m Formula: RT_ADJ ~ RT + I(RT^2) + I(RT^3) + log(RT) + exp(RT) + sqrt(RT)
+      > test-plot_frm.R: [1;30m2025-12-06 20:19:39.26[0m Estimating performance of adjusted model in CV
+      > test-adjust_frm.R: [1;30m2025-12-06 20:19:39.26[0m nfolds: 5
     ...
       Backtrace:
           ▆
@@ -818,47 +745,6 @@ Run `revdepcheck::revdep_details(, "fdacluster")` for more info
       placeholder syntax added in R 4.2.0.
       File(s) using such syntax:
         ‘caps-plot.R’ ‘utils.R’
-    ```
-
-# fiery
-
-<details>
-
-* Version: 1.4.1
-* GitHub: https://github.com/thomasp85/fiery
-* Source code: https://github.com/cran/fiery
-* Date/Publication: 2025-11-18 11:10:09 UTC
-* Number of recursive dependencies: 70
-
-Run `revdepcheck::revdep_details(, "fiery")` for more info
-
-</details>
-
-## In both
-
-*   checking tests ...
-    ```
-      Running ‘testthat.R’
-     ERROR
-    Running the tests in ‘tests/testthat.R’ failed.
-    Last 50 lines of output:
-          ▆
-       1. └─app$ignite(silent = TRUE) at test-Fire.R:209:3
-       2.   └─private$run(block = block, showcase = showcase, ..., silent = silent)
-       3.     └─private$run_blocking_server(showcase = showcase)
-       4.       └─httpuv::startServer(...)
-       5.         └─WebServer$new(host, port, app, quiet)
-    ...
-       2.   └─private$run(block = block, showcase = showcase, ..., silent = silent)
-       3.     └─private$run_blocking_server(showcase = showcase)
-       4.       └─httpuv::startServer(...)
-       5.         └─WebServer$new(host, port, app, quiet)
-       6.           └─httpuv (local) initialize(...)
-      
-      [ FAIL 5 | WARN 0 | SKIP 27 | PASS 126 ]
-      Error:
-      ! Test failures.
-      Execution halted
     ```
 
 # flowGraph
@@ -1525,47 +1411,6 @@ Run `revdepcheck::revdep_details(, "MAI")` for more info
     is not mentioned in the DESCRIPTION file.
     ```
 
-# malariaAtlas
-
-<details>
-
-* Version: 1.6.4
-* GitHub: https://github.com/malaria-atlas-project/malariaAtlas
-* Source code: https://github.com/cran/malariaAtlas
-* Date/Publication: 2025-06-11 11:00:06 UTC
-* Number of recursive dependencies: 118
-
-Run `revdepcheck::revdep_details(, "malariaAtlas")` for more info
-
-</details>
-
-## In both
-
-*   checking re-building of vignette outputs ... ERROR
-    ```
-    Error(s) in re-building vignettes:
-    --- re-building ‘overview.Rmd’ using rmarkdown
-    
-    Quitting from overview.Rmd:199-201 [unnamed-chunk-25]
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    <error/rlang_error>
-    Error:
-    ! Cannot open "/scratch/henrik/941415/RtmpDRHMN3/file1dbb7c555ddf9e.json"; The source could be corrupt or not supported. See `st_drivers()` for a list of supported formats.
-    ---
-    Backtrace:
-    ...
-    
-    Error: processing vignette 'overview.Rmd' failed with diagnostics:
-    Cannot open "/scratch/henrik/941415/RtmpDRHMN3/file1dbb7c555ddf9e.json"; The source could be corrupt or not supported. See `st_drivers()` for a list of supported formats.
-    --- failed re-building ‘overview.Rmd’
-    
-    SUMMARY: processing the following file failed:
-      ‘overview.Rmd’
-    
-    Error: Vignette re-building failed.
-    Execution halted
-    ```
-
 # mapme.biodiversity
 
 <details>
@@ -1983,7 +1828,7 @@ Run `revdepcheck::revdep_details(, "mlr3resampling")` for more info
       > if(require(testthat))test_check("mlr3resampling")
       Loading required package: testthat
       Loading required package: mlr3resampling
-      [c4-n43:1964029] OPAL ERROR: Not initialized in file ext2x_client.c at line 112
+      [c4-n43:2384034] OPAL ERROR: Not initialized in file ext2x_client.c at line 112
       --------------------------------------------------------------------------
     ...
         install PMI-2. You must then build Open MPI using --with-pmi pointing
@@ -1995,12 +1840,12 @@ Run `revdepcheck::revdep_details(, "mlr3resampling")` for more info
       *** on a NULL communicator
       *** MPI_ERRORS_ARE_FATAL (processes in this communicator will now abort,
       ***    and potentially your MPI job)
-      [c4-n43:1964029] Local abort before MPI_INIT completed completed successfully, but am not able to aggregate error messages, and not able to guarantee that all other processes were killed!
+      [c4-n43:2384034] Local abort before MPI_INIT completed completed successfully, but am not able to aggregate error messages, and not able to guarantee that all other processes were killed!
     ```
 
 *   checking dependencies in R code ... NOTE
     ```
-    [c4-n43:1941075] OPAL ERROR: Not initialized in file ext2x_client.c at line 112
+    [c4-n43:2378593] OPAL ERROR: Not initialized in file ext2x_client.c at line 112
     --------------------------------------------------------------------------
     The application appears to have been direct launched using "srun",
     but OMPI was not built with SLURM's PMI support and therefore cannot
@@ -2121,72 +1966,6 @@ Run `revdepcheck::revdep_details(, "modeltime")` for more info
     
     SUMMARY: processing the following file failed:
       ‘getting-started-with-modeltime.Rmd’
-    
-    Error: Vignette re-building failed.
-    Execution halted
-    ```
-
-# modeltuning
-
-<details>
-
-* Version: 0.1.2
-* GitHub: NA
-* Source code: https://github.com/cran/modeltuning
-* Date/Publication: 2025-10-28 12:50:02 UTC
-* Number of recursive dependencies: 82
-
-Run `revdepcheck::revdep_details(, "modeltuning")` for more info
-
-</details>
-
-## Newly broken
-
-*   checking examples ... ERROR
-    ```
-    Running examples in ‘modeltuning-Ex.R’ failed
-    The error most likely occurred in:
-    
-    > ### Name: CV
-    > ### Title: Predictive Models with Cross Validation
-    > ### Aliases: CV
-    > 
-    > ### ** Examples
-    > 
-    > 
-    ...
-    +     x = mtcars_x,
-    +     y = mtcars_y
-    +   )
-    + }
-    Loading required package: e1071
-    Loading required package: rpart
-    Loading required package: yardstick
-    Warning: Caught FutureLaunchError. Canceling all iterations ...
-    Error: Caught an unexpected error of class FutureLaunchError when trying to launch future (‘future_lapply-1’) on backend of class SequentialFutureBackend. The reason was: future::evalFuture() failed on c4-n43 (pid 2010007) at 2025-12-05T14:13:29. Using package 'future' v1.68.0.9021. Possible other reasons: Failed to attach one or more packages: there is no package called ‘Matrix’ [future <unnamed>; on be671610270935a3427ee91bd8bc3cf1@c4-dev4<2010007>] [future ‘future_lapply-1’ (be671610270935a3427ee91bd8bc3cf1-1); on be671610270935a3427ee91bd8bc3cf1@c4-dev4<2010007>]
-    Execution halted
-    ```
-
-*   checking re-building of vignette outputs ... ERROR
-    ```
-    Error(s) in re-building vignettes:
-    --- re-building ‘basic-usage.Rmd’ using rmarkdown
-    
-    Quitting from basic-usage.Rmd:128-143 [CV]
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    <error/rlang_error>
-    Error:
-    ! Caught an unexpected error of class FutureLaunchError when trying to launch future ('future_lapply-1') on backend of class SequentialFutureBackend. The reason was: future::evalFuture() failed on c4-n43 (pid 2011962) at 2025-12-05T14:13:33. Using package 'future' v1.68.0.9021. Possible other reasons: Failed to attach one or more packages: there is no package called 'Matrix' [future <unnamed>; on ce8306d7fa78680df9b5520066b31d32@c4-dev4<2011962>] [future 'future_lapply-1' (ce8306d7fa78680df9b5520066b31d32-1); on ce8306d7fa78680df9b5520066b31d32@c4-dev4<2011962>]
-    ---
-    Backtrace:
-    ...
-    
-    Error: processing vignette 'scaling-with-aws.Rmd' failed with diagnostics:
-    Caught an unexpected error of class FutureLaunchError when trying to launch future ('future_lapply-1') on backend of class SequentialFutureBackend. The reason was: future::evalFuture() failed on c4-n43 (pid 2029133) at 2025-12-05T14:13:37. Using package 'future' v1.68.0.9021. Possible other reasons: Failed to attach one or more packages: there is no package called 'Matrix' [future <unnamed>; on c996c65267dbb1a035a79c51587be47c@c4-dev4<2029133>] [future ‘future_lapply-1’ (c996c65267dbb1a035a79c51587be47c-1); on c996c65267dbb1a035a79c51587be47c@c4-dev4<2029133>]
-    --- failed re-building ‘scaling-with-aws.Rmd’
-    
-    SUMMARY: processing the following files failed:
-      ‘basic-usage.Rmd’ ‘data-masking.Rmd’ ‘scaling-with-aws.Rmd’
     
     Error: Vignette re-building failed.
     Execution halted
@@ -2953,8 +2732,8 @@ Run `revdepcheck::revdep_details(, "shinyOAuth")` for more info
         [shinyOAuth] - HTTP request failed
         x Failed to fetch OIDC discovery document
         x Status 503: Service Unavailable.
-        i URL: http://127.0.0.1:44387/.well-known/openid-configuration
-        i Trace ID: i-aLCz5e0OTb
+        i URL: http://127.0.0.1:39725/.well-known/openid-configuration
+        i Trace ID: 3S7hXcPvDn2k
       
       [ FAIL 23 | WARN 0 | SKIP 12 | PASS 671 ]
       Error:
@@ -3495,7 +3274,7 @@ Run `revdepcheck::revdep_details(, "targeted")` for more info
       test_learner_stratify.R.......    0 tests    
       test_learner_stratify.R.......    3 tests [0;32mOK[0m 
       test_learner_stratify.R.......    3 tests [0;32mOK[0m 
-      test_learner_stratify.R.......    5 tests [0;32mOK[0m [0;36m46ms[0m
+      test_learner_stratify.R.......    5 tests [0;32mOK[0m [0;36m31ms[0m
     ...
       In addition: Warning messages:
       1: In throw_err_or_depr_msg("Passed unrecognized parameters: ", paste(head(names_unrecognized),  :
