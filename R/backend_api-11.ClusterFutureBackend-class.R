@@ -621,7 +621,7 @@ resolved.ClusterFuture <- function(x, run = TRUE, timeout = NULL, ...) {
   ## Is value already collected?
   if (!is.null(future[["result"]])) {
     ## Signal conditions early?
-    signalEarly(future, ...)
+    signalEarly(future)
     return(TRUE)
   }
 
@@ -731,7 +731,7 @@ resolved.ClusterFuture <- function(x, run = TRUE, timeout = NULL, ...) {
     assertFutureResult(future, debug = debug)
 
     ## Signal conditions early? (happens only iff requested)
-    signalEarly(future, ...)
+    signalEarly(future)
   }
 
   res

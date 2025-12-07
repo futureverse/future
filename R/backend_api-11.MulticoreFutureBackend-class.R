@@ -293,7 +293,7 @@ resolved.MulticoreFuture <- local({
     ## Is value already collected?
     if (!is.null(x[["result"]])) {
       ## Signal conditions early?
-      signalEarly(x, ...)
+      signalEarly(x)
       return(TRUE)
     }
   
@@ -328,7 +328,7 @@ resolved.MulticoreFuture <- local({
     x[[".signaledConditions"]] <- signaled
 
     ## Signal conditions early? (happens only iff requested)
-    if (res) signalEarly(x, ...)
+    if (res) signalEarly(x)
   
     res
   }
