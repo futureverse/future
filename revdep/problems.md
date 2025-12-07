@@ -200,7 +200,7 @@ Run `revdepcheck::revdep_details(, "ceRNAnetsim")` for more info
 * GitHub: NA
 * Source code: https://github.com/cran/Certara.RsNLME.ModelExecutor
 * Date/Publication: 2025-03-19 14:50:01 UTC
-* Number of recursive dependencies: 110
+* Number of recursive dependencies: 111
 
 Run `revdepcheck::revdep_details(, "Certara.RsNLME.ModelExecutor")` for more info
 
@@ -648,16 +648,6 @@ Run `revdepcheck::revdep_details(, "FastRet")` for more info
 
 </details>
 
-## Newly fixed
-
-*   checking foreign function calls ... NOTE
-    ```
-    Warning in dir.create(cache_dir, recursive = TRUE) :
-      '/c4/home/henrik/.cache/R/FastRet' already exists
-    See chapter ‘System and foreign language interfaces’ in the ‘Writing R
-    Extensions’ manual.
-    ```
-
 ## In both
 
 *   checking tests ...
@@ -666,12 +656,12 @@ Run `revdepcheck::revdep_details(, "FastRet")` for more info
      ERROR
     Running the tests in ‘tests/testthat.R’ failed.
     Last 50 lines of output:
-      > test-adjust_frm.R: [1;30m2025-12-06 20:19:39.26[0m dim(original_data): 442 x 126
-      > test-adjust_frm.R: [1;30m2025-12-06 20:19:39.26[0m dim(new_data): 25 x 3
-      > test-adjust_frm.R: [1;30m2025-12-06 20:19:39.26[0m predictors: 1, 2, 3, 4, 5, 6
-      > test-plot_frm.R: [1;30m2025-12-06 20:19:39.26[0m Formula: RT_ADJ ~ RT + I(RT^2) + I(RT^3) + log(RT) + exp(RT) + sqrt(RT)
-      > test-plot_frm.R: [1;30m2025-12-06 20:19:39.26[0m Estimating performance of adjusted model in CV
-      > test-adjust_frm.R: [1;30m2025-12-06 20:19:39.26[0m nfolds: 5
+      > test-adjust_frm.R: [1;30m2025-12-07 08:56:40.41[0m Estimating performance of adjusted model in CV
+      > test-adjust_frm.R: [1;30m2025-12-07 08:56:40.46[0m Fitting adjustment model on full new data set
+      > test-adjust_frm.R: [1;30m2025-12-07 08:56:40.46[0m Returning adjusted frm object
+      > test-adjust_frm.R: [1;30m2025-12-07 08:56:40.46[0m Starting model Adjustment
+      > test-adjust_frm.R: [1;30m2025-12-07 08:56:40.46[0m dim(original_data): 442 x 126
+      > test-adjust_frm.R: [1;30m2025-12-07 08:56:40.46[0m dim(new_data): 25 x 3
     ...
       Backtrace:
           ▆
@@ -1375,7 +1365,7 @@ Run `revdepcheck::revdep_details(, "ldmppr")` for more info
 * GitHub: https://github.com/ntthung/ldsr
 * Source code: https://github.com/cran/ldsr
 * Date/Publication: 2020-05-04 14:40:09 UTC
-* Number of recursive dependencies: 66
+* Number of recursive dependencies: 67
 
 Run `revdepcheck::revdep_details(, "ldsr")` for more info
 
@@ -1409,6 +1399,40 @@ Run `revdepcheck::revdep_details(, "MAI")` for more info
     File
       LICENSE
     is not mentioned in the DESCRIPTION file.
+    ```
+
+# malariaAtlas
+
+<details>
+
+* Version: 1.6.4
+* GitHub: https://github.com/malaria-atlas-project/malariaAtlas
+* Source code: https://github.com/cran/malariaAtlas
+* Date/Publication: 2025-06-11 11:00:06 UTC
+* Number of recursive dependencies: 118
+
+Run `revdepcheck::revdep_details(, "malariaAtlas")` for more info
+
+</details>
+
+## Newly broken
+
+*   checking re-building of vignette outputs ...sh: line 1: 4043697 Terminated              '/software/c4/cbi/software/_rocky8/R-4.5.2-gcc13/lib64/R/bin/R' --vanilla --no-echo > '/scratch/henrik/revdep/future/checks/malariaAtlas/new/malariaAtlas.Rcheck/build_vignettes.log' 2>&1 < '/scratch/henrik/RtmpNefEw4/file3db04f664ac353'
+    ```
+     ERROR
+    Error(s) in re-building vignettes:
+      ...
+    --- re-building ‘overview.Rmd’ using rmarkdown
+    ```
+
+## Newly fixed
+
+*   checking re-building of vignette outputs ...sh: line 1: 4043288 Terminated              '/software/c4/cbi/software/_rocky8/R-4.5.2-gcc13/lib64/R/bin/R' --vanilla --no-echo > '/scratch/henrik/revdep/future/checks/malariaAtlas/old/malariaAtlas.Rcheck/build_vignettes.log' 2>&1 < '/scratch/henrik/Rtmp2eSOIf/file3dacf36ecaba4a'
+    ```
+     ERROR
+    Error(s) in re-building vignettes:
+      ...
+    --- re-building ‘overview.Rmd’ using rmarkdown
     ```
 
 # mapme.biodiversity
@@ -1785,7 +1809,7 @@ Run `revdepcheck::revdep_details(, "mistyR")` for more info
 * GitHub: https://github.com/tdhock/mlr3resampling
 * Source code: https://github.com/cran/mlr3resampling
 * Date/Publication: 2025-11-20 19:10:02 UTC
-* Number of recursive dependencies: 100
+* Number of recursive dependencies: 101
 
 Run `revdepcheck::revdep_details(, "mlr3resampling")` for more info
 
@@ -1828,7 +1852,7 @@ Run `revdepcheck::revdep_details(, "mlr3resampling")` for more info
       > if(require(testthat))test_check("mlr3resampling")
       Loading required package: testthat
       Loading required package: mlr3resampling
-      [c4-n43:2384034] OPAL ERROR: Not initialized in file ext2x_client.c at line 112
+      [c4-n43:2088961] OPAL ERROR: Not initialized in file ext2x_client.c at line 112
       --------------------------------------------------------------------------
     ...
         install PMI-2. You must then build Open MPI using --with-pmi pointing
@@ -1840,12 +1864,12 @@ Run `revdepcheck::revdep_details(, "mlr3resampling")` for more info
       *** on a NULL communicator
       *** MPI_ERRORS_ARE_FATAL (processes in this communicator will now abort,
       ***    and potentially your MPI job)
-      [c4-n43:2384034] Local abort before MPI_INIT completed completed successfully, but am not able to aggregate error messages, and not able to guarantee that all other processes were killed!
+      [c4-n43:2088961] Local abort before MPI_INIT completed completed successfully, but am not able to aggregate error messages, and not able to guarantee that all other processes were killed!
     ```
 
 *   checking dependencies in R code ... NOTE
     ```
-    [c4-n43:2378593] OPAL ERROR: Not initialized in file ext2x_client.c at line 112
+    [c4-n43:2046495] OPAL ERROR: Not initialized in file ext2x_client.c at line 112
     --------------------------------------------------------------------------
     The application appears to have been direct launched using "srun",
     but OMPI was not built with SLURM's PMI support and therefore cannot
@@ -2321,7 +2345,7 @@ Run `revdepcheck::revdep_details(, "photosynthesis")` for more info
 * GitHub: https://github.com/JeroenDMulder/powRICLPM
 * Source code: https://github.com/cran/powRICLPM
 * Date/Publication: 2024-10-26 13:50:03 UTC
-* Number of recursive dependencies: 64
+* Number of recursive dependencies: 65
 
 Run `revdepcheck::revdep_details(, "powRICLPM")` for more info
 
@@ -2732,8 +2756,8 @@ Run `revdepcheck::revdep_details(, "shinyOAuth")` for more info
         [shinyOAuth] - HTTP request failed
         x Failed to fetch OIDC discovery document
         x Status 503: Service Unavailable.
-        i URL: http://127.0.0.1:39725/.well-known/openid-configuration
-        i Trace ID: 3S7hXcPvDn2k
+        i URL: http://127.0.0.1:43109/.well-known/openid-configuration
+        i Trace ID: WrxKcuNIBFWT
       
       [ FAIL 23 | WARN 0 | SKIP 12 | PASS 671 ]
       Error:
@@ -3035,7 +3059,7 @@ Run `revdepcheck::revdep_details(, "sperrorest")` for more info
 * GitHub: https://github.com/lusystemsbio/sRACIPE
 * Source code: https://github.com/cran/sRACIPE
 * Date/Publication: 2025-10-29
-* Number of recursive dependencies: 95
+* Number of recursive dependencies: 96
 
 Run `revdepcheck::revdep_details(, "sRACIPE")` for more info
 
@@ -3274,7 +3298,7 @@ Run `revdepcheck::revdep_details(, "targeted")` for more info
       test_learner_stratify.R.......    0 tests    
       test_learner_stratify.R.......    3 tests [0;32mOK[0m 
       test_learner_stratify.R.......    3 tests [0;32mOK[0m 
-      test_learner_stratify.R.......    5 tests [0;32mOK[0m [0;36m31ms[0m
+      test_learner_stratify.R.......    5 tests [0;32mOK[0m [0;36m29ms[0m
     ...
       In addition: Warning messages:
       1: In throw_err_or_depr_msg("Passed unrecognized parameters: ", paste(head(names_unrecognized),  :
@@ -3321,7 +3345,7 @@ Run `revdepcheck::revdep_details(, "targeted")` for more info
 * GitHub: https://github.com/tanaylab/tglkmeans
 * Source code: https://github.com/cran/tglkmeans
 * Date/Publication: 2024-05-15 08:40:02 UTC
-* Number of recursive dependencies: 84
+* Number of recursive dependencies: 85
 
 Run `revdepcheck::revdep_details(, "tglkmeans")` for more info
 
@@ -3343,7 +3367,7 @@ Run `revdepcheck::revdep_details(, "tglkmeans")` for more info
 * GitHub: NA
 * Source code: https://github.com/cran/tramvs
 * Date/Publication: 2025-11-18 18:00:02 UTC
-* Number of recursive dependencies: 103
+* Number of recursive dependencies: 104
 
 Run `revdepcheck::revdep_details(, "tramvs")` for more info
 
@@ -3544,7 +3568,7 @@ Run `revdepcheck::revdep_details(, "tsmarch")` for more info
 * GitHub: https://github.com/nhejazi/txshift
 * Source code: https://github.com/cran/txshift
 * Date/Publication: 2022-02-09 22:30:02 UTC
-* Number of recursive dependencies: 101
+* Number of recursive dependencies: 102
 
 Run `revdepcheck::revdep_details(, "txshift")` for more info
 
