@@ -291,94 +291,6 @@ Run `revdepcheck::revdep_details(, "ChromSCape")` for more info
     to your NAMESPACE file.
     ```
 
-# CimpleG
-
-<details>
-
-* Version: 1.0.0
-* GitHub: https://github.com/CostaLab/CimpleG
-* Source code: https://github.com/cran/CimpleG
-* Date/Publication: 2025-12-03 20:50:17 UTC
-* Number of recursive dependencies: 318
-
-Run `revdepcheck::revdep_details(, "CimpleG")` for more info
-
-</details>
-
-## In both
-
-*   checking tests ...
-    ```
-      Running ‘spelling.R’
-      Running ‘testthat.R’
-     ERROR
-    Running the tests in ‘tests/testthat.R’ failed.
-    Last 50 lines of output:
-      > test-CimpleG.R: Warning: stack imbalance in '<-', 113 then 115
-      > test-CimpleG.R: Setting options('download.file.method.GEOquery'='auto')
-      > test-CimpleG.R: Setting options('GEOquery.inmemory.gpl'=FALSE)
-      > test-CimpleG.R: Warning: stack imbalance in '{', 109 then 111
-      Saving _problems/test3-CimpleG-xgboost-13.R
-    ...
-       22. │   └─butcher:::axe_env.xgb.Booster(x$fit, verbose = verbose, ...)
-       23. └─base::.handleSimpleError(...)
-       24.   └─purrr (local) h(simpleError(msg, call))
-       25.     └─cli::cli_abort(...)
-       26.       └─rlang::abort(...)
-      
-      [ FAIL 1 | WARN 0 | SKIP 4 | PASS 62 ]
-      Error:
-      ! Test failures.
-      Execution halted
-    ```
-
-*   checking dependencies in R code ... NOTE
-    ```
-    Namespace in Imports field not imported from: ‘devtools’
-      All declared Imports should be used.
-    ```
-
-# civis
-
-<details>
-
-* Version: 3.1.3
-* GitHub: https://github.com/civisanalytics/civis-r
-* Source code: https://github.com/cran/civis
-* Date/Publication: 2025-08-29 08:40:31 UTC
-* Number of recursive dependencies: 81
-
-Run `revdepcheck::revdep_details(, "civis")` for more info
-
-</details>
-
-## Newly broken
-
-*   checking tests ...
-    ```
-      Running ‘testthat.R’
-     ERROR
-    Running the tests in ‘tests/testthat.R’ failed.
-    Complete output:
-      > library(testthat)
-      > library(civis)
-      > 
-      > test_check("civis")
-      Saving _problems/test_civis_future-98.R
-      [ FAIL 2 | WARN 5 | SKIP 0 | PASS 1055 ]
-    ...
-       3. └─civis (local) mock_r_eval(fut)
-      ── Failure ('test_civis_future.R:98:2'): CivisFuture has the right stuff ───────
-      Expected `fut$envir$a` to equal 5.
-      Differences:
-      target is NULL, current is numeric
-      
-      [ FAIL 2 | WARN 5 | SKIP 0 | PASS 1055 ]
-      Error:
-      ! Test failures.
-      Execution halted
-    ```
-
 # ClustIRR
 
 <details>
@@ -703,12 +615,12 @@ Run `revdepcheck::revdep_details(, "FastRet")` for more info
      ERROR
     Running the tests in ‘tests/testthat.R’ failed.
     Last 50 lines of output:
-      > test-adjust_frm.R: [1;30m2025-12-03 19:09:23.57[0m Preprocessing data
-      > test-adjust_frm.R: [1;30m2025-12-03 19:09:23.57[0m Formula: RT_ADJ ~ RT + I(RT^2) + I(RT^3) + log(RT) + exp(RT) + sqrt(RT)
-      > test-adjust_frm.R: [1;30m2025-12-03 19:09:23.57[0m Estimating performance of adjusted model in CV
-      > test-adjust_frm.R: [1;30m2025-12-03 19:09:23.60[0m Fitting adjustment model on full new data set
-      > test-adjust_frm.R: [1;30m2025-12-03 19:09:23.61[0m Returning adjusted frm object
-      > test-plot_frm.R: [1;30m2025-12-03 19:09:23.16[0m dim(new_data): 25 x 3
+      > test-adjust_frm.R: [1;30m2025-12-07 14:09:07.39[0m Preprocessing data
+      > test-adjust_frm.R: [1;30m2025-12-07 14:09:07.39[0m Formula: RT_ADJ ~ RT + I(RT^2) + I(RT^3) + log(RT) + exp(RT) + sqrt(RT)
+      > test-adjust_frm.R: [1;30m2025-12-07 14:09:07.40[0m Estimating performance of adjusted model in CV
+      > test-adjust_frm.R: [1;30m2025-12-07 14:09:07.44[0m Fitting adjustment model on full new data set
+      > test-adjust_frm.R: [1;30m2025-12-07 14:09:07.44[0m Returning adjusted frm object
+      > test-plot_frm.R: [1;30m2025-12-07 14:09:06.64[0m dim(new_data): 25 x 3
     ...
       Backtrace:
           ▆
@@ -817,47 +729,6 @@ Run `revdepcheck::revdep_details(, "flowGraph")` for more info
     checkRd: (-1) ggdf.Rd:22: Lost braces
         22 | code{ggdf} adds to the data frames \code{v} and \code{e} in slot
            |     ^
-    ```
-
-# fmeffects
-
-<details>
-
-* Version: 0.1.4
-* GitHub: https://github.com/holgstr/fmeffects
-* Source code: https://github.com/cran/fmeffects
-* Date/Publication: 2024-11-05 18:50:02 UTC
-* Number of recursive dependencies: 182
-
-Run `revdepcheck::revdep_details(, "fmeffects")` for more info
-
-</details>
-
-## In both
-
-*   checking re-building of vignette outputs ... ERROR
-    ```
-    Error(s) in re-building vignettes:
-      ...
-    --- re-building ‘fme_theory.Rmd’ using rmarkdown
-    [WARNING] Deprecated: --highlight-style. Use --syntax-highlighting instead.
-    --- finished re-building ‘fme_theory.Rmd’
-    
-    --- re-building ‘fmeffects.Rmd’ using rmarkdown
-    
-    Quitting from fmeffects.Rmd:121-127 [unnamed-chunk-11]
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    ...
-    ℹ In index: 1.
-    Caused by error in `.__Task__col_roles()`:
-    ! Assertion on 'names(rhs)' failed: Names must be a permutation of set {'feature','target','name','order','stratum','group','offset','weights_learner','weights_measure'}, but has extra elements {'always_included'}.
-    --- failed re-building ‘fmeffects.Rmd’
-    
-    SUMMARY: processing the following file failed:
-      ‘fmeffects.Rmd’
-    
-    Error: Vignette re-building failed.
-    Execution halted
     ```
 
 # forecastML
@@ -1462,24 +1333,18 @@ Run `revdepcheck::revdep_details(, "malariaAtlas")` for more info
 
 </details>
 
-## Newly broken
+## In both
 
-*   checking re-building of vignette outputs ...sh: line 1: 4043697 Terminated              '/software/c4/cbi/software/_rocky8/R-4.5.2-gcc13/lib64/R/bin/R' --vanilla --no-echo > '/scratch/henrik/revdep/future/checks/malariaAtlas/new/malariaAtlas.Rcheck/build_vignettes.log' 2>&1 < '/scratch/henrik/RtmpNefEw4/file3db04f664ac353'
+*   checking re-building of vignette outputs ... ERROR
     ```
-     ERROR
     Error(s) in re-building vignettes:
       ...
     --- re-building ‘overview.Rmd’ using rmarkdown
-    ```
-
-## Newly fixed
-
-*   checking re-building of vignette outputs ...sh: line 1: 4043288 Terminated              '/software/c4/cbi/software/_rocky8/R-4.5.2-gcc13/lib64/R/bin/R' --vanilla --no-echo > '/scratch/henrik/revdep/future/checks/malariaAtlas/old/malariaAtlas.Rcheck/build_vignettes.log' 2>&1 < '/scratch/henrik/Rtmp2eSOIf/file3dacf36ecaba4a'
-    ```
-     ERROR
-    Error(s) in re-building vignettes:
-      ...
-    --- re-building ‘overview.Rmd’ using rmarkdown
+    
+    
+    
+    Quitting from overview.Rmd:218-221 [unnamed-chunk-28]
+    Execution halted
     ```
 
 # mapme.biodiversity
@@ -1562,77 +1427,6 @@ Run `revdepcheck::revdep_details(, "mbbe")` for more info
       Error:
       ! Test failures.
       Execution halted
-    ```
-
-# MIC
-
-<details>
-
-* Version: 1.2.0
-* GitHub: https://github.com/agerada/MIC
-* Source code: https://github.com/cran/MIC
-* Date/Publication: 2025-10-12 16:40:14 UTC
-* Number of recursive dependencies: 141
-
-Run `revdepcheck::revdep_details(, "MIC")` for more info
-
-</details>
-
-## In both
-
-*   checking examples ... ERROR
-    ```
-    Running examples in ‘MIC-Ex.R’ failed
-    The error most likely occurred in:
-    
-    > ### Name: xgb.cv.lowmem
-    > ### Title: Low memory cross-validation wrapper for XGBoost
-    > ### Aliases: xgb.cv.lowmem
-    > 
-    > ### ** Examples
-    > 
-    > train <- list(data = matrix(rnorm(20), ncol = 2),
-    ...
-    +                    params = list(objective = "binary:logistic"),
-    +                    nrounds = 2,
-    +                    nfold = 3,
-    +                    prediction = TRUE,
-    +                    nthread = 1)
-    Warning: `xgb.cv.lowmem()` was deprecated in MIC 1.2.0.
-    ℹ Please use `faLearn::xgb.cv.lowmem()` instead.
-    ℹ This function has been moved to the faLearn package.
-    Error: 'slice' is not an exported object from 'namespace:xgboost'
-    Execution halted
-    ```
-
-*   checking tests ...
-    ```
-      Running ‘testthat.R’
-     ERROR
-    Running the tests in ‘tests/testthat.R’ failed.
-    Complete output:
-      > # This file is part of the standard setup for testthat.
-      > # It is recommended that you do not modify it.
-      > #
-      > # Where should you do additional test configuration?
-      > # Learn more about the roles of various files in:
-      > # * https://r-pkgs.org/tests.html
-    ...
-      ── Error ('test-cv.R:148:3'): iris example ─────────────────────────────────────
-      Error in `apply(model$pred, 1, which.max)`: dim(X) must have a positive length
-      Backtrace:
-          ▆
-       1. └─base::apply(model$pred, 1, which.max) at test-cv.R:148:3
-      
-      [ FAIL 1 | WARN 420 | SKIP 4 | PASS 231 ]
-      Error:
-      ! Test failures.
-      Execution halted
-    ```
-
-*   checking dependencies in R code ... WARNING
-    ```
-    Missing or unexported object: ‘xgboost::slice’
     ```
 
 # mice
@@ -1935,86 +1729,28 @@ Run `revdepcheck::revdep_details(, "mlr3resampling")` for more info
 
 ## In both
 
-*   checking examples ... ERROR
-    ```
-    Running examples in ‘mlr3resampling-Ex.R’ failed
-    The error most likely occurred in:
-    
-    > ### Name: proj_compute
-    > ### Title: Compute resampling results in a project
-    > ### Aliases: proj_compute
-    > 
-    > ### ** Examples
-    > 
-    > 
-    ...
-      version 16.05 or later: you can use SLURM's PMIx support. This
-      requires that you configure and build SLURM --with-pmix.
-    
-      Versions earlier than 16.05: you must use either SLURM's PMI-1 or
-      PMI-2 support. SLURM builds PMI-1 by default, or you can manually
-      install PMI-2. You must then build Open MPI using --with-pmi pointing
-      to the SLURM PMI library location.
-    
-    Please configure as appropriate and try again.
-    --------------------------------------------------------------------------
-    ```
-
-*   checking tests ...
-    ```
-      Running ‘testthat.R’
-     ERROR
-    Running the tests in ‘tests/testthat.R’ failed.
-    Complete output:
-      > data.table::setDTthreads(1L)
-      > if(require(testthat))test_check("mlr3resampling")
-      Loading required package: testthat
-      Loading required package: mlr3resampling
-      [c4-n43:2088961] OPAL ERROR: Not initialized in file ext2x_client.c at line 112
-      --------------------------------------------------------------------------
-    ...
-        install PMI-2. You must then build Open MPI using --with-pmi pointing
-        to the SLURM PMI library location.
-      
-      Please configure as appropriate and try again.
-      --------------------------------------------------------------------------
-      *** An error occurred in MPI_Init
-      *** on a NULL communicator
-      *** MPI_ERRORS_ARE_FATAL (processes in this communicator will now abort,
-      ***    and potentially your MPI job)
-      [c4-n43:2088961] Local abort before MPI_INIT completed completed successfully, but am not able to aggregate error messages, and not able to guarantee that all other processes were killed!
-    ```
-
 *   checking dependencies in R code ... NOTE
     ```
-    c4-n43:pid2164536: PSM3 can't open nic unit: 0 (err=23)
-    c4-n43:pid2164536.R: Unable to create UDP socket for ens13f0np0: Address family not supported by protocol
-    c4-n43:pid2164536.R: Unable to initialize sockets NIC /sys/class/net/ens13f0np0 (unit 0:0)
-    c4-n43:pid2164536: PSM3 can't open nic unit: 0 (err=23)
-    c4-n43:pid2164536.R: Unable to create UDP socket for ens13f0np0: Address family not supported by protocol
-    c4-n43:pid2164536.R: Unable to initialize sockets NIC /sys/class/net/ens13f0np0 (unit 0:0)
-    c4-n43:pid2164536: PSM3 can't open nic unit: 1 (err=23)
-    c4-n43:pid2164536.R: Unable to create UDP socket for ens13f1np1: Address family not supported by protocol
-    c4-n43:pid2164536.R: Unable to initialize sockets NIC /sys/class/net/ens13f1np1 (unit 1:0)
-    c4-n43:pid2164536: PSM3 can't open nic unit: 0 (err=23)
+    c4-n43:pid4119007: PSM3 can't open nic unit: 0 (err=23)
+    c4-n43:pid4119007.R: Unable to create UDP socket for ens13f0np0: Address family not supported by protocol
+    c4-n43:pid4119007.R: Unable to initialize sockets NIC /sys/class/net/ens13f0np0 (unit 0:0)
+    c4-n43:pid4119007: PSM3 can't open nic unit: 0 (err=23)
+    c4-n43:pid4119007.R: Unable to create UDP socket for ens13f0np0: Address family not supported by protocol
+    c4-n43:pid4119007.R: Unable to initialize sockets NIC /sys/class/net/ens13f0np0 (unit 0:0)
+    c4-n43:pid4119007: PSM3 can't open nic unit: 1 (err=23)
+    c4-n43:pid4119007.R: Unable to create UDP socket for ens13f1np1: Address family not supported by protocol
+    c4-n43:pid4119007.R: Unable to initialize sockets NIC /sys/class/net/ens13f1np1 (unit 1:0)
+    c4-n43:pid4119007: PSM3 can't open nic unit: 0 (err=23)
     ...
-    c4-n43:pid2164536.R: Unable to create UDP socket for ens13f0np0: Address family not supported by protocol
-    c4-n43:pid2164536.R: Unable to initialize sockets NIC /sys/class/net/ens13f0np0 (unit 0:0)
+    c4-n43:pid4119007.R: Unable to create UDP socket for ens13f1np1: Address family not supported by protocol
+    c4-n43:pid4119007.R: Unable to initialize sockets NIC /sys/class/net/ens13f1np1 (unit 1:0)
     --------------------------------------------------------------------------
-    The application appears to have been direct launched using "srun",
-    but OMPI was not built with SLURM's PMI support and therefore cannot
-    execute. There are several options for building PMI support under
-    SLURM, depending upon the SLURM version you are using:
+    Open MPI failed an OFI Libfabric library call (fi_endpoint).  This is highly
+    unusual; your job may behave unpredictably (and/or abort) after this.
     
-      version 16.05 or later: you can use SLURM's PMIx support. This
-      requires that you configure and build SLURM --with-pmix.
-    
-      Versions earlier than 16.05: you must use either SLURM's PMI-1 or
-      PMI-2 support. SLURM builds PMI-1 by default, or you can manually
-      install PMI-2. You must then build Open MPI using --with-pmi pointing
-      to the SLURM PMI library location.
-    
-    Please configure as appropriate and try again.
+      Local host: c4-n43
+      Location: mtl_ofi_component.c:513
+      Error: Invalid argument (22)
     --------------------------------------------------------------------------
     ```
 
@@ -2467,47 +2203,6 @@ Run `revdepcheck::revdep_details(, "photosynthesis")` for more info
         ‘simulate_error.R’ ‘simulate_error.Rd’ ‘utils.R’
     ```
 
-# polle
-
-<details>
-
-* Version: 1.6.1
-* GitHub: https://github.com/AndreasNordland/polle
-* Source code: https://github.com/cran/polle
-* Date/Publication: 2025-12-01 15:40:08 UTC
-* Number of recursive dependencies: 109
-
-Run `revdepcheck::revdep_details(, "polle")` for more info
-
-</details>
-
-## In both
-
-*   checking tests ...
-    ```
-      Running ‘test-all.R’
-     ERROR
-    Running the tests in ‘tests/test-all.R’ failed.
-    Last 50 lines of output:
-        argument "y" is missing, with no default
-      Error in xgboost::xgboost(data = xgmat, objective = objective, nrounds = ntrees,  : 
-        argument "y" is missing, with no default
-      Saving _problems/test-q_xgboost-32.R
-      [ FAIL 4 | WARN 202 | SKIP 0 | PASS 935 ]
-      
-    ...
-      Backtrace:
-          ▆
-       1. └─xgboost::xgboost(...) at test-q_xgboost.R:28:3
-       2.   └─xgboost:::process.y.margin.and.objective(...)
-       3.     └─base::NROW(y)
-      
-      [ FAIL 4 | WARN 202 | SKIP 0 | PASS 935 ]
-      Error:
-      ! Test failures.
-      Execution halted
-    ```
-
 # powRICLPM
 
 <details>
@@ -2927,8 +2622,8 @@ Run `revdepcheck::revdep_details(, "shinyOAuth")` for more info
         [shinyOAuth] - HTTP request failed
         x Failed to fetch OIDC discovery document
         x Status 503: Service Unavailable.
-        i URL: http://127.0.0.1:45907/.well-known/openid-configuration
-        i Trace ID: 1WMjsEQF_rup
+        i URL: http://127.0.0.1:36019/.well-known/openid-configuration
+        i Trace ID: j-lbAyjRv8ko
       
       [ FAIL 23 | WARN 0 | SKIP 12 | PASS 671 ]
       Error:
@@ -3469,7 +3164,7 @@ Run `revdepcheck::revdep_details(, "targeted")` for more info
       test_learner_stratify.R.......    0 tests    
       test_learner_stratify.R.......    3 tests [0;32mOK[0m 
       test_learner_stratify.R.......    3 tests [0;32mOK[0m 
-      test_learner_stratify.R.......    5 tests [0;32mOK[0m [0;36m35ms[0m
+      test_learner_stratify.R.......    5 tests [0;32mOK[0m [0;36m29ms[0m
     ...
       In addition: Warning messages:
       1: In throw_err_or_depr_msg("Passed unrecognized parameters: ", paste(head(names_unrecognized),  :
