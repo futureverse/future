@@ -202,8 +202,10 @@ detect the problem before it sends the object over to the parallel
 worker.
 
 That said, the **arrow** package provides low-level functions
-`write_to_raw()` and `read_ipc_stream()` that can used to marshal and
-unmarshal **arrow** objects. For example,
+[`write_to_raw()`](https://arrow.apache.org/docs/r/reference/write_to_raw.html)
+and
+[`read_ipc_stream()`](https://arrow.apache.org/docs/r/reference/read_ipc_stream.html)
+that can used to marshal and unmarshal **arrow** objects. For example,
 
 ``` r
 

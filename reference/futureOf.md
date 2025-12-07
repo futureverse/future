@@ -67,17 +67,16 @@ print(f)
 #> Immediate condition classes: ‘immediateCondition’
 #> Lazy evaluation: FALSE
 #> Local evaluation: TRUE
-#> Early signaling (deprecated): FALSE
-#> Environment: 0x5c2297687558
+#> Early signaling: FALSE
 #> Actions: [n=1] ‘run’
 #> State: ‘finished’ ("Future was resolved successfully")
 #> Resolved: TRUE
-#> Unique identifier: 8a0c140e2f1158d297a81a9712bc203d-12
-#> Owner process: 8a0c140e2f1158d297a81a9712bc203d
+#> Unique identifier: 7f74a6c96a75eca7c1bb8e4a3035d13a-12
+#> Owner process: 7f74a6c96a75eca7c1bb8e4a3035d13a
 #> Class: ‘SequentialFuture’, ‘UniprocessFuture’, ‘Future’
 #> Value: 39 bytes of class ‘numeric’
-#> Duration: 0.003284216 secs (started 2025-12-05 18:43:17.649421)
-#> Worker process: 8a0c140e2f1158d297a81a9712bc203d
+#> Duration: 0.00343132 secs (started 2025-12-07 15:34:11.810295)
+#> Worker process: 7f74a6c96a75eca7c1bb8e4a3035d13a
 
 b %<-% { 2 }
 
@@ -97,17 +96,16 @@ print(f)
 #> Immediate condition classes: ‘immediateCondition’
 #> Lazy evaluation: FALSE
 #> Local evaluation: TRUE
-#> Early signaling (deprecated): FALSE
-#> Environment: 0x5c2297687558
+#> Early signaling: FALSE
 #> Actions: [n=1] ‘run’
 #> State: ‘finished’ ("Future was resolved successfully")
 #> Resolved: TRUE
-#> Unique identifier: 8a0c140e2f1158d297a81a9712bc203d-13
-#> Owner process: 8a0c140e2f1158d297a81a9712bc203d
+#> Unique identifier: 7f74a6c96a75eca7c1bb8e4a3035d13a-13
+#> Owner process: 7f74a6c96a75eca7c1bb8e4a3035d13a
 #> Class: ‘SequentialFuture’, ‘UniprocessFuture’, ‘Future’
 #> Value: 39 bytes of class ‘numeric’
-#> Duration: 0.003184557 secs (started 2025-12-05 18:43:17.662009)
-#> Worker process: 8a0c140e2f1158d297a81a9712bc203d
+#> Duration: 0.003595352 secs (started 2025-12-07 15:34:11.824183)
+#> Worker process: 7f74a6c96a75eca7c1bb8e4a3035d13a
 
 ## All futures
 fs <- futureOf()
@@ -127,17 +125,16 @@ print(fs)
 #> Immediate condition classes: ‘immediateCondition’
 #> Lazy evaluation: FALSE
 #> Local evaluation: TRUE
-#> Early signaling (deprecated): FALSE
-#> Environment: 0x5c2297687558
+#> Early signaling: FALSE
 #> Actions: [n=1] ‘run’
 #> State: ‘finished’ ("Future was resolved successfully")
 #> Resolved: TRUE
-#> Unique identifier: 8a0c140e2f1158d297a81a9712bc203d-12
-#> Owner process: 8a0c140e2f1158d297a81a9712bc203d
+#> Unique identifier: 7f74a6c96a75eca7c1bb8e4a3035d13a-12
+#> Owner process: 7f74a6c96a75eca7c1bb8e4a3035d13a
 #> Class: ‘SequentialFuture’, ‘UniprocessFuture’, ‘Future’
 #> Value: 39 bytes of class ‘numeric’
-#> Duration: 0.003284216 secs (started 2025-12-05 18:43:17.649421)
-#> Worker process: 8a0c140e2f1158d297a81a9712bc203d
+#> Duration: 0.00343132 secs (started 2025-12-07 15:34:11.810295)
+#> Worker process: 7f74a6c96a75eca7c1bb8e4a3035d13a
 #> 
 #> $b
 #> SequentialFuture:
@@ -154,17 +151,16 @@ print(fs)
 #> Immediate condition classes: ‘immediateCondition’
 #> Lazy evaluation: FALSE
 #> Local evaluation: TRUE
-#> Early signaling (deprecated): FALSE
-#> Environment: 0x5c2297687558
+#> Early signaling: FALSE
 #> Actions: [n=1] ‘run’
 #> State: ‘finished’ ("Future was resolved successfully")
 #> Resolved: TRUE
-#> Unique identifier: 8a0c140e2f1158d297a81a9712bc203d-13
-#> Owner process: 8a0c140e2f1158d297a81a9712bc203d
+#> Unique identifier: 7f74a6c96a75eca7c1bb8e4a3035d13a-13
+#> Owner process: 7f74a6c96a75eca7c1bb8e4a3035d13a
 #> Class: ‘SequentialFuture’, ‘UniprocessFuture’, ‘Future’
 #> Value: 39 bytes of class ‘numeric’
-#> Duration: 0.003184557 secs (started 2025-12-05 18:43:17.662009)
-#> Worker process: 8a0c140e2f1158d297a81a9712bc203d
+#> Duration: 0.003595352 secs (started 2025-12-07 15:34:11.824183)
+#> Worker process: 7f74a6c96a75eca7c1bb8e4a3035d13a
 #> 
 #> $f
 #> SequentialFuture:
@@ -181,17 +177,16 @@ print(fs)
 #> Immediate condition classes: ‘immediateCondition’
 #> Lazy evaluation: FALSE
 #> Local evaluation: TRUE
-#> Early signaling (deprecated): FALSE
-#> Environment: 0x5c2297687558
+#> Early signaling: FALSE
 #> Actions: [n=1] ‘run’
 #> State: ‘finished’ ("Future was resolved successfully")
 #> Resolved: TRUE
-#> Unique identifier: 8a0c140e2f1158d297a81a9712bc203d-13
-#> Owner process: 8a0c140e2f1158d297a81a9712bc203d
+#> Unique identifier: 7f74a6c96a75eca7c1bb8e4a3035d13a-13
+#> Owner process: 7f74a6c96a75eca7c1bb8e4a3035d13a
 #> Class: ‘SequentialFuture’, ‘UniprocessFuture’, ‘Future’
 #> Value: 39 bytes of class ‘numeric’
-#> Duration: 0.003184557 secs (started 2025-12-05 18:43:17.662009)
-#> Worker process: 8a0c140e2f1158d297a81a9712bc203d
+#> Duration: 0.003595352 secs (started 2025-12-07 15:34:11.824183)
+#> Worker process: 7f74a6c96a75eca7c1bb8e4a3035d13a
 #> 
 
 
@@ -215,17 +210,16 @@ print(f)
 #> Immediate condition classes: ‘immediateCondition’
 #> Lazy evaluation: FALSE
 #> Local evaluation: TRUE
-#> Early signaling (deprecated): FALSE
-#> Environment: 0x5c2297687558
+#> Early signaling: FALSE
 #> Actions: [n=1] ‘run’
 #> State: ‘finished’ ("Future was resolved successfully")
 #> Resolved: TRUE
-#> Unique identifier: 8a0c140e2f1158d297a81a9712bc203d-14
-#> Owner process: 8a0c140e2f1158d297a81a9712bc203d
+#> Unique identifier: 7f74a6c96a75eca7c1bb8e4a3035d13a-14
+#> Owner process: 7f74a6c96a75eca7c1bb8e4a3035d13a
 #> Class: ‘SequentialFuture’, ‘UniprocessFuture’, ‘Future’
 #> Value: 39 bytes of class ‘numeric’
-#> Duration: 0.003000975 secs (started 2025-12-05 18:43:17.678066)
-#> Worker process: 8a0c140e2f1158d297a81a9712bc203d
+#> Duration: 0.003138065 secs (started 2025-12-07 15:34:11.840461)
+#> Worker process: 7f74a6c96a75eca7c1bb8e4a3035d13a
 
 f2 <- futureOf(c, envir = env)
 print(f2)
@@ -243,17 +237,16 @@ print(f2)
 #> Immediate condition classes: ‘immediateCondition’
 #> Lazy evaluation: FALSE
 #> Local evaluation: TRUE
-#> Early signaling (deprecated): FALSE
-#> Environment: 0x5c2297687558
+#> Early signaling: FALSE
 #> Actions: [n=1] ‘run’
 #> State: ‘finished’ ("Future was resolved successfully")
 #> Resolved: TRUE
-#> Unique identifier: 8a0c140e2f1158d297a81a9712bc203d-14
-#> Owner process: 8a0c140e2f1158d297a81a9712bc203d
+#> Unique identifier: 7f74a6c96a75eca7c1bb8e4a3035d13a-14
+#> Owner process: 7f74a6c96a75eca7c1bb8e4a3035d13a
 #> Class: ‘SequentialFuture’, ‘UniprocessFuture’, ‘Future’
 #> Value: 39 bytes of class ‘numeric’
-#> Duration: 0.003000975 secs (started 2025-12-05 18:43:17.678066)
-#> Worker process: 8a0c140e2f1158d297a81a9712bc203d
+#> Duration: 0.003138065 secs (started 2025-12-07 15:34:11.840461)
+#> Worker process: 7f74a6c96a75eca7c1bb8e4a3035d13a
 
 f3 <- futureOf("c", envir = env)
 print(f3)
@@ -271,17 +264,16 @@ print(f3)
 #> Immediate condition classes: ‘immediateCondition’
 #> Lazy evaluation: FALSE
 #> Local evaluation: TRUE
-#> Early signaling (deprecated): FALSE
-#> Environment: 0x5c2297687558
+#> Early signaling: FALSE
 #> Actions: [n=1] ‘run’
 #> State: ‘finished’ ("Future was resolved successfully")
 #> Resolved: TRUE
-#> Unique identifier: 8a0c140e2f1158d297a81a9712bc203d-14
-#> Owner process: 8a0c140e2f1158d297a81a9712bc203d
+#> Unique identifier: 7f74a6c96a75eca7c1bb8e4a3035d13a-14
+#> Owner process: 7f74a6c96a75eca7c1bb8e4a3035d13a
 #> Class: ‘SequentialFuture’, ‘UniprocessFuture’, ‘Future’
 #> Value: 39 bytes of class ‘numeric’
-#> Duration: 0.003000975 secs (started 2025-12-05 18:43:17.678066)
-#> Worker process: 8a0c140e2f1158d297a81a9712bc203d
+#> Duration: 0.003138065 secs (started 2025-12-07 15:34:11.840461)
+#> Worker process: 7f74a6c96a75eca7c1bb8e4a3035d13a
 
 fs <- futureOf(envir = env)
 print(fs)
@@ -300,16 +292,15 @@ print(fs)
 #> Immediate condition classes: ‘immediateCondition’
 #> Lazy evaluation: FALSE
 #> Local evaluation: TRUE
-#> Early signaling (deprecated): FALSE
-#> Environment: 0x5c2297687558
+#> Early signaling: FALSE
 #> Actions: [n=1] ‘run’
 #> State: ‘finished’ ("Future was resolved successfully")
 #> Resolved: TRUE
-#> Unique identifier: 8a0c140e2f1158d297a81a9712bc203d-14
-#> Owner process: 8a0c140e2f1158d297a81a9712bc203d
+#> Unique identifier: 7f74a6c96a75eca7c1bb8e4a3035d13a-14
+#> Owner process: 7f74a6c96a75eca7c1bb8e4a3035d13a
 #> Class: ‘SequentialFuture’, ‘UniprocessFuture’, ‘Future’
 #> Value: 39 bytes of class ‘numeric’
-#> Duration: 0.003000975 secs (started 2025-12-05 18:43:17.678066)
-#> Worker process: 8a0c140e2f1158d297a81a9712bc203d
+#> Duration: 0.003138065 secs (started 2025-12-07 15:34:11.840461)
+#> Worker process: 7f74a6c96a75eca7c1bb8e4a3035d13a
 #> 
 ```

@@ -40,6 +40,8 @@
 - The `cluster` backend now defaults to `earlySignal = FALSE`. This was
   effectively already the case, because of an internal thinko bug.
 
+- Remove internal future field ‘envir’.
+
 ## Version 1.68.0
 
 CRAN release: 2025-11-17
