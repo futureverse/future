@@ -349,7 +349,8 @@ print.Future <- function(x, ...) {
       msg
     },
     finished = {
-      stop_if_not(inherits(result, "FutureResult"))
+      ## FIXME: Third-party backends does not yet guarantee this
+#      stop_if_not(inherits(result, "FutureResult"))
       
       if ("cancel" %in% actions) {
         if ("interrupt" %in% actions) {
@@ -361,7 +362,7 @@ print.Future <- function(x, ...) {
       } else {
         msg <- "Future was resolved"
       }
-      
+
       conditions <- result[["conditions"]]
       n <- length(conditions)
       if (n == 0L) {
