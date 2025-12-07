@@ -405,7 +405,7 @@ DefaultDeviceMisuseFutureCondition <- function(message = NULL, call = NULL, ...,
       calls <- paste(calls, collapse = "; ")
       message <- sprintf("%s (%s) opened the default graphics device (%s)", class(future)[1], label, calls)
     }
-    message <- sprintf("%s. This happens for instance if plot() is called without explicitly opening a graphics device before. Using default graphics devices in parallel processing will typically leave behind an 'Rplots.pdf' file on the parallel worker. If the intention is to plot to file, please open a graphics device explicitly (e.g. pdf() or png()) [recommended], or set your preferred `options(default = ...)` [not recommended], then plot, and make sure to close it at the end (i.e. dev.off())", message)
+    message <- sprintf("%s. This happens for instance if plot() is called without explicitly opening a graphics device before. Using default graphics devices in parallel processing will typically leave behind an 'Rplots.pdf' file on the parallel worker. If the intention is to plot to file, please open a graphics device explicitly (e.g. pdf() or png()) [recommended], or set your preferred `options(device = ...)` [not recommended], then plot, and make sure to close it at the end (i.e. dev.off())", message)
     message <- sprintf("%s. See also help(\"future.options\", package = \"future\")", message)
   }
   cond <- FutureCondition(message = message, call = call, ..., uuid = uuid, future = future)
