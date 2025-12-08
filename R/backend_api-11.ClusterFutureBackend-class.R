@@ -580,7 +580,7 @@ getSocketSelectTimeout <- function(future, timeout = NULL) {
 #' @rdname resolved
 #' @importFrom parallelly connectionId isConnectionValid
 #' @export
-resolved.ClusterFuture <- function(x, run = TRUE, timeout = NULL, ...) {
+resolved.ClusterFuture <- function(x, timeout = NULL, ...) {
   debug <- isTRUE(getOption("future.debug"))
   
   future <- x
@@ -588,10 +588,17 @@ resolved.ClusterFuture <- function(x, run = TRUE, timeout = NULL, ...) {
   stop_if_not(inherits(backend, "FutureBackend"))
   workers <- backend[["workers"]]
   reg <- backend[["reg"]]
-  
+
+  args <- list(...)
+  run <- args[["run"]]
+
+  if (!is.null(run)) {
+    deprecateArgument("resolved", "run", run)
+  }
+
   ## A lazy future not even launched?
   if (future[["state"]] == "created") {
-    if (run) {
+    if (!isFALSE(run)) {
       nworkers <- length(workers)
       
       ## Collect one resolved future, if one exists
@@ -612,7 +619,7 @@ resolved.ClusterFuture <- function(x, run = TRUE, timeout = NULL, ...) {
 
       ## 4. Launch this lazy future
       if (any(avail)) future <- run(future)
-    } ## if (run)
+    } ## if (!isFALSE(run))
 
     ## Consider future non-resolved
     return(FALSE)

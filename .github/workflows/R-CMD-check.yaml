@@ -137,6 +137,7 @@ jobs:
             Sys.setenv(R_FUTURE_FUTURE_LOCAL = "defunct")
             Sys.setenv(R_FUTURE_FUTURE_GC = "defunct")
             Sys.setenv(R_FUTURE_PLAN_EARLYSIGNAL = "defunct")
+            Sys.setenv(R_FUTURE_RESOLVED_RUN = "defunct")
           }
           if (nzchar(Sys.getenv("R_FUTURE_PLAN")) || getRversion() < "3.5.0") Sys.setenv(RCMDCHECK_ERROR_ON = "error")
           rcmdcheck::rcmdcheck(
@@ -158,6 +159,7 @@ jobs:
             Sys.setenv(R_FUTURE_FUTURE_LOCAL = "defunct")
             Sys.setenv(R_FUTURE_FUTURE_GC = "defunct")
             Sys.setenv(R_FUTURE_PLAN_EARLYSIGNAL = "defunct")
+            Sys.setenv(R_FUTURE_RESOLVED_RUN = "defunct")
           }
           rcmdcheck::rcmdcheck(
             args = c("--no-manual", "--as-cran",

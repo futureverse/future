@@ -22,6 +22,10 @@
 
 ## Deprecated and Defunct
 
+ * The `cluster` backend now defaults to `earlySignal = FALSE`. This
+   was effectively already the case, because of an internal thinko
+   bug.
+
  * Remove arguments `earlySignal` and `gc` from `future()`,
    `futureAssign()`, and `futureCall()`. Attempts to set them produce
    deprecation warnings. Deprecated also hidden argument `local`,
@@ -30,9 +34,8 @@
  * Use of `plan(..., earlySignal = ...)` is now defunct and produces a
    deprecation warning.
 
- * The `cluster` backend now defaults to `earlySignal = FALSE`. This
-   was effectively already the case, because of an internal thinko
-   bug.
+ * Remove argument `run` from `resolved()`. Attempts to set it
+   produces a deprecation warning.
 
  * Remove internal future field `envir`.
 

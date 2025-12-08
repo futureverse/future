@@ -11,9 +11,9 @@
 \alias{resolved.Future}
 \title{Check whether a future is resolved or not}
 \usage{
-\method{resolved}{ClusterFuture}(x, run = TRUE, timeout = NULL, ...)
+\method{resolved}{ClusterFuture}(x, timeout = NULL, ...)
 
-\method{resolved}{MulticoreFuture}(x, run = TRUE, timeout = NULL, ...)
+\method{resolved}{MulticoreFuture}(x, timeout = NULL, ...)
 
 resolved(x, ...)
 
@@ -23,14 +23,11 @@ resolved(x, ...)
 
 \method{resolved}{environment}(x, ...)
 
-\method{resolved}{Future}(x, run = TRUE, ...)
+\method{resolved}{Future}(x, ...)
 }
 \arguments{
 \item{x}{A \link{Future}, a list, or an environment (which also
 includes \link[listenv:listenv]{list environment}).}
-
-\item{run}{(logical) If TRUE, any lazy futures is launched,
-otherwise not.}
 
 \item{timeout}{(numeric) The maximum time (in seconds) for polling the worker
 for a response. If no response is available within this time limit, FALSE is
@@ -53,13 +50,13 @@ The default method always returns TRUE.
 Check whether a future is resolved or not
 }
 \details{
-\code{resolved(..., run = TRUE)} attempts to launch a lazy future, if there is
-an available worker, otherwise not.
+\code{resolved()} attempts to launch a lazy future, if there is an available
+worker, otherwise not.
 
 \code{resolved()} methods must always return \code{TRUE} or \code{FALSE} values, must
-always launch lazy futures by default (\code{run = TRUE}), and must never block
-indefinitely. This is because it should always be possible to poll futures
-until they are resolved using \code{resolved()}, e.g.
+always launch lazy futures, and must never block indefinitely. This is
+because it should always be possible to poll futures until they are
+resolved using \code{resolved()}, e.g.
 \code{while (!all(resolved(futures))) Sys.sleep(5)}.
 
 Each future backend must implement a \code{resolved()} method. It should return

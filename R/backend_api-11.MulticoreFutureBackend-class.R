@@ -280,10 +280,17 @@ nbrOfFreeWorkers.MulticoreFutureBackend <- function(evaluator, background = FALS
 resolved.MulticoreFuture <- local({
   selectChildren <- import_parallel_fcn("selectChildren")
 
-  function(x, run = TRUE, timeout = NULL, ...) {
+  function(x, timeout = NULL, ...) {
+    args <- list(...)
+    run <- args[["run"]]
+
+    if (!is.null(run)) {
+      deprecateArgument("resolved", "run", run)
+    }
+  
     ## A lazy future not even launched?
     if (x[["state"]] == "created") {
-      if (run) {
+      if (!isFALSE(run)) {
         ## If free cores are available, then launch this lazy future
         if (x[["workers"]] > usedCores()) x <- run(x)
       }

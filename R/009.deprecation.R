@@ -1,5 +1,5 @@
 deprecateArgument <- function(fcn, name, value) {
-  fcn <- match.arg(fcn, choices = c("future", "plan"))
+  fcn <- match.arg(fcn, choices = c("future", "plan", "resolved"))
   option <- sprintf("future.%s.%s", fcn, name)
   action <- getOption(option, "deprecated")
   action <- match.arg(action, choices = c("deprecated", "defunct", "ignore"))
