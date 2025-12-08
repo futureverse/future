@@ -220,10 +220,10 @@ Run `revdepcheck::revdep_details(, "Certara.RsNLME.ModelExecutor")` for more inf
 
 <details>
 
-* Version: 1.0.0
+* Version: 1.2.0
 * GitHub: https://github.com/cobriniklab/chevreulShiny
 * Source code: https://github.com/cran/chevreulShiny
-* Date/Publication: 2025-04-15
+* Date/Publication: 2025-12-04
 * Number of recursive dependencies: 267
 
 Run `revdepcheck::revdep_details(, "chevreulShiny")` for more info
@@ -358,34 +358,6 @@ Run `revdepcheck::revdep_details(, "codalm")` for more info
     checkRd: (-1) educFM.Rd:26: Lost braces in \itemize; meant \describe ?
     checkRd: (-1) educFM.Rd:27: Lost braces in \itemize; meant \describe ?
     checkRd: (-1) educFM.Rd:28: Lost braces in \itemize; meant \describe ?
-    ```
-
-# collinear
-
-<details>
-
-* Version: 2.0.0
-* GitHub: https://github.com/blasbenito/collinear
-* Source code: https://github.com/cran/collinear
-* Date/Publication: 2024-11-08 13:50:02 UTC
-* Number of recursive dependencies: 47
-
-Run `revdepcheck::revdep_details(, "collinear")` for more info
-
-</details>
-
-## In both
-
-*   checking DESCRIPTION meta-information ... NOTE
-    ```
-      Missing dependency on R >= 4.1.0 because package code uses the pipe
-      |> or function shorthand \(...) syntax added in R 4.1.0.
-      File(s) using such syntax:
-        ‘collinear.R’ ‘cor_cramer_v.R’ ‘cor_df.R’ ‘cor_select.R’ ‘f_auc.Rd’
-        ‘f_r2.Rd’ ‘f_r2_counts.Rd’ ‘f_v.Rd’ ‘f_v_rf_categorical.Rd’
-        ‘identify.R’ ‘model_formula.R’ ‘preference_order.R’
-        ‘preference_order_methods.R’ ‘target_encoding_methods.R’ ‘validate.R’
-        ‘vif_df.R’ ‘vif_select.R’
     ```
 
 # cSEM
@@ -615,12 +587,12 @@ Run `revdepcheck::revdep_details(, "FastRet")` for more info
      ERROR
     Running the tests in ‘tests/testthat.R’ failed.
     Last 50 lines of output:
-      > test-adjust_frm.R: [1;30m2025-12-07 14:09:07.39[0m Preprocessing data
-      > test-adjust_frm.R: [1;30m2025-12-07 14:09:07.39[0m Formula: RT_ADJ ~ RT + I(RT^2) + I(RT^3) + log(RT) + exp(RT) + sqrt(RT)
-      > test-adjust_frm.R: [1;30m2025-12-07 14:09:07.40[0m Estimating performance of adjusted model in CV
-      > test-adjust_frm.R: [1;30m2025-12-07 14:09:07.44[0m Fitting adjustment model on full new data set
-      > test-adjust_frm.R: [1;30m2025-12-07 14:09:07.44[0m Returning adjusted frm object
-      > test-plot_frm.R: [1;30m2025-12-07 14:09:06.64[0m dim(new_data): 25 x 3
+      > test-selective_measuring.R: [1;30m2025-12-08 13:07:48.90[0m Scaling features by coefficients of Ridge Regression model
+      > test-selective_measuring.R: [1;30m2025-12-08 13:07:48.91[0m Applying PAM clustering
+      > test-adjust_frm.R: [1;30m2025-12-08 13:07:48.93[0m Starting model Adjustment
+      > test-adjust_frm.R: [1;30m2025-12-08 13:07:48.94[0m dim(original_data): 442 x 126
+      > test-adjust_frm.R: [1;30m2025-12-08 13:07:48.94[0m dim(new_data): 25 x 3
+      > test-adjust_frm.R: [1;30m2025-12-08 13:07:48.94[0m predictors: 1, 2
     ...
       Backtrace:
           ▆
@@ -729,6 +701,47 @@ Run `revdepcheck::revdep_details(, "flowGraph")` for more info
     checkRd: (-1) ggdf.Rd:22: Lost braces
         22 | code{ggdf} adds to the data frames \code{v} and \code{e} in slot
            |     ^
+    ```
+
+# fmeffects
+
+<details>
+
+* Version: 0.1.4
+* GitHub: https://github.com/holgstr/fmeffects
+* Source code: https://github.com/cran/fmeffects
+* Date/Publication: 2024-11-05 18:50:02 UTC
+* Number of recursive dependencies: 182
+
+Run `revdepcheck::revdep_details(, "fmeffects")` for more info
+
+</details>
+
+## In both
+
+*   checking re-building of vignette outputs ... ERROR
+    ```
+    Error(s) in re-building vignettes:
+      ...
+    --- re-building ‘fme_theory.Rmd’ using rmarkdown
+    [WARNING] Deprecated: --highlight-style. Use --syntax-highlighting instead.
+    --- finished re-building ‘fme_theory.Rmd’
+    
+    --- re-building ‘fmeffects.Rmd’ using rmarkdown
+    
+    Quitting from fmeffects.Rmd:121-127 [unnamed-chunk-11]
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    ℹ In index: 1.
+    Caused by error in `.__Task__col_roles()`:
+    ! Assertion on 'names(rhs)' failed: Names must be a permutation of set {'feature','target','name','order','stratum','group','offset','weights_learner','weights_measure'}, but has extra elements {'always_included'}.
+    --- failed re-building ‘fmeffects.Rmd’
+    
+    SUMMARY: processing the following file failed:
+      ‘fmeffects.Rmd’
+    
+    Error: Vignette re-building failed.
+    Execution halted
     ```
 
 # forecastML
@@ -1338,12 +1351,25 @@ Run `revdepcheck::revdep_details(, "malariaAtlas")` for more info
 *   checking re-building of vignette outputs ... ERROR
     ```
     Error(s) in re-building vignettes:
-      ...
     --- re-building ‘overview.Rmd’ using rmarkdown
     
+    Quitting from overview.Rmd:199-201 [unnamed-chunk-25]
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    <error/rlang_error>
+    Error:
+    ! Cannot open "/scratch/henrik/943230/Rtmp2SPJZq/file865372b6afe3f.json"; The source could be corrupt or not supported. See `st_drivers()` for a list of supported formats.
+    ---
+    Backtrace:
+    ...
     
+    Error: processing vignette 'overview.Rmd' failed with diagnostics:
+    Cannot open "/scratch/henrik/943230/Rtmp2SPJZq/file865372b6afe3f.json"; The source could be corrupt or not supported. See `st_drivers()` for a list of supported formats.
+    --- failed re-building ‘overview.Rmd’
     
-    Quitting from overview.Rmd:218-221 [unnamed-chunk-28]
+    SUMMARY: processing the following file failed:
+      ‘overview.Rmd’
+    
+    Error: Vignette re-building failed.
     Execution halted
     ```
 
@@ -1731,19 +1757,19 @@ Run `revdepcheck::revdep_details(, "mlr3resampling")` for more info
 
 *   checking dependencies in R code ... NOTE
     ```
-    c4-n43:pid4119007: PSM3 can't open nic unit: 0 (err=23)
-    c4-n43:pid4119007.R: Unable to create UDP socket for ens13f0np0: Address family not supported by protocol
-    c4-n43:pid4119007.R: Unable to initialize sockets NIC /sys/class/net/ens13f0np0 (unit 0:0)
-    c4-n43:pid4119007: PSM3 can't open nic unit: 0 (err=23)
-    c4-n43:pid4119007.R: Unable to create UDP socket for ens13f0np0: Address family not supported by protocol
-    c4-n43:pid4119007.R: Unable to initialize sockets NIC /sys/class/net/ens13f0np0 (unit 0:0)
-    c4-n43:pid4119007: PSM3 can't open nic unit: 1 (err=23)
-    c4-n43:pid4119007.R: Unable to create UDP socket for ens13f1np1: Address family not supported by protocol
-    c4-n43:pid4119007.R: Unable to initialize sockets NIC /sys/class/net/ens13f1np1 (unit 1:0)
-    c4-n43:pid4119007: PSM3 can't open nic unit: 0 (err=23)
+    c4-n43:pid784059: PSM3 can't open nic unit: 0 (err=23)
+    c4-n43:pid784059.R: Unable to create UDP socket for ens13f0np0: Address family not supported by protocol
+    c4-n43:pid784059.R: Unable to initialize sockets NIC /sys/class/net/ens13f0np0 (unit 0:0)
+    c4-n43:pid784059: PSM3 can't open nic unit: 0 (err=23)
+    c4-n43:pid784059.R: Unable to create UDP socket for ens13f0np0: Address family not supported by protocol
+    c4-n43:pid784059.R: Unable to initialize sockets NIC /sys/class/net/ens13f0np0 (unit 0:0)
+    c4-n43:pid784059: PSM3 can't open nic unit: 1 (err=23)
+    c4-n43:pid784059.R: Unable to create UDP socket for ens13f1np1: Address family not supported by protocol
+    c4-n43:pid784059.R: Unable to initialize sockets NIC /sys/class/net/ens13f1np1 (unit 1:0)
+    c4-n43:pid784059: PSM3 can't open nic unit: 0 (err=23)
     ...
-    c4-n43:pid4119007.R: Unable to create UDP socket for ens13f1np1: Address family not supported by protocol
-    c4-n43:pid4119007.R: Unable to initialize sockets NIC /sys/class/net/ens13f1np1 (unit 1:0)
+    c4-n43:pid784059.R: Unable to create UDP socket for ens13f1np1: Address family not supported by protocol
+    c4-n43:pid784059.R: Unable to initialize sockets NIC /sys/class/net/ens13f1np1 (unit 1:0)
     --------------------------------------------------------------------------
     Open MPI failed an OFI Libfabric library call (fi_endpoint).  This is highly
     unusual; your job may behave unpredictably (and/or abort) after this.
@@ -2622,8 +2648,8 @@ Run `revdepcheck::revdep_details(, "shinyOAuth")` for more info
         [shinyOAuth] - HTTP request failed
         x Failed to fetch OIDC discovery document
         x Status 503: Service Unavailable.
-        i URL: http://127.0.0.1:36019/.well-known/openid-configuration
-        i Trace ID: j-lbAyjRv8ko
+        i URL: http://127.0.0.1:40113/.well-known/openid-configuration
+        i Trace ID: Z8Pi2b5AGXNA
       
       [ FAIL 23 | WARN 0 | SKIP 12 | PASS 671 ]
       Error:
@@ -3164,7 +3190,7 @@ Run `revdepcheck::revdep_details(, "targeted")` for more info
       test_learner_stratify.R.......    0 tests    
       test_learner_stratify.R.......    3 tests [0;32mOK[0m 
       test_learner_stratify.R.......    3 tests [0;32mOK[0m 
-      test_learner_stratify.R.......    5 tests [0;32mOK[0m [0;36m29ms[0m
+      test_learner_stratify.R.......    5 tests [0;32mOK[0m [0;36m32ms[0m
     ...
       In addition: Warning messages:
       1: In throw_err_or_depr_msg("Passed unrecognized parameters: ", paste(head(names_unrecognized),  :
@@ -3233,7 +3259,7 @@ Run `revdepcheck::revdep_details(, "tglkmeans")` for more info
 * GitHub: NA
 * Source code: https://github.com/cran/tramvs
 * Date/Publication: 2025-11-18 18:00:02 UTC
-* Number of recursive dependencies: 104
+* Number of recursive dependencies: 106
 
 Run `revdepcheck::revdep_details(, "tramvs")` for more info
 

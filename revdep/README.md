@@ -10,7 +10,7 @@
 |collate  |en_US.UTF-8                                                   |
 |ctype    |en_US.UTF-8                                                   |
 |tz       |America/Los_Angeles                                           |
-|date     |2025-12-07                                                    |
+|date     |2025-12-08                                                    |
 |pandoc   |3.8.2.1 @ /software/c4/cbi/software/pandoc-3.8.2.1/bin/pandoc |
 |quarto   |1.8.26 @ /software/c4/cbi/software/quarto-1.8.26/bin/quarto   |
 
@@ -18,7 +18,7 @@
 
 |package    |old    |new         |Δ  |
 |:----------|:------|:-----------|:--|
-|future     |1.68.0 |1.68.0-9031 |*  |
+|future     |1.68.0 |1.68.0-9032 |*  |
 |codetools  |0.2-20 |0.2-20      |   |
 |digest     |0.6.39 |0.6.39      |   |
 |globals    |0.18.0 |0.18.0      |   |
@@ -95,7 +95,7 @@
 |cft                          |1.0.0      |      |        |     |
 |chatAI4R                     |0.3.6      |      |        |     |
 |chatLLM                      |0.1.3      |      |        |     |
-|[chevreulShiny](problems.md#chevreulshiny)|1.0.0      |      |        |1    |
+|[chevreulShiny](problems.md#chevreulshiny)|1.2.0      |      |        |1    |
 |chopin                       |0.9.9      |      |        |     |
 |[ChromSCape](problems.md#chromscape)|1.20.0     |      |1       |2    |
 |CimpleG                      |1.0.1      |      |        |     |
@@ -106,7 +106,7 @@
 |[codalm](problems.md#codalm) |0.1.2      |      |        |1    |
 |codebook                     |0.9.6      |      |        |     |
 |coFAST                       |0.1.0      |      |        |     |
-|[collinear](problems.md#collinear)|2.0.0      |      |        |1    |
+|collinear                    |3.0.0      |      |        |     |
 |conformalInference.fd        |1.1.1      |      |        |     |
 |conformalInference.multi     |1.1.2      |      |        |     |
 |Coxmos                       |1.1.5      |      |        |     |
@@ -180,7 +180,7 @@
 |flexFitR                     |1.2.1      |      |        |     |
 |[flowGraph](problems.md#flowgraph)|1.18.0     |      |        |2    |
 |flowml                       |0.1.3      |      |        |     |
-|fmeffects                    |0.1.4      |      |        |     |
+|[fmeffects](problems.md#fmeffects)|0.1.4      |1     |        |     |
 |[forecastML](problems.md#forecastml)|0.9.0      |1     |        |1    |
 |[FracFixR](problems.md#fracfixr)|1.0.0      |1     |        |     |
 |fst4pg                       |1.0.0      |      |        |     |
