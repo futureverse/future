@@ -34,7 +34,7 @@
    was effectively already the case, because of an internal thinko
    bug.
 
- * Remove internal future field 'envir'.
+ * Remove internal future field `envir`.
 
  
 # Version 1.68.0 [2025-11-16]
