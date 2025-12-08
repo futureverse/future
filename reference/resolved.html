@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.68.0-9031</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.68.0-9032</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -85,10 +85,10 @@
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for class 'ClusterFuture'</span></span>
-<span><span class="fu">resolved</span><span class="op">(</span><span class="va">x</span>, run <span class="op">=</span> <span class="cn">TRUE</span>, timeout <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span></span>
+<span><span class="fu">resolved</span><span class="op">(</span><span class="va">x</span>, timeout <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'MulticoreFuture'</span></span>
-<span><span class="fu">resolved</span><span class="op">(</span><span class="va">x</span>, run <span class="op">=</span> <span class="cn">TRUE</span>, timeout <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span></span>
+<span><span class="fu">resolved</span><span class="op">(</span><span class="va">x</span>, timeout <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">resolved</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
@@ -102,7 +102,7 @@
 <span><span class="fu">resolved</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'Future'</span></span>
-<span><span class="fu">resolved</span><span class="op">(</span><span class="va">x</span>, run <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">resolved</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -112,11 +112,6 @@
 <dl><dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
 <dd><p>A <a href="Future-class.html">Future</a>, a list, or an environment (which also
 includes <a href="https://listenv.futureverse.org/reference/listenv.html" class="external-link">list environment</a>).</p></dd>
-
-
-<dt id="arg-run">run<a class="anchor" aria-label="anchor" href="#arg-run"></a></dt>
-<dd><p>(logical) If TRUE, any lazy futures is launched,
-otherwise not.</p></dd>
 
 
 <dt id="arg-timeout">timeout<a class="anchor" aria-label="anchor" href="#arg-timeout"></a></dt>
@@ -142,12 +137,12 @@ It never signals an error.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p><code>resolved(..., run = TRUE)</code> attempts to launch a lazy future, if there is
-an available worker, otherwise not.</p>
+    <p><code>resolved()</code> attempts to launch a lazy future, if there is an available
+worker, otherwise not.</p>
 <p><code>resolved()</code> methods must always return <code>TRUE</code> or <code>FALSE</code> values, must
-always launch lazy futures by default (<code>run = TRUE</code>), and must never block
-indefinitely. This is because it should always be possible to poll futures
-until they are resolved using <code>resolved()</code>, e.g.
+always launch lazy futures, and must never block indefinitely. This is
+because it should always be possible to poll futures until they are
+resolved using <code>resolved()</code>, e.g.
 <code>while (!all(resolved(futures))) Sys.sleep(5)</code>.</p>
 <p>Each future backend must implement a <code>resolved()</code> method. It should return
 either TRUE or FALSE, or throw a <a href="FutureCondition.html">FutureError</a> (which indicate a

@@ -6,10 +6,10 @@ Check whether a future is resolved or not
 
 ``` r
 # S3 method for class 'ClusterFuture'
-resolved(x, run = TRUE, timeout = NULL, ...)
+resolved(x, timeout = NULL, ...)
 
 # S3 method for class 'MulticoreFuture'
-resolved(x, run = TRUE, timeout = NULL, ...)
+resolved(x, timeout = NULL, ...)
 
 resolved(x, ...)
 
@@ -23,7 +23,7 @@ resolved(x, ...)
 resolved(x, ...)
 
 # S3 method for class 'Future'
-resolved(x, run = TRUE, ...)
+resolved(x, ...)
 ```
 
 ## Arguments
@@ -33,10 +33,6 @@ resolved(x, run = TRUE, ...)
   A [Future](https://future.futureverse.org/reference/Future-class.md),
   a list, or an environment (which also includes [list
   environment](https://listenv.futureverse.org/reference/listenv.html)).
-
-- run:
-
-  (logical) If TRUE, any lazy futures is launched, otherwise not.
 
 - timeout:
 
@@ -62,13 +58,13 @@ The default method always returns TRUE.
 
 ## Details
 
-`resolved(..., run = TRUE)` attempts to launch a lazy future, if there
-is an available worker, otherwise not.
+`resolved()` attempts to launch a lazy future, if there is an available
+worker, otherwise not.
 
 `resolved()` methods must always return `TRUE` or `FALSE` values, must
-always launch lazy futures by default (`run = TRUE`), and must never
-block indefinitely. This is because it should always be possible to poll
-futures until they are resolved using `resolved()`, e.g.
+always launch lazy futures, and must never block indefinitely. This is
+because it should always be possible to poll futures until they are
+resolved using `resolved()`, e.g.
 `while (!all(resolved(futures))) Sys.sleep(5)`.
 
 Each future backend must implement a `resolved()` method. It should

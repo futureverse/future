@@ -42,9 +42,9 @@ res <- tryCatch({
 #> [[1]]
 #> base::tryCatch(base::withCallingHandlers({
 #>     NULL
-#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/Rtmp5aeKIR/callr-fun-1a17144c18ca00"), 
+#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmplHGnWy/callr-fun-18b9a722a096f"), 
 #>         base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
-#>         quote = TRUE), file = "/tmp/hb/Rtmp5aeKIR/callr-res-1a171431889b5a", 
+#>         quote = TRUE), file = "/tmp/hb/RtmplHGnWy/callr-res-18b9a402c0590", 
 #>         compress = FALSE)
 #>     base::flush(base::stdout())
 #>     base::flush(base::stderr())
@@ -70,7 +70,7 @@ res <- tryCatch({
 #>         if (!base::is.na(cut)) {
 #>             e2$trace <- e2$trace[-(1:cut), ]
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/Rtmp5aeKIR/callr-res-1a171431889b5a", 
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmplHGnWy/callr-res-18b9a402c0590", 
 #>             ".error"))
 #>     }
 #> }, interrupt = function(e) {
@@ -93,7 +93,7 @@ res <- tryCatch({
 #>         if (!base::is.na(cut)) {
 #>             e2$trace <- e2$trace[-(1:cut), ]
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/Rtmp5aeKIR/callr-res-1a171431889b5a", 
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmplHGnWy/callr-res-18b9a402c0590", 
 #>             ".error"))
 #>     }
 #> }, callr_message = function(e) {
@@ -138,9 +138,9 @@ res <- tryCatch({
 #> [[8]]
 #> base::withCallingHandlers({
 #>     NULL
-#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/Rtmp5aeKIR/callr-fun-1a17144c18ca00"), 
+#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmplHGnWy/callr-fun-18b9a722a096f"), 
 #>         base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
-#>         quote = TRUE), file = "/tmp/hb/Rtmp5aeKIR/callr-res-1a171431889b5a", 
+#>         quote = TRUE), file = "/tmp/hb/RtmplHGnWy/callr-res-18b9a402c0590", 
 #>         compress = FALSE)
 #>     base::flush(base::stdout())
 #>     base::flush(base::stderr())
@@ -166,7 +166,7 @@ res <- tryCatch({
 #>         if (!base::is.na(cut)) {
 #>             e2$trace <- e2$trace[-(1:cut), ]
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/Rtmp5aeKIR/callr-res-1a171431889b5a", 
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmplHGnWy/callr-res-18b9a402c0590", 
 #>             ".error"))
 #>     }
 #> }, interrupt = function(e) {
@@ -189,7 +189,7 @@ res <- tryCatch({
 #>         if (!base::is.na(cut)) {
 #>             e2$trace <- e2$trace[-(1:cut), ]
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/Rtmp5aeKIR/callr-res-1a171431889b5a", 
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmplHGnWy/callr-res-18b9a402c0590", 
 #>             ".error"))
 #>     }
 #> }, callr_message = function(e) {
@@ -197,13 +197,13 @@ res <- tryCatch({
 #> })
 #> 
 #> [[9]]
-#> base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/Rtmp5aeKIR/callr-fun-1a17144c18ca00"), 
+#> base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmplHGnWy/callr-fun-18b9a722a096f"), 
 #>     base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
-#>     quote = TRUE), file = "/tmp/hb/Rtmp5aeKIR/callr-res-1a171431889b5a", 
+#>     quote = TRUE), file = "/tmp/hb/RtmplHGnWy/callr-res-18b9a402c0590", 
 #>     compress = FALSE)
 #> 
 #> [[10]]
-#> base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/Rtmp5aeKIR/callr-fun-1a17144c18ca00"), 
+#> base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmplHGnWy/callr-fun-18b9a722a096f"), 
 #>     base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
 #>     quote = TRUE)
 #> 
@@ -220,8 +220,8 @@ res <- tryCatch({
 #>     options(cli.num_colors = cli_colors, cli.hyperlink = hyperlinks, 
 #>         cli.hyperlink_run = hyperlinks)
 #>     pkgdown::build_site(...)
-#> }), base::quote(list(pkg = list(package = "future", version = "1.68.0-9031", 
-#>     src_path = "/tmp/hb/Rtmp5aeKIR/future", meta = list(url = "https://future.futureverse.org", 
+#> }), base::quote(list(pkg = list(package = "future", version = "1.68.0-9032", 
+#>     src_path = "/tmp/hb/RtmplHGnWy/future", meta = list(url = "https://future.futureverse.org", 
 #>         home = list(links = list(list(text = "Roadmap/Milestones", 
 #>             href = "https://github.com/futureverse/future/milestones"), 
 #>             list(text = "The Futureverse Project", href = "https://www.futureverse.org/"), 
@@ -256,7 +256,7 @@ res <- tryCatch({
 #>             bootstrap = 5L, `light-switch` = TRUE)), desc = <environment>, 
 #>     bs_version = 5L, development = list(destination = "dev", 
 #>         mode = "default", version_label = "muted", in_dev = FALSE, 
-#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/Rtmp5aeKIR/future/docs", 
+#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/RtmplHGnWy/future/docs", 
 #>     lang = "en-US", install_metadata = FALSE, figures = list(
 #>         dev = "ragg::agg_png", dpi = 96L, dev.args = list(), 
 #>         fig.ext = "png", fig.width = 7.29166666666667, fig.height = NULL, 
@@ -2263,21 +2263,18 @@ res <- tryCatch({
 #>                 "\n", list("resolved.list"), "\n", list("resolved.environment"), 
 #>                 "\n", list("resolved.Future"), "\n", list("Check whether a future is resolved or not"), 
 #>                 "\n", list("\n", list(list("resolved"), list(
-#>                   "ClusterFuture")), "(x, run = TRUE, timeout = NULL, ...)\n", 
+#>                   "ClusterFuture")), "(x, timeout = NULL, ...)\n", 
 #>                   "\n", list(list("resolved"), list("MulticoreFuture")), 
-#>                   "(x, run = TRUE, timeout = NULL, ...)\n", "\n", 
-#>                   "resolved(x, ...)\n", "\n", list(list("resolved"), 
-#>                     list("default")), "(x, ...)\n", "\n", list(
-#>                     list("resolved"), list("list")), "(x, ...)\n", 
-#>                   "\n", list(list("resolved"), list("environment")), 
+#>                   "(x, timeout = NULL, ...)\n", "\n", "resolved(x, ...)\n", 
+#>                   "\n", list(list("resolved"), list("default")), 
 #>                   "(x, ...)\n", "\n", list(list("resolved"), 
-#>                     list("Future")), "(x, run = TRUE, ...)\n"), 
-#>                 "\n", list("\n", list(list("x"), list("A ", list(
-#>                   "Future"), ", a list, or an environment (which also\n", 
-#>                   "includes ", list("list environment"), ").")), 
-#>                   "\n", "\n", list(list("run"), list("(logical) If TRUE, any lazy futures is launched,\n", 
-#>                     "otherwise not.")), "\n", "\n", list(list(
-#>                     "timeout"), list("(numeric) The maximum time (in seconds) for polling the worker\n", 
+#>                     list("list")), "(x, ...)\n", "\n", list(list(
+#>                     "resolved"), list("environment")), "(x, ...)\n", 
+#>                   "\n", list(list("resolved"), list("Future")), 
+#>                   "(x, ...)\n"), "\n", list("\n", list(list("x"), 
+#>                   list("A ", list("Future"), ", a list, or an environment (which also\n", 
+#>                     "includes ", list("list environment"), ").")), 
+#>                   "\n", "\n", list(list("timeout"), list("(numeric) The maximum time (in seconds) for polling the worker\n", 
 #>                     "for a response. If no response is available within this time limit, FALSE is\n", 
 #>                     "returned assuming the future is still being processed.\n", 
 #>                     "If NULL, the value defaults to ", list("getOption(\"future.<type>.resolved.timeout\")"), 
@@ -2291,16 +2288,13 @@ res <- tryCatch({
 #>                   "non-resolved future in case it is FALSE.\n", 
 #>                   "It never signals an error.\n", "\n", "The default method always returns TRUE.\n"), 
 #>                 "\n", list("\n", "Check whether a future is resolved or not\n"), 
-#>                 "\n", list("\n", list("resolved(..., run = TRUE)"), 
-#>                   " attempts to launch a lazy future, if there is\n", 
-#>                   "an available worker, otherwise not.\n", "\n", 
-#>                   list("resolved()"), " methods must always return ", 
-#>                   list("TRUE"), " or ", list("FALSE"), " values, must\n", 
-#>                   "always launch lazy futures by default (", 
-#>                   list("run = TRUE"), "), and must never block\n", 
-#>                   "indefinitely. This is because it should always be possible to poll futures\n", 
-#>                   "until they are resolved using ", list("resolved()"), 
-#>                   ", e.g.\n", list("while (!all(resolved(futures))) Sys.sleep(5)"), 
+#>                 "\n", list("\n", list("resolved()"), " attempts to launch a lazy future, if there is an available\n", 
+#>                   "worker, otherwise not.\n", "\n", list("resolved()"), 
+#>                   " methods must always return ", list("TRUE"), 
+#>                   " or ", list("FALSE"), " values, must\n", "always launch lazy futures, and must never block indefinitely. This is\n", 
+#>                   "because it should always be possible to poll futures until they are\n", 
+#>                   "resolved using ", list("resolved()"), ", e.g.\n", 
+#>                   list("while (!all(resolved(futures))) Sys.sleep(5)"), 
 #>                   ".\n", "\n", "Each future backend must implement a ", 
 #>                   list("resolved()"), " method. It should return\n", 
 #>                   "either TRUE or FALSE, or throw a ", list("FutureError"), 
@@ -2986,8 +2980,8 @@ res <- tryCatch({
 #>     options(cli.num_colors = cli_colors, cli.hyperlink = hyperlinks, 
 #>         cli.hyperlink_run = hyperlinks)
 #>     pkgdown::build_site(...)
-#> })(pkg = base::quote(list(package = "future", version = "1.68.0-9031", 
-#>     src_path = "/tmp/hb/Rtmp5aeKIR/future", meta = list(url = "https://future.futureverse.org", 
+#> })(pkg = base::quote(list(package = "future", version = "1.68.0-9032", 
+#>     src_path = "/tmp/hb/RtmplHGnWy/future", meta = list(url = "https://future.futureverse.org", 
 #>         home = list(links = list(list(text = "Roadmap/Milestones", 
 #>             href = "https://github.com/futureverse/future/milestones"), 
 #>             list(text = "The Futureverse Project", href = "https://www.futureverse.org/"), 
@@ -3022,7 +3016,7 @@ res <- tryCatch({
 #>             bootstrap = 5L, `light-switch` = TRUE)), desc = <environment>, 
 #>     bs_version = 5L, development = list(destination = "dev", 
 #>         mode = "default", version_label = "muted", in_dev = FALSE, 
-#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/Rtmp5aeKIR/future/docs", 
+#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/RtmplHGnWy/future/docs", 
 #>     lang = "en-US", install_metadata = FALSE, figures = list(
 #>         dev = "ragg::agg_png", dpi = 96L, dev.args = list(), 
 #>         fig.ext = "png", fig.width = 7.29166666666667, fig.height = NULL, 
@@ -5029,21 +5023,18 @@ res <- tryCatch({
 #>                 "\n", list("resolved.list"), "\n", list("resolved.environment"), 
 #>                 "\n", list("resolved.Future"), "\n", list("Check whether a future is resolved or not"), 
 #>                 "\n", list("\n", list(list("resolved"), list(
-#>                   "ClusterFuture")), "(x, run = TRUE, timeout = NULL, ...)\n", 
+#>                   "ClusterFuture")), "(x, timeout = NULL, ...)\n", 
 #>                   "\n", list(list("resolved"), list("MulticoreFuture")), 
-#>                   "(x, run = TRUE, timeout = NULL, ...)\n", "\n", 
-#>                   "resolved(x, ...)\n", "\n", list(list("resolved"), 
-#>                     list("default")), "(x, ...)\n", "\n", list(
-#>                     list("resolved"), list("list")), "(x, ...)\n", 
-#>                   "\n", list(list("resolved"), list("environment")), 
+#>                   "(x, timeout = NULL, ...)\n", "\n", "resolved(x, ...)\n", 
+#>                   "\n", list(list("resolved"), list("default")), 
 #>                   "(x, ...)\n", "\n", list(list("resolved"), 
-#>                     list("Future")), "(x, run = TRUE, ...)\n"), 
-#>                 "\n", list("\n", list(list("x"), list("A ", list(
-#>                   "Future"), ", a list, or an environment (which also\n", 
-#>                   "includes ", list("list environment"), ").")), 
-#>                   "\n", "\n", list(list("run"), list("(logical) If TRUE, any lazy futures is launched,\n", 
-#>                     "otherwise not.")), "\n", "\n", list(list(
-#>                     "timeout"), list("(numeric) The maximum time (in seconds) for polling the worker\n", 
+#>                     list("list")), "(x, ...)\n", "\n", list(list(
+#>                     "resolved"), list("environment")), "(x, ...)\n", 
+#>                   "\n", list(list("resolved"), list("Future")), 
+#>                   "(x, ...)\n"), "\n", list("\n", list(list("x"), 
+#>                   list("A ", list("Future"), ", a list, or an environment (which also\n", 
+#>                     "includes ", list("list environment"), ").")), 
+#>                   "\n", "\n", list(list("timeout"), list("(numeric) The maximum time (in seconds) for polling the worker\n", 
 #>                     "for a response. If no response is available within this time limit, FALSE is\n", 
 #>                     "returned assuming the future is still being processed.\n", 
 #>                     "If NULL, the value defaults to ", list("getOption(\"future.<type>.resolved.timeout\")"), 
@@ -5057,16 +5048,13 @@ res <- tryCatch({
 #>                   "non-resolved future in case it is FALSE.\n", 
 #>                   "It never signals an error.\n", "\n", "The default method always returns TRUE.\n"), 
 #>                 "\n", list("\n", "Check whether a future is resolved or not\n"), 
-#>                 "\n", list("\n", list("resolved(..., run = TRUE)"), 
-#>                   " attempts to launch a lazy future, if there is\n", 
-#>                   "an available worker, otherwise not.\n", "\n", 
-#>                   list("resolved()"), " methods must always return ", 
-#>                   list("TRUE"), " or ", list("FALSE"), " values, must\n", 
-#>                   "always launch lazy futures by default (", 
-#>                   list("run = TRUE"), "), and must never block\n", 
-#>                   "indefinitely. This is because it should always be possible to poll futures\n", 
-#>                   "until they are resolved using ", list("resolved()"), 
-#>                   ", e.g.\n", list("while (!all(resolved(futures))) Sys.sleep(5)"), 
+#>                 "\n", list("\n", list("resolved()"), " attempts to launch a lazy future, if there is an available\n", 
+#>                   "worker, otherwise not.\n", "\n", list("resolved()"), 
+#>                   " methods must always return ", list("TRUE"), 
+#>                   " or ", list("FALSE"), " values, must\n", "always launch lazy futures, and must never block indefinitely. This is\n", 
+#>                   "because it should always be possible to poll futures until they are\n", 
+#>                   "resolved using ", list("resolved()"), ", e.g.\n", 
+#>                   list("while (!all(resolved(futures))) Sys.sleep(5)"), 
 #>                   ".\n", "\n", "Each future backend must implement a ", 
 #>                   list("resolved()"), " method. It should return\n", 
 #>                   "either TRUE or FALSE, or throw a ", list("FutureError"), 

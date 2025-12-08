@@ -26,6 +26,9 @@
 
 ### Deprecated and Defunct
 
+- The `cluster` backend now defaults to `earlySignal = FALSE`. This was
+  effectively already the case, because of an internal thinko bug.
+
 - Remove arguments `earlySignal` and `gc` from
   [`future()`](https://future.futureverse.org/reference/future.md),
   [`futureAssign()`](https://future.futureverse.org/reference/futureAssign.md),
@@ -37,10 +40,11 @@
 - Use of `plan(..., earlySignal = ...)` is now defunct and produces a
   deprecation warning.
 
-- The `cluster` backend now defaults to `earlySignal = FALSE`. This was
-  effectively already the case, because of an internal thinko bug.
+- Remove argument `run` from
+  [`resolved()`](https://future.futureverse.org/reference/resolved.md).
+  Attempts to set it produces a deprecation warning.
 
-- Remove internal future field ‘envir’.
+- Remove internal future field `envir`.
 
 ## Version 1.68.0
 
