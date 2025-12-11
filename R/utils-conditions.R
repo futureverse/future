@@ -3,7 +3,7 @@ stopf <- function(fmt, ..., call. = TRUE, domain = NULL) {  #nolint
   msg <- .makeMessage(msg, domain = domain)
   if (is.call(call.)) {
     call <- call.
-  } else if (isTRUE(call)) {
+  } else if (isTRUE(call.)) {
     call <- sys.call(which = -1L)
   } else {
     call <- NULL
@@ -21,7 +21,7 @@ warnf <- function(fmt, ..., call. = TRUE, immediate. = FALSE, domain = NULL) {  
     msg <- .makeMessage(msg, domain = domain)
     if (is.call(call.)) {
       call <- call.
-    } else if (isTRUE(call)) {
+    } else if (isTRUE(call.)) {
       call <- sys.call(which = -1L)
     } else {
       call <- NULL
