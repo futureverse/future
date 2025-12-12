@@ -333,33 +333,6 @@ Run `revdepcheck::revdep_details(, "ClustIRR")` for more info
       ..count.. ag cells clones community size spec x_adj y_adj
     ```
 
-# codalm
-
-<details>
-
-* Version: 0.1.2
-* GitHub: https://github.com/jfiksel/codalm
-* Source code: https://github.com/cran/codalm
-* Date/Publication: 2021-07-26 18:40:02 UTC
-* Number of recursive dependencies: 50
-
-Run `revdepcheck::revdep_details(, "codalm")` for more info
-
-</details>
-
-## In both
-
-*   checking Rd files ... NOTE
-    ```
-    checkRd: (-1) educFM.Rd:22: Lost braces in \itemize; meant \describe ?
-    checkRd: (-1) educFM.Rd:23: Lost braces in \itemize; meant \describe ?
-    checkRd: (-1) educFM.Rd:24: Lost braces in \itemize; meant \describe ?
-    checkRd: (-1) educFM.Rd:25: Lost braces in \itemize; meant \describe ?
-    checkRd: (-1) educFM.Rd:26: Lost braces in \itemize; meant \describe ?
-    checkRd: (-1) educFM.Rd:27: Lost braces in \itemize; meant \describe ?
-    checkRd: (-1) educFM.Rd:28: Lost braces in \itemize; meant \describe ?
-    ```
-
 # cSEM
 
 <details>
@@ -587,12 +560,12 @@ Run `revdepcheck::revdep_details(, "FastRet")` for more info
      ERROR
     Running the tests in ‘tests/testthat.R’ failed.
     Last 50 lines of output:
-      > test-selective_measuring.R: [1;30m2025-12-08 13:07:48.90[0m Scaling features by coefficients of Ridge Regression model
-      > test-selective_measuring.R: [1;30m2025-12-08 13:07:48.91[0m Applying PAM clustering
-      > test-adjust_frm.R: [1;30m2025-12-08 13:07:48.93[0m Starting model Adjustment
-      > test-adjust_frm.R: [1;30m2025-12-08 13:07:48.94[0m dim(original_data): 442 x 126
-      > test-adjust_frm.R: [1;30m2025-12-08 13:07:48.94[0m dim(new_data): 25 x 3
-      > test-adjust_frm.R: [1;30m2025-12-08 13:07:48.94[0m predictors: 1, 2
+      > test-adjust_frm.R: [1;30m2025-12-11 21:04:12.68[0m Estimating performance of adjusted model in CV
+      > test-adjust_frm.R: [1;30m2025-12-11 21:04:12.70[0m Fitting adjustment model on full new data set
+      > test-adjust_frm.R: [1;30m2025-12-11 21:04:12.70[0m Returning adjusted frm object
+      > test-adjust_frm.R: [1;30m2025-12-11 21:04:12.70[0m Starting model Adjustment
+      > test-adjust_frm.R: [1;30m2025-12-11 21:04:12.70[0m dim(original_data): 442 x 126
+      > test-adjust_frm.R: [1;30m2025-12-11 21:04:12.70[0m dim(new_data): 25 x 3
     ...
       Backtrace:
           ▆
@@ -869,7 +842,15 @@ Run `revdepcheck::revdep_details(, "googleComputeEngineR")` for more info
 
 </details>
 
-## In both
+## Newly broken
+
+*   checking whether package ‘googleComputeEngineR’ can be installed ... ERROR
+    ```
+    Installation failed.
+    See ‘/scratch/henrik/revdep/future/checks/googleComputeEngineR/new/googleComputeEngineR.Rcheck/00install.out’ for details.
+    ```
+
+## Newly fixed
 
 *   checking Rd files ... NOTE
     ```
@@ -896,6 +877,46 @@ Run `revdepcheck::revdep_details(, "googleComputeEngineR")` for more info
            |                                                                                           ^
     ```
 
+## Installation
+
+### Devel
+
+```
+* installing *source* package ‘googleComputeEngineR’ ...
+** this is package ‘googleComputeEngineR’ version ‘0.3.0’
+** package ‘googleComputeEngineR’ successfully unpacked and MD5 sums checked
+** using staged installation
+** R
+** inst
+** byte-compile and prepare package for lazy loading
+Error: object ‘as.cluster’ is not exported by 'namespace:future'
+Execution halted
+ERROR: lazy loading failed for package ‘googleComputeEngineR’
+* removing ‘/scratch/henrik/revdep/future/checks/googleComputeEngineR/new/googleComputeEngineR.Rcheck/googleComputeEngineR’
+
+
+```
+### CRAN
+
+```
+* installing *source* package ‘googleComputeEngineR’ ...
+** this is package ‘googleComputeEngineR’ version ‘0.3.0’
+** package ‘googleComputeEngineR’ successfully unpacked and MD5 sums checked
+** using staged installation
+** R
+** inst
+** byte-compile and prepare package for lazy loading
+** help
+*** installing help indices
+** building package indices
+** installing vignettes
+** testing if installed package can be loaded from temporary location
+** testing if installed package can be loaded from final location
+** testing if installed package keeps a record of temporary installation path
+* DONE (googleComputeEngineR)
+
+
+```
 # googleTagManageR
 
 <details>
@@ -982,27 +1003,6 @@ Run `revdepcheck::revdep_details(, "greta")` for more info
     
     See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
     manual.
-    ```
-
-# gsynth
-
-<details>
-
-* Version: 1.2.1
-* GitHub: NA
-* Source code: https://github.com/cran/gsynth
-* Date/Publication: 2021-08-06 07:50:05 UTC
-* Number of recursive dependencies: 60
-
-Run `revdepcheck::revdep_details(, "gsynth")` for more info
-
-</details>
-
-## In both
-
-*   checking C++ specification ... NOTE
-    ```
-      Specified C++11: please drop specification unless essential
     ```
 
 # hero
@@ -1263,31 +1263,6 @@ Run `revdepcheck::revdep_details(, "ldmppr")` for more info
     Execution halted
     ```
 
-*   checking re-building of vignette outputs ... ERROR
-    ```
-    Error(s) in re-building vignettes:
-    --- re-building ‘ldmppr_howto.Rmd’ using rmarkdown
-    
-    Quitting from ldmppr_howto.Rmd:100-130 [train_mark_model]
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    <error/rlang_error>
-    Error in `xgboost::xgb.load.raw()`:
-    ! unused argument (as_booster = TRUE)
-    ---
-    Backtrace:
-    ...
-    
-    Error: processing vignette 'ldmppr_howto.Rmd' failed with diagnostics:
-    unused argument (as_booster = TRUE)
-    --- failed re-building ‘ldmppr_howto.Rmd’
-    
-    SUMMARY: processing the following file failed:
-      ‘ldmppr_howto.Rmd’
-    
-    Error: Vignette re-building failed.
-    Execution halted
-    ```
-
 # ldsr
 
 <details>
@@ -1330,47 +1305,6 @@ Run `revdepcheck::revdep_details(, "MAI")` for more info
     File
       LICENSE
     is not mentioned in the DESCRIPTION file.
-    ```
-
-# malariaAtlas
-
-<details>
-
-* Version: 1.6.4
-* GitHub: https://github.com/malaria-atlas-project/malariaAtlas
-* Source code: https://github.com/cran/malariaAtlas
-* Date/Publication: 2025-06-11 11:00:06 UTC
-* Number of recursive dependencies: 118
-
-Run `revdepcheck::revdep_details(, "malariaAtlas")` for more info
-
-</details>
-
-## In both
-
-*   checking re-building of vignette outputs ... ERROR
-    ```
-    Error(s) in re-building vignettes:
-    --- re-building ‘overview.Rmd’ using rmarkdown
-    
-    Quitting from overview.Rmd:199-201 [unnamed-chunk-25]
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    <error/rlang_error>
-    Error:
-    ! Cannot open "/scratch/henrik/943230/Rtmp2SPJZq/file865372b6afe3f.json"; The source could be corrupt or not supported. See `st_drivers()` for a list of supported formats.
-    ---
-    Backtrace:
-    ...
-    
-    Error: processing vignette 'overview.Rmd' failed with diagnostics:
-    Cannot open "/scratch/henrik/943230/Rtmp2SPJZq/file865372b6afe3f.json"; The source could be corrupt or not supported. See `st_drivers()` for a list of supported formats.
-    --- failed re-building ‘overview.Rmd’
-    
-    SUMMARY: processing the following file failed:
-      ‘overview.Rmd’
-    
-    Error: Vignette re-building failed.
-    Execution halted
     ```
 
 # mapme.biodiversity
@@ -1450,47 +1384,6 @@ Run `revdepcheck::revdep_details(, "mbbe")` for more info
        4.       └─rlang::cnd_signal(...)
       
       [ FAIL 1 | WARN 0 | SKIP 0 | PASS 11 ]
-      Error:
-      ! Test failures.
-      Execution halted
-    ```
-
-# mice
-
-<details>
-
-* Version: 3.18.0
-* GitHub: https://github.com/amices/mice
-* Source code: https://github.com/cran/mice
-* Date/Publication: 2025-05-27 10:40:02 UTC
-* Number of recursive dependencies: 132
-
-Run `revdepcheck::revdep_details(, "mice")` for more info
-
-</details>
-
-## In both
-
-*   checking tests ...
-    ```
-      Running ‘testthat.R’
-     ERROR
-    Running the tests in ‘tests/testthat.R’ failed.
-    Complete output:
-      > library(testthat)
-      > library(mice)
-      
-      Attaching package: 'mice'
-      
-      The following object is masked from 'package:stats':
-    ...
-       5. └─tidyr:::complete.data.frame(toenail, ID, visit)
-       6.   ├─tidyr::expand(data, ...)
-       7.   └─tidyr:::expand.data.frame(data, ...)
-       8.     └─tidyr:::grid_dots(..., `_data` = data)
-       9.       └─rlang::eval_tidy(dot, data = mask)
-      
-      [ FAIL 1 | WARN 0 | SKIP 2 | PASS 379 ]
       Error:
       ! Test failures.
       Execution halted
@@ -1757,19 +1650,19 @@ Run `revdepcheck::revdep_details(, "mlr3resampling")` for more info
 
 *   checking dependencies in R code ... NOTE
     ```
-    c4-n43:pid784059: PSM3 can't open nic unit: 0 (err=23)
-    c4-n43:pid784059.R: Unable to create UDP socket for ens13f0np0: Address family not supported by protocol
-    c4-n43:pid784059.R: Unable to initialize sockets NIC /sys/class/net/ens13f0np0 (unit 0:0)
-    c4-n43:pid784059: PSM3 can't open nic unit: 0 (err=23)
-    c4-n43:pid784059.R: Unable to create UDP socket for ens13f0np0: Address family not supported by protocol
-    c4-n43:pid784059.R: Unable to initialize sockets NIC /sys/class/net/ens13f0np0 (unit 0:0)
-    c4-n43:pid784059: PSM3 can't open nic unit: 1 (err=23)
-    c4-n43:pid784059.R: Unable to create UDP socket for ens13f1np1: Address family not supported by protocol
-    c4-n43:pid784059.R: Unable to initialize sockets NIC /sys/class/net/ens13f1np1 (unit 1:0)
-    c4-n43:pid784059: PSM3 can't open nic unit: 0 (err=23)
+    c4-n43:pid3126846: PSM3 can't open nic unit: 0 (err=23)
+    c4-n43:pid3126846.R: Unable to create UDP socket for ens13f0np0: Address family not supported by protocol
+    c4-n43:pid3126846.R: Unable to initialize sockets NIC /sys/class/net/ens13f0np0 (unit 0:0)
+    c4-n43:pid3126846: PSM3 can't open nic unit: 0 (err=23)
+    c4-n43:pid3126846.R: Unable to create UDP socket for ens13f0np0: Address family not supported by protocol
+    c4-n43:pid3126846.R: Unable to initialize sockets NIC /sys/class/net/ens13f0np0 (unit 0:0)
+    c4-n43:pid3126846: PSM3 can't open nic unit: 1 (err=23)
+    c4-n43:pid3126846.R: Unable to create UDP socket for ens13f1np1: Address family not supported by protocol
+    c4-n43:pid3126846.R: Unable to initialize sockets NIC /sys/class/net/ens13f1np1 (unit 1:0)
+    c4-n43:pid3126846: PSM3 can't open nic unit: 0 (err=23)
     ...
-    c4-n43:pid784059.R: Unable to create UDP socket for ens13f1np1: Address family not supported by protocol
-    c4-n43:pid784059.R: Unable to initialize sockets NIC /sys/class/net/ens13f1np1 (unit 1:0)
+    c4-n43:pid3126846.R: Unable to create UDP socket for ens13f0np0: Address family not supported by protocol
+    c4-n43:pid3126846.R: Unable to initialize sockets NIC /sys/class/net/ens13f0np0 (unit 0:0)
     --------------------------------------------------------------------------
     Open MPI failed an OFI Libfabric library call (fi_endpoint).  This is highly
     unusual; your job may behave unpredictably (and/or abort) after this.
@@ -2191,6 +2084,78 @@ Run `revdepcheck::revdep_details(, "pgxRpi")` for more info
 </details>
 
 ## In both
+
+*   checking examples ... ERROR
+    ```
+    Running examples in ‘pgxRpi-Ex.R’ failed
+    The error most likely occurred in:
+    
+    > ### Name: pgxFreqplot
+    > ### Title: Plot CNV frequency data
+    > ### Aliases: pgxFreqplot
+    > 
+    > ### ** Examples
+    > 
+    > ## load necessary data (this step can be skipped in real implementation)
+    > data("hg38_cytoband")
+    > ## get frequency data
+    > freq <- pgxLoader(type="cnv_frequency", output ='pgxfreq', filters="NCIT:C3512")
+    Error in curl::curl_fetch_memory(url, handle = handle) : 
+      Stream error in the HTTP/2 framing layer [progenetix.org]:
+    HTTP/2 stream 1 was not closed cleanly: INTERNAL_ERROR (err 2)
+    Calls: pgxLoader ... request_fetch.write_memory -> <Anonymous> -> raise_libcurl_error
+    Execution halted
+    ```
+
+*   checking tests ...
+    ```
+      Running ‘testthat.R’
+     ERROR
+    Running the tests in ‘tests/testthat.R’ failed.
+    Last 50 lines of output:
+      
+       trying: https://progenetix.org/services/variantsbedfile/?output=igv&biosampleIds=pgxbs-kftvlaih,pgxbs-kftvjgcc 
+      
+       trying: https://progenetix.org/services/samplematrix/?biosampleIds=pgxbs-kftvlaih,pgxbs-kftvjgcc 
+      
+       trying: https://progenetix.org/services/samplematrix/?individualIds=pgxind-kftx3565,pgxind-kftx5g4v 
+    ...
+       2. │ └─httr:::request_perform(req, hu$handle$handle)
+       3. │   ├─httr:::request_fetch(req$output, req$url, handle)
+       4. │   └─httr:::request_fetch.write_memory(req$output, req$url, handle)
+       5. │     └─curl::curl_fetch_memory(url, handle = handle)
+       6. └─curl:::raise_libcurl_error(...)
+      
+      [ FAIL 2 | WARN 0 | SKIP 0 | PASS 36 ]
+      Error:
+      ! Test failures.
+      Execution halted
+    ```
+
+*   checking re-building of vignette outputs ... ERROR
+    ```
+    Error(s) in re-building vignettes:
+    --- re-building ‘Introduction_1_load_metadata.Rmd’ using rmarkdown
+    
+    Quitting from Introduction_1_load_metadata.Rmd:183-188 [unnamed-chunk-13]
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    <error/rlang_error>
+    Error in `if (nrow(meta.sel.df) == 0) ...`:
+    ! argument is of length zero
+    ---
+    Backtrace:
+    ...
+    The magick package is required to crop "/scratch/henrik/revdep/future/checks/pgxRpi/new/pgxRpi.Rcheck/vign_test/pgxRpi/vignettes/Introduction_4_process_pgxseg_files/figure-html/unnamed-chunk-15-1.png" but not available.
+    The magick package is required to crop "/scratch/henrik/revdep/future/checks/pgxRpi/new/pgxRpi.Rcheck/vign_test/pgxRpi/vignettes/Introduction_4_process_pgxseg_files/figure-html/unnamed-chunk-16-1.png" but not available.
+    --- finished re-building ‘Introduction_4_process_pgxseg.Rmd’
+    
+    SUMMARY: processing the following files failed:
+      ‘Introduction_1_load_metadata.Rmd’
+      ‘Introduction_2_query_variants.Rmd’
+    
+    Error: Vignette re-building failed.
+    Execution halted
+    ```
 
 *   checking R code for possible problems ... NOTE
     ```
@@ -2648,8 +2613,8 @@ Run `revdepcheck::revdep_details(, "shinyOAuth")` for more info
         [shinyOAuth] - HTTP request failed
         x Failed to fetch OIDC discovery document
         x Status 503: Service Unavailable.
-        i URL: http://127.0.0.1:40113/.well-known/openid-configuration
-        i Trace ID: Z8Pi2b5AGXNA
+        i URL: http://127.0.0.1:32891/.well-known/openid-configuration
+        i Trace ID: qye3A5x1EuBv
       
       [ FAIL 23 | WARN 0 | SKIP 12 | PASS 671 ]
       Error:
@@ -3138,97 +3103,6 @@ Run `revdepcheck::revdep_details(, "synergyfinder")` for more info
            |          ^
     ```
 
-# targeted
-
-<details>
-
-* Version: 0.6
-* GitHub: https://github.com/kkholst/targeted
-* Source code: https://github.com/cran/targeted
-* Date/Publication: 2025-10-30 07:50:09 UTC
-* Number of recursive dependencies: 159
-
-Run `revdepcheck::revdep_details(, "targeted")` for more info
-
-</details>
-
-## In both
-
-*   checking examples ... ERROR
-    ```
-    Running examples in ‘targeted-Ex.R’ failed
-    The error most likely occurred in:
-    
-    > ### Name: learner_xgboost
-    > ### Title: Construct a learner
-    > ### Aliases: learner_xgboost
-    > 
-    > ### ** Examples
-    > 
-    > n  <- 1e3
-    ...
-    Warning in throw_err_or_depr_msg("Parameter '", match_old, "' has been renamed to '",  :
-      Parameter 'data' has been renamed to 'x'. This warning will become an error in a future version.
-    Warning in throw_err_or_depr_msg("Parameter '", match_old, "' has been renamed to '",  :
-      Parameter 'eta' has been renamed to 'learning_rate'. This warning will become an error in a future version.
-    Warning in throw_err_or_depr_msg("Parameter '", match_old, "' has been renamed to '",  :
-      Parameter 'lambda' has been renamed to 'reg_lambda'. This warning will become an error in a future version.
-    Error in (function (x, y, objective = NULL, nrounds = 100L, max_depth = NULL,  : 
-      argument "y" is missing, with no default
-    Calls: <Anonymous> ... <Anonymous> -> process.y.margin.and.objective -> NROW
-    Execution halted
-    ```
-
-*   checking tests ...
-    ```
-      Running ‘tinytest.R’
-     ERROR
-    Running the tests in ‘tests/tinytest.R’ failed.
-    Last 50 lines of output:
-      test_learner_stratify.R.......    0 tests    
-      test_learner_stratify.R.......    0 tests    
-      test_learner_stratify.R.......    0 tests    
-      test_learner_stratify.R.......    3 tests [0;32mOK[0m 
-      test_learner_stratify.R.......    3 tests [0;32mOK[0m 
-      test_learner_stratify.R.......    5 tests [0;32mOK[0m [0;36m32ms[0m
-    ...
-      In addition: Warning messages:
-      1: In throw_err_or_depr_msg("Passed unrecognized parameters: ", paste(head(names_unrecognized),  :
-        Passed unrecognized parameters: verbose. This warning will become an error in a future version.
-      2: In throw_err_or_depr_msg("Parameter '", match_old, "' has been renamed to '",  :
-        Parameter 'data' has been renamed to 'x'. This warning will become an error in a future version.
-      3: In throw_err_or_depr_msg("Parameter '", match_old, "' has been renamed to '",  :
-        Parameter 'eta' has been renamed to 'learning_rate'. This warning will become an error in a future version.
-      4: In throw_err_or_depr_msg("Parameter '", match_old, "' has been renamed to '",  :
-        Parameter 'lambda' has been renamed to 'reg_lambda'. This warning will become an error in a future version.
-      Execution halted
-    ```
-
-*   checking re-building of vignette outputs ... ERROR
-    ```
-    Error(s) in re-building vignettes:
-    --- re-building ‘predictionclass.Rmd’ using rmarkdown
-    
-    Quitting from predictionclass.Rmd:143-145 [unnamed-chunk-5]
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    <error/rlang_error>
-    Error:
-    ! argument "y" is missing, with no default
-    ---
-    Backtrace:
-    ...
-    --- failed re-building ‘predictionclass.Rmd’
-    
-    --- re-building ‘riskregression.Rmd’ using rmarkdown
-    --- finished re-building ‘riskregression.Rmd’
-    
-    SUMMARY: processing the following file failed:
-      ‘predictionclass.Rmd’
-    
-    Error: Vignette re-building failed.
-    Execution halted
-    ```
-
 # tglkmeans
 
 <details>
@@ -3508,11 +3382,11 @@ Run `revdepcheck::revdep_details(, "vmeasur")` for more info
 
 <details>
 
-* Version: 1.8-1
+* Version: 2.0
 * GitHub: NA
 * Source code: https://github.com/cran/WeightedCluster
-* Date/Publication: 2024-12-10 22:00:02 UTC
-* Number of recursive dependencies: 72
+* Date/Publication: 2025-12-10 08:40:02 UTC
+* Number of recursive dependencies: 91
 
 Run `revdepcheck::revdep_details(, "WeightedCluster")` for more info
 
