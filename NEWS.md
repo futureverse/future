@@ -1,5 +1,11 @@
 # Version (development version)
 
+## Signifcant Changes
+
+ * Removed generic function `as.cluster()`, which has been re-exported
+   from the **parallelly** package since 2020. If needed, please use
+   it from the **parallelly** package instead.
+
 ## New Features
 
  * Add `conditionMessage()` for `FutureCondition`, which appends

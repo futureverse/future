@@ -2,7 +2,6 @@
 % Please edit documentation in R/000.re-exports.R
 \name{re-exports}
 \alias{re-exports}
-\alias{as.cluster}
 \alias{availableCores}
 \alias{availableWorkers}
 \alias{makeClusterPSOCK}

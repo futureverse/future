@@ -9,7 +9,7 @@
 #'  switch to use the ones from the \pkg{parallelly} package. Thank you!_
 #'
 #' * [parallelly::as.cluster()]
-#    Used by: googleComputeEngineR(2)
+#    Used by: <none>
 #' * [parallelly::autoStopCluster()]   (no longer re-exported)
 #    Used by: <none>
 #' * [parallelly::availableCores()]
@@ -55,8 +55,6 @@
 #'
 #'
 #' @importFrom parallelly as.cluster
-#' @export as.cluster
-#' @aliases as.cluster
 #'
 #' @importFrom parallelly availableCores
 #' @export availableCores
