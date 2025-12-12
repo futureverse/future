@@ -8,32 +8,30 @@
 #' _If you are using any of these from the \pkg{future} package, please
 #'  switch to use the ones from the \pkg{parallelly} package. Thank you!_
 #'
-#' * [parallelly::as.cluster()]
+#' * [parallelly::as.cluster()]    (no longer re-exported)
 #    Used by: <none>
 #' * [parallelly::autoStopCluster()]   (no longer re-exported)
 #    Used by: <none>
 #' * [parallelly::availableCores()]
-#    Used by: aroma.affymetrix(2,3), ARPALData, BatchGetSymbols,
-#             bistablehistory, codalm, crossmap, cft, CSCNet, deseats,
-#             dipsaus, drimmR, elevatr, foieGras(4), future.BatchJobs(4),
-#             future.callr(2), GetBCBData, gtfs2emis, heterogen, isoreader,
+#    Used by: ARPALData, BatchGetSymbols, bistablehistory, codalm, crossmap,
+#             cft, CSCNet, deseats, dipsaus, drimmR, elevatr, GetBCBData,
+#             gtfs2emis, heterogen, isoreader,
 #             ItemResponseTrees, ldaPrototype, lidR, meedr, microservices,
 #             microsynth, origami, PINstimation, powRICLPM, rBiasCorrection,
 #             readsdr, recforest, rkeops, sigminer, skpr, smoots, sovereign,
 #             TriDimRegression, uci, updog, whitewater, yfR
 #' * [parallelly::availableWorkers()]
-#    Used by: aroma.affymetrix(2,3), wqspt(1)
+#    Used by: wqspt(1) [2025-03-15]
 #' * [parallelly::makeClusterMPI()]    (no longer re-exported)
 #    Used by: <none>
 #' * [parallelly::makeClusterPSOCK()]
-#    Used by: bigDM(1), eatRep, fect, foieGras(4), googleComputeEngineR(2),
-#             gsynth, interflex, ivDiag
+#    Used by: eatRep (1), fect (1), interflex (1), ivDiag (1) [2025-12-11]
 #' * [parallelly::makeNodePSOCK()]     (no longer re-exported)
 #    Used by: <none>
 #' * [parallelly::supportsMulticore()]
-#    Used by: crossmap, dhReg, furrr(1), microservices, sctransform
+#    Used by: crossmap (1), furrr(1), sctransform (1)
 #
-#  (1) PR sent
+#  (1) Issue filed or PR sent
 #  (2) In the next release
 #  (3) Non-breaking; code is never run
 #  (4) No longer on CRAN
@@ -53,8 +51,6 @@
 #'
 #' _Note that it is the goal to remove all of the above from this package._
 #'
-#'
-#' @importFrom parallelly as.cluster
 #'
 #' @importFrom parallelly availableCores
 #' @export availableCores
