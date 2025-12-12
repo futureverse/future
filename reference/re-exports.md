@@ -11,6 +11,7 @@ the future framework.
 use the ones from the parallelly package. Thank you!*
 
 - [`parallelly::as.cluster()`](https://parallelly.futureverse.org/reference/as.cluster.html)
+  (no longer re-exported)
 
 - [`parallelly::autoStopCluster()`](https://parallelly.futureverse.org/reference/autoStopCluster.html)
   (no longer re-exported)

@@ -2,6 +2,12 @@
 
 ## Version (development version)
 
+### Signifcant Changes
+
+- Removed generic function `as.cluster()`, which has been re-exported
+  from the **parallelly** package since 2020. If needed, please use it
+  from the **parallelly** package instead.
+
 ### New Features
 
 - Add [`conditionMessage()`](https://rdrr.io/r/base/conditions.html) for
@@ -1232,8 +1238,7 @@ CRAN release: 2020-11-03
   [`availableCores()`](https://future.futureverse.org/reference/re-exports.md),
   [`availableWorkers()`](https://future.futureverse.org/reference/re-exports.md),
   [`supportsMulticore()`](https://future.futureverse.org/reference/re-exports.md),
-  [`as.cluster()`](https://future.futureverse.org/reference/re-exports.md),
-  `autoStopCluster()`, `makeClusterMPI()`,
+  `as.cluster()`, `autoStopCluster()`, `makeClusterMPI()`,
   [`makeClusterPSOCK()`](https://future.futureverse.org/reference/re-exports.md),
   and `makeNodePSOCK()` have been moved. None of them are specific to
   futures per se and are likely useful elsewhere too. Also, having them
@@ -2765,11 +2770,9 @@ CRAN release: 2016-11-12
   set up and how they are launched and communicated with if running on
   external machines.
 
-- Added generic
-  [`as.cluster()`](https://future.futureverse.org/reference/re-exports.md)
-  for coercing objects to cluster objects to be used as in
-  `plan(cluster, workers = as.cluster(x))`. Also added a
-  [`c()`](https://rdrr.io/r/base/c.html) implementation for cluster
+- Added generic `as.cluster()` for coercing objects to cluster objects
+  to be used as in `plan(cluster, workers = as.cluster(x))`. Also added
+  a [`c()`](https://rdrr.io/r/base/c.html) implementation for cluster
   objects such that multiple cluster objects can be combined into a
   single one.
 

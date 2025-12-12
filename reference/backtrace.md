@@ -42,9 +42,9 @@ res <- tryCatch({
 #> [[1]]
 #> base::tryCatch(base::withCallingHandlers({
 #>     NULL
-#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmplHGnWy/callr-fun-18b9a722a096f"), 
+#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/Rtmp2RJ47P/callr-fun-20d57049123407"), 
 #>         base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
-#>         quote = TRUE), file = "/tmp/hb/RtmplHGnWy/callr-res-18b9a402c0590", 
+#>         quote = TRUE), file = "/tmp/hb/Rtmp2RJ47P/callr-res-20d57068fde8b4", 
 #>         compress = FALSE)
 #>     base::flush(base::stdout())
 #>     base::flush(base::stderr())
@@ -70,7 +70,7 @@ res <- tryCatch({
 #>         if (!base::is.na(cut)) {
 #>             e2$trace <- e2$trace[-(1:cut), ]
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmplHGnWy/callr-res-18b9a402c0590", 
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/Rtmp2RJ47P/callr-res-20d57068fde8b4", 
 #>             ".error"))
 #>     }
 #> }, interrupt = function(e) {
@@ -93,7 +93,7 @@ res <- tryCatch({
 #>         if (!base::is.na(cut)) {
 #>             e2$trace <- e2$trace[-(1:cut), ]
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmplHGnWy/callr-res-18b9a402c0590", 
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/Rtmp2RJ47P/callr-res-20d57068fde8b4", 
 #>             ".error"))
 #>     }
 #> }, callr_message = function(e) {
@@ -138,9 +138,9 @@ res <- tryCatch({
 #> [[8]]
 #> base::withCallingHandlers({
 #>     NULL
-#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmplHGnWy/callr-fun-18b9a722a096f"), 
+#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/Rtmp2RJ47P/callr-fun-20d57049123407"), 
 #>         base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
-#>         quote = TRUE), file = "/tmp/hb/RtmplHGnWy/callr-res-18b9a402c0590", 
+#>         quote = TRUE), file = "/tmp/hb/Rtmp2RJ47P/callr-res-20d57068fde8b4", 
 #>         compress = FALSE)
 #>     base::flush(base::stdout())
 #>     base::flush(base::stderr())
@@ -166,7 +166,7 @@ res <- tryCatch({
 #>         if (!base::is.na(cut)) {
 #>             e2$trace <- e2$trace[-(1:cut), ]
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmplHGnWy/callr-res-18b9a402c0590", 
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/Rtmp2RJ47P/callr-res-20d57068fde8b4", 
 #>             ".error"))
 #>     }
 #> }, interrupt = function(e) {
@@ -189,7 +189,7 @@ res <- tryCatch({
 #>         if (!base::is.na(cut)) {
 #>             e2$trace <- e2$trace[-(1:cut), ]
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmplHGnWy/callr-res-18b9a402c0590", 
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/Rtmp2RJ47P/callr-res-20d57068fde8b4", 
 #>             ".error"))
 #>     }
 #> }, callr_message = function(e) {
@@ -197,13 +197,13 @@ res <- tryCatch({
 #> })
 #> 
 #> [[9]]
-#> base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmplHGnWy/callr-fun-18b9a722a096f"), 
+#> base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/Rtmp2RJ47P/callr-fun-20d57049123407"), 
 #>     base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
-#>     quote = TRUE), file = "/tmp/hb/RtmplHGnWy/callr-res-18b9a402c0590", 
+#>     quote = TRUE), file = "/tmp/hb/Rtmp2RJ47P/callr-res-20d57068fde8b4", 
 #>     compress = FALSE)
 #> 
 #> [[10]]
-#> base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmplHGnWy/callr-fun-18b9a722a096f"), 
+#> base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/Rtmp2RJ47P/callr-fun-20d57049123407"), 
 #>     base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
 #>     quote = TRUE)
 #> 
@@ -220,8 +220,8 @@ res <- tryCatch({
 #>     options(cli.num_colors = cli_colors, cli.hyperlink = hyperlinks, 
 #>         cli.hyperlink_run = hyperlinks)
 #>     pkgdown::build_site(...)
-#> }), base::quote(list(pkg = list(package = "future", version = "1.68.0-9032", 
-#>     src_path = "/tmp/hb/RtmplHGnWy/future", meta = list(url = "https://future.futureverse.org", 
+#> }), base::quote(list(pkg = list(package = "future", version = "1.68.0-9034", 
+#>     src_path = "/tmp/hb/Rtmp2RJ47P/future", meta = list(url = "https://future.futureverse.org", 
 #>         home = list(links = list(list(text = "Roadmap/Milestones", 
 #>             href = "https://github.com/futureverse/future/milestones"), 
 #>             list(text = "The Futureverse Project", href = "https://www.futureverse.org/"), 
@@ -256,7 +256,7 @@ res <- tryCatch({
 #>             bootstrap = 5L, `light-switch` = TRUE)), desc = <environment>, 
 #>     bs_version = 5L, development = list(destination = "dev", 
 #>         mode = "default", version_label = "muted", in_dev = FALSE, 
-#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/RtmplHGnWy/future/docs", 
+#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/Rtmp2RJ47P/future/docs", 
 #>     lang = "en-US", install_metadata = FALSE, figures = list(
 #>         dev = "ragg::agg_png", dpi = 96L, dev.args = list(), 
 #>         fig.ext = "png", fig.width = 7.29166666666667, fig.height = NULL, 
@@ -349,9 +349,8 @@ res <- tryCatch({
 #>         "MultisessionFuture"), nbrOfWorkers.Rd = c("nbrOfWorkers", 
 #>         "nbrOfFreeWorkers"), nullcon.Rd = "nullcon", plan.Rd = c("plan", 
 #>         "with.FutureStrategyList", "tweak"), private_length.Rd = ".length", 
-#>         `re-exports.Rd` = c("re-exports", "as.cluster", "availableCores", 
-#>         "availableWorkers", "makeClusterPSOCK", "supportsMulticore"
-#>         ), readImmediateConditions.Rd = c("readImmediateConditions", 
+#>         `re-exports.Rd` = c("re-exports", "availableCores", "availableWorkers", 
+#>         "makeClusterPSOCK", "supportsMulticore"), readImmediateConditions.Rd = c("readImmediateConditions", 
 #>         "saveImmediateCondition"), requestCore.Rd = "requestCore", 
 #>         reset.Rd = "reset", resetWorkers.Rd = "resetWorkers", 
 #>         resolve.Rd = "resolve", resolved.Rd = c("resolved.ClusterFuture", 
@@ -2081,9 +2080,9 @@ res <- tryCatch({
 #>                 "% Generated by roxygen2: do not edit by hand", 
 #>                 "\n", "% Please edit documentation in R/000.re-exports.R", 
 #>                 "\n", list("re-exports"), "\n", list("re-exports"), 
-#>                 "\n", list("as.cluster"), "\n", list("availableCores"), 
-#>                 "\n", list("availableWorkers"), "\n", list("makeClusterPSOCK"), 
-#>                 "\n", list("supportsMulticore"), "\n", list("Functions Moved to 'parallelly'"), 
+#>                 "\n", list("availableCores"), "\n", list("availableWorkers"), 
+#>                 "\n", list("makeClusterPSOCK"), "\n", list("supportsMulticore"), 
+#>                 "\n", list("Functions Moved to 'parallelly'"), 
 #>                 "\n", list("\n", "The following function used to be part of ", 
 #>                   list("future"), " but has since\n", "been migrated to ", 
 #>                   list("parallelly"), ".  The migration started with\n", 
@@ -2093,7 +2092,8 @@ res <- tryCatch({
 #>                   list("future"), " package, please\n", "switch to use the ones from the ", 
 #>                   list("parallelly"), " package. Thank you!"), 
 #>                   "\n", list("\n", list(), " ", list(list("parallelly::as.cluster()")), 
-#>                     "\n", list(), " ", list(list("parallelly::autoStopCluster()")), 
+#>                     "    (no longer re-exported)\n", list(), 
+#>                     " ", list(list("parallelly::autoStopCluster()")), 
 #>                     "   (no longer re-exported)\n", list(), " ", 
 #>                     list(list("parallelly::availableCores()")), 
 #>                     "\n", list(), " ", list(list("parallelly::availableWorkers()")), 
@@ -2980,8 +2980,8 @@ res <- tryCatch({
 #>     options(cli.num_colors = cli_colors, cli.hyperlink = hyperlinks, 
 #>         cli.hyperlink_run = hyperlinks)
 #>     pkgdown::build_site(...)
-#> })(pkg = base::quote(list(package = "future", version = "1.68.0-9032", 
-#>     src_path = "/tmp/hb/RtmplHGnWy/future", meta = list(url = "https://future.futureverse.org", 
+#> })(pkg = base::quote(list(package = "future", version = "1.68.0-9034", 
+#>     src_path = "/tmp/hb/Rtmp2RJ47P/future", meta = list(url = "https://future.futureverse.org", 
 #>         home = list(links = list(list(text = "Roadmap/Milestones", 
 #>             href = "https://github.com/futureverse/future/milestones"), 
 #>             list(text = "The Futureverse Project", href = "https://www.futureverse.org/"), 
@@ -3016,7 +3016,7 @@ res <- tryCatch({
 #>             bootstrap = 5L, `light-switch` = TRUE)), desc = <environment>, 
 #>     bs_version = 5L, development = list(destination = "dev", 
 #>         mode = "default", version_label = "muted", in_dev = FALSE, 
-#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/RtmplHGnWy/future/docs", 
+#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/Rtmp2RJ47P/future/docs", 
 #>     lang = "en-US", install_metadata = FALSE, figures = list(
 #>         dev = "ragg::agg_png", dpi = 96L, dev.args = list(), 
 #>         fig.ext = "png", fig.width = 7.29166666666667, fig.height = NULL, 
@@ -3109,9 +3109,8 @@ res <- tryCatch({
 #>         "MultisessionFuture"), nbrOfWorkers.Rd = c("nbrOfWorkers", 
 #>         "nbrOfFreeWorkers"), nullcon.Rd = "nullcon", plan.Rd = c("plan", 
 #>         "with.FutureStrategyList", "tweak"), private_length.Rd = ".length", 
-#>         `re-exports.Rd` = c("re-exports", "as.cluster", "availableCores", 
-#>         "availableWorkers", "makeClusterPSOCK", "supportsMulticore"
-#>         ), readImmediateConditions.Rd = c("readImmediateConditions", 
+#>         `re-exports.Rd` = c("re-exports", "availableCores", "availableWorkers", 
+#>         "makeClusterPSOCK", "supportsMulticore"), readImmediateConditions.Rd = c("readImmediateConditions", 
 #>         "saveImmediateCondition"), requestCore.Rd = "requestCore", 
 #>         reset.Rd = "reset", resetWorkers.Rd = "resetWorkers", 
 #>         resolve.Rd = "resolve", resolved.Rd = c("resolved.ClusterFuture", 
@@ -4841,9 +4840,9 @@ res <- tryCatch({
 #>                 "% Generated by roxygen2: do not edit by hand", 
 #>                 "\n", "% Please edit documentation in R/000.re-exports.R", 
 #>                 "\n", list("re-exports"), "\n", list("re-exports"), 
-#>                 "\n", list("as.cluster"), "\n", list("availableCores"), 
-#>                 "\n", list("availableWorkers"), "\n", list("makeClusterPSOCK"), 
-#>                 "\n", list("supportsMulticore"), "\n", list("Functions Moved to 'parallelly'"), 
+#>                 "\n", list("availableCores"), "\n", list("availableWorkers"), 
+#>                 "\n", list("makeClusterPSOCK"), "\n", list("supportsMulticore"), 
+#>                 "\n", list("Functions Moved to 'parallelly'"), 
 #>                 "\n", list("\n", "The following function used to be part of ", 
 #>                   list("future"), " but has since\n", "been migrated to ", 
 #>                   list("parallelly"), ".  The migration started with\n", 
@@ -4853,7 +4852,8 @@ res <- tryCatch({
 #>                   list("future"), " package, please\n", "switch to use the ones from the ", 
 #>                   list("parallelly"), " package. Thank you!"), 
 #>                   "\n", list("\n", list(), " ", list(list("parallelly::as.cluster()")), 
-#>                     "\n", list(), " ", list(list("parallelly::autoStopCluster()")), 
+#>                     "    (no longer re-exported)\n", list(), 
+#>                     " ", list(list("parallelly::autoStopCluster()")), 
 #>                     "   (no longer re-exported)\n", list(), " ", 
 #>                     list(list("parallelly::availableCores()")), 
 #>                     "\n", list(), " ", list(list("parallelly::availableWorkers()")), 

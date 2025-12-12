@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.68.0-9032</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.68.0-9034</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -79,6 +79,10 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="version-development-version">Version (development version)<a class="anchor" aria-label="anchor" href="#version-development-version"></a></h2>
+<div class="section level3">
+<h3 id="signifcant-changes-development-version">Signifcant Changes<a class="anchor" aria-label="anchor" href="#signifcant-changes-development-version"></a></h3>
+<ul><li>Removed generic function <code>as.cluster()</code>, which has been re-exported from the <strong>parallelly</strong> package since 2020. If needed, please use it from the <strong>parallelly</strong> package instead.</li>
+</ul></div>
 <div class="section level3">
 <h3 id="new-features-development-version">New Features<a class="anchor" aria-label="anchor" href="#new-features-development-version"></a></h3>
 <ul><li><p>Add <code><a href="https://rdrr.io/r/base/conditions.html" class="external-link">conditionMessage()</a></code> for <code>FutureCondition</code>, which appends meta-data information to the original message.</p></li>
@@ -561,7 +565,7 @@
 <li><p>Launching R or Rscript with command-line option <code>--parallel=n</code>, where n &gt; 1, will now use ‘multisession’ as future strategy. Previously, it would use ‘multiprocess’, which is now deprecated.</p></li>
 <li><p>Support for <code>local = FALSE</code> is deprecated. For the time being, it remains supported for ‘transparent’ futures and ‘cluster’ futures that use <code>persistent = TRUE</code>. However, note that <code>persistent = TRUE</code> will also deprecated at some point in the future. These deprecations are required in order to further standardize the Future API across various types of parallel backends.</p></li>
 <li><p>Now multisession workers inherit the package library path from the main R session <em>when they are created</em>, that is, when calling <code>plan(multisession)</code>. To avoid this, use <code>plan(multisession, rscript_libs = NULL)</code>, which is an argument passed down to <code><a href="../reference/re-exports.html">makeClusterPSOCK()</a></code>. With this update, ‘sequential’, ‘multisession’, and ‘multicore’ futures see the exact same library path.</p></li>
-<li><p>Several functions for managing <strong>parallel</strong>-style processing have been moved to a new <strong>parallelly</strong> package. Specifically, functions <code><a href="../reference/re-exports.html">availableCores()</a></code>, <code><a href="../reference/re-exports.html">availableWorkers()</a></code>, <code><a href="../reference/re-exports.html">supportsMulticore()</a></code>, <code><a href="../reference/re-exports.html">as.cluster()</a></code>, <code>autoStopCluster()</code>, <code>makeClusterMPI()</code>, <code><a href="../reference/re-exports.html">makeClusterPSOCK()</a></code>, and <code>makeNodePSOCK()</code> have been moved. None of them are specific to futures per se and are likely useful elsewhere too. Also, having them in a separate, standalone package will speed up the process of releasing any updates to these functions. The code base of the <strong>future</strong> package shrunk about 10-15% from this migration. For backward compatibility, the migrated functions remain in this package as re-exports.</p></li>
+<li><p>Several functions for managing <strong>parallel</strong>-style processing have been moved to a new <strong>parallelly</strong> package. Specifically, functions <code><a href="../reference/re-exports.html">availableCores()</a></code>, <code><a href="../reference/re-exports.html">availableWorkers()</a></code>, <code><a href="../reference/re-exports.html">supportsMulticore()</a></code>, <code>as.cluster()</code>, <code>autoStopCluster()</code>, <code>makeClusterMPI()</code>, <code><a href="../reference/re-exports.html">makeClusterPSOCK()</a></code>, and <code>makeNodePSOCK()</code> have been moved. None of them are specific to futures per se and are likely useful elsewhere too. Also, having them in a separate, standalone package will speed up the process of releasing any updates to these functions. The code base of the <strong>future</strong> package shrunk about 10-15% from this migration. For backward compatibility, the migrated functions remain in this package as re-exports.</p></li>
 </ul></div>
 <div class="section level3">
 <h3 id="new-features-1-20-0">New Features<a class="anchor" aria-label="anchor" href="#new-features-1-20-0"></a></h3>
@@ -1177,7 +1181,7 @@
 <div class="section level3">
 <h3 id="new-features-1-2-0">New Features<a class="anchor" aria-label="anchor" href="#new-features-1-2-0"></a></h3>
 <ul><li><p>Added <code><a href="../reference/re-exports.html">makeClusterPSOCK()</a></code> - a version of <code><a href="https://rdrr.io/r/parallel/makeCluster.html" class="external-link">parallel::makePSOCKcluster()</a></code> that allows for more flexible control of how PSOCK cluster workers are set up and how they are launched and communicated with if running on external machines.</p></li>
-<li><p>Added generic <code><a href="../reference/re-exports.html">as.cluster()</a></code> for coercing objects to cluster objects to be used as in <code>plan(cluster, workers = as.cluster(x))</code>. Also added a <code><a href="https://rdrr.io/r/base/c.html" class="external-link">c()</a></code> implementation for cluster objects such that multiple cluster objects can be combined into a single one.</p></li>
+<li><p>Added generic <code>as.cluster()</code> for coercing objects to cluster objects to be used as in <code>plan(cluster, workers = as.cluster(x))</code>. Also added a <code><a href="https://rdrr.io/r/base/c.html" class="external-link">c()</a></code> implementation for cluster objects such that multiple cluster objects can be combined into a single one.</p></li>
 <li><p>Added <code><a href="../reference/sessionDetails.html">sessionDetails()</a></code> for gathering details of the current R session.</p></li>
 <li><p><code><a href="../reference/plan.html">plan()</a></code> and <code>plan("list")</code> now prints more user-friendly output.</p></li>
 <li><p>On Unix, internal <code>myInternalIP()</code> tries more alternatives for finding the local IP number.</p></li>
