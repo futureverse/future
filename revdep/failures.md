@@ -1,3 +1,92 @@
+# googleComputeEngineR
+
+<details>
+
+* Version: 0.3.0
+* GitHub: https://github.com/cloudyr/googleComputeEngineR
+* Source code: https://github.com/cran/googleComputeEngineR
+* Date/Publication: 2019-05-04 22:40:02 UTC
+* Number of recursive dependencies: 59
+
+Run `revdepcheck::revdep_details(, "googleComputeEngineR")` for more info
+
+</details>
+
+## Newly broken
+
+*   checking whether package ‘googleComputeEngineR’ can be installed ... ERROR
+    ```
+    Installation failed.
+    See ‘/scratch/henrik/revdep/future/checks/googleComputeEngineR/new/googleComputeEngineR.Rcheck/00install.out’ for details.
+    ```
+
+## Newly fixed
+
+*   checking Rd files ... NOTE
+    ```
+    checkRd: (-1) docker_cmd.gce_instance.Rd:21: Lost braces; missing escapes or markup?
+        21 | \item{nvidia}{If true will use \code{nvidia-docker} instead of {docker}}
+           |                                                                ^
+    checkRd: (-1) gce_list_disks.Rd:11: Lost braces; missing escapes or markup?
+        11 | \item{filter}{Sets a filter expression for filtering listed resources, in the form filter={expression}}
+           |                                                                                           ^
+    checkRd: (-1) gce_list_disks_all.Rd:11: Lost braces; missing escapes or markup?
+        11 | \item{filter}{Sets a filter expression for filtering listed resources, in the form filter={expression}}
+           |                                                                                           ^
+    checkRd: (-1) gce_list_firewall_rules.Rd:11: Lost braces; missing escapes or markup?
+    ...
+           |                                                                                           ^
+    checkRd: (-1) gce_list_networks.Rd:11: Lost braces; missing escapes or markup?
+        11 | \item{filter}{Sets a filter expression for filtering listed resources, in the form filter={expression}}
+           |                                                                                           ^
+    checkRd: (-1) gce_list_zone_op.Rd:11: Lost braces; missing escapes or markup?
+        11 | \item{filter}{Sets a filter expression for filtering listed resources, in the form filter={expression}}
+           |                                                                                           ^
+    checkRd: (-1) gce_list_zones.Rd:13: Lost braces; missing escapes or markup?
+        13 | \item{filter}{Sets a filter expression for filtering listed resources, in the form filter={expression}}
+           |                                                                                           ^
+    ```
+
+## Installation
+
+### Devel
+
+```
+* installing *source* package ‘googleComputeEngineR’ ...
+** this is package ‘googleComputeEngineR’ version ‘0.3.0’
+** package ‘googleComputeEngineR’ successfully unpacked and MD5 sums checked
+** using staged installation
+** R
+** inst
+** byte-compile and prepare package for lazy loading
+Error: object ‘as.cluster’ is not exported by 'namespace:future'
+Execution halted
+ERROR: lazy loading failed for package ‘googleComputeEngineR’
+* removing ‘/scratch/henrik/revdep/future/checks/googleComputeEngineR/new/googleComputeEngineR.Rcheck/googleComputeEngineR’
+
+
+```
+### CRAN
+
+```
+* installing *source* package ‘googleComputeEngineR’ ...
+** this is package ‘googleComputeEngineR’ version ‘0.3.0’
+** package ‘googleComputeEngineR’ successfully unpacked and MD5 sums checked
+** using staged installation
+** R
+** inst
+** byte-compile and prepare package for lazy loading
+** help
+*** installing help indices
+** building package indices
+** installing vignettes
+** testing if installed package can be loaded from temporary location
+** testing if installed package can be loaded from final location
+** testing if installed package keeps a record of temporary installation path
+* DONE (googleComputeEngineR)
+
+
+```
 # TriDimRegression
 
 <details>
