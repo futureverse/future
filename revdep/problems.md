@@ -26,31 +26,6 @@ Run `revdepcheck::revdep_details(, "adestr")` for more info
         ‘plot.R’ ‘print.R’ ‘reference_implementation.R’
     ```
 
-# AICcPermanova
-
-<details>
-
-* Version: 0.0.2
-* GitHub: https://github.com/Sustainscapes/AICcPerm
-* Source code: https://github.com/cran/AICcPermanova
-* Date/Publication: 2023-04-11 13:40:06 UTC
-* Number of recursive dependencies: 114
-
-Run `revdepcheck::revdep_details(, "AICcPermanova")` for more info
-
-</details>
-
-## In both
-
-*   checking DESCRIPTION meta-information ... NOTE
-    ```
-      Missing dependency on R >= 4.1.0 because package code uses the pipe
-      |> or function shorthand \(...) syntax added in R 4.1.0.
-      File(s) using such syntax:
-        ‘akaike_adjusted_rsq.R’ ‘filter_vif.R’ ‘fit_models.R’
-        ‘select_models.R’
-    ```
-
 # alookr
 
 <details>
@@ -90,30 +65,6 @@ Run `revdepcheck::revdep_details(, "alookr")` for more info
      17.   └─cli::cli_abort(...)
      18.     └─rlang::abort(...)
     Execution halted
-    ```
-
-# alphaci
-
-<details>
-
-* Version: 1.0.1
-* GitHub: NA
-* Source code: https://github.com/cran/alphaci
-* Date/Publication: 2024-02-05 12:20:09 UTC
-* Number of recursive dependencies: 73
-
-Run `revdepcheck::revdep_details(, "alphaci")` for more info
-
-</details>
-
-## In both
-
-*   checking DESCRIPTION meta-information ... NOTE
-    ```
-      Missing dependency on R >= 4.1.0 because package code uses the pipe
-      |> or function shorthand \(...) syntax added in R 4.1.0.
-      File(s) using such syntax:
-        ‘inference.R’ ‘transformers.R’ ‘variance.R’
     ```
 
 # bamm
@@ -161,6 +112,47 @@ Run `revdepcheck::revdep_details(, "baseballr")` for more info
       |> or function shorthand \(...) syntax added in R 4.1.0.
       File(s) using such syntax:
         ‘chadwick_installation.R’
+    ```
+
+# CAESAR.Suite
+
+<details>
+
+* Version: 0.2.3
+* GitHub: https://github.com/XiaoZhangryy/CAESAR.Suite
+* Source code: https://github.com/cran/CAESAR.Suite
+* Date/Publication: 2025-11-07 10:40:02 UTC
+* Number of recursive dependencies: 262
+
+Run `revdepcheck::revdep_details(, "CAESAR.Suite")` for more info
+
+</details>
+
+## In both
+
+*   checking examples ... ERROR
+    ```
+    Running examples in ‘CAESAR.Suite-Ex.R’ failed
+    The error most likely occurred in:
+    
+    > ### Name: CAESAR.CTDEP
+    > ### Title: Test Cell Type Differentially Enriched Pathways
+    > ### Aliases: CAESAR.CTDEP
+    > 
+    > ### ** Examples
+    > 
+    > data(toydata)
+    ...
+    Backtrace:
+        ▆
+     1. └─CAESAR.Suite::CAESAR.enrich.score(seu, pathway_list)
+     2.   ├─Seurat::GetAssayData(object = seu, slot = "data", assay = assay.dist)
+     3.   └─SeuratObject:::GetAssayData.Seurat(...)
+     4.     └─SeuratObject::.Deprecate(...)
+     5.       └─lifecycle::deprecate_stop(...)
+     6.         └─lifecycle:::deprecate_stop0(msg)
+     7.           └─rlang::cnd_signal(...)
+    Execution halted
     ```
 
 # ceRNAnetsim
@@ -355,29 +347,6 @@ Run `revdepcheck::revdep_details(, "cSEM")` for more info
       All declared Imports should be used.
     ```
 
-# CSGo
-
-<details>
-
-* Version: 0.6.7
-* GitHub: https://github.com/adsoncostanzifilho/CSGo
-* Source code: https://github.com/cran/CSGo
-* Date/Publication: 2021-05-07 18:50:02 UTC
-* Number of recursive dependencies: 70
-
-Run `revdepcheck::revdep_details(, "CSGo")` for more info
-
-</details>
-
-## In both
-
-*   checking dependencies in R code ... NOTE
-    ```
-    Namespaces in Imports field not imported from:
-      ‘extrafont’ ‘future’
-      All declared Imports should be used.
-    ```
-
 # ctsem
 
 <details>
@@ -424,6 +393,119 @@ Run `revdepcheck::revdep_details(, "ctsem")` for more info
     
     Error: Vignette re-building failed.
     Execution halted
+    ```
+
+# dar
+
+<details>
+
+* Version: 1.6.0
+* GitHub: https://github.com/MicrobialGenomics-IrsicaixaOrg/dar
+* Source code: https://github.com/cran/dar
+* Date/Publication: 2025-10-29
+* Number of recursive dependencies: 388
+
+Run `revdepcheck::revdep_details(, "dar")` for more info
+
+</details>
+
+## In both
+
+*   checking examples ... ERROR
+    ```
+    Running examples in ‘dar-Ex.R’ failed
+    The error most likely occurred in:
+    
+    > ### Name: export_steps
+    > ### Title: Export step parameters as json.
+    > ### Aliases: export_steps
+    > 
+    > ### ** Examples
+    > 
+    > data(metaHIV_phy)
+    ...
+    Error in (function (.x, .f, ..., .progress = FALSE)  : ℹ In index: 1.
+    Caused by error in `purrr::map()`:
+    ℹ In index: 1.
+    ℹ With name: RiskGroup2.
+    Caused by error in `map()`:
+    ℹ In index: 1.
+    Caused by error in `loadNamespace()`:
+    ! there is no package called ‘Maaslin2’
+    Calls: prep ... furrr_map_template -> furrr_template -> <Anonymous> -> value.list
+    Execution halted
+    ```
+
+*   checking tests ...
+    ```
+      Running ‘testthat.R’
+     ERROR
+    Running the tests in ‘tests/testthat.R’ failed.
+    Last 50 lines of output:
+       50. │ └─vars %>% purrr::set_names() %>% ...
+       51. ├─purrr::map(...)
+       52. │ └─purrr:::map_("list", .x, .f, ..., .progress = .progress)
+       53. │   ├─purrr:::with_indexed_errors(...)
+       54. │   │ └─base::withCallingHandlers(...)
+       55. │   ├─purrr:::call_with_cleanup(...)
+    ...
+       92. │     └─rlang:::signal_abort(cnd, .file)
+       93. │       └─base::signalCondition(cnd)
+       94. └─purrr (local) `<fn>`(`<prrr_rr_>`)
+       95.   └─cli::cli_abort(...)
+       96.     └─rlang::abort(...)
+      
+      [ FAIL 2 | WARN 3 | SKIP 8 | PASS 95 ]
+      Error:
+      ! Test failures.
+      Execution halted
+    ```
+
+*   checking re-building of vignette outputs ... ERROR
+    ```
+    Error(s) in re-building vignettes:
+    --- re-building ‘article.Rmd’ using rmarkdown
+    
+    Quitting from article.Rmd:164-168 [unnamed-chunk-5]
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    NULL
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    
+    Error: processing vignette 'article.Rmd' failed with diagnostics:
+    ℹ In index: 1.
+    ...
+    Caused by error in `loadNamespace()`:
+    ! there is no package called 'Maaslin2'
+    --- failed re-building ‘import_export_recipes.Rmd’
+    
+    SUMMARY: processing the following files failed:
+      ‘article.Rmd’ ‘bioinformatics_vignette.Rmd’ ‘dar.Rmd’
+      ‘import_export_recipes.Rmd’
+    
+    Error: Vignette re-building failed.
+    Execution halted
+    ```
+
+# delimtools
+
+<details>
+
+* Version: 0.2.1
+* GitHub: https://github.com/legalLab/delimtools
+* Source code: https://github.com/cran/delimtools
+* Date/Publication: 2025-09-29 22:10:02 UTC
+* Number of recursive dependencies: 101
+
+Run `revdepcheck::revdep_details(, "delimtools")` for more info
+
+</details>
+
+## In both
+
+*   checking Rd cross-references ... NOTE
+    ```
+    Package unavailable to check Rd xrefs: ‘bGMYC’
+    Unknown package ‘splits’ in Rd xrefs
     ```
 
 # disk.frame
@@ -560,12 +642,12 @@ Run `revdepcheck::revdep_details(, "FastRet")` for more info
      ERROR
     Running the tests in ‘tests/testthat.R’ failed.
     Last 50 lines of output:
-      > test-adjust_frm.R: [1;30m2025-12-11 21:04:12.68[0m Estimating performance of adjusted model in CV
-      > test-adjust_frm.R: [1;30m2025-12-11 21:04:12.70[0m Fitting adjustment model on full new data set
-      > test-adjust_frm.R: [1;30m2025-12-11 21:04:12.70[0m Returning adjusted frm object
-      > test-adjust_frm.R: [1;30m2025-12-11 21:04:12.70[0m Starting model Adjustment
-      > test-adjust_frm.R: [1;30m2025-12-11 21:04:12.70[0m dim(original_data): 442 x 126
-      > test-adjust_frm.R: [1;30m2025-12-11 21:04:12.70[0m dim(new_data): 25 x 3
+      > test-adjust_frm.R: [1;30m2025-12-14 22:44:20.30[0m Preprocessing data
+      > test-adjust_frm.R: [1;30m2025-12-14 22:44:20.30[0m Formula: RT_ADJ ~ RT + I(RT^2) + I(RT^3) + log(RT) + exp(RT) + sqrt(RT)
+      > test-adjust_frm.R: [1;30m2025-12-14 22:44:20.30[0m Estimating performance of adjusted model in CV
+      > test-adjust_frm.R: [1;30m2025-12-14 22:44:20.33[0m Fitting adjustment model on full new data set
+      > test-adjust_frm.R: [1;30m2025-12-14 22:44:20.33[0m Returning adjusted frm object
+      > test-plot_frm.R: [1;30m2025-12-14 22:44:19.87[0m dim(new_data): 25 x 3
     ...
       Backtrace:
           ▆
@@ -601,44 +683,6 @@ Run `revdepcheck::revdep_details(, "fastRhockey")` for more info
     checkRd: (-1) update_nhl_db.Rd:54-57: Lost braces in \itemize; meant \describe ?
     checkRd: (-1) update_phf_db.Rd:51-53: Lost braces in \itemize; meant \describe ?
     checkRd: (-1) update_phf_db.Rd:54-57: Lost braces in \itemize; meant \describe ?
-    ```
-
-# fdacluster
-
-<details>
-
-* Version: 0.4.1
-* GitHub: https://github.com/astamm/fdacluster
-* Source code: https://github.com/cran/fdacluster
-* Date/Publication: 2025-01-14 16:50:09 UTC
-* Number of recursive dependencies: 126
-
-Run `revdepcheck::revdep_details(, "fdacluster")` for more info
-
-</details>
-
-## In both
-
-*   checking whether package ‘fdacluster’ can be installed ... WARNING
-    ```
-    Found the following significant warnings:
-      baseDissimilarityClass.cpp:39:28: warning: ‘bool arma::is_finite(eT, const typename arma_scalar_only<eT>::result*) [with eT = double; typename arma_scalar_only<eT>::result = double]’ is deprecated: change arma::is_finite(val) to std::isfinite(val) [-Wdeprecated-declarations]
-      baseDissimilarityClass.cpp:39:57: warning: ‘bool arma::is_finite(const Base<typename T1::elem_type, T1>&) [with T1 = subview<double>; typename T1::elem_type = double]’ is deprecated: change arma::is_finite(X) to X.is_finite() [-Wdeprecated-declarations]
-      baseDissimilarityClass.cpp:53:28: warning: ‘bool arma::is_finite(eT, const typename arma_scalar_only<eT>::result*) [with eT = double; typename arma_scalar_only<eT>::result = double]’ is deprecated: change arma::is_finite(val) to std::isfinite(val) [-Wdeprecated-declarations]
-      baseDissimilarityClass.cpp:53:57: warning: ‘bool arma::is_finite(const Base<typename T1::elem_type, T1>&) [with T1 = subview<double>; typename T1::elem_type = double]’ is deprecated: change arma::is_finite(X) to X.is_finite() [-Wdeprecated-declarations]
-      lowessCenterClass.cpp:41:28: warning: ‘bool arma::is_finite(eT, const typename arma_scalar_only<eT>::result*) [with eT = double; typename arma_scalar_only<eT>::result = double]’ is deprecated: change arma::is_finite(val) to std::isfinite(val) [-Wdeprecated-declarations]
-      lowessCenterClass.cpp:41:64: warning: ‘bool arma::is_finite(eT, const typename arma_scalar_only<eT>::result*) [with eT = double; typename arma_scalar_only<eT>::result = double]’ is deprecated: change arma::is_finite(val) to std::isfinite(val) [-Wdeprecated-declarations]
-      polyCenterClass.cpp:39:28: warning: ‘bool arma::is_finite(eT, const typename arma_scalar_only<eT>::result*) [with eT = double; typename arma_scalar_only<eT>::result = double]’ is deprecated: change arma::is_finite(val) to std::isfinite(val) [-Wdeprecated-declarations]
-      polyCenterClass.cpp:39:64: warning: ‘bool arma::is_finite(eT, const typename arma_scalar_only<eT>::result*) [with eT = double; typename arma_scalar_only<eT>::result = double]’ is deprecated: change arma::is_finite(val) to std::isfinite(val) [-Wdeprecated-declarations]
-    See ‘/scratch/henrik/revdep/future/checks/fdacluster/new/fdacluster.Rcheck/00install.out’ for details.
-    ```
-
-*   checking DESCRIPTION meta-information ... NOTE
-    ```
-      Missing dependency on R >= 4.2.0 because package code uses the pipe
-      placeholder syntax added in R 4.2.0.
-      File(s) using such syntax:
-        ‘caps-plot.R’ ‘utils.R’
     ```
 
 # flowGraph
@@ -789,13 +833,13 @@ Run `revdepcheck::revdep_details(, "FracFixR")` for more info
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     <error/rlang_error>
     Error in `checkNumberOfLocalWorkers()`:
-    ! Attempting to set up 255 localhost parallel workers with only 5 CPU cores available for this R process (per 'N/A'), which could result in a 5100% load. The hard limit is set to 300%. Overusing the CPUs has negative impact on the current R process, but also on all other processes of yours and others running on the same machine. See help("parallelly.maxWorkers.localhost", package = "parallelly") for further explanations and how to override the hard limit that triggered this error
+    ! Attempting to set up 255 localhost parallel workers with only 5 CPU cores available for this R process (per 'N/A'), which could result in a 5100% load. The hard limit is set to 300%. Overusing the CPUs has negative impact on the current R process, but also on all other processes of yours and others running on the same machine. See help("parallelly.maxWorkers.localhost", package = "parallelly") for further explanations and how to override the hard limit that triggered this error. By the way, was parallel::detectCores() used, because the number of workers (255) equals detectCores() - 1? If so, please use parallelly::availableCores() instead
     ---
     Backtrace:
     ...
     
     Error: processing vignette 'FracFixR-intro.Rmd' failed with diagnostics:
-    Attempting to set up 255 localhost parallel workers with only 5 CPU cores available for this R process (per 'N/A'), which could result in a 5100% load. The hard limit is set to 300%. Overusing the CPUs has negative impact on the current R process, but also on all other processes of yours and others running on the same machine. See help("parallelly.maxWorkers.localhost", package = "parallelly") for further explanations and how to override the hard limit that triggered this error
+    Attempting to set up 255 localhost parallel workers with only 5 CPU cores available for this R process (per 'N/A'), which could result in a 5100% load. The hard limit is set to 300%. Overusing the CPUs has negative impact on the current R process, but also on all other processes of yours and others running on the same machine. See help("parallelly.maxWorkers.localhost", package = "parallelly") for further explanations and how to override the hard limit that triggered this error. By the way, was parallel::detectCores() used, because the number of workers (255) equals detectCores() - 1? If so, please use parallelly::availableCores() instead
     --- failed re-building ‘FracFixR-intro.Rmd’
     
     SUMMARY: processing the following file failed:
@@ -828,95 +872,6 @@ Run `revdepcheck::revdep_details(, "GeDS")` for more info
     See ‘/scratch/henrik/revdep/future/checks/GeDS/new/GeDS.Rcheck/00install.out’ for details.
     ```
 
-# googleComputeEngineR
-
-<details>
-
-* Version: 0.3.0
-* GitHub: https://github.com/cloudyr/googleComputeEngineR
-* Source code: https://github.com/cran/googleComputeEngineR
-* Date/Publication: 2019-05-04 22:40:02 UTC
-* Number of recursive dependencies: 59
-
-Run `revdepcheck::revdep_details(, "googleComputeEngineR")` for more info
-
-</details>
-
-## Newly broken
-
-*   checking whether package ‘googleComputeEngineR’ can be installed ... ERROR
-    ```
-    Installation failed.
-    See ‘/scratch/henrik/revdep/future/checks/googleComputeEngineR/new/googleComputeEngineR.Rcheck/00install.out’ for details.
-    ```
-
-## Newly fixed
-
-*   checking Rd files ... NOTE
-    ```
-    checkRd: (-1) docker_cmd.gce_instance.Rd:21: Lost braces; missing escapes or markup?
-        21 | \item{nvidia}{If true will use \code{nvidia-docker} instead of {docker}}
-           |                                                                ^
-    checkRd: (-1) gce_list_disks.Rd:11: Lost braces; missing escapes or markup?
-        11 | \item{filter}{Sets a filter expression for filtering listed resources, in the form filter={expression}}
-           |                                                                                           ^
-    checkRd: (-1) gce_list_disks_all.Rd:11: Lost braces; missing escapes or markup?
-        11 | \item{filter}{Sets a filter expression for filtering listed resources, in the form filter={expression}}
-           |                                                                                           ^
-    checkRd: (-1) gce_list_firewall_rules.Rd:11: Lost braces; missing escapes or markup?
-    ...
-           |                                                                                           ^
-    checkRd: (-1) gce_list_networks.Rd:11: Lost braces; missing escapes or markup?
-        11 | \item{filter}{Sets a filter expression for filtering listed resources, in the form filter={expression}}
-           |                                                                                           ^
-    checkRd: (-1) gce_list_zone_op.Rd:11: Lost braces; missing escapes or markup?
-        11 | \item{filter}{Sets a filter expression for filtering listed resources, in the form filter={expression}}
-           |                                                                                           ^
-    checkRd: (-1) gce_list_zones.Rd:13: Lost braces; missing escapes or markup?
-        13 | \item{filter}{Sets a filter expression for filtering listed resources, in the form filter={expression}}
-           |                                                                                           ^
-    ```
-
-## Installation
-
-### Devel
-
-```
-* installing *source* package ‘googleComputeEngineR’ ...
-** this is package ‘googleComputeEngineR’ version ‘0.3.0’
-** package ‘googleComputeEngineR’ successfully unpacked and MD5 sums checked
-** using staged installation
-** R
-** inst
-** byte-compile and prepare package for lazy loading
-Error: object ‘as.cluster’ is not exported by 'namespace:future'
-Execution halted
-ERROR: lazy loading failed for package ‘googleComputeEngineR’
-* removing ‘/scratch/henrik/revdep/future/checks/googleComputeEngineR/new/googleComputeEngineR.Rcheck/googleComputeEngineR’
-
-
-```
-### CRAN
-
-```
-* installing *source* package ‘googleComputeEngineR’ ...
-** this is package ‘googleComputeEngineR’ version ‘0.3.0’
-** package ‘googleComputeEngineR’ successfully unpacked and MD5 sums checked
-** using staged installation
-** R
-** inst
-** byte-compile and prepare package for lazy loading
-** help
-*** installing help indices
-** building package indices
-** installing vignettes
-** testing if installed package can be loaded from temporary location
-** testing if installed package can be loaded from final location
-** testing if installed package keeps a record of temporary installation path
-* DONE (googleComputeEngineR)
-
-
-```
 # googleTagManageR
 
 <details>
@@ -948,7 +903,7 @@ Run `revdepcheck::revdep_details(, "googleTagManageR")` for more info
 * GitHub: https://github.com/billbillbilly/greenSD
 * Source code: https://github.com/cran/greenSD
 * Date/Publication: 2025-10-30 19:50:02 UTC
-* Number of recursive dependencies: 121
+* Number of recursive dependencies: 119
 
 Run `revdepcheck::revdep_details(, "greenSD")` for more info
 
@@ -979,30 +934,6 @@ Run `revdepcheck::revdep_details(, "greenSD")` for more info
     Warning: GDAL/OGR not compiled with libcurl support, remote requests not supported. (GDAL error 6)
     Error: Cannot open "https://raw.githubusercontent.com/billbillbilly/greenSD/main/scripts/city_urban_boundaries.geojson"; The file doesn't seem to exist.
     Execution halted
-    ```
-
-# greta
-
-<details>
-
-* Version: 0.5.0
-* GitHub: https://github.com/greta-dev/greta
-* Source code: https://github.com/cran/greta
-* Date/Publication: 2024-11-12 06:40:02 UTC
-* Number of recursive dependencies: 142
-
-Run `revdepcheck::revdep_details(, "greta")` for more info
-
-</details>
-
-## In both
-
-*   checking package dependencies ... ERROR
-    ```
-    Package required and available but unsuitable version: ‘tensorflow’
-    
-    See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
-    manual.
     ```
 
 # hero
@@ -1039,7 +970,7 @@ Run `revdepcheck::revdep_details(, "hero")` for more info
 * GitHub: https://github.com/broadinstitute/inferCNV
 * Source code: https://github.com/cran/infercnv
 * Date/Publication: 2025-10-29
-* Number of recursive dependencies: 199
+* Number of recursive dependencies: 198
 
 Run `revdepcheck::revdep_details(, "infercnv")` for more info
 
@@ -1650,19 +1581,19 @@ Run `revdepcheck::revdep_details(, "mlr3resampling")` for more info
 
 *   checking dependencies in R code ... NOTE
     ```
-    c4-n43:pid3126846: PSM3 can't open nic unit: 0 (err=23)
-    c4-n43:pid3126846.R: Unable to create UDP socket for ens13f0np0: Address family not supported by protocol
-    c4-n43:pid3126846.R: Unable to initialize sockets NIC /sys/class/net/ens13f0np0 (unit 0:0)
-    c4-n43:pid3126846: PSM3 can't open nic unit: 0 (err=23)
-    c4-n43:pid3126846.R: Unable to create UDP socket for ens13f0np0: Address family not supported by protocol
-    c4-n43:pid3126846.R: Unable to initialize sockets NIC /sys/class/net/ens13f0np0 (unit 0:0)
-    c4-n43:pid3126846: PSM3 can't open nic unit: 1 (err=23)
-    c4-n43:pid3126846.R: Unable to create UDP socket for ens13f1np1: Address family not supported by protocol
-    c4-n43:pid3126846.R: Unable to initialize sockets NIC /sys/class/net/ens13f1np1 (unit 1:0)
-    c4-n43:pid3126846: PSM3 can't open nic unit: 0 (err=23)
+    c4-n43:pid1097275: PSM3 can't open nic unit: 0 (err=23)
+    c4-n43:pid1097275.R: Unable to create UDP socket for ens13f0np0: Address family not supported by protocol
+    c4-n43:pid1097275.R: Unable to initialize sockets NIC /sys/class/net/ens13f0np0 (unit 0:0)
+    c4-n43:pid1097275: PSM3 can't open nic unit: 0 (err=23)
+    c4-n43:pid1097275.R: Unable to create UDP socket for ens13f0np0: Address family not supported by protocol
+    c4-n43:pid1097275.R: Unable to initialize sockets NIC /sys/class/net/ens13f0np0 (unit 0:0)
+    c4-n43:pid1097275: PSM3 can't open nic unit: 1 (err=23)
+    c4-n43:pid1097275.R: Unable to create UDP socket for ens13f1np1: Address family not supported by protocol
+    c4-n43:pid1097275.R: Unable to initialize sockets NIC /sys/class/net/ens13f1np1 (unit 1:0)
+    c4-n43:pid1097275: PSM3 can't open nic unit: 0 (err=23)
     ...
-    c4-n43:pid3126846.R: Unable to create UDP socket for ens13f0np0: Address family not supported by protocol
-    c4-n43:pid3126846.R: Unable to initialize sockets NIC /sys/class/net/ens13f0np0 (unit 0:0)
+    c4-n43:pid1097275.R: Unable to create UDP socket for ens13f1np1: Address family not supported by protocol
+    c4-n43:pid1097275.R: Unable to initialize sockets NIC /sys/class/net/ens13f1np1 (unit 1:0)
     --------------------------------------------------------------------------
     Open MPI failed an OFI Libfabric library call (fi_endpoint).  This is highly
     unusual; your job may behave unpredictably (and/or abort) after this.
@@ -1671,47 +1602,6 @@ Run `revdepcheck::revdep_details(, "mlr3resampling")` for more info
       Location: mtl_ofi_component.c:513
       Error: Invalid argument (22)
     --------------------------------------------------------------------------
-    ```
-
-# mlr3tuning
-
-<details>
-
-* Version: 1.5.0
-* GitHub: https://github.com/mlr-org/mlr3tuning
-* Source code: https://github.com/cran/mlr3tuning
-* Date/Publication: 2025-11-07 12:40:09 UTC
-* Number of recursive dependencies: 100
-
-Run `revdepcheck::revdep_details(, "mlr3tuning")` for more info
-
-</details>
-
-## In both
-
-*   checking examples ... ERROR
-    ```
-    Running examples in ‘mlr3tuning-Ex.R’ failed
-    The error most likely occurred in:
-    
-    > ### Name: mlr_tuners_internal
-    > ### Title: Hyperparameter Tuning with Internal Tuning
-    > ### Aliases: mlr_tuners_internal TunerBatchInternal
-    > 
-    > ### ** Examples
-    > 
-    > ## Don't show: 
-    ...
-      Argument 'objective' is only for custom objectives. For built-in objectives, pass the objective under 'params'. This warning will become an error in a future version.
-    Warning in check.deprecation(deprecated_train_params, match.call(), ...) :
-      Passed invalid function arguments: eval_metric, nthread, num_class. These should be passed as a list to argument 'params'. Conversion from argument to 'params' entry will be done automatically, but this behavior will become an error in a future version.
-    Warning in throw_err_or_depr_msg("Parameter '", match_old, "' has been renamed to '",  :
-      Parameter 'watchlist' has been renamed to 'evals'. This warning will become an error in a future version.
-    Warning in check.custom.obj(params, objective) :
-      Argument 'objective' is only for custom objectives. For built-in objectives, pass the objective under 'params'. This warning will become an error in a future version.
-    Error in names(x) <- nm : attempt to set an attribute on NULL
-    Calls: withAutoprint ... tryCatchList -> tryCatchOne -> <Anonymous> -> onError
-    Execution halted
     ```
 
 # modeltime
@@ -1901,129 +1791,6 @@ Run `revdepcheck::revdep_details(, "PAMscapes")` for more info
     See ‘/scratch/henrik/revdep/future/checks/PAMscapes/new/PAMscapes.Rcheck/00install.out’ for details.
     ```
 
-# pareg
-
-<details>
-
-* Version: 1.8.0
-* GitHub: https://github.com/cbg-ethz/pareg
-* Source code: https://github.com/cran/pareg
-* Date/Publication: 2024-04-30
-* Number of recursive dependencies: 323
-
-Run `revdepcheck::revdep_details(, "pareg")` for more info
-
-</details>
-
-## In both
-
-*   checking examples ... ERROR
-    ```
-    Running examples in ‘pareg-Ex.R’ failed
-    The error most likely occurred in:
-    
-    > ### Name: as.data.frame.pareg
-    > ### Title: as.data.frame for an object of class 'pareg'.
-    > ### Aliases: as.data.frame.pareg
-    > 
-    > ### ** Examples
-    > 
-    > df_genes <- data.frame(
-    ...
-        Found existing installation: pip 25.0.1
-        Uninstalling pip-25.0.1:
-          Successfully uninstalled pip-25.0.1
-    Successfully installed pip-25.3 setuptools-80.9.0 wheel-0.45.1
-    Installing packages: 'tensorflow==2.10.0', 'tensorflow-probability==0.14.0'
-    + /c4/home/henrik/.cache/R/basilisk/1.22.0/pareg/1.8.0/pareg/bin/python -m pip install --upgrade --no-user 'tensorflow==2.10.0' 'tensorflow-probability==0.14.0'
-    ERROR: Could not find a version that satisfies the requirement tensorflow==2.10.0 (from versions: 2.16.0rc0, 2.16.1, 2.16.2, 2.17.0rc0, 2.17.0rc1, 2.17.0, 2.17.1, 2.18.0rc0, 2.18.0rc1, 2.18.0rc2, 2.18.0, 2.18.1, 2.19.0rc0, 2.19.0, 2.19.1, 2.20.0rc0, 2.20.0)
-    ERROR: No matching distribution found for tensorflow==2.10.0
-    Error: Error installing package(s): "'tensorflow==2.10.0'", "'tensorflow-probability==0.14.0'"
-    Execution halted
-    ```
-
-*   checking tests ...
-    ```
-      Running ‘testthat.R’
-     ERROR
-    Running the tests in ‘tests/testthat.R’ failed.
-    Complete output:
-      > library(testthat)
-      > library(pareg)
-      Loading required package: tensorflow
-      Loading required package: tfprobability
-      
-      
-    ...
-          Found existing installation: pip 25.0.1
-          Uninstalling pip-25.0.1:
-            Successfully uninstalled pip-25.0.1
-      Successfully installed pip-25.3 setuptools-80.9.0 wheel-0.45.1
-      Installing packages: 'tensorflow==2.10.0', 'tensorflow-probability==0.14.0'
-      + /c4/home/henrik/.cache/R/basilisk/1.22.0/pareg/1.8.0/pareg/bin/python -m pip install --upgrade --no-user 'tensorflow==2.10.0' 'tensorflow-probability==0.14.0'
-      ERROR: Could not find a version that satisfies the requirement tensorflow==2.10.0 (from versions: 2.16.0rc0, 2.16.1, 2.16.2, 2.17.0rc0, 2.17.0rc1, 2.17.0, 2.17.1, 2.18.0rc0, 2.18.0rc1, 2.18.0rc2, 2.18.0, 2.18.1, 2.19.0rc0, 2.19.0, 2.19.1, 2.20.0rc0, 2.20.0)
-      ERROR: No matching distribution found for tensorflow==2.10.0
-      Error: Error installing package(s): "'tensorflow==2.10.0'", "'tensorflow-probability==0.14.0'"
-      Execution halted
-    ```
-
-*   checking re-building of vignette outputs ... ERROR
-    ```
-    Error(s) in re-building vignettes:
-    --- re-building ‘pareg.Rmd’ using rmarkdown
-    The magick package is required to crop "/scratch/henrik/revdep/future/checks/pareg/new/pareg.Rcheck/vign_test/pareg/vignettes/pareg_files/figure-html/unnamed-chunk-4-1.png" but not available.
-    The magick package is required to crop "/scratch/henrik/revdep/future/checks/pareg/new/pareg.Rcheck/vign_test/pareg/vignettes/pareg_files/figure-html/unnamed-chunk-5-1.png" but not available.
-    Requirement already satisfied: pip in /c4/home/henrik/.cache/R/basilisk/1.22.0/pareg/1.8.0/pareg/lib/python3.12/site-packages (25.0.1)
-    Collecting pip
-      Using cached pip-25.3-py3-none-any.whl.metadata (4.7 kB)
-    Collecting wheel
-      Using cached wheel-0.45.1-py3-none-any.whl.metadata (2.3 kB)
-    Collecting setuptools
-    ...
-    --- re-building ‘pathway_similarities.Rmd’ using rmarkdown
-    The magick package is required to crop "/scratch/henrik/revdep/future/checks/pareg/new/pareg.Rcheck/vign_test/pareg/vignettes/pathway_similarities_files/figure-html/unnamed-chunk-2-1.png" but not available.
-    The magick package is required to crop "/scratch/henrik/revdep/future/checks/pareg/new/pareg.Rcheck/vign_test/pareg/vignettes/pathway_similarities_files/figure-html/unnamed-chunk-3-1.png" but not available.
-    --- finished re-building ‘pathway_similarities.Rmd’
-    
-    SUMMARY: processing the following file failed:
-      ‘pareg.Rmd’
-    
-    Error: Vignette re-building failed.
-    Execution halted
-    ```
-
-*   checking for portable file names ... NOTE
-    ```
-    Found the following non-portable file paths:
-      pareg/inst/scripts/synthetic_benchmark/resources/multi_config_workflow/config_ablation_study/config.yaml
-      pareg/inst/scripts/synthetic_benchmark/resources/multi_config_workflow/config_ablation_study/params.csv
-      pareg/inst/scripts/synthetic_benchmark/resources/multi_config_workflow/config_dispersion_fitting/config.yaml
-      pareg/inst/scripts/synthetic_benchmark/resources/multi_config_workflow/config_dispersion_fitting/params.csv
-      pareg/inst/scripts/synthetic_benchmark/resources/multi_config_workflow/config_real_datasets/config.yaml
-      pareg/inst/scripts/synthetic_benchmark/resources/multi_config_workflow/config_real_datasets/params.csv
-      pareg/inst/scripts/synthetic_benchmark/resources/multi_config_workflow/config_regularization_effect/config.yaml
-      pareg/inst/scripts/synthetic_benchmark/resources/multi_config_workflow/config_regularization_effect/params.csv
-      pareg/inst/scripts/synthetic_benchmark/resources/multi_config_workflow/config_regularization_parameter/config.yaml
-    ...
-      pareg/inst/scripts/synthetic_benchmark/resources/multi_config_workflow/config_response_distribution/params.csv
-      pareg/inst/scripts/synthetic_benchmark/resources/multi_config_workflow/config_similarity_measures/config.yaml
-      pareg/inst/scripts/synthetic_benchmark/resources/multi_config_workflow/config_similarity_measures/params.csv
-      pareg/inst/scripts/synthetic_benchmark/resources/multi_config_workflow/workflow/scripts/compare_rocauc_vs_loss.R
-      pareg/inst/scripts/synthetic_benchmark/resources/multi_config_workflow/config_regularization_parameter
-    
-    Tarballs are only required to store paths of up to 100 bytes and cannot
-    store those of more than 256 bytes, with restrictions including to 100
-    bytes for the final component.
-    See section ‘Package structure’ in the ‘Writing R Extensions’ manual.
-    ```
-
-*   checking whether package ‘pareg’ can be installed ... NOTE
-    ```
-    Found the following notes/warnings:
-      Non-staged installation was used
-    See ‘/scratch/henrik/revdep/future/checks/pareg/new/pareg.Rcheck/00install.out’ for details.
-    ```
-
 # partR2
 
 <details>
@@ -2100,10 +1867,9 @@ Run `revdepcheck::revdep_details(, "pgxRpi")` for more info
     > data("hg38_cytoband")
     > ## get frequency data
     > freq <- pgxLoader(type="cnv_frequency", output ='pgxfreq', filters="NCIT:C3512")
-    Error in curl::curl_fetch_memory(url, handle = handle) : 
-      Stream error in the HTTP/2 framing layer [progenetix.org]:
-    HTTP/2 stream 1 was not closed cleanly: INTERNAL_ERROR (err 2)
-    Calls: pgxLoader ... request_fetch.write_memory -> <Anonymous> -> raise_libcurl_error
+    Error in pgxFreqLoader(output = output, filters = filters, domain = domain) : 
+      Request failed for filter NCIT:C3512 (status code: 422)
+    Calls: pgxLoader -> pgxFreqLoader
     Execution halted
     ```
 
@@ -2113,20 +1879,20 @@ Run `revdepcheck::revdep_details(, "pgxRpi")` for more info
      ERROR
     Running the tests in ‘tests/testthat.R’ failed.
     Last 50 lines of output:
-      
-       trying: https://progenetix.org/services/variantsbedfile/?output=igv&biosampleIds=pgxbs-kftvlaih,pgxbs-kftvjgcc 
-      
-       trying: https://progenetix.org/services/samplematrix/?biosampleIds=pgxbs-kftvlaih,pgxbs-kftvjgcc 
-      
-       trying: https://progenetix.org/services/samplematrix/?individualIds=pgxind-kftx3565,pgxind-kftx5g4v 
+      1/1 mismatches
+      x[1]: "application/json"
+      y[1]: "text/plain"
+      ── Failure ('test_variants.R:65:5'): retrieve pgxmatrix variant with filters ───
+      Expected `... <- NULL` not to throw any errors.
+      Actually got a <simpleError> with message:
     ...
-       2. │ └─httr:::request_perform(req, hu$handle$handle)
-       3. │   ├─httr:::request_fetch(req$output, req$url, handle)
-       4. │   └─httr:::request_fetch.write_memory(req$output, req$url, handle)
-       5. │     └─curl::curl_fetch_memory(url, handle = handle)
-       6. └─curl:::raise_libcurl_error(...)
+      target is NULL, current is logical
+      ── Failure ('test_variants.R:103:9'): retrieve variants with JSON in cellz ─────
+      Expected `nrow(table)` > 0.
+      Actual comparison: 0.0 <= 0.0
+      Difference: 0.0 <= 0
       
-      [ FAIL 2 | WARN 0 | SKIP 0 | PASS 36 ]
+      [ FAIL 37 | WARN 5 | SKIP 0 | PASS 0 ]
       Error:
       ! Test failures.
       Execution halted
@@ -2145,13 +1911,13 @@ Run `revdepcheck::revdep_details(, "pgxRpi")` for more info
     ---
     Backtrace:
     ...
-    The magick package is required to crop "/scratch/henrik/revdep/future/checks/pgxRpi/new/pgxRpi.Rcheck/vign_test/pgxRpi/vignettes/Introduction_4_process_pgxseg_files/figure-html/unnamed-chunk-15-1.png" but not available.
     The magick package is required to crop "/scratch/henrik/revdep/future/checks/pgxRpi/new/pgxRpi.Rcheck/vign_test/pgxRpi/vignettes/Introduction_4_process_pgxseg_files/figure-html/unnamed-chunk-16-1.png" but not available.
     --- finished re-building ‘Introduction_4_process_pgxseg.Rmd’
     
     SUMMARY: processing the following files failed:
       ‘Introduction_1_load_metadata.Rmd’
       ‘Introduction_2_query_variants.Rmd’
+      ‘Introduction_3_access_cnv_frequency.Rmd’
     
     Error: Vignette re-building failed.
     Execution halted
@@ -2514,7 +2280,7 @@ Run `revdepcheck::revdep_details(, "rsi")` for more info
 * GitHub: https://github.com/AbbVie-ComputationalGenomics/SCArray
 * Source code: https://github.com/cran/SCArray.sat
 * Date/Publication: 2025-10-07
-* Number of recursive dependencies: 177
+* Number of recursive dependencies: 176
 
 Run `revdepcheck::revdep_details(, "SCArray.sat")` for more info
 
@@ -2581,6 +2347,47 @@ Run `revdepcheck::revdep_details(, "SCArray.sat")` for more info
       See the note in ?`:::` about the use of this operator.
     ```
 
+# scLANE
+
+<details>
+
+* Version: 1.0.0
+* GitHub: https://github.com/jr-leary7/scLANE
+* Source code: https://github.com/cran/scLANE
+* Date/Publication: 2025-10-29
+* Number of recursive dependencies: 295
+
+Run `revdepcheck::revdep_details(, "scLANE")` for more info
+
+</details>
+
+## In both
+
+*   checking tests ...
+    ```
+      Running ‘testthat.R’
+     ERROR
+    Running the tests in ‘tests/testthat.R’ failed.
+    Last 50 lines of output:
+      > test_check("scLANE")
+      Loading required namespace: SingleCellExperiment
+      
+      Attaching package: 'MASS'
+      
+      The following object is masked from 'package:glm2':
+    ...
+       5.   └─SeuratObject:::GetAssayData.Seurat(...)
+       6.     └─SeuratObject::.Deprecate(...)
+       7.       └─lifecycle::deprecate_stop(...)
+       8.         └─lifecycle:::deprecate_stop0(msg)
+       9.           └─rlang::cnd_signal(...)
+      
+      [ FAIL 1 | WARN 740 | SKIP 0 | PASS 0 ]
+      Error:
+      ! Test failures.
+      Execution halted
+    ```
+
 # shinyOAuth
 
 <details>
@@ -2613,8 +2420,8 @@ Run `revdepcheck::revdep_details(, "shinyOAuth")` for more info
         [shinyOAuth] - HTTP request failed
         x Failed to fetch OIDC discovery document
         x Status 503: Service Unavailable.
-        i URL: http://127.0.0.1:32891/.well-known/openid-configuration
-        i Trace ID: qye3A5x1EuBv
+        i URL: http://127.0.0.1:32793/.well-known/openid-configuration
+        i Trace ID: rt9fKMVeaBia
       
       [ FAIL 23 | WARN 0 | SKIP 12 | PASS 671 ]
       Error:
@@ -2733,47 +2540,6 @@ Run `revdepcheck::revdep_details(, "simhelpers")` for more info
         ‘utilities.R’
     ```
 
-# SmCCNet
-
-<details>
-
-* Version: 2.0.3
-* GitHub: https://github.com/KechrisLab/SmCCNet
-* Source code: https://github.com/cran/SmCCNet
-* Date/Publication: 2024-04-16 05:20:02 UTC
-* Number of recursive dependencies: 165
-
-Run `revdepcheck::revdep_details(, "SmCCNet")` for more info
-
-</details>
-
-## In both
-
-*   checking re-building of vignette outputs ... WARNING
-    ```
-    Error(s) in re-building vignettes:
-    --- re-building ‘SmCCNet_Vignette_AutoSmCCNet.Rmd’ using rmarkdown
-    [WARNING] Deprecated: --highlight-style. Use --syntax-highlighting instead.
-    ! LaTeX Error: File `ucharcat.sty' not found.
-    
-    ! Emergency stop.
-    <read *> 
-    
-    Error: processing vignette 'SmCCNet_Vignette_AutoSmCCNet.Rmd' failed with diagnostics:
-    LaTeX failed to compile /scratch/henrik/revdep/future/checks/SmCCNet/new/SmCCNet.Rcheck/vign_test/SmCCNet/vignettes/SmCCNet_Vignette_AutoSmCCNet.tex. See https://yihui.org/tinytex/r/#debugging for debugging tips. See SmCCNet_Vignette_AutoSmCCNet.log for more info.
-    ...
-    Error: processing vignette 'SmCCNet_Vignette_SingleOmics.Rmd' failed with diagnostics:
-    LaTeX failed to compile /scratch/henrik/revdep/future/checks/SmCCNet/new/SmCCNet.Rcheck/vign_test/SmCCNet/vignettes/SmCCNet_Vignette_SingleOmics.tex. See https://yihui.org/tinytex/r/#debugging for debugging tips. See SmCCNet_Vignette_SingleOmics.log for more info.
-    --- failed re-building ‘SmCCNet_Vignette_SingleOmics.Rmd’
-    
-    SUMMARY: processing the following files failed:
-      ‘SmCCNet_Vignette_AutoSmCCNet.Rmd’ ‘SmCCNet_Vignette_MultiOmics.Rmd’
-      ‘SmCCNet_Vignette_SingleOmics.Rmd’
-    
-    Error: Vignette re-building failed.
-    Execution halted
-    ```
-
 # solitude
 
 <details>
@@ -2818,29 +2584,6 @@ Run `revdepcheck::revdep_details(, "sparrpowR")` for more info
     Found the following significant warnings:
       Warning: no DISPLAY variable so Tk is not available
     See ‘/scratch/henrik/revdep/future/checks/sparrpowR/new/sparrpowR.Rcheck/00install.out’ for details.
-    ```
-
-# SPARSEMODr
-
-<details>
-
-* Version: 1.2.0
-* GitHub: https://github.com/NAU-CCL/SPARSEMODr
-* Source code: https://github.com/cran/SPARSEMODr
-* Date/Publication: 2022-07-19 20:50:02 UTC
-* Number of recursive dependencies: 120
-
-Run `revdepcheck::revdep_details(, "SPARSEMODr")` for more info
-
-</details>
-
-## In both
-
-*   checking dependencies in R code ... NOTE
-    ```
-    Namespaces in Imports field not imported from:
-      ‘future’ ‘geosphere’ ‘lubridate’ ‘tidyverse’ ‘viridis’
-      All declared Imports should be used.
     ```
 
 # spdesign
@@ -2962,30 +2705,6 @@ Run `revdepcheck::revdep_details(, "sRACIPE")` for more info
     checkRd: (-1) sracipeHeatmapSimilarity.Rd:32: Lost braces
         32 | and /code{distance  = (1-cor(x, method = "spear"))/2} will be used to 
            |          ^
-    ```
-
-# stars
-
-<details>
-
-* Version: 0.6-8
-* GitHub: https://github.com/r-spatial/stars
-* Source code: https://github.com/cran/stars
-* Date/Publication: 2025-02-01 18:50:02 UTC
-* Number of recursive dependencies: 162
-
-Run `revdepcheck::revdep_details(, "stars")` for more info
-
-</details>
-
-## In both
-
-*   checking DESCRIPTION meta-information ... NOTE
-    ```
-      Missing dependency on R >= 4.2.0 because package code uses the pipe
-      placeholder syntax added in R 4.2.0.
-      File(s) using such syntax:
-        ‘prcomp.Rd’
     ```
 
 # stppSim
@@ -3304,7 +3023,6 @@ Run `revdepcheck::revdep_details(, "tsmarch")` for more info
 *   checking re-building of vignette outputs ... ERROR
     ```
     Error(s) in re-building vignettes:
-      ...
     --- re-building ‘feasible_multivariate_garch.Rmd’ using rmarkdown
     [WARNING] Deprecated: --highlight-style. Use --syntax-highlighting instead.
     ! Undefined control sequence.
@@ -3313,14 +3031,15 @@ Run `revdepcheck::revdep_details(, "tsmarch")` for more info
     
     Error: processing vignette 'feasible_multivariate_garch.Rmd' failed with diagnostics:
     LaTeX failed to compile /scratch/henrik/revdep/future/checks/tsmarch/new/tsmarch.Rcheck/vign_test/tsmarch/vignettes/feasible_multivariate_garch.tex. See https://yihui.org/tinytex/r/#debugging for debugging tips. See feasible_multivariate_garch.log for more info.
+    --- failed re-building ‘feasible_multivariate_garch.Rmd’
     ...
-    
-    --- re-building ‘tsmarch_demo.Rmd’ using rmarkdown
-    [WARNING] Deprecated: --highlight-style. Use --syntax-highlighting instead.
-    --- finished re-building ‘tsmarch_demo.Rmd’
-    
-    SUMMARY: processing the following file failed:
-      ‘feasible_multivariate_garch.Rmd’
+    36: tryCatchOne(expr, names, parentenv, handlers[[1L]])
+    37: tryCatchList(expr, classes, parentenv, handlers)
+    38: tryCatch({    engine$weave(file, quiet = quiet, encoding = enc)    setwd(startdir)    output <- find_vignette_product(name, by = "weave", engine = engine)    if (!have.makefile && vignette_is_tex(output)) {        texi2pdf(file = output, clean = FALSE, quiet = quiet)        output <- find_vignette_product(name, by = "texi2pdf",             engine = engine)    }}, error = function(e) {    OK <<- FALSE    message(gettextf("Error: processing vignette '%s' failed with diagnostics:\n%s",         file, conditionMessage(e)))})
+    39: tools:::.buildOneVignette("tsmarch_demo.Rmd", "/scratch/henrik/revdep/future/checks/tsmarch/new/tsmarch.Rcheck/vign_test/tsmarch",     TRUE, FALSE, "tsmarch_demo", "UTF-8", "/scratch/henrik/957295/Rtmp9GJWte/filee8f487391d2c3.rds")
+    An irrecoverable exception occurred. R is aborting now ...
+    SUMMARY: processing the following files failed:
+      ‘feasible_multivariate_garch.Rmd’ ‘tsmarch_demo.Rmd’
     
     Error: Vignette re-building failed.
     Execution halted
@@ -3442,81 +3161,3 @@ Run `revdepcheck::revdep_details(, "wru")` for more info
       All declared Imports should be used.
     ```
 
-# XNAString
-
-<details>
-
-* Version: 1.15.0
-* GitHub: NA
-* Source code: https://github.com/cran/XNAString
-* Date/Publication: 2024-10-29
-* Number of recursive dependencies: 108
-
-Run `revdepcheck::revdep_details(, "XNAString")` for more info
-
-</details>
-
-## In both
-
-*   checking whether package ‘XNAString’ can be installed ... ERROR
-    ```
-    Installation failed.
-    See ‘/scratch/henrik/revdep/future/checks/XNAString/new/XNAString.Rcheck/00install.out’ for details.
-    ```
-
-## Installation
-
-### Devel
-
-```
-* installing *source* package ‘XNAString’ ...
-** this is package ‘XNAString’ version ‘1.15.0’
-** using staged installation
-** libs
-using C++ compiler: ‘g++ (GCC) 13.3.1 20240611 (Red Hat 13.3.1-2)’
-using C++11
-gcc -std=gnu2x -I"/software/c4/cbi/software/_rocky8/R-4.5.2-gcc13/lib64/R/include" -DNDEBUG -Dlibcaf_core_shared_EXPORTS -I../src -I../src -I'/scratch/henrik/revdep/future/library/XNAString/Rcpp/include' -I/usr/local/include    -fpic  -g -O2  -c ViennaRNA/utils/cpu.c -o ViennaRNA/utils/cpu.o
-gcc -std=gnu2x -I"/software/c4/cbi/software/_rocky8/R-4.5.2-gcc13/lib64/R/include" -DNDEBUG -Dlibcaf_core_shared_EXPORTS -I../src -I../src -I'/scratch/henrik/revdep/future/library/XNAString/Rcpp/include' -I/usr/local/include    -fpic  -g -O2  -c ViennaRNA/utils/msa_utils.c -o ViennaRNA/utils/msa_utils.o
-gcc -std=gnu2x -I"/software/c4/cbi/software/_rocky8/R-4.5.2-gcc13/lib64/R/include" -DNDEBUG -Dlibcaf_core_shared_EXPORTS -I../src -I../src -I'/scratch/henrik/revdep/future/library/XNAString/Rcpp/include' -I/usr/local/include    -fpic  -g -O2  -c ViennaRNA/utils/structure_tree.c -o ViennaRNA/utils/structure_tree.o
-gcc -std=gnu2x -I"/software/c4/cbi/software/_rocky8/R-4.5.2-gcc13/lib64/R/include" -DNDEBUG -Dlibcaf_core_shared_EXPORTS -I../src -I../src -I'/scratch/henrik/revdep/future/library/XNAString/Rcpp/include' -I/usr/local/include    -fpic  -g -O2  -c ViennaRNA/utils/higher_order_functions.c -o ViennaRNA/utils/higher_order_functions.o
-...
-      |      ^~~~~~~~
-ViennaRNA/datastructures/lists.c:284:1: error: conflicting types for ‘lst_mergesort’; have ‘void(LIST *, int (*)(void *, void *))’
-  284 | lst_mergesort (LIST * l, int (*cmp_func) (void *, void *))
-      | ^~~~~~~~~~~~~
-../src/ViennaRNA/datastructures/lists.h:63:6: note: previous declaration of ‘lst_mergesort’ with type ‘void(LIST *, int (*)(void))’
-   63 | void lst_mergesort (LIST * l, int (*cmp_func) ());
-      |      ^~~~~~~~~~~~~
-make: *** [/software/c4/cbi/software/_rocky8/R-4.5.2-gcc13/lib64/R/etc/Makeconf:202: ViennaRNA/datastructures/lists.o] Error 1
-ERROR: compilation failed for package ‘XNAString’
-* removing ‘/scratch/henrik/revdep/future/checks/XNAString/new/XNAString.Rcheck/XNAString’
-
-
-```
-### CRAN
-
-```
-* installing *source* package ‘XNAString’ ...
-** this is package ‘XNAString’ version ‘1.15.0’
-** using staged installation
-** libs
-using C++ compiler: ‘g++ (GCC) 13.3.1 20240611 (Red Hat 13.3.1-2)’
-using C++11
-gcc -std=gnu2x -I"/software/c4/cbi/software/_rocky8/R-4.5.2-gcc13/lib64/R/include" -DNDEBUG -Dlibcaf_core_shared_EXPORTS -I../src -I../src -I'/scratch/henrik/revdep/future/library/XNAString/Rcpp/include' -I/usr/local/include    -fpic  -g -O2  -c ViennaRNA/utils/cpu.c -o ViennaRNA/utils/cpu.o
-gcc -std=gnu2x -I"/software/c4/cbi/software/_rocky8/R-4.5.2-gcc13/lib64/R/include" -DNDEBUG -Dlibcaf_core_shared_EXPORTS -I../src -I../src -I'/scratch/henrik/revdep/future/library/XNAString/Rcpp/include' -I/usr/local/include    -fpic  -g -O2  -c ViennaRNA/utils/msa_utils.c -o ViennaRNA/utils/msa_utils.o
-gcc -std=gnu2x -I"/software/c4/cbi/software/_rocky8/R-4.5.2-gcc13/lib64/R/include" -DNDEBUG -Dlibcaf_core_shared_EXPORTS -I../src -I../src -I'/scratch/henrik/revdep/future/library/XNAString/Rcpp/include' -I/usr/local/include    -fpic  -g -O2  -c ViennaRNA/utils/structure_tree.c -o ViennaRNA/utils/structure_tree.o
-gcc -std=gnu2x -I"/software/c4/cbi/software/_rocky8/R-4.5.2-gcc13/lib64/R/include" -DNDEBUG -Dlibcaf_core_shared_EXPORTS -I../src -I../src -I'/scratch/henrik/revdep/future/library/XNAString/Rcpp/include' -I/usr/local/include    -fpic  -g -O2  -c ViennaRNA/utils/higher_order_functions.c -o ViennaRNA/utils/higher_order_functions.o
-...
-      |      ^~~~~~~~
-ViennaRNA/datastructures/lists.c:284:1: error: conflicting types for ‘lst_mergesort’; have ‘void(LIST *, int (*)(void *, void *))’
-  284 | lst_mergesort (LIST * l, int (*cmp_func) (void *, void *))
-      | ^~~~~~~~~~~~~
-../src/ViennaRNA/datastructures/lists.h:63:6: note: previous declaration of ‘lst_mergesort’ with type ‘void(LIST *, int (*)(void))’
-   63 | void lst_mergesort (LIST * l, int (*cmp_func) ());
-      |      ^~~~~~~~~~~~~
-make: *** [/software/c4/cbi/software/_rocky8/R-4.5.2-gcc13/lib64/R/etc/Makeconf:202: ViennaRNA/datastructures/lists.o] Error 1
-ERROR: compilation failed for package ‘XNAString’
-* removing ‘/scratch/henrik/revdep/future/checks/XNAString/old/XNAString.Rcheck/XNAString’
-
-
-```
