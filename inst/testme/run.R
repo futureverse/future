@@ -21,6 +21,7 @@
 #'                  (Environment variable: `R_TESTME_NAME`)
 #' --not-cran       Set environment variable `NOT_CRAN=true`
 #' --covr=summary   Estimate test code coverage with basic summary
+#' --covr=tally     Estimate test code coverage with full tally summary
 #' --covr=report    Estimate test code coverage with full HTML report
 #' --debug          Output debug messages
 #'                  (Environment variable: `R_TESTME_DEBUG`)
@@ -105,7 +106,7 @@ main <- function() {
     if (!nzchar(value)) {
       covr <- "summary"
     } else {
-      covr <- match.arg(value, choices = c("summary", "report"))
+      covr <- match.arg(value, choices = c("summary", "tally", "report"))
     }
     cmd_args <- cmd_args[-idx]
   } else {
@@ -114,7 +115,7 @@ main <- function() {
       value <- as.logical(value)
       covr <- if (value) "summary" else "none"
     } else {
-      covr <- match.arg(value, choices = "report")
+      covr <- match.arg(value, choices = c("summary", "tally", "report"))
     }
   }
   if (covr != "none") {
@@ -289,51 +290,8 @@ testme_run_test <- function(testme) {
     if (testme[["debug"]]) message("Running test script: ", sQuote(testme[["script"]]))
     testme[["status"]] <- "failed"
     if (testme[["covr"]] != "none") {
-      source_dirs <- c("R", "src")
-      source_dirs <- source_dirs[utils::file_test("-d", source_dirs)]
-      source_files <- dir(source_dirs, pattern = "[.]R$", full.names = TRUE)
-      stopifnot(length(source_files) > 0)
-
-      assign(".packageName", testme[["package"]], envir = globalenv())
-  
-      ## Attach imported packages
-#      library(testme[["package"]], character.only = TRUE)
-#      desc <- utils::packageDescription(testme[["package"]])
-#      pkgs <- desc[["Imports"]]
-#      pkgs <- strsplit(pkgs, split = ",", fixed = TRUE)[[1]]
-#      pkgs <- gsub("[[:space:]]", "", pkgs)
-#      lapply(pkgs, FUN = library, character.only = TRUE)
-
-      ## Copy imports
-      ns <- getNamespace(testme[["package"]])
-      ns <- parent.env(ns)
-      for (name in names(ns)) {
-        obj <- get(name, envir = ns, inherits = FALSE)
-        assign(name, obj, envir = globalenv(), inherits = FALSE)
-      }
-
-      ## Copy non-exported 'NativeSymbolInfo':s
-      ns <- getNamespace(testme[["package"]])
-      for (name in names(ns)) {
-        if (!exists(name, mode = "list", envir = ns, inherits = FALSE)) next
-        obj <- get(name, mode = "list", envir = ns, inherits = FALSE)
-        if (!inherits(obj, "NativeSymbolInfo")) next
-        assign(name, obj, envir = globalenv(), inherits = FALSE)
-      }
-
-      ## Register S3 methods
-      library(testme[["package"]], character.only = TRUE)
-      ns <- getNamespace(testme[["package"]])
-      ns2 <- ns[[".__S3MethodsTable__."]]
-      for (name in names(ns2)) {
-        pattern <- "(.*)[.]([^.]+)$"
-        genname <- gsub(pattern, "\\1", name)
-        class <- gsub(pattern, "\\2", name)
-        method <- ns2[[name]]
-        registerS3method(genname, class, method, envir = ns)
-      }
-      
-      cov <- covr::file_coverage(source_files, test_files = testme[["script"]])
+      pkg_env <- pkgload::load_all()
+      cov <- covr::environment_coverage(pkg_env[["env"]], test_files = testme[["script"]])
       ## Keep source files with non-zero coverage
       tally <- covr::tally_coverage(cov)
       tally <- subset(tally, value > 0)
@@ -344,11 +302,6 @@ testme_run_test <- function(testme) {
       source(testme[["script"]], echo = TRUE)
     }
     testme[["status"]] <- "success"
-    
-  #  ## In case test script overwrote some elements in 'testme'
-  #  for (name in names(testme_config)) {
-  #    testme[[name]] <- testme_config[[name]]
-  #  }
   }
   
   
@@ -392,7 +345,11 @@ testme_run_test <- function(testme) {
     message("Source files covered by the test script:")
     if (length(cov) > 0) {
       print(cov)
-      if (testme[["covr"]] == "report") {
+      if ("tally" %in% testme[["covr"]]) {
+        tally <- covr::tally_coverage(cov)
+        print(tally)
+      }
+      if ("report" %in% testme[["covr"]]) {
         html <- covr::report(cov, browse = FALSE)
         browseURL(html)
         Sys.sleep(5.0)
