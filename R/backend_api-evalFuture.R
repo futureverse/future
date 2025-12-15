@@ -98,7 +98,7 @@ canForceSingleThreading <- local({
     ans <- FALSE
     if (requireNamespace("RhpcBLASctl", quietly = TRUE)) {
       ## If RhpcBLASctl is compiled without OpenMP support, then it
-      ## returns NA_integer_, or NULL if RhpcBLASctl (< 0.20-17)
+      ## returns NA_integer_, or NULL if RhpcBLASctl (< 0.20-17) [2020-01-17]
       old <- RhpcBLASctl::omp_get_max_threads()
       
       ## Success?
