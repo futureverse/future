@@ -336,7 +336,6 @@ print.Future <- function(x, ...) {
   actions <- future[["actions"]]
   cat(sprintf("Actions: [n=%d] %s\n", length(actions), commaq(actions)))
 
-  actions <- future[["actions"]]
   result <- future[["result"]]
   state <- future[["state"]]
   description <- switch(state,
