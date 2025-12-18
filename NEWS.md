@@ -26,6 +26,9 @@
    1 unknown future arguments: 'interrupts'" for third-party future
    backends.
 
+ * `resolved()` on a 'cluster' future would produce a warning when
+   using a `parallelly::makeClusterSequential())` cluster.
+
 ## Deprecated and Defunct
 
  * The `cluster` backend now defaults to `earlySignal = FALSE`. This

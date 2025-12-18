@@ -725,6 +725,8 @@ resolved.ClusterFuture <- function(x, timeout = NULL, ...) {
     } ## while()
   } else if (inherits(node, "MPInode")) {
     res <- resolveMPI(future)
+  } else if (inherits(node, "sequential_node")) {
+    res <- TRUE
   } else {
     warnf("resolved() is not yet implemented for workers of class %s. Will use value() instead and return TRUE", sQuote(class(node)[1]))
     value(future, stdout = FALSE, signal = FALSE)
