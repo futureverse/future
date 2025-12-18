@@ -1,6 +1,6 @@
 # Version (development version)
 
-## Signifcant Changes
+## Significant Changes
 
  * Removed generic function `as.cluster()`, which has been re-exported
    from the **parallelly** package since 2020. If needed, please use
@@ -25,6 +25,9 @@
  * `plan(..., interrupts = ...)` would produce a warning on "Detected
    1 unknown future arguments: 'interrupts'" for third-party future
    backends.
+
+ * `plan(cluster, workers = parallelly::makeClusterSequential())` would
+   erase the global environment as soon as a future is launched.
 
  * `resolved()` on a 'cluster' future would produce a warning when
    using a `parallelly::makeClusterSequential())` cluster.

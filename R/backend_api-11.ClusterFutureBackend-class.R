@@ -283,8 +283,11 @@ launchFuture.ClusterFutureBackend <- function(backend, future, ...) {
   ##     may happen even if the future is evaluated inside a
   ##     local, e.g. local({ a <<- 1 }).
   ##     If the persistent = TRUE, this will be skipped.
+  ##
+  ##     SPECIAL CASE: Do not erase if a
+  ##     parallelly::makeClusterSequential() is used
   persistent <- isTRUE(future[["persistent"]])
-  if (!persistent) {
+  if (!persistent && !inherits(node, "sequential_node")) {
     if (debug) mdebug_push("eraseGlobalEnvironment() ...")
     
     t_start <- Sys.time()
