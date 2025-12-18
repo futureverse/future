@@ -50,7 +50,7 @@
   Attempts to set them produce deprecation warnings. Deprecated also
   hidden argument `local`, which was kept around for legacy reasons.
 
-- Use of `plan(..., earlySignal = ...)` is now defunct and produces a
+- Use of `plan(..., earlySignal = ...)` is now deprecated and produces a
   deprecation warning.
 
 - Remove argument `run` from

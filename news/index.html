@@ -100,7 +100,7 @@
 <h3 id="deprecated-and-defunct-development-version">Deprecated and Defunct<a class="anchor" aria-label="anchor" href="#deprecated-and-defunct-development-version"></a></h3>
 <ul><li><p>The <code>cluster</code> backend now defaults to <code>earlySignal = FALSE</code>. This was effectively already the case, because of an internal thinko bug.</p></li>
 <li><p>Remove arguments <code>earlySignal</code> and <code>gc</code> from <code><a href="../reference/future.html">future()</a></code>, <code><a href="../reference/futureAssign.html">futureAssign()</a></code>, and <code><a href="../reference/future.html">futureCall()</a></code>. Attempts to set them produce deprecation warnings. Deprecated also hidden argument <code>local</code>, which was kept around for legacy reasons.</p></li>
-<li><p>Use of <code>plan(..., earlySignal = ...)</code> is now defunct and produces a deprecation warning.</p></li>
+<li><p>Use of <code>plan(..., earlySignal = ...)</code> is now deprecated and produces a deprecation warning.</p></li>
 <li><p>Remove argument <code>run</code> from <code><a href="../reference/resolved.html">resolved()</a></code>. Attempts to set it produces a deprecation warning.</p></li>
 <li><p>Remove internal future field <code>envir</code>.</p></li>
 </ul></div>
