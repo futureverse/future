@@ -4,10 +4,10 @@ name: revdepcheck-top
 
 jobs:
   R-CMD-check:
-    if: "! contains(github.event.head_commit.message, '[ci skip]')"    
+    if: "! contains(github.event.head_commit.message, '[ci skip]')"
 
     timeout-minutes: 30
-    
+
     runs-on: ubuntu-latest
 
     name: ${{ matrix.config.pkg }} (${{ matrix.config.r }}) ${{ matrix.config.label }}
@@ -50,7 +50,7 @@ jobs:
       R_FUTURE_GLOBALS_KEEPWHERE: ${{ matrix.config.globals_keepWhere }}
       R_GLOBALS_BRANCH: ${{ matrix.config.globals }}
       NOT_CRAN: true
-      
+
     steps:
       - uses: actions/checkout@v4
 
@@ -70,20 +70,20 @@ jobs:
             any::covr
           needs: check
 
-      - name: Install system dependencies (manually added)
+      - name: Install system dependencies
         run: |
           ## 'plumber' fail to install 'sf', because 'units' fail to
-	  ## install due 'libudunits2-dev' missing
+          ## install due 'libudunits2-dev' missing
           if [[ "{{ matrix.config.pkg }}" == "plumber" ]]; then
-	    apt install -y libudunits2-dev
-	  fi
+            apt install -y libudunits2-dev
+          fi
           ## 'shiny' fail at run time with "Error in `dyn.load(file, DLLpath
-	  ## = DLLpath, ...)`: unable to load shared object '/home/runner/
-	  ## work/_temp/Library/otelsdk/libs/otelsdk.so': libprotobuf.so.32:
-	  ## cannot open shared object file: No such file or directory
+          ## = DLLpath, ...)`: unable to load shared object '/home/runner/
+          ## work/_temp/Library/otelsdk/libs/otelsdk.so': libprotobuf.so.32:
+          ## cannot open shared object file: No such file or directory
           if [[ "{{ matrix.config.pkg }}" == "shiny" ]]; then
-	    apt install -y libprotobuf32t64
-	  fi
+            apt install -y libprotobuf32t64
+          fi
 
       - name: Install dependencies
         run: |
