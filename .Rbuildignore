@@ -1,6 +1,7 @@
 #----------------------------
 # Git and SVN related
 #----------------------------
+^.pre-commit-config.yaml$
 ^.svn
 ^.git
 ^.make
