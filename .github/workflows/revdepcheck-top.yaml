@@ -75,14 +75,14 @@ jobs:
           ## 'plumber' fail to install 'sf', because 'units' fail to
           ## install due 'libudunits2-dev' missing
           if [[ "${{ matrix.config.pkg }}" == "plumber" ]]; then
-            apt install -y libudunits2-dev
+            sudo apt install -y libudunits2-dev
           fi
           ## 'shiny' fail at run time with "Error in `dyn.load(file, DLLpath
           ## = DLLpath, ...)`: unable to load shared object '/home/runner/
           ## work/_temp/Library/otelsdk/libs/otelsdk.so': libprotobuf.so.32:
           ## cannot open shared object file: No such file or directory
           if [[ "${{ matrix.config.pkg }}" == "shiny" ]]; then
-            apt install -y libprotobuf32t64
+            sudo apt install -y libprotobuf32t64
           fi
 
       - name: Install dependencies
