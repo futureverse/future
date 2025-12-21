@@ -33,15 +33,12 @@ jobs:
 #          - {os: ubuntu-latest,  r: 'oldrel'   }
 #          - {os: ubuntu-latest,  r: 'oldrel-1' }
 #          - {os: ubuntu-latest,  r: 'oldrel-2' }
-#          - {os: ubuntu-latest,  r: '4.0'      }
 #          
 #          - {os: ubuntu-latest,  r: 'release'  , availablecores: 1, label: 'availableCores.system=1' }
 #          - {os: ubuntu-latest,  r: 'release'  , availablecores: 2, label: 'availableCores.system=2' }
 #          - {os: ubuntu-latest,  r: 'release'  , language: ko,    label: ko    }
 #          - {os: ubuntu-latest,  r: 'release'  , language: zh_CN, label: zh_CN }
 #          - {os: ubuntu-latest,  r: 'release'  , language: zh_TW, label: zh_TW }
-#          - {os: ubuntu-latest,  r: 'release'  , globals_keepWhere: true, label: 'keepWhere' }
-#          - {os: ubuntu-latest,  r: 'release'  , globals_keepWhere: false, label: '!keepWhere' }
 #          - {os: ubuntu-latest,  r: 'release'  , plan: multicore, fork_multithreading_enable: false, label: 'multicore, no-multithreading-in-forks' }
 #          - {os: ubuntu-latest,  r: 'release'  , plan: multisession, fork_multithreading_enable: false, label: 'multisession, no-multithreading-in-forks' }
 #          - {os: ubuntu-latest,  r: 'release'  , psock_relay_immediate: false, label: 'no-immediate-relay-in-psock' }

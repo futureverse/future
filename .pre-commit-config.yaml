@@ -7,8 +7,4 @@ repos:
     - id: detect-aws-credentials
     - id: detect-private-key
     - id: mixed-line-ending
--   repo: https://github.com/psf/black
-    rev: 22.10.0
-    hooks:
-    -   id: black
     
