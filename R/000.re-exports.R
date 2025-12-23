@@ -13,13 +13,12 @@
 #' * [parallelly::autoStopCluster()]   (no longer re-exported)
 #    Used by: <none>
 #' * [parallelly::availableCores()]
-#    Used by: ARPALData, BatchGetSymbols, bistablehistory, codalm, crossmap,
-#             cft, CSCNet, deseats, dipsaus, drimmR, elevatr, GetBCBData,
-#             gtfs2emis, heterogen, isoreader,
-#             ItemResponseTrees, ldaPrototype, lidR, meedr, microservices,
-#             microsynth, origami, PINstimation, powRICLPM, rBiasCorrection,
-#             readsdr, recforest, rkeops, sigminer, skpr, smoots, sovereign,
-#             TriDimRegression, uci, updog, whitewater, yfR
+#    Used by: BatchGetSymbols, bistablehistory, codalm, cft, CSCNet (1),
+#             deseats, dipsaus, drimmR, elevatr, GetBCBData, gtfs2emis,
+#             heterogen, ldaPrototype, lidR (1), origami, PINstimation (1),
+#             powRICLPM, rBiasCorrection, readsdr (1), recforest,
+#             sigminer (1), skpr (1), smoots, sovereign, TriDimRegression,
+#             uci (1), updog, whitewater, yfR [2025-12-22]
 #' * [parallelly::availableWorkers()]
 #    Used by: wqspt(1) [2025-03-15]
 #' * [parallelly::makeClusterMPI()]    (no longer re-exported)
@@ -29,7 +28,7 @@
 #' * [parallelly::makeNodePSOCK()]     (no longer re-exported)
 #    Used by: <none>
 #' * [parallelly::supportsMulticore()]
-#    Used by: crossmap (1), furrr(1), sctransform (1)
+#    Used by: furrr(1), sctransform (1)
 #
 #  (1) Issue filed or PR sent
 #  (2) In the next release
