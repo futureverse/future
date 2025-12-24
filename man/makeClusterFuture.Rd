@@ -65,7 +65,8 @@ See below for more details.
 
 \section{clusterSetRNGStream}{
 
-\code{\link[parallel:RngStream]{parallel::clusterSetRNGStream()}} distributes "L'Ecuyer-CMRG" RNG
+\code{\link[parallel:clusterSetRNGStream]{parallel::clusterSetRNGStream()}}
+distributes "L'Ecuyer-CMRG" RNG
 streams to the cluster nodes, which record them such that the next
 round of futures will use them. When used, the RNG state after the
 futures are resolved are recorded accordingly, such that the next

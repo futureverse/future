@@ -68,7 +68,11 @@
 #' See below for more details.
 #'
 #' @section clusterSetRNGStream:
-#' [parallel::clusterSetRNGStream()] distributes "L'Ecuyer-CMRG" RNG
+## [parallel::clusterSetRNGStream()] results in
+## \code{\link[parallel:RngStream]{parallel::clusterSetRNGStream()}}, which
+## causes Rd2md::render_refman() to produce an error /HB 2025-12-23
+#' \code{\link[parallel:clusterSetRNGStream]{parallel::clusterSetRNGStream()}}
+#' distributes "L'Ecuyer-CMRG" RNG
 #' streams to the cluster nodes, which record them such that the next
 #' round of futures will use them. When used, the RNG state after the
 #' futures are resolved are recorded accordingly, such that the next
