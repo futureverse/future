@@ -146,14 +146,14 @@ Hello world!
 
 future パッケージで利用できる戦略を次の表に示す。
 
-| 名前 | OS | 説明 |
-|:---|:---|:---|
-| ***同期:*** |  | ***非並列:*** |
-| `sequential` | すべて | 逐次的かつ現行のRプロセス |
-| ***非同期:*** |  | ***並列:*** |
-| `multisession` | すべて | バックグラウンド R セッション（現行のマシン上） |
-| `multicore` | Windows以外/RStudio以外 | フォークされた R プロセス（現行のマシン上） |
-| `cluster` | すべて | 外部 R セッション（現行、ローカル、リモートマシン上） |
+| 名前           | OS                      | 説明                                                  |
+|:---------------|:------------------------|:------------------------------------------------------|
+| ***同期:***    |                         | ***非並列:***                                         |
+| `sequential`   | すべて                  | 逐次的かつ現行のRプロセス                             |
+| ***非同期:***  |                         | ***並列:***                                           |
+| `multisession` | すべて                  | バックグラウンド R セッション（現行のマシン上）       |
+| `multicore`    | Windows以外/RStudio以外 | フォークされた R プロセス（現行のマシン上）           |
+| `cluster`      | すべて                  | 外部 R セッション（現行、ローカル、リモートマシン上） |
 
 future
 パッケージは、自分で実装した戦略を追加できるように設計されている。
@@ -376,7 +376,6 @@ Windows 以外）では、バックグラウンドで R
 フォークがサポートされている場合、次のようにしてマルチコアフューチャを使用することができる。
 
 ``` r
-
 plan(multicore)
 ```
 
@@ -445,7 +444,6 @@ Future 'c' ...
 例えば、上記のクラスタを明示的にセットアップするには次のように書く。
 
 ``` r
-
 cl <- parallel::makeCluster(c("n1", "n2", "n3"))
 plan(cluster, workers = cl)
 ```
@@ -528,7 +526,6 @@ Future 'b2' ...
 例えば、上記と同じ評価トポロジーを明示的に指定するには次のようにする。
 
 ``` r
-
 plan(list(multisession, sequential))
 ```
 
@@ -798,7 +795,6 @@ List of 3
 (Mandelbrot) デモを実行するとよい。 まず、逐次評価で実行してみよう。
 
 ``` r
-
 library(future)
 plan(sequential)
 demo("mandelbrot", package = "future", ask = FALSE)
@@ -810,7 +806,6 @@ demo("mandelbrot", package = "future", ask = FALSE)
 プロセスで並列に計算する。
 
 ``` r
-
 plan(multisession)
 demo("mandelbrot", package = "future", ask = FALSE)
 ```
@@ -818,7 +813,6 @@ demo("mandelbrot", package = "future", ask = FALSE)
 最後に、複数の計算機にアクセスできる場合、クラスタのワーカを指定して実行できる。
 
 ``` r
-
 plan(cluster, workers = c("n2", "n5", "n6", "n6", "n9"))
 demo("mandelbrot", package = "future", ask = FALSE)
 ```
@@ -838,7 +832,6 @@ future パッケージは CRAN
 で利用可能であり、次のコードを実行してインストールできる。
 
 ``` r
-
 install.packages("future")
 ```
 
@@ -848,7 +841,6 @@ install.packages("future")
 ブランチにあり、インストールするには次のようにする。
 
 ``` r
-
 remotes::install_github("futureverse/future", ref="develop")
 ```
 

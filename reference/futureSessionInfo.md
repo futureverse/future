@@ -29,18 +29,13 @@ Nothing.
 plan(multisession, workers = 2)
 futureSessionInfo()
 #> *** Package versions
-#> future 1.68.0.9036, parallelly 1.46.0, parallel 4.5.2, globals 0.18.0, listenv 0.10.0
+#> future 1.68.0.9037, parallelly 1.46.1, parallel 4.5.2, globals 0.18.0, listenv 0.10.0
 #> 
 #> *** Allocations
 #> availableCores():
-#>                system     /proc/self/status                 nproc 
-#>                     8                     8                     8 
-#> _R_CHECK_LIMIT_CORES_ 
-#>                     2 
+#>            system /proc/self/status             nproc 
+#>                 8                 8                 8 
 #> availableWorkers():
-#> $`_R_CHECK_LIMIT_CORES_`
-#> [1] "localhost" "localhost"
-#> 
 #> $nproc
 #> [1] "localhost" "localhost" "localhost" "localhost" "localhost" "localhost"
 #> [7] "localhost" "localhost"
@@ -71,16 +66,16 @@ futureSessionInfo()
 #> 
 #> *** Basic tests
 #> Main R session details:
-#>       pid     r sysname           release
-#> 1 1235712 4.5.2   Linux 6.14.0-37-generic
+#>      pid     r sysname           release
+#> 1 248897 4.5.2   Linux 6.14.0-37-generic
 #>                                                            version nodename
 #> 1 #37~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Thu Nov 20 10:25:38 UTC 2  host001
 #>   machine   login    user effective_user
 #> 1  x86_64 user001 user001        user001
 #> Worker R session details:
-#>   worker     pid     r sysname           release
-#> 1      1 1236719 4.5.2   Linux 6.14.0-37-generic
-#> 2      2 1236718 4.5.2   Linux 6.14.0-37-generic
+#>   worker    pid     r sysname           release
+#> 1      1 249915 4.5.2   Linux 6.14.0-37-generic
+#> 2      2 249914 4.5.2   Linux 6.14.0-37-generic
 #>                                                            version nodename
 #> 1 #37~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Thu Nov 20 10:25:38 UTC 2  host001
 #> 2 #37~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Thu Nov 20 10:25:38 UTC 2  host001

@@ -35,7 +35,7 @@
 
     <a class="navbar-brand me-2" href="index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.68.0-9036</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.68.0-9037</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -132,7 +132,7 @@
 <span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://future.apply.futureverse.org/reference/future_lapply.html" class="external-link">future_lapply</a></span><span class="op">(</span><span class="va">X</span>, <span class="va">slow_fcn</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co">## furrr: futurized version of purrr</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/futureverse/furrr" class="external-link">furrr</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/DavisVaughan/furrr" class="external-link">furrr</a></span><span class="op">)</span></span>
 <span><span class="va">y</span> <span class="op">&lt;-</span> <span class="va">X</span> <span class="op">|&gt;</span>        <span class="fu">map</span><span class="op">(</span><span class="va">slow_fcn</span><span class="op">)</span></span>
 <span><span class="va">y</span> <span class="op">&lt;-</span> <span class="va">X</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://furrr.futureverse.org/reference/future_map.html" class="external-link">future_map</a></span><span class="op">(</span><span class="va">slow_fcn</span><span class="op">)</span></span>
 <span></span>
@@ -223,13 +223,13 @@
 <col width="15%">
 <col width="64%">
 </colgroup>
-<thead><tr>
+<thead><tr class="header">
 <th align="left">Package / Backend</th>
 <th align="left">Features</th>
 <th align="left">How futures are evaluated</th>
 </tr></thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td align="left">
 <strong>future</strong><br><code>sequential</code>
 </td>
@@ -237,7 +237,7 @@
 </td>
 <td align="left">sequentially and in the current R process; default</td>
 </tr>
-<tr>
+<tr class="even">
 <td align="left">
 <strong>future</strong><br><code>multisession</code>
 </td>
@@ -245,7 +245,7 @@
 </td>
 <td align="left">parallelly via background R sessions on current machine</td>
 </tr>
-<tr>
+<tr class="odd">
 <td align="left">
 <strong>future</strong><br><code>cluster</code>
 </td>
@@ -253,7 +253,7 @@
 </td>
 <td align="left">parallelly in external R sessions on current, local, and/or remote machines</td>
 </tr>
-<tr>
+<tr class="even">
 <td align="left">
 <strong>future</strong><br><code>multicore</code>
 </td>
@@ -261,7 +261,7 @@
 </td>
 <td align="left">(not recommended) parallelly via forked R processes on current machine; not with GUIs like RStudio; not on Windows</td>
 </tr>
-<tr>
+<tr class="odd">
 <td align="left">
 <strong><a href="https://future.callr.futureverse.org" class="external-link">future.callr</a></strong><br><code>callr</code>
 </td>
@@ -269,7 +269,7 @@
 </td>
 <td align="left">parallelly via transient <strong><a href="https://cran.r-project.org/package=callr" class="external-link">callr</a></strong> background R sessions on current machine; all memory is returned when as each future is resolved</td>
 </tr>
-<tr>
+<tr class="even">
 <td align="left">
 <strong><a href="https://future.mirai.futureverse.org" class="external-link">future.mirai</a></strong><br><code>mirai_multisession</code>
 </td>
@@ -277,7 +277,7 @@
 </td>
 <td align="left">parallelly via <strong><a href="https://cran.r-project.org/package=mirai" class="external-link">mirai</a></strong> background R sessions on current machine; low latency</td>
 </tr>
-<tr>
+<tr class="odd">
 <td align="left">
 <strong><a href="https://future.mirai.futureverse.org" class="external-link">future.mirai</a></strong><br><code>mirai_cluster</code>
 </td>
@@ -285,7 +285,7 @@
 </td>
 <td align="left">parallelly via <strong><a href="https://cran.r-project.org/package=mirai" class="external-link">mirai</a></strong> daemons running locally or remotely</td>
 </tr>
-<tr>
+<tr class="even">
 <td align="left">
 <strong><a href="https://future.batchtools.futureverse.org" class="external-link">future.batchtools</a></strong><br><code>batchtools_lsf</code><br><code>batchtools_openlava</code><br><code>batchtools_sge</code><br><code>batchtools_slurm</code><br><code>batchtools_torque</code>
 </td>

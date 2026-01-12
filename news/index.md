@@ -23,6 +23,10 @@
 
 ### Bug Fixes
 
+- [`makeClusterFuture()`](https://future.futureverse.org/reference/makeClusterFuture.md)
+  clusters would not signal errors as other **parallel** clusters.
+  Instead they were signals as-is instantly.
+
 - `future(..., packages = "missing-package")` did not result in an error
   despite requesting a non-installed package.
 

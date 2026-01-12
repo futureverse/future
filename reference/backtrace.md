@@ -42,9 +42,9 @@ res <- tryCatch({
 #> [[1]]
 #> base::tryCatch(base::withCallingHandlers({
 #>     NULL
-#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpEgg6V1/callr-fun-12d7bc3dab43d6"), 
+#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/Rtmpe4imIh/callr-fun-3cba274ff44c6"), 
 #>         base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
-#>         quote = TRUE), file = "/tmp/hb/RtmpEgg6V1/callr-res-12d7bc1905d058", 
+#>         quote = TRUE), file = "/tmp/hb/Rtmpe4imIh/callr-res-3cba218ce214", 
 #>         compress = FALSE)
 #>     base::flush(base::stdout())
 #>     base::flush(base::stderr())
@@ -70,7 +70,7 @@ res <- tryCatch({
 #>         if (!base::is.na(cut)) {
 #>             e2$trace <- e2$trace[-(1:cut), ]
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpEgg6V1/callr-res-12d7bc1905d058", 
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/Rtmpe4imIh/callr-res-3cba218ce214", 
 #>             ".error"))
 #>     }
 #> }, interrupt = function(e) {
@@ -93,7 +93,7 @@ res <- tryCatch({
 #>         if (!base::is.na(cut)) {
 #>             e2$trace <- e2$trace[-(1:cut), ]
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpEgg6V1/callr-res-12d7bc1905d058", 
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/Rtmpe4imIh/callr-res-3cba218ce214", 
 #>             ".error"))
 #>     }
 #> }, callr_message = function(e) {
@@ -138,9 +138,9 @@ res <- tryCatch({
 #> [[8]]
 #> base::withCallingHandlers({
 #>     NULL
-#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpEgg6V1/callr-fun-12d7bc3dab43d6"), 
+#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/Rtmpe4imIh/callr-fun-3cba274ff44c6"), 
 #>         base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
-#>         quote = TRUE), file = "/tmp/hb/RtmpEgg6V1/callr-res-12d7bc1905d058", 
+#>         quote = TRUE), file = "/tmp/hb/Rtmpe4imIh/callr-res-3cba218ce214", 
 #>         compress = FALSE)
 #>     base::flush(base::stdout())
 #>     base::flush(base::stderr())
@@ -166,7 +166,7 @@ res <- tryCatch({
 #>         if (!base::is.na(cut)) {
 #>             e2$trace <- e2$trace[-(1:cut), ]
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpEgg6V1/callr-res-12d7bc1905d058", 
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/Rtmpe4imIh/callr-res-3cba218ce214", 
 #>             ".error"))
 #>     }
 #> }, interrupt = function(e) {
@@ -189,7 +189,7 @@ res <- tryCatch({
 #>         if (!base::is.na(cut)) {
 #>             e2$trace <- e2$trace[-(1:cut), ]
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpEgg6V1/callr-res-12d7bc1905d058", 
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/Rtmpe4imIh/callr-res-3cba218ce214", 
 #>             ".error"))
 #>     }
 #> }, callr_message = function(e) {
@@ -197,13 +197,13 @@ res <- tryCatch({
 #> })
 #> 
 #> [[9]]
-#> base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpEgg6V1/callr-fun-12d7bc3dab43d6"), 
+#> base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/Rtmpe4imIh/callr-fun-3cba274ff44c6"), 
 #>     base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
-#>     quote = TRUE), file = "/tmp/hb/RtmpEgg6V1/callr-res-12d7bc1905d058", 
+#>     quote = TRUE), file = "/tmp/hb/Rtmpe4imIh/callr-res-3cba218ce214", 
 #>     compress = FALSE)
 #> 
 #> [[10]]
-#> base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpEgg6V1/callr-fun-12d7bc3dab43d6"), 
+#> base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/Rtmpe4imIh/callr-fun-3cba274ff44c6"), 
 #>     base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
 #>     quote = TRUE)
 #> 
@@ -220,8 +220,8 @@ res <- tryCatch({
 #>     options(cli.num_colors = cli_colors, cli.hyperlink = hyperlinks, 
 #>         cli.hyperlink_run = hyperlinks)
 #>     pkgdown::build_site(...)
-#> }), base::quote(list(pkg = list(package = "future", version = "1.68.0-9036", 
-#>     src_path = "/tmp/hb/RtmpEgg6V1/future", meta = list(url = "https://future.futureverse.org", 
+#> }), base::quote(list(pkg = list(package = "future", version = "1.68.0-9037", 
+#>     src_path = "/tmp/hb/Rtmpe4imIh/future", meta = list(url = "https://future.futureverse.org", 
 #>         home = list(links = list(list(text = "Roadmap/Milestones", 
 #>             href = "https://github.com/futureverse/future/milestones"), 
 #>             list(text = "The Futureverse Project", href = "https://www.futureverse.org/"), 
@@ -256,7 +256,7 @@ res <- tryCatch({
 #>             bootstrap = 5L, `light-switch` = TRUE)), desc = <environment>, 
 #>     bs_version = 5L, development = list(destination = "dev", 
 #>         mode = "default", version_label = "muted", in_dev = FALSE, 
-#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/RtmpEgg6V1/future/docs", 
+#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/Rtmpe4imIh/future/docs", 
 #>     lang = "en-US", install_metadata = FALSE, figures = list(
 #>         dev = "ragg::agg_png", dpi = 96L, dev.args = list(), 
 #>         fig.ext = "png", fig.width = 7.29166666666667, fig.height = NULL, 
@@ -1638,7 +1638,8 @@ res <- tryCatch({
 #>                   "See below for more details.\n")), "\n", "\n", 
 #>                 list(list("clusterSetRNGStream"), list("\n", 
 #>                   "\n", list(list("parallel::clusterSetRNGStream()")), 
-#>                   " distributes \"L'Ecuyer-CMRG\" RNG\n", "streams to the cluster nodes, which record them such that the next\n", 
+#>                   "\n", "distributes \"L'Ecuyer-CMRG\" RNG\n", 
+#>                   "streams to the cluster nodes, which record them such that the next\n", 
 #>                   "round of futures will use them. When used, the RNG state after the\n", 
 #>                   "futures are resolved are recorded accordingly, such that the next\n", 
 #>                   "round again of future will use those, and so on. This strategy\n", 
@@ -2084,9 +2085,9 @@ res <- tryCatch({
 #>                 "\n", list("makeClusterPSOCK"), "\n", list("supportsMulticore"), 
 #>                 "\n", list("Functions Moved to 'parallelly'"), 
 #>                 "\n", list("\n", "The following function used to be part of ", 
-#>                   list("future"), " but has since\n", "been migrated to ", 
-#>                   list("parallelly"), ".  The migration started with\n", 
-#>                   list("future"), " 1.20.0 (November 2020).  They were moved because they\n", 
+#>                   list("future"), ", but has since\n", "been migrated to ", 
+#>                   list("parallelly"), ". The migration started with\n", 
+#>                   list("future"), " 1.20.0 (November 2020). They were moved because they\n", 
 #>                   "are also useful outside of the ", list("future"), 
 #>                   " framework.\n"), "\n", list("\n", list("If you are using any of these from the ", 
 #>                   list("future"), " package, please\n", "switch to use the ones from the ", 
@@ -2980,8 +2981,8 @@ res <- tryCatch({
 #>     options(cli.num_colors = cli_colors, cli.hyperlink = hyperlinks, 
 #>         cli.hyperlink_run = hyperlinks)
 #>     pkgdown::build_site(...)
-#> })(pkg = base::quote(list(package = "future", version = "1.68.0-9036", 
-#>     src_path = "/tmp/hb/RtmpEgg6V1/future", meta = list(url = "https://future.futureverse.org", 
+#> })(pkg = base::quote(list(package = "future", version = "1.68.0-9037", 
+#>     src_path = "/tmp/hb/Rtmpe4imIh/future", meta = list(url = "https://future.futureverse.org", 
 #>         home = list(links = list(list(text = "Roadmap/Milestones", 
 #>             href = "https://github.com/futureverse/future/milestones"), 
 #>             list(text = "The Futureverse Project", href = "https://www.futureverse.org/"), 
@@ -3016,7 +3017,7 @@ res <- tryCatch({
 #>             bootstrap = 5L, `light-switch` = TRUE)), desc = <environment>, 
 #>     bs_version = 5L, development = list(destination = "dev", 
 #>         mode = "default", version_label = "muted", in_dev = FALSE, 
-#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/RtmpEgg6V1/future/docs", 
+#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/Rtmpe4imIh/future/docs", 
 #>     lang = "en-US", install_metadata = FALSE, figures = list(
 #>         dev = "ragg::agg_png", dpi = 96L, dev.args = list(), 
 #>         fig.ext = "png", fig.width = 7.29166666666667, fig.height = NULL, 
@@ -4398,7 +4399,8 @@ res <- tryCatch({
 #>                   "See below for more details.\n")), "\n", "\n", 
 #>                 list(list("clusterSetRNGStream"), list("\n", 
 #>                   "\n", list(list("parallel::clusterSetRNGStream()")), 
-#>                   " distributes \"L'Ecuyer-CMRG\" RNG\n", "streams to the cluster nodes, which record them such that the next\n", 
+#>                   "\n", "distributes \"L'Ecuyer-CMRG\" RNG\n", 
+#>                   "streams to the cluster nodes, which record them such that the next\n", 
 #>                   "round of futures will use them. When used, the RNG state after the\n", 
 #>                   "futures are resolved are recorded accordingly, such that the next\n", 
 #>                   "round again of future will use those, and so on. This strategy\n", 
@@ -4844,9 +4846,9 @@ res <- tryCatch({
 #>                 "\n", list("makeClusterPSOCK"), "\n", list("supportsMulticore"), 
 #>                 "\n", list("Functions Moved to 'parallelly'"), 
 #>                 "\n", list("\n", "The following function used to be part of ", 
-#>                   list("future"), " but has since\n", "been migrated to ", 
-#>                   list("parallelly"), ".  The migration started with\n", 
-#>                   list("future"), " 1.20.0 (November 2020).  They were moved because they\n", 
+#>                   list("future"), ", but has since\n", "been migrated to ", 
+#>                   list("parallelly"), ". The migration started with\n", 
+#>                   list("future"), " 1.20.0 (November 2020). They were moved because they\n", 
 #>                   "are also useful outside of the ", list("future"), 
 #>                   " framework.\n"), "\n", list("\n", list("If you are using any of these from the ", 
 #>                   list("future"), " package, please\n", "switch to use the ones from the ", 

@@ -1,6 +1,6 @@
 # Functions Moved to 'parallelly'
 
-The following function used to be part of future but has since been
+The following function used to be part of future, but has since been
 migrated to parallelly. The migration started with future 1.20.0
 (November 2020). They were moved because they are also useful outside of
 the future framework.

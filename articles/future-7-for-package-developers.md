@@ -26,7 +26,6 @@ For instance, if your future code made an assumption that it will have
 access to our local file system, as in:
 
 ``` r
-
 f <- future({
   data <- read_tsv(file)
   analyze(data)
@@ -37,7 +36,6 @@ you can rewrite the code to load the content of the file before you set
 up the future, as in:
 
 ``` r
-
 data <- read_tsv(file)
 f <- future({
   analyze(data)
@@ -54,7 +52,6 @@ on just the local computer. Properly written future code will work
 regardless of what future backend the end-user picks, e.g.
 
 ``` r
-
 plan(sequential)
 plan(multisession)
 plan(cluster, workers = rep(c("n1.remote.org", "n2.remote.org", "n3.remote.org"), each = 32))
@@ -84,7 +81,6 @@ to undo when the function exits, also on errors. This can be done by
 using `with(plan(...), local = TRUE)`, e.g.
 
 ``` r
-
 my_fcn <- function(x) {
   with(plan(multisession), local = TRUE)
   y <- analyze(x)
@@ -98,7 +94,6 @@ the end-user to specify whether they want to run the function in
 parallel or sequentially. This often result in code like:
 
 ``` r
-
 my_fcn <- function(x, parallel = FALSE) {
   if (parallel) {
     with(plan(multisession), local = TRUE)
@@ -113,14 +108,12 @@ my_fcn <- function(x, parallel = FALSE) {
 This way the user can use:
 
 ``` r
-
 y <- my_fcn(x, parallel = FALSE)
 ```
 
 or
 
 ``` r
-
 y <- my_fcn(x, parallel = TRUE)
 ```
 
@@ -129,7 +122,6 @@ to call your function in their function, they now have to expose that
 `parallel` argument to the users of their function, e.g.
 
 ``` r
-
 their_fcn <- function(x, parallel = FALSE) {
   x2 <- preprocess(x)
   y <- my_fcn(x2, parallel = parallel)
@@ -142,7 +134,6 @@ Exposing and passing a “parallel” argument along can become quite
 cumbersome. Instead, it is neater to use:
 
 ``` r
-
 my_fcn <- function(x) {
   y <- future_lapply(x, FUN = analyze) ## from future.apply package
   summarize(y)
@@ -164,7 +155,6 @@ bump up the `future.globals.maxSize` limit when creating a future, use
 something like the following inside your function:
 
 ``` r
-
 oopts <- options(future.globals.maxSize = 1.0 * 1e9)  ## 1.0 GB
 on.exit(options(oopts))
 f <- future({ expr })  ## Launch a future with large objects
@@ -182,7 +172,6 @@ underlying PSOCK clusters.
 For instance, here is an example:
 
 ``` r
-
 ## Run the analysis in parallel on the local computer
 future::plan("multisession")
 
@@ -219,7 +208,6 @@ Importantly, if you use the `multisession` backend in a vignette, you
 must manually specify the number of workers, i.e.
 
 ``` r
-
 plan(multisession, workers = 2)
 ```
 
@@ -233,7 +221,6 @@ cores that the operating system has given our R process.
 Don’t forget to stop the parallel workers by calling
 
 ``` r
-
 plan(sequential)
 ```
 
@@ -246,7 +233,6 @@ well as when running in parallel, it is often good enough to have
 package tests that run the code with:
 
 ``` r
-
 plan(multisession)
 ```
 
@@ -258,7 +244,6 @@ Always make sure to shut down your parallel ‘multisession’ workers at
 the end of each package test by calling:
 
 ``` r
-
 plan(sequential)
 ```
 
@@ -299,7 +284,6 @@ which almost always are parallel `cluster`:s that we forgot to stop at
 the end. To stop ‘multisession’ workers, call:
 
 ``` r
-
 plan(sequential)
 ```
 
@@ -308,7 +292,6 @@ at the end of your examples(\*), vignettes, and package tests.
 If you create the `cluster` manually using
 
 ``` r
-
 cl <- parallelly::makeClusterPSOCK(2)
 plan(cluster, workers = cl)
 ```
@@ -316,7 +299,6 @@ plan(cluster, workers = cl)
 make sure to stop such clusters at the end using
 
 ``` r
-
 plan(sequential)
 parallel::stopCluster(cl)
 ```

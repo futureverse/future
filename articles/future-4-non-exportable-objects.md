@@ -20,7 +20,6 @@ An example of a non-exportable object is a connection, e.g. a file
 connection. For instance, if you create a file connection,
 
 ``` r
-
 con <- file("output.log", open = "wb")
 cat("hello ", file = con)
 flush(con)
@@ -32,7 +31,6 @@ it will not work when used in another R process. If we try, the result
 is “unknown”, e.g.
 
 ``` r
-
 library(future)
 plan(multisession)
 f <- future({ cat("world!", file = con); flush(con) })
@@ -50,7 +48,6 @@ The culprit here is that the connection uses a so called *external
 pointer*:
 
 ``` r
-
 str(con)
 ## Classes 'file', 'connection'  atomic [1:1] 3
 ##   ..- attr(*, "conn_id")=<externalptr>
@@ -68,7 +65,6 @@ future framework provides a mechanism for automatically detecting such
 objects. To enable it, do:
 
 ``` r
-
 options(future.globals.onReference = "error")
 f <- future({ cat("world!", file = con); flush(con) })
 ## Error: Detected a non-exportable reference ('externalptr') in one of the globals
@@ -89,30 +85,30 @@ identify other cases, please consider
 [reporting](https://github.com/futureverse/future/issues/) them so they
 can be documented here and possibly even be fixed.*
 
-| Package | Examples of non-exportable types or classes |
-|:---|:---|
-| **arrow** | Table (`externalptr`) |
-| **base** | connection (`externalptr`) |
-| **bigmemory** | big.matrix (`externalptr`) |
-| **cpp11** | E.g. functions created by `cpp_source()` |
-| **DBI** | DBIConnection (`externalptr`) |
-| **inline** | CFunc (`externalptr` of class DLLHandle) |
-| **keras** | keras.engine.sequential.Sequential (`externalptr`), keras.engine.base_layer.Layer (`externalptr`) |
-| **magick** | magick-image (`externalptr`) |
-| **ncdf4** | ncdf4 (custom reference; *non-detectable*) |
-| **parallel** | cluster and cluster nodes (`connection`) |
-| **polars** | RPolarsDataFrame (`externalptr`) |
-| **raster** | RasterLayer (`externalptr`; *not all*) |
-| **Rcpp** | NativeSymbol (`externalptr`) |
-| **reticulate** | python.builtin.function (`externalptr`), python.builtin.module (`externalptr`) |
-| **rJava** | jclassName (`externalptr`) |
-| **ShortRead** | FastqFile, FastqStreamer, FastqStreamerList (`connection`) |
-| **sparklyr** | tbl_spark (`externalptr`) |
-| **terra** | SpatRaster, SpatVector (`externalptr`) |
-| **udpipe** | udpipe_model (`externalptr`) |
-| **xgboost** | xgb.DMatrix (`externalptr`) |
-| **XML** | XMLInternalDocument, XMLInternalElementNode (`externalptr`) |
-| **xml2** | xml_document (`externalptr`) |
+| Package        | Examples of non-exportable types or classes                                                       |
+|:---------------|:--------------------------------------------------------------------------------------------------|
+| **arrow**      | Table (`externalptr`)                                                                             |
+| **base**       | connection (`externalptr`)                                                                        |
+| **bigmemory**  | big.matrix (`externalptr`)                                                                        |
+| **cpp11**      | E.g. functions created by `cpp_source()`                                                          |
+| **DBI**        | DBIConnection (`externalptr`)                                                                     |
+| **inline**     | CFunc (`externalptr` of class DLLHandle)                                                          |
+| **keras**      | keras.engine.sequential.Sequential (`externalptr`), keras.engine.base_layer.Layer (`externalptr`) |
+| **magick**     | magick-image (`externalptr`)                                                                      |
+| **ncdf4**      | ncdf4 (custom reference; *non-detectable*)                                                        |
+| **parallel**   | cluster and cluster nodes (`connection`)                                                          |
+| **polars**     | RPolarsDataFrame (`externalptr`)                                                                  |
+| **raster**     | RasterLayer (`externalptr`; *not all*)                                                            |
+| **Rcpp**       | NativeSymbol (`externalptr`)                                                                      |
+| **reticulate** | python.builtin.function (`externalptr`), python.builtin.module (`externalptr`)                    |
+| **rJava**      | jclassName (`externalptr`)                                                                        |
+| **ShortRead**  | FastqFile, FastqStreamer, FastqStreamerList (`connection`)                                        |
+| **sparklyr**   | tbl_spark (`externalptr`)                                                                         |
+| **terra**      | SpatRaster, SpatVector (`externalptr`)                                                            |
+| **udpipe**     | udpipe_model (`externalptr`)                                                                      |
+| **xgboost**    | xgb.DMatrix (`externalptr`)                                                                       |
+| **XML**        | XMLInternalDocument, XMLInternalElementNode (`externalptr`)                                       |
+| **xml2**       | xml_document (`externalptr`)                                                                      |
 
 These are illustrated in sections ‘Packages that rely on external
 pointers’ and ‘Packages with other types of non-external objects’ below.
@@ -133,7 +129,6 @@ exportable external pointers’ at the very end of this vignette.
 #### Package: parallel
 
 ``` r
-
 library(future)
 plan(multisession, workers = 2)
 
@@ -151,7 +146,6 @@ If we turn on `options(future.globals.onReference = "error")`, we will
 catch this already when we create the future:
 
 ``` r
-
 y %<-% parSapply(cl, X = 2:3, FUN = sqrt)
 ## Error: Detected a non-exportable reference ('externalptr') in one of the globals
 ## ('cl' of class 'SOCKcluster') used in the future expression
@@ -184,7 +178,6 @@ provides efficient in-memory storage of arrays and tables. However,
 these objects cannot be transferred as-is to a parallel worker.
 
 ``` r
-
 library(arrow)
 
 library(future)
@@ -208,7 +201,6 @@ and
 that can used to marshal and unmarshal **arrow** objects. For example,
 
 ``` r
-
 library(arrow)
 
 library(future)
@@ -232,7 +224,6 @@ package provides mechanisms for working with very large matrices that
 can be updated in-place, which helps save memory. For example,
 
 ``` r
-
 library(bigmemory)
 
 g <- function(x) {
@@ -253,7 +244,6 @@ Note how `x` was updated in-place. This is achieved by `big.matrix`
 objects holds an external pointer to where the matrix data is stored;
 
 ``` r
-
 str(x)
 #> Formal class 'big.matrix' [package "bigmemory"] with 1 slot
 #>   ..@ address:<externalptr> 
@@ -263,7 +253,6 @@ If we would try to use `x` in a parallel worker, then the parallel
 worker crashes due to a bug in **bigmemory**, e.g.
 
 ``` r
-
 library(bigmemory)
 
 library(future)
@@ -286,14 +275,12 @@ value(f)
 We can protected against this setting:
 
 ``` r
-
 options(future.globals.onReference = "error")
 ```
 
 which gives:
 
 ``` r
-
 f <- future(dim(x), packages = "bigmemory")
 #> Error: Detected a non-exportable reference ('externalptr') in one
 #> of the globals ('x' of class 'big.matrix') used in the future
@@ -307,7 +294,6 @@ Another example is
 to easily create R functions that are implemented in C++, e.g.
 
 ``` r
-
 cpp11::cpp_source(code = '
 #include "cpp11/doubles.hpp"
 using namespace cpp11;
@@ -328,7 +314,6 @@ so that:
 However, this function cannot be exported to another R process:
 
 ``` r
-
 library(future)
 plan(multisession)
 x <- rnorm(10)
@@ -346,7 +331,6 @@ engines. Analogously to regular connections in R, DBIConnection objects
 can *not* safely be exported to another R process, e.g.
 
 ``` r
-
 library(future)
 options(future.globals.onReference = "error")
 plan(multisession)
@@ -364,7 +348,6 @@ Another example is
 to easily create R functions that are implemented in C and C++, e.g.
 
 ``` r
-
 library(inline)
 code <- "
   int i;
@@ -380,7 +363,6 @@ However, if we would attempt to call `sum_1_to_n()` in a future, we get
 an error:
 
 ``` r
-
 library(future)
 plan(cluster, workers = 1L)
 f <- future(sum_1_to_n(10, 0))
@@ -392,7 +374,6 @@ v <- value(f)
 This is because:
 
 ``` r
-
 options(future.globals.onReference = "error")
 f <- future(sum_1_to_n(10, 0))
 ## Error: Detected a non-exportable reference ('externalptr' of class
@@ -413,7 +394,6 @@ processes. For example, if the attempt to use a Keras model in a
 multisession workers, the worker will produce a run-time error:
 
 ``` r
-
 library(keras)
 
 library(future)
@@ -454,7 +434,6 @@ of the **keras** package can be used as workaround to marshal and
 unmarshal non-exportable **keras** objects, e.g.
 
 ``` r
-
 .model <- serialize_model(model)      ## marshal
 f <- future({
   model <- unserialize_model(.model)  ## unmarshal
@@ -476,7 +455,6 @@ internally as external pointers of class ‘magick_image’ that cannot be
 be exported to another R process, e.g.
 
 ``` r
-
 library(future)
 plan(multisession)
 library(magick)
@@ -490,7 +468,6 @@ v <- value(f)
 If we set:
 
 ``` r
-
 options(future.globals.onReference = "error")
 ```
 
@@ -512,7 +489,6 @@ tied to the R process that created them. If we attempt to use them in a
 parallel worker, we end up crashing the parallel worker:
 
 ``` r
-
 library(future)
 plan(multisession)
 
@@ -570,7 +546,6 @@ Similarly to **cpp11**,
 R functions that are implemented in C++, e.g.
 
 ``` r
-
 Rcpp::sourceCpp(code = '
 #include <Rcpp.h>
 using namespace Rcpp;
@@ -592,7 +567,6 @@ However, since this function uses an external pointer internally, we
 cannot pass it to another R process:
 
 ``` r
-
 library(future)
 plan(multisession)
 x <- rnorm(10)
@@ -604,7 +578,6 @@ n
 We can detect and protect against this using:
 
 ``` r
-
 options(future.globals.onReference = "error")
 n %<-% my_length(x)
 ## Error: Detected a non-exportable reference ('externalptr' of class
@@ -620,7 +593,6 @@ within R. If one attempt to use Python-binding objects from this
 package, we get errors like:
 
 ``` r
-
 library(future)
 plan(multisession)
 library(reticulate)
@@ -635,7 +607,6 @@ and by telling the **future** package to validate globals further, we
 get:
 
 ``` r
-
 options(future.globals.onReference = "error")
 pwd %<-% os$getcwd()
 ## Error: Detected a non-exportable reference ('externalptr') in one of the
@@ -646,7 +617,6 @@ Another reticulate example is when we try to use a Python function that
 we create ourselves as in:
 
 ``` r
-
 cat("def twice(x):\n    return 2*x\n", file = "twice.py")
 source_python("twice.py")
 twice(1.2)
@@ -661,7 +631,6 @@ y
 which, again, is because:
 
 ``` r
-
 options(future.globals.onReference = "error")
 y %<-% twice(1.2)
 ## Error: Detected a non-exportable reference ('externalptr') in one of the globals
@@ -675,7 +644,6 @@ Here is an example that shows how
 exported to external R processes.
 
 ``` r
-
 library(future)
 plan(multisession)
 library(rJava)
@@ -699,7 +667,6 @@ Although no error is produced, we see that the value `d1` is a Java NULL
 Object. As before, we can catch this by using:
 
 ``` r
-
 options(future.globals.onReference = "error")
 f <- future({
   .jinit() ## Initialize Java VM on worker
@@ -722,7 +689,6 @@ Here is an example that illustrates how an attempt to use a
 a parallel worker:
 
 ``` r
-
 library(future)
 plan(multisession)
 
@@ -741,7 +707,6 @@ To catch this earlier, and to get a more informative error message, we
 do as before;
 
 ``` r
-
 options(future.globals.onReference = "error")
 
 reads %<-% yield(fs)
@@ -752,7 +717,6 @@ reads %<-% yield(fs)
 #### Package: sparklyr
 
 ``` r
-
 library(future)
 plan(multisession)
 library(sparklyr)
@@ -772,7 +736,6 @@ d
 To catch this as soon as possible,
 
 ``` r
-
 options(future.globals.onReference = "error")
 d %<-% dim(data)
 ## Error: Detected a non-exportable reference ('externalptr') in one of
@@ -803,7 +766,6 @@ dr
 To catch this as soon as possible,
 
 ``` r
-
 options(future.globals.onReference = "error")
 
 dv %<-% dim(v)
@@ -859,7 +821,6 @@ For more details, see
 #### Package: udpipe
 
 ``` r
-
 library(future)
 plan(multisession)
 library(udpipe)
@@ -874,7 +835,6 @@ x
 To catch this as soon as possible,
 
 ``` r
-
 options(future.globals.onReference = "error")
 x %<-% udpipe_annotate(udmodel, x = "Ik ging op reis en ik nam mee.")
 ## Error: Detected a non-exportable reference ('externalptr') in one of the
@@ -893,7 +853,6 @@ provides fast gradient-boosting methods. Some of its data structures use
 external pointers. For example,
 
 ``` r
-
 library(future)
 plan(multisession)
 
@@ -912,7 +871,6 @@ works just fine but if we attempt to pass on the ‘xgb.DMatrix’ object
 `train` to an external worker, we silently get a incorrect value:
 
 ``` r
-
 f <- future(dim(train))
 d <- value(f)
 d
@@ -922,7 +880,6 @@ d
 This is unfortunate, but we can at least detect this by:
 
 ``` r
-
 options(future.globals.onReference = "error")
 f <- future(dim(dtrain))
 ## Error: Detected a non-exportable reference ('externalptr' of class 'xgb.DMatrix')
@@ -940,7 +897,6 @@ produce evaluation error, or even cause R to abort if used in another R
 process, e.g.
 
 ``` r
-
 library(future)
 plan(multisession)
 library(XML)
@@ -999,7 +955,6 @@ objects before exporting them to a parallel R process, and unmarshal
 them before working with them there. For example,
 
 ``` r
-
 library(future)
 plan(multisession)
 library(XML)
@@ -1021,7 +976,6 @@ An alternative, more generic workaround, is to always create the `doc`
 element, an `XMLInternalDocument` object, on the parallel workers, i.e.
 
 ``` r
-
 library(future)
 plan(multisession)
 library(XML)
@@ -1043,7 +997,6 @@ produce evaluation errors (or just invalid results depending on how they
 are used), e.g.
 
 ``` r
-
 library(future)
 plan(multisession)
 library(xml2)
@@ -1057,7 +1010,6 @@ The future framework can help detect this *before* sending off the
 future to the worker;
 
 ``` r
-
 options(future.globals.onReference = "error")
 f <- future(xml_children(xml))
 ## Error: Detected a non-exportable reference ('externalptr') in one of the
@@ -1075,7 +1027,6 @@ can pass **xml2** object back and forth between the main R session and R
 workers:
 
 ``` r
-
 ## Encode the 'xml_document' object 'doc' as a 'raw' object
 .doc <- xml_serialize(doc, connection = NULL)  ## marshal
 
@@ -1105,7 +1056,6 @@ an R API to work with data that live in netCDF files. For example, we
 can create a simple netCDF file that holds a variable ‘x’:
 
 ``` r
-
 library(ncdf4)
 x <- ncvar_def("x", units = "count", dim = list())
 file <- nc_create("example.nc", x)
@@ -1116,7 +1066,6 @@ nc_close(file)
 We can now use this netCDF file next time we start R, e.g.
 
 ``` r
-
 library(ncdf4)
 file <- nc_open("example.nc")
 y <- ncvar_get(file)
@@ -1128,7 +1077,6 @@ However, it would fail if we attempt to use `file`, which is an object
 of class ‘ncdf4’, in a parallel worker, we will get an error:
 
 ``` r
-
 library(future)
 plan(multisession)
 library(ncdf4)
@@ -1148,7 +1096,6 @@ detect them. That is, using
 A workaround is to open the netCDF in each worker, e.g.
 
 ``` r
-
 library(future)
 plan(multisession)
 library(ncdf4)
@@ -1175,7 +1122,6 @@ another R session, or exported to a parallel worker. This is because
 Consider the following example:
 
 ``` r
-
 library(data.table)
 DT <- data.table(a = 1:3, b = letters[1:3])
 
@@ -1202,7 +1148,6 @@ the globals ('DT' of class 'data.table') used in the future expression
 This is a false positive. If we relax the checks, it does indeed work:
 
 ``` r
-
 options(future.globals.onReference = NULL)
 
 row <- DT[2]
@@ -1222,7 +1167,6 @@ Consider the following example from
 `example("rstan", package = "rstan")`:
 
 ``` r
-
 library(rstan)
 
 code <- "
@@ -1268,7 +1212,6 @@ However, this is a false positive. The `fit` object, which is of class
 e.g.
 
 ``` r
-
 options(future.globals.onReference = NULL)
 
 e %<-% extract(fit, permuted = FALSE)

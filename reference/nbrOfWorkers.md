@@ -41,7 +41,7 @@ for some future backends may also be `+Inf`.
 ``` r
 plan(multisession)
 nbrOfWorkers()  ## == availableCores()
-#> [1] 2
+#> [1] 8
 
 plan(sequential)
 nbrOfWorkers()  ## == 1

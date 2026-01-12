@@ -25,7 +25,6 @@ fails to identify the global variable and therefore fails to export it,
 resulting in a run-time error. For example, although this works:
 
 ``` r
-
 plan(multisession)
 
 reset <- TRUE
@@ -38,7 +37,6 @@ y
 the following does *not* work:
 
 ``` r
-
 reset <- FALSE
 x <- 1
 y %<-% { if (reset) x <- 0; x + 1 }
@@ -51,7 +49,6 @@ whether a variable is global or local. To force variable `x` to always
 be global, insert it at the very being of the future expression, e.g.
 
 ``` r
-
 reset <- FALSE
 x <- 1
 y %<-% { x; if (reset) x <- 0; x + 1 }
@@ -72,14 +69,12 @@ identify the function as a global object in the future expression. For
 instance, use
 
 ``` r
-
 do.call(file_ext, list("foo.txt"))
 ```
 
 instead of
 
 ``` r
-
 do.call("file_ext", list("foo.txt"))
 ```
 
@@ -325,7 +320,6 @@ In R, we can use the `...` construct is used to refer to zero or more
 arguments. For example, we can use as in:
 
 ``` r
-
 my_mean <- function(x, ...) mean(x, ...)
 
 y <- my_mean(1:10, trim = 0.1, na.rm = FALSE)
@@ -338,7 +332,6 @@ We can also use it to pass arguments in map-reduce calls to anonymous
 functions as in:
 
 ``` r
-
 X <- rnorm(10)
 y <- lapply(X, FUN = function(x, ...) {
   round(x, ...)
@@ -353,7 +346,6 @@ argument, which is then passed on to
 If we take this one step further, we might see things like:
 
 ``` r
-
 my_fcn <- function(X, ...) {  ## outer '...'
   y <- lapply(X, FUN = function(x, ...) { ## inner '...'
     round(x, ...) ## inner '...'
@@ -376,7 +368,6 @@ not uncommon to see that the `...` is used as a global variable in
 anonymous functions. For example, you might find:
 
 ``` r
-
 my_fcn <- function(X, ...) {  ## outer '...'
   y <- lapply(X, FUN = function(x) {
     round(x, ...) ## outer '...' as global variables
@@ -393,7 +384,6 @@ If we attempt to do the same with the future framework, or other
 parallel frameworks, it might not work. For example, using:
 
 ``` r
-
 my_fcn <- function(X, ...) {
   y <- future_lapply(X, FUN = function(x) {
     round(x, ...)
@@ -411,7 +401,6 @@ Even you do not get this error, it is always a good idea to make sure
 e.g.
 
 ``` r
-
 my_fcn <- function(X, ...) {
   y <- future.apply::future_lapply(X, FUN = function(x, ...) {
     round(x, ...)
@@ -559,7 +548,6 @@ such cases, we might want to return a default value, say, a missing
 value, instead of signaling an error. This can be done using:
 
 ``` r
-
 res <- tryCatch({
   unstable_calc(x)
 }, error = function(e) {
@@ -574,7 +562,6 @@ In addition to the above, we could produce a warning whenever we get an
 error and replace it with a missing value. We can do this as:
 
 ``` r
-
 res <- tryCatch({
   unstable_calc(x)
 }, error = function(e) {
@@ -602,7 +589,6 @@ futures. It is always better to source external R scripts at the top of
 your main R script, e.g.
 
 ``` r
-
 library(future)
 source("./my-script.R")
 
@@ -615,7 +601,6 @@ However, if you find yourself having to source a script inside a future,
 or inside a function, make sure to specify argument `local = TRUE`, e.g.
 
 ``` r
-
 f <- future({
   source("./my-script.R", local = TRUE)
   ...
@@ -776,7 +761,6 @@ surprising because `%<-%` is technically an infix operator. This means
 that if you for instance use the following code in your package:
 
 ``` r
-
 foo <- function() {
   b <- 3.14
   a %<-% { b + 1 }
@@ -797,7 +781,6 @@ In order to avoid this, we can add a dummy assignment of the missing
 global at the top of the function, i.e.
 
 ``` r
-
 foo <- function() {
   a <- NULL ## To please R CMD check
   b <- 3.14
