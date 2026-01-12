@@ -391,8 +391,13 @@ recvData.FutureNode <- function(node) {
     node[["seed"]] <- result[["seed"]]
   }
 
+  ## Handle errors like parallel:::workCommand()
+  handler <- function(e) {
+    structure(conditionMessage(e), class = c("snow-try-error", "try-error"))
+  }
+
   ## parallel:::recvResult() expects element 'value'
-  list(value = value(future))
+  list(value = tryCatch(value(future), error = handler))
 }
 
 

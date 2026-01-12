@@ -8,9 +8,9 @@
 \alias{supportsMulticore}
 \title{Functions Moved to 'parallelly'}
 \description{
-The following function used to be part of \pkg{future} but has since
-been migrated to \pkg{parallelly}.  The migration started with
-\pkg{future} 1.20.0 (November 2020).  They were moved because they
+The following function used to be part of \pkg{future}, but has since
+been migrated to \pkg{parallelly}. The migration started with
+\pkg{future} 1.20.0 (November 2020). They were moved because they
 are also useful outside of the \pkg{future} framework.
 }
 \details{
