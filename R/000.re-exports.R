@@ -1,8 +1,8 @@
 #' Functions Moved to 'parallelly'
 #'
-#' The following function used to be part of \pkg{future} but has since
-#' been migrated to \pkg{parallelly}.  The migration started with
-#' \pkg{future} 1.20.0 (November 2020).  They were moved because they
+#' The following function used to be part of \pkg{future}, but has since
+#' been migrated to \pkg{parallelly}. The migration started with
+#' \pkg{future} 1.20.0 (November 2020). They were moved because they
 #' are also useful outside of the \pkg{future} framework.
 #'
 #' _If you are using any of these from the \pkg{future} package, please
@@ -13,14 +13,14 @@
 #' * [parallelly::autoStopCluster()]   (no longer re-exported)
 #    Used by: <none>
 #' * [parallelly::availableCores()]
-#    Used by: BatchGetSymbols, bistablehistory, codalm, cft, CSCNet (1),
+#    Used by: BatchGetSymbols, bistablehistory, codalm, cft,
 #             deseats, dipsaus, drimmR, elevatr, GetBCBData, gtfs2emis,
-#             heterogen, ldaPrototype, lidR (1), origami, PINstimation (1),
+#             heterogen, ldaPrototype, origami, PINstimation (1),
 #             powRICLPM, rBiasCorrection, readsdr (1), recforest,
-#             sigminer (1), skpr (1), smoots, sovereign, TriDimRegression,
+#             sigminer (2), skpr (1), smoots, sovereign, TriDimRegression,
 #             uci (1), updog, whitewater, yfR [2025-12-22]
 #' * [parallelly::availableWorkers()]
-#    Used by: wqspt(1) [2025-03-15]
+#    Used by: wqspt (1) [2025-03-15]
 #' * [parallelly::makeClusterMPI()]    (no longer re-exported)
 #    Used by: <none>
 #' * [parallelly::makeClusterPSOCK()]
@@ -28,12 +28,10 @@
 #' * [parallelly::makeNodePSOCK()]     (no longer re-exported)
 #    Used by: <none>
 #' * [parallelly::supportsMulticore()]
-#    Used by: furrr(1), sctransform (1)
+#    Used by: furrr(1)
 #
 #  (1) Issue filed or PR sent
 #  (2) In the next release
-#  (3) Non-breaking; code is never run
-#  (4) No longer on CRAN
 #' 
 #' For backward-compatible reasons, _some_ of these functions remain
 #' available as exact copies also from this package (as re-exports), e.g.
