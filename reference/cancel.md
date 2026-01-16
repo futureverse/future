@@ -36,7 +36,7 @@ Canceling a lazy or a finished future has no effect.
 
 A canceled future can be
 [`reset()`](https://future.futureverse.org/reference/reset.md) to a
-lazy, vanilla future such that it can be relaunched, possible on another
+lazy, vanilla future such that it can be relaunched, possibly on another
 future backend.
 
 ## Examples
@@ -45,7 +45,7 @@ future backend.
 ## Set up two parallel workers
 plan(multisession, workers = 2)
 
-## Launch two long running future
+## Launch two long running futures
 fs <- lapply(c(1, 2), function(duration) {
   future({
     Sys.sleep(duration)
@@ -68,7 +68,7 @@ message("Result: ", v)
 
 ## The value of the canceled future is an error
 try(v <- value(fs[!r]))
-#> Error : Future (<unnamed-3>) of class MultisessionFuture was canceled (pid 1407010) [future <unnamed-3> (f8a5d718b48721a726d379e703256826-3); on f8a5d718b48721a726d379e703256826@hb-x1-2023<1406688> at 2026-01-16 12:27:35.503506]
+#> Error : Future (<unnamed-3>) of class MultisessionFuture was canceled (pid 1459458) [future <unnamed-3> (43ca918a3692f3bde60c70e2d68d2831-3); on 43ca918a3692f3bde60c70e2d68d2831@hb-x1-2023<1459134> at 2026-01-16 14:19:08.371964]
 
 ## Shut down parallel workers
 plan(sequential)

@@ -2,7 +2,7 @@
 
 Gets the value of a future or the values of all elements (including
 futures) in a container such as a list, an environment, or a list
-environment. If one or more futures is unresolved, then this function
+environment. If one or more futures are unresolved, then this function
 blocks until all queried futures are resolved.
 
 ## Usage
@@ -71,10 +71,10 @@ value(x, ...)
 - drop:
 
   If TRUE, resolved futures are minimized in size and invalidated as
-  soon the as their values have been collected and any output and
-  conditions have been relayed. Combining `drop = TRUE` with
-  `inorder = FALSE` reduces the memory use sooner, especially avoiding
-  the risk of holding on to future values until the very end.
+  soon as their values have been collected and any output and conditions
+  have been relayed. Combining `drop = TRUE` with `inorder = FALSE`
+  reduces the memory use sooner, especially avoiding the risk of holding
+  on to future values until the very end.
 
 - idxs:
 
@@ -106,12 +106,12 @@ value(x, ...)
 - inorder:
 
   If TRUE, then standard output and conditions are relayed, and value
-  reduction, is done in the order the futures occur in `x`, but always
-  as soon as possible. This is achieved by buffering the details until
-  they can be released. By setting `inorder = FALSE`, no buffering takes
+  reduction is done in the order the futures occur in `x`, but always as
+  soon as possible. This is achieved by buffering the details until they
+  can be released. By setting `inorder = FALSE`, no buffering takes
   place and everything is relayed and reduced as soon as a new future is
-  resolved. Regardlessly, the values are always returned in the same
-  order as `x`.
+  resolved. Regardless, the values are always returned in the same order
+  as `x`.
 
 - force:
 

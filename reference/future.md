@@ -4,9 +4,9 @@ Creates a future that evaluates an R expression or a future that calls
 an R function with a set of arguments. How, when, and where these
 futures are evaluated can be configured using
 [`plan()`](https://future.futureverse.org/reference/plan.md) such that
-it is evaluated in parallel on, for instance, the current machine, on a
-remote machine, or via a job queue on a compute cluster. Importantly,
-any R code using futures remains the same regardless on these settings
+they are evaluated in parallel on, for instance, the current machine, on
+a remote machine, or via a job queue on a compute cluster. Importantly,
+any R code using futures remains the same regardless of these settings
 and there is no need to modify the code when switching from, say,
 sequential to parallel processing.
 
@@ -68,7 +68,7 @@ minifuture(
 - substitute:
 
   If TRUE, argument `expr` is
-  [`substitute()`](https://rdrr.io/r/base/substitute.html):ed, otherwise
+  [`substitute()`](https://rdrr.io/r/base/substitute.html):d, otherwise
   not.
 
 - lazy:
@@ -81,9 +81,9 @@ minifuture(
   (optional) If TRUE, the random seed, that is, the state of the random
   number generator (RNG) will be set such that statistically sound
   random numbers are produced (also during parallelization). If FALSE
-  (default), it is assumed that the future expression does neither need
-  nor use random numbers generation. To use a fixed random seed, specify
-  a L'Ecuyer-CMRG seed (seven integer) or a regular RNG seed (a single
+  (default), it is assumed that the future expression neither needs nor
+  uses random number generation. To use a fixed random seed, specify a
+  L'Ecuyer-CMRG seed (seven integers) or a regular RNG seed (a single
   integer). If the latter, then a L'Ecuyer-CMRG seed will be
   automatically created based on the given seed. Furthermore, if FALSE,
   then the future will be monitored to make sure it does not use random
@@ -120,16 +120,16 @@ minifuture(
 
 - conditions:
 
-  A character string of conditions classes to be captured and relayed.
+  A character string of condition classes to be captured and relayed.
   The default is to relay all conditions, including messages and
   warnings. To drop all conditions, use `conditions = character(0)`.
   Errors are always relayed. Attribute `exclude` can be used to ignore
   specific classes, e.g.
   `conditions = structure("condition", exclude = "message")` will
-  capture all `condition` classes except those that inherits from the
+  capture all `condition` classes except those that inherit from the
   `message` class. Using `conditions = structure(..., drop = TRUE)`
   causes any captured conditions to be dropped from the future object as
-  soon as it has been relayed, e.g. by `value(f)`. This can help
+  soon as they have been relayed, e.g. by `value(f)`. This can help
   decrease the overall memory consumed by captured conditions across
   futures. Using `conditions = NULL` (not recommended) avoids
   intercepting conditions, except from errors; behavior of such
@@ -229,13 +229,13 @@ cases, such automatic collection of globals is sufficient and less
 tedious and error prone than if they are manually specified*.
 
 However, for full control, it is also possible to explicitly specify
-exactly which the globals are by providing their names as a character
+exactly which globals are by providing their names as a character
 vector. In the above example, we could use
 
       a <- 42
       f <- future({ b <- 2; a * b }, globals = "a")
 
-Yet another alternative is to explicitly specify also their values using
+Yet another alternative is to explicitly also specify their values using
 a named list as in
 
       a <- 42
@@ -303,7 +303,7 @@ global `a`.
 
 ## See also
 
-How, when and where futures are resolved is given by the *future
+How, when, and where futures are resolved is determined by the *future
 backend*, which can be set by the end user using the
 [`plan()`](https://future.futureverse.org/reference/plan.md) function.
 

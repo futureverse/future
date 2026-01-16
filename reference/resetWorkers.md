@@ -20,7 +20,7 @@ resetWorkers(x, ...)
 
 ## Details
 
-This function will resolve any active futures that is currently being
+This function will resolve any active futures that are currently being
 evaluated on background workers.
 
 ## Examples

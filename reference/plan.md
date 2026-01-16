@@ -2,7 +2,7 @@
 
 This function allows *the user* to plan the future, more specifically,
 it specifies how
-[`future()`](https://future.futureverse.org/reference/future.md):s are
+[`future()`](https://future.futureverse.org/reference/future.md)s are
 resolved, e.g. sequentially or in parallel.
 
 ## Usage
@@ -86,8 +86,8 @@ tweak(strategy, ..., penvir = parent.frame())
 
 ## Value
 
-`plan()` returns a the previous plan invisibly if a new future backend
-is chosen, otherwise it returns the current one visibly.
+`plan()` returns the previous plan invisibly if a new future backend is
+chosen, otherwise it returns the current one visibly.
 
 The value of the expression evaluated (invisibly).
 
@@ -99,8 +99,8 @@ The default backend is
 [`sequential`](https://future.futureverse.org/reference/sequential.md),
 but another one can be set using `plan()`, e.g. `plan(multisession)`
 will launch parallel workers running in the background, which then will
-be used to resolve future. To shut down background workers launched this
-way, call `plan(sequential)`.
+be used to resolve futures. To shut down background workers launched
+this way, call `plan(sequential)`.
 
 ## Built-in evaluation strategies
 
@@ -139,27 +139,27 @@ that leverage R package callr and mirai:
 
 - `callr`::
 
-  Similar to `multisession`, this resolved futures in parallel in
+  Similar to `multisession`, this resolves futures in parallel in
   background R sessions on the local machine via the callr package, e.g.
   `plan(future.callr::callr)` and
   `plan(future.callr::callr, workers = 2)`. The difference is that each
   future is processed in a fresh parallel R worker, which is
   automatically shut down as soon as the future is resolved. This can
-  help decrease the overall memory. Moreover, contrary to
+  help decrease the overall memory usage. Moreover, contrary to
   `multisession`, `callr` does not rely on socket connections, which
   means it is not limited by the number of connections that R can have
   open at any time.
 
 - `mirai_multisession`::
 
-  Similar to `multisession`, this resolved futures in parallel in
+  Similar to `multisession`, this resolves futures in parallel in
   background R sessions on the local machine via the mirai package, e.g.
   `plan(future.mirai::mirai_multisession)` and
   `plan(future.mirai::mirai_multisession, workers = 2)`.
 
 - `mirai_cluster`::
 
-  Similar to `cluster`, this resolved futures in parallel via
+  Similar to `cluster`, this resolves futures in parallel via
   pre-configured R mirai daemon processes, e.g.
   `plan(future.mirai::mirai_cluster)`.
 
@@ -170,27 +170,27 @@ OpenLava;
 
 - `batchtools_slurm`::
 
-  The backend resolved futures via the Slurm scheduler, e.g.
+  The backend resolves futures via the Slurm scheduler, e.g.
   `plan(future.batchtools::batchtools_slurm)`.
 
 - `batchtools_torque`::
 
-  The backend resolved futures via the TORQUE/PBS scheduler, e.g.
+  The backend resolves futures via the TORQUE/PBS scheduler, e.g.
   `plan(future.batchtools::batchtools_torque)`.
 
 - `batchtools_sge`::
 
-  The backend resolved futures via the Grid Engine (SGE, AGE) scheduler,
+  The backend resolves futures via the Grid Engine (SGE, AGE) scheduler,
   e.g. `plan(future.batchtools::batchtools_sge)`.
 
 - `batchtools_lsf`::
 
-  The backend resolved futures via the Load Sharing Facility (LSF)
+  The backend resolves futures via the Load Sharing Facility (LSF)
   scheduler, e.g. `plan(future.batchtools::batchtools_lsf)`.
 
 - `batchtools_openlava`::
 
-  The backend resolved futures via the OpenLava scheduler, e.g.
+  The backend resolves futures via the OpenLava scheduler, e.g.
   `plan(future.batchtools::batchtools_openlava)`.
 
 ## For package developers
@@ -215,12 +215,11 @@ This can be achieved by using `with(plan(...), local = TRUE)`, e.g.
       }
 
 This is important because the end-user might have already set the future
-strategy elsewhere for other purposes and will most likely not known
-that calling your function will break their setup. *Remember, your
-package and its functions might be used in a greater context where
-multiple packages and functions are involved and those might also rely
-on the future framework, so it is important to avoid stepping on others'
-toes.*
+strategy elsewhere for other purposes and will most likely not know that
+calling your function will break their setup. *Remember, your package
+and its functions might be used in a greater context where multiple
+packages and functions are involved and those might also rely on the
+future framework, so it is important to avoid stepping on others' toes.*
 
 ## Using plan() in scripts and vignettes
 
@@ -342,7 +341,7 @@ with(plan(multisession, workers = 2), {
 })
 print(c(main = Sys.getpid(), worker = w_pid))
 #>    main  worker 
-#> 1406688 1409561 
+#> 1459134 1461965 
 
 
 
@@ -355,6 +354,6 @@ local({
   print(c(main = Sys.getpid(), worker = w_pid))
 })
 #>    main  worker 
-#> 1406688 1409662 
+#> 1459134 1462068 
 
 ```

@@ -3,14 +3,14 @@
 futureAssign("x", value) create a Future that evaluates the expression
 (value) and binds it to variable x (as a
 promise). The expression is evaluated in parallel
-in the background. Later on, when x is first queried, the value of future
-is automatically retrieved as it were a regular variable and x is
+in the background. Later on, when x is first queried, the value of the future
+is automatically retrieved as if it were a regular variable and x is
 materialized as a regular value.'><meta property="og:description" content='x %&amp;lt;-% value (also known as a "future assignment") and
 futureAssign("x", value) create a Future that evaluates the expression
 (value) and binds it to variable x (as a
 promise). The expression is evaluated in parallel
-in the background. Later on, when x is first queried, the value of future
-is automatically retrieved as it were a regular variable and x is
+in the background. Later on, when x is first queried, the value of the future
+is automatically retrieved as if it were a regular variable and x is
 materialized as a regular value.'><meta property="og:image" content="https://future.futureverse.org/logo.png"><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-SB3EQSD9FR"></script><script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -25,7 +25,7 @@ materialized as a regular value.'><meta property="og:image" content="https://fut
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.69.0-9001</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.69.0-9002</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -95,8 +95,8 @@ materialized as a regular value.'><meta property="og:image" content="https://fut
 <code>futureAssign("x", value)</code> create a <a href="Future-class.html">Future</a> that evaluates the expression
 (<code>value</code>) and binds it to variable <code>x</code> (as a
 <a href="https://rdrr.io/r/base/delayedAssign.html" class="external-link">promise</a>). The expression is evaluated in parallel
-in the background. Later on, when <code>x</code> is first queried, the value of future
-is automatically retrieved as it were a regular variable and <code>x</code> is
+in the background. Later on, when <code>x</code> is first queried, the value of the future
+is automatically retrieved as if it were a regular variable and <code>x</code> is
 materialized as a regular value.</p>
     </div>
 
@@ -158,7 +158,7 @@ identified.</p></dd>
 
 <dt id="arg-substitute">substitute<a class="anchor" aria-label="anchor" href="#arg-substitute"></a></dt>
 <dd><p>If TRUE, argument <code>expr</code> is
-<code><a href="https://rdrr.io/r/base/substitute.html" class="external-link">substitute()</a></code>:ed, otherwise not.</p></dd>
+<code><a href="https://rdrr.io/r/base/substitute.html" class="external-link">substitute()</a></code>:d, otherwise not.</p></dd>
 
 
 <dt id="arg-lazy">lazy<a class="anchor" aria-label="anchor" href="#arg-lazy"></a></dt>
@@ -170,9 +170,9 @@ eagerly (starting immediately), otherwise not.</p></dd>
 <dd><p>(optional) If TRUE, the random seed, that is, the state of the
 random number generator (RNG) will be set such that statistically sound
 random numbers are produced (also during parallelization).
-If FALSE (default), it is assumed that the future expression does neither
-need nor use random numbers generation.
-To use a fixed random seed, specify a L'Ecuyer-CMRG seed (seven integer)
+If FALSE (default), it is assumed that the future expression neither
+needs nor uses random number generation.
+To use a fixed random seed, specify a L'Ecuyer-CMRG seed (seven integers)
 or a regular RNG seed (a single integer).  If the latter, then a
 L'Ecuyer-CMRG seed will be automatically created based on the given seed.
 Furthermore, if FALSE, then the future will be monitored to make sure it
@@ -209,15 +209,15 @@ behavior of such unhandled standard output depends on the future backend.</p></d
 
 
 <dt id="arg-conditions">conditions<a class="anchor" aria-label="anchor" href="#arg-conditions"></a></dt>
-<dd><p>A character string of conditions classes to be captured
+<dd><p>A character string of condition classes to be captured
 and relayed.  The default is to relay all conditions, including messages
 and warnings.  To drop all conditions, use <code>conditions = character(0)</code>.
 Errors are always relayed.
 Attribute <code>exclude</code> can be used to ignore specific classes, e.g.
 <code>conditions = structure("condition", exclude = "message")</code> will capture
-all <code>condition</code> classes except those that inherits from the <code>message</code> class.
+all <code>condition</code> classes except those that inherit from the <code>message</code> class.
 Using <code>conditions = structure(..., drop = TRUE)</code> causes any captured
-conditions to be dropped from the future object as soon as it has
+conditions to be dropped from the future object as soon as they have
 been relayed, e.g. by <code>value(f)</code>. This can help decrease the overall
 memory consumed by captured conditions across futures.
 Using <code>conditions = NULL</code> (not recommended) avoids intercepting conditions,
@@ -274,7 +274,7 @@ as it is resolved, and any succeeding queries, querying <code>x</code> will
 immediately give the value.</p>
 <p>The future assignment construct <code>x %&lt;-% value</code> is not a formal assignment
 per se, but a binary infix operator on objects <code>x</code> and expression <code>value</code>.
-However, by using non-standard evaluation, this constructs can emulate an
+However, by using non-standard evaluation, this construct can emulate an
 assignment operator similar to <code>x &lt;- value</code>. Due to <span style="R">R</span>'s precedence rules
 of operators, future expressions often need to be explicitly bracketed,
 e.g. <code>x %&lt;-% { a + b }</code>.</p>
@@ -291,10 +291,10 @@ e.g. whether output should be relayed or not. When using a future
 assignment, these arguments can be specified via corresponding
 assignment expression.  For example, <code>x %&lt;-% { rnorm(10) } %seed% TRUE</code>
 corresponds to <code>futureAssign("x", { rnorm(10) }, seed = TRUE)</code>. Here are
-a several examples.</p>
+several examples.</p>
 <p>To explicitly specify variables and functions that a future assignment
 should use, use <code>%globals%</code>. To explicitly specify which packages need
-to be attached for the evaluate to success, use <code>%packages%</code>. For
+to be attached for the evaluation to succeed, use <code>%packages%</code>. For
 example,</p>
 <p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="sc">&gt;</span> x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">1000</span>)</span>
 <span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="sc">&gt;</span> y <span class="sc">%&lt;-%</span> { <span class="fu">median</span>(x) } <span class="sc">%globals%</span> <span class="fu">list</span>(<span class="at">x =</span> x) <span class="sc">%packages%</span> <span class="st">"stats"</span></span>
@@ -326,7 +326,7 @@ example,</p>
 <span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>Hello</span>
 <span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="sc">&gt;</span> z</span>
 <span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">55</span></span></code></pre><p></p></div>
-<p>To create a future without launching in such that it will only be
+<p>To create a future without launching it such that it will only be
 processed if the value is really needed, use <code>%lazy%</code>, e.g.</p>
 <p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="sc">&gt;</span> x <span class="sc">%&lt;-%</span> { <span class="fu">Sys.sleep</span>(<span class="dv">5</span>); <span class="dv">42</span> } <span class="sc">%lazy%</span> <span class="cn">TRUE</span></span>
 <span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="sc">&gt;</span> y <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)</span>
@@ -341,9 +341,9 @@ processed if the value is really needed, use <code>%lazy%</code>, e.g.</p>
 
 
 
-<p>Because future assignments are promises, errors produced by the the
+<p>Because future assignments are promises, errors produced by the
 future expression will not be signaled until the value of the future is
-requested. For example, if you create a future assignment that produce
+requested. For example, if you create a future assignment that produces
 an error, you will not be affected by the error until you "touch" the
 future-assignment variable. For example,</p>
 <p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="sc">&gt;</span> x <span class="sc">%&lt;-%</span> { <span class="fu">stop</span>(<span class="st">"boom"</span>) }</span>
@@ -358,7 +358,7 @@ future-assignment variable. For example,</p>
 
 <p>Futures are evaluated on the future backend that the user has specified
 by <code><a href="plan.html">plan()</a></code>. With regular futures, we can temporarily use another future
-backend by wrapping our code in <code>with(plan(...), { ... }]</code>, or temporarily
+backend by wrapping our code in <code>with(plan(...), { ... })</code>, or temporarily
 inside a function using <code>with(plan(...), local = TRUE)</code>. To achieve the
 same for a specific future assignment, use <code>%plan%</code>, e.g.</p>
 <p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">plan</span>(multisession)</span>

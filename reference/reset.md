@@ -1,7 +1,7 @@
 # Reset a finished, failed, canceled, or interrupted future to a lazy future
 
-A future that has successfully completed,
-[canceled](https://future.futureverse.org/reference/cancel.md),
+A future that has successfully completed, was
+[canceled](https://future.futureverse.org/reference/cancel.md) or
 interrupted, or has failed due to an error, can be relaunched after
 resetting it.
 

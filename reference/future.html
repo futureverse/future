@@ -3,20 +3,20 @@
 Creates a future that evaluates an R expression or
 a future that calls an R function with a set of arguments.
 How, when, and where these futures are evaluated can be configured
-using plan() such that it is evaluated in parallel on,
+using plan() such that they are evaluated in parallel on,
 for instance, the current machine, on a remote machine, or via a
 job queue on a compute cluster.
 Importantly, any R code using futures remains the same regardless
-on these settings and there is no need to modify the code when
+of these settings and there is no need to modify the code when
 switching from, say, sequential to parallel processing."><meta property="og:description" content="
 Creates a future that evaluates an R expression or
 a future that calls an R function with a set of arguments.
 How, when, and where these futures are evaluated can be configured
-using plan() such that it is evaluated in parallel on,
+using plan() such that they are evaluated in parallel on,
 for instance, the current machine, on a remote machine, or via a
 job queue on a compute cluster.
 Importantly, any R code using futures remains the same regardless
-on these settings and there is no need to modify the code when
+of these settings and there is no need to modify the code when
 switching from, say, sequential to parallel processing."><meta property="og:image" content="https://future.futureverse.org/logo.png"><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-SB3EQSD9FR"></script><script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -31,7 +31,7 @@ switching from, say, sequential to parallel processing."><meta property="og:imag
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.69.0-9001</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.69.0-9002</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -101,11 +101,11 @@ switching from, say, sequential to parallel processing."><meta property="og:imag
 Creates a future that evaluates an <span style="R">R</span> expression or
 a future that calls an <span style="R">R</span> function with a set of arguments.
 How, when, and where these futures are evaluated can be configured
-using <code><a href="plan.html">plan()</a></code> such that it is evaluated in parallel on,
+using <code><a href="plan.html">plan()</a></code> such that they are evaluated in parallel on,
 for instance, the current machine, on a remote machine, or via a
 job queue on a compute cluster.
 Importantly, any <span style="R">R</span> code using futures remains the same regardless
-on these settings and there is no need to modify the code when
+of these settings and there is no need to modify the code when
 switching from, say, sequential to parallel processing.</p>
     </div>
 
@@ -167,7 +167,7 @@ identified.</p></dd>
 
 <dt id="arg-substitute">substitute<a class="anchor" aria-label="anchor" href="#arg-substitute"></a></dt>
 <dd><p>If TRUE, argument <code>expr</code> is
-<code><a href="https://rdrr.io/r/base/substitute.html" class="external-link">substitute()</a></code>:ed, otherwise not.</p></dd>
+<code><a href="https://rdrr.io/r/base/substitute.html" class="external-link">substitute()</a></code>:d, otherwise not.</p></dd>
 
 
 <dt id="arg-lazy">lazy<a class="anchor" aria-label="anchor" href="#arg-lazy"></a></dt>
@@ -179,9 +179,9 @@ eagerly (starting immediately), otherwise not.</p></dd>
 <dd><p>(optional) If TRUE, the random seed, that is, the state of the
 random number generator (RNG) will be set such that statistically sound
 random numbers are produced (also during parallelization).
-If FALSE (default), it is assumed that the future expression does neither
-need nor use random numbers generation.
-To use a fixed random seed, specify a L'Ecuyer-CMRG seed (seven integer)
+If FALSE (default), it is assumed that the future expression neither
+needs nor uses random number generation.
+To use a fixed random seed, specify a L'Ecuyer-CMRG seed (seven integers)
 or a regular RNG seed (a single integer).  If the latter, then a
 L'Ecuyer-CMRG seed will be automatically created based on the given seed.
 Furthermore, if FALSE, then the future will be monitored to make sure it
@@ -218,15 +218,15 @@ behavior of such unhandled standard output depends on the future backend.</p></d
 
 
 <dt id="arg-conditions">conditions<a class="anchor" aria-label="anchor" href="#arg-conditions"></a></dt>
-<dd><p>A character string of conditions classes to be captured
+<dd><p>A character string of condition classes to be captured
 and relayed.  The default is to relay all conditions, including messages
 and warnings.  To drop all conditions, use <code>conditions = character(0)</code>.
 Errors are always relayed.
 Attribute <code>exclude</code> can be used to ignore specific classes, e.g.
 <code>conditions = structure("condition", exclude = "message")</code> will capture
-all <code>condition</code> classes except those that inherits from the <code>message</code> class.
+all <code>condition</code> classes except those that inherit from the <code>message</code> class.
 Using <code>conditions = structure(..., drop = TRUE)</code> causes any captured
-conditions to be dropped from the future object as soon as it has
+conditions to be dropped from the future object as soon as they have
 been relayed, e.g. by <code>value(f)</code>. This can help decrease the overall
 memory consumed by captured conditions across futures.
 Using <code>conditions = NULL</code> (not recommended) avoids intercepting conditions,
@@ -314,13 +314,13 @@ environment <code>envir</code> as the starting point (basically via
 <em>In most cases, such automatic collection of globals is sufficient
 and less tedious and error prone than if they are manually specified</em>.</p>
 <p>However, for full control, it is also possible to explicitly specify
-exactly which the globals are by providing their names as a character
+exactly which globals are by providing their names as a character
 vector.
 In the above example, we could use</p><div class="sourceCode"><pre><code><span></span>
 <span>  <span class="va">a</span> <span class="op">&lt;-</span> <span class="fl">42</span></span>
 <span>  <span class="va">f</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/future.html">future</a></span><span class="op">(</span><span class="op">{</span> <span class="va">b</span> <span class="op">&lt;-</span> <span class="fl">2</span>; <span class="va">a</span> <span class="op">*</span> <span class="va">b</span> <span class="op">}</span>, globals <span class="op">=</span> <span class="st">"a"</span><span class="op">)</span></span></code></pre></div>
 
-<p>Yet another alternative is to explicitly specify also their values
+<p>Yet another alternative is to explicitly also specify their values
 using a named list as in</p><div class="sourceCode"><pre><code><span></span>
 <span>  <span class="va">a</span> <span class="op">&lt;-</span> <span class="fl">42</span></span>
 <span>  <span class="va">f</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/future.html">future</a></span><span class="op">(</span><span class="op">{</span> <span class="va">b</span> <span class="op">&lt;-</span> <span class="fl">2</span>; <span class="va">a</span> <span class="op">*</span> <span class="va">b</span> <span class="op">}</span>, globals <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>a <span class="op">=</span> <span class="va">a</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><p>or</p><div class="sourceCode"><pre><code><span></span>
@@ -371,7 +371,7 @@ global <code>a</code>.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p>How, when and where futures are resolved is given by the
+    <div class="dont-index"><p>How, when, and where futures are resolved is determined by the
 <em>future backend</em>, which can be set by the end user using the
 <code><a href="plan.html">plan()</a></code> function.</p></div>
     </div>

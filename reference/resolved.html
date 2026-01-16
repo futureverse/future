@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.69.0-9001</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.69.0-9002</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -145,7 +145,7 @@ because it should always be possible to poll futures until they are
 resolved using <code>resolved()</code>, e.g.
 <code>while (!all(resolved(futures))) Sys.sleep(5)</code>.</p>
 <p>Each future backend must implement a <code>resolved()</code> method. It should return
-either TRUE or FALSE, or throw a <a href="FutureCondition.html">FutureError</a> (which indicate a
+either TRUE or FALSE, or throw a <a href="FutureCondition.html">FutureError</a> (which indicates a
 significant, often unrecoverable infrastructure problem, or an interrupt).</p>
     </div>
     <div class="section level2">

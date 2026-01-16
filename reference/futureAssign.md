@@ -6,8 +6,8 @@
 evaluates the expression (`value`) and binds it to variable `x` (as a
 [promise](https://rdrr.io/r/base/delayedAssign.html)). The expression is
 evaluated in parallel in the background. Later on, when `x` is first
-queried, the value of future is automatically retrieved as it were a
-regular variable and `x` is materialized as a regular value.
+queried, the value of the future is automatically retrieved as if it
+were a regular variable and `x` is materialized as a regular value.
 
 ## Usage
 
@@ -67,7 +67,7 @@ fassignment %tweak% tweaks
 - substitute:
 
   If TRUE, argument `expr` is
-  [`substitute()`](https://rdrr.io/r/base/substitute.html):ed, otherwise
+  [`substitute()`](https://rdrr.io/r/base/substitute.html):d, otherwise
   not.
 
 - lazy:
@@ -80,9 +80,9 @@ fassignment %tweak% tweaks
   (optional) If TRUE, the random seed, that is, the state of the random
   number generator (RNG) will be set such that statistically sound
   random numbers are produced (also during parallelization). If FALSE
-  (default), it is assumed that the future expression does neither need
-  nor use random numbers generation. To use a fixed random seed, specify
-  a L'Ecuyer-CMRG seed (seven integer) or a regular RNG seed (a single
+  (default), it is assumed that the future expression neither needs nor
+  uses random number generation. To use a fixed random seed, specify a
+  L'Ecuyer-CMRG seed (seven integers) or a regular RNG seed (a single
   integer). If the latter, then a L'Ecuyer-CMRG seed will be
   automatically created based on the given seed. Furthermore, if FALSE,
   then the future will be monitored to make sure it does not use random
@@ -120,16 +120,16 @@ fassignment %tweak% tweaks
 
 - conditions:
 
-  A character string of conditions classes to be captured and relayed.
+  A character string of condition classes to be captured and relayed.
   The default is to relay all conditions, including messages and
   warnings. To drop all conditions, use `conditions = character(0)`.
   Errors are always relayed. Attribute `exclude` can be used to ignore
   specific classes, e.g.
   `conditions = structure("condition", exclude = "message")` will
-  capture all `condition` classes except those that inherits from the
+  capture all `condition` classes except those that inherit from the
   `message` class. Using `conditions = structure(..., drop = TRUE)`
   causes any captured conditions to be dropped from the future object as
-  soon as it has been relayed, e.g. by `value(f)`. This can help
+  soon as they have been relayed, e.g. by `value(f)`. This can help
   decrease the overall memory consumed by captured conditions across
   futures. Using `conditions = NULL` (not recommended) avoids
   intercepting conditions, except from errors; behavior of such
@@ -190,7 +190,7 @@ succeeding queries, querying `x` will immediately give the value.
 The future assignment construct `x %<-% value` is not a formal
 assignment per se, but a binary infix operator on objects `x` and
 expression `value`. However, by using non-standard evaluation, this
-constructs can emulate an assignment operator similar to `x <- value`.
+construct can emulate an assignment operator similar to `x <- value`.
 Due to R's precedence rules of operators, future expressions often need
 to be explicitly bracketed, e.g. `x %<-% { a + b }`.
 
@@ -203,12 +203,12 @@ can also be used to override default behaviors of the future, e.g.
 whether output should be relayed or not. When using a future assignment,
 these arguments can be specified via corresponding assignment
 expression. For example, `x %<-% { rnorm(10) } %seed% TRUE` corresponds
-to `futureAssign("x", { rnorm(10) }, seed = TRUE)`. Here are a several
+to `futureAssign("x", { rnorm(10) }, seed = TRUE)`. Here are several
 examples.
 
 To explicitly specify variables and functions that a future assignment
 should use, use `%globals%`. To explicitly specify which packages need
-to be attached for the evaluate to success, use `%packages%`. For
+to be attached for the evaluation to succeed, use `%packages%`. For
 example,
 
     > x <- rnorm(1000)
@@ -254,7 +254,7 @@ To disable relaying of conditions, use `%conditions%`, e.g.
     > z
     [1] 55
 
-To create a future without launching in such that it will only be
+To create a future without launching it such that it will only be
 processed if the value is really needed, use `%lazy%`, e.g.
 
     > x %<-% { Sys.sleep(5); 42 } %lazy% TRUE
@@ -267,9 +267,9 @@ processed if the value is really needed, use `%lazy%`, e.g.
 
 ## Error handling
 
-Because future assignments are promises, errors produced by the the
-future expression will not be signaled until the value of the future is
-requested. For example, if you create a future assignment that produce
+Because future assignments are promises, errors produced by the future
+expression will not be signaled until the value of the future is
+requested. For example, if you create a future assignment that produces
 an error, you will not be affected by the error until you "touch" the
 future-assignment variable. For example,
 
@@ -283,7 +283,7 @@ future-assignment variable. For example,
 Futures are evaluated on the future backend that the user has specified
 by [`plan()`](https://future.futureverse.org/reference/plan.md). With
 regular futures, we can temporarily use another future backend by
-wrapping our code in `with(plan(...), { ... }]`, or temporarily inside a
+wrapping our code in `with(plan(...), { ... })`, or temporarily inside a
 function using `with(plan(...), local = TRUE)`. To achieve the same for
 a specific future assignment, use `%plan%`, e.g.
 

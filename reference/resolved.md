@@ -70,7 +70,7 @@ resolved using `resolved()`, e.g.
 Each future backend must implement a `resolved()` method. It should
 return either TRUE or FALSE, or throw a
 [FutureError](https://future.futureverse.org/reference/FutureCondition.md)
-(which indicate a significant, often unrecoverable infrastructure
+(which indicates a significant, often unrecoverable infrastructure
 problem, or an interrupt).
 
 ## Behavior of cluster and multisession futures

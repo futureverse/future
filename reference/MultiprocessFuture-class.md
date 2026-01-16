@@ -18,7 +18,7 @@ MultiprocessFuture(expr = NULL, substitute = TRUE, envir = parent.frame(), ...)
 - substitute:
 
   If TRUE, argument `expr` is
-  [`substitute()`](https://rdrr.io/r/base/substitute.html):ed, otherwise
+  [`substitute()`](https://rdrr.io/r/base/substitute.html):d, otherwise
   not.
 
 - envir:
