@@ -26,47 +26,6 @@ Run `revdepcheck::revdep_details(, "adestr")` for more info
         ‘plot.R’ ‘print.R’ ‘reference_implementation.R’
     ```
 
-# alookr
-
-<details>
-
-* Version: 0.4.0
-* GitHub: https://github.com/choonghyunryu/alookr
-* Source code: https://github.com/cran/alookr
-* Date/Publication: 2025-09-16 02:50:02 UTC
-* Number of recursive dependencies: 149
-
-Run `revdepcheck::revdep_details(, "alookr")` for more info
-
-</details>
-
-## In both
-
-*   checking examples ... ERROR
-    ```
-    Running examples in ‘alookr-Ex.R’ failed
-    The error most likely occurred in:
-    
-    > ### Name: run_models
-    > ### Title: Fit binary classification model
-    > ### Aliases: run_models
-    > 
-    > ### ** Examples
-    > 
-    > library(dplyr)
-    ...
-     10. │   ├─purrr:::call_with_cleanup(...)
-     11. │   └─alookr (local) .f(.x[[i]], ...)
-     12. │     ├─future::value(.x)
-     13. │     └─future:::value.Future(.x)
-     14. │       └─future:::signalConditions(...)
-     15. │         └─base::stop(condition)
-     16. └─purrr (local) `<fn>`(`<smplErrr>`)
-     17.   └─cli::cli_abort(...)
-     18.     └─rlang::abort(...)
-    Execution halted
-    ```
-
 # bamm
 
 <details>
@@ -112,47 +71,6 @@ Run `revdepcheck::revdep_details(, "baseballr")` for more info
       |> or function shorthand \(...) syntax added in R 4.1.0.
       File(s) using such syntax:
         ‘chadwick_installation.R’
-    ```
-
-# CAESAR.Suite
-
-<details>
-
-* Version: 0.2.3
-* GitHub: https://github.com/XiaoZhangryy/CAESAR.Suite
-* Source code: https://github.com/cran/CAESAR.Suite
-* Date/Publication: 2025-11-07 10:40:02 UTC
-* Number of recursive dependencies: 262
-
-Run `revdepcheck::revdep_details(, "CAESAR.Suite")` for more info
-
-</details>
-
-## In both
-
-*   checking examples ... ERROR
-    ```
-    Running examples in ‘CAESAR.Suite-Ex.R’ failed
-    The error most likely occurred in:
-    
-    > ### Name: CAESAR.CTDEP
-    > ### Title: Test Cell Type Differentially Enriched Pathways
-    > ### Aliases: CAESAR.CTDEP
-    > 
-    > ### ** Examples
-    > 
-    > data(toydata)
-    ...
-    Backtrace:
-        ▆
-     1. └─CAESAR.Suite::CAESAR.enrich.score(seu, pathway_list)
-     2.   ├─Seurat::GetAssayData(object = seu, slot = "data", assay = assay.dist)
-     3.   └─SeuratObject:::GetAssayData.Seurat(...)
-     4.     └─SeuratObject::.Deprecate(...)
-     5.       └─lifecycle::deprecate_stop(...)
-     6.         └─lifecycle:::deprecate_stop0(msg)
-     7.           └─rlang::cnd_signal(...)
-    Execution halted
     ```
 
 # ceRNAnetsim
@@ -367,7 +285,7 @@ Run `revdepcheck::revdep_details(, "ctsem")` for more info
     ```
     Found the following significant warnings:
       Warning: namespace ‘colorspace’ is not available and has been replaced
-    See ‘/scratch/henrik/revdep/future/checks/ctsem/new/ctsem.Rcheck/00install.out’ for details.
+    See ‘/scratch/henrik/1001117/revdep/future/checks/ctsem/new/ctsem.Rcheck/00install.out’ for details.
     ```
 
 *   checking re-building of vignette outputs ... WARNING
@@ -468,10 +386,10 @@ Run `revdepcheck::revdep_details(, "dar")` for more info
     
     Quitting from article.Rmd:164-168 [unnamed-chunk-5]
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    NULL
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    
-    Error: processing vignette 'article.Rmd' failed with diagnostics:
+    <error/purrr_error_indexed>
+    Error:
+    ℹ In index: 1.
+    Caused by error in `purrr::map()`:
     ℹ In index: 1.
     ...
     Caused by error in `loadNamespace()`:
@@ -484,28 +402,6 @@ Run `revdepcheck::revdep_details(, "dar")` for more info
     
     Error: Vignette re-building failed.
     Execution halted
-    ```
-
-# delimtools
-
-<details>
-
-* Version: 0.2.1
-* GitHub: https://github.com/legalLab/delimtools
-* Source code: https://github.com/cran/delimtools
-* Date/Publication: 2025-09-29 22:10:02 UTC
-* Number of recursive dependencies: 101
-
-Run `revdepcheck::revdep_details(, "delimtools")` for more info
-
-</details>
-
-## In both
-
-*   checking Rd cross-references ... NOTE
-    ```
-    Package unavailable to check Rd xrefs: ‘bGMYC’
-    Unknown package ‘splits’ in Rd xrefs
     ```
 
 # disk.frame
@@ -617,48 +513,7 @@ Run `revdepcheck::revdep_details(, "envi")` for more info
     ```
     Found the following significant warnings:
       Warning: no DISPLAY variable so Tk is not available
-    See ‘/scratch/henrik/revdep/future/checks/envi/new/envi.Rcheck/00install.out’ for details.
-    ```
-
-# FastRet
-
-<details>
-
-* Version: 1.1.4
-* GitHub: https://github.com/spang-lab/FastRet
-* Source code: https://github.com/cran/FastRet
-* Date/Publication: 2025-02-10 18:30:02 UTC
-* Number of recursive dependencies: 188
-
-Run `revdepcheck::revdep_details(, "FastRet")` for more info
-
-</details>
-
-## In both
-
-*   checking tests ...
-    ```
-      Running ‘testthat.R’
-     ERROR
-    Running the tests in ‘tests/testthat.R’ failed.
-    Last 50 lines of output:
-      > test-adjust_frm.R: [1;30m2025-12-14 22:44:20.30[0m Preprocessing data
-      > test-adjust_frm.R: [1;30m2025-12-14 22:44:20.30[0m Formula: RT_ADJ ~ RT + I(RT^2) + I(RT^3) + log(RT) + exp(RT) + sqrt(RT)
-      > test-adjust_frm.R: [1;30m2025-12-14 22:44:20.30[0m Estimating performance of adjusted model in CV
-      > test-adjust_frm.R: [1;30m2025-12-14 22:44:20.33[0m Fitting adjustment model on full new data set
-      > test-adjust_frm.R: [1;30m2025-12-14 22:44:20.33[0m Returning adjusted frm object
-      > test-plot_frm.R: [1;30m2025-12-14 22:44:19.87[0m dim(new_data): 25 x 3
-    ...
-      Backtrace:
-          ▆
-       1. └─FastRet:::fit_gbtree(df, verbose = 0) at test-fit_gbtree.R:16:5
-       2.   └─FastRet:::fit_gbtree_grid(...)
-       3.     └─xgboost::xgb.train(...)
-      
-      [ FAIL 3 | WARN 5 | SKIP 0 | PASS 19 ]
-      Error:
-      ! Test failures.
-      Execution halted
+    See ‘/scratch/henrik/1001117/revdep/future/checks/envi/new/envi.Rcheck/00install.out’ for details.
     ```
 
 # fastRhockey
@@ -739,7 +594,6 @@ Run `revdepcheck::revdep_details(, "fmeffects")` for more info
 *   checking re-building of vignette outputs ... ERROR
     ```
     Error(s) in re-building vignettes:
-      ...
     --- re-building ‘fme_theory.Rmd’ using rmarkdown
     [WARNING] Deprecated: --highlight-style. Use --syntax-highlighting instead.
     --- finished re-building ‘fme_theory.Rmd’
@@ -748,6 +602,7 @@ Run `revdepcheck::revdep_details(, "fmeffects")` for more info
     
     Quitting from fmeffects.Rmd:121-127 [unnamed-chunk-11]
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    <error/purrr_error_indexed>
     ...
     ℹ In index: 1.
     Caused by error in `.__Task__col_roles()`:
@@ -833,13 +688,13 @@ Run `revdepcheck::revdep_details(, "FracFixR")` for more info
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     <error/rlang_error>
     Error in `checkNumberOfLocalWorkers()`:
-    ! Attempting to set up 255 localhost parallel workers with only 5 CPU cores available for this R process (per 'N/A'), which could result in a 5100% load. The hard limit is set to 300%. Overusing the CPUs has negative impact on the current R process, but also on all other processes of yours and others running on the same machine. See help("parallelly.maxWorkers.localhost", package = "parallelly") for further explanations and how to override the hard limit that triggered this error. By the way, was parallel::detectCores() used, because the number of workers (255) equals detectCores() - 1? If so, please use parallelly::availableCores() instead
+    ! Attempting to set up 63 localhost parallel workers with only 5 CPU cores available for this R process (per 'N/A'), which could result in a 1260% load. The hard limit is set to 300%. Overusing the CPUs has negative impact on the current R process, but also on all other processes of yours and others running on the same machine. See help("parallelly.maxWorkers.localhost", package = "parallelly") for further explanations and how to override the hard limit that triggered this error. By the way, was parallel::detectCores() used, because the number of workers (63) equals detectCores() - 1? If so, please use parallelly::availableCores() instead
     ---
     Backtrace:
     ...
     
     Error: processing vignette 'FracFixR-intro.Rmd' failed with diagnostics:
-    Attempting to set up 255 localhost parallel workers with only 5 CPU cores available for this R process (per 'N/A'), which could result in a 5100% load. The hard limit is set to 300%. Overusing the CPUs has negative impact on the current R process, but also on all other processes of yours and others running on the same machine. See help("parallelly.maxWorkers.localhost", package = "parallelly") for further explanations and how to override the hard limit that triggered this error. By the way, was parallel::detectCores() used, because the number of workers (255) equals detectCores() - 1? If so, please use parallelly::availableCores() instead
+    Attempting to set up 63 localhost parallel workers with only 5 CPU cores available for this R process (per 'N/A'), which could result in a 1260% load. The hard limit is set to 300%. Overusing the CPUs has negative impact on the current R process, but also on all other processes of yours and others running on the same machine. See help("parallelly.maxWorkers.localhost", package = "parallelly") for further explanations and how to override the hard limit that triggered this error. By the way, was parallel::detectCores() used, because the number of workers (63) equals detectCores() - 1? If so, please use parallelly::availableCores() instead
     --- failed re-building ‘FracFixR-intro.Rmd’
     
     SUMMARY: processing the following file failed:
@@ -869,7 +724,7 @@ Run `revdepcheck::revdep_details(, "GeDS")` for more info
     ```
     Found the following significant warnings:
       Warning: no DISPLAY variable so Tk is not available
-    See ‘/scratch/henrik/revdep/future/checks/GeDS/new/GeDS.Rcheck/00install.out’ for details.
+    See ‘/scratch/henrik/1001117/revdep/future/checks/GeDS/new/GeDS.Rcheck/00install.out’ for details.
     ```
 
 # googleTagManageR
@@ -1035,27 +890,6 @@ Run `revdepcheck::revdep_details(, "InPAS")` for more info
     Extensions’ manual.
     ```
 
-# interflex
-
-<details>
-
-* Version: 1.2.6
-* GitHub: NA
-* Source code: https://github.com/cran/interflex
-* Date/Publication: 2021-05-18 11:40:02 UTC
-* Number of recursive dependencies: 101
-
-Run `revdepcheck::revdep_details(, "interflex")` for more info
-
-</details>
-
-## In both
-
-*   checking C++ specification ... NOTE
-    ```
-      Specified C++11: please drop specification unless essential
-    ```
-
 # ISAnalytics
 
 <details>
@@ -1151,47 +985,6 @@ Run `revdepcheck::revdep_details(, "kappaGold")` for more info
       |> or function shorthand \(...) syntax added in R 4.1.0.
       File(s) using such syntax:
         ‘kappa_inference.R’
-    ```
-
-# ldmppr
-
-<details>
-
-* Version: 1.0.4
-* GitHub: https://github.com/lanedrew/ldmppr
-* Source code: https://github.com/cran/ldmppr
-* Date/Publication: 2025-02-24 21:00:02 UTC
-* Number of recursive dependencies: 128
-
-Run `revdepcheck::revdep_details(, "ldmppr")` for more info
-
-</details>
-
-## In both
-
-*   checking examples ... ERROR
-    ```
-    Running examples in ‘ldmppr-Ex.R’ failed
-    The error most likely occurred in:
-    
-    > ### Name: predict_marks
-    > ### Title: Predict values from the mark distribution
-    > ### Aliases: predict_marks
-    > 
-    > ### ** Examples
-    > 
-    > # Simulate a realization
-    ...
-    > # Load the example mark model
-    > file_path <- system.file("extdata", "example_mark_model.rds", package = "ldmppr")
-    > example_mark_model <- readRDS(file_path)
-    > 
-    > # Unbundle the model
-    > mark_model <- bundle::unbundle(example_mark_model)
-    Error in xgboost::xgb.load.raw(object, as_booster = TRUE) : 
-      unused argument (as_booster = TRUE)
-    Calls: <Anonymous> ... <Anonymous> -> unbundle -> unbundle.bundle -> <Anonymous>
-    Execution halted
     ```
 
 # ldsr
@@ -1581,93 +1374,27 @@ Run `revdepcheck::revdep_details(, "mlr3resampling")` for more info
 
 *   checking dependencies in R code ... NOTE
     ```
-    c4-n43:pid1097275: PSM3 can't open nic unit: 0 (err=23)
-    c4-n43:pid1097275.R: Unable to create UDP socket for ens13f0np0: Address family not supported by protocol
-    c4-n43:pid1097275.R: Unable to initialize sockets NIC /sys/class/net/ens13f0np0 (unit 0:0)
-    c4-n43:pid1097275: PSM3 can't open nic unit: 0 (err=23)
-    c4-n43:pid1097275.R: Unable to create UDP socket for ens13f0np0: Address family not supported by protocol
-    c4-n43:pid1097275.R: Unable to initialize sockets NIC /sys/class/net/ens13f0np0 (unit 0:0)
-    c4-n43:pid1097275: PSM3 can't open nic unit: 1 (err=23)
-    c4-n43:pid1097275.R: Unable to create UDP socket for ens13f1np1: Address family not supported by protocol
-    c4-n43:pid1097275.R: Unable to initialize sockets NIC /sys/class/net/ens13f1np1 (unit 1:0)
-    c4-n43:pid1097275: PSM3 can't open nic unit: 0 (err=23)
+    c4-dev4:pid1918326: PSM3 can't open nic unit: 3 (err=23)
+    c4-dev4:pid1918326.R: Unable to create UDP socket for enp3s0f1: Address family not supported by protocol
+    c4-dev4:pid1918326.R: Unable to initialize sockets NIC /sys/class/net/enp3s0f1 (unit 3:0)
+    c4-dev4:pid1918326: PSM3 can't open nic unit: 3 (err=23)
+    c4-dev4:pid1918326.R: Unable to create UDP socket for enp3s0f1: Address family not supported by protocol
+    c4-dev4:pid1918326.R: Unable to initialize sockets NIC /sys/class/net/enp3s0f1 (unit 3:0)
+    c4-dev4:pid1918326: PSM3 can't open nic unit: 3 (err=23)
+    c4-dev4:pid1918326.R: Unable to create UDP socket for enp3s0f1: Address family not supported by protocol
+    c4-dev4:pid1918326.R: Unable to initialize sockets NIC /sys/class/net/enp3s0f1 (unit 3:0)
+    c4-dev4:pid1918326: PSM3 can't open nic unit: 3 (err=23)
     ...
-    c4-n43:pid1097275.R: Unable to create UDP socket for ens13f1np1: Address family not supported by protocol
-    c4-n43:pid1097275.R: Unable to initialize sockets NIC /sys/class/net/ens13f1np1 (unit 1:0)
+    c4-dev4:pid1918326.R: Unable to create UDP socket for enp3s0f1: Address family not supported by protocol
+    c4-dev4:pid1918326.R: Unable to initialize sockets NIC /sys/class/net/enp3s0f1 (unit 3:0)
     --------------------------------------------------------------------------
     Open MPI failed an OFI Libfabric library call (fi_endpoint).  This is highly
     unusual; your job may behave unpredictably (and/or abort) after this.
     
-      Local host: c4-n43
+      Local host: c4-dev4
       Location: mtl_ofi_component.c:513
       Error: Invalid argument (22)
     --------------------------------------------------------------------------
-    ```
-
-# modeltime
-
-<details>
-
-* Version: 1.3.2
-* GitHub: https://github.com/business-science/modeltime
-* Source code: https://github.com/cran/modeltime
-* Date/Publication: 2025-08-28 23:40:09 UTC
-* Number of recursive dependencies: 237
-
-Run `revdepcheck::revdep_details(, "modeltime")` for more info
-
-</details>
-
-## In both
-
-*   checking tests ...
-    ```
-      Running ‘testthat.R’
-     ERROR
-    Running the tests in ‘tests/testthat.R’ failed.
-    Last 50 lines of output:
-        'test-algo-seasonal_decomp_ets.R:10:5',
-        'test-algo-seasonal_reg_tbats.R:20:5', 'test-algo-seasonal_reg_tbats.R:35:5',
-        'test-algo-seasonal_reg_tbats.R:93:5', 'test-algo-temporal_hierarchy.R:8:5',
-        'test-algo-window_reg.R:24:5', 'test-algo-window_reg.R:69:5',
-        'test-algo-window_reg.R:100:5', 'test-algo-window_reg.R:153:5',
-        'test-algo-window_reg.R:206:5', 'test-algo-window_reg.R:241:5',
-    ...
-       5. │   └─parsnip:::xy_xy(...)
-       6. │     └─parsnip:::eval_mod(...)
-       7. │       └─rlang::eval_tidy(e, env = envir, ...)
-       8. └─modeltime::prophet_xgboost_fit_impl(...)
-       9.   └─modeltime::xgboost_predict(fit_xgboost, newdata = xreg_tbl)
-      
-      [ FAIL 1 | WARN 0 | SKIP 80 | PASS 0 ]
-      Error:
-      ! Test failures.
-      Execution halted
-    ```
-
-*   checking re-building of vignette outputs ... ERROR
-    ```
-    Error(s) in re-building vignettes:
-    --- re-building ‘getting-started-with-modeltime.Rmd’ using rmarkdown
-    
-    Quitting from getting-started-with-modeltime.Rmd:162-171 [unnamed-chunk-9]
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    <error/rlang_error>
-    Error in `switch()`:
-    ! EXPR must be a length 1 vector
-    ---
-    Backtrace:
-    ...
-    
-    Error: processing vignette 'getting-started-with-modeltime.Rmd' failed with diagnostics:
-    EXPR must be a length 1 vector
-    --- failed re-building ‘getting-started-with-modeltime.Rmd’
-    
-    SUMMARY: processing the following file failed:
-      ‘getting-started-with-modeltime.Rmd’
-    
-    Error: Vignette re-building failed.
-    Execution halted
     ```
 
 # multiverse
@@ -1742,7 +1469,7 @@ Run `revdepcheck::revdep_details(, "outliers.ts.oga")` for more info
     ```
     Found the following significant warnings:
       Warning: no DISPLAY variable so Tk is not available
-    See ‘/scratch/henrik/revdep/future/checks/outliers.ts.oga/new/outliers.ts.oga.Rcheck/00install.out’ for details.
+    See ‘/scratch/henrik/1001117/revdep/future/checks/outliers.ts.oga/new/outliers.ts.oga.Rcheck/00install.out’ for details.
     ```
 
 # PAMpal
@@ -1765,7 +1492,7 @@ Run `revdepcheck::revdep_details(, "PAMpal")` for more info
     ```
     Found the following significant warnings:
       Warning: no DISPLAY variable so Tk is not available
-    See ‘/scratch/henrik/revdep/future/checks/PAMpal/new/PAMpal.Rcheck/00install.out’ for details.
+    See ‘/scratch/henrik/1001117/revdep/future/checks/PAMpal/new/PAMpal.Rcheck/00install.out’ for details.
     ```
 
 # PAMscapes
@@ -1788,7 +1515,7 @@ Run `revdepcheck::revdep_details(, "PAMscapes")` for more info
     ```
     Found the following significant warnings:
       Warning: no DISPLAY variable so Tk is not available
-    See ‘/scratch/henrik/revdep/future/checks/PAMscapes/new/PAMscapes.Rcheck/00install.out’ for details.
+    See ‘/scratch/henrik/1001117/revdep/future/checks/PAMscapes/new/PAMscapes.Rcheck/00install.out’ for details.
     ```
 
 # partR2
@@ -1833,7 +1560,7 @@ Run `revdepcheck::revdep_details(, "pavo")` for more info
     ```
     Found the following significant warnings:
       Warning: no DISPLAY variable so Tk is not available
-    See ‘/scratch/henrik/revdep/future/checks/pavo/new/pavo.Rcheck/00install.out’ for details.
+    See ‘/scratch/henrik/1001117/revdep/future/checks/pavo/new/pavo.Rcheck/00install.out’ for details.
     ```
 
 # pgxRpi
@@ -1851,77 +1578,6 @@ Run `revdepcheck::revdep_details(, "pgxRpi")` for more info
 </details>
 
 ## In both
-
-*   checking examples ... ERROR
-    ```
-    Running examples in ‘pgxRpi-Ex.R’ failed
-    The error most likely occurred in:
-    
-    > ### Name: pgxFreqplot
-    > ### Title: Plot CNV frequency data
-    > ### Aliases: pgxFreqplot
-    > 
-    > ### ** Examples
-    > 
-    > ## load necessary data (this step can be skipped in real implementation)
-    > data("hg38_cytoband")
-    > ## get frequency data
-    > freq <- pgxLoader(type="cnv_frequency", output ='pgxfreq', filters="NCIT:C3512")
-    Error in pgxFreqLoader(output = output, filters = filters, domain = domain) : 
-      Request failed for filter NCIT:C3512 (status code: 422)
-    Calls: pgxLoader -> pgxFreqLoader
-    Execution halted
-    ```
-
-*   checking tests ...
-    ```
-      Running ‘testthat.R’
-     ERROR
-    Running the tests in ‘tests/testthat.R’ failed.
-    Last 50 lines of output:
-      1/1 mismatches
-      x[1]: "application/json"
-      y[1]: "text/plain"
-      ── Failure ('test_variants.R:65:5'): retrieve pgxmatrix variant with filters ───
-      Expected `... <- NULL` not to throw any errors.
-      Actually got a <simpleError> with message:
-    ...
-      target is NULL, current is logical
-      ── Failure ('test_variants.R:103:9'): retrieve variants with JSON in cellz ─────
-      Expected `nrow(table)` > 0.
-      Actual comparison: 0.0 <= 0.0
-      Difference: 0.0 <= 0
-      
-      [ FAIL 37 | WARN 5 | SKIP 0 | PASS 0 ]
-      Error:
-      ! Test failures.
-      Execution halted
-    ```
-
-*   checking re-building of vignette outputs ... ERROR
-    ```
-    Error(s) in re-building vignettes:
-    --- re-building ‘Introduction_1_load_metadata.Rmd’ using rmarkdown
-    
-    Quitting from Introduction_1_load_metadata.Rmd:183-188 [unnamed-chunk-13]
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    <error/rlang_error>
-    Error in `if (nrow(meta.sel.df) == 0) ...`:
-    ! argument is of length zero
-    ---
-    Backtrace:
-    ...
-    The magick package is required to crop "/scratch/henrik/revdep/future/checks/pgxRpi/new/pgxRpi.Rcheck/vign_test/pgxRpi/vignettes/Introduction_4_process_pgxseg_files/figure-html/unnamed-chunk-16-1.png" but not available.
-    --- finished re-building ‘Introduction_4_process_pgxseg.Rmd’
-    
-    SUMMARY: processing the following files failed:
-      ‘Introduction_1_load_metadata.Rmd’
-      ‘Introduction_2_query_variants.Rmd’
-      ‘Introduction_3_access_cnv_frequency.Rmd’
-    
-    Error: Vignette re-building failed.
-    Execution halted
-    ```
 
 *   checking R code for possible problems ... NOTE
     ```
@@ -2004,7 +1660,7 @@ Run `revdepcheck::revdep_details(, "Prostar")` for more info
     ```
     Found the following significant warnings:
       Warning: replacing previous import ‘future::reset’ by ‘shinyjs::reset’ when loading ‘Prostar’
-    See ‘/scratch/henrik/revdep/future/checks/Prostar/new/Prostar.Rcheck/00install.out’ for details.
+    See ‘/scratch/henrik/1001117/revdep/future/checks/Prostar/new/Prostar.Rcheck/00install.out’ for details.
     ```
 
 *   checking for hidden files and directories ... NOTE
@@ -2085,7 +1741,7 @@ Run `revdepcheck::revdep_details(, "qape")` for more info
 * GitHub: https://github.com/ccagc/QDNAseq
 * Source code: https://github.com/cran/QDNAseq
 * Date/Publication: 2025-10-29
-* Number of recursive dependencies: 95
+* Number of recursive dependencies: 94
 
 Run `revdepcheck::revdep_details(, "QDNAseq")` for more info
 
@@ -2154,47 +1810,6 @@ Run `revdepcheck::revdep_details(, "receptiviti")` for more info
        8.   └─receptiviti:::manage_request(...)
       
       [ FAIL 1 | WARN 0 | SKIP 4 | PASS 5 ]
-      Error:
-      ! Test failures.
-      Execution halted
-    ```
-
-# recforest
-
-<details>
-
-* Version: 1.0.0
-* GitHub: NA
-* Source code: https://github.com/cran/recforest
-* Date/Publication: 2024-12-05 18:30:02 UTC
-* Number of recursive dependencies: 124
-
-Run `revdepcheck::revdep_details(, "recforest")` for more info
-
-</details>
-
-## In both
-
-*   checking tests ...
-    ```
-      Running ‘testthat.R’
-     ERROR
-    Running the tests in ‘tests/testthat.R’ failed.
-    Last 50 lines of output:
-       3. └─testthat::expect_equal(...) at test-train_forest.R:285:5
-      ── Failure ('test-train_forest.R:301:5'): train_forest and predict_forest works with method GL ──
-      Expected `trained_forest$tree_metrics` to equal `list(...)`.
-      Differences:
-        `actual[[1]]$c_index`: 0.794279
-      `expected[[1]]$c_index`: 0.794180
-    ...
-      Backtrace:
-          ▆
-       1. ├─withr::with_seed(...) at test-train_forest.R:251:3
-       2. │ └─withr::with_preserve_seed(...)
-       3. └─testthat::expect_equal(...) at test-train_forest.R:323:5
-      
-      [ FAIL 3 | WARN 0 | SKIP 1 | PASS 61 ]
       Error:
       ! Test failures.
       Execution halted
@@ -2382,7 +1997,7 @@ Run `revdepcheck::revdep_details(, "scLANE")` for more info
        8.         └─lifecycle:::deprecate_stop0(msg)
        9.           └─rlang::cnd_signal(...)
       
-      [ FAIL 1 | WARN 740 | SKIP 0 | PASS 0 ]
+      [ FAIL 1 | WARN 741 | SKIP 0 | PASS 0 ]
       Error:
       ! Test failures.
       Execution halted
@@ -2392,11 +2007,11 @@ Run `revdepcheck::revdep_details(, "scLANE")` for more info
 
 <details>
 
-* Version: 0.1.4
+* Version: 0.2.0
 * GitHub: https://github.com/lukakoning/shinyOAuth
 * Source code: https://github.com/cran/shinyOAuth
-* Date/Publication: 2025-11-24 20:10:02 UTC
-* Number of recursive dependencies: 76
+* Date/Publication: 2026-01-13 08:10:02 UTC
+* Number of recursive dependencies: 75
 
 Run `revdepcheck::revdep_details(, "shinyOAuth")` for more info
 
@@ -2410,20 +2025,20 @@ Run `revdepcheck::revdep_details(, "shinyOAuth")` for more info
      ERROR
     Running the tests in ‘tests/testthat.R’ failed.
     Last 50 lines of output:
-        4. │     ├─testthat (local) .capture(...)
-        5. │     │ └─base::withCallingHandlers(...)
-        6. │     └─rlang::eval_bare(quo_get_expr(.quo), quo_get_env(.quo))
-        7. └─shinyOAuth::oauth_provider_oidc_discover(issuer = issuer, jwks_host_issuer_match = TRUE)
-        8.   └─shinyOAuth:::.discover_fetch_response(req, issuer)
-        9.     └─shinyOAuth:::err_http(c(x = "Failed to fetch OIDC discovery document"), resp, context = list(issuer = issuer))
+        3.     └─httr2:::resp_failure_cnd(req, resp, error_call = error_call)
+        4.       ├─rlang::catch_cnd(...)
+        5.       │ ├─rlang::eval_bare(...)
+        6.       │ ├─base::tryCatch(...)
+        7.       │ │ └─base (local) tryCatchList(expr, classes, parentenv, handlers)
+        8.       │ │   └─base (local) tryCatchOne(expr, names, parentenv, handlers[[1L]])
     ...
-        [shinyOAuth] - HTTP request failed
-        x Failed to fetch OIDC discovery document
-        x Status 503: Service Unavailable.
-        i URL: http://127.0.0.1:32793/.well-known/openid-configuration
-        i Trace ID: rt9fKMVeaBia
+        7.       │ │ └─base (local) tryCatchList(expr, classes, parentenv, handlers)
+        8.       │ │   └─base (local) tryCatchOne(expr, names, parentenv, handlers[[1L]])
+        9.       │ │     └─base (local) doTryCatch(return(expr), name, parentenv, handler)
+       10.       │ └─base::force(expr)
+       11.       └─rlang::abort(...)
       
-      [ FAIL 23 | WARN 0 | SKIP 12 | PASS 671 ]
+      [ FAIL 35 | WARN 0 | SKIP 19 | PASS 1206 ]
       Error:
       ! Test failures.
       Execution halted
@@ -2583,7 +2198,7 @@ Run `revdepcheck::revdep_details(, "sparrpowR")` for more info
     ```
     Found the following significant warnings:
       Warning: no DISPLAY variable so Tk is not available
-    See ‘/scratch/henrik/revdep/future/checks/sparrpowR/new/sparrpowR.Rcheck/00install.out’ for details.
+    See ‘/scratch/henrik/1001117/revdep/future/checks/sparrpowR/new/sparrpowR.Rcheck/00install.out’ for details.
     ```
 
 # spdesign
@@ -2727,7 +2342,7 @@ Run `revdepcheck::revdep_details(, "stppSim")` for more info
     ```
     Found the following significant warnings:
       Warning: no DISPLAY variable so Tk is not available
-    See ‘/scratch/henrik/revdep/future/checks/stppSim/new/stppSim.Rcheck/00install.out’ for details.
+    See ‘/scratch/henrik/1001117/revdep/future/checks/stppSim/new/stppSim.Rcheck/00install.out’ for details.
     ```
 
 # survstan
@@ -2822,28 +2437,6 @@ Run `revdepcheck::revdep_details(, "synergyfinder")` for more info
            |          ^
     ```
 
-# tglkmeans
-
-<details>
-
-* Version: 0.5.5
-* GitHub: https://github.com/tanaylab/tglkmeans
-* Source code: https://github.com/cran/tglkmeans
-* Date/Publication: 2024-05-15 08:40:02 UTC
-* Number of recursive dependencies: 85
-
-Run `revdepcheck::revdep_details(, "tglkmeans")` for more info
-
-</details>
-
-## In both
-
-*   checking dependencies in R code ... NOTE
-    ```
-    Namespace in Imports field not imported from: ‘doRNG’
-      All declared Imports should be used.
-    ```
-
 # tramvs
 
 <details>
@@ -2904,7 +2497,7 @@ Run `revdepcheck::revdep_details(, "TriDimRegression")` for more info
 *   checking whether package ‘TriDimRegression’ can be installed ... ERROR
     ```
     Installation failed.
-    See ‘/scratch/henrik/revdep/future/checks/TriDimRegression/new/TriDimRegression.Rcheck/00install.out’ for details.
+    See ‘/scratch/henrik/1001117/revdep/future/checks/TriDimRegression/new/TriDimRegression.Rcheck/00install.out’ for details.
     ```
 
 ## Installation
@@ -2920,7 +2513,7 @@ Error in loadNamespace(x) : there is no package called ‘rstantools’
 Calls: loadNamespace -> withRestarts -> withOneRestart -> doWithOneRestart
 Execution halted
 ERROR: configuration failed for package ‘TriDimRegression’
-* removing ‘/scratch/henrik/revdep/future/checks/TriDimRegression/new/TriDimRegression.Rcheck/TriDimRegression’
+* removing ‘/scratch/henrik/1001117/revdep/future/checks/TriDimRegression/new/TriDimRegression.Rcheck/TriDimRegression’
 
 
 ```
@@ -2935,7 +2528,7 @@ Error in loadNamespace(x) : there is no package called ‘rstantools’
 Calls: loadNamespace -> withRestarts -> withOneRestart -> doWithOneRestart
 Execution halted
 ERROR: configuration failed for package ‘TriDimRegression’
-* removing ‘/scratch/henrik/revdep/future/checks/TriDimRegression/old/TriDimRegression.Rcheck/TriDimRegression’
+* removing ‘/scratch/henrik/1001117/revdep/future/checks/TriDimRegression/old/TriDimRegression.Rcheck/TriDimRegression’
 
 
 ```
@@ -3023,6 +2616,7 @@ Run `revdepcheck::revdep_details(, "tsmarch")` for more info
 *   checking re-building of vignette outputs ... ERROR
     ```
     Error(s) in re-building vignettes:
+      ...
     --- re-building ‘feasible_multivariate_garch.Rmd’ using rmarkdown
     [WARNING] Deprecated: --highlight-style. Use --syntax-highlighting instead.
     ! Undefined control sequence.
@@ -3030,16 +2624,15 @@ Run `revdepcheck::revdep_details(, "tsmarch")` for more info
                             \citeproctext{}{} 
     
     Error: processing vignette 'feasible_multivariate_garch.Rmd' failed with diagnostics:
-    LaTeX failed to compile /scratch/henrik/revdep/future/checks/tsmarch/new/tsmarch.Rcheck/vign_test/tsmarch/vignettes/feasible_multivariate_garch.tex. See https://yihui.org/tinytex/r/#debugging for debugging tips. See feasible_multivariate_garch.log for more info.
-    --- failed re-building ‘feasible_multivariate_garch.Rmd’
+    LaTeX failed to compile /scratch/henrik/1001117/revdep/future/checks/tsmarch/new/tsmarch.Rcheck/vign_test/tsmarch/vignettes/feasible_multivariate_garch.tex. See https://yihui.org/tinytex/r/#debugging for debugging tips. See feasible_multivariate_garch.log for more info.
     ...
-    36: tryCatchOne(expr, names, parentenv, handlers[[1L]])
-    37: tryCatchList(expr, classes, parentenv, handlers)
-    38: tryCatch({    engine$weave(file, quiet = quiet, encoding = enc)    setwd(startdir)    output <- find_vignette_product(name, by = "weave", engine = engine)    if (!have.makefile && vignette_is_tex(output)) {        texi2pdf(file = output, clean = FALSE, quiet = quiet)        output <- find_vignette_product(name, by = "texi2pdf",             engine = engine)    }}, error = function(e) {    OK <<- FALSE    message(gettextf("Error: processing vignette '%s' failed with diagnostics:\n%s",         file, conditionMessage(e)))})
-    39: tools:::.buildOneVignette("tsmarch_demo.Rmd", "/scratch/henrik/revdep/future/checks/tsmarch/new/tsmarch.Rcheck/vign_test/tsmarch",     TRUE, FALSE, "tsmarch_demo", "UTF-8", "/scratch/henrik/957295/Rtmp9GJWte/filee8f487391d2c3.rds")
-    An irrecoverable exception occurred. R is aborting now ...
-    SUMMARY: processing the following files failed:
-      ‘feasible_multivariate_garch.Rmd’ ‘tsmarch_demo.Rmd’
+    
+    --- re-building ‘tsmarch_demo.Rmd’ using rmarkdown
+    [WARNING] Deprecated: --highlight-style. Use --syntax-highlighting instead.
+    --- finished re-building ‘tsmarch_demo.Rmd’
+    
+    SUMMARY: processing the following file failed:
+      ‘feasible_multivariate_garch.Rmd’
     
     Error: Vignette re-building failed.
     Execution halted
@@ -3094,7 +2687,7 @@ Run `revdepcheck::revdep_details(, "vmeasur")` for more info
     ```
     Found the following significant warnings:
       Warning: no DISPLAY variable so Tk is not available
-    See ‘/scratch/henrik/revdep/future/checks/vmeasur/new/vmeasur.Rcheck/00install.out’ for details.
+    See ‘/scratch/henrik/1001117/revdep/future/checks/vmeasur/new/vmeasur.Rcheck/00install.out’ for details.
     ```
 
 # WeightedCluster
@@ -3146,7 +2739,7 @@ Run `revdepcheck::revdep_details(, "WeightedCluster")` for more info
 * GitHub: https://github.com/kosukeimai/wru
 * Source code: https://github.com/cran/wru
 * Date/Publication: 2024-05-24 18:00:02 UTC
-* Number of recursive dependencies: 94
+* Number of recursive dependencies: 95
 
 Run `revdepcheck::revdep_details(, "wru")` for more info
 
