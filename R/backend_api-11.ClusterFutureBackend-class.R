@@ -21,7 +21,7 @@ ClusterFutureBackend <- local({
   ## Most recent 'workers' set up
   last <- NULL
 
-  function(workers = availableWorkers(constraints = "connections"), gc = TRUE, earlySignal = TRUE, interrupts = FALSE, persistent = FALSE, ...) {
+  function(workers = availableWorkers(constraints = "connections"), gc = TRUE, earlySignal = FALSE, interrupts = FALSE, persistent = FALSE, ...) {
     debug <- isTRUE(getOption("future.debug"))
     if (debug) {
       mdebugf_push("ClusterFutureBackend(..., persistent = %s, gc = %s, earlySignal = %s) ...", persistent, gc, earlySignal)
@@ -244,7 +244,7 @@ launchFuture.ClusterFutureBackend <- function(backend, future, ...) {
   ##     NOTE: Already take care of by evalFuture().
   ##     However, if we need to get an early error about missing packages,
   ##     we can get the error here before launching the future.
-  if (future[["earlySignal"]]) {
+  if (isTRUE(backend[["earlySignal"]])) {
     if (debug) mdebug_push("requirePackages() ...")
     
     packages <- future[["packages"]]
@@ -254,7 +254,7 @@ launchFuture.ClusterFutureBackend <- function(backend, future, ...) {
     if (length(packages) > 0L) { 
       t_start <- Sys.time()
   
-      ## (ii) Attach packages that needs to be attached
+      ## (ii) Attach packages that need to be attached
       ##      NOTE: Already take care of by evalFuture().
       ##      However, if we need to get an early error about missing packages,
       ##      we can get the error here before launching the future.
@@ -283,8 +283,11 @@ launchFuture.ClusterFutureBackend <- function(backend, future, ...) {
   ##     may happen even if the future is evaluated inside a
   ##     local, e.g. local({ a <<- 1 }).
   ##     If the persistent = TRUE, this will be skipped.
+  ##
+  ##     SPECIAL CASE: Do not erase if a
+  ##     parallelly::makeClusterSequential() is used
   persistent <- isTRUE(future[["persistent"]])
-  if (!persistent) {
+  if (!persistent && !inherits(node, "sequential_node")) {
     if (debug) mdebug_push("eraseGlobalEnvironment() ...")
     
     t_start <- Sys.time()
@@ -580,7 +583,7 @@ getSocketSelectTimeout <- function(future, timeout = NULL) {
 #' @rdname resolved
 #' @importFrom parallelly connectionId isConnectionValid
 #' @export
-resolved.ClusterFuture <- function(x, run = TRUE, timeout = NULL, ...) {
+resolved.ClusterFuture <- function(x, timeout = NULL, ...) {
   debug <- isTRUE(getOption("future.debug"))
   
   future <- x
@@ -588,10 +591,17 @@ resolved.ClusterFuture <- function(x, run = TRUE, timeout = NULL, ...) {
   stop_if_not(inherits(backend, "FutureBackend"))
   workers <- backend[["workers"]]
   reg <- backend[["reg"]]
-  
+
+  args <- list(...)
+  run <- args[["run"]]
+
+  if (!is.null(run)) {
+    deprecateArgument("resolved", "run", run)
+  }
+
   ## A lazy future not even launched?
   if (future[["state"]] == "created") {
-    if (run) {
+    if (!isFALSE(run)) {
       nworkers <- length(workers)
       
       ## Collect one resolved future, if one exists
@@ -612,7 +622,7 @@ resolved.ClusterFuture <- function(x, run = TRUE, timeout = NULL, ...) {
 
       ## 4. Launch this lazy future
       if (any(avail)) future <- run(future)
-    } ## if (run)
+    } ## if (!isFALSE(run))
 
     ## Consider future non-resolved
     return(FALSE)
@@ -621,7 +631,7 @@ resolved.ClusterFuture <- function(x, run = TRUE, timeout = NULL, ...) {
   ## Is value already collected?
   if (!is.null(future[["result"]])) {
     ## Signal conditions early?
-    signalEarly(future, ...)
+    signalEarly(future)
     return(TRUE)
   }
 
@@ -718,6 +728,8 @@ resolved.ClusterFuture <- function(x, run = TRUE, timeout = NULL, ...) {
     } ## while()
   } else if (inherits(node, "MPInode")) {
     res <- resolveMPI(future)
+  } else if (inherits(node, "sequential_node")) {
+    res <- TRUE
   } else {
     warnf("resolved() is not yet implemented for workers of class %s. Will use value() instead and return TRUE", sQuote(class(node)[1]))
     value(future, stdout = FALSE, signal = FALSE)
@@ -731,7 +743,7 @@ resolved.ClusterFuture <- function(x, run = TRUE, timeout = NULL, ...) {
     assertFutureResult(future, debug = debug)
 
     ## Signal conditions early? (happens only iff requested)
-    signalEarly(future, ...)
+    signalEarly(future)
   }
 
   res
@@ -1266,8 +1278,8 @@ cluster_call_blocking <- function(cl, ..., when = "call function on", future, ex
     if (!is.null(expected)) {
       value <- ans[[1]]
       if (length(value) != 1L || !is.character(value) || 
-          is.na(value) || value != "future-grmall") {
-        utils::str(list(ans = ans, expected = expected))
+          is.na(value) || value != expected) {
+        utils::str(list(value = value, expected = expected))
         stop(sprintf("parallel::clusterCall() did not return string %s as expected. Received a %s object instead: %s", sQuote(expected), class(value)[1], paste(deparse(value), collapse = "; ")))
       }
     }
@@ -1518,12 +1530,16 @@ handleInterruptedFuture <- local({
     } else {
       event <- sprintf("was %s", state)
     }
-    msg <- sprintf("Future (%s) of class %s %s, while running on %s", label, class(future)[1], event, sQuote(host))
+    msg <- sprintf("Future (%s) of class %s %s", label, class(future)[1], event)
     if (inherits(node, "RichSOCKnode")) {
       pid <- node[["session_info"]][["process"]][["pid"]]
       if (!is.null(pid)) msg <- sprintf("%s (pid %s)", msg, pid)
     }
-    result <- FutureInterruptError(msg, future = future)
+    if (state %in% "canceled") {
+      result <- FutureCanceledError(msg, future = future)
+    } else {
+      result <- FutureInterruptError(msg, future = future)
+    }
     future[["result"]] <- result
   
     ## Remove from backend

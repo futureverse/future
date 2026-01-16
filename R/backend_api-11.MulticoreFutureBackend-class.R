@@ -138,7 +138,7 @@ MulticoreFutureBackend <- function(workers = availableCores(constraints = "multi
   default_workers <- missing(workers)
   if (is.function(workers)) workers <- workers()
   stop_if_not(is.numeric(workers))
-  workers <- structure(as.integer(workers), class = class(workers))
+  workers <- structure(as.integer(workers), class = setdiff(class(workers), mode(workers)))
   stop_if_not(length(workers) == 1, is.finite(workers), workers >= 1)
   
   ## Fall back to sequential futures if only a single additional R process
@@ -280,10 +280,17 @@ nbrOfFreeWorkers.MulticoreFutureBackend <- function(evaluator, background = FALS
 resolved.MulticoreFuture <- local({
   selectChildren <- import_parallel_fcn("selectChildren")
 
-  function(x, run = TRUE, timeout = NULL, ...) {
+  function(x, timeout = NULL, ...) {
+    args <- list(...)
+    run <- args[["run"]]
+
+    if (!is.null(run)) {
+      deprecateArgument("resolved", "run", run)
+    }
+  
     ## A lazy future not even launched?
     if (x[["state"]] == "created") {
-      if (run) {
+      if (!isFALSE(run)) {
         ## If free cores are available, then launch this lazy future
         if (x[["workers"]] > usedCores()) x <- run(x)
       }
@@ -293,7 +300,7 @@ resolved.MulticoreFuture <- local({
     ## Is value already collected?
     if (!is.null(x[["result"]])) {
       ## Signal conditions early?
-      signalEarly(x, ...)
+      signalEarly(x)
       return(TRUE)
     }
   
@@ -328,7 +335,7 @@ resolved.MulticoreFuture <- local({
     x[[".signaledConditions"]] <- signaled
 
     ## Signal conditions early? (happens only iff requested)
-    if (res) signalEarly(x, ...)
+    if (res) signalEarly(x)
   
     res
   }
@@ -419,7 +426,11 @@ result.MulticoreFuture <- local({
         if (future[["state"]] %in% c("canceled", "interrupted")) {
           if (debug) mdebugf("Detected interrupted %s whose result cannot be retrieved", sQuote(class(future)[1]))
           msg <- sprintf("A future (%s) of class %s was interrupted, while running on localhost (pid %d)", label, class(future)[1], pid)
-          result <- FutureInterruptError(msg, future = future)
+          if (future[["state"]] %in% "canceled") {
+            result <- FutureCanceledError(msg, future = future)
+          } else {
+            result <- FutureInterruptError(msg, future = future)
+          }
           future[["result"]] <- result
 
           ## Remove from backend
@@ -476,7 +487,7 @@ result.MulticoreFuture <- local({
         future[["state"]] <- "interrupted"
       } else if (inherits(result, "FutureLaunchError")) {
         ex <- result
-        future[["state"]] <- "interrupted"
+        future[["state"]] <- "failed"
       } else if (inherits(result, "FutureError")) {
         ## FIXME: Add more details
         hint <- sprintf("parallel::mccollect() did return a FutureResult but a %s object: %s", sQuote(class(result)[1]), paste(deparse(result), collapse = "; "))

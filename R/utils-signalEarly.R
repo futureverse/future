@@ -1,4 +1,19 @@
-signalEarly <- function(future, collect = TRUE, .signalEarly = TRUE, ...) {
+#' Signals collected conditions for futures flagged for early signaling
+#'
+#' @param future A [Future] object.
+#'
+#' @param \ldots ... Not used.
+#'
+#' @return The `future` object.
+#'
+#' @details
+#' This function returns immediately ("no-op"), if the future (i) is _not_
+#' flagged for early signaling, or (ii) not resolved.
+#' Otherwise, the future results are collected and any captured conditions
+#' are signaled, unless they have been signaled previously.
+#'
+#' @noRd
+signalEarly <- function(future, ...) {
   ## Don't signal early?
   if (!isTRUE(future[["earlySignal"]])) return(future)
 
@@ -7,15 +22,6 @@ signalEarly <- function(future, collect = TRUE, .signalEarly = TRUE, ...) {
 
   debug <- isTRUE(getOption("future.debug"))
   if (debug) mdebug_push("signalEarly() ...")
-
-  ## Nothing to do?
-  if (!collect && !resolved(future, .signalEarly = FALSE)) {
-    if (debug) {
-      mdebug("Future not resolved and collect = FALSE. Skipping")
-      mdebug_pop()
-    }
-    return(future)
-  }
   
   result <- result(future)
   stop_if_not(inherits(result, "FutureResult"))
@@ -23,9 +29,8 @@ signalEarly <- function(future, collect = TRUE, .signalEarly = TRUE, ...) {
   conditions <- result[["conditions"]]
   
   ## Nothing to do?
-  if (!.signalEarly || length(conditions) == 0L) {
+  if (length(conditions) == 0L) {
     if (debug) {
-      if (!.signalEarly) mdebug("Skipping because .signalEarly = FALSE")
       if (length(conditions) == 0L) mdebug("No conditions to signal")
       mdebug_pop()
     }

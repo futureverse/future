@@ -60,7 +60,14 @@ listFutures.MultiprocessFutureBackend <- function(backend, ..., debug = FALSE) {
       counter <- as.integer(future[["uuid"]][2])
       start <- future[["start"]]
       if (is.null(start)) start <- NA_real_ ## happens if future is reset
-      resolved <- resolved(future, run = FALSE)
+
+      ## Avoid triggering resolved() launching a lazy future
+      if (future[["state"]] == "created") {
+        resolved <- FALSE
+      } else {
+        resolved <- resolved(future)
+      }
+      
       data.frame(
         counter = counter,
         start = start,

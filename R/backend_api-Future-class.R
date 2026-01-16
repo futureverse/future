@@ -70,16 +70,6 @@
 #' @param lazy If FALSE (default), the future is resolved
 #' eagerly (starting immediately), otherwise not.
 #'
-#' @param gc If TRUE, the garbage collector run (in the process that
-#' evaluated the future) only after the value of the future is collected.
-#' Exactly when the values are collected may depend on various factors such
-#' as number of free workers and whether `earlySignal` is TRUE (more
-#' frequently) or FALSE (less frequently).
-#' _Some future backends may ignore this argument._
-#'
-#' @param earlySignal Specified whether conditions should be signaled as soon
-#' as possible or not.
-#'
 #' @param label A character string label attached to the future.
 #'
 #' @param \ldots Additional named elements of the future.
@@ -101,7 +91,7 @@
 #' @export
 #' @keywords internal
 #' @name Future-class
-Future <- function(expr = NULL, envir = parent.frame(), substitute = TRUE, stdout = TRUE, conditions = "condition", globals = list(), packages = NULL, seed = FALSE, lazy = FALSE, gc = FALSE, earlySignal = FALSE, label = NULL, ...) {
+Future <- function(expr = NULL, envir = parent.frame(), substitute = TRUE, stdout = TRUE, conditions = "condition", globals = list(), packages = NULL, seed = FALSE, lazy = FALSE, label = NULL, ...) {
   if (substitute) expr <- substitute(expr)
   t_start <- Sys.time()
 
@@ -205,14 +195,12 @@ Future <- function(expr = NULL, envir = parent.frame(), substitute = TRUE, stdou
 
   ## Future evaluation
   core[["expr"]] <- expr
-  core[["envir"]] <- envir
   core[["stdout"]] <- stdout
   core[["conditions"]] <- conditions
   core[["globals"]] <- globals
   core[["packages"]] <- packages
   core[["seed"]] <- seed
   core[["lazy"]] <- lazy
-  core[["asynchronous"]] <- TRUE  ## Reserved for future version (Issue #109)
 
   ## 'local' is now defunct and always TRUE, unless persistent = TRUE,
   ## which in turn may only be used for cluster futures. /HB 2023-01-11
@@ -225,8 +213,6 @@ Future <- function(expr = NULL, envir = parent.frame(), substitute = TRUE, stdou
 
   ## Future miscellaneous
   core[["label"]] <- label
-  core[["earlySignal"]] <- earlySignal
-  core[["gc"]] <- gc
   
   core[["onReference"]] <- onReference
   core[["owner"]] <- session_uuid()
@@ -237,10 +223,22 @@ Future <- function(expr = NULL, envir = parent.frame(), substitute = TRUE, stdou
   ## The current state of the future, e.g.
   ## 'created', 'running', 'finished', 'failed', 'canceled', 'interrupted'
   core[["state"]] <- "created"
+  core[["actions"]] <- character(0L)
 
   ## Additional named arguments
   for (key in args_names) core[[key]] <- args[[key]]
 
+  ## Backward compatibility: drop field 'envir' in future (> 1.68.0)
+  ## 1. civis::CivisFuture() relies on 'envir'
+  ## 2. there might be other unknown dependencies out there => option
+  if (getOption("future.Future.envir.keep", FALSE)) {
+    core[["envir"]] <- envir
+  } else if (all(c("required_resources", "docker_image_name",
+    "docker_image_tag") %in% args_names) && "civis" %in% loadedNamespaces()) {
+    ## Looks like Future() was called from CivisFuture
+    core[["envir"]] <- envir
+  }
+  
   structure(core, class = c("Future", class(core)))
 }
 
@@ -333,14 +331,100 @@ print.Future <- function(x, ...) {
 
   cat(sprintf("Lazy evaluation: %s\n", future[["lazy"]]))
   cat(sprintf("Local evaluation: %s\n", future[["local"]]))
-  cat(sprintf("Asynchronous evaluation: %s\n", future[["asynchronous"]]))
   cat(sprintf("Early signaling: %s\n", isTRUE(future[["earlySignal"]])))
-  cat(sprintf("Environment: %s\n", envname(future[["envir"]])))
 
-  state <- future[["state"]]
-  cat(sprintf("State: %s\n", commaq(state)))
-  
+  actions <- future[["actions"]]
+  cat(sprintf("Actions: [n=%d] %s\n", length(actions), commaq(actions)))
+
   result <- future[["result"]]
+  state <- future[["state"]]
+  description <- switch(state,
+    created = {
+      "Future was created, but is yet to be submitted"
+    },
+    submitted = {
+      "Future has been submitted, but it is not known if it has been started"
+    },
+    running = {
+      msg <- "Future is being evaluated"
+      if ("cancel" %in% actions) {
+        if ("interrupt" %in% actions) {
+          msg <- sprintf("%s, but has been canceled and interrupted", msg)
+        } else {
+          msg <- sprintf("%s, but has been canceled without being interrupted", msg)
+        }
+      }
+      msg
+    },
+    finished = {
+      ## FIXME: Third-party backends does not yet guarantee this
+#      stop_if_not(inherits(result, "FutureResult"))
+      
+      if ("cancel" %in% actions) {
+        if ("interrupt" %in% actions) {
+          msg <- "Future was canceled and interrupted"
+        } else {
+          msg <- "Future was canceled but not interrupted"
+        }
+        msg <- sprintf("%s, while being evaluated", msg)
+      } else {
+        msg <- "Future was resolved"
+      }
+
+      conditions <- result[["conditions"]]
+      n <- length(conditions)
+      if (n == 0L) {
+        cond <- NULL
+      } else {
+        condition <- conditions[[n]]
+        cond <- condition[["condition"]]
+      }
+      if (inherits(cond, "error")) {
+        if (inherits(cond, "FutureInterruptError")) {
+          if (!"interrupt" %in% actions) {
+            msg <- sprintf("%s, but was interrupted via an external method", msg)
+          }
+          msg <- sprintf("%s, resulting in a %s", msg, sQuote(class(cond)[1]))
+        } else if (inherits(cond, "FutureError")) {
+          msg <- sprintf("%s, but produced a %s", msg, sQuote(class(cond)[1]))
+        } else {
+          msg <- sprintf("%s, but produced a run-time %s error", msg, sQuote(class(cond)[1]))
+        }
+      } else if (inherits(cond, "interrupt")) {
+        msg <- sprintf("%s, which was interrupted during evaluation via a user interrupt", msg)
+      } else {
+        msg <- sprintf("%s successfully", msg)
+      }
+    },
+    interrupted = {
+      msg <- "Future was interrupted during evaluation"
+      if ("cancel" %in% actions) {
+        if ("interrupt" %in% actions) {
+          msg <- sprintf("%s, because it was canceled and interrupted", msg)
+        } else {
+          msg <- sprintf("%s, because it was canceled but not interrupted", msg)
+        }
+      }
+      msg      
+    },
+    canceled = {
+      if ("cancel" %in% actions) {
+        if ("interrupt" %in% actions) {
+          "Future was canceled and interrupted"
+        } else {
+          "Future was canceled, but not interrupted"
+        }
+      } else {
+        "Future was canceled"
+      }
+    },
+    failed = {
+      "Future failed due to an unexpected, internal error during launch, evaluation, or while returning the results"
+    },
+    NA_character_
+  )
+  cat(sprintf("State: %s (\"%s\")\n", commaq(state), description))
+  
   hasResult <- inherits(result, "FutureResult")
   ## BACKWARD COMPATIBILITY
   hasResult <- hasResult || exists("value", envir = future, inherits = FALSE)
@@ -477,9 +561,10 @@ run.Future <- function(future, ...) {
     if (debug) mdebug_push("Launching futures ...")
     future[["backend"]] <- backend
     future[["start"]] <- proc.time()[[3]]
-    future2 <- tryCatch(
+    future2 <- tryCatch({
       launchFuture(backend, future = future)
-    , FutureError = function(ex) {
+    }, FutureError = function(ex) {
+      future[["state"]] <- "failed"
       ## Known error caught by the future backend
       stop(ex)
     }, error = function(ex) {
@@ -487,6 +572,7 @@ run.Future <- function(future, ...) {
       msg <- conditionMessage(ex)
       label <- sQuoteLabel(future)
       msg <- sprintf("Caught an unexpected error of class %s when trying to launch future (%s) on backend of class %s. The reason was: %s", class(ex)[1], label, class(backend)[1], msg)
+      future[["state"]] <- "failed"
       stop(FutureLaunchError(msg, future = future))
     })
     if (debug) mdebug_pop()
@@ -515,7 +601,7 @@ run.Future <- function(future, ...) {
   args <- list(
     quote(future[["expr"]]),
     substitute = FALSE,
-    envir = future[["envir"]],
+    envir = future[["envir"]],   ## For backward compatibility with 'civis'
     lazy = TRUE,
     stdout = future[["stdout"]],
     conditions = future[["conditions"]],
@@ -544,11 +630,6 @@ run.Future <- function(future, ...) {
   }
 
   if (debug) mdebug("Future class: ", commaq(class(tmpFuture)))
-
-  ## AD HOC/SPECIAL:
-  ## If 'earlySignal=TRUE' was set explicitly when creating the future,
-  ## then override the plan, otherwise use what the plan() says
-  if (isTRUE(future[["earlySignal"]])) tmpFuture[["earlySignal"]] <- TRUE
 
   ## If 'gc=TRUE' was set explicitly when creating the future,
   ## then override the plan, otherwise use what the plan() says
@@ -603,171 +684,10 @@ run <- function(future, ...) {
       )
     })
   }
+  
+  future[["actions"]] <- c(future[["actions"]], "run")
   UseMethod("run")
 }
-
-
-#' @export
-#' @keywords internal
-result <- function(future, ...) {
-  ## Automatically update journal entries for Future object
-  if (inherits(future, "Future") &&
-      inherits(future[[".journal"]], "FutureJournal")) {
-    start <- Sys.time()
-    on.exit({
-      appendToFutureJournal(future,
-           event = "gather",
-        category = "overhead",
-           start = start,
-            stop = Sys.time()
-      )
-
-      ## Signal FutureJournalCondition?
-      if (!isTRUE(future[[".journal_signalled"]])) {
-        journal <- journal(future)
-        label <- sQuoteLabel(future)
-        msg <- sprintf("A future (%s) of class %s was resolved", label, class(future)[1])
-        cond <- FutureJournalCondition(message = msg, journal = journal) 
-        signalCondition(cond)
-        future[[".journal_signalled"]] <- TRUE
-      }
-    })
-  }
-  UseMethod("result")
-}
-
-#' Get the results of a resolved future
-#'
-#' @param future A \link{Future}.
-#' @param \ldots Not used.
-#'
-#' @return The [FutureResult] object.
-#' It may signal a [FutureError], if there is a significant orchestration
-#' error. For example, if the parallel worker process terminated abruptly
-#' ("crashed"), then a [FutureInterruptError] is signaled.
-#'
-#' @details
-#' This function is only part of the _backend_ Future API.
-#' This function is _not_ part of the frontend Future API.
-#'
-#' @aliases result
-#' @rdname result
-#' @export
-#' @keywords internal
-result.Future <- function(future, ...) {
-  debug <- isTRUE(getOption("future.debug"))
-  if (debug) {
-    mdebugf_push("result() for %s (%s) ...", sQuote(class(future)[1]), sQuoteLabel(future))
-    mdebug("state: ", sQuote(future[["state"]]))
-    on.exit(mdebugf_pop())
-  }
-  
-  ## Has the result already been collected?
-  result <- future[["result"]]
-  if (!is.null(result)) {
-    ## Assert result is for the expected future
-    assertFutureResult(future)
-    
-    ## Always signal immediateCondition:s and as soon as possible.
-    ## They will always be signaled if they exist.
-    signalImmediateConditions(future)
-
-    if (inherits(result, "FutureError")) stop(result)
-    return(result)
-  }
-  
-  if (future[["state"]] == "created") {
-    future <- run(future)
-  }
-
-  if (!future[["state"]] %in% c("finished", "failed", "canceled", "interrupted")) {
-    ## BACKWARD COMPATIBILITY:
-    ## For now, it is value() that collects the results.  Later we want
-    ## all future backends to use result() to do it. /HB 2018-02-22
-    value(future, stdout = FALSE, signal = FALSE)
-
-    ## Always signal immediateCondition:s and as soon as possible.
-    ## They will always be signaled if they exist.
-    signalImmediateConditions(future)
-  }
-
-  result <- future[["result"]]
-  if (inherits(result, "FutureResult")) {
-    ## Assert result is for the expected future
-    assertFutureResult(future)
-    return(result)
-  }
-
-  ## BACKWARD COMPATIBILITY
-  result <- future[["value"]]
-  if (inherits(result, "FutureResult")) {
-    ## Assert result is for the expected future
-    assertFutureResult(future)
-    return(result)
-  }
-
-  version <- future[["version"]]
-  if (is.null(version)) {
-    warning(FutureWarning("Future version was not set. Using default %s",
-                          sQuote(version)))
-  }
-
-  ## Sanity check
-  if (is.null(result) && version == "1.8") {
-    if (inherits(future, "MulticoreFuture")) {
-      label <- sQuoteLabel(future)
-      msg <- sprintf("A future (%s) of class %s did not produce a FutureResult object but NULL. This suggests that the R worker terminated (crashed?) before the future expression was resolved.", label, class(future)[1])
-      stop(FutureError(msg, future = future))
-    }
-  }
-
-  .Defunct(msg = "Future objects with an internal version of 1.7 or earlier are defunct. This error is likely coming from a third-party package or other R code. Please report this to the maintainer of the 'future' package so this can be resolved.", package = .packageName)
-}
-
-
-#' @rdname resolved
-#' @export
-resolved.Future <- function(x, run = TRUE, ...) {
-  future <- x
-  debug <- isTRUE(getOption("future.debug"))
-  if (debug) {
-    mdebugf_push("resolved() for %s (%s) ...", class(future)[1], sQuoteLabel(future))
-    on.exit(mdebug_pop())
-    mdebug("state: ", sQuote(future[["state"]]))
-    mdebug("run: ", run)
-  }
-  
-  ## A lazy future not even launched?
-  if (future[["state"]] == "created") {
-    if (!run) return(FALSE)
-    if (debug) mdebug_push("run() ...")
-    future <- run(future)
-    if (debug) {
-      mdebug_pop()
-      mdebug_push("resolved() ...")
-    }
-    res <- resolved(future, ...)
-    if (debug) {
-      mdebug("resolved: ", res)
-      mdebug_pop()
-    }
-    return(res)
-  }
-
-  ## Signal conditions early, iff specified for the given future
-  ## Note, collect = TRUE will block here, which is intentional
-  signalEarly(future, collect = TRUE, ...)
-
-  if (debug) mdebug("result: ", sQuote(class(future[["result"]])[1]))
-  if (inherits(future[["result"]], "FutureResult")) return(TRUE)
-  
-  res <- (future[["state"]] %in% c("finished", "failed", "canceled", "interrupted"))
-
-  if (debug) mdebug("resolved: ", res)
-
-  res
-}
-
 
 
 # Get the executable closure, a.k.a. "the core", of the future
@@ -1024,6 +944,48 @@ getExpression.Future <- local({
 }) ## getExpression()
 
 
+# Future states:
+#
+#  1. `created`:
+#     The future has been created, but not yet been submitted.
+#     Examples:
+#       A future created with `lazy = TRUE` is in this state.
+#
+#  2. `submitted`:
+#     The future has been submitted for evaluation.
+#     There is no evidence yet that the future is being evaluated.
+#     Examples:
+#       A future submitted to a queue may be in this state.
+#                
+#  3. `running`:
+#     The future is currently being evaluated.
+#     There is no evidence yet that the evaluation of the future has finished.
+#     Examples:
+#       Future being processed by a worker is typically in this state.
+#                
+#  4. `finished`:
+#     The evaluation of the future has completed.
+#     Examples:
+#       A future submitted to a queue may be in this state.
+#
+#  5. `failed`:
+#     The evaluation of the future has terminated, but failed before being
+#     completed.
+#     Examples:
+#       A future that failed to launch.
+#       An internal error occured while evaluating the future.
+#       An internal error occured after finishing future evaluation, but
+#       before return the results.
+#
+#  6. `interrupted`:
+#     The evaluation of the future has terminated, but was interrupted before
+#     being completed.
+#     Examples:
+#
+#  7. `canceled`:
+#     The evaluation of the future has terminated, but was canceled.
+#     Examples:
+#
 #' @export
 `$<-.Future` <- function(x, name, value) {
   if (name == "state") {

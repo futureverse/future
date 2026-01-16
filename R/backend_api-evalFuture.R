@@ -98,7 +98,7 @@ canForceSingleThreading <- local({
     ans <- FALSE
     if (requireNamespace("RhpcBLASctl", quietly = TRUE)) {
       ## If RhpcBLASctl is compiled without OpenMP support, then it
-      ## returns NA_integer_, or NULL if RhpcBLASctl (< 0.20-17)
+      ## returns NA_integer_, or NULL if RhpcBLASctl (< 0.20-17) [2020-01-17]
       old <- RhpcBLASctl::omp_get_max_threads()
       
       ## Success?
@@ -407,6 +407,12 @@ evalFuture <- function(
       }
     }
     msg <- sprintf("%s. Possible other reasons: %s", msg, conditionMessage(ex))
+    call <- conditionCall(ex)
+    if (!is.null(call)) {
+      call <- deparse(call, width.cutoff = 500L)
+      call <- paste(call, collapse = " -> ")
+      msg <- sprintf("%s [in %s]", msg, call)
+    }
     ex <- simpleError(msg)
     class(ex) <- c("FutureLaunchError", "FutureError", class(ex))
     ex
@@ -661,9 +667,12 @@ evalFutureInternal <- function(data) {
   ## -----------------------------------------------------------------
   ## Load and attached backend packages
   ## -----------------------------------------------------------------
-  withCallingHandlers({
+  res <- withCallingHandlers({
     attachPackages(backendPackages)
   }, condition = onEvalCondition)
+  if (inherits(res, "error")) {
+    stop(FutureEvalError(sprintf("Failed to attach one or more future-backend packages: %s", conditionMessage(res))))
+  }
 
 
   ## -----------------------------------------------------------------
@@ -676,9 +685,12 @@ evalFutureInternal <- function(data) {
   ...future.mc.cores.old <- getOption("mc.cores")
 
   ## Load and attached packages
-  withCallingHandlers({
+  res <- withCallingHandlers({
     attachPackages(packages)
   }, condition = onEvalCondition)
+  if (inherits(res, "error")) {
+    stop(FutureEvalError(sprintf("Failed to attach one or more packages: %s", conditionMessage(res))))
+  }
 
   ## Note, we record R options and environment variables _after_
   ## loading and attaching packages, in case they set options/env vars

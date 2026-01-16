@@ -64,21 +64,42 @@ tweak.future <- function(strategy, ..., penvir = parent.frame()) {
 
   ## Identify arguments that must not be tweaked
 
-  ## (i) All future strategies inherits from the 'future' class
-  untweakable <- attr(future, "untweakable", exact = TRUE)
-  tweakable <- eval(attr(future, "tweakable", exact = TRUE))
+  untweakable <- character(0L)
+  tweakable <- character(0L)
 
-  ## (ii) Others that are specific to this future strategy, if any
+  ## (a) All future strategies inherits from the 'future' class
+  untweakable <- c(attr(future, "untweakable", exact = TRUE), untweakable)
+  tweakable <- c(eval(attr(future, "tweakable", exact = TRUE)), tweakable)
+
+  ## (b) All future strategies inherits from the 'Future' class
+  untweakable <- c(attr(Future, "untweakable", exact = TRUE), untweakable)
+  tweakable <- c(eval(attr(Future, "tweakable", exact = TRUE)), tweakable)
+
+  ## (c) All future strategies inherits from the 'FutureBackend' class
+  untweakable <- c(attr(FutureBackend, "untweakable", exact = TRUE),untweakable)
+  tweakable <- c(eval(attr(FutureBackend, "tweakable", exact = TRUE)), tweakable)
+
+  ## Sanity check
+  conflicts <- intersect(tweakable, untweakable)
+  stopifnot(length(conflicts) == 0)
+  
+  ## (d) Others that are specific to this future strategy, if any
+  untweakable_plan <- tweakable_plan <- character(0L)
   for (class in class(strategy)) {
     if (class == "future") break
     if (!exists(class, mode = "function")) next
     fcn <- get(class, mode = "function")
     if (!inherits(fcn, "future")) next
-    untweakable <- c(attr(fcn, "untweakable", exact = TRUE), untweakable)
-    tweakable <- c(eval(attr(fcn, "tweakable", exact = TRUE)), tweakable)
+    untweakable_class <- attr(fcn, "untweakable", exact = TRUE)
+    tweakable_class <- eval(attr(fcn, "tweakable", exact = TRUE))
+    untweakable_plan <- c(untweakable_class, untweakable_plan)
+    tweakable_plan <- c(tweakable_class, tweakable_plan)
   }
-  
-  ## Add temporary, secret option for disabling these checks in case to
+
+  untweakable <- c(untweakable_plan, untweakable)
+  tweakable <- c(tweakable_plan, tweakable)
+
+  ## (e) Add temporary, secret option for disabling these checks in case to
   ## give users some time to sort out legacy mistakes
   untweakable <- getOption("future.tweak.untweakable", untweakable)
   if (any(names %in% untweakable)) {
@@ -87,7 +108,12 @@ tweak.future <- function(strategy, ..., penvir = parent.frame()) {
     stopf("Detected arguments that must not be set via plan() or tweak(): %s",
          untweakable)
   }
-  
+
+  ## Arguments 'earlySignal' is deprecated
+  if ("earlySignal" %in% names) {
+    deprecateArgument("plan", "earlySignal", args[["earlySignal"]])
+  }
+
   ## formals()<- drops any attributes including class
   attrs <- attributes(strategy)
   class <- class(strategy)

@@ -160,15 +160,13 @@
 #' @aliases futureCall
 #' @rdname future
 #' @export
-future <- function(expr, envir = parent.frame(), substitute = TRUE, lazy = FALSE, seed = FALSE, globals = TRUE, packages = NULL, stdout = TRUE, conditions = "condition", label = NULL, gc = FALSE, earlySignal = FALSE, ...) {
+future <- function(expr, envir = parent.frame(), substitute = TRUE, lazy = FALSE, seed = FALSE, globals = TRUE, packages = NULL, stdout = TRUE, conditions = "condition", label = NULL, ...) {
   debug <- isTRUE(getOption("future.debug"))
   if (debug) {
     mdebugf_push("future(..., label = %s) ...", sQuoteLabel(label))
     mdebugf("lazy: %s", lazy)
     mdebugf("stdout: %s", stdout)
     mdebugf("conditions: [n=%d] %s", length(conditions), commaq(conditions))
-    mdebugf("gc: %s", gc)
-    mdebugf("earlySignal: %s", earlySignal)
     on.exit(mdebugf_pop())
   }
   
@@ -198,15 +196,24 @@ future <- function(expr, envir = parent.frame(), substitute = TRUE, lazy = FALSE
                    packages = packages,
                    stdout = stdout,
                    conditions = conditions,
-                   earlySignal = earlySignal,
                    label = label,
-                   gc = gc,
                    onReference = onReference,
                    ...)
 
+  args_names <- names(list(...))
+  
+  ## Deprecation of arguments 'earlySignal', 'gc', and 'local'
+  for (name in c("earlySignal", "gc", "local")) {
+    if (!is.null(future[[name]])) {
+      if (is.element(name, args_names)) {
+        deprecateArgument("future", name, future[[name]])
+      }
+    }
+  }
+
   ## WORKAROUND: Was argument 'local' specified?
   ## Comment: Only allowed for persistent 'cluster' futures
-  future[[".defaultLocal"]] <- !is.element("local", names(list(...)))
+  future[[".defaultLocal"]] <- !is.element("local", args_names)
 
   ## Enable journaling?
   if (isTRUE(getOption("future.journal"))) {
@@ -225,7 +232,6 @@ future <- function(expr, envir = parent.frame(), substitute = TRUE, lazy = FALSE
 
 ## Arguments to 'future' strategies that must not be tweaked
 attr(future, "untweakable") <- c(
-  "asynchronous",  ## reserved
   "conditions",
   "envir",
   "expr",

@@ -15,8 +15,6 @@ Future(
   packages = NULL,
   seed = FALSE,
   lazy = FALSE,
-  gc = FALSE,
-  earlySignal = FALSE,
   label = NULL,
   ...
 )
@@ -81,16 +79,6 @@ but without the RNG check being performed.}
 
 \item{lazy}{If FALSE (default), the future is resolved
 eagerly (starting immediately), otherwise not.}
-
-\item{gc}{If TRUE, the garbage collector run (in the process that
-evaluated the future) only after the value of the future is collected.
-Exactly when the values are collected may depend on various factors such
-as number of free workers and whether \code{earlySignal} is TRUE (more
-frequently) or FALSE (less frequently).
-\emph{Some future backends may ignore this argument.}}
-
-\item{earlySignal}{Specified whether conditions should be signaled as soon
-as possible or not.}
 
 \item{label}{A character string label attached to the future.}
 

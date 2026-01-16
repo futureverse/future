@@ -3,9 +3,6 @@
 #' @param x A \link{Future}, a list, or an environment (which also
 #' includes \link[listenv:listenv]{list environment}).
 #'
-#' @param run (logical) If TRUE, any lazy futures is launched,
-#' otherwise not.
-#'
 #' @param \ldots Not used.
 #'
 #' @return
@@ -15,13 +12,13 @@
 #' It never signals an error.
 #'
 #' @details
-#' `resolved(..., run = TRUE)` attempts to launch a lazy future, if there is
-#' an available worker, otherwise not.
+#' `resolved()` attempts to launch a lazy future, if there is an available
+#' worker, otherwise not.
 #'
 #' `resolved()` methods must always return `TRUE` or `FALSE` values, must
-#' always launch lazy futures by default (`run = TRUE`), and must never block
-#' indefinitely. This is because it should always be possible to poll futures
-#' until they are resolved using `resolved()`, e.g.
+#' always launch lazy futures, and must never block indefinitely. This is
+#' because it should always be possible to poll futures until they are
+#' resolved using `resolved()`, e.g.
 #' `while (!all(resolved(futures))) Sys.sleep(5)`.
 #'
 #' Each future backend must implement a `resolved()` method. It should return
@@ -117,4 +114,55 @@ resolved.environment <- function(x, ...) {
   fs <- resolved(fs, ...)
   stop_if_not(length(fs) == n_fs)
   fs
+}
+
+
+#' @rdname resolved
+#' @export
+resolved.Future <- function(x, ...) {
+  future <- x
+  args <- list(...)
+  run <- args[["run"]]
+
+  debug <- isTRUE(getOption("future.debug"))
+  if (debug) {
+    mdebugf_push("resolved() for %s (%s) ...", class(future)[1], sQuoteLabel(future))
+    on.exit(mdebug_pop())
+    mdebug("state: ", sQuote(future[["state"]]))
+    mdebug("run: ", deparse(run))
+  }
+
+  if (!is.null(run)) {
+    deprecateArgument("resolved", "run", run)
+  }
+
+  ## A lazy future not even launched?
+  if (future[["state"]] == "created") {
+    if (isFALSE(run)) return(FALSE)
+    if (debug) mdebug_push("run() ...")
+    future <- run(future)
+    if (debug) {
+      mdebug_pop()
+      mdebug_push("resolved() ...")
+    }
+    res <- resolved(future, ...)
+    if (debug) {
+      mdebug("resolved: ", res)
+      mdebug_pop()
+    }
+    return(res)
+  }
+
+  ## Signal conditions early, iff specified for the given future
+  ## Note, this will block, which is intentional
+  signalEarly(future)
+
+  if (debug) mdebug("result: ", sQuote(class(future[["result"]])[1]))
+  if (inherits(future[["result"]], "FutureResult")) return(TRUE)
+  
+  res <- (future[["state"]] %in% c("finished", "failed", "canceled", "interrupted"))
+
+  if (debug) mdebug("resolved: ", res)
+
+  res
 }

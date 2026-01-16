@@ -90,6 +90,7 @@ Problematic packages:
 * dar
 * gtfs2emis
 * gtfs2gps
+* mistyR
 * signeR
 * simIDM
 * uci
@@ -107,6 +108,18 @@ and setting R option 'parallelly.maxWorkers.localhost=c(100,100)' as;
 ```sh
 R_PARALLELLY_MAXWORKERS_LOCALHOST="100,100" revdep/run.R
 ```
+
+
+### Overusing multithreading packages
+
+* xpect
+
+The workaround is to use:
+
+```sh
+OMP_NUM_THREADS=2 OPENBLAS_NUM_THREADS=2 MKL_NUM_THREADS=2 GOTO_NUM_THREADS=2 revdep/run.R
+```
+
 
 Problematic packages:
 

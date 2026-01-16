@@ -1,4 +1,5 @@
 #' @tags worker-broken
+#' @tags detritus-files
 #' @tags cluster
 
 library(future)

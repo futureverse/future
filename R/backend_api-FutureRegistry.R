@@ -1,3 +1,42 @@
+#' Registry of Active Futures
+#'
+#' @param where (character string) The name of the registry, which is
+#' decided by the [FutureBackend].
+#'
+#' @param action (character string)
+#'  If `"add"`, add `future` to registry.
+#'  If `"remove"`, remove `future` to registry.
+#'  If `"contains"`, checks whether `future` is in registry.
+#'
+#'  If `"list"`, return a list of active [Future]:s.
+#'
+#'  If `"collect-first"`, find an active [Future] that is resolved
+#'  and collects its [FutureResult].
+#'  If `"collect-all"`, find all active [Future] that are resolved
+#'  and collects their [FutureResult]:s.
+#'  Collecting the result of a future frees up the corresponding worker
+#'  process, but the worker will not be available to take on new tasks
+#'  until the future has been removed from the registry.
+#'
+#'  If `"reset"`, drops a registered [Future]:s without any attempts
+#'  to collect their values etc.
+#'
+#' @param future ([Future] object; optional) Required when `action` is
+#' `"add"`, `"remove"`, or `"contains"`. Ignored otherwise.
+#'
+#' @param earlySignal (logical) If TRUE (default), the results of all
+#' resolved futures are collected for futures that are set up for early
+#' signalling (deprecated).
+#' This does not apply when `action = "collect-all"`.
+#'
+#' @param \ldots Not used.
+#'
+#' @param debug (logical) If TRUE, debug messages are outputted.
+#'
+#' @return
+#' A list of active [Future]:s.
+#'
+#' @noRd
 FutureRegistry <- local({
   db <- list()
 
@@ -48,7 +87,8 @@ FutureRegistry <- local({
       ## NOTE: It is when calling resolved() on a future with
       ##       early signaling is enabled that conditioned
       ##       may be signaled.
-      if (resolved(future, run = FALSE, .signalEarly = FALSE)) {
+      if ((!future[["state"]] %in% "created") &&
+          resolved(future, .signalEarly = FALSE)) {
         if (debug) mdebugf_push("Future at position #%d is resolved ...", ii)
         ## (a) Let future cleanup after itself, iff needed.
         ##     This, this may result in a call to
@@ -197,6 +237,7 @@ FutureRegistry <- local({
       collectValues(where, futures = futures, firstOnly = TRUE, debug = debug)
     } else if (action == "collect-all") {
       collectValues(where, futures = futures, firstOnly = FALSE, debug = debug)
+      earlySignal <- FALSE ## Avoid second round of result collection
     } else if (action == "reset") {
       db[[where]] <<- list()
       if (debug) mdebug("Erased registry")
@@ -212,7 +253,7 @@ FutureRegistry <- local({
     if (earlySignal && length(futures) > 0L) {
       if (debug) mdebugf("Early signaling of %d future candidates ...", length(futures))
       ## Which futures have early signaling enabled?
-      idxs <- lapply(futures, FUN = function(f) f[["earlySignal"]])
+      idxs <- lapply(futures, FUN = function(f) isTRUE(f[["earlySignal"]]))
       idxs <- which(unlist(idxs, use.names = FALSE))
 
       if (debug) mdebugf("Number of futures with early signaling requested: %d", length(idxs))

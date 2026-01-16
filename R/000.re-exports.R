@@ -1,42 +1,37 @@
 #' Functions Moved to 'parallelly'
 #'
-#' The following function used to be part of \pkg{future} but has since
-#' been migrated to \pkg{parallelly}.  The migration started with
-#' \pkg{future} 1.20.0 (November 2020).  They were moved because they
+#' The following function used to be part of \pkg{future}, but has since
+#' been migrated to \pkg{parallelly}. The migration started with
+#' \pkg{future} 1.20.0 (November 2020). They were moved because they
 #' are also useful outside of the \pkg{future} framework.
 #'
 #' _If you are using any of these from the \pkg{future} package, please
 #'  switch to use the ones from the \pkg{parallelly} package. Thank you!_
 #'
-#' * [parallelly::as.cluster()]
-#    Used by: googleComputeEngineR(2)
+#' * [parallelly::as.cluster()]    (no longer re-exported)
+#    Used by: <none>
 #' * [parallelly::autoStopCluster()]   (no longer re-exported)
 #    Used by: <none>
 #' * [parallelly::availableCores()]
-#    Used by: aroma.affymetrix(2,3), ARPALData, BatchGetSymbols,
-#             bistablehistory, codalm, crossmap, cft, CSCNet, deseats,
-#             dipsaus, drimmR, elevatr, foieGras(4), future.BatchJobs(4),
-#             future.callr(2), GetBCBData, gtfs2emis, heterogen, isoreader,
-#             ItemResponseTrees, ldaPrototype, lidR, meedr, microservices,
-#             microsynth, origami, PINstimation, powRICLPM, rBiasCorrection,
-#             readsdr, recforest, rkeops, sigminer, skpr, smoots, sovereign,
-#             TriDimRegression, uci, updog, whitewater, yfR
+#    Used by: BatchGetSymbols, bistablehistory, codalm, cft,
+#             deseats, dipsaus, drimmR, elevatr, fect (2), GetBCBData,
+#             gtfs2emis, heterogen, ldaPrototype, origami, PINstimation (1),
+#             powRICLPM, rBiasCorrection, readsdr (1), recforest,
+#             sigminer (2), skpr (1), smoots, sovereign, TriDimRegression,
+#             uci (1), updog, whitewater, yfR [2025-12-22]
 #' * [parallelly::availableWorkers()]
-#    Used by: aroma.affymetrix(2,3), wqspt(1)
+#    Used by: wqspt (1) [2025-03-15]
 #' * [parallelly::makeClusterMPI()]    (no longer re-exported)
 #    Used by: <none>
 #' * [parallelly::makeClusterPSOCK()]
-#    Used by: bigDM(1), eatRep, fect, foieGras(4), googleComputeEngineR(2),
-#             gsynth, interflex, ivDiag
+#    Used by: eatRep (1), fect (2), interflex (1), ivDiag (1) [2025-12-11]
 #' * [parallelly::makeNodePSOCK()]     (no longer re-exported)
 #    Used by: <none>
 #' * [parallelly::supportsMulticore()]
-#    Used by: crossmap, dhReg, furrr(1), microservices, sctransform
+#    Used by: furrr(1)
 #
-#  (1) PR sent
+#  (1) Issue filed or PR sent
 #  (2) In the next release
-#  (3) Non-breaking; code is never run
-#  (4) No longer on CRAN
 #' 
 #' For backward-compatible reasons, _some_ of these functions remain
 #' available as exact copies also from this package (as re-exports), e.g.
@@ -53,10 +48,6 @@
 #'
 #' _Note that it is the goal to remove all of the above from this package._
 #'
-#'
-#' @importFrom parallelly as.cluster
-#' @export as.cluster
-#' @aliases as.cluster
 #'
 #' @importFrom parallelly availableCores
 #' @export availableCores

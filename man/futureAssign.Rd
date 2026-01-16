@@ -31,9 +31,7 @@ futureAssign(
   packages = NULL,
   stdout = TRUE,
   conditions = "condition",
-  earlySignal = FALSE,
   label = NULL,
-  gc = FALSE,
   ...,
   assign.env = envir
 )
@@ -121,17 +119,7 @@ Using \code{conditions = NULL} (not recommended) avoids intercepting conditions,
 except from errors; behavior of such unhandled conditions depends on the
 future backend and the environment from which R runs.}
 
-\item{earlySignal}{Specified whether conditions should be signaled as soon
-as possible or not.}
-
 \item{label}{A character string label attached to the future.}
-
-\item{gc}{If TRUE, the garbage collector run (in the process that
-evaluated the future) only after the value of the future is collected.
-Exactly when the values are collected may depend on various factors such
-as number of free workers and whether \code{earlySignal} is TRUE (more
-frequently) or FALSE (less frequently).
-\emph{Some future backends may ignore this argument.}}
 
 \item{assign.env}{The \link[base]{environment} to which the variable
 should be assigned.}

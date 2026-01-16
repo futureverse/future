@@ -26,6 +26,7 @@ FastqStreamer
 FastqStreamerList
 FutureBackend
 FutureBackend
+FutureCluster
 FutureCondition
 FutureError
 FutureEvaluationCondition
@@ -33,6 +34,8 @@ FutureEvaluationError
 FutureEvaluationWarning
 FutureEvaulationMessage
 FutureGlobals
+FutureInterruptError
+FutureJournal
 FutureMessage
 FutureRegistry
 FutureResult
@@ -106,6 +109,7 @@ Rcpp
 RcppParallel
 Regardlessly
 RegisteredNativeSymbol
+Renviron
 RhpcBLASctl
 RichSOCKcluster
 RichSOCKnode
@@ -136,6 +140,7 @@ SpatVector
 Sys
 Topologies
 UDPipe
+UUID
 UnexpectedFutureResultError
 UniprocessFuture
 Univa
@@ -196,6 +201,7 @@ chr
 ci
 cleanEx
 closeAllConnections
+clusterEvalQ
 clusterExport
 clusterSetRNGStream
 conditionMessage
@@ -211,6 +217,7 @@ customWorkers
 cut'n'pasteable
 dbConnect
 ddb
+de
 deprecations
 detectCores
 deterministically
@@ -484,6 +491,7 @@ tempdir
 tempfile
 terra
 tf
+thinko
 thost
 tif
 tmp

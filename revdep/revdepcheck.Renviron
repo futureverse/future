@@ -5,10 +5,22 @@ TAR_SKIP_CLUSTERMQ=${TAR_SKIP_CLUSTERMQ-true}
 ## Allow for at least two workers
 R_PARALLELLY_AVAILABLECORES_FALLBACK=2
 
-## Allow for at most 32 cores
+## Allow for at most 5 cores
 ## Needed for parallelly (< 1.46.0), which will return
 ## detectCores() when check vignettes
-R_PARALLELLY_AVAILABLECORES_MAX=32
+R_PARALLELLY_AVAILABLECORES_MAX=5
+
+## Allow for at most 8 threads
+OMP_NUM_THREADS=8
+OPENBLAS_NUM_THREADS=8
+MKL_NUM_THREADS=8
+GOTO_NUM_THREADS=8
 
 ## Turn on more checks
 #NOT_CRAN=true
+
+R_FUTURE_PLAN_EARLYSIGNAL=defunct
+R_FUTURE_FUTURE_EARLYSIGNAL=defunct
+R_FUTURE_FUTURE_LOCAL=defunct
+R_FUTURE_FUTURE_GC=defunct
+R_FUTURE_RESOLVED_RUN=defunct

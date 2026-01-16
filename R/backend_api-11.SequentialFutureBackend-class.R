@@ -50,8 +50,13 @@ launchFuture.SequentialFutureBackend <- function(backend, future, ...) {
 
   ## Launch future
   future[["state"]] <- "running"
-  future[["result"]] <- evalFuture(data)
-  future[["state"]] <- "finished"
+  result <- evalFuture(data)
+  if (inherits(result, "FutureLaunchError")) {
+    future[["state"]] <- "failed"
+  } else {
+    future[["state"]] <- "finished"
+  }
+  future[["result"]] <- result
 
   ## Register run (used to collect statistics)
   reg <- backend[["reg"]]
@@ -67,7 +72,7 @@ launchFuture.SequentialFutureBackend <- function(backend, future, ...) {
   signalImmediateConditions(future)
 
   ## Signal conditions early, iff specified for the given future
-  signalEarly(future, collect = FALSE)
+  signalEarly(future)
 
   hooks <- backend[["hooks"]]
   if (hooks) {

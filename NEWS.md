@@ -1,3 +1,60 @@
+# Version 1.69.0 [2026-01-15]
+
+## Significant Changes
+
+ * Removed generic function `as.cluster()`, which has been re-exported
+   from the **parallelly** package since 2020. If needed, please use
+   it from the **parallelly** package instead.
+
+## New Features
+
+ * Add `conditionMessage()` for `FutureCondition`, which appends
+   meta-data information to the original message.
+
+ * Add more metadata to `FutureCondition` objects by default, e.g. in
+   which session (including UUID, hostname, and PID) and when the
+   condition was created.
+
+ * `print()` on a Future outputs a description of the current state.
+
+## Bug Fixes
+
+ * `makeClusterFuture()` clusters would not signal errors as other
+   **parallel** clusters. Instead they were signals as-is instantly.
+ 
+ * `future(..., packages = "missing-package")` did not result in an
+   error despite requesting a non-installed package.
+
+ * `plan(..., interrupts = ...)` would produce a warning on "Detected
+   1 unknown future arguments: 'interrupts'" for third-party future
+   backends.
+
+ * `plan(cluster, workers = parallelly::makeClusterSequential())` would
+   erase the global environment as soon as a future is launched.
+
+ * `resolved()` on a 'cluster' future would produce a warning when
+   using a `parallelly::makeClusterSequential())` cluster.
+
+## Deprecated and Defunct
+
+ * The `cluster` backend now defaults to `earlySignal = FALSE`. This
+   was effectively already the case, because of an internal thinko
+   bug.
+
+ * Remove arguments `earlySignal` and `gc` from `future()`,
+   `futureAssign()`, and `futureCall()`. Attempts to set them produce
+   deprecation warnings. Deprecated also hidden argument `local`,
+   which was kept around for legacy reasons.
+
+ * Use of `plan(..., earlySignal = ...)` is now deprecated and
+   produces a deprecation warning.
+
+ * Remove argument `run` from `resolved()`. Attempts to set it
+   produces a deprecation warning.
+
+ * Remove internal future field `envir`.
+
+ 
 # Version 1.68.0 [2025-11-16]
 
 This is the fifth rollout out of several towards a near-future major
@@ -19,7 +76,7 @@ repeat. This release fixes a few more regressions introduced in
 
  * The `cluster` backend failed when used with an `MPIcluster` as
    created by `parallel::makeCluster(..., type = "MPI")`. This bug was
-   introduced in **future** (>= 1.40.0) [2025-04-10].
+   introduced in **future** 1.40.0 [2025-04-10].
 
  * Setting `R_FUTURE_PLAN=multisession` in an Renviron file, or a
    shell startup script, would result in a "fork bomb" when loading
@@ -28,7 +85,7 @@ repeat. This release fixes a few more regressions introduced in
    loaded instead of being deferred to when the first future launched.
    This resulted in new, nested R workers being created recursively,
    until the machine ran out of resources. This bug was introduced in
-   **future** (>= 1.67.0) [2025-07-29].
+   **future** 1.67.0 [2025-07-29].
 
  * ``value(..., reduce = structure(`+`, init = 42))`` is not
    supported, because `` `+` `` is a primitive function and one must
@@ -63,8 +120,8 @@ repeat. This release fixes a few more regressions introduced in
  * The pre-validation of the cluster worker allotted to a future when
    launched was unnecessarily expensive due to a thinko since
    **future** 1.40.0 (2025-04-10), e.g. it would take ~0.1-0.2 seconds
-   for a multisession future, whereas after the fix it is effectly 0.0
-   seconds.
+   for a multisession future, whereas after the fix it is effectively
+   0.0 seconds.
 
  * Calling `resolved()` on a lazy `ClusterFuture` would collect the
    result for the first _resolved_ future in order to free up one

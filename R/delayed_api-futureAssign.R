@@ -185,14 +185,14 @@
 #'
 #' @rdname futureAssign
 #' @export
-futureAssign <- function(x, value, envir = parent.frame(), substitute = TRUE, lazy = FALSE, seed = FALSE, globals = TRUE, packages = NULL, stdout = TRUE, conditions = "condition", earlySignal = FALSE, label = NULL, gc = FALSE, ..., assign.env = envir) {
+futureAssign <- function(x, value, envir = parent.frame(), substitute = TRUE, lazy = FALSE, seed = FALSE, globals = TRUE, packages = NULL, stdout = TRUE, conditions = "condition", label = NULL, ..., assign.env = envir) {
   stop_if_not(is.character(x), !is.na(x), nzchar(x))
   if (substitute) value <- substitute(value)
   
   ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   ## (1) Arguments passed to future()
   ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  future.args <- list(value, envir = envir, lazy = lazy, seed = seed, globals = globals, packages = packages, stdout = stdout, conditions = conditions, earlySignal = earlySignal, label = label, gc = gc, ...)
+  future.args <- list(value, envir = envir, lazy = lazy, seed = seed, globals = globals, packages = packages, stdout = stdout, conditions = conditions, label = label, ...)
   ## Any arguments set via disposible option?
   args <- getOption("future.disposable")
   if (!is.null(args)) {

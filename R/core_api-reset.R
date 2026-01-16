@@ -78,14 +78,12 @@ reset.Future <- function(x, ...) {
   core_fields <- c(
     "version",
     "expr",
-    "envir",
     "stdout",
     "conditions",
     "globals",
     "packages",
     "seed",
     "lazy",
-    "asynchronous",
     "local",
     "reset",
     "label",
@@ -109,6 +107,7 @@ reset.Future <- function(x, ...) {
 
   future[["state"]] <- "created"
   future[["lazy"]] <- TRUE
+  future[["actions"]] <- character(0L)
   
   future
 } ## reset() for Future

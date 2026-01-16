@@ -29,17 +29,39 @@
 \alias{FutureJournalCondition}
 \title{A condition (message, warning, or error) that occurred while orchestrating a future}
 \usage{
-FutureCondition(message, call = NULL, uuid = future[["uuid"]], future = NULL)
+FutureCondition(
+  message,
+  call = NULL,
+  by = session_uuid(),
+  when = NULL,
+  uuid = future[["uuid"]],
+  label = future[["label"]],
+  future = NULL,
+  drop = FALSE
+)
 
-FutureMessage(message, call = NULL, uuid = future[["uuid"]], future = NULL)
+FutureMessage(
+  message,
+  call = NULL,
+  ...,
+  uuid = future[["uuid"]],
+  future = NULL
+)
 
-FutureWarning(message, call = NULL, uuid = future[["uuid"]], future = NULL)
+FutureWarning(
+  message,
+  call = NULL,
+  ...,
+  uuid = future[["uuid"]],
+  future = NULL
+)
 
-FutureError(message, call = NULL, uuid = future[["uuid"]], future = NULL)
+FutureError(message, call = NULL, ..., uuid = future[["uuid"]], future = NULL)
 
 RngFutureCondition(
   message = NULL,
   call = NULL,
+  ...,
   uuid = future[["uuid"]],
   future = NULL
 )
@@ -53,6 +75,7 @@ UnexpectedFutureResultError(future, hint = NULL)
 GlobalEnvMisuseFutureCondition(
   message = NULL,
   call = NULL,
+  ...,
   differences = NULL,
   uuid = future[["uuid"]],
   future = NULL
@@ -65,6 +88,7 @@ GlobalEnvMisuseFutureError(...)
 ConnectionMisuseFutureCondition(
   message = NULL,
   call = NULL,
+  ...,
   differences = NULL,
   uuid = future[["uuid"]],
   future = NULL
@@ -77,6 +101,7 @@ ConnectionMisuseFutureError(...)
 DeviceMisuseFutureCondition(
   message = NULL,
   call = NULL,
+  ...,
   differences = NULL,
   uuid = future[["uuid"]],
   future = NULL
@@ -88,8 +113,9 @@ DeviceMisuseFutureError(...)
 
 DefaultDeviceMisuseFutureCondition(
   message = NULL,
-  incidents = NULL,
   call = NULL,
+  ...,
+  incidents = NULL,
   uuid = future[["uuid"]],
   future = NULL
 )
@@ -100,7 +126,11 @@ DefaultDeviceMisuseFutureError(...)
 
 FutureLaunchError(..., future = NULL)
 
-FutureInterruptError(..., future = NULL)
+FutureInterruptError(
+  message = "A future was interrupted",
+  when = Sys.time(),
+  future = NULL
+)
 
 FutureCanceledError(..., future = NULL)
 
@@ -117,12 +147,22 @@ FutureJournalCondition(
 \arguments{
 \item{message}{A message condition.}
 
-\item{call}{The call stack that led up to the condition.}
+\item{call}{(optional) The call stack that led up to the condition.}
 
-\item{uuid}{A universally unique identifier for the future associated with
-this FutureCondition.}
+\item{by}{(optional) A session UUID object.}
 
-\item{future}{The \link{Future} involved.}
+\item{when}{(optional) A \link{POSIXct} timestamp for when the condition was
+created.}
+
+\item{uuid}{(optional) A universally unique identifier for the future
+associated with this FutureCondition.}
+
+\item{label}{(optional) A future label.}
+
+\item{future}{(optional) The \link{Future} involved.}
+
+\item{drop}{If TRUE, the \code{future} argument is only used to populate
+future metadata, but is not stored in the condition object created.}
 
 \item{hint}{(optional) A string with a suggestion on what might be wrong.}
 }

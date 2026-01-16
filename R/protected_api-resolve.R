@@ -91,6 +91,8 @@ resolve.Future <- function(x, idxs = NULL, recursive = 0, result = FALSE, stdout
   relay <- (stdout || signal)
   result <- result || relay
 
+  future[["actions"]] <- c(future[["actions"]], "resolve")
+
   ## Lazy future that is not yet launched?
   if (future[["state"]] == "created") future <- run(future)
 

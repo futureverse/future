@@ -1,5 +1,5 @@
 Package: future
-Version: 1.68.0
+Version: 1.69.0
 Title: Unified Parallel and Distributed Processing in R for Everyone
 Depends:
     R (>= 3.2.0)
@@ -49,6 +49,7 @@ Collate:
     '000.bquote.R'
     '000.import.R'
     '000.re-exports.R'
+    '009.deprecation.R'
     '010.tweakable.R'
     '010.utils-parallelly.R'
     'backend_api-01-FutureBackend-class.R'
@@ -86,6 +87,7 @@ Collate:
     'protected_api-globals.R'
     'protected_api-journal.R'
     'protected_api-resolve.R'
+    'protected_api-result.R'
     'protected_api-signalConditions.R'
     'testme.R'
     'utils-basic.R'

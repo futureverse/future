@@ -28,8 +28,6 @@ jobs:
           - {os: ubuntu-latest,  r: 'oldrel-1' }
           - {os: ubuntu-latest,  r: 'oldrel-2' }
           - {os: ubuntu-latest,  r: '4.0'      }
-          - {os: ubuntu-latest,  r: 'devel'   , globals: develop, label: 'globals develop' }
-          - {os: ubuntu-latest,  r: '4.0'     , globals: develop, label: 'globals develop' }
 
           - {os: ubuntu-latest,  r: 'release', strict: true, label: 'strict' }
 
@@ -38,7 +36,6 @@ jobs:
           - {os: ubuntu-latest,  r: 'release'  , language: ko,    label: ko    }
           - {os: ubuntu-latest,  r: 'release'  , language: zh_CN, label: zh_CN }
           - {os: ubuntu-latest,  r: 'release'  , language: zh_TW, label: zh_TW }
-          - {os: ubuntu-latest,  r: 'release'  , globals_keepWhere: false, label: '!keepWhere' }
           - {os: ubuntu-latest,  r: 'release'  , plan: multicore, fork_multithreading_enable: false, label: 'multicore, no-multithreading-in-forks' }
           - {os: ubuntu-latest,  r: 'release'  , plan: multisession, fork_multithreading_enable: false, label: 'multisession, no-multithreading-in-forks' }
           - {os: ubuntu-latest,  r: 'release'  , psock_relay_immediate: false, label: 'no-immediate-relay-in-psock' }
@@ -130,8 +127,14 @@ jobs:
         run: |
           if ("${{ matrix.config.strict }}" == "true") {
             # FIXME: Sys.setenv(R_FUTURE_CONNECTIONS_ONMISUSE = "error[details=TRUE]")
+            Sys.setenv(NOT_CRAN = "true")
             Sys.setenv(R_FUTURE_GLOBALENV_ONMISUSE = "error")
             Sys.setenv(R_FUTURE_RNG_ONMISUSE = "error")
+            Sys.setenv(R_FUTURE_FUTURE_EARLYSIGNAL = "defunct")
+            Sys.setenv(R_FUTURE_FUTURE_LOCAL = "defunct")
+            Sys.setenv(R_FUTURE_FUTURE_GC = "defunct")
+            Sys.setenv(R_FUTURE_PLAN_EARLYSIGNAL = "defunct")
+            Sys.setenv(R_FUTURE_RESOLVED_RUN = "defunct")
           }
           if (nzchar(Sys.getenv("R_FUTURE_PLAN")) || getRversion() < "3.5.0") Sys.setenv(RCMDCHECK_ERROR_ON = "error")
           rcmdcheck::rcmdcheck(
@@ -149,6 +152,11 @@ jobs:
             Sys.setenv(R_FUTURE_DEVICES_ONMISUSE = "error")
             Sys.setenv(R_FUTURE_GLOBALENV_ONMISUSE = "error")
             Sys.setenv(R_FUTURE_RNG_ONMISUSE = "error")
+            Sys.setenv(R_FUTURE_FUTURE_EARLYSIGNAL = "defunct")
+            Sys.setenv(R_FUTURE_FUTURE_LOCAL = "defunct")
+            Sys.setenv(R_FUTURE_FUTURE_GC = "defunct")
+            Sys.setenv(R_FUTURE_PLAN_EARLYSIGNAL = "defunct")
+            Sys.setenv(R_FUTURE_RESOLVED_RUN = "defunct")
           }
           rcmdcheck::rcmdcheck(
             args = c("--no-manual", "--as-cran",

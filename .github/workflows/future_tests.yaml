@@ -20,6 +20,7 @@ jobs:
           - { plan: 'multicore'                           }
           - { plan: 'multisession'                        }
           - { plan: 'sequential'                          }
+          - { plan: 'plan(cluster, workers = parallelly::makeClusterSequential())' }
           - { plan: 'future.batchtools::batchtools_local' }
           - { plan: 'future.batchtools::batchtools_bash'  }
           - { plan: 'future.callr::callr'                 }
@@ -84,7 +85,7 @@ jobs:
         run: |
           R CMD build --no-build-vignettes --no-manual . 
           R CMD INSTALL *.tar.gz 
-          Rscript -e future.tests::check --args --test-plan=${{ matrix.future.plan }}
+          Rscript -e future.tests::check --args --test-plan="${{ matrix.future.plan }}"
 
       - name: Upload check results
         if: failure()

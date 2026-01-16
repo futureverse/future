@@ -4,10 +4,10 @@ name: revdepcheck-top
 
 jobs:
   R-CMD-check:
-    if: "! contains(github.event.head_commit.message, '[ci skip]')"    
+    if: "! contains(github.event.head_commit.message, '[ci skip]')"
 
     timeout-minutes: 30
-    
+
     runs-on: ubuntu-latest
 
     name: ${{ matrix.config.pkg }} (${{ matrix.config.r }}) ${{ matrix.config.label }}
@@ -24,19 +24,11 @@ jobs:
           - { r: "release", pkg: "furrr", not_cran: false }
           - { r: "release", pkg: "future.tests"      }
           - { r: "release", pkg: "promises"          , force_suggests: false }
-          - { r: "release", pkg: "shiny", not_cran: false }
+          - { r: "release", pkg: "shiny"             , force_suggests: false , not_cran: false }
           - { r: "release", pkg: "plumber"           }
-          - { r: "release", pkg: "future.batchtools" , globals: develop, label: 'globals develop' }
-          - { r: "release", pkg: "future.callr"      , globals: develop, label: 'globals develop' }
-          - { r: "release", pkg: "future.mirai"      , globals: develop, label: 'globals develop' }
-          - { r: "release", pkg: "doFuture"          , globals: develop, label: 'globals develop' }
-          - { r: "release", pkg: "future.apply"      , globals: develop, label: 'globals develop' }
-          - { r: "release", pkg: "furrr", not_cran: false, globals: develop, label: 'globals develop' }
-          - { r: "release", pkg: "future.tests"      , globals: develop, label: 'globals develop' }
           - { r: "release", pkg: "doFuture"          , plan: multisession, label: multisession }
           - { r: "release", pkg: "future.apply"      , plan: multisession, label: multisession }
           - { r: "release", pkg: "furrr", not_cran: false, plan: multisession, label: multisession }
-          - { r: "release", pkg: "future.apply"      , globals_keepWhere: false, label: '!keepWhere' }
 
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
@@ -50,7 +42,7 @@ jobs:
       R_FUTURE_GLOBALS_KEEPWHERE: ${{ matrix.config.globals_keepWhere }}
       R_GLOBALS_BRANCH: ${{ matrix.config.globals }}
       NOT_CRAN: true
-      
+
     steps:
       - uses: actions/checkout@v4
 
@@ -69,6 +61,21 @@ jobs:
             any::sessioninfo
             any::covr
           needs: check
+
+      - name: Install system dependencies
+        run: |
+          ## 'plumber' fails to install 'units' and 'sf'
+          if [[ "${{ matrix.config.pkg }}" == "plumber" ]]; then
+            sudo apt install -y libudunits2-dev                     ## 'units'
+            sudo apt install -y libgdal-dev libgeos-dev libproj-dev ## 'sf'
+          fi
+          ## 'shiny' fails at run time with "Error in `dyn.load(file, DLLpath
+          ## = DLLpath, ...)`: unable to load shared object '/home/runner/
+          ## work/_temp/Library/otelsdk/libs/otelsdk.so': libprotobuf.so.32:
+          ## cannot open shared object file: No such file or directory
+          if [[ "${{ matrix.config.pkg }}" == "shiny" ]]; then
+            sudo apt install -y libprotobuf32t64
+          fi
 
       - name: Install dependencies
         run: |
