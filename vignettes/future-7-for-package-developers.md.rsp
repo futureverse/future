@@ -17,12 +17,12 @@ options("withCapture/newline" = FALSE)
 
 # <%@meta name="title"%>
 
-Using future code in package is not much different from other type of package code or when using futures in R scripts.  However, there are a few things that are useful to know about in order to minimize the risk for surprises to the end user.
+Using future code in a package is not much different from other types of package code or when using futures in R scripts.  However, there are a few things that are useful to know about in order to minimize the risk for surprises to the end user.
 
 
 ## The future smell test
 
-The by far most common and popular future backend is to parallelize on the local machine, e.g. `plan(multisession)`.  This is often good enough in most situations but note that some end-users have access to multiple machines and might want to run your code using all of them to speed it up beyond what a single machine can do.  Because of this, avoid as far as possible making assumption about your code will only run on the local machine.  A good "smell test" is to ask yourself:
+The by far most common and popular future backend is to parallelize on the local machine, e.g. `plan(multisession)`.  This is often good enough in most situations but note that some end-users have access to multiple machines and might want to run your code using all of them to speed it up beyond what a single machine can do.  Because of this, avoid as far as possible making assumptions that your code will only run on the local machine.  A good "smell test" is to ask yourself:
 
  _\- Will my future code work if it ends up running on the other side of the world?_
 
@@ -62,9 +62,9 @@ Remember, as developers we never know what compute resources the end-user has ac
 
 ## Avoid changing the future backend
 
-For reasons like the ones mentioned above, refrain from setting `plan()` in a function.  It is better to leave it to the end-user to decided how they want to parallelize.  One reason for this is that we can never know how and in what context our code will run.  For example, they might use futures to parallelize a function call in some other package and that package code calls your package internally.  If you set `plan(multisession)` internally without undoing, you might mess up the `plan()` that is already set breaking any further parallelization.
+For reasons like the ones mentioned above, refrain from setting `plan()` in a function.  It is better to leave it to the end-user to decide how they want to parallelize.  One reason for this is that we can never know how and in what context our code will run.  For example, they might use futures to parallelize a function call in some other package and that package code calls your package internally.  If you set `plan(multisession)` internally without undoing, you might mess up the `plan()` that is already set breaking any further parallelization.
 
-If you still think it is necessary to set `plan()`, make sure to undo when the function exits, also on errors.  This can be done by using `with(plan(...), local = TRUE)`, e.g.
+If you still think it is necessary to set `plan()`, make sure to undo it when the function exits, also on errors.  This can be done by using `with(plan(...), local = TRUE)`, e.g.
 
 ```r
 my_fcn <- function(x) {
@@ -101,7 +101,7 @@ or
 y <- my_fcn(x, parallel = TRUE)
 ```
 
-depending on their needs.  However, if another package developer decide to call your function in their function, they now have to expose that `parallel` argument to the users of their function, e.g.
+depending on their needs.  However, if another package developer decides to call your function in their function, they now have to expose that `parallel` argument to the users of their function, e.g.
 
 ```r
 their_fcn <- function(x, parallel = FALSE) {
@@ -275,4 +275,4 @@ parallel::stopCluster(cl)
 ```
 
 (*) Currently, examples are excluded from the detritus checks.
-    This was the validated with R-devel revision 82991 (2022-10-02).
+    This was validated with R-devel revision 82991 (2022-10-02).

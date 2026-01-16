@@ -24,7 +24,7 @@ First, all the essential core packages part of the future framework,
 rich set of package tests.  These are validated regularly across the
 wide-range of operating systems (Linux, macOS, and MS Windows) and R
 versions available on CRAN, on continuous integration (CI) services
-(GitHub Actions), an on [R-hub]. The core packages are also tested with
+(GitHub Actions), and on [R-hub]. The core packages are also tested with
 non-English locale settings, including Korean, Simplified Chinese
 (China) and Traditional Chinese (Taiwan). They are also verified to
 work with single-core and dual-core machines, which may be the case
@@ -42,11 +42,11 @@ coverage.
 
 Third, a suite of _Future API conformance tests_ available in the
 **[future.tests]** package validates the
-correctness of all future backends.  Any new future backend developed, must
+correctness of all future backends.  Any new future backend developed must
 pass these tests to comply with the _Future API_.
 By conforming to this API, the end-user can trust that the backend will
 produce the same correct and reproducible results as any other backend,
-including the ones that the developer have tested on.
+including the ones that the developer has tested on.
 Also, by making it the responsibility of the developer to assert that their
 new future backend conforms to the _Future API_, we relieve other
 developers from having to test that their future-based software works on all
@@ -72,14 +72,14 @@ parallel foreach adaptor because they do not properly export globals or
 declare package dependencies.  The exception is when using the sequential
 _doSEQ_ adaptor (default), fork-based ones such as **[doMC]**, or
 the generic **[doFuture]**, which supports any future backend and
-relies on the future framework for handling globals and packages(*)
+relies on the future framework for handling globals and packages(*).
 
 Lastly, analogously to above reverse-dependency checks of each new release,
 CRAN and Bioconductor continuously run checks on all these direct, but
 also indirect, reverse dependencies, which further increases the validation
 of the _Future API_ and the future ecosystem at large.
 
-(\*) There is a plan to update **[foreach]** to use the exact same static-code-analysis method as the **[future]** package use for identifying globals.  As the maintainer of the future framework, I collaborate with the maintainer of the **[foreach]** package to implement this.
+(\*) There is a plan to update **[foreach]** to use the exact same static-code-analysis method as the **[future]** package uses for identifying globals.  As the maintainer of the future framework, I collaborate with the maintainer of the **[foreach]** package to implement this.
 
 
 [parallelly]: https://parallelly.futureverse.org

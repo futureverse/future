@@ -20,7 +20,7 @@
 
 Futures will _relay_ output produced by functions such as `cat()`, `print()` and `str()`.  More specifically, output sent to the standard output (stdout) while a future is evaluated will be captured and _re-outputted ("relayed") when the value of the future is queried_.  Messages produced by `message()`, which formally are R conditions are also captured and resignaled ("relayed") as messages in the main R session.  Importantly, this works identically regardless of future backend used.
 
-For simplicitly, lets start with an illustration on how standard output ("stdout") is captured and relayed:
+For simplicity, lets start with an illustration on how standard output ("stdout") is captured and relayed:
 
 ```r
 > library(future)
@@ -233,7 +233,7 @@ ping
 
 ## Known limitations
 
-It is only the standard output that is relayed.  It is _not possible_ to relay output send to the standard error (stderr), e.g. output by `cat(..., file = stderr())` will be lost.  This is due to a [limitation in R](https://github.com/HenrikBengtsson/Wishlist-for-R/issues/55), preventing us from capturing stderr in a reliable way, particularity across all backends.  However, note that the captured messages by `message()` are outputted to stderr (as expected) when resignaled/relayed.
+It is only the standard output that is relayed.  It is _not possible_ to relay output send to the standard error (stderr), e.g. output sent by `cat(..., file = stderr())` will be lost.  This is due to a [limitation in R](https://github.com/HenrikBengtsson/Wishlist-for-R/issues/55), preventing us from capturing stderr in a reliable way, particularly across all backends.  However, note that the captured messages by `message()` are outputted to stderr (as expected) when resignaled/relayed.
 
 
 [foreach]: https://cran.r-project.org/package=foreach

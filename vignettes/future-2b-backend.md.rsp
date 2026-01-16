@@ -20,7 +20,7 @@
 --------------------------------------------------------------------"%>
 # A Future for R: Available Future Backends
 
-The **future** package comes with built-in future backends that leverage the **parallel** package part of R itself. In addition to these backends, others exist in package extensions, e.g. **[future.callr]**, **[future.mirai]**, and **[future.batchtools]**. Below is an overview of the most common backends that you as an end-user can chose from.
+The **future** package comes with built-in future backends that leverage parallel frameworks available in the **parallel** package, which is part of R itself. In addition to these backends, others exist in package extensions, e.g. **[future.callr]**, **[future.mirai]**, and **[future.batchtools]**. Below is an overview of the most common backends that you as an end-user can choose from.
 
 | Package / Backend             | Features    | How futures are evaluated
 |:----------------|:------------|:-----------------------------------------------------

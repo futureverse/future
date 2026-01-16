@@ -44,7 +44,7 @@ y
 ## Error: object 'x' not found
 ```
 
-It is recommended to avoid above constructs where it is ambiguous whether a variable is global or local.  To force variable `x` to always be global, insert it at the very being of the future expression, e.g.
+It is recommended to avoid above constructs where it is ambiguous whether a variable is global or local.  To force variable `x` to always be global, insert it at the very beginning of the future expression, e.g.
 
 ```r
 reset <- FALSE
@@ -114,8 +114,8 @@ If we attempt to call `my_sum()` via a future, we will get an error (if the futu
 Error in get(var) : object 'a' not found
 ```
 
-This is because the static code inspection done on the future expression `my_sum("a")` does not reveal object `a` as a global object.  In that expression alone, there are only three objects: the function `my_sum()`, the primitive function `(`, and the string `"a"`, and none of those are object `a`.  The future framework will also scan these three objects for globals, which in this example means that it scans also `my_sum()`.  This recursive search for globals will identify three additional globals, namely, the primitive function `{`, the function `sum()`, and the function `get()`, but, as before, none of these source will identify `a` as a global object.
-In order for `a` to be identified, the future framework would need to have a built-in understanding on how `get(var)` works, which would be a daunting task, especially if it need to know how it acts for different data types of `var` and various choices on arguments `envir` and `enclos`.  In fact, this can often not be inferred until run time, that is, it is not possible to identify what objects are needed without actually running the code.  In short, it is not possible to automatically identify global variables specified via a character string.
+This is because the static code inspection done on the future expression `my_sum("a")` does not reveal object `a` as a global object.  In that expression alone, there are only three objects: the function `my_sum()`, the primitive function `(`, and the string `"a"`, and none of those are object `a`.  The future framework will also scan these three objects for globals, which in this example means that it scans also `my_sum()`.  This recursive search for globals will identify three additional globals, namely, the primitive function `{`, the function `sum()`, and the function `get()`, but, as before, none of these sources will identify `a` as a global object.
+In order for `a` to be identified, the future framework would need to have a built-in understanding on how `get(var)` works, which would be a daunting task, especially if it needs to know how it acts for different data types of `var` and various choices on arguments `envir` and `enclos`.  In fact, this can often not be inferred until run time, that is, it is not possible to identify what objects are needed without actually running the code.  In short, it is not possible to automatically identify global variables specified via a character string.
 
 The workaround is to tell the future framework what _additional_ globals are needed.  This can be done via argument `globals` using:
 
@@ -153,7 +153,7 @@ For example, consider this, slightly more complex, example:
  6 22 12
 ```
 
-Instead of using "free roaming" objects `a`, `b`, and `c`, it's better to put those values in a list (or a data frame of of the same length);
+Instead of using "free roaming" objects `a`, `b`, and `c`, it's better to put those values in a list (or a data frame of the same length);
 
 ```r
 > data <- list(a = 1:3, b = 4:7, c = 3:5)
@@ -230,7 +230,7 @@ Error: object 'b' not found
 
 The above error occurs because, contrary to the master R process, the R worker that evaluated the future expression does not have **data.table** loaded.  Instead the evaluation falls back to the `[.data.frame` method, which is not what we want.
 
-Until the future framework manages to identify **data.table** as a required package (which is the goal), we can guide future by specifying additional packages needed:
+Until the future framework manages to identify **data.table** as a required package (which is the goal), we can guide the future package by specifying additional packages needed:
 
 ```r
 > y %<-% DT[, sum(b)] %packages% "data.table"
@@ -251,8 +251,8 @@ Note, do _not_ use `library()` or `loadNamespace()` to resolve these problems. I
 
 ## '...' used in an incorrect context
 
-In R, we can use the `...` construct is used to refer to zero or more
-arguments. For example, we can use as in:
+In R, the `...` construct is used to refer to zero or more
+arguments. For example, we can use it as in:
 
 ```r
 my_mean <- function(x, ...) mean(x, ...)
@@ -294,7 +294,7 @@ y <- my_fcn(X, digits = 3)
 In this case, we have two levels of `...` arguments; one for
 `my_fcn()` and one for the anonymous function.  Note how the `...`
 arguments for `my_fcn()` are passed down to the anonymous function by
-specifying `...` as an final argument to `lapply()`.
+specifying `...` as a final argument to `lapply()`.
 
 The above is the ideal and proper way to pass down `...`. However, it
 is not uncommon to see that the `...` is used as a global variable in
@@ -348,7 +348,7 @@ my_fcn <- function(X, ...) {
 
 ## Non-exportable objects
 
-Certain types of objects are tied to a given R session and cannot be passed along to another R process (a "worker").  An example of a non-exportable object is is XML objects of the **[xml2]** package.  If we attempt to use those in parallel processing, we may get a error when the future is evaluated (or just invalid results depending on how they are used), e.g.
+Certain types of objects are tied to a given R session and cannot be passed along to another R process (a "worker").  An example of a non-exportable object is XML objects of the **[xml2]** package.  If we attempt to use those in parallel processing, we may get a error when the future is evaluated (or just invalid results depending on how they are used), e.g.
 
 ```r
 > library(future)
@@ -437,7 +437,7 @@ Error: Invalid usage of futures: A future whose value has not yet been collected
  -7a05-1373-e1b20022e4d8; pid 7464 on localhost): {; Sys.getpid(); }
 ```
 
-As previously, this can be avoided by making sure `x$a` is resolved first, which can be one in various ways, e.g. `dummy <- x$a`, `resolve(x$a)` and `force(x$a)`.
+As previously, this can be avoided by making sure `x$a` is resolved first, which can be done in various ways, e.g. `dummy <- x$a`, `resolve(x$a)` and `force(x$a)`.
 
 _Footnote_: (*) Although sequential futures could be passed on to other futures part of the same R process and be resolved there because they share the same evaluation process, by definition of the Future API it is invalid to do so regardless of future type.  This conservative approach is taken in order to make future expressions behave consistently regardless of the type of future used.
 
@@ -496,7 +496,7 @@ f <- future({
 })
 ```
 
-This is because `source()` defaults to `local = FALSE`, which has side effects.  When using `local = FALSE`, any functions or variables defined by the R script are assigned to the global environment - not the calling environment as we might expect.  This may make little different when calling `source()` from the R prompt, or from another script.  However, when called from inside a function, inside `local()`, or inside a future, it might result in unexpected behavior. It is similar to using `assign("a", 42, envir = globalenv())`, which is known be a bad practice.  To be on the safe side, it is almost always better call `source()` with `local = TRUE`.
+This is because `source()` defaults to `local = FALSE`, which has side effects.  When using `local = FALSE`, any functions or variables defined by the R script are assigned to the global environment - not the calling environment as we might expect.  This may make little difference when calling `source()` from the R prompt, or from another script.  However, when called from inside a function, inside `local()`, or inside a future, it might result in unexpected behavior. It is similar to using `assign("a", 42, envir = globalenv())`, which is known to be a bad practice.  To be on the safe side, it is almost always better call `source()` with `local = TRUE`.
 
 
 ### Clashes with other packages
