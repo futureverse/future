@@ -60,7 +60,7 @@ resolved using \code{resolved()}, e.g.
 \code{while (!all(resolved(futures))) Sys.sleep(5)}.
 
 Each future backend must implement a \code{resolved()} method. It should return
-either TRUE or FALSE, or throw a \link{FutureError} (which indicate a
+either TRUE or FALSE, or throw a \link{FutureError} (which indicates a
 significant, often unrecoverable infrastructure problem, or an interrupt).
 }
 \section{Behavior of cluster and multisession futures}{

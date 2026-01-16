@@ -12,7 +12,7 @@ MultiprocessFuture(expr = NULL, substitute = TRUE, envir = parent.frame(), ...)
 \item{expr}{An \R \link[base]{expression}.}
 
 \item{substitute}{If TRUE, argument \code{expr} is
-\code{\link[base]{substitute}()}:ed, otherwise not.}
+\code{\link[base]{substitute}()}:d, otherwise not.}
 
 \item{envir}{The \link{environment} from where global objects should be
 identified.}

@@ -5,11 +5,11 @@
 #' Creates a future that evaluates an \R expression or
 #' a future that calls an \R function with a set of arguments.
 #' How, when, and where these futures are evaluated can be configured
-#' using [plan()] such that it is evaluated in parallel on,
+#' using [plan()] such that they are evaluated in parallel on,
 #' for instance, the current machine, on a remote machine, or via a
 #' job queue on a compute cluster.
 #' Importantly, any \R code using futures remains the same regardless
-#' on these settings and there is no need to modify the code when
+#' of these settings and there is no need to modify the code when
 #' switching from, say, sequential to parallel processing.
 #'
 #' @inheritParams Future-class
@@ -69,7 +69,7 @@
 #' and less tedious and error prone than if they are manually specified_.
 #'
 #' However, for full control, it is also possible to explicitly specify
-#' exactly which the globals are by providing their names as a character
+#' exactly which globals are by providing their names as a character
 #' vector.
 #' In the above example, we could use
 #' \preformatted{
@@ -77,7 +77,7 @@
 #'   f <- future({ b <- 2; a * b }, globals = "a")
 #' }
 #'
-#' Yet another alternative is to explicitly specify also their values
+#' Yet another alternative is to explicitly also specify their values
 #' using a named list as in
 #' \preformatted{
 #'   a <- 42
@@ -152,7 +152,7 @@
 #' The future logo was designed by Dan LaBar and tweaked by Henrik Bengtsson.
 #'
 #' @seealso
-#' How, when and where futures are resolved is given by the
+#' How, when, and where futures are resolved is determined by the
 #' _future backend_, which can be set by the end user using the
 #' [plan()] function.
 #'

@@ -3,7 +3,7 @@
 #'
 #' Gets the value of a future or the values of all elements (including futures)
 #' in a container such as a list, an environment, or a list environment.
-#' If one or more futures is unresolved, then this function blocks until all
+#' If one or more futures are unresolved, then this function blocks until all
 #' queried futures are resolved.
 #'
 #' @param future,x A [Future], an environment, a list, or a list environment.
@@ -15,15 +15,15 @@
 #' futures are relayed, otherwise not.
 #' 
 #' @param inorder If TRUE, then standard output and conditions are relayed,
-#' and value reduction, is done in the order the futures occur in `x`, but
+#' and value reduction is done in the order the futures occur in `x`, but
 #' always as soon as possible. This is achieved by buffering the details
 #' until they can be released. By setting `inorder = FALSE`, no buffering
 #' takes place and everything is relayed and reduced as soon as a new future
-#' is resolved. Regardlessly, the values are always returned in the same
+#' is resolved. Regardless, the values are always returned in the same
 #' order as `x`.
 #'
 #' @param drop If TRUE, resolved futures are minimized in size and invalidated
-#' as soon the as their values have been collected and any output and
+#' as soon as their values have been collected and any output and
 #' conditions have been relayed.
 #' Combining `drop = TRUE` with `inorder = FALSE` reduces the memory use
 #' sooner, especially avoiding the risk of holding on to future values until

@@ -8,7 +8,7 @@
 #'
 #' @param envir the environment where to search from.
 #'
-#' @param mustExist If TRUE and the variable does not exists, then
+#' @param mustExist If TRUE and the variable does not exist, then
 #' an informative error is thrown, otherwise NA is returned.
 #'
 #' @param default the default value if future was not found.
@@ -17,7 +17,7 @@
 #' only contains futures, otherwise also `default` values.
 #'
 #' @return A [Future] (or `default`).
-#' If `var` is NULL, then a named list of Future:s are returned.
+#' If `var` is NULL, then a named list of Future:s is returned.
 #'
 #' @example incl/futureOf.R
 #'

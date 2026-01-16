@@ -15,7 +15,7 @@ resetWorkers(x, ...)
 Free up active background workers
 }
 \details{
-This function will resolve any active futures that is currently
+This function will resolve any active futures that are currently
 being evaluated on background workers.
 }
 \examples{

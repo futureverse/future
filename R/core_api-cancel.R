@@ -19,7 +19,7 @@
 #' ## Set up two parallel workers
 #' plan(multisession, workers = 2)
 #' 
-#' ## Launch two long running future
+#' ## Launch two long running futures
 #' fs <- lapply(c(1, 2), function(duration) {
 #'   future({
 #'     Sys.sleep(duration)
@@ -47,7 +47,7 @@
 #'
 #' @seealso
 #' A canceled future can be [reset()] to a lazy, vanilla future
-#' such that it can be relaunched, possible on another future backend.
+#' such that it can be relaunched, possibly on another future backend.
 #'
 #' @export
 cancel <- function(x, interrupt = TRUE, ...) {

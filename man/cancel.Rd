@@ -28,7 +28,7 @@ Cancels futures, with the option to interrupt running ones.
 ## Set up two parallel workers
 plan(multisession, workers = 2)
 
-## Launch two long running future
+## Launch two long running futures
 fs <- lapply(c(1, 2), function(duration) {
   future({
     Sys.sleep(duration)
@@ -57,5 +57,5 @@ plan(sequential)
 }
 \seealso{
 A canceled future can be \code{\link[=reset]{reset()}} to a lazy, vanilla future
-such that it can be relaunched, possible on another future backend.
+such that it can be relaunched, possibly on another future backend.
 }

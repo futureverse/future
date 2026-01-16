@@ -54,7 +54,7 @@ minifuture(
 identified.}
 
 \item{substitute}{If TRUE, argument \code{expr} is
-\code{\link[base]{substitute}()}:ed, otherwise not.}
+\code{\link[base]{substitute}()}:d, otherwise not.}
 
 \item{lazy}{If FALSE (default), the future is resolved
 eagerly (starting immediately), otherwise not.}
@@ -62,9 +62,9 @@ eagerly (starting immediately), otherwise not.}
 \item{seed}{(optional) If TRUE, the random seed, that is, the state of the
 random number generator (RNG) will be set such that statistically sound
 random numbers are produced (also during parallelization).
-If FALSE (default), it is assumed that the future expression does neither
-need nor use random numbers generation.
-To use a fixed random seed, specify a L'Ecuyer-CMRG seed (seven integer)
+If FALSE (default), it is assumed that the future expression neither
+needs nor uses random number generation.
+To use a fixed random seed, specify a L'Ecuyer-CMRG seed (seven integers)
 or a regular RNG seed (a single integer).  If the latter, then a
 L'Ecuyer-CMRG seed will be automatically created based on the given seed.
 Furthermore, if FALSE, then the future will be monitored to make sure it
@@ -93,15 +93,15 @@ captured output across futures.
 Using \code{stdout = NA} fully avoids intercepting the standard output;
 behavior of such unhandled standard output depends on the future backend.}
 
-\item{conditions}{A character string of conditions classes to be captured
+\item{conditions}{A character string of condition classes to be captured
 and relayed.  The default is to relay all conditions, including messages
 and warnings.  To drop all conditions, use \code{conditions = character(0)}.
 Errors are always relayed.
 Attribute \code{exclude} can be used to ignore specific classes, e.g.
 \code{conditions = structure("condition", exclude = "message")} will capture
-all \code{condition} classes except those that inherits from the \code{message} class.
+all \code{condition} classes except those that inherit from the \code{message} class.
 Using \code{conditions = structure(..., drop = TRUE)} causes any captured
-conditions to be dropped from the future object as soon as it has
+conditions to be dropped from the future object as soon as they have
 been relayed, e.g. by \code{value(f)}. This can help decrease the overall
 memory consumed by captured conditions across futures.
 Using \code{conditions = NULL} (not recommended) avoids intercepting conditions,
@@ -134,11 +134,11 @@ which automatic features of \code{\link[=future]{future()}} introduce extra over
 Creates a future that evaluates an \R expression or
 a future that calls an \R function with a set of arguments.
 How, when, and where these futures are evaluated can be configured
-using \code{\link[=plan]{plan()}} such that it is evaluated in parallel on,
+using \code{\link[=plan]{plan()}} such that they are evaluated in parallel on,
 for instance, the current machine, on a remote machine, or via a
 job queue on a compute cluster.
 Importantly, any \R code using futures remains the same regardless
-on these settings and there is no need to modify the code when
+of these settings and there is no need to modify the code when
 switching from, say, sequential to parallel processing.
 }
 \details{
@@ -196,7 +196,7 @@ environment \code{envir} as the starting point (basically via
 and less tedious and error prone than if they are manually specified}.
 
 However, for full control, it is also possible to explicitly specify
-exactly which the globals are by providing their names as a character
+exactly which globals are by providing their names as a character
 vector.
 In the above example, we could use
 \preformatted{
@@ -204,7 +204,7 @@ In the above example, we could use
   f <- future({ b <- 2; a * b }, globals = "a")
 }
 
-Yet another alternative is to explicitly specify also their values
+Yet another alternative is to explicitly also specify their values
 using a named list as in
 \preformatted{
   a <- 42
@@ -336,7 +336,7 @@ y1 <- value(f1)
 print(y1)
 }
 \seealso{
-How, when and where futures are resolved is given by the
+How, when, and where futures are resolved is determined by the
 \emph{future backend}, which can be set by the end user using the
 \code{\link[=plan]{plan()}} function.
 }

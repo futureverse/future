@@ -18,7 +18,7 @@ environment are returned.}
 
 \item{envir}{the environment where to search from.}
 
-\item{mustExist}{If TRUE and the variable does not exists, then
+\item{mustExist}{If TRUE and the variable does not exist, then
 an informative error is thrown, otherwise NA is returned.}
 
 \item{default}{the default value if future was not found.}
@@ -28,7 +28,7 @@ only contains futures, otherwise also \code{default} values.}
 }
 \value{
 A \link{Future} (or \code{default}).
-If \code{var} is NULL, then a named list of Future:s are returned.
+If \code{var} is NULL, then a named list of Future:s is returned.
 }
 \description{
 Get the future of a future variable that has been created directly
