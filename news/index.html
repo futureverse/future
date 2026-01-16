@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.69.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.69.0-9001</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -78,6 +78,10 @@
     </div>
 
     <div class="section level2">
+<h2 class="pkg-version" data-toc-text="development version" id="version-development-version">Version (development version)<a class="anchor" aria-label="anchor" href="#version-development-version"></a></h2>
+<ul><li>…</li>
+</ul></div>
+    <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.69.0" id="version-1690">Version 1.69.0<a class="anchor" aria-label="anchor" href="#version-1690"></a></h2><p class="text-muted">CRAN release: 2026-01-16</p>
 <div class="section level3">
 <h3 id="significant-changes-1-69-0">Significant Changes<a class="anchor" aria-label="anchor" href="#significant-changes-1-69-0"></a></h3>
@@ -85,14 +89,14 @@
 </ul></div>
 <div class="section level3">
 <h3 id="new-features-1-69-0">New Features<a class="anchor" aria-label="anchor" href="#new-features-1-69-0"></a></h3>
-<ul><li><p>Add <code><a href="https://rdrr.io/r/base/conditions.html" class="external-link">conditionMessage()</a></code> for <code>FutureCondition</code>, which appends meta-data information to the original message.</p></li>
+<ul><li><p>Add <code><a href="https://rdrr.io/r/base/conditions.html" class="external-link">conditionMessage()</a></code> for <code>FutureCondition</code>, which appends metadata information to the original message.</p></li>
 <li><p>Add more metadata to <code>FutureCondition</code> objects by default, e.g. in which session (including UUID, hostname, and PID) and when the condition was created.</p></li>
 <li><p><code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> on a Future outputs a description of the current state.</p></li>
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-1-69-0">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-1-69-0"></a></h3>
-<ul><li><p><code><a href="../reference/makeClusterFuture.html">makeClusterFuture()</a></code> clusters would not signal errors as other <strong>parallel</strong> clusters. Instead they were signals as-is instantly.</p></li>
-<li><p><code>future(..., packages = "missing-package")</code> did not result in an error despite requesting a non-installed package.</p></li>
+<ul><li><p><code><a href="../reference/makeClusterFuture.html">makeClusterFuture()</a></code> clusters would not signal errors as other <strong>parallel</strong> clusters. Instead they were signaled as-is instantly.</p></li>
+<li><p><code>future(..., packages = "missing-package")</code> did not result in an error despite requesting a non-installed package. This bug was introduced around <strong>future</strong> 1.40.0 (2025-04-10).</p></li>
 <li><p><code>plan(..., interrupts = ...)</code> would produce a warning on “Detected 1 unknown future arguments: ‘interrupts’” for third-party future backends.</p></li>
 <li><p><code>plan(cluster, workers = parallelly::makeClusterSequential())</code> would erase the global environment as soon as a future is launched.</p></li>
 <li><p><code><a href="../reference/resolved.html">resolved()</a></code> on a ‘cluster’ future would produce a warning when using a <code>parallelly::makeClusterSequential())</code> cluster.</p></li>
@@ -108,7 +112,7 @@
 </div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.68.0" id="version-1680">Version 1.68.0<a class="anchor" aria-label="anchor" href="#version-1680"></a></h2><p class="text-muted">CRAN release: 2025-11-17</p>
-<p>This is the fifth rollout out of several towards a near-future major release. This has been made possible due to a multi-year effort of internal re-designs, work with package maintainers, release, and repeat. This release fixes a few more regressions introduced in <strong>future</strong> 1.40.0 (2025-04-10) and 1.67.0 (2025-07-29).</p>
+<p>This is the fifth rollout of several towards a near-future major release. This has been made possible due to a multi-year effort of internal re-designs, work with package maintainers, release, and repeat. This release fixes a few more regressions introduced in <strong>future</strong> 1.40.0 (2025-04-10) and 1.67.0 (2025-07-29).</p>
 <div class="section level3">
 <h3 id="beta-features-1-68-0">Beta Features<a class="anchor" aria-label="anchor" href="#beta-features-1-68-0"></a></h3>
 <ul><li>Calling <code>clusterEvalQ()</code> on a FutureCluster, introduced in <strong>future</strong> 1.58.0 (2025-06-05), is now an error by default - it used to be just a warning.</li>
@@ -117,13 +121,13 @@
 <h3 id="bug-fixes-1-68-0">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-1-68-0"></a></h3>
 <ul><li><p><code><a href="../reference/result.html">result()</a></code> on a canceled and interrupted cluster future returned the future instead of producing a FutureInterruptError.</p></li>
 <li><p>The <code>cluster</code> backend failed when used with an <code>MPIcluster</code> as created by <code>parallel::makeCluster(..., type = "MPI")</code>. This bug was introduced in <strong>future</strong> 1.40.0 [2025-04-10].</p></li>
-<li><p>Setting <code>R_FUTURE_PLAN=multisession</code> in an Renviron file, or a shell startup script, would result in a “fork bomb” when loading the <strong>future</strong> package. This happened because the setup of the future backend happened eagerly when the <strong>future</strong> package was loaded instead of being deferred to when the first future launched. This resulted in new, nested R workers being created recursively, until the machine ran out of resources. This bug was introduced in <strong>future</strong> 1.67.0 [2025-07-29].</p></li>
+<li><p>Setting <code>R_FUTURE_PLAN=multisession</code> in an .Renviron file, or a shell startup script, would result in a “fork bomb” when loading the <strong>future</strong> package. This happened because the setup of the future backend happened eagerly when the <strong>future</strong> package was loaded instead of being deferred to when the first future launched. This resulted in new, nested R workers being created recursively, until the machine ran out of resources. This bug was introduced in <strong>future</strong> 1.67.0 [2025-07-29].</p></li>
 <li><p><code>value(..., reduce = structure(`+`, init = 42))</code> is not supported, because <code>`+`</code> is a primitive function and one must not set attributes on primitive functions. <code><a href="../reference/value.html">value()</a></code> detects this and produces an error suggestion to use <code>reduce = structure("+",    init = 42)</code> instead. The latter still gave the same error, which is now fixed.</p></li>
 </ul></div>
 </div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.67.0" id="version-1670">Version 1.67.0<a class="anchor" aria-label="anchor" href="#version-1670"></a></h2><p class="text-muted">CRAN release: 2025-07-29</p>
-<p>This is the fourth rollout out of several towards a near-future major release. This has been made possible due to a multi-year effort of internal re-designs, work with package maintainers, release, and repeat. This release fixes a few more regressions introduced in <strong>future</strong> 1.40.0 (2025-04-10).</p>
+<p>This is the fourth rollout of several towards a near-future major release. This has been made possible due to a multi-year effort of internal re-designs, work with package maintainers, release, and repeat. This release fixes a few more regressions introduced in <strong>future</strong> 1.40.0 (2025-04-10).</p>
 <div class="section level3">
 <h3 id="significant-changes-1-67-0">Significant Changes<a class="anchor" aria-label="anchor" href="#significant-changes-1-67-0"></a></h3>
 <ul><li><p>Now argument <code>workers</code> for <code>plan(multisession)</code> defaults to <code>availableCores(constraints = "connections-16")</code>. This will make the default for <code>plan(multisession)</code> work also on computers with a large number of CPU cores (e.g. 192 and 256 cores) while leaving 16 connection slots available for other needs.</p></li>
@@ -137,25 +141,25 @@
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-1-67-0">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-1-67-0"></a></h3>
-<ul><li><p>If a multicore future that was terminated abruptly (e.g. via <code><a href="https://rdrr.io/r/tools/pskill.html" class="external-link">tools::pskill()</a></code> or by the operating system), then it was not detected as such. Instead it resulted in an unexpected error that could not be recovered from. Now it is detected and a <code>FutureInterruptError</code> is signaled, which can then be handled and the future may be <code><a href="../reference/reset.html">reset()</a></code>.</p></li>
+<ul><li><p>If a multicore future was terminated abruptly (e.g. via <code><a href="https://rdrr.io/r/tools/pskill.html" class="external-link">tools::pskill()</a></code> or by the operating system), it was not detected as such. Instead it resulted in an unexpected error that could not be recovered from. Now it is detected and a <code>FutureInterruptError</code> is signaled, which can then be handled and the future may be <code><a href="../reference/reset.html">reset()</a></code>.</p></li>
 <li><p>Calls to <code><a href="../reference/resolved.html">resolved()</a></code> were not registered by FutureJournal.</p></li>
 <li><p>Future backend factory was created via the calling environment rather than via the namespace environment where it lives.</p></li>
 </ul></div>
 </div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.58.0" id="version-1580">Version 1.58.0<a class="anchor" aria-label="anchor" href="#version-1580"></a></h2><p class="text-muted">CRAN release: 2025-06-05</p>
-<p>This is the third rollout out of several towards a near-future major release that I am really excited about. This has been made possible due to a multi-year effort of internal re-designs, work with package maintainers, release, and repeat. This release fixes a few regressions introduced in <strong>future</strong> 1.40.0 (2025-04-10), despite passing <a href="https://www.futureverse.org/quality.html" class="external-link">all unit, regression, and system tests</a>.</p>
+<p>This is the third rollout of several towards a near-future major release that I am really excited about. This has been made possible due to a multi-year effort of internal re-designs, work with package maintainers, release, and repeat. This release fixes a few regressions introduced in <strong>future</strong> 1.40.0 (2025-04-10), despite passing <a href="https://www.futureverse.org/quality.html" class="external-link">all unit, regression, and system tests</a>.</p>
 <div class="section level3">
 <h3 id="new-features-1-58-0">New Features<a class="anchor" aria-label="anchor" href="#new-features-1-58-0"></a></h3>
-<ul><li>Now futures produce a warning when they detect that the <em>default</em> graphics device, as defined by R option <code>"device"</code>, is opened by, for instance, a <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code> call without explicitly opening a graphics device. The reason for this check is that we rarely want to plot to the <em>default</em> graphics device in parallel processing, which typically ends up plotting to a <code>Rplots.pdf</code> file that is local to the parallel worker. If that is truly wanted, please open a graphics devices explicitly (e.g. <code><a href="https://rdrr.io/r/grDevices/pdf.html" class="external-link">pdf()</a></code> or <code><a href="https://rdrr.io/r/grDevices/png.html" class="external-link">png()</a></code>) before plotting. Alternatively, explicitly set R option <code>device</code> inside the future expression.</li>
+<ul><li>Now futures produce a warning when they detect that the <em>default</em> graphics device, as defined by R option <code>"device"</code>, is opened by, for instance, a <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code> call without explicitly opening a graphics device. The reason for this check is that we rarely want to plot to the <em>default</em> graphics device in parallel processing, which typically ends up plotting to a <code>Rplots.pdf</code> file that is local to the parallel worker. If that is truly wanted, please open a graphics device explicitly (e.g. <code><a href="https://rdrr.io/r/grDevices/pdf.html" class="external-link">pdf()</a></code> or <code><a href="https://rdrr.io/r/grDevices/png.html" class="external-link">png()</a></code>) before plotting. Alternatively, explicitly set R option <code>device</code> inside the future expression.</li>
 </ul></div>
 <div class="section level3">
 <h3 id="beta-features-1-58-0">Beta Features<a class="anchor" aria-label="anchor" href="#beta-features-1-58-0"></a></h3>
-<ul><li>Add <code><a href="../reference/makeClusterFuture.html">makeClusterFuture()</a></code> for creating a cluster of stateless parallel workers for processing via the future framework. This requires R (&gt;= 4.4.0) [2024-04-24]. Please make sure to read <code><a href="../reference/makeClusterFuture.html">help("makeClusterFuture", package = "future")</a></code> to learn about potential pitfalls. The plan is to support more corner cases in future releases, and when not possible, add more mechanisms for detecting non-supported cases and given an informative error.</li>
+<ul><li>Add <code><a href="../reference/makeClusterFuture.html">makeClusterFuture()</a></code> for creating a cluster of stateless parallel workers for processing via the future framework. This requires R (&gt;= 4.4.0) [2024-04-24]. Please make sure to read <code><a href="../reference/makeClusterFuture.html">help("makeClusterFuture", package = "future")</a></code> to learn about potential pitfalls. The plan is to support more corner cases in future releases, and when not possible, add more mechanisms for detecting non-supported cases and give an informative error.</li>
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-1-58-0">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-1-58-0"></a></h3>
-<ul><li><p>Setting <code>options(warn = 2)</code> on a parallel worker was ignored - warnings were not escalated to errors on the worker, and was instead relayed as-is in the parent R session, unless <code>options(warn    = 2)</code> was also set in the parent. Now <code>options(warn = 2)</code> on a worker causes warnings to be escalated immediately to errors on the worker, which therefore also terminates the future.</p></li>
+<ul><li><p>Setting <code>options(warn = 2)</code> on a parallel worker was ignored - warnings were not escalated to errors on the worker, and were instead relayed as-is in the parent R session, unless <code>options(warn    = 2)</code> was also set in the parent. Now <code>options(warn = 2)</code> on a worker causes warnings to be escalated immediately to errors on the worker, which therefore also terminates the future.</p></li>
 <li><p><code><a href="../reference/future.html">future()</a></code> arguments <code>stdout</code> and <code>conditions</code> were not applied when packages that were specified via argument <code>packages</code> were loaded and attached. This prevented us from excluding, for instance, <code>packageStartupMessage</code>:s, causing them to be displayed in sequential and multicore processing.</p></li>
 <li><p>When the using <code>cluster</code> and <code>multisession</code> backends, one could, in some cases, end up with warnings on “package may not be available when loading” that are produced by <code><a href="https://rdrr.io/r/base/serialize.html" class="external-link">serialize()</a></code>. These type of warnings are now suppressed.</p></li>
 <li><p>Now the cluster future backend tries even harder to shut down parallel cluster workers when shutting down the backend. If it fails to communicate with one or more of the parallel workers, it will now close any socket connections that remain open towards such cluster nodes.</p></li>
@@ -166,12 +170,12 @@
 </div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.49.0" id="version-1490">Version 1.49.0<a class="anchor" aria-label="anchor" href="#version-1490"></a></h2><p class="text-muted">CRAN release: 2025-05-09</p>
-<p>This is the second rollout out of three-four major updates, which is now possible due to a multi-year effort of internal re-designs, work with package maintainers, release, and repeat. This release fixes two regressions introduced in <strong>future</strong> 1.40.0 (2025-04-10), despite passing <a href="https://www.futureverse.org/quality.html" class="external-link">all unit, regression, and system tests</a> of the Future API that we have built up over the years. On the upside, fixing these issues led to a greatly improved static-code analyzer for automatically finding global variables in future expressions. Also, with this release, we can now move on top releasing modern versions of future backends <strong>future.callr</strong> and <strong>future.mirai</strong> that support interrupting futures and near-live progress updates using the <strong>progressr</strong> package. In addition, map-reduce packages such as <strong>future.apply</strong>, <strong>furrr</strong>, and <strong>doFuture</strong> can be updated to take advantage of early exiting on errors via cancellation of futures.</p>
+<p>This is the second rollout of three-four major updates, which is now possible due to a multi-year effort of internal re-designs, work with package maintainers, release, and repeat. This release fixes two regressions introduced in <strong>future</strong> 1.40.0 (2025-04-10), despite passing <a href="https://www.futureverse.org/quality.html" class="external-link">all unit, regression, and system tests</a> of the Future API that we have built up over the years. On the upside, fixing these issues led to a greatly improved static-code analyzer for automatically finding global variables in future expressions. Also, with this release, we can now move on to releasing modern versions of future backends <strong>future.callr</strong> and <strong>future.mirai</strong> that support interrupting futures and near-live progress updates using the <strong>progressr</strong> package. In addition, map-reduce packages such as <strong>future.apply</strong>, <strong>furrr</strong>, and <strong>doFuture</strong> can be updated to take advantage of early exiting on errors via cancellation of futures.</p>
 <div class="section level3">
 <h3 id="new-features-1-49-0">New Features<a class="anchor" aria-label="anchor" href="#new-features-1-49-0"></a></h3>
-<ul><li><p><code><a href="../reference/future.html">future()</a></code> does a better job in identifying global variables in the future expression. This is achieved by the static-code analysis now walks the abstract syntax tree (AST) of the future expression using a strategy that better emulates how the R engine identifies global variables at run-time.</p></li>
+<ul><li><p><code><a href="../reference/future.html">future()</a></code> does a better job in identifying global variables in the future expression. This is achieved by the static-code analyzer now walking the abstract syntax tree (AST) of the future expression using a strategy that better emulates how the R engine identifies global variables at run-time.</p></li>
 <li><p>Add <code><a href="../reference/cancel.html">cancel()</a></code> for canceling one or more futures. By default, it attempts to interrupt any running futures. This replaces the <code>interrupt()</code> method introduced in the previous version, which now has been removed.</p></li>
-<li><p>Now <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> for <code>Future</code> reports also on the current state of the future, e.g. ‘created’, ‘running’, ‘finished’, and ‘interrupted’.</p></li>
+<li><p>Now <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> for <code>Future</code> also reports on the current state of the future, e.g. ‘created’, ‘running’, ‘finished’, and ‘interrupted’.</p></li>
 <li><p>Now <code>print(plan())</code> reports on the number of created, launched, and finished futures since the future backend was set. It also reports on the total and average runtime of all finished futures thus far.</p></li>
 </ul></div>
 <div class="section level3">
@@ -191,7 +195,7 @@
 </div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.40.0" id="version-1400">Version 1.40.0<a class="anchor" aria-label="anchor" href="#version-1400"></a></h2><p class="text-muted">CRAN release: 2025-04-10</p>
-<p>This is the first rollout out of three major updates, which is now possible due to a multi-year effort of internal re-designs, work with package maintainers, release, and repeat. This release comes with a large redesign of how future backends are implemented internally. One goal is to lower the threshold for implementing exciting, new features, that has been on hold for too long. Some of these features are available already in this release, and more are to come in near-future releases. Another goal is to make it straightforward to implement a new backend.</p>
+<p>This is the first rollout of three major updates, which is now possible due to a multi-year effort of internal re-designs, work with package maintainers, release, and repeat. This release comes with a large redesign of how future backends are implemented internally. One goal is to lower the threshold for implementing exciting, new features, that has been on hold for too long. Some of these features are available already in this release, and more are to come in near-future releases. Another goal is to make it straightforward to implement a new backend.</p>
 <p>This update is fully backward compatible with previous versions. Developers and end-users can expect business as usual. Like all releases, this version has been <a href="https://www.futureverse.org/quality.html" class="external-link">validated thoroughly</a> via reverse-dependency checks, <strong>future.tests</strong> checks, and more.</p>
 <div class="section level3">
 <h3 id="new-features-1-40-0">New Features<a class="anchor" aria-label="anchor" href="#new-features-1-40-0"></a></h3>
@@ -199,25 +203,25 @@
 <li><p>Add <code>interrupt()</code>, which interrupts a future, if the parallel backend supports it, otherwise it is silently ignored. It can also be used on a container (i.e. lists, <code>listenv</code>:s and environment) of futures. Interrupts are enabled by default for <code>multicore</code> and <code>multisession</code> futures. Interrupts are disabled by default for <code>cluster</code> futures, because there parallel workers may be running on remote machines where the overhead of interrupting such workers might be too large. To override the defaults, specify <code><a href="../reference/plan.html">plan()</a></code> argument <code>interrupts</code>, e.g. <code>plan(cluster, workers = hosts,    interrupts = TRUE)</code>.</p></li>
 <li><p>Add <code><a href="../reference/reset.html">reset()</a></code>, which resets a future that has completed, failed, or been interrupted. The future is reset back to a lazy, vanilla future that can be relaunched.</p></li>
 <li><p><code><a href="../reference/value.html">value()</a></code> on containers gained argument <code>reduce</code>, which specifies a function for reducing the values, e.g. <code>values(fs, reduce =    `+`)</code>. Optional attribute <code>init</code> controls the initial value. Note that attributes must not be set on primitive functions. As a workaround, use <code>reduce = structure("+", init = 42)</code>.</p></li>
-<li><p><code><a href="../reference/value.html">value()</a></code> on containers gained argument <code>inorder</code>, which can be used control whether standard output and conditions are relayed in order of <code>x</code>, or as soon as a future in <code>x</code> is resolved. It also controls the order of how values are reduced.</p></li>
+<li><p><code><a href="../reference/value.html">value()</a></code> on containers gained argument <code>inorder</code>, which can be used to control whether standard output and conditions are relayed in order of <code>x</code>, or as soon as a future in <code>x</code> is resolved. It also controls the order of how values are reduced.</p></li>
 <li><p><code><a href="../reference/value.html">value()</a></code> gained argument <code>drop</code> to turn resolved futures into minimal, invalid light-weight futures after their values have been returned. This reduces the memory use. This is particularly useful when using <code>reduce</code> in combination with <code>inorder = FALSE</code>. For instance, if you have a list of futures <code>fs</code>, and you know that you will not need to query the futures for their values more than once, then it is memory efficient and more performant to use <code>v &lt;-    value(fs, reduce = `+`, inorder = FALSE, drop = TRUE)</code>.</p></li>
 <li><p><code><a href="../reference/value.html">value()</a></code> on containers cancels non-resolved futures if an error is detected in one of the futures.</p></li>
 <li><p>Add <code><a href="../reference/future.html">minifuture()</a></code>, which is like <code><a href="../reference/future.html">future()</a></code>, but with different default arguments resulting in less overhead with the added burden of having to specify globals and packages, not having conditions and standard output relayed, and ignoring random number generation.</p></li>
 <li><p>Printing <code><a href="../reference/plan.html">plan()</a></code> will output details on the future backend, e.g. number of workers, number of free workers, backend settings, and summary of resolved and non-resolved, active futures.</p></li>
 <li><p>Interrupted futures are now handled and produce an informative error.</p></li>
 <li><p>Timeout errors triggered by <code><a href="https://rdrr.io/r/base/setTimeLimit.html" class="external-link">setTimeLimit()</a></code> are now relayed.</p></li>
-<li><p>Failures to launch a future is now detected, handled, and relayed as an error with details on why it failed.</p></li>
+<li><p>Failures to launch a future are now detected, handled, and relayed as an error with details on why it failed.</p></li>
 <li><p>Failed workers are automatically detected and relaunched, if supported by the parallel backend. For instance, if a <code>cluster</code> worker is interrupted, or crashes for other reasons, it will be relaunched. This works for both local and remote workers.</p></li>
 <li><p>A future must close any connections or graphical devices it opens, and must never close ones that it did not open. Now <code><a href="../reference/value.html">value()</a></code> produces a warning if such misuse is detected. This may be upgrade to an error in future releases. The default behavior can be controlled via an R option. Reverse dependency checks spotted one CRAN package, out of 426, that left stray connections behind.</p></li>
 <li><p>All parallel backends now prevent nested parallelization, unless explicitly allowed, e.g. settings recognized by <code><a href="https://parallelly.futureverse.org/reference/availableCores.html" class="external-link">parallelly::availableCores()</a></code> or set by the future <code><a href="../reference/plan.html">plan()</a></code>. Previously, this had to be implemented by each backend, but now it’s handled automatically by the future framework.</p></li>
 <li><p>Add new FutureBackend API for writing future backends. Please use with care, because there will be further updates in the next few release cycles.</p></li>
 <li><p>The maximum total size of objects send to and from the worker can now be configured per backend, e.g. <code>plan(multisession,    maxSizeOfObjects = 10e6)</code> will produce an error if the total size of globals exceeds 10 MB.</p></li>
-<li><p>Backends <code>sequential</code> and <code>multicore</code> no longer has a limit on the maximum size of globals, i.e. they now default to <code>maxSizeOfObjects    = +Inf</code>. Backends <code>cluster</code> and <code>multisession</code> also default to <code>maxSizeOfObjects = +Inf</code>, unless R option <code>future.globals.maxSize</code> (sic!) is set.</p></li>
+<li><p>Backends <code>sequential</code> and <code>multicore</code> no longer have a limit on the maximum size of globals, i.e. they now default to <code>maxSizeOfObjects    = +Inf</code>. Backends <code>cluster</code> and <code>multisession</code> also default to <code>maxSizeOfObjects = +Inf</code>, unless R option <code>future.globals.maxSize</code> (sic!) is set.</p></li>
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-1-40-0">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-1-40-0"></a></h3>
-<ul><li><p>Now ‘interrupt’ conditions are captured during the evaluation of the future, and results in the evaluation being terminated with a <code>FutureInterruptError</code>. Not all backends manage to catch interrupts, leading to the parallel R workers to terminate, resulting in a regular <code>FutureError</code>. Previously, interrupts would result in non-deterministic behavior and errors depending of future backend.</p></li>
-<li><p>Timeout errors triggered by <code><a href="https://rdrr.io/r/base/setTimeLimit.html" class="external-link">setTimeLimit()</a></code> was likely to render the future and the corresponding worker invalid.</p></li>
+<ul><li><p>Now ‘interrupt’ conditions are captured during the evaluation of the future, and results in the evaluation being terminated with a <code>FutureInterruptError</code>. Not all backends manage to catch interrupts, leading to the parallel R workers to terminate, resulting in a regular <code>FutureError</code>. Previously, interrupts would result in non-deterministic behavior and errors depending on the future backend.</p></li>
+<li><p>Timeout errors triggered by <code><a href="https://rdrr.io/r/base/setTimeLimit.html" class="external-link">setTimeLimit()</a></code> were likely to render the future and the corresponding worker invalid.</p></li>
 <li><p>Identified and fixed one reason for why <code>cluster</code> and <code>multisession</code> futures could result in errors on “Unexpected result (of class ‘NULL’ != ‘FutureResult’) retrieved for MultisessionFuture future … This suggests that the communication with ‘RichSOCKnode’ <a href="https://github.com/futureverse/future/issues/1" class="external-link">#1</a> on host ‘localhost’ (R Under development (unstable) (2025-03-23 r88038), platform x86_64-pc-linux-gnu) is out of sync.”</p></li>
 <li><p>Switching plan while having active futures would likely result in the active futures becoming corrupt, resulting in unpredictable errors when querying the future by, for instance, <code><a href="../reference/value.html">value()</a></code>, but also <code><a href="../reference/resolved.html">resolved()</a></code>, which should never produce an error. Now such futures become predictable, interrupted futures.</p></li>
 </ul></div>
@@ -314,7 +318,7 @@
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-1-31-0">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-1-31-0"></a></h3>
-<ul><li>Error messages that contain a deparsed version of the future expression could become very large in cases where the expression comprise expanded, large objects. Now only the first 100 lines of the expression is deparsed.</li>
+<ul><li>Error messages that contain a deparsed version of the future expression could become very large in cases where the expression comprises expanded, large objects. Now only the first 100 lines of the expression are deparsed.</li>
 </ul></div>
 <div class="section level3">
 <h3 id="deprecated-and-defunct-1-31-0">Deprecated and Defunct<a class="anchor" aria-label="anchor" href="#deprecated-and-defunct-1-31-0"></a></h3>
@@ -348,7 +352,7 @@
 </ul></div>
 <div class="section level3">
 <h3 id="deprecated-and-defunct-1-29-0">Deprecated and Defunct<a class="anchor" aria-label="anchor" href="#deprecated-and-defunct-1-29-0"></a></h3>
-<ul><li><p>Using the deprecated <code>plan(multiprocess)</code> will now trigger a deprecation warning <em>each</em> time a <code>multiprocess</code> future is created. This means that there could be a lot of warnings produced. Note that <code>multiprocess</code> has been deprecated since <strong>future</strong> 1.20.0 [2020-10-30]. Please use <code>multisession</code> (recommended) or <code>multicore</code> instead.</p></li>
+<ul><li><p>Using the deprecated <code>plan(multiprocess)</code> will now trigger a deprecation warning <em>each</em> time a <code>multiprocess</code> future is created. This means that a lot of warnings could be produced. Note that <code>multiprocess</code> has been deprecated since <strong>future</strong> 1.20.0 [2020-10-30]. Please use <code>multisession</code> (recommended) or <code>multicore</code> instead.</p></li>
 <li><p>Removing <code>values()</code>, which has been defunct since <strong>future</strong> 1.23.0. Use <code><a href="../reference/value.html">value()</a></code> instead.</p></li>
 </ul></div>
 </div>
@@ -391,20 +395,20 @@
 <h2 class="pkg-version" data-toc-text="1.26.1" id="version-1261">Version 1.26.1<a class="anchor" aria-label="anchor" href="#version-1261"></a></h2><p class="text-muted">CRAN release: 2022-05-27</p>
 <div class="section level3">
 <h3 id="miscellaneous-1-26-1">Miscellaneous<a class="anchor" aria-label="anchor" href="#miscellaneous-1-26-1"></a></h3>
-<ul><li>TESTS: <code>R CMD check --as-cran</code> on R-devel and MS Windows would trigger a NOTE on “Check: for detritus in the temp directory” and “Found the following files/directories: ‘Rscript1349cb8aeeba0’ …”. There were two package tests that explicitly created PSOCK cluster without stopping them. A third test launched multisession future without resolving it, which prevented the PSOCK worker to terminate. This was not detected in R 4.2.0. It is not a problem on macOS and Linux, because there background workers are automatically terminated when the main R session terminates.</li>
+<ul><li>TESTS: <code>R CMD check --as-cran</code> on R-devel and MS Windows would trigger a NOTE on “Check: for detritus in the temp directory” and “Found the following files/directories: ‘Rscript1349cb8aeeba0’ …”. There were two package tests that explicitly created PSOCK clusters without stopping them. A third test launched multisession future without resolving it, which prevented the PSOCK worker to terminate. This was not detected in R 4.2.0. It is not a problem on macOS and Linux, because there background workers are automatically terminated when the main R session terminates.</li>
 </ul></div>
 </div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.26.0" id="version-1260">Version 1.26.0<a class="anchor" aria-label="anchor" href="#version-1260"></a></h2>
 <div class="section level3">
 <h3 id="significant-changes-1-26-0">Significant Changes<a class="anchor" aria-label="anchor" href="#significant-changes-1-26-0"></a></h3>
-<ul><li><p>R options and environment variables are now reset on the workers after future is resolved as they were after any packages required by the future has been loaded and attached. Previously, they were reset to what they were before these were loaded and attached. In addition, only pre-existing R options and environment variables are reset. Any new ones added are not removed for now, because we do not know which added R options or environment variables might have been added from loading a package and that are essential for that package to work.</p></li>
-<li><p>If it was changed while evaluating the future expression, the current working directory is now reset when the future has been resolved.</p></li>
+<ul><li><p>R options and environment variables are now reset on the workers after future is resolved as they were after any packages required by the future have been loaded and attached. Previously, they were reset to what they were before these were loaded and attached. In addition, only pre-existing R options and environment variables are reset. Any new ones added are not removed for now, because we do not know which added R options or environment variables might have been added from loading a package and that are essential for that package to work.</p></li>
+<li><p>If the current working directory was changed while evaluating the future expression, the current working directory is now reset when the future has been resolved.</p></li>
 </ul></div>
 <div class="section level3">
 <h3 id="new-features-1-26-0">New Features<a class="anchor" aria-label="anchor" href="#new-features-1-26-0"></a></h3>
 <ul><li><p><code><a href="../reference/futureSessionInfo.html">futureSessionInfo()</a></code> gained argument <code>anonymize</code>. If TRUE (default), host and user names are anonymized.</p></li>
-<li><p><code><a href="../reference/futureSessionInfo.html">futureSessionInfo()</a></code> now also report on the main R session details.</p></li>
+<li><p><code><a href="../reference/futureSessionInfo.html">futureSessionInfo()</a></code> now also reports on the main R session details.</p></li>
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-1-26-0">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-1-26-0"></a></h3>
@@ -962,7 +966,7 @@
 <h2 class="pkg-version" data-toc-text="1.8.0" id="version-180">Version 1.8.0<a class="anchor" aria-label="anchor" href="#version-180"></a></h2><p class="text-muted">CRAN release: 2018-04-08</p>
 <div class="section level3">
 <h3 id="significant-changes-1-8-0">Significant Changes<a class="anchor" aria-label="anchor" href="#significant-changes-1-8-0"></a></h3>
-<ul><li>Errors produces when evaluating futures are now (re-)signaled on the master R process as-is with the original content and class attributes.</li>
+<ul><li>Errors produced when evaluating futures are now (re-)signaled on the master R process as-is with the original content and class attributes.</li>
 </ul></div>
 <div class="section level3">
 <h3 id="new-features-1-8-0">New Features<a class="anchor" aria-label="anchor" href="#new-features-1-8-0"></a></h3>
@@ -975,7 +979,7 @@
 <ul><li><p><code><a href="../reference/value.html">value()</a></code> for <code>MulticoreFuture</code> would not produce an error when a (forked) background R workers would terminate before the future expression is resolved. This was a limitation inherited from the <strong>parallel</strong> package. Now an informative <code>FutureError</code> message is produced.</p></li>
 <li><p><code><a href="../reference/value.html">value()</a></code> for <code>MulticoreFuture</code> would not signal errors unless they inherited from <code>simpleError</code> - now it’s enough for them to inherits from <code>error</code>.</p></li>
 <li><p><code><a href="../reference/value.html">value()</a></code> for <code>ClusterFuture</code> no longer produces a <code>FutureEvaluationError</code>, but <code>FutureError</code>, if the connection to the R worker has changed (which happens if something as drastic as <code><a href="https://rdrr.io/r/base/showConnections.html" class="external-link">closeAllConnections()</a></code> have been called.)</p></li>
-<li><p><code>futureCall(..., globals = FALSE)</code> would produce “Error: second argument must be a list”, because the explicit arguments where not exported. This could also happen when specifying globals by name or as a named list.</p></li>
+<li><p><code>futureCall(..., globals = FALSE)</code> would produce “Error: second argument must be a list”, because the explicit arguments were not exported. This could also happen when specifying globals by name or as a named list.</p></li>
 <li><p>Nested futures were too conservative in requiring global variables to exist, even when they were false positives.</p></li>
 </ul></div>
 <div class="section level3">
@@ -997,7 +1001,7 @@
 <li><p>On Windows, <code><a href="../reference/re-exports.html">makeClusterPSOCK()</a></code>, and therefore <code>plan(multisession)</code> and <code>plan(multiprocess)</code>, will use the SSH client distributed with RStudio as a fallback if neither <code>ssh</code> nor <code>plink</code> is available on the system <code>PATH</code>.</p></li>
 <li><p>Now <code><a href="../reference/plan.html">plan()</a></code> makes sure that <code><a href="../reference/nbrOfWorkers.html">nbrOfWorkers()</a></code> will work for the new strategy. This will help catch mistakes such as <code>plan(cluster,    workers = cl)</code> where <code>cl</code> is a basic R list rather than a <code>cluster</code> list early on.</p></li>
 <li><p>Added <code>%packages%</code> to explicitly control packages to be attached when a future is resolved, e.g. <code>y %&lt;-% { YT[2] } %packages%    "data.table"</code>. Note, this is only needed in cases where the automatic identification of global and package dependencies is not sufficient.</p></li>
-<li><p>Added condition classes <code>FutureCondition</code>, <code>FutureMessage</code>, <code>FutureWarning</code>, and <code>FutureError</code> representing conditions that occur while a future is setup, launched, queried, or retrieved. They do <em>not</em> represent conditions that occur while evaluating the future expression. For those conditions, new classes <code>FutureEvaluationCondition</code>, <code>FutureEvaulationMessage</code>, <code>FutureEvaluationWarning</code>, and <code>FutureEvaluationError</code> exists.</p></li>
+<li><p>Added condition classes <code>FutureCondition</code>, <code>FutureMessage</code>, <code>FutureWarning</code>, and <code>FutureError</code> representing conditions that occur while a future is setup, launched, queried, or retrieved. They do <em>not</em> represent conditions that occur while evaluating the future expression. For those conditions, new classes <code>FutureEvaluationCondition</code>, <code>FutureEvaluationMessage</code>, <code>FutureEvaluationWarning</code>, and <code>FutureEvaluationError</code> exists.</p></li>
 </ul></div>
 <div class="section level3">
 <h3 id="documentation-1-7-0">Documentation<a class="anchor" aria-label="anchor" href="#documentation-1-7-0"></a></h3>
@@ -1009,7 +1013,7 @@
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-1-7-0">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-1-7-0"></a></h3>
-<ul><li><p>The total size of global variables was overestimated, and dramatically so if defined in the global environment and there were are large objects there too. This would sometimes result in a false error saying that the total size is larger than the allowed limit.</p></li>
+<ul><li><p>The total size of global variables was overestimated, and dramatically so if defined in the global environment and there were large objects there too. This would sometimes result in a false error saying that the total size is larger than the allowed limit.</p></li>
 <li><p>An assignment such as <code>x &lt;- x + 1</code> where the left-hand side (LHS) <code>x</code> is a global failed to identify <code>x</code> as a global because the right-hand side (RHS) <code>x</code> would override it as a local variable. Updates to the <strong>globals</strong> package fixed this problem.</p></li>
 <li><p><code>makeClusterPSOCK(..., renice = 19)</code> would launch each PSOCK worker via <code>nice +19</code> resulting in the error “nice: ‘+19’: No such file or directory”. This bug was inherited from <code><a href="https://rdrr.io/r/parallel/makeCluster.html" class="external-link">parallel::makePSOCKcluster()</a></code>. Now using <code>nice --adjustment=19</code> instead.</p></li>
 <li><p>Protection against passing future objects to other futures did not work for future strategy ‘multicore’.</p></li>
@@ -1083,7 +1087,7 @@
 <ul><li><p><code><a href="../reference/re-exports.html">makeClusterPSOCK()</a></code> now defaults to use the Windows PuTTY software’s SSH client <code>plink -ssh</code>, if <code>ssh</code> is not found.</p></li>
 <li><p>Argument <code>homogeneous</code> of <code>makeNodePSOCK()</code>, a helper function of <code><a href="../reference/re-exports.html">makeClusterPSOCK()</a></code>, will default to FALSE also if the hostname is a fully qualified domain name (FQDN), that is, it “contains periods”. For instance, <code>c('node1', 'node2.server.org')</code> will use <code>homogeneous = TRUE</code> for the first worker and <code>homogeneous = FALSE</code> for the second.</p></li>
 <li><p><code><a href="../reference/re-exports.html">makeClusterPSOCK()</a></code> now asserts that each cluster node is functioning by retrieving and recording the node’s session information including the process ID of the corresponding R process.</p></li>
-<li><p>Nested futures sets option <code>mc.cores</code> to prevent spawning of recursive parallel processes by mistake. Because ‘mc.cores’ controls <em>additional</em> processes, it was previously set to zero. However, since some functions such as <code>mclapply()</code> does not support that, it is now set to one instead.</p></li>
+<li><p>Nested futures sets option <code>mc.cores</code> to prevent spawning of recursive parallel processes by mistake. Because ‘mc.cores’ controls <em>additional</em> processes, it was previously set to zero. However, since some functions such as <code>mclapply()</code> do not support that, it is now set to one instead.</p></li>
 </ul></div>
 <div class="section level3">
 <h3 id="documentation-1-5-0">Documentation<a class="anchor" aria-label="anchor" href="#documentation-1-5-0"></a></h3>
@@ -1322,7 +1326,7 @@
 <ul><li><p>Add support to <code><a href="../reference/plan.html">plan()</a></code> for specifying different future strategies for the different levels of nested futures.</p></li>
 <li><p>Add <code><a href="../reference/backtrace.html">backtrace()</a></code> for listing the trace the expressions evaluated (the calls made) before a condition was caught.</p></li>
 <li><p>Add transparent futures, which are eager futures with early signaling of conditioned enabled and whose expression is evaluated in the calling environment. This makes the evaluation of such futures as similar as possible to how R evaluates expressions, which in turn simplifies troubleshooting errors, etc.</p></li>
-<li><p>Add support for early signaling of conditions. The default is (as before) to signal conditions when the value is queried. In addition, they may be signals as soon as possible, e.g. when checking whether a future is resolved or not.</p></li>
+<li><p>Add support for early signaling of conditions. The default is (as before) to signal conditions when the value is queried. In addition, they may be signaled as soon as possible, e.g. when checking whether a future is resolved or not.</p></li>
 <li><p>Signaling of conditions when calling <code><a href="../reference/value.html">value()</a></code> is now controlled by argument <code>signal</code> (previously <code>onError</code>).</p></li>
 <li><p>Now <code>UniprocessFuture</code>:s captures the call stack for errors occurring while resolving futures.</p></li>
 <li><p><code>ClusterFuture()</code> gained argument <code>persistent = FALSE</code>. With <code>persistent = TRUE</code>, any objects in the cluster R session that was created during the evaluation of a previous future is available for succeeding futures that are evaluated in the same session. Moreover, globals are still identified and exported but “missing” globals will not give an error - instead it is assumed such globals are available in the environment where the future is evaluated.</p></li>
@@ -1341,7 +1345,7 @@
 <ul><li><p>Added multiprocess futures, which are multicore futures if supported, otherwise multisession futures. This makes it possible to use <code>plan(multiprocess)</code> everywhere regardless of operating system.</p></li>
 <li><p>Future strategy functions gained class attributes such that it is possible to test what type of future is currently used, e.g. <code>inherits(plan(), "multicore")</code>.</p></li>
 <li><p>ROBUSTNESS: It is only the R process that created a future that can resolve it. If a non-resolved future is queried by another R process, then an informative error is generated explaining that this is not possible.</p></li>
-<li><p>ROBUSTNESS: Now <code><a href="../reference/value.html">value()</a></code> for multicore futures detects if the underlying forked R process was terminated before completing and if so generates an informative error messages.</p></li>
+<li><p>ROBUSTNESS: Now <code><a href="../reference/value.html">value()</a></code> for multicore futures detects if the underlying forked R process was terminated before completing and if so generates an informative error message.</p></li>
 </ul></div>
 <div class="section level3">
 <h3 id="performance-0-12-0">Performance<a class="anchor" aria-label="anchor" href="#performance-0-12-0"></a></h3>

@@ -69,6 +69,13 @@ repeat({
   f <- reset(f)
   Sys.sleep(0.1)
 })
+#> Resetting failed future, and retry in 0.1 seconds
+#> Resetting failed future, and retry in 0.1 seconds
+#> Resetting failed future, and retry in 0.1 seconds
+#> Resetting failed future, and retry in 0.1 seconds
+#> Resetting failed future, and retry in 0.1 seconds
+#> Resetting failed future, and retry in 0.1 seconds
+#> Resetting failed future, and retry in 0.1 seconds
 cat("mean:", v, "\n")
 #> mean: 0.03014631 
 ```
