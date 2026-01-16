@@ -158,9 +158,10 @@ this error
 Because Futureverse has this built-in protection, we need to explicitly
 override it by declaring nested workers using the As-Is `I(.)` function.
 This basically tells the parallel framework “trust us, we know what we
-are doing”. To minimize the risk of mistakes and to make sure our setup
-respects
-[`availableCores()`](https://future.futureverse.org/reference/re-exports.md).
+are doing”. To minimize the risk of mistakes here, please make sure your
+settings respect what
+[`availableCores()`](https://future.futureverse.org/reference/re-exports.md)
+gives.
 
 To make sure we stay within the limits of the current machine, it’s best
 to use something like:
@@ -312,7 +313,7 @@ plan(list(
 
 With this, each node will use at most 50% of the cores available. For
 instance, if `n1` and `n2` have eight cores, and `n3` has 32 cores, then
-they nodes will use four, four, and 16 cores, respectively.
+the nodes will use four, four, and 16 cores, respectively.
 
 Another example is:
 

@@ -12,7 +12,7 @@ conditions are also captured and resignaled (“relayed”) as messages in
 the main R session. Importantly, this works identically regardless of
 future backend used.
 
-For simplicitly, lets start with an illustration on how standard output
+For simplicity, lets start with an illustration on how standard output
 (“stdout”) is captured and relayed:
 
 ``` r
@@ -244,10 +244,10 @@ ping
 ## Known limitations
 
 It is only the standard output that is relayed. It is *not possible* to
-relay output send to the standard error (stderr), e.g. output by
+relay output send to the standard error (stderr), e.g. output sent by
 `cat(..., file = stderr())` will be lost. This is due to a [limitation
 in R](https://github.com/HenrikBengtsson/Wishlist-for-R/issues/55),
-preventing us from capturing stderr in a reliable way, particularity
+preventing us from capturing stderr in a reliable way, particularly
 across all backends. However, note that the captured messages by
 [`message()`](https://rdrr.io/r/base/message.html) are outputted to
 stderr (as expected) when resignaled/relayed.

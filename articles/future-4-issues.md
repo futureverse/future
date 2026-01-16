@@ -46,7 +46,8 @@ y
 
 It is recommended to avoid above constructs where it is ambiguous
 whether a variable is global or local. To force variable `x` to always
-be global, insert it at the very being of the future expression, e.g.
+be global, insert it at the very beginning of the future expression,
+e.g.
 
 ``` r
 reset <- FALSE
@@ -142,10 +143,10 @@ recursive search for globals will identify three additional globals,
 namely, the primitive function `{`, the function
 [`sum()`](https://rdrr.io/r/base/sum.html), and the function
 [`get()`](https://rdrr.io/r/base/get.html), but, as before, none of
-these source will identify `a` as a global object. In order for `a` to
+these sources will identify `a` as a global object. In order for `a` to
 be identified, the future framework would need to have a built-in
 understanding on how `get(var)` works, which would be a daunting task,
-especially if it need to know how it acts for different data types of
+especially if it needs to know how it acts for different data types of
 `var` and various choices on arguments `envir` and `enclos`. In fact,
 this can often not be inferred until run time, that is, it is not
 possible to identify what objects are needed without actually running
@@ -198,7 +199,7 @@ For example, consider this, slightly more complex, example:
 ```
 
 Instead of using “free roaming” objects `a`, `b`, and `c`, it’s better
-to put those values in a list (or a data frame of of the same length);
+to put those values in a list (or a data frame of the same length);
 
 ``` r
 > data <- list(a = 1:3, b = 4:7, c = 3:5)
@@ -292,8 +293,8 @@ loaded. Instead the evaluation falls back to the `[.data.frame` method,
 which is not what we want.
 
 Until the future framework manages to identify **data.table** as a
-required package (which is the goal), we can guide future by specifying
-additional packages needed:
+required package (which is the goal), we can guide the future package by
+specifying additional packages needed:
 
 ``` r
 > y %<-% DT[, sum(b)] %packages% "data.table"
@@ -316,8 +317,8 @@ approach.
 
 ## ‘…’ used in an incorrect context
 
-In R, we can use the `...` construct is used to refer to zero or more
-arguments. For example, we can use as in:
+In R, the `...` construct is used to refer to zero or more arguments.
+For example, we can use it as in:
 
 ``` r
 my_mean <- function(x, ...) mean(x, ...)
@@ -360,8 +361,7 @@ y <- my_fcn(X, digits = 3)
 In this case, we have two levels of `...` arguments; one for `my_fcn()`
 and one for the anonymous function. Note how the `...` arguments for
 `my_fcn()` are passed down to the anonymous function by specifying `...`
-as an final argument to
-[`lapply()`](https://rdrr.io/r/base/lapply.html).
+as a final argument to [`lapply()`](https://rdrr.io/r/base/lapply.html).
 
 The above is the ideal and proper way to pass down `...`. However, it is
 not uncommon to see that the `...` is used as a global variable in
@@ -413,7 +413,7 @@ my_fcn <- function(X, ...) {
 
 Certain types of objects are tied to a given R session and cannot be
 passed along to another R process (a “worker”). An example of a
-non-exportable object is is XML objects of the
+non-exportable object is XML objects of the
 **[xml2](https://cran.r-project.org/package=xml2)** package. If we
 attempt to use those in parallel processing, we may get a error when the
 future is evaluated (or just invalid results depending on how they are
@@ -529,7 +529,7 @@ Error: Invalid usage of futures: A future whose value has not yet been collected
 ```
 
 As previously, this can be avoided by making sure `x$a` is resolved
-first, which can be one in various ways, e.g. `dummy <- x$a`,
+first, which can be done in various ways, e.g. `dummy <- x$a`,
 `resolve(x$a)` and `force(x$a)`.
 
 *Footnote*: (\*) Although sequential futures could be passed on to other
@@ -611,12 +611,12 @@ This is because [`source()`](https://rdrr.io/r/base/source.html)
 defaults to `local = FALSE`, which has side effects. When using
 `local = FALSE`, any functions or variables defined by the R script are
 assigned to the global environment - not the calling environment as we
-might expect. This may make little different when calling
+might expect. This may make little difference when calling
 [`source()`](https://rdrr.io/r/base/source.html) from the R prompt, or
 from another script. However, when called from inside a function, inside
 [`local()`](https://rdrr.io/r/base/eval.html), or inside a future, it
 might result in unexpected behavior. It is similar to using
-`assign("a", 42, envir = globalenv())`, which is known be a bad
+`assign("a", 42, envir = globalenv())`, which is known to be a bad
 practice. To be on the safe side, it is almost always better call
 [`source()`](https://rdrr.io/r/base/source.html) with `local = TRUE`.
 

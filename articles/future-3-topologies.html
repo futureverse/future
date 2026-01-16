@@ -256,7 +256,8 @@ layer:</p>
 explicitly override it by declaring nested workers using the As-Is
 <code>I(.)</code> function. This basically tells the parallel framework
 “trust us, we know what we are doing”. To minimize the risk of mistakes
-and to make sure our setup respects <code><a href="../reference/re-exports.html">availableCores()</a></code>.</p>
+here, please make sure your settings respect what
+<code><a href="../reference/re-exports.html">availableCores()</a></code> gives.</p>
 <p>To make sure we stay within the limits of the current machine, it’s
 best to use something like:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
@@ -394,8 +395,8 @@ passing a function to <code>workers</code>;</p>
 <span id="cb13-5"><a href="#cb13-5" tabindex="-1"></a>))</span></code></pre></div>
 <p>With this, each node will use at most 50% of the cores available. For
 instance, if <code>n1</code> and <code>n2</code> have eight cores, and
-<code>n3</code> has 32 cores, then they nodes will use four, four, and
-16 cores, respectively.</p>
+<code>n3</code> has 32 cores, then the nodes will use four, four, and 16
+cores, respectively.</p>
 <p>Another example is:</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">customWorkers</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span>

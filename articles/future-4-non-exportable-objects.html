@@ -122,9 +122,9 @@ Bengtsson</h4>
 cannot be saved to file by one R process and then later be reloaded in
 another R process and expected to work correctly. If attempted, we will
 often get an informative error but not always. For the same reason,
-these type of objects cannot be exported to another R processes(*) for
+these types of objects cannot be exported to other R processes(*) for
 parallel processing regardless of which parallelization framework we
-use. We refer to these type of objects as “non-exportable objects”.</p>
+use. We refer to these types of objects as “non-exportable objects”.</p>
 <p>(*) The exception <em>might be</em> when <em>forked</em> processes
 are used, i.e. <code>plan(multicore)</code>. However, such attempts to
 work around the underlying problem, which is non-exportable objects,
@@ -168,7 +168,7 @@ always occur.</p>
 <div class="section level2">
 <h2 id="protect-against-non-exportable-objects">Protect against non-exportable objects<a class="anchor" aria-label="anchor" href="#protect-against-non-exportable-objects"></a>
 </h2>
-<p>To help avoiding exporting non-exportable objects by mistakes, which
+<p>To help avoid exporting non-exportable objects by mistake, which
 typically happens because a global variable is non-exportable, the
 future framework provides a mechanism for automatically detecting such
 objects. To enable it, do:</p>
@@ -177,7 +177,7 @@ objects. To enable it, do:</p>
 <span><span class="va">f</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/future.html">future</a></span><span class="op">(</span><span class="op">{</span> <span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"world!"</span>, file <span class="op">=</span> <span class="va">con</span><span class="op">)</span>; <span class="fu"><a href="https://rdrr.io/r/base/connections.html" class="external-link">flush</a></span><span class="op">(</span><span class="va">con</span><span class="op">)</span> <span class="op">}</span><span class="op">)</span></span>
 <span><span class="co">## Error: Detected a non-exportable reference ('externalptr') in one of the globals</span></span>
 <span><span class="co">## ('con' of class 'file') used in the future expression</span></span></code></pre></div>
-<p><em>Comment</em>: The <code>future.globals.onReference</code> options
+<p><em>Comment</em>: The <code>future.globals.onReference</code> option
 is set to <code>"ignore"</code> by default due to the extra overhead
 <code>"error"</code> introduces, which can be significant for very large
 nested objects. Furthermore, some subclasses of external pointers can be
@@ -359,16 +359,16 @@ it can only be used in the R session where it was created. If it is
 exported to and used in a parallel process, it will likely cause an
 error there. As shown above, and in below examples, setting option
 <code>future.globals.onReference</code> to <code>"error"</code> will
-make <strong>future</strong> to scan for <em>external pointer</em>:s
-before launching the future on a parallel worker, and throw an error if
-one is detected.</p>
-<p>However, there are objects with <em>external pointer</em>:s that can
-be exported, e.g. <code>data.table</code> objects of the <strong><a href="https://cran.r-project.org/package=data.table" class="external-link">data.table</a></strong>
+make <strong>future</strong> to scan for external pointers before
+launching the future on a parallel worker, and throw an error if one is
+detected.</p>
+<p>However, there are objects with external pointers that can be
+exported, e.g. <code>data.table</code> objects of the <strong><a href="https://cran.r-project.org/package=data.table" class="external-link">data.table</a></strong>
 package is one such example. In other words, the existence of a
 <em>external pointer</em> is just a suggestion for an object being
 non-exportable - it is not a sufficient condition.</p>
-<p>Below are some examples of packages who produce non-exportable
-objects with <em>external pointer</em>:s.</p>
+<p>Below are some examples of packages that produce non-exportable
+objects with external pointers.</p>
 <div class="section level4">
 <h4 id="package-arrow">Package: arrow<a class="anchor" aria-label="anchor" href="#package-arrow"></a>
 </h4>
@@ -392,8 +392,8 @@ worker.</p>
 over to the parallel worker.</p>
 <p>That said, the <strong>arrow</strong> package provides low-level
 functions <code><a href="https://arrow.apache.org/docs/r/reference/write_to_raw.html" class="external-link">write_to_raw()</a></code> and <code><a href="https://arrow.apache.org/docs/r/reference/read_ipc_stream.html" class="external-link">read_ipc_stream()</a></code>
-that can used to marshal and unmarshal <strong>arrow</strong> objects.
-For example,</p>
+that can be used to marshal and unmarshal <strong>arrow</strong>
+objects. For example,</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/apache/arrow/" class="external-link">arrow</a></span><span class="op">)</span></span>
 <span></span>
@@ -432,7 +432,7 @@ can be updated in-place, which helps save memory. For example,</p>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">x</span><span class="op">[</span><span class="fl">1</span>,<span class="fl">1</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 42</span></span></code></pre></div>
 <p>Note how <code>x</code> was updated in-place. This is achieved by
-<code>big.matrix</code> objects holds an external pointer to where the
+<code>big.matrix</code> objects hold an external pointer to where the
 matrix data is stored;</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
@@ -459,7 +459,7 @@ e.g.</p>
 <span><span class="co">#&gt; ('externalptr') in one of the globals ('x' of class 'big.matrix') used</span></span>
 <span><span class="co">#&gt; in the future expression. The total size of the 1 globals exported is</span></span>
 <span><span class="co">#&gt; 696 bytes. There is one global: 'x' (696 bytes of class 'S4')</span></span></code></pre></div>
-<p>We can protected against this setting:</p>
+<p>We can protect against this by setting:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>future.globals.onReference <span class="op">=</span> <span class="st">"error"</span><span class="op">)</span></span></code></pre></div>
 <p>which gives:</p>
@@ -560,8 +560,8 @@ fast experimentation”. The R implementation accesses the Keras Python
 API via <strong><a href="https://cran.r-project.org/package=reticulate" class="external-link">reticulate</a></strong>.
 However, Keras model instances in R make use of R connections and
 external pointers, which prevents them from being exported to external R
-processes. For example, if the attempt to use a Keras model in a
-multisession workers, the worker will produce a run-time error:</p>
+processes. For example, if we attempt to use a Keras model in a
+multisession worker, the worker will produce a run-time error:</p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tensorflow.rstudio.com/" class="external-link">keras</a></span><span class="op">)</span></span>
 <span></span>
@@ -584,7 +584,7 @@ multisession workers, the worker will produce a run-time error:</p>
 <span><span class="va">pred</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/value.html">value</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span></span>
 <span><span class="co">## Error in do.call(object$predict, args) :</span></span>
 <span><span class="co">##   'what' must be a function or character string</span></span></code></pre></div>
-<p>This is error message is not very helpful. But, if we turn on
+<p>This error message is not very helpful. But, if we turn on
 <code>options(future.globals.onReference = "error")</code>, we get more
 clues;</p>
 <div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a>Error<span class="sc">:</span> Detected a non<span class="sc">-</span>exportable <span class="fu">reference</span> (<span class="st">'externalptr'</span>) <span class="cf">in</span> one of the</span>
@@ -612,7 +612,7 @@ can be used as workaround to marshal and unmarshal non-exportable
 <p>The <strong><a href="https://cran.r-project.org/package=magick" class="external-link">magick</a></strong>
 package provides an R-level API for <a href="https://imagemagick.org/" class="external-link">ImageMagick</a> to work with images.
 When working with this API, the images are represented internally as
-external pointers of class ‘magick_image’ that cannot be be exported to
+external pointers of class ‘magick_image’ that cannot be exported to
 another R process, e.g.</p>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://future.futureverse.org">future</a></span><span class="op">)</span></span>
@@ -692,7 +692,7 @@ this problem and would be fine to pass on to a worker.</p>
 <h4 id="package-rcpp">Package: Rcpp<a class="anchor" aria-label="anchor" href="#package-rcpp"></a>
 </h4>
 <p>Similarly to <strong>cpp11</strong>, <strong><a href="https://cran.r-project.org/package=Rcpp" class="external-link">Rcpp</a></strong> can be
-use to create R functions that are implemented in C++, e.g.</p>
+used to create R functions that are implemented in C++, e.g.</p>
 <div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">Rcpp</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/Rcpp/man/sourceCpp.html" class="external-link">sourceCpp</a></span><span class="op">(</span>code <span class="op">=</span> <span class="st">'</span></span>
 <span><span class="st">#include &lt;Rcpp.h&gt;</span></span>
@@ -729,7 +729,7 @@ cannot pass it to another R process:</p>
 </h4>
 <p>The <strong><a href="https://cran.r-project.org/package=reticulate" class="external-link">reticulate</a></strong>
 package provides methods for creating and calling Python code from
-within R. If one attempt to use Python-binding objects from this
+within R. If one attempts to use Python-binding objects from this
 package, we get errors like:</p>
 <div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://future.futureverse.org">future</a></span><span class="op">)</span></span>
@@ -1032,11 +1032,11 @@ to use it in <em>another</em> R session, the following happens:</p>
 <span id="cb53-18"><a href="#cb53-18" tabindex="-1"></a>Selection<span class="sc">:</span></span></code></pre></div>
 <p>This is a very harsh way of telling us that we cannot export all
 types of objects produced by <strong>XML</strong>. Ideally,
-<strong>XML</strong> would detect this and give am informative error
+<strong>XML</strong> would detect this and give an informative error
 message and not crash R like this.</p>
-<p>A workaround for working around this is to marshal the problematic
-objects before exporting them to a parallel R process, and unmarshal
-them before working with them there. For example,</p>
+<p>A workaround is to marshal the problematic objects before exporting
+them to a parallel R process, and unmarshal them before working with
+them there. For example,</p>
 <div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://future.futureverse.org">future</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/plan.html">plan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span></span>
@@ -1091,7 +1091,7 @@ the future to the worker;</p>
 <span><span class="co">## Error: Detected a non-exportable reference ('externalptr') in one of the</span></span>
 <span><span class="co">## globals ('xml' of class 'xml_document') used in the future expression</span></span></code></pre></div>
 <p>One workaround when dealing with non-exportable objects is to look
-for ways to encode the object such that it can be exported, and the
+for ways to encode the object such that it can be exported, and then
 decoded on the receiving end. With <strong>xml2</strong>, we can use
 <code><a href="http://xml2.r-lib.org/reference/xml_serialize.html" class="external-link">xml2::xml_serialize()</a></code> and
 <code><a href="http://xml2.r-lib.org/reference/xml_serialize.html" class="external-link">xml2::xml_unserialize()</a></code> to do this. Here is how we can
@@ -1182,11 +1182,11 @@ here.</p>
 <h4 id="package-data-table">Package data.table<a class="anchor" aria-label="anchor" href="#package-data-table"></a>
 </h4>
 <p>The <strong><a href="https://cran.r-project.org/package=data.table" class="external-link">data.table</a></strong>
-package creates objects comprising external pointers. Contrary to above
-non-exportable examples, such objects can be saved to file and used in
-another R session, or exported to a parallel worker. This is because
-<strong>data.table</strong> is capable of restoring these objects to a
-valid state. Consider the following example:</p>
+package creates objects comprising external pointers. Contrary to the
+above non-exportable examples, such objects can be saved to file and
+used in another R session, or exported to a parallel worker. This is
+because <strong>data.table</strong> is capable of restoring these
+objects to a valid state. Consider the following example:</p>
 <div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-datatable.com" class="external-link">data.table</a></span><span class="op">)</span></span>
 <span><span class="va">DT</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdatatable.gitlab.io/data.table/reference/data.table.html" class="external-link">data.table</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, b <span class="op">=</span> <span class="va">letters</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span><span class="op">)</span></span>

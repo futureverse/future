@@ -13,7 +13,7 @@ First, all the essential core packages part of the future framework,
 package tests. These are validated regularly across the wide-range of
 operating systems (Linux, macOS, and MS Windows) and R versions
 available on CRAN, on continuous integration (CI) services (GitHub
-Actions), an on [R-hub](https://r-hub.github.io/rhub/). The core
+Actions), and on [R-hub](https://r-hub.github.io/rhub/). The core
 packages are also tested with non-English locale settings, including
 Korean, Simplified Chinese (China) and Traditional Chinese (Taiwan).
 They are also verified to work with single-core and dual-core machines,
@@ -32,10 +32,10 @@ that globals and packages are identified correctly. We also test with
 Third, a suite of *Future API conformance tests* available in the
 **[future.tests](https://future.tests.futureverse.org)** package
 validates the correctness of all future backends. Any new future backend
-developed, must pass these tests to comply with the *Future API*. By
+developed must pass these tests to comply with the *Future API*. By
 conforming to this API, the end-user can trust that the backend will
 produce the same correct and reproducible results as any other backend,
-including the ones that the developer have tested on. Also, by making it
+including the ones that the developer has tested on. Also, by making it
 the responsibility of the developer to assert that their new future
 backend conforms to the *Future API*, we relieve other developers from
 having to test that their future-based software works on all backends.
@@ -68,7 +68,7 @@ dependencies. The exception is when using the sequential *doSEQ* adaptor
 **[doMC](https://CRAN.R-Project.org/package=doMC)**, or the generic
 **[doFuture](https://doFuture.futureverse.org)**, which supports any
 future backend and relies on the future framework for handling globals
-and packages(\*)
+and packages(\*).
 
 Lastly, analogously to above reverse-dependency checks of each new
 release, CRAN and Bioconductor continuously run checks on all these
@@ -78,8 +78,8 @@ the validation of the *Future API* and the future ecosystem at large.
 (\*) There is a plan to update
 **[foreach](https://CRAN.R-Project.org/package=foreach)** to use the
 exact same static-code-analysis method as the
-**[future](https://future.futureverse.org)** package use for identifying
-globals. As the maintainer of the future framework, I collaborate with
-the maintainer of the
+**[future](https://future.futureverse.org)** package uses for
+identifying globals. As the maintainer of the future framework, I
+collaborate with the maintainer of the
 **[foreach](https://CRAN.R-Project.org/package=foreach)** package to
 implement this.

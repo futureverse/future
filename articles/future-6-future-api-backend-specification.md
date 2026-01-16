@@ -12,7 +12,7 @@ of the below is subject to change for the next few release cycles.*
 
 This document is written to serve as a reference for developers who are
 developing a future backend to the future framework as implemented in
-the **[future](https://future.futureverse.org)** package for R that
+the **[future](https://future.futureverse.org)** package for R that is
 available on CRAN. The Future Application Programming Interface (API)
 has three fundamental functions at its core:
 
@@ -54,7 +54,7 @@ rules. Rules that are documented below.
 
 A supplement to the specification herein is the ‘Test Suite for Future
 API Backends’, which consists of a set of tests that can be used to
-validated that a future backend meets the minimal requirements of the
+validate that a future backend meets the minimal requirements of the
 Future API. These tests run from the command-line, from the R prompt, or
 as part of the package tests of a backend package. This test suite is
 documented and implemented in the
@@ -92,8 +92,8 @@ components:
   the future backend via
   [`plan()`](https://future.futureverse.org/reference/plan.md).
 
-- A `MyParallelFutureBackend` function that returns and an object of
-  class `MyParallelFutureBackend` inheriting the `FutureBackend`. This
+- A `MyParallelFutureBackend` function that returns an object of class
+  `MyParallelFutureBackend` inheriting the `FutureBackend`. This
   function should be set as attribute `factory` for the above
   `myparallel` function.
 
@@ -120,15 +120,15 @@ components:
   yet resolved, this method should block until the future is resolved.
 
 With this in place, the selection of using this backend as the future
-plan, will be done as `plan(myparallel)` with the option of specifying
-certain arguments to be passed to `myparallel()`. With the plan set, a
-call to `f <- future(expr)` will then launch the evaluation of the
-future via the
+plan, done as `plan(myparallel)` with the option of specifying certain
+arguments to be passed to `myparallel()`. With the plan set, a call to
+`f <- future(expr)` will then launch the evaluation of the future via
+the
 [`launchFuture()`](https://future.futureverse.org/reference/FutureBackend-class.md)
-method for the current set future backend and return then launch the
-future now inheriting `MyParallelFuture`. When calling `resolved(f)` to
-query whether the future expression is resolved or not, the underlying
-S3 method for this class will then check in with the parallel worker
+method for the current set future backend and return the future now
+inheriting `MyParallelFuture`. When calling `resolved(f)` to query
+whether the future expression is resolved or not, the underlying S3
+method for this class will then check in with the parallel worker
 whether the expression is resolved or not. When calling `value(f)`, the
 S3 method for the `Future` class calls `result(f)`, which will return
 the `FutureResult` object for this future. If the future is not yet
@@ -151,7 +151,7 @@ mentioned below are from the
 
 The place-holder function `myparallel()` that is used by
 [`plan()`](https://future.futureverse.org/reference/plan.md) must
-inherits from class `future` such that `inherits(myparallel, "future")`
+inherit from class `future` such that `inherits(myparallel, "future")`
 is true. It must also have attribute `factory` set to the corresponding
 `FutureBackend` function, i.e. `MyParallelFutureBackend`.
 
@@ -171,7 +171,7 @@ e.g. `MyParallelFuture`.
 
 The
 [`launchFuture()`](https://future.futureverse.org/reference/FutureBackend-class.md)
-method is responsible for evaluation the `Future` object. The evaluation
+method is responsible for evaluating the `Future` object. The evaluation
 of the future expression should respect any global variables in the
 `FutureGlobals` object returned by `globals()` with the `Future` object
 as the first argument. The evaluation should also respect any package
@@ -184,7 +184,7 @@ should return the future as soon as possible and without waiting for it
 to be resolved. If all workers are occupied, then
 [`launchFuture()`](https://future.futureverse.org/reference/FutureBackend-class.md)
 is responsible for waiting until a worker becomes available and then
-launch the future on that worker and immediatedly return the future.
+launch the future on that worker and immediately return the future.
 
 The
 [`launchFuture()`](https://future.futureverse.org/reference/FutureBackend-class.md)
@@ -207,7 +207,7 @@ additional arguments via `...`, which are currently not used.
 The method may be called zero or more times.
 
 The method should return `FALSE` as long as the future is unresolved. It
-may also return `FALSE` if it fail to establish the state of the future
+may also return `FALSE` if it fails to establish the state of the future
 within a reasonable time period (“timeout”). It should return `TRUE` as
 soon as it can be established that the future is resolved. After it has
 returned `TRUE` once, any succeeding calls should return `TRUE`.
@@ -234,7 +234,7 @@ method must not update the RNG state.
 An S3 method
 [`result()`](https://future.futureverse.org/reference/result.md) for
 `MyParallelFuture` that takes a `Future` object as its first argument
-and return a `FutureResult` object is required. It should accept
+and returns a `FutureResult` object is required. It should accept
 additional arguments via `...`, which are currently not used.
 
 The method may be called zero or more times.

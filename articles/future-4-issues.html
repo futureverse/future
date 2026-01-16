@@ -158,7 +158,7 @@ this works:</p>
 <span><span class="co">## Error: object 'x' not found</span></span></code></pre></div>
 <p>It is recommended to avoid above constructs where it is ambiguous
 whether a variable is global or local. To force variable <code>x</code>
-to always be global, insert it at the very being of the future
+to always be global, insert it at the very beginning of the future
 expression, e.g.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">reset</span> <span class="op">&lt;-</span> <span class="cn">FALSE</span></span>
@@ -236,11 +236,11 @@ these three objects for globals, which in this example means that it
 scans also <code>my_sum()</code>. This recursive search for globals will
 identify three additional globals, namely, the primitive function
 <code>{</code>, the function <code><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum()</a></code>, and the function
-<code><a href="https://rdrr.io/r/base/get.html" class="external-link">get()</a></code>, but, as before, none of these source will identify
+<code><a href="https://rdrr.io/r/base/get.html" class="external-link">get()</a></code>, but, as before, none of these sources will identify
 <code>a</code> as a global object. In order for <code>a</code> to be
 identified, the future framework would need to have a built-in
 understanding on how <code>get(var)</code> works, which would be a
-daunting task, especially if it need to know how it acts for different
+daunting task, especially if it needs to know how it acts for different
 data types of <code>var</code> and various choices on arguments
 <code>envir</code> and <code>enclos</code>. In fact, this can often not
 be inferred until run time, that is, it is not possible to identify what
@@ -282,7 +282,7 @@ better solution available.</p>
 <span id="cb11-8"><a href="#cb11-8" tabindex="-1"></a> <span class="dv">6</span> <span class="dv">22</span> <span class="dv">12</span></span></code></pre></div>
 <p>Instead of using “free roaming” objects <code>a</code>,
 <code>b</code>, and <code>c</code>, it’s better to put those values in a
-list (or a data frame of of the same length);</p>
+list (or a data frame of the same length);</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="sc">&gt;</span> data <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">a =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">b =</span> <span class="dv">4</span><span class="sc">:</span><span class="dv">7</span>, <span class="at">c =</span> <span class="dv">3</span><span class="sc">:</span><span class="dv">5</span>)</span></code></pre></div>
 <p>This will in turn allow us to perform the same calculations without
 having to use <code><a href="https://rdrr.io/r/base/get.html" class="external-link">get()</a></code>;</p>
@@ -355,7 +355,8 @@ R worker that evaluated the future expression does not have
 the <code>[.data.frame</code> method, which is not what we want.</p>
 <p>Until the future framework manages to identify
 <strong>data.table</strong> as a required package (which is the goal),
-we can guide future by specifying additional packages needed:</p>
+we can guide the future package by specifying additional packages
+needed:</p>
 <div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a><span class="sc">&gt;</span> y <span class="sc">%&lt;-%</span> DT[, <span class="fu">sum</span>(b)] <span class="sc">%packages%</span> <span class="st">"data.table"</span></span>
 <span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a><span class="sc">&gt;</span> y</span>
 <span id="cb19-3"><a href="#cb19-3" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">6</span></span></code></pre></div>
@@ -371,8 +372,8 @@ better to use the above <code>packages</code> approach.</p>
 <div class="section level2">
 <h2 id="used-in-an-incorrect-context">‘…’ used in an incorrect context<a class="anchor" aria-label="anchor" href="#used-in-an-incorrect-context"></a>
 </h2>
-<p>In R, we can use the <code>...</code> construct is used to refer to
-zero or more arguments. For example, we can use as in:</p>
+<p>In R, the <code>...</code> construct is used to refer to zero or more
+arguments. For example, we can use it as in:</p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">my_mean</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
@@ -405,7 +406,7 @@ via its <code>...</code> argument, which is then passed on to
 <p>In this case, we have two levels of <code>...</code> arguments; one
 for <code>my_fcn()</code> and one for the anonymous function. Note how
 the <code>...</code> arguments for <code>my_fcn()</code> are passed down
-to the anonymous function by specifying <code>...</code> as an final
+to the anonymous function by specifying <code>...</code> as a final
 argument to <code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply()</a></code>.</p>
 <p>The above is the ideal and proper way to pass down <code>...</code>.
 However, it is not uncommon to see that the <code>...</code> is used as
@@ -449,7 +450,7 @@ is used, e.g.</p>
 </h2>
 <p>Certain types of objects are tied to a given R session and cannot be
 passed along to another R process (a “worker”). An example of a
-non-exportable object is is XML objects of the <strong><a href="https://cran.r-project.org/package=xml2" class="external-link">xml2</a></strong>
+non-exportable object is XML objects of the <strong><a href="https://cran.r-project.org/package=xml2" class="external-link">xml2</a></strong>
 package. If we attempt to use those in parallel processing, we may get a
 error when the future is evaluated (or just invalid results depending on
 how they are used), e.g.</p>
@@ -541,7 +542,7 @@ environments). For instance,</p>
 <span id="cb33-10"><a href="#cb33-10" tabindex="-1"></a> <span class="dv">1276</span> on localhost) that created it, not by any other R <span class="fu">processes</span> (<span class="dv">2</span>ce86ccd<span class="dv">-5854</span></span>
 <span id="cb33-11"><a href="#cb33-11" tabindex="-1"></a> <span class="sc">-</span><span class="dv">7</span>a05<span class="dv">-1373</span><span class="sc">-</span>e1b20022e4d8; pid <span class="dv">7464</span> on localhost)<span class="sc">:</span> {; <span class="fu">Sys.getpid</span>(); }</span></code></pre></div>
 <p>As previously, this can be avoided by making sure <code>x$a</code> is
-resolved first, which can be one in various ways,
+resolved first, which can be done in various ways,
 e.g. <code>dummy &lt;- x$a</code>, <code>resolve(x$a)</code> and
 <code>force(x$a)</code>.</p>
 <p><em>Footnote</em>: (*) Although sequential futures could be passed on
@@ -615,13 +616,13 @@ future, or inside a function, make sure to specify argument
 <code>local = FALSE</code>, which has side effects. When using
 <code>local = FALSE</code>, any functions or variables defined by the R
 script are assigned to the global environment - not the calling
-environment as we might expect. This may make little different when
+environment as we might expect. This may make little difference when
 calling <code><a href="https://rdrr.io/r/base/source.html" class="external-link">source()</a></code> from the R prompt, or from another script.
 However, when called from inside a function, inside
 <code><a href="https://rdrr.io/r/base/eval.html" class="external-link">local()</a></code>, or inside a future, it might result in unexpected
 behavior. It is similar to using
-<code>assign("a", 42, envir = globalenv())</code>, which is known be a
-bad practice. To be on the safe side, it is almost always better call
+<code>assign("a", 42, envir = globalenv())</code>, which is known to be
+a bad practice. To be on the safe side, it is almost always better call
 <code><a href="https://rdrr.io/r/base/source.html" class="external-link">source()</a></code> with <code>local = TRUE</code>.</p>
 </div>
 <div class="section level3">

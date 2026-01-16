@@ -132,7 +132,7 @@ the next few release cycles.</em></p>
 <p>This document is written to serve as a reference for developers who
 are developing a future backend to the future framework as implemented
 in the <strong><a href="https://future.futureverse.org">future</a></strong> package for R
-that available on CRAN. The Future Application Programming Interface
+that is available on CRAN. The Future Application Programming Interface
 (API) has three fundamental functions at its core:</p>
 <ul>
 <li><p><code>f &lt;- future(expr)</code> - create a future from an R
@@ -167,7 +167,7 @@ future backends conform to a set of rules. Rules that are documented
 below.</p>
 <p>A supplement to the specification herein is the ‘Test Suite for
 Future API Backends’, which consists of a set of tests that can be used
-to validated that a future backend meets the minimal requirements of the
+to validate that a future backend meets the minimal requirements of the
 Future API. These tests run from the command-line, from the R prompt, or
 as part of the package tests of a backend package. This test suite is
 documented and implemented in the <strong><a href="https://future.tests.futureverse.org" class="external-link">future.tests</a></strong>
@@ -203,8 +203,8 @@ components:</p>
 <code>future</code>. This function must never be called - it is used as
 a no-op placeholder for setting the future backend via
 <code><a href="../reference/plan.html">plan()</a></code>.</p></li>
-<li><p>A <code>MyParallelFutureBackend</code> function that returns and
-an object of class <code>MyParallelFutureBackend</code> inheriting the
+<li><p>A <code>MyParallelFutureBackend</code> function that returns an
+object of class <code>MyParallelFutureBackend</code> inheriting the
 <code>FutureBackend</code>. This function should be set as attribute
 <code>factory</code> for the above <code>myparallel</code>
 function.</p></li>
@@ -229,12 +229,12 @@ not yet resolved, this method should block until the future is
 resolved.</p></li>
 </ul>
 <p>With this in place, the selection of using this backend as the future
-plan, will be done as <code>plan(myparallel)</code> with the option of
+plan, done as <code>plan(myparallel)</code> with the option of
 specifying certain arguments to be passed to <code>myparallel()</code>.
 With the plan set, a call to <code>f &lt;- future(expr)</code> will then
 launch the evaluation of the future via the <code><a href="../reference/FutureBackend-class.html">launchFuture()</a></code>
-method for the current set future backend and return then launch the
-future now inheriting <code>MyParallelFuture</code>. When calling
+method for the current set future backend and return the future now
+inheriting <code>MyParallelFuture</code>. When calling
 <code>resolved(f)</code> to query whether the future expression is
 resolved or not, the underlying S3 method for this class will then check
 in with the parallel worker whether the expression is resolved or not.
@@ -260,7 +260,7 @@ mentioned below are from the <strong><a href="https://future.futureverse.org">fu
 <h4 id="constructor-function-creating-a-future">Constructor function creating a Future<a class="anchor" aria-label="anchor" href="#constructor-function-creating-a-future"></a>
 </h4>
 <p>The place-holder function <code>myparallel()</code> that is used by
-<code><a href="../reference/plan.html">plan()</a></code> must inherits from class <code>future</code> such
+<code><a href="../reference/plan.html">plan()</a></code> must inherit from class <code>future</code> such
 that <code>inherits(myparallel, "future")</code> is true. It must also
 have attribute <code>factory</code> set to the corresponding
 <code>FutureBackend</code> function,
@@ -278,7 +278,7 @@ used.</p>
 <p>The <code><a href="../reference/FutureBackend-class.html">launchFuture()</a></code> method should invisibly return the
 <code>Future</code> object of desired class,
 e.g. <code>MyParallelFuture</code>.</p>
-<p>The <code><a href="../reference/FutureBackend-class.html">launchFuture()</a></code> method is responsible for evaluation
+<p>The <code><a href="../reference/FutureBackend-class.html">launchFuture()</a></code> method is responsible for evaluating
 the <code>Future</code> object. The evaluation of the future expression
 should respect any global variables in the <code>FutureGlobals</code>
 object returned by <code>globals()</code> with the <code>Future</code>
@@ -290,7 +290,7 @@ package names returned by <code>packages()</code> with the
 and without waiting for it to be resolved. If all workers are occupied,
 then <code><a href="../reference/FutureBackend-class.html">launchFuture()</a></code> is responsible for waiting until a
 worker becomes available and then launch the future on that worker and
-immediatedly return the future.</p>
+immediately return the future.</p>
 <p>The <code><a href="../reference/FutureBackend-class.html">launchFuture()</a></code> method may produce an error of class
 <code>FutureError</code> in case it fails to launch the future on the
 worker or the worker has terminated unexpectedly.</p>
@@ -307,7 +307,7 @@ its first argument and return either <code>TRUE</code> or
 via <code>...</code>, which are currently not used.</p>
 <p>The method may be called zero or more times.</p>
 <p>The method should return <code>FALSE</code> as long as the future is
-unresolved. It may also return <code>FALSE</code> if it fail to
+unresolved. It may also return <code>FALSE</code> if it fails to
 establish the state of the future within a reasonable time period
 (“timeout”). It should return <code>TRUE</code> as soon as it can be
 established that the future is resolved. After it has returned
@@ -328,8 +328,8 @@ terminated unexpectedly.</p>
 <h4 id="result-method-for-the-future-class">result() method for the Future class<a class="anchor" aria-label="anchor" href="#result-method-for-the-future-class"></a>
 </h4>
 <p>An S3 method <code><a href="../reference/result.html">result()</a></code> for <code>MyParallelFuture</code>
-that takes a <code>Future</code> object as its first argument and return
-a <code>FutureResult</code> object is required. It should accept
+that takes a <code>Future</code> object as its first argument and
+returns a <code>FutureResult</code> object is required. It should accept
 additional arguments via <code>...</code>, which are currently not
 used.</p>
 <p>The method may be called zero or more times.</p>

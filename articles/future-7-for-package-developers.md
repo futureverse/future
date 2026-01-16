@@ -1,6 +1,6 @@
 # A Future for R: Best Practices for Package Developers
 
-Using future code in package is not much different from other type of
+Using future code in a package is not much different from other types of
 package code or when using futures in R scripts. However, there are a
 few things that are useful to know about in order to minimize the risk
 for surprises to the end user.
@@ -12,7 +12,7 @@ the local machine, e.g. `plan(multisession)`. This is often good enough
 in most situations but note that some end-users have access to multiple
 machines and might want to run your code using all of them to speed it
 up beyond what a single machine can do. Because of this, avoid as far as
-possible making assumption about your code will only run on the local
+possible making assumptions that your code will only run on the local
 machine. A good “smell test” is to ask yourself:
 
 *- Will my future code work if it ends up running on the other side of
@@ -66,7 +66,7 @@ located on The Moon twenty years from now.
 
 For reasons like the ones mentioned above, refrain from setting
 [`plan()`](https://future.futureverse.org/reference/plan.md) in a
-function. It is better to leave it to the end-user to decided how they
+function. It is better to leave it to the end-user to decide how they
 want to parallelize. One reason for this is that we can never know how
 and in what context our code will run. For example, they might use
 futures to parallelize a function call in some other package and that
@@ -77,7 +77,7 @@ already set breaking any further parallelization.
 
 If you still think it is necessary to set
 [`plan()`](https://future.futureverse.org/reference/plan.md), make sure
-to undo when the function exits, also on errors. This can be done by
+to undo it when the function exits, also on errors. This can be done by
 using `with(plan(...), local = TRUE)`, e.g.
 
 ``` r
@@ -117,7 +117,7 @@ or
 y <- my_fcn(x, parallel = TRUE)
 ```
 
-depending on their needs. However, if another package developer decide
+depending on their needs. However, if another package developer decides
 to call your function in their function, they now have to expose that
 `parallel` argument to the users of their function, e.g.
 
@@ -304,4 +304,4 @@ parallel::stopCluster(cl)
 ```
 
 (\*) Currently, examples are excluded from the detritus checks. This was
-the validated with R-devel revision 82991 (2022-10-02).
+validated with R-devel revision 82991 (2022-10-02).

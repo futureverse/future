@@ -163,8 +163,8 @@ command-line option <code>--parallel=ncores</code> (short
 for specifying parallel future processing from the command line. For
 example, if we start R with</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="ex">$</span> R <span class="at">--quiet</span> <span class="at">--args</span> <span class="at">--parallel</span><span class="op">=</span>2</span></code></pre></div>
-<p>then future will interpret this as we wish to resolve futures in
-parallel using 2 cores. More specifically, we get that</p>
+<p>then the future package will interpret this as we wish to resolve
+futures in parallel using 2 cores. More specifically, we get that</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">availableCores</span>()</span>
 <span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>mc.cores</span>
 <span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>       <span class="dv">2</span></span>

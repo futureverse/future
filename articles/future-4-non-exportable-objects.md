@@ -4,9 +4,9 @@ Certain types of objects are tied to a given R session. Such objects
 cannot be saved to file by one R process and then later be reloaded in
 another R process and expected to work correctly. If attempted, we will
 often get an informative error but not always. For the same reason,
-these type of objects cannot be exported to another R processes(\*) for
+these types of objects cannot be exported to other R processes(\*) for
 parallel processing regardless of which parallelization framework we
-use. We refer to these type of objects as “non-exportable objects”.
+use. We refer to these types of objects as “non-exportable objects”.
 
 (\*) The exception *might be* when *forked* processes are used,
 i.e. `plan(multicore)`. However, such attempts to work around the
@@ -59,7 +59,7 @@ informative error message, but as seen here, that does not always occur.
 
 ## Protect against non-exportable objects
 
-To help avoiding exporting non-exportable objects by mistakes, which
+To help avoid exporting non-exportable objects by mistake, which
 typically happens because a global variable is non-exportable, the
 future framework provides a mechanism for automatically detecting such
 objects. To enable it, do:
@@ -71,7 +71,7 @@ f <- future({ cat("world!", file = con); flush(con) })
 ## ('con' of class 'file') used in the future expression
 ```
 
-*Comment*: The `future.globals.onReference` options is set to `"ignore"`
+*Comment*: The `future.globals.onReference` option is set to `"ignore"`
 by default due to the extra overhead `"error"` introduces, which can be
 significant for very large nested objects. Furthermore, some subclasses
 of external pointers can be exported without causing problems.
@@ -158,18 +158,18 @@ only be used in the R session where it was created. If it is exported to
 and used in a parallel process, it will likely cause an error there. As
 shown above, and in below examples, setting option
 `future.globals.onReference` to `"error"` will make **future** to scan
-for *external pointer*:s before launching the future on a parallel
-worker, and throw an error if one is detected.
+for external pointers before launching the future on a parallel worker,
+and throw an error if one is detected.
 
-However, there are objects with *external pointer*:s that can be
-exported, e.g. `data.table` objects of the
+However, there are objects with external pointers that can be exported,
+e.g. `data.table` objects of the
 **[data.table](https://cran.r-project.org/package=data.table)** package
 is one such example. In other words, the existence of a *external
 pointer* is just a suggestion for an object being non-exportable - it is
 not a sufficient condition.
 
-Below are some examples of packages who produce non-exportable objects
-with *external pointer*:s.
+Below are some examples of packages that produce non-exportable objects
+with external pointers.
 
 #### Package: arrow
 
@@ -198,7 +198,8 @@ That said, the **arrow** package provides low-level functions
 [`write_to_raw()`](https://arrow.apache.org/docs/r/reference/write_to_raw.html)
 and
 [`read_ipc_stream()`](https://arrow.apache.org/docs/r/reference/read_ipc_stream.html)
-that can used to marshal and unmarshal **arrow** objects. For example,
+that can be used to marshal and unmarshal **arrow** objects. For
+example,
 
 ``` r
 library(arrow)
@@ -241,7 +242,7 @@ print(x[1,1])
 ```
 
 Note how `x` was updated in-place. This is achieved by `big.matrix`
-objects holds an external pointer to where the matrix data is stored;
+objects hold an external pointer to where the matrix data is stored;
 
 ``` r
 str(x)
@@ -272,7 +273,7 @@ value(f)
 #> 696 bytes. There is one global: 'x' (696 bytes of class 'S4')
 ```
 
-We can protected against this setting:
+We can protect against this by setting:
 
 ``` r
 options(future.globals.onReference = "error")
@@ -390,8 +391,8 @@ experimentation”. The R implementation accesses the Keras Python API via
 **[reticulate](https://cran.r-project.org/package=reticulate)**.
 However, Keras model instances in R make use of R connections and
 external pointers, which prevents them from being exported to external R
-processes. For example, if the attempt to use a Keras model in a
-multisession workers, the worker will produce a run-time error:
+processes. For example, if we attempt to use a Keras model in a
+multisession worker, the worker will produce a run-time error:
 
 ``` r
 library(keras)
@@ -417,7 +418,7 @@ pred <- value(f)
 ##   'what' must be a function or character string
 ```
 
-This is error message is not very helpful. But, if we turn on
+This error message is not very helpful. But, if we turn on
 `options(future.globals.onReference = "error")`, we get more clues;
 
 ``` r
@@ -452,7 +453,7 @@ The **[magick](https://cran.r-project.org/package=magick)** package
 provides an R-level API for [ImageMagick](https://imagemagick.org/) to
 work with images. When working with this API, the images are represented
 internally as external pointers of class ‘magick_image’ that cannot be
-be exported to another R process, e.g.
+exported to another R process, e.g.
 
 ``` r
 library(future)
@@ -542,8 +543,8 @@ worker.
 #### Package: Rcpp
 
 Similarly to **cpp11**,
-**[Rcpp](https://cran.r-project.org/package=Rcpp)** can be use to create
-R functions that are implemented in C++, e.g.
+**[Rcpp](https://cran.r-project.org/package=Rcpp)** can be used to
+create R functions that are implemented in C++, e.g.
 
 ``` r
 Rcpp::sourceCpp(code = '
@@ -589,7 +590,7 @@ n %<-% my_length(x)
 
 The **[reticulate](https://cran.r-project.org/package=reticulate)**
 package provides methods for creating and calling Python code from
-within R. If one attempt to use Python-binding objects from this
+within R. If one attempts to use Python-binding objects from this
 package, we get errors like:
 
 ``` r
@@ -948,11 +949,11 @@ Selection:
 
 This is a very harsh way of telling us that we cannot export all types
 of objects produced by **XML**. Ideally, **XML** would detect this and
-give am informative error message and not crash R like this.
+give an informative error message and not crash R like this.
 
-A workaround for working around this is to marshal the problematic
-objects before exporting them to a parallel R process, and unmarshal
-them before working with them there. For example,
+A workaround is to marshal the problematic objects before exporting them
+to a parallel R process, and unmarshal them before working with them
+there. For example,
 
 ``` r
 library(future)
@@ -1017,7 +1018,7 @@ f <- future(xml_children(xml))
 ```
 
 One workaround when dealing with non-exportable objects is to look for
-ways to encode the object such that it can be exported, and the decoded
+ways to encode the object such that it can be exported, and then decoded
 on the receiving end. With **xml2**, we can use
 [`xml2::xml_serialize()`](http://xml2.r-lib.org/reference/xml_serialize.md)
 and
@@ -1115,11 +1116,11 @@ y
 #### Package data.table
 
 The **[data.table](https://cran.r-project.org/package=data.table)**
-package creates objects comprising external pointers. Contrary to above
-non-exportable examples, such objects can be saved to file and used in
-another R session, or exported to a parallel worker. This is because
-**data.table** is capable of restoring these objects to a valid state.
-Consider the following example:
+package creates objects comprising external pointers. Contrary to the
+above non-exportable examples, such objects can be saved to file and
+used in another R session, or exported to a parallel worker. This is
+because **data.table** is capable of restoring these objects to a valid
+state. Consider the following example:
 
 ``` r
 library(data.table)

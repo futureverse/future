@@ -55,8 +55,8 @@ example, if we start R with
 $ R --quiet --args --parallel=2
 ```
 
-then future will interpret this as we wish to resolve futures in
-parallel using 2 cores. More specifically, we get that
+then the future package will interpret this as we wish to resolve
+futures in parallel using 2 cores. More specifically, we get that
 
 ``` r
 > availableCores()

@@ -127,7 +127,7 @@ value of the future is queried</em>. Messages produced by
 captured and resignaled (“relayed”) as messages in the main R session.
 Importantly, this works identically regardless of future backend
 used.</p>
-<p>For simplicitly, lets start with an illustration on how standard
+<p>For simplicity, lets start with an illustration on how standard
 output (“stdout”) is captured and relayed:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">library</span>(future)</span>
 <span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">plan</span>(multisession)</span>
@@ -325,10 +325,10 @@ elsewhere in R. For example,</p>
 </h2>
 <p>It is only the standard output that is relayed. It is <em>not
 possible</em> to relay output send to the standard error (stderr),
-e.g. output by <code>cat(..., file = stderr())</code> will be lost. This
-is due to a <a href="https://github.com/HenrikBengtsson/Wishlist-for-R/issues/55" class="external-link">limitation
+e.g. output sent by <code>cat(..., file = stderr())</code> will be lost.
+This is due to a <a href="https://github.com/HenrikBengtsson/Wishlist-for-R/issues/55" class="external-link">limitation
 in R</a>, preventing us from capturing stderr in a reliable way,
-particularity across all backends. However, note that the captured
+particularly across all backends. However, note that the captured
 messages by <code><a href="https://rdrr.io/r/base/message.html" class="external-link">message()</a></code> are outputted to stderr (as expected)
 when resignaled/relayed.</p>
 </div>

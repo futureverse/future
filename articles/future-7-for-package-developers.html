@@ -118,8 +118,8 @@ Bengtsson</h4>
 
     
     
-<p>Using future code in package is not much different from other type of
-package code or when using futures in R scripts. However, there are a
+<p>Using future code in a package is not much different from other types
+of package code or when using futures in R scripts. However, there are a
 few things that are useful to know about in order to minimize the risk
 for surprises to the end user.</p>
 <div class="section level2">
@@ -130,7 +130,7 @@ on the local machine, e.g. <code>plan(multisession)</code>. This is
 often good enough in most situations but note that some end-users have
 access to multiple machines and might want to run your code using all of
 them to speed it up beyond what a single machine can do. Because of
-this, avoid as far as possible making assumption about your code will
+this, avoid as far as possible making assumptions that your code will
 only run on the local machine. A good “smell test” is to ask
 yourself:</p>
 <p><em>- Will my future code work if it ends up running on the other
@@ -173,7 +173,7 @@ located on The Moon twenty years from now.</p>
 </h2>
 <p>For reasons like the ones mentioned above, refrain from setting
 <code><a href="../reference/plan.html">plan()</a></code> in a function. It is better to leave it to the
-end-user to decided how they want to parallelize. One reason for this is
+end-user to decide how they want to parallelize. One reason for this is
 that we can never know how and in what context our code will run. For
 example, they might use futures to parallelize a function call in some
 other package and that package code calls your package internally. If
@@ -181,8 +181,8 @@ you set <code>plan(multisession)</code> internally without undoing, you
 might mess up the <code><a href="../reference/plan.html">plan()</a></code> that is already set breaking any
 further parallelization.</p>
 <p>If you still think it is necessary to set <code><a href="../reference/plan.html">plan()</a></code>, make
-sure to undo when the function exits, also on errors. This can be done
-by using <code>with(plan(...), local = TRUE)</code>, e.g.</p>
+sure to undo it when the function exits, also on errors. This can be
+done by using <code>with(plan(...), local = TRUE)</code>, e.g.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">my_fcn</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span><span class="fu"><a href="../reference/plan.html">plan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span>, local <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
@@ -210,7 +210,7 @@ parallel or sequentially. This often result in code like:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu">my_fcn</span><span class="op">(</span><span class="va">x</span>, parallel <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p>depending on their needs. However, if another package developer
-decide to call your function in their function, they now have to expose
+decides to call your function in their function, they now have to expose
 that <code>parallel</code> argument to the users of their function,
 e.g.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
@@ -360,7 +360,7 @@ worker processes, which almost always are parallel
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plan.html">plan</a></span><span class="op">(</span><span class="va">sequential</span><span class="op">)</span></span>
 <span><span class="fu">parallel</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/parallel/makeCluster.html" class="external-link">stopCluster</a></span><span class="op">(</span><span class="va">cl</span><span class="op">)</span></span></code></pre></div>
 <p>(*) Currently, examples are excluded from the detritus checks. This
-was the validated with R-devel revision 82991 (2022-10-02).</p>
+was validated with R-devel revision 82991 (2022-10-02).</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
