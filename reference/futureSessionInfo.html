@@ -49,6 +49,7 @@
     <li><a class="external-link dropdown-item" href="https://future.callr.futureverse.org">future.callr (backend)</a></li>
     <li><a class="external-link dropdown-item" href="https://future.mirai.futureverse.org">future.mirai (backend)</a></li>
     <li><a class="external-link dropdown-item" href="https://future.tests.futureverse.org">future.tests</a></li>
+    <li><a class="external-link dropdown-item" href="https://futurize.futureverse.org">futurize (map-reduce)</a></li>
     <li><a class="external-link dropdown-item" href="https://globals.futureverse.org">globals</a></li>
     <li><a class="external-link dropdown-item" href="https://listenv.futureverse.org">listenv</a></li>
     <li><a class="external-link dropdown-item" href="https://parallelly.futureverse.org">parallelly</a></li>
@@ -110,7 +111,7 @@ and validate their information.</p></dd>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="plan.html">plan</a></span><span class="op">(</span><span class="va">multisession</span>, workers <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">futureSessionInfo</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> *** Package versions</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> future 1.69.0.9002, parallelly 1.46.1, parallel 4.5.2, globals 0.18.0, listenv 0.10.0</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> future 1.69.0.9002, parallelly 1.46.1.9003, parallel 4.5.2, globals 0.18.0.9004, listenv 0.10.0.9002</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> *** Allocations</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> availableCores():</span>
@@ -148,15 +149,15 @@ and validate their information.</p></dd>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> *** Basic tests</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Main R session details:</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>       pid     r sysname           release</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 1 1474623 4.5.2   Linux 6.14.0-37-generic</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 1 3543216 4.5.2   Linux 6.14.0-37-generic</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>                                                            version nodename</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 1 #37~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Thu Nov 20 10:25:38 UTC 2  host001</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   machine   login    user effective_user</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 1  x86_64 user001 user001        user001</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Worker R session details:</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   worker     pid     r sysname           release</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 1      1 1475686 4.5.2   Linux 6.14.0-37-generic</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 2      2 1475687 4.5.2   Linux 6.14.0-37-generic</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 1      1 3544297 4.5.2   Linux 6.14.0-37-generic</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2      2 3544296 4.5.2   Linux 6.14.0-37-generic</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>                                                            version nodename</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 1 #37~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Thu Nov 20 10:25:38 UTC 2  host001</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 2 #37~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Thu Nov 20 10:25:38 UTC 2  host001</span>
