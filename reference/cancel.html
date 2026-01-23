@@ -54,9 +54,7 @@
     <li><a class="external-link dropdown-item" href="https://listenv.futureverse.org">listenv</a></li>
     <li><a class="external-link dropdown-item" href="https://parallelly.futureverse.org">parallelly</a></li>
     <li><a class="external-link dropdown-item" href="https://progressr.futureverse.org">progressr</a></li>
-    <li><a class="external-link dropdown-item" href="https://BiocParallel.FutureParam.futureverse.org">BiocParallel.FutureParam (experimental)</a></li>
     <li><a class="external-link dropdown-item" href="https://future.tools.futureverse.org">future.tools (experimental)</a></li>
-    <li><a class="external-link dropdown-item" href="https://future.mapreduce.futureverse.org">future.mapreduce (experimental)</a></li>
     <li><a class="external-link dropdown-item" href="https://marshal.futureverse.org">marshal (experimental)</a></li>
   </ul></li>
 <li class="nav-item"><a class="external-link nav-link" href="https://cloud.r-project.org/package=future"><span class="fa fab fa-r-project"></span></a></li>
@@ -145,7 +143,7 @@ such that it can be relaunched, possibly on another future backend.</p></div>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## The value of the canceled future is an error</span></span></span>
 <span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/try.html" class="external-link">try</a></span><span class="op">(</span><span class="va">v</span> <span class="op">&lt;-</span> <span class="fu"><a href="value.html">value</a></span><span class="op">(</span><span class="va">fs</span><span class="op">[</span><span class="op">!</span><span class="va">r</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Error : Future (&lt;unnamed-3&gt;) of class MultisessionFuture was canceled (pid 3543550) [future &lt;unnamed-3&gt; (53f78903fcd6a9b4cad052fae11600ec-3); on 53f78903fcd6a9b4cad052fae11600ec@hb-x1-2023&lt;3543216&gt; at 2026-01-22 14:00:41.902213]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Error : Future (&lt;unnamed-3&gt;) of class MultisessionFuture was canceled (pid 3874698) [future &lt;unnamed-3&gt; (7a1e043358c85e967b977d36447c9bc8-3); on 7a1e043358c85e967b977d36447c9bc8@hb-x1-2023&lt;3873967&gt; at 2026-01-23 09:31:53.646319]</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Shut down parallel workers</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="plan.html">plan</a></span><span class="op">(</span><span class="va">sequential</span><span class="op">)</span></span></span>
