@@ -340,8 +340,8 @@ with(plan(multisession, workers = 2), {
   w_pid <- value(f)
 })
 print(c(main = Sys.getpid(), worker = w_pid))
-#>    main  worker 
-#> 3873967 3877181 
+#>   main worker 
+#> 267764 271003 
 
 
 
@@ -353,7 +353,7 @@ local({
   w_pid <- value(f)
   print(c(main = Sys.getpid(), worker = w_pid))
 })
-#>    main  worker 
-#> 3873967 3877277 
+#>   main worker 
+#> 267764 271102 
 
 ```

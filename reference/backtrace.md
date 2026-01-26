@@ -42,9 +42,9 @@ res <- tryCatch({
 #> [[1]]
 #> base::tryCatch(base::withCallingHandlers({
 #>     NULL
-#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpF6eBvg/callr-fun-3b1bfe2d2706fd"), 
+#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmppyDuSw/callr-fun-413976c34b82f"), 
 #>         base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
-#>         quote = TRUE), file = "/tmp/hb/RtmpF6eBvg/callr-res-3b1bfe2db7296d", 
+#>         quote = TRUE), file = "/tmp/hb/RtmppyDuSw/callr-res-413977532bcc", 
 #>         compress = FALSE)
 #>     base::flush(base::stdout())
 #>     base::flush(base::stderr())
@@ -70,7 +70,7 @@ res <- tryCatch({
 #>         if (!base::is.na(cut)) {
 #>             e2$trace <- e2$trace[-(1:cut), ]
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpF6eBvg/callr-res-3b1bfe2db7296d", 
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmppyDuSw/callr-res-413977532bcc", 
 #>             ".error"))
 #>     }
 #> }, interrupt = function(e) {
@@ -93,7 +93,7 @@ res <- tryCatch({
 #>         if (!base::is.na(cut)) {
 #>             e2$trace <- e2$trace[-(1:cut), ]
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpF6eBvg/callr-res-3b1bfe2db7296d", 
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmppyDuSw/callr-res-413977532bcc", 
 #>             ".error"))
 #>     }
 #> }, callr_message = function(e) {
@@ -138,9 +138,9 @@ res <- tryCatch({
 #> [[8]]
 #> base::withCallingHandlers({
 #>     NULL
-#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpF6eBvg/callr-fun-3b1bfe2d2706fd"), 
+#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmppyDuSw/callr-fun-413976c34b82f"), 
 #>         base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
-#>         quote = TRUE), file = "/tmp/hb/RtmpF6eBvg/callr-res-3b1bfe2db7296d", 
+#>         quote = TRUE), file = "/tmp/hb/RtmppyDuSw/callr-res-413977532bcc", 
 #>         compress = FALSE)
 #>     base::flush(base::stdout())
 #>     base::flush(base::stderr())
@@ -166,7 +166,7 @@ res <- tryCatch({
 #>         if (!base::is.na(cut)) {
 #>             e2$trace <- e2$trace[-(1:cut), ]
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpF6eBvg/callr-res-3b1bfe2db7296d", 
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmppyDuSw/callr-res-413977532bcc", 
 #>             ".error"))
 #>     }
 #> }, interrupt = function(e) {
@@ -189,7 +189,7 @@ res <- tryCatch({
 #>         if (!base::is.na(cut)) {
 #>             e2$trace <- e2$trace[-(1:cut), ]
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpF6eBvg/callr-res-3b1bfe2db7296d", 
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmppyDuSw/callr-res-413977532bcc", 
 #>             ".error"))
 #>     }
 #> }, callr_message = function(e) {
@@ -197,13 +197,13 @@ res <- tryCatch({
 #> })
 #> 
 #> [[9]]
-#> base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpF6eBvg/callr-fun-3b1bfe2d2706fd"), 
+#> base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmppyDuSw/callr-fun-413976c34b82f"), 
 #>     base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
-#>     quote = TRUE), file = "/tmp/hb/RtmpF6eBvg/callr-res-3b1bfe2db7296d", 
+#>     quote = TRUE), file = "/tmp/hb/RtmppyDuSw/callr-res-413977532bcc", 
 #>     compress = FALSE)
 #> 
 #> [[10]]
-#> base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpF6eBvg/callr-fun-3b1bfe2d2706fd"), 
+#> base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmppyDuSw/callr-fun-413976c34b82f"), 
 #>     base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
 #>     quote = TRUE)
 #> 
@@ -221,7 +221,7 @@ res <- tryCatch({
 #>         cli.hyperlink_run = hyperlinks)
 #>     pkgdown::build_site(...)
 #> }), base::quote(list(pkg = list(package = "future", version = "1.69.0-9002", 
-#>     src_path = "/tmp/hb/RtmpF6eBvg/future", meta = list(url = "https://future.futureverse.org", 
+#>     src_path = "/tmp/hb/RtmppyDuSw/future", meta = list(url = "https://future.futureverse.org", 
 #>         home = list(links = list(list(text = "Roadmap/Milestones", 
 #>             href = "https://github.com/futureverse/future/milestones"), 
 #>             list(text = "The Futureverse Project", href = "https://www.futureverse.org/"), 
@@ -243,6 +243,7 @@ res <- tryCatch({
 #>                 list(text = "listenv", href = "https://listenv.futureverse.org"), 
 #>                 list(text = "parallelly", href = "https://parallelly.futureverse.org"), 
 #>                 list(text = "progressr", href = "https://progressr.futureverse.org"), 
+#>                 list(text = "future.p2p (experimental)", href = "https://future.p2p.futureverse.org"), 
 #>                 list(text = "future.tools (experimental)", href = "https://future.tools.futureverse.org"), 
 #>                 list(text = "marshal (experimental)", href = "https://marshal.futureverse.org"))), 
 #>             cran = list(icon = "fab fa-r-project", href = "https://cloud.r-project.org/package=future"))), 
@@ -253,7 +254,7 @@ res <- tryCatch({
 #>             bootstrap = 5L, `light-switch` = TRUE)), desc = <environment>, 
 #>     bs_version = 5L, development = list(destination = "dev", 
 #>         mode = "default", version_label = "muted", in_dev = FALSE, 
-#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/RtmpF6eBvg/future/docs", 
+#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/RtmppyDuSw/future/docs", 
 #>     lang = "en-US", install_metadata = FALSE, figures = list(
 #>         dev = "ragg::agg_png", dpi = 96L, dev.args = list(), 
 #>         fig.ext = "png", fig.width = 7.29166666666667, fig.height = NULL, 
@@ -2979,7 +2980,7 @@ res <- tryCatch({
 #>         cli.hyperlink_run = hyperlinks)
 #>     pkgdown::build_site(...)
 #> })(pkg = base::quote(list(package = "future", version = "1.69.0-9002", 
-#>     src_path = "/tmp/hb/RtmpF6eBvg/future", meta = list(url = "https://future.futureverse.org", 
+#>     src_path = "/tmp/hb/RtmppyDuSw/future", meta = list(url = "https://future.futureverse.org", 
 #>         home = list(links = list(list(text = "Roadmap/Milestones", 
 #>             href = "https://github.com/futureverse/future/milestones"), 
 #>             list(text = "The Futureverse Project", href = "https://www.futureverse.org/"), 
@@ -3001,6 +3002,7 @@ res <- tryCatch({
 #>                 list(text = "listenv", href = "https://listenv.futureverse.org"), 
 #>                 list(text = "parallelly", href = "https://parallelly.futureverse.org"), 
 #>                 list(text = "progressr", href = "https://progressr.futureverse.org"), 
+#>                 list(text = "future.p2p (experimental)", href = "https://future.p2p.futureverse.org"), 
 #>                 list(text = "future.tools (experimental)", href = "https://future.tools.futureverse.org"), 
 #>                 list(text = "marshal (experimental)", href = "https://marshal.futureverse.org"))), 
 #>             cran = list(icon = "fab fa-r-project", href = "https://cloud.r-project.org/package=future"))), 
@@ -3011,7 +3013,7 @@ res <- tryCatch({
 #>             bootstrap = 5L, `light-switch` = TRUE)), desc = <environment>, 
 #>     bs_version = 5L, development = list(destination = "dev", 
 #>         mode = "default", version_label = "muted", in_dev = FALSE, 
-#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/RtmpF6eBvg/future/docs", 
+#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/RtmppyDuSw/future/docs", 
 #>     lang = "en-US", install_metadata = FALSE, figures = list(
 #>         dev = "ragg::agg_png", dpi = 96L, dev.args = list(), 
 #>         fig.ext = "png", fig.width = 7.29166666666667, fig.height = NULL, 
