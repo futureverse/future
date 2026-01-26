@@ -269,11 +269,11 @@ Run `revdepcheck::revdep_details(, "cSEM")` for more info
 
 <details>
 
-* Version: 3.10.4
+* Version: 3.10.5
 * GitHub: https://github.com/cdriveraus/ctsem
 * Source code: https://github.com/cran/ctsem
-* Date/Publication: 2025-06-30 16:40:11 UTC
-* Number of recursive dependencies: 166
+* Date/Publication: 2026-01-20 06:10:27 UTC
+* Number of recursive dependencies: 170
 
 Run `revdepcheck::revdep_details(, "ctsem")` for more info
 
@@ -285,7 +285,7 @@ Run `revdepcheck::revdep_details(, "ctsem")` for more info
     ```
     Found the following significant warnings:
       Warning: namespace ‘colorspace’ is not available and has been replaced
-    See ‘/scratch/henrik/1001117/revdep/future/checks/ctsem/new/ctsem.Rcheck/00install.out’ for details.
+    See ‘/c4/home/henrik/futureverse/future/revdep/checks/ctsem/new/ctsem.Rcheck/00install.out’ for details.
     ```
 
 *   checking re-building of vignette outputs ... WARNING
@@ -513,7 +513,43 @@ Run `revdepcheck::revdep_details(, "envi")` for more info
     ```
     Found the following significant warnings:
       Warning: no DISPLAY variable so Tk is not available
-    See ‘/scratch/henrik/1001117/revdep/future/checks/envi/new/envi.Rcheck/00install.out’ for details.
+    See ‘/c4/home/henrik/futureverse/future/revdep/checks/envi/new/envi.Rcheck/00install.out’ for details.
+    ```
+
+# FastRet
+
+<details>
+
+* Version: 1.3.0
+* GitHub: https://github.com/spang-lab/FastRet
+* Source code: https://github.com/cran/FastRet
+* Date/Publication: 2025-12-17 23:40:02 UTC
+* Number of recursive dependencies: 181
+
+Run `revdepcheck::revdep_details(, "FastRet")` for more info
+
+</details>
+
+## In both
+
+*   checking examples ... ERROR
+    ```
+    Running examples in ‘FastRet-Ex.R’ failed
+    The error most likely occurred in:
+    
+    > ### Name: analyzeCDNames
+    > ### Title: Analyze Chemical Descriptors Names
+    > ### Aliases: analyzeCDNames
+    > ### Keywords: internal
+    > 
+    > ### ** Examples
+    > 
+    > X <- analyzeCDNames(df = head(RP, 2), descriptors = CDNames[1:2])
+    2026-01-25 15:48:17.86 Descriptor 1/2
+    Error in loadNamespace(i, c(lib.loc, .libPaths()), versionCheck = vI[[i]]) : 
+      there is no package called ‘rJava’
+    Calls: analyzeCDNames ... loadNamespace -> withRestarts -> withOneRestart -> doWithOneRestart
+    Execution halted
     ```
 
 # fastRhockey
@@ -688,13 +724,13 @@ Run `revdepcheck::revdep_details(, "FracFixR")` for more info
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     <error/rlang_error>
     Error in `checkNumberOfLocalWorkers()`:
-    ! Attempting to set up 63 localhost parallel workers with only 5 CPU cores available for this R process (per 'N/A'), which could result in a 1260% load. The hard limit is set to 300%. Overusing the CPUs has negative impact on the current R process, but also on all other processes of yours and others running on the same machine. See help("parallelly.maxWorkers.localhost", package = "parallelly") for further explanations and how to override the hard limit that triggered this error. By the way, was parallel::detectCores() used, because the number of workers (63) equals detectCores() - 1? If so, please use parallelly::availableCores() instead
+    ! Attempting to set up 255 localhost parallel workers with only 5 CPU cores available for this R process (per 'N/A'), which could result in a 5100% load. The hard limit is set to 300%. Overusing the CPUs has negative impact on the current R process, but also on all other processes of yours and others running on the same machine. See help("parallelly.maxWorkers.localhost", package = "parallelly") for further explanations and how to override the hard limit that triggered this error. By the way, was parallel::detectCores() used, because the number of workers (255) equals detectCores() - 1? If so, please use parallelly::availableCores() instead
     ---
     Backtrace:
     ...
     
     Error: processing vignette 'FracFixR-intro.Rmd' failed with diagnostics:
-    Attempting to set up 63 localhost parallel workers with only 5 CPU cores available for this R process (per 'N/A'), which could result in a 1260% load. The hard limit is set to 300%. Overusing the CPUs has negative impact on the current R process, but also on all other processes of yours and others running on the same machine. See help("parallelly.maxWorkers.localhost", package = "parallelly") for further explanations and how to override the hard limit that triggered this error. By the way, was parallel::detectCores() used, because the number of workers (63) equals detectCores() - 1? If so, please use parallelly::availableCores() instead
+    Attempting to set up 255 localhost parallel workers with only 5 CPU cores available for this R process (per 'N/A'), which could result in a 5100% load. The hard limit is set to 300%. Overusing the CPUs has negative impact on the current R process, but also on all other processes of yours and others running on the same machine. See help("parallelly.maxWorkers.localhost", package = "parallelly") for further explanations and how to override the hard limit that triggered this error. By the way, was parallel::detectCores() used, because the number of workers (255) equals detectCores() - 1? If so, please use parallelly::availableCores() instead
     --- failed re-building ‘FracFixR-intro.Rmd’
     
     SUMMARY: processing the following file failed:
@@ -724,7 +760,7 @@ Run `revdepcheck::revdep_details(, "GeDS")` for more info
     ```
     Found the following significant warnings:
       Warning: no DISPLAY variable so Tk is not available
-    See ‘/scratch/henrik/1001117/revdep/future/checks/GeDS/new/GeDS.Rcheck/00install.out’ for details.
+    See ‘/c4/home/henrik/futureverse/future/revdep/checks/GeDS/new/GeDS.Rcheck/00install.out’ for details.
     ```
 
 # googleTagManageR
@@ -906,6 +942,31 @@ Run `revdepcheck::revdep_details(, "ISAnalytics")` for more info
 
 ## In both
 
+*   checking tests ...
+    ```
+      Running ‘testthat.R’
+     ERROR
+    Running the tests in ‘tests/testthat.R’ failed.
+    Complete output:
+      > library(testthat)
+      > library(ISAnalytics)
+      > 
+      > test_check("ISAnalytics")
+      Loading required namespace: plotly
+      Loading required namespace: rmarkdown
+    ...
+      Backtrace:
+          ▆
+       1. └─ISAnalytics:::.re_agg_and_estimate(...) at test-population-size-estimate.R:605:5
+       2.   ├─groups_dfs[[i]]
+       3.   └─vctrs:::`[[.vctrs_list_of`(groups_dfs, i)
+      
+      [ FAIL 1 | WARN 0 | SKIP 0 | PASS 832 ]
+      Error:
+      ! Test failures.
+      Execution halted
+    ```
+
 *   checking Rd files ... NOTE
     ```
     checkRd: (-1) refGenes_hg19.Rd:21: Lost braces; missing escapes or markup?
@@ -955,6 +1016,19 @@ Run `revdepcheck::revdep_details(, "JointAI")` for more info
 
 ## In both
 
+*   checking for code/documentation mismatches ... WARNING
+    ```
+    Codoc mismatches from Rd file 'Surv.Rd':
+    Surv
+      Code: function(time, time2, event, type = c("right", "left",
+                     "interval", "counting", "interval2"), origin = 0)
+      Docs: function(time, time2, event, type = c("right", "left",
+                     "interval", "counting", "interval2", "mstate"), origin
+                     = 0)
+      Mismatches in argument default values:
+        Name: 'type' Code: c("right", "left", "interval", "counting", "interval2") Docs: c("right", "left", "interval", "counting", "interval2", "mstate")
+    ```
+
 *   checking DESCRIPTION meta-information ... NOTE
     ```
       Missing dependency on R >= 4.1.0 because package code uses the pipe
@@ -985,6 +1059,125 @@ Run `revdepcheck::revdep_details(, "kappaGold")` for more info
       |> or function shorthand \(...) syntax added in R 4.1.0.
       File(s) using such syntax:
         ‘kappa_inference.R’
+    ```
+
+# kmeRtone
+
+<details>
+
+* Version: 1.0
+* GitHub: https://github.com/SahakyanLab/kmeRtone
+* Source code: https://github.com/cran/kmeRtone
+* Date/Publication: 2024-08-30 10:50:06 UTC
+* Number of recursive dependencies: 69
+
+Run `revdepcheck::revdep_details(, "kmeRtone")` for more info
+
+</details>
+
+## In both
+
+*   checking whether package ‘kmeRtone’ can be installed ... ERROR
+    ```
+    Installation failed.
+    See ‘/c4/home/henrik/futureverse/future/revdep/checks/kmeRtone/new/kmeRtone.Rcheck/00install.out’ for details.
+    ```
+
+## Installation
+
+### Devel
+
+```
+* installing *source* package ‘kmeRtone’ ...
+** this is package ‘kmeRtone’ version ‘1.0’
+** package ‘kmeRtone’ successfully unpacked and MD5 sums checked
+** using staged installation
+** libs
+using C++ compiler: ‘g++ (GCC) 13.3.1 20240611 (Red Hat 13.3.1-2)’
+Error in loadNamespace(x) : there is no package called ‘Rhtslib’
+Calls: loadNamespace -> withRestarts -> withOneRestart -> doWithOneRestart
+Execution halted
+g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.2-gcc13/lib64/R/include" -DNDEBUG  -I'/c4/home/henrik/futureverse/future/revdep/library/kmeRtone/Rcpp/include' -I'/c4/home/henrik/futureverse/future/revdep/library/kmeRtone/stringi/include' -I/usr/local/include    -fpic  -g -O2   -c RcppExports.cpp -o RcppExports.o
+...
+** data
+*** moving datasets to lazyload DB
+** inst
+** byte-compile and prepare package for lazy loading
+Error in loadNamespace(i, c(lib.loc, .libPaths()), versionCheck = vI[[i]]) : 
+  there is no package called ‘rJava’
+Calls: <Anonymous> ... loadNamespace -> withRestarts -> withOneRestart -> doWithOneRestart
+Execution halted
+ERROR: lazy loading failed for package ‘kmeRtone’
+* removing ‘/c4/home/henrik/futureverse/future/revdep/checks/kmeRtone/new/kmeRtone.Rcheck/kmeRtone’
+
+
+```
+### CRAN
+
+```
+* installing *source* package ‘kmeRtone’ ...
+** this is package ‘kmeRtone’ version ‘1.0’
+** package ‘kmeRtone’ successfully unpacked and MD5 sums checked
+** using staged installation
+** libs
+using C++ compiler: ‘g++ (GCC) 13.3.1 20240611 (Red Hat 13.3.1-2)’
+Error in loadNamespace(x) : there is no package called ‘Rhtslib’
+Calls: loadNamespace -> withRestarts -> withOneRestart -> doWithOneRestart
+Execution halted
+g++ -std=gnu++17 -I"/software/c4/cbi/software/_rocky8/R-4.5.2-gcc13/lib64/R/include" -DNDEBUG  -I'/c4/home/henrik/futureverse/future/revdep/library/kmeRtone/Rcpp/include' -I'/c4/home/henrik/futureverse/future/revdep/library/kmeRtone/stringi/include' -I/usr/local/include    -fpic  -g -O2   -c RcppExports.cpp -o RcppExports.o
+...
+** data
+*** moving datasets to lazyload DB
+** inst
+** byte-compile and prepare package for lazy loading
+Error in loadNamespace(i, c(lib.loc, .libPaths()), versionCheck = vI[[i]]) : 
+  there is no package called ‘rJava’
+Calls: <Anonymous> ... loadNamespace -> withRestarts -> withOneRestart -> doWithOneRestart
+Execution halted
+ERROR: lazy loading failed for package ‘kmeRtone’
+* removing ‘/c4/home/henrik/futureverse/future/revdep/checks/kmeRtone/old/kmeRtone.Rcheck/kmeRtone’
+
+
+```
+# lavDiag
+
+<details>
+
+* Version: 0.1.0
+* GitHub: https://github.com/reckak/lavDiag
+* Source code: https://github.com/cran/lavDiag
+* Date/Publication: 2026-01-17 11:50:08 UTC
+* Number of recursive dependencies: 90
+
+Run `revdepcheck::revdep_details(, "lavDiag")` for more info
+
+</details>
+
+## In both
+
+*   checking tests ...
+    ```
+      Running ‘spelling.R’
+      Running ‘testthat.R’
+     ERROR
+    Running the tests in ‘tests/testthat.R’ failed.
+    Last 50 lines of output:
+      Error in `checkNumberOfLocalWorkers(workers)`: Attempting to set up 255 localhost parallel workers with only 5 CPU cores available for this R process (per 'N/A'), which could result in a 5100% load. The hard limit is set to 300%. Overusing the CPUs has negative impact on the current R process, but also on all other processes of yours and others running on the same machine. See help("parallelly.maxWorkers.localhost", package = "parallelly") for further explanations and how to override the hard limit that triggered this error. By the way, was parallel::detectCores() used, because the number of workers (255) equals detectCores() - 1? If so, please use parallelly::availableCores() instead
+      Backtrace:
+           ▆
+        1. ├─lavDiag::augment(fit) at test-augment.R:13:3
+        2. │ └─lavDiag::lavPredict_parallel(...)
+    ...
+      Error in `prepare(fit, length.out = 15)`: Neither continuous nor ordinal branch succeeded - check model/functions.
+      Backtrace:
+          ▆
+       1. └─lavDiag::prepare(fit, length.out = 15) at test-prepare.R:12:3
+       2.   └─rlang::abort("Neither continuous nor ordinal branch succeeded - check model/functions.")
+      
+      [ FAIL 3 | WARN 25 | SKIP 1 | PASS 28 ]
+      Error:
+      ! Test failures.
+      Execution halted
     ```
 
 # ldsr
@@ -1156,23 +1349,48 @@ Run `revdepcheck::revdep_details(, "MineICA")` for more info
     Running examples in ‘MineICA-Ex.R’ failed
     The error most likely occurred in:
     
-    > ### Name: plotCorGraph
-    > ### Title: Plots graph using
-    > ### Aliases: plotCorGraph
-    > 
-    > ### ** Examples
-    > 
-    > dat1 <- data.frame(matrix(rnorm(10000),ncol=10,nrow=1000))
+    > ### Name: IcaSet
+    > ### Title: Class to Contain and Describe an ICA decomposition of
+    > ###   High-Throughput Data.
+    > ### Aliases: class:IcaSet IcaSet IcaSet-class [ [,ANY,ANY,IcaSet-method
+    > ###   [,IcaSet,ANY-method [,IcaSet,ANY,ANY-method
+    > ###   [,IcaSet,ANY,ANY,ANY-method [<- [<-,IcaSet,ANY,ANY,ANY,ANY-method
+    > ###   [<-,IcaSet,ANY,ANY,ANY-method [<-,IcaSet,ANY,ANY-method organism
     ...
-     1. └─MineICA::plotCorGraph(...)
-     2.   └─igraph::layout.fruchterman.reingold(...)
-     3.     ├─igraph:::do_call(layout_with_fr, .args = c(list(...), params))
-     4.     │ └─base::eval(call, .env)
-     5.     │   └─base::eval(call, .env)
-     6.     └─igraph::layout_with_fr(...)
-     7.       └─lifecycle::deprecate_stop("0.8.0", "layout_with_fr(area = )")
-     8.         └─lifecycle:::deprecate_stop0(msg)
-     9.           └─rlang::cnd_signal(...)
+    Annotation:  
+    > dat <- matrix(runif(100000), nrow=1000, ncol=100)
+    > rownames(dat) <- 1:nrow(dat)
+    > new("IcaSet",
+    +     dat=dat, 
+    +     A=as.data.frame(matrix(runif(1000), nrow=100, ncol=10)),
+    +     S=as.data.frame(matrix(runif(10000), nrow=1000, ncol=10), row.names = 1:nrow(dat)))
+    Error: Your query has been redirected to https://status.ensembl.org indicating this Ensembl service is currently unavailable.
+    Look at ?useEnsembl for details on how to try a mirror site.
+    Execution halted
+    ```
+
+*   checking re-building of vignette outputs ... ERROR
+    ```
+    Error(s) in re-building vignettes:
+    --- re-building ‘MineICA.Rnw’ using Sweave
+    Loading required package: BiocGenerics
+    Loading required package: generics
+    
+    Attaching package: ‘generics’
+    
+    The following objects are masked from ‘package:base’:
+    
+        as.difftime, as.factor, as.ordered, intersect, is.element, setdiff,
+    ...
+    Error : Your query has been redirected to https://status.ensembl.org indicating this Ensembl service is currently unavailable.
+    Look at ?useEnsembl for details on how to try a mirror site.
+    
+    --- failed re-building ‘MineICA.Rnw’
+    
+    SUMMARY: processing the following file failed:
+      ‘MineICA.Rnw’
+    
+    Error: Vignette re-building failed.
     Execution halted
     ```
 
@@ -1224,31 +1442,6 @@ Run `revdepcheck::revdep_details(, "MineICA")` for more info
     should have documentation entries.
     See chapter ‘Writing R documentation files’ in the ‘Writing R
     Extensions’ manual.
-    ```
-
-*   checking re-building of vignette outputs ... WARNING
-    ```
-    Error(s) in re-building vignettes:
-    --- re-building ‘MineICA.Rnw’ using Sweave
-    Loading required package: BiocGenerics
-    Loading required package: generics
-    
-    Attaching package: ‘generics’
-    
-    The following objects are masked from ‘package:base’:
-    
-        as.difftime, as.factor, as.ordered, intersect, is.element, setdiff,
-    ...
-    l.23 \usepackage
-                    {subfig}^^M
-    !  ==> Fatal error occurred, no output PDF file produced!
-    --- failed re-building ‘MineICA.Rnw’
-    
-    SUMMARY: processing the following file failed:
-      ‘MineICA.Rnw’
-    
-    Error: Vignette re-building failed.
-    Execution halted
     ```
 
 *   checking DESCRIPTION meta-information ... NOTE
@@ -1372,29 +1565,116 @@ Run `revdepcheck::revdep_details(, "mlr3resampling")` for more info
 
 ## In both
 
+*   checking examples ... ERROR
+    ```
+    Running examples in ‘mlr3resampling-Ex.R’ failed
+    The error most likely occurred in:
+    
+    > ### Name: proj_compute
+    > ### Title: Compute resampling results in a project
+    > ### Aliases: proj_compute
+    > 
+    > ### ** Examples
+    > 
+    > 
+    ...
+      version 16.05 or later: you can use SLURM's PMIx support. This
+      requires that you configure and build SLURM --with-pmix.
+    
+      Versions earlier than 16.05: you must use either SLURM's PMI-1 or
+      PMI-2 support. SLURM builds PMI-1 by default, or you can manually
+      install PMI-2. You must then build Open MPI using --with-pmi pointing
+      to the SLURM PMI library location.
+    
+    Please configure as appropriate and try again.
+    --------------------------------------------------------------------------
+    ```
+
+*   checking tests ...
+    ```
+      Running ‘testthat.R’
+     ERROR
+    Running the tests in ‘tests/testthat.R’ failed.
+    Complete output:
+      > data.table::setDTthreads(1L)
+      > if(require(testthat))test_check("mlr3resampling")
+      Loading required package: testthat
+      Loading required package: mlr3resampling
+      [c4-n43:526522] OPAL ERROR: Not initialized in file ext2x_client.c at line 112
+      --------------------------------------------------------------------------
+    ...
+        install PMI-2. You must then build Open MPI using --with-pmi pointing
+        to the SLURM PMI library location.
+      
+      Please configure as appropriate and try again.
+      --------------------------------------------------------------------------
+      *** An error occurred in MPI_Init
+      *** on a NULL communicator
+      *** MPI_ERRORS_ARE_FATAL (processes in this communicator will now abort,
+      ***    and potentially your MPI job)
+      [c4-n43:526522] Local abort before MPI_INIT completed completed successfully, but am not able to aggregate error messages, and not able to guarantee that all other processes were killed!
+    ```
+
 *   checking dependencies in R code ... NOTE
     ```
-    c4-dev4:pid1918326: PSM3 can't open nic unit: 3 (err=23)
-    c4-dev4:pid1918326.R: Unable to create UDP socket for enp3s0f1: Address family not supported by protocol
-    c4-dev4:pid1918326.R: Unable to initialize sockets NIC /sys/class/net/enp3s0f1 (unit 3:0)
-    c4-dev4:pid1918326: PSM3 can't open nic unit: 3 (err=23)
-    c4-dev4:pid1918326.R: Unable to create UDP socket for enp3s0f1: Address family not supported by protocol
-    c4-dev4:pid1918326.R: Unable to initialize sockets NIC /sys/class/net/enp3s0f1 (unit 3:0)
-    c4-dev4:pid1918326: PSM3 can't open nic unit: 3 (err=23)
-    c4-dev4:pid1918326.R: Unable to create UDP socket for enp3s0f1: Address family not supported by protocol
-    c4-dev4:pid1918326.R: Unable to initialize sockets NIC /sys/class/net/enp3s0f1 (unit 3:0)
-    c4-dev4:pid1918326: PSM3 can't open nic unit: 3 (err=23)
-    ...
-    c4-dev4:pid1918326.R: Unable to create UDP socket for enp3s0f1: Address family not supported by protocol
-    c4-dev4:pid1918326.R: Unable to initialize sockets NIC /sys/class/net/enp3s0f1 (unit 3:0)
+    [c4-n43:520752] OPAL ERROR: Not initialized in file ext2x_client.c at line 112
     --------------------------------------------------------------------------
-    Open MPI failed an OFI Libfabric library call (fi_endpoint).  This is highly
-    unusual; your job may behave unpredictably (and/or abort) after this.
+    The application appears to have been direct launched using "srun",
+    but OMPI was not built with SLURM's PMI support and therefore cannot
+    execute. There are several options for building PMI support under
+    SLURM, depending upon the SLURM version you are using:
     
-      Local host: c4-dev4
-      Location: mtl_ofi_component.c:513
-      Error: Invalid argument (22)
+      version 16.05 or later: you can use SLURM's PMIx support. This
+      requires that you configure and build SLURM --with-pmix.
+    
+      Versions earlier than 16.05: you must use either SLURM's PMI-1 or
+      PMI-2 support. SLURM builds PMI-1 by default, or you can manually
+      install PMI-2. You must then build Open MPI using --with-pmi pointing
+      to the SLURM PMI library location.
+    
+    Please configure as appropriate and try again.
     --------------------------------------------------------------------------
+    ```
+
+# mongolstats
+
+<details>
+
+* Version: 0.1.0
+* GitHub: https://github.com/temuulene/mongolstats
+* Source code: https://github.com/cran/mongolstats
+* Date/Publication: 2026-01-18 11:00:02 UTC
+* Number of recursive dependencies: 117
+
+Run `revdepcheck::revdep_details(, "mongolstats")` for more info
+
+</details>
+
+## In both
+
+*   checking re-building of vignette outputs ... ERROR
+    ```
+    Error(s) in re-building vignettes:
+    --- re-building ‘discovery.Rmd’ using rmarkdown
+    [WARNING] Deprecated: --highlight-style. Use --syntax-highlighting instead.
+    --- finished re-building ‘discovery.Rmd’
+    
+    --- re-building ‘environmental-surveillance.Rmd’ using rmarkdown
+    
+    Quitting from environmental-surveillance.Rmd:61-145 [air-quality-data]
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    <error/rlang_error>
+    ...
+    
+    --- re-building ‘ub-health-environment.Rmd’ using rmarkdown
+    [WARNING] Deprecated: --highlight-style. Use --syntax-highlighting instead.
+    --- finished re-building ‘ub-health-environment.Rmd’
+    
+    SUMMARY: processing the following file failed:
+      ‘environmental-surveillance.Rmd’
+    
+    Error: Vignette re-building failed.
+    Execution halted
     ```
 
 # multiverse
@@ -1469,7 +1749,30 @@ Run `revdepcheck::revdep_details(, "outliers.ts.oga")` for more info
     ```
     Found the following significant warnings:
       Warning: no DISPLAY variable so Tk is not available
-    See ‘/scratch/henrik/1001117/revdep/future/checks/outliers.ts.oga/new/outliers.ts.oga.Rcheck/00install.out’ for details.
+    See ‘/c4/home/henrik/futureverse/future/revdep/checks/outliers.ts.oga/new/outliers.ts.oga.Rcheck/00install.out’ for details.
+    ```
+
+# OutSeekR
+
+<details>
+
+* Version: 1.1.0
+* GitHub: NA
+* Source code: https://github.com/cran/OutSeekR
+* Date/Publication: 2026-01-16 17:00:22 UTC
+* Number of recursive dependencies: 35
+
+Run `revdepcheck::revdep_details(, "OutSeekR")` for more info
+
+</details>
+
+## In both
+
+*   checking dependencies in R code ... NOTE
+    ```
+    Namespaces in Imports field not imported from:
+      ‘future’ ‘truncnorm’
+      All declared Imports should be used.
     ```
 
 # PAMpal
@@ -1492,7 +1795,7 @@ Run `revdepcheck::revdep_details(, "PAMpal")` for more info
     ```
     Found the following significant warnings:
       Warning: no DISPLAY variable so Tk is not available
-    See ‘/scratch/henrik/1001117/revdep/future/checks/PAMpal/new/PAMpal.Rcheck/00install.out’ for details.
+    See ‘/c4/home/henrik/futureverse/future/revdep/checks/PAMpal/new/PAMpal.Rcheck/00install.out’ for details.
     ```
 
 # PAMscapes
@@ -1515,7 +1818,7 @@ Run `revdepcheck::revdep_details(, "PAMscapes")` for more info
     ```
     Found the following significant warnings:
       Warning: no DISPLAY variable so Tk is not available
-    See ‘/scratch/henrik/1001117/revdep/future/checks/PAMscapes/new/PAMscapes.Rcheck/00install.out’ for details.
+    See ‘/c4/home/henrik/futureverse/future/revdep/checks/PAMscapes/new/PAMscapes.Rcheck/00install.out’ for details.
     ```
 
 # partR2
@@ -1560,7 +1863,7 @@ Run `revdepcheck::revdep_details(, "pavo")` for more info
     ```
     Found the following significant warnings:
       Warning: no DISPLAY variable so Tk is not available
-    See ‘/scratch/henrik/1001117/revdep/future/checks/pavo/new/pavo.Rcheck/00install.out’ for details.
+    See ‘/c4/home/henrik/futureverse/future/revdep/checks/pavo/new/pavo.Rcheck/00install.out’ for details.
     ```
 
 # pgxRpi
@@ -1578,6 +1881,56 @@ Run `revdepcheck::revdep_details(, "pgxRpi")` for more info
 </details>
 
 ## In both
+
+*   checking tests ...
+    ```
+      Running ‘testthat.R’
+     ERROR
+    Running the tests in ‘tests/testthat.R’ failed.
+    Last 50 lines of output:
+      Saving _problems/test_variants-57.R
+      
+       trying: https://progenetix.org/services/samplematrix/?filters=pgx:icdom-88503 
+      Saving _problems/test_variants-64.R
+      Saving _problems/test_variants-65.R
+      Saving _problems/test_variants-66.R
+    ...
+          ▆
+       1. ├─testthat::expect_gt(nrow(result), 0) at test_variants.R:66:5
+       2. │ └─testthat::quasi_label(enquo(object), label)
+       3. │   └─rlang::eval_bare(expr, quo_get_env(quo))
+       4. └─base::nrow(result)
+      
+      [ FAIL 5 | WARN 2 | SKIP 0 | PASS 35 ]
+      Error:
+      ! Test failures.
+      Execution halted
+    ```
+
+*   checking re-building of vignette outputs ... ERROR
+    ```
+    Error(s) in re-building vignettes:
+    --- re-building ‘Introduction_1_load_metadata.Rmd’ using rmarkdown
+    The magick package is required to crop "/c4/home/henrik/futureverse/future/revdep/checks/pgxRpi/new/pgxRpi.Rcheck/vign_test/pgxRpi/vignettes/Introduction_1_load_metadata_files/figure-html/unnamed-chunk-13-1.png" but not available.
+    --- finished re-building ‘Introduction_1_load_metadata.Rmd’
+    
+    --- re-building ‘Introduction_2_query_variants.Rmd’ using rmarkdown
+    --- finished re-building ‘Introduction_2_query_variants.Rmd’
+    
+    --- re-building ‘Introduction_3_access_cnv_frequency.Rmd’ using rmarkdown
+    
+    ...
+    The magick package is required to crop "/c4/home/henrik/futureverse/future/revdep/checks/pgxRpi/new/pgxRpi.Rcheck/vign_test/pgxRpi/vignettes/Introduction_4_process_pgxseg_files/figure-html/unnamed-chunk-14-1.png" but not available.
+    The magick package is required to crop "/c4/home/henrik/futureverse/future/revdep/checks/pgxRpi/new/pgxRpi.Rcheck/vign_test/pgxRpi/vignettes/Introduction_4_process_pgxseg_files/figure-html/unnamed-chunk-15-1.png" but not available.
+    The magick package is required to crop "/c4/home/henrik/futureverse/future/revdep/checks/pgxRpi/new/pgxRpi.Rcheck/vign_test/pgxRpi/vignettes/Introduction_4_process_pgxseg_files/figure-html/unnamed-chunk-16-1.png" but not available.
+    --- finished re-building ‘Introduction_4_process_pgxseg.Rmd’
+    
+    SUMMARY: processing the following file failed:
+      ‘Introduction_3_access_cnv_frequency.Rmd’
+    
+    Error: Vignette re-building failed.
+    Execution halted
+    ```
 
 *   checking R code for possible problems ... NOTE
     ```
@@ -1660,7 +2013,7 @@ Run `revdepcheck::revdep_details(, "Prostar")` for more info
     ```
     Found the following significant warnings:
       Warning: replacing previous import ‘future::reset’ by ‘shinyjs::reset’ when loading ‘Prostar’
-    See ‘/scratch/henrik/1001117/revdep/future/checks/Prostar/new/Prostar.Rcheck/00install.out’ for details.
+    See ‘/c4/home/henrik/futureverse/future/revdep/checks/Prostar/new/Prostar.Rcheck/00install.out’ for details.
     ```
 
 *   checking for hidden files and directories ... NOTE
@@ -1774,6 +2127,30 @@ Run `revdepcheck::revdep_details(, "QDNAseq")` for more info
     Execution halted
     ```
 
+# Rcurvep
+
+<details>
+
+* Version: 1.3.2
+* GitHub: https://github.com/moggces/Rcurvep
+* Source code: https://github.com/cran/Rcurvep
+* Date/Publication: 2025-05-31 21:10:02 UTC
+* Number of recursive dependencies: 122
+
+Run `revdepcheck::revdep_details(, "Rcurvep")` for more info
+
+</details>
+
+## In both
+
+*   checking package dependencies ... ERROR
+    ```
+    Package required but not available: ‘rJava’
+    
+    See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
+    manual.
+    ```
+
 # receptiviti
 
 <details>
@@ -1860,6 +2237,29 @@ Run `revdepcheck::revdep_details(, "regmedint")` for more info
     ```
     Namespace in Imports field not imported from: ‘Deriv’
       All declared Imports should be used.
+    ```
+
+# remiod
+
+<details>
+
+* Version: 1.0.2
+* GitHub: https://github.com/xsswang/remiod
+* Source code: https://github.com/cran/remiod
+* Date/Publication: 2022-11-18 17:20:02 UTC
+* Number of recursive dependencies: 147
+
+Run `revdepcheck::revdep_details(, "remiod")` for more info
+
+</details>
+
+## In both
+
+*   checking whether package ‘remiod’ can be installed ... WARNING
+    ```
+    Found the following significant warnings:
+      Warning: replacing previous import ‘JointAI::Surv’ by ‘survival::Surv’ when loading ‘remiod’
+    See ‘/c4/home/henrik/futureverse/future/revdep/checks/remiod/new/remiod.Rcheck/00install.out’ for details.
     ```
 
 # rsi
@@ -2178,6 +2578,42 @@ Run `revdepcheck::revdep_details(, "solitude")` for more info
       All declared Imports should be used.
     ```
 
+# SpaDES.core
+
+<details>
+
+* Version: 3.0.4
+* GitHub: https://github.com/PredictiveEcology/SpaDES.core
+* Source code: https://github.com/cran/SpaDES.core
+* Date/Publication: 2026-01-11 06:12:04 UTC
+* Number of recursive dependencies: 142
+
+Run `revdepcheck::revdep_details(, "SpaDES.core")` for more info
+
+</details>
+
+## In both
+
+*   checking examples ... ERROR
+    ```
+    Running examples in ‘SpaDES.core-Ex.R’ failed
+    The error most likely occurred in:
+    
+    > ### Name: convertToPackage
+    > ### Title: Convert standard module code into an R package
+    > ### Aliases: convertToPackage
+    > 
+    > ### ** Examples
+    > 
+    > if (requireNamespace("ggplot2") && requireNamespace("pkgload") ) {
+    +   tmpdir <- tempdir2()
+    +   newModule("test", tmpdir, open = FALSE)
+    +   convertToPackage("test", path = tmpdir)
+    + }
+    Loading required namespace: pkgload
+    New module test created at /scratch/henrik/1016046/RtmpqVW9ux/reproducible/U3C0xYmG
+    ```
+
 # sparrpowR
 
 <details>
@@ -2198,7 +2634,7 @@ Run `revdepcheck::revdep_details(, "sparrpowR")` for more info
     ```
     Found the following significant warnings:
       Warning: no DISPLAY variable so Tk is not available
-    See ‘/scratch/henrik/1001117/revdep/future/checks/sparrpowR/new/sparrpowR.Rcheck/00install.out’ for details.
+    See ‘/c4/home/henrik/futureverse/future/revdep/checks/sparrpowR/new/sparrpowR.Rcheck/00install.out’ for details.
     ```
 
 # spdesign
@@ -2342,7 +2778,7 @@ Run `revdepcheck::revdep_details(, "stppSim")` for more info
     ```
     Found the following significant warnings:
       Warning: no DISPLAY variable so Tk is not available
-    See ‘/scratch/henrik/1001117/revdep/future/checks/stppSim/new/stppSim.Rcheck/00install.out’ for details.
+    See ‘/c4/home/henrik/futureverse/future/revdep/checks/stppSim/new/stppSim.Rcheck/00install.out’ for details.
     ```
 
 # survstan
@@ -2353,7 +2789,7 @@ Run `revdepcheck::revdep_details(, "stppSim")` for more info
 * GitHub: https://github.com/fndemarqui/survstan
 * Source code: https://github.com/cran/survstan
 * Date/Publication: 2024-04-12 16:50:02 UTC
-* Number of recursive dependencies: 111
+* Number of recursive dependencies: 112
 
 Run `revdepcheck::revdep_details(, "survstan")` for more info
 
@@ -2437,6 +2873,27 @@ Run `revdepcheck::revdep_details(, "synergyfinder")` for more info
            |          ^
     ```
 
+# targets
+
+<details>
+
+* Version: 1.11.4
+* GitHub: https://github.com/ropensci/targets
+* Source code: https://github.com/cran/targets
+* Date/Publication: 2025-09-13 05:10:02 UTC
+* Number of recursive dependencies: 156
+
+Run `revdepcheck::revdep_details(, "targets")` for more info
+
+</details>
+
+## In both
+
+*   checking Rd cross-references ... NOTE
+    ```
+    Unknown package ‘qs’ in Rd xrefs
+    ```
+
 # tramvs
 
 <details>
@@ -2497,7 +2954,7 @@ Run `revdepcheck::revdep_details(, "TriDimRegression")` for more info
 *   checking whether package ‘TriDimRegression’ can be installed ... ERROR
     ```
     Installation failed.
-    See ‘/scratch/henrik/1001117/revdep/future/checks/TriDimRegression/new/TriDimRegression.Rcheck/00install.out’ for details.
+    See ‘/c4/home/henrik/futureverse/future/revdep/checks/TriDimRegression/new/TriDimRegression.Rcheck/00install.out’ for details.
     ```
 
 ## Installation
@@ -2513,7 +2970,7 @@ Error in loadNamespace(x) : there is no package called ‘rstantools’
 Calls: loadNamespace -> withRestarts -> withOneRestart -> doWithOneRestart
 Execution halted
 ERROR: configuration failed for package ‘TriDimRegression’
-* removing ‘/scratch/henrik/1001117/revdep/future/checks/TriDimRegression/new/TriDimRegression.Rcheck/TriDimRegression’
+* removing ‘/c4/home/henrik/futureverse/future/revdep/checks/TriDimRegression/new/TriDimRegression.Rcheck/TriDimRegression’
 
 
 ```
@@ -2528,7 +2985,7 @@ Error in loadNamespace(x) : there is no package called ‘rstantools’
 Calls: loadNamespace -> withRestarts -> withOneRestart -> doWithOneRestart
 Execution halted
 ERROR: configuration failed for package ‘TriDimRegression’
-* removing ‘/scratch/henrik/1001117/revdep/future/checks/TriDimRegression/old/TriDimRegression.Rcheck/TriDimRegression’
+* removing ‘/c4/home/henrik/futureverse/future/revdep/checks/TriDimRegression/old/TriDimRegression.Rcheck/TriDimRegression’
 
 
 ```
@@ -2624,7 +3081,7 @@ Run `revdepcheck::revdep_details(, "tsmarch")` for more info
                             \citeproctext{}{} 
     
     Error: processing vignette 'feasible_multivariate_garch.Rmd' failed with diagnostics:
-    LaTeX failed to compile /scratch/henrik/1001117/revdep/future/checks/tsmarch/new/tsmarch.Rcheck/vign_test/tsmarch/vignettes/feasible_multivariate_garch.tex. See https://yihui.org/tinytex/r/#debugging for debugging tips. See feasible_multivariate_garch.log for more info.
+    LaTeX failed to compile /c4/home/henrik/futureverse/future/revdep/checks/tsmarch/new/tsmarch.Rcheck/vign_test/tsmarch/vignettes/feasible_multivariate_garch.tex. See https://yihui.org/tinytex/r/#debugging for debugging tips. See feasible_multivariate_garch.log for more info.
     ...
     
     --- re-building ‘tsmarch_demo.Rmd’ using rmarkdown
@@ -2687,7 +3144,7 @@ Run `revdepcheck::revdep_details(, "vmeasur")` for more info
     ```
     Found the following significant warnings:
       Warning: no DISPLAY variable so Tk is not available
-    See ‘/scratch/henrik/1001117/revdep/future/checks/vmeasur/new/vmeasur.Rcheck/00install.out’ for details.
+    See ‘/c4/home/henrik/futureverse/future/revdep/checks/vmeasur/new/vmeasur.Rcheck/00install.out’ for details.
     ```
 
 # WeightedCluster
