@@ -640,11 +640,11 @@ There is one limitation with implicit futures that does not exist for explicit o
 ```r
 <%=withCapture({
 plan(multisession, workers = 2)
-f <- list()
+fs <- list()
 for (ii in 1:3) {
-  f[[ii]] <- future({ Sys.getpid() })
+  fs[[ii]] <- future({ Sys.getpid() })
 }
-v <- value(f)
+v <- value(fs)
 str(v)
 })%>
 ```
