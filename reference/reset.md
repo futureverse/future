@@ -73,8 +73,6 @@ repeat({
 #> Resetting failed future, and retry in 0.1 seconds
 #> Resetting failed future, and retry in 0.1 seconds
 #> Resetting failed future, and retry in 0.1 seconds
-#> Resetting failed future, and retry in 0.1 seconds
-#> Resetting failed future, and retry in 0.1 seconds
 cat("mean:", v, "\n")
 #> mean: 0.03014631 
 ```
