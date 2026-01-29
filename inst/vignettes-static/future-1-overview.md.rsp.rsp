@@ -644,7 +644,7 @@ f <- list()
 for (ii in 1:3) {
   f[[ii]] <- future({ Sys.getpid() })
 }
-v <- lapply(f, FUN = value)
+v <- value(f)
 str(v)
 })%>
 ```
