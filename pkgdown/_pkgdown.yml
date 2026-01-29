@@ -35,6 +35,8 @@ navbar:
         href: https://future.mirai.futureverse.org
       - text: future.tests 
         href: https://future.tests.futureverse.org
+      - text: futurize (map-reduce)
+        href: https://futurize.futureverse.org
       - text: globals 
         href: https://globals.futureverse.org
       - text: listenv 
@@ -43,12 +45,10 @@ navbar:
         href: https://parallelly.futureverse.org
       - text: progressr 
         href: https://progressr.futureverse.org
-      - text: BiocParallel.FutureParam (experimental)
-        href: https://BiocParallel.FutureParam.futureverse.org
+      - text: future.p2p (experimental)
+        href: https://future.p2p.futureverse.org
       - text: future.tools (experimental)
         href: https://future.tools.futureverse.org
-      - text: future.mapreduce (experimental)
-        href: https://future.mapreduce.futureverse.org
       - text: marshal (experimental)
         href: https://marshal.futureverse.org
     cran:
