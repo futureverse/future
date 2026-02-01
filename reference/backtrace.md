@@ -42,9 +42,9 @@ res <- tryCatch({
 #> [[1]]
 #> base::tryCatch(base::withCallingHandlers({
 #>     NULL
-#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/Rtmpm9Reym/callr-fun-cb5137190aef6"), 
+#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/Rtmp1RtZaP/callr-fun-109e0313a38b02"), 
 #>         base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
-#>         quote = TRUE), file = "/tmp/hb/Rtmpm9Reym/callr-res-cb5136777c4c2", 
+#>         quote = TRUE), file = "/tmp/hb/Rtmp1RtZaP/callr-res-109e032488db91", 
 #>         compress = FALSE)
 #>     base::flush(base::stdout())
 #>     base::flush(base::stderr())
@@ -70,7 +70,7 @@ res <- tryCatch({
 #>         if (!base::is.na(cut)) {
 #>             e2$trace <- e2$trace[-(1:cut), ]
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/Rtmpm9Reym/callr-res-cb5136777c4c2", 
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/Rtmp1RtZaP/callr-res-109e032488db91", 
 #>             ".error"))
 #>     }
 #> }, interrupt = function(e) {
@@ -93,7 +93,7 @@ res <- tryCatch({
 #>         if (!base::is.na(cut)) {
 #>             e2$trace <- e2$trace[-(1:cut), ]
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/Rtmpm9Reym/callr-res-cb5136777c4c2", 
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/Rtmp1RtZaP/callr-res-109e032488db91", 
 #>             ".error"))
 #>     }
 #> }, callr_message = function(e) {
@@ -138,9 +138,9 @@ res <- tryCatch({
 #> [[8]]
 #> base::withCallingHandlers({
 #>     NULL
-#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/Rtmpm9Reym/callr-fun-cb5137190aef6"), 
+#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/Rtmp1RtZaP/callr-fun-109e0313a38b02"), 
 #>         base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
-#>         quote = TRUE), file = "/tmp/hb/Rtmpm9Reym/callr-res-cb5136777c4c2", 
+#>         quote = TRUE), file = "/tmp/hb/Rtmp1RtZaP/callr-res-109e032488db91", 
 #>         compress = FALSE)
 #>     base::flush(base::stdout())
 #>     base::flush(base::stderr())
@@ -166,7 +166,7 @@ res <- tryCatch({
 #>         if (!base::is.na(cut)) {
 #>             e2$trace <- e2$trace[-(1:cut), ]
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/Rtmpm9Reym/callr-res-cb5136777c4c2", 
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/Rtmp1RtZaP/callr-res-109e032488db91", 
 #>             ".error"))
 #>     }
 #> }, interrupt = function(e) {
@@ -189,7 +189,7 @@ res <- tryCatch({
 #>         if (!base::is.na(cut)) {
 #>             e2$trace <- e2$trace[-(1:cut), ]
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/Rtmpm9Reym/callr-res-cb5136777c4c2", 
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/Rtmp1RtZaP/callr-res-109e032488db91", 
 #>             ".error"))
 #>     }
 #> }, callr_message = function(e) {
@@ -197,13 +197,13 @@ res <- tryCatch({
 #> })
 #> 
 #> [[9]]
-#> base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/Rtmpm9Reym/callr-fun-cb5137190aef6"), 
+#> base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/Rtmp1RtZaP/callr-fun-109e0313a38b02"), 
 #>     base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
-#>     quote = TRUE), file = "/tmp/hb/Rtmpm9Reym/callr-res-cb5136777c4c2", 
+#>     quote = TRUE), file = "/tmp/hb/Rtmp1RtZaP/callr-res-109e032488db91", 
 #>     compress = FALSE)
 #> 
 #> [[10]]
-#> base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/Rtmpm9Reym/callr-fun-cb5137190aef6"), 
+#> base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/Rtmp1RtZaP/callr-fun-109e0313a38b02"), 
 #>     base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
 #>     quote = TRUE)
 #> 
@@ -221,7 +221,7 @@ res <- tryCatch({
 #>         cli.hyperlink_run = hyperlinks)
 #>     pkgdown::build_site(...)
 #> }), base::quote(list(pkg = list(package = "future", version = "1.69.0-9003", 
-#>     src_path = "/tmp/hb/Rtmpm9Reym/future", meta = list(url = "https://future.futureverse.org", 
+#>     src_path = "/tmp/hb/Rtmp1RtZaP/future", meta = list(url = "https://future.futureverse.org", 
 #>         home = list(links = list(list(text = "Roadmap/Milestones", 
 #>             href = "https://github.com/futureverse/future/milestones"), 
 #>             list(text = "The Futureverse Project", href = "https://www.futureverse.org/"), 
@@ -254,7 +254,7 @@ res <- tryCatch({
 #>             bootstrap = 5L, `light-switch` = TRUE)), desc = <environment>, 
 #>     bs_version = 5L, development = list(destination = "dev", 
 #>         mode = "default", version_label = "muted", in_dev = FALSE, 
-#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/Rtmpm9Reym/future/docs", 
+#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/Rtmp1RtZaP/future/docs", 
 #>     lang = "en-US", install_metadata = FALSE, figures = list(
 #>         dev = "ragg::agg_png", dpi = 96L, dev.args = list(), 
 #>         fig.ext = "png", fig.width = 7.29166666666667, fig.height = NULL, 
@@ -1652,6 +1652,27 @@ res <- tryCatch({
 #>                   "is produced. The error can be de-escalated to a warning by setting\n", 
 #>                   "R option ", list("future.ClusterFuture.clusterEvalQ"), 
 #>                   " to ", list("\"warning\""), ".\n")), "\n", 
+#>                 "\n", list(list("Benefits of using makeClusterFuture()"), 
+#>                   list("\n", "\n", "\n", "Many packages rely on traditional ", 
+#>                     list("parallel"), " functions such as\n", 
+#>                     list("parallel::parLapply()"), " and ", list(
+#>                       "parallel::clusterApply()"), ". Some of them\n", 
+#>                     "expose arguments (e.g. ", list("cl"), " or ", 
+#>                     list("cluster"), "), or supports\n", list(
+#>                       "parallel::getDefaultCluster()"), ", for using a custom ", 
+#>                     list("parallel"), "\n", list("cluster"), 
+#>                     " object. The ", list("makeClusterFuture()"), 
+#>                     " function brings the all\n", "benefits of the future ecosystem to those packages and functions.\n", 
+#>                     "\n", "One benefit is that you can use ", 
+#>                     list("any"), " future parallel backend,\n", 
+#>                     "e.g. ", list("plan(multisession)"), ", ", 
+#>                     list("plan(future.mirai::mirai_multisession)"), 
+#>                     ",\n", list("plan(future.batchtools::batchtools_slurm)"), 
+#>                     ".\n", "\n", "Another benefit is that output, messages, warnings, and other types of\n", 
+#>                     "conditions produced on parallel workers are automatically relayed in\n", 
+#>                     "the main R session. This can be very helpful for progress reporting\n", 
+#>                     "and troubleshooting. Among all parallel frameworks in R, only the\n", 
+#>                     "future ecosystem does this.\n")), "\n", 
 #>                 "\n", list("\n", list("if ((getRversion() >= \"4.4.0\")) withAutoprint({ # examplesIf"), 
 #>                   "\n", "plan(multisession)\n", "cl <- makeClusterFuture()\n", 
 #>                   "\n", "parallel::clusterSetRNGStream(cl)\n", 
@@ -2980,7 +3001,7 @@ res <- tryCatch({
 #>         cli.hyperlink_run = hyperlinks)
 #>     pkgdown::build_site(...)
 #> })(pkg = base::quote(list(package = "future", version = "1.69.0-9003", 
-#>     src_path = "/tmp/hb/Rtmpm9Reym/future", meta = list(url = "https://future.futureverse.org", 
+#>     src_path = "/tmp/hb/Rtmp1RtZaP/future", meta = list(url = "https://future.futureverse.org", 
 #>         home = list(links = list(list(text = "Roadmap/Milestones", 
 #>             href = "https://github.com/futureverse/future/milestones"), 
 #>             list(text = "The Futureverse Project", href = "https://www.futureverse.org/"), 
@@ -3013,7 +3034,7 @@ res <- tryCatch({
 #>             bootstrap = 5L, `light-switch` = TRUE)), desc = <environment>, 
 #>     bs_version = 5L, development = list(destination = "dev", 
 #>         mode = "default", version_label = "muted", in_dev = FALSE, 
-#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/Rtmpm9Reym/future/docs", 
+#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/Rtmp1RtZaP/future/docs", 
 #>     lang = "en-US", install_metadata = FALSE, figures = list(
 #>         dev = "ragg::agg_png", dpi = 96L, dev.args = list(), 
 #>         fig.ext = "png", fig.width = 7.29166666666667, fig.height = NULL, 
@@ -4411,6 +4432,27 @@ res <- tryCatch({
 #>                   "is produced. The error can be de-escalated to a warning by setting\n", 
 #>                   "R option ", list("future.ClusterFuture.clusterEvalQ"), 
 #>                   " to ", list("\"warning\""), ".\n")), "\n", 
+#>                 "\n", list(list("Benefits of using makeClusterFuture()"), 
+#>                   list("\n", "\n", "\n", "Many packages rely on traditional ", 
+#>                     list("parallel"), " functions such as\n", 
+#>                     list("parallel::parLapply()"), " and ", list(
+#>                       "parallel::clusterApply()"), ". Some of them\n", 
+#>                     "expose arguments (e.g. ", list("cl"), " or ", 
+#>                     list("cluster"), "), or supports\n", list(
+#>                       "parallel::getDefaultCluster()"), ", for using a custom ", 
+#>                     list("parallel"), "\n", list("cluster"), 
+#>                     " object. The ", list("makeClusterFuture()"), 
+#>                     " function brings the all\n", "benefits of the future ecosystem to those packages and functions.\n", 
+#>                     "\n", "One benefit is that you can use ", 
+#>                     list("any"), " future parallel backend,\n", 
+#>                     "e.g. ", list("plan(multisession)"), ", ", 
+#>                     list("plan(future.mirai::mirai_multisession)"), 
+#>                     ",\n", list("plan(future.batchtools::batchtools_slurm)"), 
+#>                     ".\n", "\n", "Another benefit is that output, messages, warnings, and other types of\n", 
+#>                     "conditions produced on parallel workers are automatically relayed in\n", 
+#>                     "the main R session. This can be very helpful for progress reporting\n", 
+#>                     "and troubleshooting. Among all parallel frameworks in R, only the\n", 
+#>                     "future ecosystem does this.\n")), "\n", 
 #>                 "\n", list("\n", list("if ((getRversion() >= \"4.4.0\")) withAutoprint({ # examplesIf"), 
 #>                   "\n", "plan(multisession)\n", "cl <- makeClusterFuture()\n", 
 #>                   "\n", "parallel::clusterSetRNGStream(cl)\n", 

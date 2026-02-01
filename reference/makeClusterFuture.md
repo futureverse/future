@@ -89,6 +89,28 @@ If `clusterEvalQ()` is called, the call is ignored, and an error is
 produced. The error can be de-escalated to a warning by setting R option
 `future.ClusterFuture.clusterEvalQ` to `"warning"`.
 
+## Benefits of using makeClusterFuture()
+
+Many packages rely on traditional **parallel** functions such as
+[`parallel::parLapply()`](https://rdrr.io/r/parallel/clusterApply.html)
+and
+[`parallel::clusterApply()`](https://rdrr.io/r/parallel/clusterApply.html).
+Some of them expose arguments (e.g. `cl` or `cluster`), or supports
+[`parallel::getDefaultCluster()`](https://rdrr.io/r/parallel/makeCluster.html),
+for using a custom **parallel** `cluster` object. The
+`makeClusterFuture()` function brings the all benefits of the future
+ecosystem to those packages and functions.
+
+One benefit is that you can use *any* future parallel backend, e.g.
+`plan(multisession)`, `plan(future.mirai::mirai_multisession)`,
+`plan(future.batchtools::batchtools_slurm)`.
+
+Another benefit is that output, messages, warnings, and other types of
+conditions produced on parallel workers are automatically relayed in the
+main R session. This can be very helpful for progress reporting and
+troubleshooting. Among all parallel frameworks in R, only the future
+ecosystem does this.
+
 ## Examples
 
 ``` r
@@ -101,9 +123,9 @@ y <- parallel::parLapply(cl, 11:13, function(x) {
   message("Process ID: ", Sys.getpid())
   mean(rnorm(n = x))
 })
-#> Process ID: 834131
-#> Process ID: 834132
-#> Process ID: 834136
+#> Process ID: 1090372
+#> Process ID: 1090375
+#> Process ID: 1090371
 str(y)
 #> List of 3
 #>  $ : num 0.0146
