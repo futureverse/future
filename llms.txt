@@ -9,9 +9,10 @@ a cross-platform solution that requires no additional setups or
 technical skills. Anyone can be up and running within a few minutes.
 
 At the core of Futureverse is this package, the **future** package. Most
-users interactive with the future ecosystem using higher-level packages
-such as **futurize** for its convenience of running map-reduce calls
-concurrently. Here are some examples of both:
+users interact with the future ecosystem using higher-level packages
+such as **[futurize](https://futurize.futureverse.org/)** for its
+convenience of running map-reduce calls concurrently. Here are some
+examples of both:
 
 ``` r
 library(future)
