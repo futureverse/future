@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.69.0-9003</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.69.0-9005</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -570,10 +570,10 @@ For instance, here is an example of two “top” futures (a and b) that uses mu
 <span id="cb13-28"><a href="#cb13-28" tabindex="-1"></a>  b.pid  b1.pid  b2.pid</span>
 <span id="cb13-29"><a href="#cb13-29" tabindex="-1"></a><span class="dv">1427607</span> <span class="dv">1427607</span> <span class="dv">1427607</span></span></code></pre></div>
 <!--
-By inspection the process IDs, we see that there are in total three different processes involved for resolving the futures.
-There is the main R process (pid 1427324), and there are the two processes used by a (pid 1427606) and b (pid 1427607).
-However, the two futures (b1 and b2) that is nested by b are evaluated by the same R process as b.
-This is because nested futures use sequential evaluation unless otherwise specified.
+By inspecting the process IDs, we see that there are in total three different processes involved for resolving the futures.
+The main R process
+(pid 831123)
+and the two processes used by `a`This is because nested futures use sequential evaluation unless otherwise specified.
 There are a few reasons for this, but the main reason is that it protects us from spawning off a large number of background processes by mistake, e.g. via recursive calls.
 -->
 <p>プロセスIDを見ると、3つの異なるプロセスがフューチャの解決に使われていることがわかる。 メインプロセス (pid 1427324)、<code>a</code> に使われるプロセス (pid 1427606)、<code>b</code> に使われるプロセス (pid 1427607) である。 しかし、<code>b</code> にネストされている2つのフューチャ <code>b1</code> と <code>b2</code> は <code>b</code> と同じプロセスで評価されている。 これは、特に指定しない限り、ネストされたフューチャは逐次戦略を使って評価されるためである。 これにはいくつかの理由があるが、主な理由は、再帰呼び出しなどによって、誤って多くのバックグラウンドプロセスが発生するのを防ぐためである。</p>
@@ -748,7 +748,7 @@ The future package tries to automate these tasks as far as possible.
 It does this with help of the globals package, which uses static-code inspection to identify global variables.
 If a global variable is identified, it is captured and made available to the evaluating process.
 Moreover, if a global is defined in a package, then that global is not exported.
-Instead, it is made sure that the corresponding package is attached when the future is evaluated.
+Instead, it ensures that the corresponding package is attached when the future is evaluated.
 This not only better reflects the setup of the main R session, but it also minimizes the need for exporting globals, which saves not only memory but also time and bandwidth, especially when using remote compute nodes.
 -->
 <p>future パッケージではこれをできる限り自動化している。 そのために静的コード解析によってグローバル変数を特定する <a href="https://cran.r-project.org/package=globals" class="external-link">globals</a> パッケージが使われる。 グローバル変数が特定されると、キャプチャされ、評価プロセスで利用可能になる。 また、パッケージ内でグローバル変数が定義されている場合、それらはエクスポートされない。 かわりに、フューチャが評価されるときに対応するパッケージが確実に読み込まれているようにする。 これはメイン R セッションの設定をよりよく反映するだけでなく、グローバルオブジェクトのエクスポートの必要性も最小限に抑える。 これにより、特にリモートの計算ノードを使用する場合、メモリだけでなく時間と帯域幅も節約できる。</p>

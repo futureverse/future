@@ -32,7 +32,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.69.0-9003</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.69.0-9005</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -137,7 +137,7 @@ loops, e.g.</p>
 <span><span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span><span class="co">## [1] 1.1 1.2 1.3 2.1 2.2 2.3 3.1 3.2 3.3</span></span></code></pre></div>
 <p>The default is to use synchronous futures unless otherwise specified,
-which is also true for nested futures. If we for instance specify,
+which is also true for nested futures. If we, for instance, specify,
 <code>plan(multisession)</code>, the first layer of futures
 (<code>x[[ii]] %&lt;-% { expr }</code>) will be processed asynchronously
 in background R processes, and the futures in the second layer of
@@ -201,27 +201,27 @@ skip trailing sequential futures in the setup,
 e.g. <code>plan(list(multisession))</code> or just
 <code>plan(multisession)</code>. However, it does not hurt to be
 explicit.</p>
-<p>If we instead would like to process the sample sequentially and the
+<p>If we instead would like to process the samples sequentially and the
 chromosomes in parallel, we can use:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plan.html">plan</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">sequential</span>, <span class="va">multisession</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="section level4">
 <h4 id="built-in-protection-against-recursive-parallelism">Built-in protection against recursive parallelism<a class="anchor" aria-label="anchor" href="#built-in-protection-against-recursive-parallelism"></a>
 </h4>
-<p>Above we have processed either the outer or the inner set of future
+<p>Above we have processed either the outer or the inner set of futures
 in parallel. What if we want to process both layers in parallel? It’s
 tempting to use:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plan.html">plan</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">multisession</span>, <span class="va">multisession</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>Although this does not give an error, we will find that the inner
-layer of futures will be processed sequentially just as if we would use
-<code>plan(list(multisession, sequential))</code>. This behavior is due
-to the built-in protection against nested parallelism. If both layers
-would run in parallel, each using the 8 cores available on the machine,
-we would be running 8 * 8 = 64 parallel processes - that would for sure
-overload our computer. What happens internally is that for the outer
-layer, <code><a href="../reference/re-exports.html">availableCores()</a></code> equals eight (8), whereas for the
-inner layer it equals one (1).</p>
+layer of futures will be processed sequentially just as if we were to
+use <code>plan(list(multisession, sequential))</code>. This behavior is
+due to the built-in protection against nested parallelism. If both
+layers would run in parallel, each using the 8 cores available on the
+machine, we would be running 8 * 8 = 64 parallel processes - that would
+for sure overload our computer. What happens internally is that for the
+outer layer, <code><a href="../reference/re-exports.html">availableCores()</a></code> equals eight (8), whereas for
+the inner layer it equals one (1).</p>
 <p>Now, we could imagine that we process the outer layer with, say, two
 parallel futures, and then the inner layer with four parallel futures.
 In that case, we would end up running on at most eight cores (= 2 * 4).

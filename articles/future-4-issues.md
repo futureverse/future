@@ -7,7 +7,7 @@ are within curly brackets (`{ ... }`). Also, if you assign these to
 lists (e.g. in a for loop), you need to use a list environment
 (`listenv`) instead of a plain list.
 
-However, as show below, there are few cases where you might run into
+However, as shown below, there are a few cases where you might run into
 some hurdles, but, as also shown, they are often easy to overcome. These
 are often related to global variables.
 
@@ -58,8 +58,8 @@ y
 ```
 
 *Comment:* The goal is to in a future version of the package detect
-globals also in expression where the local-global state of a variable is
-only known at run time.
+globals also in expressions where the local-global state of a variable
+is only known at run time.
 
 #### do.call() - function not found
 
@@ -265,11 +265,11 @@ missing globals as “dummy” variables, e.g.
 ### Missing packages (false negatives)
 
 Occasionally, the static-code inspection of the future expression fails
-to identify packages needed to evaluated the expression. This may occur
-when an expression uses S3 generic functions part of one package whereas
-the required S3 method is in another package. For example, in the below
-future generic function `[` is used on data.table object `DT`, which
-requires S3 method `[.data.table` from the
+to identify packages needed to evaluate the expression. This may occur
+when an expression uses S3 generic functions as part of one package
+whereas the required S3 method is in another package. For example, in
+the below future generic function `[` is used on data.table object `DT`,
+which requires S3 method `[.data.table` from the
 **[data.table](https://cran.r-project.org/package=data.table)** package.
 However, the **future** and
 **[globals](https://cran.r-project.org/package=globals)** packages fail
@@ -415,9 +415,9 @@ Certain types of objects are tied to a given R session and cannot be
 passed along to another R process (a “worker”). An example of a
 non-exportable object is XML objects of the
 **[xml2](https://cran.r-project.org/package=xml2)** package. If we
-attempt to use those in parallel processing, we may get a error when the
-future is evaluated (or just invalid results depending on how they are
-used), e.g.
+attempt to use those in parallel processing, we may get an error when
+the future is evaluated (or just invalid results depending on how they
+are used), e.g.
 
 ``` r
 > library(future)

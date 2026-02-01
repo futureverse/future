@@ -31,7 +31,7 @@ switching from, say, sequential to parallel processing."><meta property="og:imag
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.69.0-9003</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.69.0-9005</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -343,7 +343,7 @@ For example, in</p><div class="sourceCode"><pre><code><span></span>
 <span>  <span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">1000</span><span class="op">)</span></span>
 <span>  <span class="va">f</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/future.html">future</a></span><span class="op">(</span><span class="op">{</span> <span class="fu"><a href="https://rdrr.io/r/stats/median.html" class="external-link">median</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">}</span><span class="op">)</span></span></code></pre></div><p>variable <code>x</code> and <code><a href="https://rdrr.io/r/stats/median.html" class="external-link">median()</a></code> are globals, but only <code>x</code>
 is exported whereas <code><a href="https://rdrr.io/r/stats/median.html" class="external-link">median()</a></code>, which is part of the <span class="pkg">stats</span>
-package, is not exported.  Instead it is made sure that the <span class="pkg">stats</span>
+package, is not exported.  Instead, it ensures that the <span class="pkg">stats</span>
 package is on the search path when the future expression is evaluated.
 Effectively, the above becomes</p><div class="sourceCode"><pre><code><span></span>
 <span>  <span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">1000</span><span class="op">)</span></span>

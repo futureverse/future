@@ -72,9 +72,9 @@ Hello world!
 
 With asynchronous futures, the current/main R process does *not* block,
 which means it is available for further processing while the futures are
-being resolved in separate processes running in the background. In other
-words, futures provide a simple but yet powerful construct for parallel
-and / or distributed processing in R.
+being resolved in separate processes that run in the background. In
+other words, futures provide a simple but yet powerful construct for
+parallel and distributed processing in R.
 
 Now, if you cannot be bothered to read all the nitty-gritty details
 about futures, but just want to try them out, then skip to the end to
@@ -136,7 +136,7 @@ e.g. **[future.callr](https://future.callr.futureverse.org)**,
 **[future.mirai](https://future.mirai.futureverse.org)**, and
 **[future.batchtools](https://future.batchtools.futureverse.org)**.
 Below is an overview of the most common backends that you as an end-user
-can chose from.
+can choose from.
 
 [TABLE]
 
@@ -230,7 +230,7 @@ illustrating their properties:
 > plan(sequential)
 > pid <- Sys.getpid()
 > pid
-[1] 831123
+[1] 1129789
 > a %<-% {
 +     pid <- Sys.getpid()
 +     cat("Future 'a' ...\n")
@@ -248,14 +248,14 @@ illustrating their properties:
 Future 'a' ...
 > b
 Future 'b' ...
-[1] 831123
+[1] 1129789
 > c
 Future 'c' ...
 [1] 6.28
 > a
 [1] 3.14
 > pid
-[1] 831123
+[1] 1129789
 ```
 
 Since eager sequential evaluation is taking place, each of the three
@@ -274,7 +274,7 @@ resolved in the background. By design, these futures are non-blocking,
 that is, after being created the calling process is available for other
 tasks including creating additional futures. It is only when the calling
 process tries to access the value of a future that is not yet resolved,
-or trying to create another asynchronous future when all available R
+or tries to create another asynchronous future when all available R
 processes are busy serving other futures, that it blocks.
 
 #### Multisession Futures
@@ -288,7 +288,7 @@ our example with multisession evaluation:
 > plan(multisession, workers = 2)
 > pid <- Sys.getpid()
 > pid
-[1] 831123
+[1] 1129789
 > a %<-% {
 +     pid <- Sys.getpid()
 +     cat("Future 'a' ...\n")
@@ -306,14 +306,14 @@ our example with multisession evaluation:
 Future 'a' ...
 > b
 Future 'b' ...
-[1] 831178
+[1] 1129843
 > c
 Future 'c' ...
 [1] 6.28
 > a
 [1] 3.14
 > pid
-[1] 831123
+[1] 1129789
 ```
 
 The first thing we observe is that the values of `a`, `c` and `pid` are
@@ -344,7 +344,7 @@ background processes serving the multisession futures. The
 [`availableCores()`](https://future.futureverse.org/reference/re-exports.md)
 is also agile to different options and system environment variables. For
 instance, if compute cluster schedulers are used (e.g. TORQUE/PBS and
-Slurm), they set specific environment variable specifying the number of
+Slurm), they set specific environment variables specifying the number of
 cores that was allotted to any given job;
 [`availableCores()`](https://future.futureverse.org/reference/re-exports.md)
 acknowledges these as well. If nothing else is specified, all available
@@ -356,7 +356,7 @@ For more details, please see
 #### Multicore Futures
 
 On operating systems where R supports *forking* of processes, which is
-basically all operating system except Windows, an alternative to
+basically all operating systems except Windows, an alternative to
 spawning R sessions in the background is to fork the existing R process.
 To use multicore futures, when supported, specify:
 
@@ -380,7 +380,7 @@ runs in one of the forked processes.
 
 On the other hand, process forking is also considered unstable in some R
 environments. For instance, when running R from within RStudio process
-forking may resulting in crashed R sessions. Because of this, the
+forking may result in crashed R sessions. Because of this, the
 **future** package disables multicore futures by default when running
 from RStudio. See
 [`help("supportsMulticore")`](https://future.futureverse.org/reference/re-exports.md)
@@ -397,7 +397,7 @@ asynchronous evaluation as:
 > plan(cluster, workers = c("n1", "n2", "n3"))
 > pid <- Sys.getpid()
 > pid
-[1] 831123
+[1] 1129789
 > a %<-% {
 +     pid <- Sys.getpid()
 +     cat("Future 'a' ...\n")
@@ -415,14 +415,14 @@ asynchronous evaluation as:
 Future 'a' ...
 > b
 Future 'b' ...
-[1] 831278
+[1] 1129943
 > c
 Future 'c' ...
 [1] 6.28
 > a
 [1] 3.14
 > pid
-[1] 831123
+[1] 1129789
 ```
 
 Any types of clusters that
@@ -460,7 +460,7 @@ nine parallel workers.
 
 ### Nested Futures and Evaluation Topologies
 
-This far we have discussed what can be referred to as “flat topology” of
+Thus far we have discussed what can be referred to as “flat topology” of
 futures, that is, all futures are created in and assigned to the same
 environment. However, there is nothing stopping us from using a “nested
 topology” of futures, where one set of futures may, in turn, create
@@ -490,24 +490,24 @@ uses two internal futures:
 +     c(b.pid = Sys.getpid(), b1.pid = b1, b2.pid = b2)
 + }
 > pid
-[1] 831123
+[1] 1129789
 > a
 Future 'a' ...
-[1] 831395
+[1] 1130062
 > b
 Future 'b' ...
 Future 'b1' ...
 Future 'b2' ...
- b.pid b1.pid b2.pid 
-831394 831394 831394 
+  b.pid  b1.pid  b2.pid 
+1130061 1130061 1130061 
 ```
 
-By inspection the process IDs, we see that there are in total three
+By inspecting the process IDs, we see that there are in total three
 different processes involved for resolving the futures. There is the
-main R process (pid 831123), and there are the two processes used by `a`
-(pid 831395) and `b` (pid 831394). However, the two futures (`b1` and
-`b2`) that is nested by `b` are evaluated by the same R process as `b`.
-This is because nested futures use sequential evaluation unless
+main R process (pid 1129789), and there are the two processes used by
+`a` (pid 1130062) and `b` (pid 1130061). However, the two futures (`b1`
+and `b2`) that is nested by `b` are evaluated by the same R process as
+`b`. This is because nested futures use sequential evaluation unless
 otherwise specified. There are a few reasons for this, but the main
 reason is that it protects us from spawning off a large number of
 background processes by mistake, e.g. via recursive calls.
@@ -515,7 +515,7 @@ background processes by mistake, e.g. via recursive calls.
 To specify a different type of *evaluation topology*, other than the
 first level of futures being resolved by multisession evaluation and the
 second level by sequential evaluation, we can provide a sequence of
-nested backend by specifying a list to
+nested backends by specifying a list to
 [`plan()`](https://future.futureverse.org/reference/plan.md). To
 clarify, first, the same sequence of backends as used above can be
 explicitly specified as:
@@ -531,16 +531,16 @@ of multisession evaluations;
 > plan(list(multisession, multisession))
 [...]
 > pid
-[1] 831123
+[1] 1129789
 > a
 Future 'a' ...
-[1] 831493
+[1] 1130160
 > b
 Future 'b' ...
 Future 'b1' ...
 Future 'b2' ...
- b.pid b1.pid b2.pid 
-831494 831494 831494 
+  b.pid  b1.pid  b2.pid 
+1130161 1130161 1130161 
 ```
 
 The second multisession backend will default to single, sequential
@@ -555,21 +555,21 @@ multisession backend for any nested futures, we get:
 > plan(list(sequential, multisession))
 [...]
 > pid
-[1] 831123
+[1] 1129789
 > a
 Future 'a' ...
-[1] 831123
+[1] 1129789
 > b
 Future 'b' ...
 Future 'b1' ...
 Future 'b2' ...
- b.pid b1.pid b2.pid 
-831123 831589 831588 
+  b.pid  b1.pid  b2.pid 
+1129789 1130260 1130259 
 ```
 
 which clearly show that `a` and `b` are resolved in the calling process
-(pid 831123) whereas the two nested futures (`b1` and `b2`) are resolved
-in two separate R processes (pids 831589 and 831588).
+(pid 1129789) whereas the two nested futures (`b1` and `b2`) are
+resolved in two separate R processes (pids 1130260 and 1130259).
 
 Having said this, it is indeed possible to use nested multisession
 backend that are not forced to sequential processing by explicitly
@@ -582,22 +582,22 @@ which can be done as follows:
 +     workers = 2)))
 [...]
 > pid
-[1] 831123
+[1] 1129789
 > a
 Future 'a' ...
-[1] 831688
+[1] 1130358
 > b
 Future 'b' ...
 Future 'b1' ...
 Future 'b2' ...
- b.pid b1.pid b2.pid 
-831687 831814 831815 
+  b.pid  b1.pid  b2.pid 
+1130359 1130484 1130483 
 ```
 
 First, we see that both `a` and `b` are resolved in different processes
-(pids 831688 and 831687) than the calling process (pid 831123). Second,
-the two nested futures (`b1` and `b2`) are resolved in yet two other R
-processes (pids 831814 and 831815).
+(pids 1130358 and 1130359) than the calling process (pid 1129789).
+Second, the two nested futures (`b1` and `b2`) are resolved in yet two
+other R processes (pids 1130484 and 1130483).
 
 For more details on working with nested futures and different future
 backends at each level, see Vignette ‘[A Future for R: Future
@@ -643,7 +643,7 @@ Waiting for 'a' to be resolved ...
 Waiting for 'a' to be resolved ... DONE
 > a
 Future 'a' ...done
-[1] 831913
+[1] 1130583
 ```
 
 ## Failed Futures
@@ -669,7 +669,7 @@ Error in log(b) : non-numeric argument to mathematical function
 ```
 
 The error is thrown each time the value is requested, that is, if we try
-to get the value again will generate the same error (and output):
+to get the value again, it will generate the same error (and output):
 
 ``` r
 > a
@@ -715,11 +715,11 @@ It does this with help of the
 static-code inspection to identify global variables. If a global
 variable is identified, it is captured and made available to the
 evaluating process. Moreover, if a global is defined in a package, then
-that global is not exported. Instead, it is made sure that the
-corresponding package is attached when the future is evaluated. This not
-only better reflects the setup of the main R session, but it also
-minimizes the need for exporting globals, which saves not only memory
-but also time and bandwidth, especially when using remote compute nodes.
+that global is not exported. Instead, it ensures that the corresponding
+package is attached when the future is evaluated. This not only better
+reflects the setup of the main R session, but it also minimizes the need
+for exporting globals, which saves not only memory but also time and
+bandwidth, especially when using remote compute nodes.
 
 Finally, it should be clarified that identifying globals from static
 code inspection alone is a challenging problem. There will always be
@@ -754,9 +754,9 @@ create several of them in a loop and assign them to a list, e.g.
 > v <- value(fs)
 > str(v)
 List of 3
- $ : int 832022
- $ : int 832023
- $ : int 832023
+ $ : int 1130686
+ $ : int 1130685
+ $ : int 1130685
 ```
 
 This is *not* possible to do when using implicit futures. This is
@@ -778,9 +778,9 @@ e.g.
 > v <- as.list(v)
 > str(v)
 List of 3
- $ a: int 832022
- $ b: int 832023
- $ c: int 832022
+ $ a: int 1130686
+ $ b: int 1130685
+ $ c: int 1130686
 ```
 
 Here `as.list(v)` blocks until all futures in the environment `v` have
@@ -808,18 +808,18 @@ example,
 > v <- as.list(v)
 > str(v)
 List of 3
- $ : int 832022
- $ : int 832023
- $ : int 832022
+ $ : int 1130686
+ $ : int 1130685
+ $ : int 1130686
 ```
 
 As previously, `as.list(v)` blocks until all futures are resolved.
 
 ## Demos
 
-To see a live illustration how different types of futures are evaluated,
-run the Mandelbrot demo of this package. First, try with the sequential
-evaluation,
+To see a live illustration of how different types of futures are
+evaluated, run the Mandelbrot demo of this package. First, try with the
+sequential evaluation,
 
 ``` r
 library(future)

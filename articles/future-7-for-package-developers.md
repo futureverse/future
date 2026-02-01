@@ -3,7 +3,7 @@
 Using future code in a package is not much different from other types of
 package code or when using futures in R scripts. However, there are a
 few things that are useful to know about in order to minimize the risk
-for surprises to the end user.
+of surprises to the end user.
 
 ## The future smell test
 
@@ -59,7 +59,7 @@ plan(cluster, workers = rep(c("n1.remote.org", "n2.remote.org", "n3.remote.org")
 
 Remember, as developers we never know what compute resources the
 end-user has access to right now or they will have access to in six
-month. Who knows, your code might even end up running on 2,000 cores
+months. Who knows, your code might even end up running on 2,000 cores
 located on The Moon twenty years from now.
 
 ## Avoid changing the future backend

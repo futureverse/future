@@ -42,9 +42,7 @@ that use futures internally.
 For example, the above three functions serve as building blocks in
 several higher-level map-reduce APIs. One example is the
 **[future.apply](https://future.apply.futureverse.org)** package on CRAN
-that provides
-[`future_lapply()`](https://future.apply.futureverse.org/reference/future_lapply.html),
-which is a futurized version of
+that provides `future_lapply()`, which is a futurized version of
 [`lapply()`](https://rdrr.io/r/base/lapply.html) available in the
 **base** package. This function can be used to perform the lapply-like
 processing in parallel using a parallel backend. The implementation of

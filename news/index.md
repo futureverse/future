@@ -226,10 +226,10 @@ and system tests](https://www.futureverse.org/quality.html).
   `packageStartupMessage`:s, causing them to be displayed in sequential
   and multicore processing.
 
-- When the using `cluster` and `multisession` backends, one could, in
-  some cases, end up with warnings on “package may not be available when
+- When using cluster and multisession backends, one could, in some
+  cases, end up with warnings on “package may not be available when
   loading” that are produced by
-  [`serialize()`](https://rdrr.io/r/base/serialize.html). These type of
+  [`serialize()`](https://rdrr.io/r/base/serialize.html). These types of
   warnings are now suppressed.
 
 - Now the cluster future backend tries even harder to shut down parallel
@@ -246,7 +246,7 @@ and system tests](https://www.futureverse.org/quality.html).
   it did not prune the empty ’after’ before the check.
 
 - The `multicore` backend did not relay `immediateCondition`:s in a
-  near-live fashion, but only when the results of the futures where
+  near-live fashion, but only when the results of the futures were
   collected.
 
 - The `sequential`, `cluster`, `multisession`, and `multicore` backends
@@ -309,11 +309,11 @@ via cancellation of futures.
 - In rare cases, a future backend might fail to launch a future and at
   the same time fail to handle such errors. That would result in
   hard-to-understand, obscure errors. In case the future backend does
-  not detect this itself, such errors are now caught by the **future**
-  package and resignaled as informative errors of class
-  `FutureLaunchError`. By always handling launch errors, we assure that
-  futures failing to launch can always be reset and relaunched again,
-  possible on alternative backend.
+  not detect this itself, such errors are now caught by the package and
+  resignaled as informative errors of class `FutureLaunchError`. By
+  always handling launch errors, we assure that futures failing to
+  launch can always be reset and relaunched again, possibly on an
+  alternative backend.
 
 - When a future fails to launch due to issues with the parallel worker,
   querying it with
@@ -327,9 +327,9 @@ via cancellation of futures.
   being signaled.
 
 - Shutdown of `cluster` and `multisession` workers could fail if one of
-  the the workers was already terminated, e.g. interrupted or crashed.
-  Now the shutdown of each worker is independent of the others, lowering
-  the risk of leaving stray PSOCK workers behind.
+  the workers was already terminated, e.g. interrupted or crashed. Now
+  the shutdown of each worker is independent of the others, lowering the
+  risk of leaving stray PSOCK workers behind.
 
 - The built-in validation that futures do not leave behind stray
   connections could, in some cases, result in
@@ -454,7 +454,7 @@ reverse-dependency checks, **future.tests** checks, and more.
 - A future must close any connections or graphical devices it opens, and
   must never close ones that it did not open. Now
   [`value()`](https://future.futureverse.org/reference/value.md)
-  produces a warning if such misuse is detected. This may be upgrade to
+  produces a warning if such misuse is detected. This may be upgraded to
   an error in future releases. The default behavior can be controlled
   via an R option. Reverse dependency checks spotted one CRAN package,
   out of 426, that left stray connections behind.
@@ -485,7 +485,7 @@ reverse-dependency checks, **future.tests** checks, and more.
 ### Bug Fixes
 
 - Now ‘interrupt’ conditions are captured during the evaluation of the
-  future, and results in the evaluation being terminated with a
+  future, and result in the evaluation being terminated with a
   `FutureInterruptError`. Not all backends manage to catch interrupts,
   leading to the parallel R workers to terminate, resulting in a regular
   `FutureError`. Previously, interrupts would result in
@@ -1057,15 +1057,14 @@ CRAN release: 2021-08-25
 
 ### Performance
 
-- The overhead of initiating futures have been significantly reduced.
-  For example, the roundtrip time for `value(future(NULL))` is about
-  twice as fast for ‘sequential’, ‘cluster’, and ‘multisession’ futures.
-  For ‘multicore’ futures the roundtrip speedup is about 20%. The
-  speedup comes from pre-compiling the R expression that will be used to
-  resolve the future expression into R expression templates which then
-  can quickly compiled for each future. This speeds up the creation of
-  these expression by ~10 times, compared when re-compiling them each
-  time.
+- The overhead of initiating futures has been significantly reduced. For
+  example, the roundtrip time for `value(future(NULL))` is about twice
+  as fast for ‘sequential’, ‘cluster’, and ‘multisession’ futures. For
+  ‘multicore’ futures the roundtrip speedup is about 20%. The speedup
+  comes from pre-compiling the R expression that will be used to resolve
+  the future expression into R expression templates which then can
+  quickly compiled for each future. This speeds up the creation of these
+  expression by ~10 times, compared when re-compiling them each time.
 
 - The default timeout for
   [`resolved()`](https://future.futureverse.org/reference/resolved.md)
@@ -1085,7 +1084,7 @@ CRAN release: 2021-08-25
   parallel, because such objects cannot be transferred between R
   processes.
 
-- In addition to specify which condition classes to be captured and
+- In addition to specifying which condition classes to be captured and
   relayed, it is now possible to also specify condition classes to be
   ignored. For example,
   `conditions = structure("condition", exclude = "message")` captures
@@ -1096,15 +1095,15 @@ CRAN release: 2021-08-25
   **parallelly** package trying to infer whether TRUE or FALSE should be
   used based on the `workers` argument.
 
-- Now the the post-mortem analysis report of multicore and cluster
-  futures in case their results could not be retrieved include
-  information on globals and their sizes, and if some of them are
-  non-exportable. A similar, detailed report is also produced when a
-  cluster future fails to set up and launch itself on a parallel worker.
+- Now the post-mortem analysis report of multicore and cluster futures
+  in case their results could not be retrieved include information on
+  globals and their sizes, and if some of them are non-exportable. A
+  similar, detailed report is also produced when a cluster future fails
+  to set up and launch itself on a parallel worker.
 
 - if option `future.fork.multithreading.enable` is FALSE,
   **RcppParallel**, in addition to **OpenMP**, is forced to run with a
-  single threaded whenever running in a forked process (=‘multicore’
+  single-threaded whenever running in a forked process (=‘multicore’
   futures). This is done by setting environment variable
   `RCPP_PARALLEL_NUM_THREADS` to 1.
 
@@ -1140,7 +1139,7 @@ CRAN release: 2021-08-25
   `future.apply::future_lapply(1, function(x) a, future.globals = list(a = 42))`.
 
 - Resolving a ‘sequential’ future without globals would result in
-  internal several `...future.*` objects being written to the calling
+  several internal `...future.*` objects being written to the calling
   environment, which might be the global environment.
 
 - Environment variable `R_FUTURE_PLAN` would propagate down with nested
@@ -1419,7 +1418,7 @@ CRAN release: 2020-09-22
   [`availableCores()`](https://future.futureverse.org/reference/re-exports.md)
   and
   [`availableWorkers()`](https://future.futureverse.org/reference/re-exports.md)
-  supports LSF/OpenLava. Specifically, they acknowledge environment
+  support LSF/OpenLava. Specifically, they acknowledge environment
   variable `LSB_DJOB_NUMPROC` and `LSB_HOSTS`, respectively.
 
 ### Performance
@@ -1487,12 +1486,12 @@ CRAN release: 2020-07-09
 - Error messages from cluster future failures are now more informative
   than “Unexpected result (of class ‘NULL’ != ‘FutureResult’)”. For
   example, if the **future** package is not installed on the worker,
-  then the error message clearly says so. Even, if there is an
-  unexpected result error from a PSOCK cluster future, then the error
-  produced give extra information on node where it failed,
-  e.g. “Unexpected result (of class ‘NULL’ != ‘FutureResult’) retrieved
-  for ClusterFuture future (label = ‘’, expression = ‘…’): This suggests
-  that the communication with `ClusterFuture` worker (‘RichSOCKnode’
+  then the error message clearly says so. Even if there is an unexpected
+  result error from a PSOCK cluster future, then the error produced
+  gives extra information on the node where it failed, e.g. “Unexpected
+  result (of class ‘NULL’ != ‘FutureResult’) retrieved for ClusterFuture
+  future (label = ‘’, expression = ‘…’): This suggests that the
+  communication with `ClusterFuture` worker (‘RichSOCKnode’
   [\#1](https://github.com/futureverse/future/issues/1) on host ‘n3’ (R
   version 3.6.3 (2020-02-29), platform x86_64-pc-linux-gnu)) is out of
   sync.”
@@ -1500,7 +1499,7 @@ CRAN release: 2020-07-09
 - It is now possible to set environment variables on workers before they
   are launched by
   [`makeClusterPSOCK()`](https://future.futureverse.org/reference/re-exports.md)
-  by specify them as as `"<name>=<value>"` as part of the `rscript`
+  by specifying them as `"<name>=<value>"` as part of the `rscript`
   vector argument,
   e.g. `rscript = c("ABC=123", "DEF='hello world'", "Rscript")`. This
   works because elements in `rscript` that match regular expression
@@ -1633,14 +1632,14 @@ CRAN release: 2020-01-16
 
 ### Beta Features
 
-- Add support for automatically disable multi-threading when using
+- Add support for automatically disabling multi-threading when using
   ‘multicore’ futures. For now, the default is to allow multi-threaded
   processing but this might change in the future. To disable
   multi-threaded, set option `future.fork.multithreading.enable` or
   environment variable `R_FUTURE_FORK_MULTITHREADING_ENABLE` to `FALSE`.
   This requires that **RhpcBLASctl** package is installed.
   Parallelization via multi-threaded processing (done in native code by
-  some packages and externally library) while at the same time using
+  some packages and external libraries) while at the same time using
   forked (aka “multicore”) parallel processing is unstable in some
   cases. Note that this is not only true when using `plan(multicore)`
   but also when using, for instance,
@@ -1710,7 +1709,7 @@ CRAN release: 2019-11-08
 - Added ‘Troubleshooting’ section to
   [`?makeClusterPSOCK`](https://future.futureverse.org/reference/re-exports.md)
   with instructions on how to troubleshoot when the setup of local and
-  remote clusters fail.
+  remote clusters fails.
 
 ### Bug Fixes
 
@@ -1728,9 +1727,9 @@ CRAN release: 2019-11-08
 - Package could set `.Random.seed` to NULL, instead of removing it,
   which in turn would produce a warning on “‘.Random.seed’ is not an
   integer vector but of type ‘NULL’, so ignored” when the next random
-  number generated.
+  number is generated.
 
-- Now a future assignment to list environments produce more informative
+- Now a future assignment to list environments produces more informative
   error messages if attempting to assign to more than one element.
 
 - `makeClusterMPI()` did not work for MPI clusters with `comm` other
@@ -1763,7 +1762,7 @@ CRAN release: 2019-07-02
 
 ### New Features
 
-- `values()` now relays `stdout` and signal as soon as possible as long
+- `values()` now relays `stdout` and signals as soon as possible as long
   as the standard output and the conditions are relayed in their
   original order.
 
@@ -1778,7 +1777,7 @@ CRAN release: 2019-07-02
   ‘multicore’ futures have been disabled in those cases since **future**
   1.13.0. This change caught several RStudio users by surprise. Starting
   with **future** 1.14.0, an informative one-time-per-session warning
-  will be produced when attempts to use ‘multicore’ is made in
+  will be produced when attempts to use ‘multicore’ are made in
   non-supported environments such as RStudio. This warning will also be
   produced when using ‘multiprocess’, which will fall back to using
   ‘multisession’ futures. The warning can be disabled by setting R
@@ -1845,7 +1844,7 @@ CRAN release: 2019-05-08
 ### Significant Changes
 
 - Forked processing is now disabled by default when running R via
-  RStudio When disabled, ‘multicore’ futures fall back to a ‘sequential’
+  RStudio. When disabled, ‘multicore’ futures fall back to ‘sequential’
   futures. This update follows from an RStudio recommendation against
   using *forked* parallel processing from within RStudio because it is
   likely to break the RStudio R session. See
@@ -1873,7 +1872,7 @@ CRAN release: 2019-05-08
   also recognizes PBS environment variable `NCPUS`, because the PBSPro
   scheduler does not set `PBS_NUM_PPN`.
 
-- If, option `future.availableCores.custom` is set to a function, then
+- If option `future.availableCores.custom` is set to a function, then
   [`availableCores()`](https://future.futureverse.org/reference/re-exports.md)
   will call that function and interpret its value as number of cores.
   Analogously, option `future.availableWorkers.custom` can be used to
@@ -1955,7 +1954,7 @@ CRAN release: 2019-03-08
 
 - Validation of L’Ecuyer-CMRG RNG seeds failed in recent R devel.
 
-- With `options(OutDec = ",")`, the default value of several argument
+- With `options(OutDec = ",")`, the default value of several arguments
   would resolve to `NA_real_` rather than a numeric value resulting in
   errors such as “is.finite(alpha) is not TRUE”.
 
@@ -1991,7 +1990,7 @@ CRAN release: 2019-01-26
 - The defaults of several arguments of
   [`makeClusterPSOCK()`](https://future.futureverse.org/reference/re-exports.md)
   and `makeNodePSOCK()` can now be controlled via environment variables
-  in addition to R options that was supported in the past. An advantage
+  in addition to R options that were supported in the past. An advantage
   of using environment variables is that they will be inherited by child
   processes, also nested ones.
 
@@ -2044,7 +2043,7 @@ CRAN release: 2019-01-21
 
 - Now
   [`futureCall()`](https://future.futureverse.org/reference/future.md)
-  defaults to `args = list()` making is easier to call functions that do
+  defaults to `args = list()` making it easier to call functions that do
   not take arguments, e.g. `futureCall(function() 42)`.
 
 - [`plan()`](https://future.futureverse.org/reference/plan.md) gained
@@ -2101,9 +2100,8 @@ CRAN release: 2019-01-21
 
 ### Deprecated and Defunct
 
-- Removed defunct
-  [`future::future_lapply()`](https://future.apply.futureverse.org/reference/future_lapply.html).
-  Please use the one in the **future.apply** package instead.
+- Removed defunct `future::future_lapply()`. Please use the one in the
+  **future.apply** package instead.
 
 ## Version 1.10.0
 
@@ -2176,7 +2174,7 @@ CRAN release: 2018-07-23
 
 ### Bug Fixes
 
-- When using forced, nested ‘multicore’ parallel processing, such as,
+- When using forced, nested ‘multicore’ parallel processing, such as
   `plan(list(tweak(multicore, workers = 2), tweak(multicore, workers = 2)))`,
   then the child process would attempt to resolve futures owned by the
   parent process resulting in an error (on ‘bad error message’).
@@ -2199,9 +2197,8 @@ CRAN release: 2018-07-23
 
 ### Deprecated and Defunct
 
-- [`future::future_lapply()`](https://future.apply.futureverse.org/reference/future_lapply.html)
-  is defunct (gives an error if called). Please use the one in the
-  **future.apply** package instead.
+- `future::future_lapply()` is defunct (gives an error if called).
+  Please use the one in the **future.apply** package instead.
 
 - Argument `output` of
   [`FutureError()`](https://future.futureverse.org/reference/FutureCondition.md)
@@ -2303,9 +2300,8 @@ CRAN release: 2018-04-08
 
 ### Deprecated and Defunct
 
-- [`future::future_lapply()`](https://future.apply.futureverse.org/reference/future_lapply.html)
-  is formally deprecated. Please use the one in the **future.apply**
-  package instead.
+- `future::future_lapply()` is formally deprecated. Please use the one
+  in the **future.apply** package instead.
 
 - Recently introduced `FutureEvaluationCondition` classes are
   deprecated, because they no longer serve a purpose since future
@@ -2317,8 +2313,8 @@ CRAN release: 2018-02-11
 
 ### Significant Changes
 
-- [`future_lapply()`](https://future.apply.futureverse.org/reference/future_lapply.html)
-  has moved to the **future.apply** package available on CRAN.
+- `future_lapply()` has moved to the **future.apply** package available
+  on CRAN.
 
 ### New Features
 
@@ -2399,12 +2395,10 @@ CRAN release: 2018-02-11
 
 ### Deprecated and Defunct
 
-- [`future_lapply()`](https://future.apply.futureverse.org/reference/future_lapply.html)
-  has moved to the new **future.apply** package available on CRAN. The
-  [`future::future_lapply()`](https://future.apply.futureverse.org/reference/future_lapply.html)
-  function will soon be deprecated, then defunct, and eventually be
-  removed from the **future** package. Please update your code to make
-  use of
+- `future_lapply()` has moved to the new **future.apply** package
+  available on CRAN. The `future::future_lapply()` function will soon be
+  deprecated, then defunct, and eventually be removed from the
+  **future** package. Please update your code to make use of
   [`future.apply::future_lapply()`](https://future.apply.futureverse.org/reference/future_lapply.html)
   instead.
 
@@ -2452,10 +2446,9 @@ CRAN release: 2017-09-09
 
 ### Bug Fixes
 
-- [`future_lapply()`](https://future.apply.futureverse.org/reference/future_lapply.html)
-  would give “Error in objectSize.env(x, depth = depth - 1L): object
-  ‘nnn’ not found” when for instance ‘nnn’ is part of an unresolved
-  expression that is an argument value.
+- `future_lapply()` would give “Error in objectSize.env(x, depth =
+  depth - 1L): object ‘nnn’ not found” when for instance ‘nnn’ is part
+  of an unresolved expression that is an argument value.
 
 ### Software Quality
 
@@ -2544,16 +2537,14 @@ CRAN release: 2017-05-26
 
 ### Bug Fixes
 
-- [`future_lapply()`](https://future.apply.futureverse.org/reference/future_lapply.html)
-  with multicore / multisession futures, would use a suboptimal workload
-  balancing where it split up the data in one chunk too many. This is no
-  longer a problem because of how argument `workers` is now defined for
-  those type of futures (see note on top).
+- `future_lapply()` with multicore / multisession futures, would use a
+  suboptimal workload balancing where it split up the data in one chunk
+  too many. This is no longer a problem because of how argument
+  `workers` is now defined for those type of futures (see note on top).
 
-- [`future_lapply()`](https://future.apply.futureverse.org/reference/future_lapply.html),
-  as well as lazy multicore and lazy sequential futures, did not respect
-  option `future.globals.resolve`, but was hardcoded to always resolve
-  globals (`future.globals.resolve = TRUE`).
+- `future_lapply()`, as well as lazy multicore and lazy sequential
+  futures, did not respect option `future.globals.resolve`, but was
+  hardcoded to always resolve globals (`future.globals.resolve = TRUE`).
 
 - When globals larger than the allowed size (option
   `future.globals.maxSize`) are detected an informative error message is
@@ -2587,37 +2578,30 @@ CRAN release: 2017-03-13
 
 ### Significant Changes
 
-- The default for
-  [`future_lapply()`](https://future.apply.futureverse.org/reference/future_lapply.html)
-  is now to *not* generate RNG seeds (`future.seed = FALSE`). If proper
-  random number generation is needed, use `future.seed = TRUE`. For more
-  details, see help page.
+- The default for `future_lapply()` is now to *not* generate RNG seeds
+  (`future.seed = FALSE`). If proper random number generation is needed,
+  use `future.seed = TRUE`. For more details, see help page.
 
 ### New Features
 
 - [`future()`](https://future.futureverse.org/reference/future.md) and
-  [`future_lapply()`](https://future.apply.futureverse.org/reference/future_lapply.html)
-  gained argument `packages` for explicitly specifying packages to be
-  attached when the futures are evaluated. Note that the default
-  throughout the **future** package is that all globals and all required
-  packages are automatically identified and gathered, so in most cases
-  those do not have to be specified manually.
+  `future_lapply()` gained argument `packages` for explicitly specifying
+  packages to be attached when the futures are evaluated. Note that the
+  default throughout the **future** package is that all globals and all
+  required packages are automatically identified and gathered, so in
+  most cases those do not have to be specified manually.
 
 - The default values for arguments `connectTimeout` and `timeout` of
   `makeNodePSOCK()` can now be controlled via global options.
 
 ### Random Number Generation
 
-- Now
-  [`future_lapply()`](https://future.apply.futureverse.org/reference/future_lapply.html)
-  guarantees that the RNG state of the calling R process after returning
-  is updated compared to what it was before and in the exact same way
-  regardless of `future.seed` (except FALSE), `future.scheduling` and
-  future strategy used. This is done in order to guarantee that an R
-  script calling
-  [`future_lapply()`](https://future.apply.futureverse.org/reference/future_lapply.html)
-  multiple times should be numerically reproducible given the same
-  initial seed.
+- Now `future_lapply()` guarantees that the RNG state of the calling R
+  process after returning is updated compared to what it was before and
+  in the exact same way regardless of `future.seed` (except FALSE),
+  `future.scheduling` and future strategy used. This is done in order to
+  guarantee that an R script calling `future_lapply()` multiple times
+  should be numerically reproducible given the same initial seed.
 
 - It is now possible to specify a pre-generated sequence of
   `.Random.seed` seeds to be used for each `FUN(x[[i]], ...)` call in
@@ -2625,10 +2609,9 @@ CRAN release: 2017-03-13
 
 ### Performance
 
-- [`future_lapply()`](https://future.apply.futureverse.org/reference/future_lapply.html)
-  scans global variables for non-resolved futures (to resolve them) and
-  calculate their total size once. Previously, each chunk (a future)
-  would redo this.
+- `future_lapply()` scans global variables for non-resolved futures (to
+  resolve them) and calculate their total size once. Previously, each
+  chunk (a future) would redo this.
 
 ### Bug Fixes
 
@@ -2645,9 +2628,8 @@ CRAN release: 2017-03-13
   gave an error with `plan(cluster, workers = cl)` where `cl` is a
   `cluster` object created by
   [`parallel::makeCluster()`](https://rdrr.io/r/parallel/makeCluster.html),
-  etc. This prevented for instance
-  [`future_lapply()`](https://future.apply.futureverse.org/reference/future_lapply.html)
-  to work with such setups.
+  etc. This prevented for instance `future_lapply()` to work with such
+  setups.
 
 - `plan(cluster, workers = cl)` where
   `cl <- makeCluster(..., type = MPI")` would give an instant error due
@@ -2696,11 +2678,9 @@ CRAN release: 2017-02-19
   now passes all additional arguments to
   [`future()`](https://future.futureverse.org/reference/future.md).
 
-- Added
-  [`future_lapply()`](https://future.apply.futureverse.org/reference/future_lapply.html)
-  which supports load balancing (“chunking”) and perfect reproducibility
-  (regardless of type of load balancing and how futures are resolved)
-  via initial random seed.
+- Added `future_lapply()` which supports load balancing (“chunking”) and
+  perfect reproducibility (regardless of type of load balancing and how
+  futures are resolved) via initial random seed.
 
 - Added
   [`availableWorkers()`](https://future.futureverse.org/reference/re-exports.md).
@@ -2768,9 +2748,7 @@ CRAN release: 2017-02-19
 - [`nbrOfWorkers()`](https://future.futureverse.org/reference/nbrOfWorkers.md)
   gave an error for `plan(cluster, workers)` where `workers` was a
   character vector or a `cluster` object of the **parallel** package.
-  Because of this,
-  [`future_lapply()`](https://future.apply.futureverse.org/reference/future_lapply.html)
-  gave an error with such setups.
+  Because of this, `future_lapply()` gave an error with such setups.
 
 - `availableCores(methods = "_R_CHECK_LIMIT_CORES_")` would give an
   error if not running `R CMD check`.

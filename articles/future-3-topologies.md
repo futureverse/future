@@ -22,7 +22,7 @@ unlist(x)
 ```
 
 The default is to use synchronous futures unless otherwise specified,
-which is also true for nested futures. If we for instance specify,
+which is also true for nested futures. If we, for instance, specify,
 `plan(multisession)`, the first layer of futures
 (`x[[ii]] %<-% { expr }`) will be processed asynchronously in background
 R processes, and the futures in the second layer of futures
@@ -92,7 +92,7 @@ trailing sequential futures in the setup,
 e.g. `plan(list(multisession))` or just `plan(multisession)`. However,
 it does not hurt to be explicit.
 
-If we instead would like to process the sample sequentially and the
+If we instead would like to process the samples sequentially and the
 chromosomes in parallel, we can use:
 
 ``` r
@@ -101,7 +101,7 @@ plan(list(sequential, multisession))
 
 #### Built-in protection against recursive parallelism
 
-Above we have processed either the outer or the inner set of future in
+Above we have processed either the outer or the inner set of futures in
 parallel. What if we want to process both layers in parallel? It’s
 tempting to use:
 
@@ -110,7 +110,7 @@ plan(list(multisession, multisession))
 ```
 
 Although this does not give an error, we will find that the inner layer
-of futures will be processed sequentially just as if we would use
+of futures will be processed sequentially just as if we were to use
 `plan(list(multisession, sequential))`. This behavior is due to the
 built-in protection against nested parallelism. If both layers would run
 in parallel, each using the 8 cores available on the machine, we would

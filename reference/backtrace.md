@@ -42,9 +42,9 @@ res <- tryCatch({
 #> [[1]]
 #> base::tryCatch(base::withCallingHandlers({
 #>     NULL
-#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/Rtmp1RtZaP/callr-fun-109e0313a38b02"), 
+#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/Rtmpfzed3u/callr-fun-11877b59e336e7"), 
 #>         base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
-#>         quote = TRUE), file = "/tmp/hb/Rtmp1RtZaP/callr-res-109e032488db91", 
+#>         quote = TRUE), file = "/tmp/hb/Rtmpfzed3u/callr-res-11877b1ae43987", 
 #>         compress = FALSE)
 #>     base::flush(base::stdout())
 #>     base::flush(base::stderr())
@@ -70,7 +70,7 @@ res <- tryCatch({
 #>         if (!base::is.na(cut)) {
 #>             e2$trace <- e2$trace[-(1:cut), ]
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/Rtmp1RtZaP/callr-res-109e032488db91", 
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/Rtmpfzed3u/callr-res-11877b1ae43987", 
 #>             ".error"))
 #>     }
 #> }, interrupt = function(e) {
@@ -93,7 +93,7 @@ res <- tryCatch({
 #>         if (!base::is.na(cut)) {
 #>             e2$trace <- e2$trace[-(1:cut), ]
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/Rtmp1RtZaP/callr-res-109e032488db91", 
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/Rtmpfzed3u/callr-res-11877b1ae43987", 
 #>             ".error"))
 #>     }
 #> }, callr_message = function(e) {
@@ -138,9 +138,9 @@ res <- tryCatch({
 #> [[8]]
 #> base::withCallingHandlers({
 #>     NULL
-#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/Rtmp1RtZaP/callr-fun-109e0313a38b02"), 
+#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/Rtmpfzed3u/callr-fun-11877b59e336e7"), 
 #>         base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
-#>         quote = TRUE), file = "/tmp/hb/Rtmp1RtZaP/callr-res-109e032488db91", 
+#>         quote = TRUE), file = "/tmp/hb/Rtmpfzed3u/callr-res-11877b1ae43987", 
 #>         compress = FALSE)
 #>     base::flush(base::stdout())
 #>     base::flush(base::stderr())
@@ -166,7 +166,7 @@ res <- tryCatch({
 #>         if (!base::is.na(cut)) {
 #>             e2$trace <- e2$trace[-(1:cut), ]
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/Rtmp1RtZaP/callr-res-109e032488db91", 
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/Rtmpfzed3u/callr-res-11877b1ae43987", 
 #>             ".error"))
 #>     }
 #> }, interrupt = function(e) {
@@ -189,7 +189,7 @@ res <- tryCatch({
 #>         if (!base::is.na(cut)) {
 #>             e2$trace <- e2$trace[-(1:cut), ]
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/Rtmp1RtZaP/callr-res-109e032488db91", 
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/Rtmpfzed3u/callr-res-11877b1ae43987", 
 #>             ".error"))
 #>     }
 #> }, callr_message = function(e) {
@@ -197,13 +197,13 @@ res <- tryCatch({
 #> })
 #> 
 #> [[9]]
-#> base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/Rtmp1RtZaP/callr-fun-109e0313a38b02"), 
+#> base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/Rtmpfzed3u/callr-fun-11877b59e336e7"), 
 #>     base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
-#>     quote = TRUE), file = "/tmp/hb/Rtmp1RtZaP/callr-res-109e032488db91", 
+#>     quote = TRUE), file = "/tmp/hb/Rtmpfzed3u/callr-res-11877b1ae43987", 
 #>     compress = FALSE)
 #> 
 #> [[10]]
-#> base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/Rtmp1RtZaP/callr-fun-109e0313a38b02"), 
+#> base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/Rtmpfzed3u/callr-fun-11877b59e336e7"), 
 #>     base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
 #>     quote = TRUE)
 #> 
@@ -220,8 +220,8 @@ res <- tryCatch({
 #>     options(cli.num_colors = cli_colors, cli.hyperlink = hyperlinks, 
 #>         cli.hyperlink_run = hyperlinks)
 #>     pkgdown::build_site(...)
-#> }), base::quote(list(pkg = list(package = "future", version = "1.69.0-9003", 
-#>     src_path = "/tmp/hb/Rtmp1RtZaP/future", meta = list(url = "https://future.futureverse.org", 
+#> }), base::quote(list(pkg = list(package = "future", version = "1.69.0-9005", 
+#>     src_path = "/tmp/hb/Rtmpfzed3u/future", meta = list(url = "https://future.futureverse.org", 
 #>         home = list(links = list(list(text = "Roadmap/Milestones", 
 #>             href = "https://github.com/futureverse/future/milestones"), 
 #>             list(text = "The Futureverse Project", href = "https://www.futureverse.org/"), 
@@ -254,7 +254,7 @@ res <- tryCatch({
 #>             bootstrap = 5L, `light-switch` = TRUE)), desc = <environment>, 
 #>     bs_version = 5L, development = list(destination = "dev", 
 #>         mode = "default", version_label = "muted", in_dev = FALSE, 
-#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/Rtmp1RtZaP/future/docs", 
+#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/Rtmpfzed3u/future/docs", 
 #>     lang = "en-US", install_metadata = FALSE, figures = list(
 #>         dev = "ragg::agg_png", dpi = 96L, dev.args = list(), 
 #>         fig.ext = "png", fig.width = 7.29166666666667, fig.height = NULL, 
@@ -1166,7 +1166,7 @@ res <- tryCatch({
 #>                       "median()"), " are globals, but only ", 
 #>                     list("x"), "\n", "is exported whereas ", 
 #>                     list("median()"), ", which is part of the ", 
-#>                     list("stats"), "\n", "package, is not exported.  Instead it is made sure that the ", 
+#>                     list("stats"), "\n", "package, is not exported.  Instead, it ensures that the ", 
 #>                     list("stats"), "\n", "package is on the search path when the future expression is evaluated.\n", 
 #>                     "Effectively, the above becomes\n", list(
 #>                       "\n", "  x <- rnorm(1000)\n", "  f <- future({\n", 
@@ -3000,8 +3000,8 @@ res <- tryCatch({
 #>     options(cli.num_colors = cli_colors, cli.hyperlink = hyperlinks, 
 #>         cli.hyperlink_run = hyperlinks)
 #>     pkgdown::build_site(...)
-#> })(pkg = base::quote(list(package = "future", version = "1.69.0-9003", 
-#>     src_path = "/tmp/hb/Rtmp1RtZaP/future", meta = list(url = "https://future.futureverse.org", 
+#> })(pkg = base::quote(list(package = "future", version = "1.69.0-9005", 
+#>     src_path = "/tmp/hb/Rtmpfzed3u/future", meta = list(url = "https://future.futureverse.org", 
 #>         home = list(links = list(list(text = "Roadmap/Milestones", 
 #>             href = "https://github.com/futureverse/future/milestones"), 
 #>             list(text = "The Futureverse Project", href = "https://www.futureverse.org/"), 
@@ -3034,7 +3034,7 @@ res <- tryCatch({
 #>             bootstrap = 5L, `light-switch` = TRUE)), desc = <environment>, 
 #>     bs_version = 5L, development = list(destination = "dev", 
 #>         mode = "default", version_label = "muted", in_dev = FALSE, 
-#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/Rtmp1RtZaP/future/docs", 
+#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/Rtmpfzed3u/future/docs", 
 #>     lang = "en-US", install_metadata = FALSE, figures = list(
 #>         dev = "ragg::agg_png", dpi = 96L, dev.args = list(), 
 #>         fig.ext = "png", fig.width = 7.29166666666667, fig.height = NULL, 
@@ -3946,7 +3946,7 @@ res <- tryCatch({
 #>                       "median()"), " are globals, but only ", 
 #>                     list("x"), "\n", "is exported whereas ", 
 #>                     list("median()"), ", which is part of the ", 
-#>                     list("stats"), "\n", "package, is not exported.  Instead it is made sure that the ", 
+#>                     list("stats"), "\n", "package, is not exported.  Instead, it ensures that the ", 
 #>                     list("stats"), "\n", "package is on the search path when the future expression is evaluated.\n", 
 #>                     "Effectively, the above becomes\n", list(
 #>                       "\n", "  x <- rnorm(1000)\n", "  f <- future({\n", 

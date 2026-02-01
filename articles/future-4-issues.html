@@ -32,7 +32,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.69.0-9003</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.69.0-9005</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -125,9 +125,9 @@ right-hand side (RHS) expressions are within curly brackets
 (<code>{ ... }</code>). Also, if you assign these to lists (e.g. in a
 for loop), you need to use a list environment (<code>listenv</code>)
 instead of a plain list.</p>
-<p>However, as show below, there are few cases where you might run into
-some hurdles, but, as also shown, they are often easy to overcome. These
-are often related to global variables.</p>
+<p>However, as shown below, there are a few cases where you might run
+into some hurdles, but, as also shown, they are often easy to overcome.
+These are often related to global variables.</p>
 <p><em>If you identify other cases, please consider <a href="https://github.com/futureverse/future/issues/" class="external-link">reporting</a> them
 so they can be documented here and possibly even be fixed.</em></p>
 <div class="section level2">
@@ -167,7 +167,7 @@ expression, e.g.</p>
 <span><span class="va">y</span></span>
 <span><span class="co">## [1] 2</span></span></code></pre></div>
 <p><em>Comment:</em> The goal is to in a future version of the package
-detect globals also in expression where the local-global state of a
+detect globals also in expressions where the local-global state of a
 variable is only known at run time.</p>
 <div class="section level4">
 <h4 id="do-call---function-not-found">do.call() - function not found<a class="anchor" aria-label="anchor" href="#do-call---function-not-found"></a>
@@ -332,11 +332,11 @@ The value of a is 42.</code></pre>
 <h3 id="missing-packages-false-negatives">Missing packages (false negatives)<a class="anchor" aria-label="anchor" href="#missing-packages-false-negatives"></a>
 </h3>
 <p>Occasionally, the static-code inspection of the future expression
-fails to identify packages needed to evaluated the expression. This may
-occur when an expression uses S3 generic functions part of one package
-whereas the required S3 method is in another package. For example, in
-the below future generic function <code>[</code> is used on data.table
-object <code>DT</code>, which requires S3 method
+fails to identify packages needed to evaluate the expression. This may
+occur when an expression uses S3 generic functions as part of one
+package whereas the required S3 method is in another package. For
+example, in the below future generic function <code>[</code> is used on
+data.table object <code>DT</code>, which requires S3 method
 <code>[.data.table</code> from the <strong><a href="https://cran.r-project.org/package=data.table" class="external-link">data.table</a></strong>
 package. However, the <strong>future</strong> and <strong><a href="https://cran.r-project.org/package=globals" class="external-link">globals</a></strong>
 packages fail to identify <strong>data.table</strong> as a required
@@ -427,7 +427,7 @@ through.</p>
 parallel frameworks, it might not work. For example, using:</p>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">my_fcn</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">X</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://future.apply.futureverse.org/reference/future_lapply.html" class="external-link">future_lapply</a></span><span class="op">(</span><span class="va">X</span>, FUN <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">y</span> <span class="op">&lt;-</span> <span class="fu">future_lapply</span><span class="op">(</span><span class="va">X</span>, FUN <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span>
 <span>  <span class="op">}</span><span class="op">)</span></span>
 <span>  <span class="va">y</span></span>
@@ -451,9 +451,9 @@ is used, e.g.</p>
 <p>Certain types of objects are tied to a given R session and cannot be
 passed along to another R process (a “worker”). An example of a
 non-exportable object is XML objects of the <strong><a href="https://cran.r-project.org/package=xml2" class="external-link">xml2</a></strong>
-package. If we attempt to use those in parallel processing, we may get a
-error when the future is evaluated (or just invalid results depending on
-how they are used), e.g.</p>
+package. If we attempt to use those in parallel processing, we may get
+an error when the future is evaluated (or just invalid results depending
+on how they are used), e.g.</p>
 <div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">library</span>(future)</span>
 <span id="cb28-2"><a href="#cb28-2" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">plan</span>(multisession)</span>
 <span id="cb28-3"><a href="#cb28-3" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">library</span>(xml2)</span>

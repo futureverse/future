@@ -266,7 +266,7 @@ reduces the amount of transferred objects. For example, in
 variable `x` and [`median()`](https://rdrr.io/r/stats/median.html) are
 globals, but only `x` is exported whereas
 [`median()`](https://rdrr.io/r/stats/median.html), which is part of the
-stats package, is not exported. Instead it is made sure that the stats
+stats package, is not exported. Instead, it ensures that the stats
 package is on the search path when the future expression is evaluated.
 Effectively, the above becomes
 
