@@ -13,7 +13,7 @@
 
 In the ideal case, all it takes to start using futures in R is to replace select standard assignments (`<-`) in your R code with future assignments (`%<-%`) and make sure the right-hand side (RHS) expressions are within curly brackets (`{ ... }`).  Also, if you assign these to lists (e.g. in a for loop), you need to use a list environment (`listenv`) instead of a plain list.
 
-However, as show below, there are few cases where you might run into some hurdles, but, as also shown, they are often easy to overcome.  These are often related to global variables.  
+However, as shown below, there are a few cases where you might run into some hurdles, but, as also shown, they are often easy to overcome.  These are often related to global variables.  
 
 _If you identify other cases, please consider [reporting](https://github.com/futureverse/future/issues/) them so they can be documented here and possibly even be fixed._
 
@@ -54,7 +54,7 @@ y
 ## [1] 2
 ```
 
-_Comment:_ The goal is to in a future version of the package detect globals also in expression where the local-global state of a variable is only known at run time.
+_Comment:_ The goal is to in a future version of the package detect globals also in expressions where the local-global state of a variable is only known at run time.
 
 
 #### do.call() - function not found
@@ -215,7 +215,7 @@ The value of a is 42.
 
 ### Missing packages (false negatives)
 
-Occasionally, the static-code inspection of the future expression fails to identify packages needed to evaluated the expression.  This may occur when an expression uses S3 generic functions part of one package whereas the required S3 method is in another package.  For example, in the below future generic function `[` is used on data.table object `DT`, which requires S3 method `[.data.table` from the **[data.table]** package.  However, the **future** and **[globals]** packages fail to identify **data.table** as a required package, which results in an evaluation error:
+Occasionally, the static-code inspection of the future expression fails to identify packages needed to evaluate the expression.  This may occur when an expression uses S3 generic functions as part of one package whereas the required S3 method is in another package.  For example, in the below future generic function `[` is used on data.table object `DT`, which requires S3 method `[.data.table` from the **[data.table]** package.  However, the **future** and **[globals]** packages fail to identify **data.table** as a required package, which results in an evaluation error:
 
 ```r
 > library(future)
@@ -348,7 +348,7 @@ my_fcn <- function(X, ...) {
 
 ## Non-exportable objects
 
-Certain types of objects are tied to a given R session and cannot be passed along to another R process (a "worker").  An example of a non-exportable object is XML objects of the **[xml2]** package.  If we attempt to use those in parallel processing, we may get a error when the future is evaluated (or just invalid results depending on how they are used), e.g.
+Certain types of objects are tied to a given R session and cannot be passed along to another R process (a "worker").  An example of a non-exportable object is XML objects of the **[xml2]** package.  If we attempt to use those in parallel processing, we may get an error when the future is evaluated (or just invalid results depending on how they are used), e.g.
 
 ```r
 > library(future)
