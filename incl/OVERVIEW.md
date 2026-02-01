@@ -7,37 +7,39 @@ manner. It is a cross-platform solution that requires no additional
 setups or technical skills. Anyone can be up and running within a few
 minutes.
 
+At the core of Futureverse is this package, the **future**
+package. Most users interact with the future ecosystem using
+higher-level packages such as **[futurize]** for its convenience of
+running map-reduce calls concurrently.  Here are some examples of
+both:
+
 ```r
 library(future)
 plan(multisession)
 
-## Evaluate an R expression sequentially
+## Sequential evaluation of an R expression
 y <- slow_fcn(X[1])
 
-## Evaluate it in parallel in the background
+## Parallel evaluation of an R expression
 f <- future(slow_fcn(X[1]))
 y <- value(f)
 
-## future.apply: futurized version of base R apply
-library(future.apply)
-y <-        lapply(X, slow_fcn)
-y <- future_lapply(X, slow_fcn)
 
-## furrr: futurized version of purrr
-library(furrr)
-y <- X |>        map(slow_fcn)
-y <- X |> future_map(slow_fcn)
+library(futurize)
 
-## foreach: futurized version (modern)
+## Sequential and parallel base R apply
+y <- lapply(X, slow_fcn)
+y <- lapply(X, slow_fcn) |> futurize()
+
+## Sequential and parallel purrr map
+library(purrr)
+y <- X |>  map(slow_fcn)
+y <- X |>  map(slow_fcn) |> futurize()
+
+## Sequential and parallel foreach calls
 library(foreach)
-y <- foreach(x = X) %do%       slow_fcn(x)
-y <- foreach(x = X) %dofuture% slow_fcn(x)
-
-## foreach: futurized version (traditional)
-library(foreach)
-doFuture::registerDoFuture()
-y <- foreach(x = X) %do%    slow_fcn(x)
-y <- foreach(x = X) %dopar% slow_fcn(x)
+y <- foreach(x = X) %do% slow_fcn(x)
+y <- foreach(x = X) %do% slow_fcn(x) |> futurize()
 ```
 
 
@@ -61,3 +63,5 @@ md <- gsub(": (future-.*[.]html)",
 ## Output
 cat(md, sep="\n")
 %>
+
+[futurize]: https://futurize.futureverse.org/
