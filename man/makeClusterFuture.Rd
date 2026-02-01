@@ -89,6 +89,27 @@ is produced. The error can be de-escalated to a warning by setting
 R option \code{future.ClusterFuture.clusterEvalQ} to \code{"warning"}.
 }
 
+\section{Benefits of using makeClusterFuture()}{
+
+
+Many packages rely on traditional \strong{parallel} functions such as
+\code{parallel::parLapply()} and \code{parallel::clusterApply()}. Some of them
+expose arguments (e.g. \code{cl} or \code{cluster}), or supports
+\code{parallel::getDefaultCluster()}, for using a custom \strong{parallel}
+\code{cluster} object. The \code{makeClusterFuture()} function brings the all
+benefits of the future ecosystem to those packages and functions.
+
+One benefit is that you can use \emph{any} future parallel backend,
+e.g. \code{plan(multisession)}, \code{plan(future.mirai::mirai_multisession)},
+\code{plan(future.batchtools::batchtools_slurm)}.
+
+Another benefit is that output, messages, warnings, and other types of
+conditions produced on parallel workers are automatically relayed in
+the main R session. This can be very helpful for progress reporting
+and troubleshooting. Among all parallel frameworks in R, only the
+future ecosystem does this.
+}
+
 \examples{
 \dontshow{if ((getRversion() >= "4.4.0")) withAutoprint(\{ # examplesIf}
 plan(multisession)
