@@ -460,7 +460,7 @@ update_package_options <- function(debug = FALSE) {
 
   ## future 1.49.0:
   update_package_option("future.regression.note", mode = "logical", default = TRUE, debug = debug)
-  update_package_option("future.globals.method.default", mode = "character", split = ",", default = c("ordered", "dfs"), debug = debug)
+  update_package_option("future.globals.method.default", mode = "character", split = ",", default = "dfs", debug = debug)
 
   update_package_option("future.debug.indent", mode = "character", default = " ", debug = debug)
 

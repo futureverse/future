@@ -1,6 +1,18 @@
 # Version (development version)
 
- * ...
+## Significant Changes
+
+ * The packages has been using a secondary "deep-first-search"
+   algorithm for identifying global variables needed by a future since
+   **future** 1.49.0 (2025-05-08), in addition to the ordinary
+   "ordered" algorithm that has been in place since **future** 0.9.0
+   (2015-12-11). In this release, after having done thorough testing,
+   we are making the deep-first-search algorithm the default and the
+   only search algorithm. This will lower the overhead of finding
+   globals. If someone is experiencing issues from this update, it
+   will be possible for the time being to switch back to the old
+   behavior via an R option - see `help("future.options", package =
+   "future")` for how to do this.
 
 
 # Version 1.69.0 [2026-01-15]
