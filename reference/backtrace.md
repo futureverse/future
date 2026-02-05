@@ -42,9 +42,9 @@ res <- tryCatch({
 #> [[1]]
 #> base::tryCatch(base::withCallingHandlers({
 #>     NULL
-#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpCzyWaj/callr-fun-11b0233f6bc047"), 
+#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpozCoHw/callr-fun-1b63b6cc493ee"), 
 #>         base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
-#>         quote = TRUE), file = "/tmp/hb/RtmpCzyWaj/callr-res-11b02311b5a68b", 
+#>         quote = TRUE), file = "/tmp/hb/RtmpozCoHw/callr-res-1b63b63ac2ea58", 
 #>         compress = FALSE)
 #>     base::flush(base::stdout())
 #>     base::flush(base::stderr())
@@ -70,7 +70,7 @@ res <- tryCatch({
 #>         if (!base::is.na(cut)) {
 #>             e2$trace <- e2$trace[-(1:cut), ]
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpCzyWaj/callr-res-11b02311b5a68b", 
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpozCoHw/callr-res-1b63b63ac2ea58", 
 #>             ".error"))
 #>     }
 #> }, interrupt = function(e) {
@@ -93,7 +93,7 @@ res <- tryCatch({
 #>         if (!base::is.na(cut)) {
 #>             e2$trace <- e2$trace[-(1:cut), ]
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpCzyWaj/callr-res-11b02311b5a68b", 
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpozCoHw/callr-res-1b63b63ac2ea58", 
 #>             ".error"))
 #>     }
 #> }, callr_message = function(e) {
@@ -138,9 +138,9 @@ res <- tryCatch({
 #> [[8]]
 #> base::withCallingHandlers({
 #>     NULL
-#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpCzyWaj/callr-fun-11b0233f6bc047"), 
+#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpozCoHw/callr-fun-1b63b6cc493ee"), 
 #>         base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
-#>         quote = TRUE), file = "/tmp/hb/RtmpCzyWaj/callr-res-11b02311b5a68b", 
+#>         quote = TRUE), file = "/tmp/hb/RtmpozCoHw/callr-res-1b63b63ac2ea58", 
 #>         compress = FALSE)
 #>     base::flush(base::stdout())
 #>     base::flush(base::stderr())
@@ -166,7 +166,7 @@ res <- tryCatch({
 #>         if (!base::is.na(cut)) {
 #>             e2$trace <- e2$trace[-(1:cut), ]
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpCzyWaj/callr-res-11b02311b5a68b", 
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpozCoHw/callr-res-1b63b63ac2ea58", 
 #>             ".error"))
 #>     }
 #> }, interrupt = function(e) {
@@ -189,7 +189,7 @@ res <- tryCatch({
 #>         if (!base::is.na(cut)) {
 #>             e2$trace <- e2$trace[-(1:cut), ]
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpCzyWaj/callr-res-11b02311b5a68b", 
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpozCoHw/callr-res-1b63b63ac2ea58", 
 #>             ".error"))
 #>     }
 #> }, callr_message = function(e) {
@@ -197,13 +197,13 @@ res <- tryCatch({
 #> })
 #> 
 #> [[9]]
-#> base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpCzyWaj/callr-fun-11b0233f6bc047"), 
+#> base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpozCoHw/callr-fun-1b63b6cc493ee"), 
 #>     base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
-#>     quote = TRUE), file = "/tmp/hb/RtmpCzyWaj/callr-res-11b02311b5a68b", 
+#>     quote = TRUE), file = "/tmp/hb/RtmpozCoHw/callr-res-1b63b63ac2ea58", 
 #>     compress = FALSE)
 #> 
 #> [[10]]
-#> base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpCzyWaj/callr-fun-11b0233f6bc047"), 
+#> base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpozCoHw/callr-fun-1b63b6cc493ee"), 
 #>     base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
 #>     quote = TRUE)
 #> 
@@ -220,8 +220,8 @@ res <- tryCatch({
 #>     options(cli.num_colors = cli_colors, cli.hyperlink = hyperlinks, 
 #>         cli.hyperlink_run = hyperlinks)
 #>     pkgdown::build_site(...)
-#> }), base::quote(list(pkg = list(package = "future", version = "1.69.0-9005", 
-#>     src_path = "/tmp/hb/RtmpCzyWaj/future", meta = list(url = "https://future.futureverse.org", 
+#> }), base::quote(list(pkg = list(package = "future", version = "1.69.0-9007", 
+#>     src_path = "/tmp/hb/RtmpozCoHw/future", meta = list(url = "https://future.futureverse.org", 
 #>         home = list(links = list(list(text = "Roadmap/Milestones", 
 #>             href = "https://github.com/futureverse/future/milestones"), 
 #>             list(text = "The Futureverse Project", href = "https://www.futureverse.org/"), 
@@ -254,7 +254,7 @@ res <- tryCatch({
 #>             bootstrap = 5L, `light-switch` = TRUE)), desc = <environment>, 
 #>     bs_version = 5L, development = list(destination = "dev", 
 #>         mode = "default", version_label = "muted", in_dev = FALSE, 
-#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/RtmpCzyWaj/future/docs", 
+#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/RtmpozCoHw/future/docs", 
 #>     lang = "en-US", install_metadata = FALSE, figures = list(
 #>         dev = "ragg::agg_png", dpi = 96L, dev.args = list(), 
 #>         fig.ext = "png", fig.width = 7.29166666666667, fig.height = NULL, 
@@ -1761,11 +1761,28 @@ res <- tryCatch({
 #>                       "how to control forked processing or not, and how to silence this warning in\n", 
 #>                       "future R sessions, see ?parallelly::supportsMulticore\n"), 
 #>                     list(list("html"), list(list("</div>"))), 
-#>                     "\n")), "\n", "\n", list("\n", "## Use multicore futures\n", 
-#>                   "plan(multicore)\n", "\n", "## A global variable\n", 
-#>                   "a <- 0\n", "\n", "## Create future (explicitly)\n", 
-#>                   "f <- future({\n", "  b <- 3\n", "  c <- 2\n", 
-#>                   "  a * b * c\n", "})\n", "\n", "## A multicore future is evaluated in a separate forked\n", 
+#>                     "\n")), "\n", "\n", list(list("Why not forked processing?"), 
+#>                   list("\n", "\n", "One reason for ", list("not"), 
+#>                     " using forked parallel processing in R is that is\n", 
+#>                     "not guaranteed to be stable in all environments or in all contexts,\n", 
+#>                     "which also depends on which functions are called in the forked\n", 
+#>                     "processes. Here is what R Core developer of the ", 
+#>                     list("parallel::mclapply()"), "\n", "family of functions, which ", 
+#>                     list("multicore"), " rely on, said on ", 
+#>                     list(list("https://stat.ethz.ch/pipermail/r-devel/2020-April/079384.html"), 
+#>                       list("R-devel (2020-04-29)")), ":\n", "\n", 
+#>                     list("\"Do NOT use ", list("mcparallel()"), 
+#>                       " in packages except as a non-default option\n", 
+#>                       "that user can set ... Multicore is intended for HPC applications that\n", 
+#>                       "need to use many cores for computing-heavy jobs, but it does not play\n", 
+#>                       "well with RStudio and more importantly you [as the developer] don't\n", 
+#>                       "know the resource available so only the user can tell you when it's\n", 
+#>                       "safe to use.\""), "\n")), "\n", "\n", 
+#>                 list("\n", "## Use multicore futures\n", "plan(multicore)\n", 
+#>                   "\n", "## A global variable\n", "a <- 0\n", 
+#>                   "\n", "## Create future (explicitly)\n", "f <- future({\n", 
+#>                   "  b <- 3\n", "  c <- 2\n", "  a * b * c\n", 
+#>                   "})\n", "\n", "## A multicore future is evaluated in a separate forked\n", 
 #>                   "## process.  Changing the value of a global variable\n", 
 #>                   "## will not affect the result of the future.\n", 
 #>                   "a <- 7\n", "print(a)\n", "\n", "v <- value(f)\n", 
@@ -3000,8 +3017,8 @@ res <- tryCatch({
 #>     options(cli.num_colors = cli_colors, cli.hyperlink = hyperlinks, 
 #>         cli.hyperlink_run = hyperlinks)
 #>     pkgdown::build_site(...)
-#> })(pkg = base::quote(list(package = "future", version = "1.69.0-9005", 
-#>     src_path = "/tmp/hb/RtmpCzyWaj/future", meta = list(url = "https://future.futureverse.org", 
+#> })(pkg = base::quote(list(package = "future", version = "1.69.0-9007", 
+#>     src_path = "/tmp/hb/RtmpozCoHw/future", meta = list(url = "https://future.futureverse.org", 
 #>         home = list(links = list(list(text = "Roadmap/Milestones", 
 #>             href = "https://github.com/futureverse/future/milestones"), 
 #>             list(text = "The Futureverse Project", href = "https://www.futureverse.org/"), 
@@ -3034,7 +3051,7 @@ res <- tryCatch({
 #>             bootstrap = 5L, `light-switch` = TRUE)), desc = <environment>, 
 #>     bs_version = 5L, development = list(destination = "dev", 
 #>         mode = "default", version_label = "muted", in_dev = FALSE, 
-#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/RtmpCzyWaj/future/docs", 
+#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/RtmpozCoHw/future/docs", 
 #>     lang = "en-US", install_metadata = FALSE, figures = list(
 #>         dev = "ragg::agg_png", dpi = 96L, dev.args = list(), 
 #>         fig.ext = "png", fig.width = 7.29166666666667, fig.height = NULL, 
@@ -4541,11 +4558,28 @@ res <- tryCatch({
 #>                       "how to control forked processing or not, and how to silence this warning in\n", 
 #>                       "future R sessions, see ?parallelly::supportsMulticore\n"), 
 #>                     list(list("html"), list(list("</div>"))), 
-#>                     "\n")), "\n", "\n", list("\n", "## Use multicore futures\n", 
-#>                   "plan(multicore)\n", "\n", "## A global variable\n", 
-#>                   "a <- 0\n", "\n", "## Create future (explicitly)\n", 
-#>                   "f <- future({\n", "  b <- 3\n", "  c <- 2\n", 
-#>                   "  a * b * c\n", "})\n", "\n", "## A multicore future is evaluated in a separate forked\n", 
+#>                     "\n")), "\n", "\n", list(list("Why not forked processing?"), 
+#>                   list("\n", "\n", "One reason for ", list("not"), 
+#>                     " using forked parallel processing in R is that is\n", 
+#>                     "not guaranteed to be stable in all environments or in all contexts,\n", 
+#>                     "which also depends on which functions are called in the forked\n", 
+#>                     "processes. Here is what R Core developer of the ", 
+#>                     list("parallel::mclapply()"), "\n", "family of functions, which ", 
+#>                     list("multicore"), " rely on, said on ", 
+#>                     list(list("https://stat.ethz.ch/pipermail/r-devel/2020-April/079384.html"), 
+#>                       list("R-devel (2020-04-29)")), ":\n", "\n", 
+#>                     list("\"Do NOT use ", list("mcparallel()"), 
+#>                       " in packages except as a non-default option\n", 
+#>                       "that user can set ... Multicore is intended for HPC applications that\n", 
+#>                       "need to use many cores for computing-heavy jobs, but it does not play\n", 
+#>                       "well with RStudio and more importantly you [as the developer] don't\n", 
+#>                       "know the resource available so only the user can tell you when it's\n", 
+#>                       "safe to use.\""), "\n")), "\n", "\n", 
+#>                 list("\n", "## Use multicore futures\n", "plan(multicore)\n", 
+#>                   "\n", "## A global variable\n", "a <- 0\n", 
+#>                   "\n", "## Create future (explicitly)\n", "f <- future({\n", 
+#>                   "  b <- 3\n", "  c <- 2\n", "  a * b * c\n", 
+#>                   "})\n", "\n", "## A multicore future is evaluated in a separate forked\n", 
 #>                   "## process.  Changing the value of a global variable\n", 
 #>                   "## will not affect the result of the future.\n", 
 #>                   "a <- 7\n", "print(a)\n", "\n", "v <- value(f)\n", 
