@@ -59,6 +59,22 @@ future R sessions, see ?parallelly::supportsMulticore
 }\if{html}{\out{</div>}}
 }
 
+\section{Why not forked processing?}{
+
+One reason for \emph{not} using forked parallel processing in R is that is
+not guaranteed to be stable in all environments or in all contexts,
+which also depends on which functions are called in the forked
+processes. Here is what R Core developer of the \code{parallel::mclapply()}
+family of functions, which \code{multicore} rely on, said on \href{https://stat.ethz.ch/pipermail/r-devel/2020-April/079384.html}{R-devel (2020-04-29)}:
+
+\emph{"Do NOT use \code{mcparallel()} in packages except as a non-default option
+that user can set ... Multicore is intended for HPC applications that
+need to use many cores for computing-heavy jobs, but it does not play
+well with RStudio and more importantly you [as the developer] don't
+know the resource available so only the user can tell you when it's
+safe to use."}
+}
+
 \examples{
 ## Use multicore futures
 plan(multicore)

@@ -662,6 +662,21 @@ interruptFuture.MulticoreFutureBackend <- function(backend, future, ...) {
 #' future R sessions, see ?parallelly::supportsMulticore
 #' ```
 #'
+#' @section Why not forked processing?:
+#' One reason for _not_ using forked parallel processing in R is that is
+#' not guaranteed to be stable in all environments or in all contexts,
+#' which also depends on which functions are called in the forked
+#' processes. Here is what R Core developer of the `parallel::mclapply()`
+#' family of functions, which `multicore` rely on, said on [R-devel
+#' (2020-04-29)](https://stat.ethz.ch/pipermail/r-devel/2020-April/079384.html):
+#' 
+#' _"Do NOT use `mcparallel()` in packages except as a non-default option
+#' that user can set ... Multicore is intended for HPC applications that
+#' need to use many cores for computing-heavy jobs, but it does not play
+#' well with RStudio and more importantly you \[as the developer\] don't
+#' know the resource available so only the user can tell you when it's
+#' safe to use."_
+#'
 #' @seealso
 #' For processing in multiple background \R sessions, see
 #' [multisession] futures.
