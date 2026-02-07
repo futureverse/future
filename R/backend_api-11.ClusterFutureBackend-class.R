@@ -1214,16 +1214,10 @@ requestNode <- local({
             stop(FutureError(msg))
           }
           node <- NULL
-  
-          ## Make sure to close connection
-          con <- backend[["workers"]][[node_idx]]$con
-          if (inherits(con, "connection")) {
-            tryCatch(close(con), error = identity)
-          }
-  
+
           workers[[node_idx]] <- node2
           backend[["workers"]] <- workers
-  
+          
           node <- node2
   
           if (debug) {
@@ -1231,7 +1225,9 @@ requestNode <- local({
             mprint(node)          
             mdebugf_pop()
           }
-        }
+          
+          break
+        } # if (!okay)
     
         ## Try again
         Sys.sleep(0.1)
