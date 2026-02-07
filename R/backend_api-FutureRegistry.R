@@ -154,7 +154,7 @@ FutureRegistry <- local({
         if (debug) mdebugf("Future at position #%d is not resolved", ii)
       }
     } ## for (ii ...)
-
+    
     futures
   } ## collectValues()
 
@@ -200,7 +200,7 @@ FutureRegistry <- local({
         if (is.na(idx)) {
           mdebug("Future does not exist")
         } else {
-          mdebug("Future exists at position #%d", idx)
+          mdebugf("Future exists at position #%d", idx)
         }
       }
       return(!is.na(idx))
