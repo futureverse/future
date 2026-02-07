@@ -14,6 +14,12 @@
    behavior via an R option - see `help("future.options", package =
    "future")` for how to do this.
 
+## Bug Fixes
+
+ * Cancellation of 'multisession' futures could produce a warning on
+   "In .Internal(gc(verbose, reset, full)) : closing unused connection
+   3 (<-localhost:11825)".
+
 
 # Version 1.69.0 [2026-01-15]
 

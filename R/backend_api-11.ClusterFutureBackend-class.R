@@ -644,7 +644,6 @@ resolved.ClusterFuture <- function(x, timeout = NULL, ...) {
   node_idx <- future[["node"]]
   cl <- workers[node_idx]
   node <- cl[[1]]
-
   
   ## Check if workers socket connection is available for reading
   if (!is.null(con <- node[["con"]])) {
@@ -1042,202 +1041,218 @@ receiveMessageFromWorker <- local({
 ## to backend[["workers"]], before returning.
 #' @importFrom parallelly isConnectionValid isNodeAlive cloneNode
 #' @importFrom parallel clusterCall
-requestNode <- function(await, backend, timeout, delta, alpha, validateWorker = TRUE) {
-  debug <- isTRUE(getOption("future.debug"))
-  if (debug) {
-    mdebug_push("requestNode() ...")
-    on.exit(mdebug_pop(), add = TRUE)
-  }
+requestNode <- local({
+  closeNode <- import_parallel("closeNode", default = function(node) {
+    con <- node[["con"]]
+    if (inherits(con, "connection")) close(con)
+  })
 
-  stop_if_not(inherits(backend, "FutureBackend"))
-  workers <- backend[["workers"]]
-  stop_if_not(inherits(workers, "cluster"))
-  stop_if_not(is.function(await))
-  stop_if_not(is.finite(timeout), timeout >= 0)
-  stop_if_not(is.finite(alpha), alpha > 0)
-
-  ## Maximum number of nodes available
-  total <- length(workers)
-  if (debug) mdebugf("Number of workers: %d", total)
-
-  ## FutureRegistry to use
-  name <- attr(workers, "name", exact = TRUE)
-  stop_if_not(is.character(name), length(name) == 1L)
-  reg <- sprintf("workers-%s", name)
-  
-  usedNodes <- function() {
-    ## Number of unresolved cluster futures
-    length(FutureRegistry(reg, action = "list", earlySignal = FALSE, debug = debug))
-  }
-
-  if (debug) mdebug_push("Polling for a free worker ...")
-  t0 <- Sys.time()
-  dt <- 0
-  iter <- 1L
-  interval <- delta
-  finished <- FALSE
-  while (dt <= timeout) {
-    ## Check for available nodes
-    used <- usedNodes()
-    finished <- (used < total)
-    if (finished) break
-
-    if (debug) mdebugf("Poll #%d (%s): usedNodes() = %d, workers = %d", iter, format(round(dt, digits = 2L)), used, total)
-
-    ## Wait
-    Sys.sleep(interval)
-    interval <- alpha * interval
-    
-    ## Finish/close workers, iff possible
-    await()
-
-    iter <- iter + 1L
-    dt <- difftime(Sys.time(), t0)
-  }
-  if (debug) {
-    mdebugf("Total time: %s", dt)
-    mdebug_pop()
-  }
-
-  if (!finished) {
-    msg <- sprintf("TIMEOUT: All %d cluster nodes are still occupied after %s (polled %d times)", total, format(round(dt, digits = 2L)), iter)
-    if (debug) mdebug(msg)
-    ex <- FutureError(msg, future = future)
-    stop(ex)
-  }
-
-  ## Find which node is available
-  avail <- rep(TRUE, times = length(workers))
-  futures <- FutureRegistry(reg, action = "list", earlySignal = FALSE, debug = debug)
-  if (length(futures) > 0) {
-    ## Get indices for all busy cluster nodes
-    nodes <- unlist(lapply(futures, FUN = function(f) f[["node"]]), use.names = FALSE)
-    stop_if_not(
-      length(nodes) == length(futures),
-      is.numeric(nodes), all(is.finite(nodes)),
-      all(nodes >= 1), all(nodes <= length(workers)),
-      length(unique(nodes)) == length(nodes)
-    )
-    avail[nodes] <- FALSE
-  }
-
-  ## Sanity check
-  stop_if_not(any(avail))
-
-  if (debug) mdebugf("avail: [n=%d] %s", length(avail), commaq(which(avail)))
-
-  node_idx <- which(avail)[1L]
-  stop_if_not(is.numeric(node_idx), is.finite(node_idx), node_idx >= 1, node_idx <= length(workers))
-  if (debug) mdebugf("Index of first available worker: %d", node_idx)
-  
-  ## Validate that the cluster node is working - if not, relaunch it
-  if (validateWorker) {
-    if (debug) mdebug_push("Validate that the worker is functional ...")
-    cl <- workers[node_idx]
-    stop_if_not(length(cl) == 1L, inherits(cl, "cluster"))
-  
-    truth <- "future:::requestNode() validation call"
-    
-    maxTries <- 3L
-    for (kk in maxTries:1) {
-      okay <- TRUE
-      res <- tryCatch({
-        suppressWarnings({
-          clusterCall(cl = cl, identity, truth)[[1]]
-        })
-      }, error = identity)
-      
-      ## If not working, investigate why, and relaunch a new worker
-      if (inherits(res, "error") || !identical(res, truth)) {
-        if (debug) {
-          mdebug("Worker is non-functional")
-          if (inherits(res, "error")) {
-            mdebug("Error received: ", conditionMessage(res))
-          } else {
-            mdebug("Result received: ", sQuote(res))
-          }
-        }
-        okay <- FALSE
-    
-        ## Is the connection working?
-        node <- cl[[1]]
-        con <- node[["con"]]
-        connectionOkay <- NA
-        if (inherits(con, "connection")) {
-          connectionOkay <- isConnectionValid(con)
-          if (debug) mdebug("Connection is valid: ", connectionOkay)
-        }
-    
-        if (is.na(connectionOkay) || connectionOkay) {
-          ## If the node does not use a connection, or the connection is working,
-          ## we can only assume the worker is also alive. If so, we should try to
-          ## kill the worker.
-          res <- suppressWarnings(killNode(node))
-          if (debug) mdebugf("Killed %s: %s", class(node)[1], res)
-        } else {
-          ## If connection is not working, we could assume the worker is no longer
-          ## alive, but it could also be a network issues. In either case, we
-          ## should try to kill it, just in case.
-          res <- suppressWarnings(killNode(node))
-          if (debug) mdebugf("Killed %s: %s", class(node)[1], res)
-        }
-        if (kk == 1L) {
-          stop(FutureError(sprintf("Failed to find a functional cluster worker, after attempting to relaunch the parallel worker %d times", maxTries)))
-        }
-      } else {
-        if (debug) mdebug("Worker is functional")
-        break
-      }
-      
-      ## Relaunch worker?
-      if (!okay) {
-        if (debug) mdebugf_push("Restarting non-alive cluster node %d ...", node_idx)
-        node2 <- tryCatch({
-          cloneNode(node)
-        }, error = identity)
-        if (inherits(node2, "error")) {
-          msg <- sprintf("One of the future workers of class %s, part of a cluster of class %s, was interrupted and attempts to relaunch it failed", sQuote(class(node)[1]), sQuote(class(cl)[1]))
-          if (inherits(node, c("SOCKnode", "SOCK0node")) &&
-              !inherits(node, c("RichSOCKnode"))) {
-            msg <- sprintf("%s. If you created your cluster with parallel::makeCluster(), try with parallelly::makeClusterPSOCK() instead", msg)
-          }
-          msg <- sprintf("%s. The reported reason was: %s", msg, conditionMessage(node2))
-          stop(FutureError(msg))
-        } else {
-          node <- node2
-        }
-        
-        cl[[1]] <- node
-        
-        workers[[node_idx]] <- node
-        backend[["workers"]] <- workers
-        
-        if (debug) {
-          mdebug("Re-launched cluster node:")
-          mprint(node)
-          mdebugf_pop()
-        }
-      }
-  
-      ## Try again
-      Sys.sleep(0.1)
-    } ##  for (kk in maxTries:1)
-  } ## if (validateWorker)
-
-  ## Assert that there is no other registered future that is using
-  ## the found node
-  futures <- FutureRegistry(reg, action = "list", earlySignal = FALSE, debug = debug)
-  for (kk in seq_along(futures)) {
-    future <- futures[[kk]]
-    if (node_idx == future[["node"]]) {
-      stop(FutureError(sprintf("[INTERNAL ERROR]: requestNode() found node #%d to be free, but it is used by future #%d (%s)", node_idx, kk, sQuoteLabel(future))))
+  function(await, backend, timeout, delta, alpha, validateWorker = TRUE) {
+    debug <- isTRUE(getOption("future.debug"))
+    if (debug) {
+      mdebug_push("requestNode() ...")
+      on.exit(mdebug_pop(), add = TRUE)
     }
-  }
-
-  if (debug) mdebug_pop()
   
-  node_idx
-} ## requestNode()
+    stop_if_not(inherits(backend, "FutureBackend"))
+    workers <- backend[["workers"]]
+    stop_if_not(inherits(workers, "cluster"))
+    stop_if_not(is.function(await))
+    stop_if_not(is.finite(timeout), timeout >= 0)
+    stop_if_not(is.finite(alpha), alpha > 0)
+  
+    ## Maximum number of nodes available
+    total <- length(workers)
+    if (debug) mdebugf("Number of workers: %d", total)
+  
+    ## FutureRegistry to use
+    name <- attr(workers, "name", exact = TRUE)
+    stop_if_not(is.character(name), length(name) == 1L)
+    reg <- sprintf("workers-%s", name)
+    
+    usedNodes <- function() {
+      ## Number of unresolved cluster futures
+      length(FutureRegistry(reg, action = "list", earlySignal = FALSE, debug = debug))
+    }
+  
+    if (debug) mdebug_push("Polling for a free worker ...")
+    t0 <- Sys.time()
+    dt <- 0
+    iter <- 1L
+    interval <- delta
+    finished <- FALSE
+    while (dt <= timeout) {
+      ## Check for available nodes
+      used <- usedNodes()
+      finished <- (used < total)
+      if (finished) break
+  
+      if (debug) mdebugf("Poll #%d (%s): usedNodes() = %d, workers = %d", iter, format(round(dt, digits = 2L)), used, total)
+  
+      ## Wait
+      Sys.sleep(interval)
+      interval <- alpha * interval
+      
+      ## Finish/close workers, iff possible
+      await()
+  
+      iter <- iter + 1L
+      dt <- difftime(Sys.time(), t0)
+    }
+    if (debug) {
+      mdebugf("Total time: %s", dt)
+      mdebug_pop()
+    }
+  
+    if (!finished) {
+      msg <- sprintf("TIMEOUT: All %d cluster nodes are still occupied after %s (polled %d times)", total, format(round(dt, digits = 2L)), iter)
+      if (debug) mdebug(msg)
+      ex <- FutureError(msg, future = future)
+      stop(ex)
+    }
+  
+    ## Find which node is available
+    avail <- rep(TRUE, times = length(workers))
+    futures <- FutureRegistry(reg, action = "list", earlySignal = FALSE, debug = debug)
+    if (length(futures) > 0) {
+      ## Get indices for all busy cluster nodes
+      nodes <- unlist(lapply(futures, FUN = function(f) f[["node"]]), use.names = FALSE)
+      stop_if_not(
+        length(nodes) == length(futures),
+        is.numeric(nodes), all(is.finite(nodes)),
+        all(nodes >= 1), all(nodes <= length(workers)),
+        length(unique(nodes)) == length(nodes)
+      )
+      avail[nodes] <- FALSE
+    }
+  
+    ## Sanity check
+    stop_if_not(any(avail))
+  
+    if (debug) mdebugf("avail: [n=%d] %s", length(avail), commaq(which(avail)))
+  
+    node_idx <- which(avail)[1L]
+    stop_if_not(is.numeric(node_idx), is.finite(node_idx), node_idx >= 1, node_idx <= length(workers))
+    if (debug) mdebugf("Index of first available worker: %d", node_idx)
+  
+    ## Validate that the cluster node is working - if not, relaunch it
+    if (validateWorker) {
+      if (debug) mdebug_push("Validate that the worker is functional ...")
+      cl <- workers[node_idx]
+      stop_if_not(length(cl) == 1L, inherits(cl, "cluster"))
+  
+      truth <- "future:::requestNode() validation call"
+      
+      maxTries <- 3L
+      for (kk in maxTries:1) {
+        okay <- TRUE
+        res <- tryCatch({
+          suppressWarnings({
+            clusterCall(cl = cl, identity, truth)[[1]]
+          })
+        }, error = identity)
+  
+        ## If not working, investigate why, and relaunch a new worker
+        if (inherits(res, "error") || !identical(res, truth)) {
+          if (debug) {
+            mdebug("Worker is non-functional")
+            if (inherits(res, "error")) {
+              mdebug("Error received: ", conditionMessage(res))
+            } else {
+              mdebug("Result received: ", sQuote(res))
+            }
+          }
+          okay <- FALSE
+      
+          ## Is the connection working?
+          node <- cl[[1]]
+          con <- node[["con"]]
+          connectionOkay <- NA
+          if (inherits(con, "connection")) {
+            connectionOkay <- isConnectionValid(con)
+            if (debug) mdebug("Connection is valid: ", connectionOkay)
+          }
+      
+          if (is.na(connectionOkay) || connectionOkay) {
+            ## If the node does not use a connection, or the connection is working,
+            ## we can only assume the worker is also alive. If so, we should try to
+            ## kill the worker.
+            res <- suppressWarnings(killNode(node))
+            if (debug) mdebugf("Killed %s: %s", class(node)[1], res)
+          } else {
+            ## If connection is not working, we could assume the worker is no longer
+            ## alive, but it could also be a network issues. In either case, we
+            ## should try to kill it, just in case.
+            res <- suppressWarnings(killNode(node))
+            if (debug) mdebugf("Killed %s: %s", class(node)[1], res)
+          }
+          if (kk == 1L) {
+            stop(FutureError(sprintf("Failed to find a functional cluster worker, after attempting to relaunch the parallel worker %d times", maxTries)))
+          }
+        } else {
+          if (debug) mdebug("Worker is functional")
+          break
+        }
+  
+        ## Relaunch worker?
+        if (!okay) {
+          if (debug) mdebugf_push("Restarting non-alive cluster node %d ...", node_idx)
+  
+          ## Make sure to close the old cluster node (including any connection)
+          tryCatch(closeNode(node), error = identity)
+  
+          node2 <- tryCatch({
+            cloneNode(node)
+          }, error = identity)
+          if (inherits(node2, "error")) {
+            msg <- sprintf("One of the future workers of class %s, part of a cluster of class %s, was interrupted and attempts to relaunch it failed", sQuote(class(node)[1]), sQuote(class(cl)[1]))
+            if (inherits(node, c("SOCKnode", "SOCK0node")) &&
+                !inherits(node, c("RichSOCKnode"))) {
+              msg <- sprintf("%s. If you created your cluster with parallel::makeCluster(), try with parallelly::makeClusterPSOCK() instead", msg)
+            }
+            msg <- sprintf("%s. The reported reason was: %s", msg, conditionMessage(node2))
+            stop(FutureError(msg))
+          }
+          node <- NULL
+  
+          ## Make sure to close connection
+          con <- backend[["workers"]][[node_idx]]$con
+          if (inherits(con, "connection")) {
+            tryCatch(close(con), error = identity)
+          }
+  
+          workers[[node_idx]] <- node2
+          backend[["workers"]] <- workers
+  
+          node <- node2
+  
+          if (debug) {
+            mdebug("Re-launched cluster node:")
+            mprint(node)          
+            mdebugf_pop()
+          }
+        }
+    
+        ## Try again
+        Sys.sleep(0.1)
+      } ##  for (kk in maxTries:1)
+    } ## if (validateWorker)
+  
+    ## Assert that there is no other registered future that is using
+    ## the found node
+    futures <- FutureRegistry(reg, action = "list", earlySignal = FALSE, debug = debug)
+    for (kk in seq_along(futures)) {
+      future <- futures[[kk]]
+      if (node_idx == future[["node"]]) {
+        stop(FutureError(sprintf("[INTERNAL ERROR]: requestNode() found node #%d to be free, but it is used by future #%d (%s)", node_idx, kk, sQuoteLabel(future))))
+      }
+    }
+  
+    if (debug) mdebug_pop()
+    
+    node_idx
+  }
+}) ## requestNode()
 
 
 
@@ -1523,6 +1538,7 @@ handleInterruptedFuture <- local({
     node_idx <- future[["node"]]
     cl <- workers[node_idx]
     node <- cl[[1]]
+    cl <- NULL
     host <- node[["host"]]
     event <- if (state %in% "running") {
       event <- sprintf("failed for unknown reason while %s", state)
@@ -1557,17 +1573,18 @@ handleInterruptedFuture <- local({
       ## It is not possible to check if a node is alive on all types of clusters.
       ## If that is the case, the best we can do is to assume it is alive
       if (!is.na(alive) && !alive) {
+        ## Make sure to close the old cluster node (including any connection)
+        tryCatch(closeNode(node), error = identity)
+
         ## Launch a new cluster node, by cloning the old one
         node2 <- cloneNode(node)
-        
+        node <- NULL
+
         ## Add to cluster
         workers[[node_idx]] <- node2
     
         ## Update backend
         backend[["workers"]] <- workers
-        
-        ## Make sure to close the old cluster node (including any connection)
-        tryCatch(closeNode(node), error = identity)
       }
     } ## if (relaunchWorker)
   

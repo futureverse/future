@@ -204,6 +204,7 @@ closeAllConnections
 clusterEvalQ
 clusterExport
 clusterSetRNGStream
+conditionCall
 conditionMessage
 configurating
 conn
@@ -265,6 +266,7 @@ futureCall
 futureOf
 futureSessionInfo
 futureverse
+futurize
 futurized
 gc
 getExpression
@@ -304,6 +306,7 @@ inq
 interpretable
 interruptible
 interweaved
+invokeRestart
 io
 ipc
 iter
@@ -331,6 +334,7 @@ maechler
 magick
 magrittr
 makeCluster
+makeClusterFuture
 makeClusterMPI
 makeClusterPSOCK
 makeNodePSOCK
@@ -352,6 +356,8 @@ mirai
 mortem
 mpi
 mpid
+muffleMessage
+muffleWarning
 multiprocess
 multisession
 multithreading
@@ -452,6 +458,7 @@ se
 sessionDetails
 setTimeLimit
 setalloccol
+setenv
 setosa
 setwd
 sge
@@ -468,6 +475,7 @@ sourceCpp
 sp
 sparklyr
 splitted
+sprintf
 ss
 stan
 stanfit
@@ -520,6 +528,7 @@ versicolor
 virginica
 warnPartialMatchDollar
 wb
+withCallingHandlers
 withCapture
 workRSOCK
 writeStart
