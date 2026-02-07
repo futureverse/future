@@ -786,7 +786,6 @@ result.ClusterFuture <- function(future, ...) {
       ## worker also shutting done? If so, turn the error into a run-time
       ## FutureInterruptError and revive the worker
       future <- handleInterruptedFuture(backend, future = future)
-      stop_if_not(inherits(future, "Future"))
       result <- future[["result"]]
       if (inherits(result, "FutureError")) stop(result)
       stop_if_not(inherits(future, "FutureResult"))
@@ -1144,39 +1143,54 @@ requestNode <- local({
       for (kk in maxTries:1) {
         cl <- workers[node_idx]
         stop_if_not(length(cl) == 1L, inherits(cl, "cluster"))
-        if (debug) {
-          mprint(cl[[1]])
-          mprint(showConnections())
-        }
+
+        valid <- TRUE
         
-        res <- tryCatch({
-          suppressWarnings({
-            clusterCall(cl = cl, identity, truth)[[1]]
-          })
-        }, error = identity)
-  
-        if (identical(res, truth)) {
-          if (debug) mdebug("Worker is functional")
-          break
-        }
-        
-        ## If not working, investigate why, and relaunch a new worker
-        if (debug) {
-          mdebug("Worker is non-functional")
-          if (inherits(res, "error")) {
-            mdebug("Error received: ", conditionMessage(res))
-          } else {
-            mdebug("Unexpected result received: ", sQuote(res))
-          }
-        }
-    
-        ## Is the connection working?
+        ## If it uses a connection, does it work?
         node <- cl[[1]]
         con <- node[["con"]]
         if (inherits(con, "connection")) {
-          if (debug) mdebug("Connection is valid: ", isConnectionValid(con))
+          valid <- isConnectionValid(con)
+          if (debug) {
+            if (valid) {
+              mdebugf("Connection is valid")
+            } else {
+              mdebugf("Connection is invalid: %s", attr(valid, "reason"))
+              mprint(showConnections())
+            }
+          }
         }
+
+        if (valid) {
+          if (debug) mprint(cl[[1]])
+          res <- tryCatch({
+            suppressWarnings({
+              clusterCall(cl = cl, identity, truth)[[1]]
+            })
+          }, error = identity)
     
+          if (identical(res, truth)) {
+            if (debug) mdebug("Worker is functional")
+            break
+          }
+
+          ## If not working, investigate why, and relaunch a new worker
+          if (debug) {
+            mdebug("Worker is non-functional")
+            if (inherits(res, "error")) {
+              mdebug("Error received: ", conditionMessage(res))
+            } else {
+              mdebug("Unexpected result received: ", sQuote(res))
+            }
+          }
+
+          ## Make sure to close the old cluster node (including any connection)
+          if (debug) mprint(showConnections())
+          tryCatch(closeNode(node), error = identity)
+          if (inherits(con, "connection")) tryCatch(close(con), error = identity)
+          if (debug) mprint(showConnections())
+        } ## if (valid)
+
         ## If the node does not use a connection, or the connection is working,
         ## we can only assume the worker is also alive, but not working.
         ## Alternatively, if connection is not working, we could assume the worker
@@ -1184,10 +1198,6 @@ requestNode <- local({
         ## Either way, worker is not reliable and we should try to kill it.
         res <- suppressWarnings(killNode(node))
         if (debug) mdebugf("Killed %s: %s", class(node)[1], res)
-
-        ## Make sure to close the old cluster node (including any connection)
-        tryCatch(closeNode(node), error = identity)
-        if (inherits(con, "connection")) tryCatch(close(con), error = identity)
 
         ## Give up?
         if (kk == 1L) {
@@ -1552,7 +1562,12 @@ handleInterruptedFuture <- local({
       FutureRegistry(reg, action = "remove", future = future, earlySignal = FALSE, debug = debug)
       if (debug) mdebug("Erased future from future backend")
     }
-  
+
+    if (debug) {
+      mdebug("Future workers after handling interrupted future:")
+      mprint(summary(workers))
+    }
+
     ## Try to relaunch worker, if it is no longer running?
     if (relaunchWorker) {
       alive <- isNodeAlive(node)
@@ -1563,18 +1578,38 @@ handleInterruptedFuture <- local({
         ## Make sure to close the old cluster node (including any connection)
         tryCatch(closeNode(node), error = identity)
 
+        if (debug) {
+          mdebug("Dropping old node:")
+          mprint(node)
+          mdebug("Currently known connections:")
+          mprint(showConnections())
+        }
+        
         ## Launch a new cluster node, by cloning the old one
         node2 <- cloneNode(node)
-        node <- NULL
+
+        if (debug) {
+          mdebug("Created new node:")
+          mprint(node2)
+          mdebug("Currently known connections:")
+          mprint(showConnections())
+        }
 
         ## Add to cluster
         workers[[node_idx]] <- node2
-    
+
         ## Update backend
         backend[["workers"]] <- workers
+
+        node <- NULL
+        
+        if (debug) {
+          mdebug("Future workers after relaunching worker:")
+          mprint(summary(workers))
+        }
       }
     } ## if (relaunchWorker)
-  
+
     future
   } ## handleInterruptedFuture()
 })
