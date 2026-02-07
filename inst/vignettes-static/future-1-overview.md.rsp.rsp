@@ -45,18 +45,15 @@ file found under inst/vignettes-static/ of the source package.
 R.utils::use("R.utils")
 withCapture <- function(expr, ..., envir = parent.frame()) {
   expr <- substitute(expr)
-  extra <- c()
   res <- withCallingHandlers({
-    do.call(R.utils::withCapture, args = list(expr, ..., collapse = NULL, envir = envir))
+    do.call(R.utils::withCapture, args = list(expr, ..., envir = envir))
   }, warning = function(w) {
-    extra <<- c(extra, sprintf("Warning in %s: %s", deparse(conditionCall(w)), conditionMessage(w)))
+    cat(sprintf("Warning in %s: %s\n", deparse(conditionCall(w)), conditionMessage(w)))
     invokeRestart("muffleWarning")
   }, message = function(m) {
-    extra <<- c(extra, conditionMessage(m))
+    cat(conditionMessage(m))
     invokeRestart("muffleMessage")
   })
-  res <- c(res, extra)
-  res <- paste(res, collapse = "\n")
   res
 }
 
