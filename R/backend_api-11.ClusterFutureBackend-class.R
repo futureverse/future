@@ -1109,7 +1109,11 @@ requestNode <- local({
       ex <- FutureError(msg, future = future)
       stop(ex)
     }
-  
+
+    ## Re-read workers from backend, because await() may have triggered
+    ## handleInterruptedFuture(), which relaunches broken workers
+    workers <- backend[["workers"]]
+
     ## Find which node is available
     avail <- rep(TRUE, times = length(workers))
     futures <- FutureRegistry(reg, action = "list", earlySignal = FALSE, debug = debug)
