@@ -16,6 +16,12 @@
   [`help("future.options", package = "future")`](https://future.futureverse.org/reference/zzz-future.options.md)
   for how to do this.
 
+### Bug Fixes
+
+- Cancellation of ‘multisession’ futures could produce a warning on “In
+  .Internal(gc(verbose, reset, full)) : closing unused connection 3
+  (\<-localhost:11825)”.
+
 ## Version 1.69.0
 
 CRAN release: 2026-01-16

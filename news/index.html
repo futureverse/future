@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.69.0-9007</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.69.0-9008</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -82,6 +82,10 @@
 <div class="section level3">
 <h3 id="significant-changes-development-version">Significant Changes<a class="anchor" aria-label="anchor" href="#significant-changes-development-version"></a></h3>
 <ul><li>The packages has been using a secondary “deep-first-search” algorithm for identifying global variables needed by a future since <strong>future</strong> 1.49.0 (2025-05-08), in addition to the ordinary “ordered” algorithm that has been in place since <strong>future</strong> 0.9.0 (2015-12-11). In this release, after having done thorough testing, we are making the deep-first-search algorithm the default and the only search algorithm. This will lower the overhead of finding globals. If someone is experiencing issues from this update, it will be possible for the time being to switch back to the old behavior via an R option - see <code><a href="../reference/zzz-future.options.html">help("future.options", package =    "future")</a></code> for how to do this.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="bug-fixes-development-version">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h3>
+<ul><li>Cancellation of ‘multisession’ futures could produce a warning on “In .Internal(gc(verbose, reset, full)) : closing unused connection 3 (&lt;-localhost:11825)”.</li>
 </ul></div>
 </div>
     <div class="section level2">
