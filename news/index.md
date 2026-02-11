@@ -416,7 +416,7 @@ reverse-dependency checks, **future.tests** checks, and more.
 
 - [`value()`](https://future.futureverse.org/reference/value.md) on
   containers gained argument `reduce`, which specifies a function for
-  reducing the values, e.g. `` values(fs, reduce = `+`) ``. Optional
+  reducing the values, e.g. `` value(fs, reduce = `+`) ``. Optional
   attribute `init` controls the initial value. Note that attributes must
   not be set on primitive functions. As a workaround, use
   `reduce = structure("+", init = 42)`.
