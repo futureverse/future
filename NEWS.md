@@ -381,7 +381,7 @@ reverse-dependency checks, **future.tests** checks, and more.
    future that can be relaunched.
 
  * `value()` on containers gained argument `reduce`, which specifies a
-   function for reducing the values, e.g. ``values(fs, reduce =
+   function for reducing the values, e.g. ``value(fs, reduce =
    `+`)``. Optional attribute `init` controls the initial value. Note
    that attributes must not be set on primitive functions. As a
    workaround, use `reduce = structure("+", init = 42)`.
