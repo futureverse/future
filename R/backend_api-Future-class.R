@@ -132,6 +132,18 @@ Future <- function(expr = NULL, prologue = NULL, envir = parent.frame(), substit
     if (is.null(onReference)) onReference <- "ignore"
   }
 
+  ## Look for prologue( ... ) subexpression
+  if (is.null(prologue) && identical(expr[[1]], as.symbol("{")) && !is.symbol(expr[[2]])) {
+    ## The prologue() expression should be the first subexpression, if at all
+    prologue_expression <- expr[[2]]
+    prologue_call <- prologue_expression[[1]]
+    if (is.symbol(prologue_call)) {
+      if (identical(prologue_call, as.symbol("prologue"))) {
+        prologue <- prologue_expression[[2L]]
+        expr <- expr[-2L]
+      }
+    }
+  }
 
   ## Evaluate the 'prologue' expression?
   if (!is.null(prologue)) {

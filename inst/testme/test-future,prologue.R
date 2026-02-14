@@ -2,9 +2,14 @@
 #' @tags sequential
 
 library(future)
+plan(multisession, workers = 2L)
 options(future.debug = FALSE)
 
+prologue <- identity
+
 message("*** future() with prologue expression ...")
+
+message("*** future(..., prologue = ...) ...")
 
 stdout <- utils::capture.output({
   f <- future({
@@ -17,7 +22,7 @@ stdout <- utils::capture.output({
 })
 
 stopifnot(
-  stdout == "prologue evaluation"
+  identical(stdout, "prologue evaluation")
 )
 
 v <- value(f)
@@ -26,6 +31,52 @@ stopifnot(identical(v, c(3.14, 42)))
 f <- reset(f)
 v <- value(f)
 stopifnot(identical(v, c(3.14, 42)))
+
+message("*** future(..., prologue = ...) ... DONE")
+
+
+message("*** future(..., ) w/ prologue({ ... }) ...")
+
+stdout <- utils::capture.output({
+  f <- future({
+    prologue({
+      cat("prologue evaluation\n")
+      a <- 3.14
+      b <- 42
+    })
+    c(a, b)
+  })
+})
+stopifnot(
+  identical(stdout, "prologue evaluation")
+)
+
+v <- value(f)
+stopifnot(identical(v, c(3.14, 42)))
+
+message("*** future(..., ) w/ prologue({ ... }) ... DONE")
+
+
+message("*** future(..., ) w/ future::prologue({ ... }) ...")
+
+stdout <- utils::capture.output({
+  f <- future({
+    future::prologue({
+      cat("prologue evaluation\n")
+      a <- 3.14
+      b <- 42
+    })
+    c(a, b)
+  })
+})
+stopifnot(
+  identical(stdout, "prologue evaluation")
+)
+
+v <- value(f)
+stopifnot(identical(v, c(3.14, 42)))
+
+message("*** future(..., ) w/ future::prologue({ ... }) ... DONE")
 
 
 message("*** future() - exceptions ...")
