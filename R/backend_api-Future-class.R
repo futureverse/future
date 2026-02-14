@@ -137,11 +137,12 @@ Future <- function(expr = NULL, envir = parent.frame(), substitute = TRUE, stdou
       expr <- gp[["expr"]]
     
       ## Record packages?
-      if (length(packages) > 0 || (length(gp[["packages"]]) > 0 && lazy)) {
+      if (length(packages) > 0 || (length(gp[["packages"]]) > 0)) {
         packages <- c(gp[["packages"]], packages)
       }
       
       gp <- NULL
+      attr(globals, "already-done") <- TRUE
     }
   }
   
