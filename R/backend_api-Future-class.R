@@ -11,9 +11,11 @@
 #'
 #' @param expr An \R \link[base]{expression}.
 #'
-#' @param prologue (optional) An \R \link[base]{expression} to be evaluated
-#' in the current R session prior to identifying globals and prior to
-#' evaluating the future expression.
+#' @param prologue (optional) An \R \link[base]{expression} to be
+#' evaluated in the current R session prior to identifying globals and
+#' prior to evaluating the future expression.  Alternatively, if TRUE,
+#' a `prologue(...)` expression is looked for in the future expression
+#' `expr`. If FALSE, prologue expressions are not considered.
 #'
 #' @param envir The [environment] from where global objects should be
 #' identified.
@@ -95,7 +97,7 @@
 #' @export
 #' @keywords internal
 #' @name Future-class
-Future <- function(expr = NULL, prologue = NULL, envir = parent.frame(), substitute = TRUE, stdout = TRUE, conditions = "condition", globals = list(), packages = NULL, seed = FALSE, lazy = FALSE, label = NULL, ...) {
+Future <- function(expr = NULL, prologue = TRUE, envir = parent.frame(), substitute = TRUE, stdout = TRUE, conditions = "condition", globals = list(), packages = NULL, seed = FALSE, lazy = FALSE, label = NULL, ...) {
   if (substitute) {
     expr <- substitute(expr)
     prologue <- substitute(prologue)
@@ -133,15 +135,22 @@ Future <- function(expr = NULL, prologue = NULL, envir = parent.frame(), substit
   }
 
   ## Look for prologue( ... ) subexpression
-  if (is.null(prologue) && identical(expr[[1]], as.symbol("{")) && !is.symbol(expr[[2]])) {
-    ## The prologue() expression should be the first subexpression, if at all
-    prologue_expression <- expr[[2]]
-    prologue_call <- prologue_expression[[1]]
-    if (is.symbol(prologue_call)) {
-      if (identical(prologue_call, as.symbol("prologue"))) {
-        prologue <- prologue_expression[[2L]]
-        expr <- expr[-2L]
+  if (is.logical(prologue)) {
+    stop_if_not(length(prologue) == 1L, !is.na(prologue))
+    if (isTRUE(prologue)) {
+      if (identical(expr[[1]], as.symbol("{")) && !is.symbol(expr[[2]])) {
+        ## The prologue() expression should be the first subexpression, if at all
+        prologue_expression <- expr[[2]]
+        prologue_call <- prologue_expression[[1]]
+        if (is.symbol(prologue_call)) {
+          if (identical(prologue_call, as.symbol("prologue"))) {
+            prologue <- prologue_expression[[2L]]
+            expr <- expr[-2L]
+          }
+        }
       }
+    } else {
+      prologue <- NULL
     }
   }
 

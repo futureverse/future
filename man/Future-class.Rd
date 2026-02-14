@@ -7,7 +7,7 @@
 \usage{
 Future(
   expr = NULL,
-  prologue = NULL,
+  prologue = TRUE,
   envir = parent.frame(),
   substitute = TRUE,
   stdout = TRUE,
@@ -23,9 +23,11 @@ Future(
 \arguments{
 \item{expr}{An \R \link[base]{expression}.}
 
-\item{prologue}{(optional) An \R \link[base]{expression} to be evaluated
-in the current R session prior to identifying globals and prior to
-evaluating the future expression.}
+\item{prologue}{(optional) An \R \link[base]{expression} to be
+evaluated in the current R session prior to identifying globals and
+prior to evaluating the future expression.  Alternatively, if TRUE,
+a \code{prologue(...)} expression is looked for in the future expression
+\code{expr}. If FALSE, prologue expressions are not considered.}
 
 \item{envir}{The \link{environment} from where global objects should be
 identified.}

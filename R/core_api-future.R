@@ -158,7 +158,7 @@
 #' @aliases futureCall
 #' @rdname future
 #' @export
-future <- function(expr, prologue = NULL, envir = parent.frame(), substitute = TRUE, lazy = FALSE, seed = FALSE, globals = TRUE, packages = NULL, stdout = TRUE, conditions = "condition", label = NULL, ...) {
+future <- function(expr, prologue = TRUE, envir = parent.frame(), substitute = TRUE, lazy = FALSE, seed = FALSE, globals = TRUE, packages = NULL, stdout = TRUE, conditions = "condition", label = NULL, ...) {
   debug <- isTRUE(getOption("future.debug"))
   if (debug) {
     mdebugf_push("future(..., label = %s) ...", sQuoteLabel(label))

@@ -35,7 +35,7 @@ stopifnot(identical(v, c(3.14, 42)))
 message("*** future(..., prologue = ...) ... DONE")
 
 
-message("*** future(..., ) w/ prologue({ ... }) ...")
+message("*** future(...) w/ prologue({ ... }) ...")
 
 stdout <- utils::capture.output({
   f <- future({
@@ -54,29 +54,37 @@ stopifnot(
 v <- value(f)
 stopifnot(identical(v, c(3.14, 42)))
 
-message("*** future(..., ) w/ prologue({ ... }) ... DONE")
+message("*** future(...) w/ prologue({ ... }) ... DONE")
 
 
-message("*** future(..., ) w/ future::prologue({ ... }) ...")
+message("*** future(..., prologue = FALSE) w/ prologue({ ... }) ...")
+
+prologue <- eval
 
 stdout <- utils::capture.output({
   f <- future({
-    future::prologue({
+    prologue({
       cat("prologue evaluation\n")
       a <- 3.14
       b <- 42
     })
     c(a, b)
-  })
+  }, prologue = FALSE)
+})
+stopifnot(
+  identical(stdout, character(0L))
+)
+
+stdout <- utils::capture.output({
+  v <- value(f)
 })
 stopifnot(
   identical(stdout, "prologue evaluation")
 )
-
-v <- value(f)
 stopifnot(identical(v, c(3.14, 42)))
 
-message("*** future(..., ) w/ future::prologue({ ... }) ... DONE")
+message("*** future(..., prologue = FALSE) w/ prologue({ ... }) ... DONE")
+
 
 
 message("*** future() - exceptions ...")
