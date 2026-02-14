@@ -138,16 +138,10 @@ Future <- function(expr = NULL, prologue = TRUE, envir = parent.frame(), substit
   if (is.logical(prologue)) {
     stop_if_not(length(prologue) == 1L, !is.na(prologue))
     if (isTRUE(prologue)) {
-      if (identical(expr[[1]], as.symbol("{")) && !is.symbol(expr[[2]])) {
-        ## The prologue() expression should be the first subexpression, if at all
-        prologue_expression <- expr[[2]]
-        prologue_call <- prologue_expression[[1]]
-        if (is.symbol(prologue_call)) {
-          if (identical(prologue_call, as.symbol("prologue"))) {
-            prologue <- prologue_expression[[2L]]
-            expr <- expr[-2L]
-          }
-        }
+      res <- parse_prologue(expr)
+      if (res[["exists"]]) {
+        prologue <- res[["prologue"]]
+        expr <- res[["expr"]]
       }
     } else {
       prologue <- NULL
@@ -1054,3 +1048,23 @@ getExpression.Future <- local({
   
   NextMethod()
 }
+
+
+
+parse_prologue <- function(expr) {
+  prologue <- NULL
+  exists <- FALSE
+  if (identical(expr[[1]], as.symbol("{")) && !is.symbol(expr[[2]])) {
+    ## The prologue() expression should be the first subexpression, if at all
+    prologue_expression <- expr[[2]]
+    prologue_call <- prologue_expression[[1]]
+    if (is.symbol(prologue_call)) {
+      if (identical(prologue_call, as.symbol("prologue"))) {
+        prologue <- prologue_expression[[2L]]
+        expr <- expr[-2L]
+        exists <- TRUE
+      }
+    }
+  }
+  list(expr = expr, prologue = prologue, exists = exists)
+} ## parse_prologue()
