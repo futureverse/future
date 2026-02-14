@@ -14,6 +14,17 @@
    behavior via an R option - see `help("future.options", package =
    "future")` for how to do this.
 
+## Beta Features
+
+ * Add support for future prologue expressions. For example, in
+  `future({ 2 * a }, prologue = { a <- 3 })`, expression `{ a <- 42 }`
+  will be evaluated in a local environment in the current R session
+  _when_ the future is created. If there are global variables in the
+  future expression, variables created by the prologue expression will
+  be used first. Prologue expressions can be used to subset large
+  objects in the main R session avoiding having to pass them to
+  parallel workers.
+
 ## Bug Fixes
 
  * Cancellation of 'multisession' futures could produce a warning on

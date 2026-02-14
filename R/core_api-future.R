@@ -14,8 +14,6 @@
 #'
 #' @inheritParams Future-class
 #' 
-#' @param expr An \R \link[base]{expression}.
-#'
 #' @param \ldots Additional arguments passed to [Future()].
 #'
 #' @return
@@ -160,7 +158,7 @@
 #' @aliases futureCall
 #' @rdname future
 #' @export
-future <- function(expr, envir = parent.frame(), substitute = TRUE, lazy = FALSE, seed = FALSE, globals = TRUE, packages = NULL, stdout = TRUE, conditions = "condition", label = NULL, ...) {
+future <- function(expr, prologue = NULL, envir = parent.frame(), substitute = TRUE, lazy = FALSE, seed = FALSE, globals = TRUE, packages = NULL, stdout = TRUE, conditions = "condition", label = NULL, ...) {
   debug <- isTRUE(getOption("future.debug"))
   if (debug) {
     mdebugf_push("future(..., label = %s) ...", sQuoteLabel(label))
@@ -170,13 +168,19 @@ future <- function(expr, envir = parent.frame(), substitute = TRUE, lazy = FALSE
     on.exit(mdebugf_pop())
   }
   
-  if (substitute) expr <- substitute(expr)
+  if (substitute) {
+    expr <- substitute(expr)
+    prologue <- substitute(prologue)
+  }
+
   t_start <- Sys.time()
 
   onReference <- getOption("future.globals.onReference")
   if (is.null(onReference)) onReference <- "ignore"
 
-  future <- Future(expr, substitute = FALSE,
+  future <- Future(expr,
+                   prologue = prologue,
+                   substitute = FALSE,
                    envir = envir,
                    lazy = TRUE,
                    seed = seed,
@@ -227,6 +231,7 @@ attr(future, "untweakable") <- c(
   "lazy",
   "local",
   "packages",
+  "prologue",
   "seed",
   "stdout",
   "substitute",

@@ -11,10 +11,14 @@
 #'
 #' @param expr An \R \link[base]{expression}.
 #'
+#' @param prologue (optional) An \R \link[base]{expression} to be evaluated
+#' in the current R session prior to identifying globals and prior to
+#' evaluating the future expression.
+#'
 #' @param envir The [environment] from where global objects should be
 #' identified.
 #'
-#' @param substitute If TRUE, argument `expr` is
+#' @param substitute If TRUE, arguments `expr` and `prologue` are
 #' \code{\link[base]{substitute}()}:d, otherwise not.
 #'
 #' @param stdout If TRUE (default), then the standard output is captured,
@@ -91,8 +95,11 @@
 #' @export
 #' @keywords internal
 #' @name Future-class
-Future <- function(expr = NULL, envir = parent.frame(), substitute = TRUE, stdout = TRUE, conditions = "condition", globals = list(), packages = NULL, seed = FALSE, lazy = FALSE, label = NULL, ...) {
-  if (substitute) expr <- substitute(expr)
+Future <- function(expr = NULL, prologue = NULL, envir = parent.frame(), substitute = TRUE, stdout = TRUE, conditions = "condition", globals = list(), packages = NULL, seed = FALSE, lazy = FALSE, label = NULL, ...) {
+  if (substitute) {
+    expr <- substitute(expr)
+    prologue <- substitute(prologue)
+  }
   t_start <- Sys.time()
 
   if (is.null(seed)) {
@@ -125,6 +132,21 @@ Future <- function(expr = NULL, envir = parent.frame(), substitute = TRUE, stdou
     if (is.null(onReference)) onReference <- "ignore"
   }
 
+
+  ## Evaluate the 'prologue' expression?
+  if (!is.null(prologue)) {
+    prologue_envir <- new.env(parent = envir)
+    tryCatch({
+      res <- eval(prologue, envir = prologue_envir)
+    }, error = function(ex) {
+      stop(FutureError(sprintf("Failed to create future, because prologue expression produced an error: %s\n%s\nfailed", conditionMessage(ex), paste(deparse(prologue), collapse = "\n"))))
+    })
+    globals_envir <- prologue_envir
+    prologue_envir <- NULL
+  } else {
+    globals_envir <- envir
+  }
+
   ## WORKAROUND: Skip scanning of globals if already done /HB 2021-01-18
   if (!is.null(globals)) {
     if (!inherits(globals, "Globals") ||
@@ -132,7 +154,7 @@ Future <- function(expr = NULL, envir = parent.frame(), substitute = TRUE, stdou
       ## Global objects?
       ## 'persistent' is only allowed for ClusterFuture:s, which will be
       ## asserted when run() is called /HB 2023-01-17
-      gp <- getGlobalsAndPackages(expr, envir = envir, tweak = tweakExpression, globals = globals, persistent = isTRUE(args[["persistent"]]), onReference = onReference, maxSize = +Inf)
+      gp <- getGlobalsAndPackages(expr, envir = globals_envir, tweak = tweakExpression, globals = globals, onReference = onReference, maxSize = +Inf, persistent = isTRUE(args[["persistent"]]))
       globals <- gp[["globals"]]
       expr <- gp[["expr"]]
     
@@ -145,6 +167,7 @@ Future <- function(expr = NULL, envir = parent.frame(), substitute = TRUE, stdou
       attr(globals, "already-done") <- TRUE
     }
   }
+  globals_envir <- NULL
   
   if (length(packages) > 1L) packages <- unique(packages)
 
@@ -196,6 +219,7 @@ Future <- function(expr = NULL, envir = parent.frame(), substitute = TRUE, stdou
 
   ## Future evaluation
   core[["expr"]] <- expr
+  core[["prologue"]] <- prologue
   core[["stdout"]] <- stdout
   core[["conditions"]] <- conditions
   core[["globals"]] <- globals
@@ -279,6 +303,8 @@ print.Future <- function(x, ...) {
   cat("Label: ", label, "\n", sep = "")
   cat("Expression:\n")
   print(future[["expr"]])
+  cat("Prologue expression:\n")
+  print(future[["prologue"]])
 
   ## FIXME: Add method globals_of() for Future such that it's possible
   ## also for SequentialFuture to return something here. /HB 2017-05-17
@@ -601,6 +627,7 @@ run.Future <- function(future, ...) {
   ## AD HOC/WORKAROUND: /HB 2020-12-21
   args <- list(
     quote(future[["expr"]]),
+    prologue = quote(core[["prologue"]]),
     substitute = FALSE,
     envir = future[["envir"]],   ## For backward compatibility with 'civis'
     lazy = TRUE,

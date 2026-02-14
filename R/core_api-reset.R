@@ -78,6 +78,7 @@ reset.Future <- function(x, ...) {
   core_fields <- c(
     "version",
     "expr",
+    "prologue",
     "stdout",
     "conditions",
     "globals",

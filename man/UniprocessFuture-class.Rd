@@ -10,7 +10,7 @@ UniprocessFuture(expr = NULL, substitute = TRUE, envir = parent.frame(), ...)
 \arguments{
 \item{expr}{An \R \link[base]{expression}.}
 
-\item{substitute}{If TRUE, argument \code{expr} is
+\item{substitute}{If TRUE, arguments \code{expr} and \code{prologue} are
 \code{\link[base]{substitute}()}:d, otherwise not.}
 
 \item{envir}{The \link{environment} from where global objects should be

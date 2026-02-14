@@ -64,7 +64,7 @@ of the future expression (as a promise).}
 \item{envir}{The \link{environment} from where global objects should be
 identified.}
 
-\item{substitute}{If TRUE, argument \code{expr} is
+\item{substitute}{If TRUE, arguments \code{expr} and \code{prologue} are
 \code{\link[base]{substitute}()}:d, otherwise not.}
 
 \item{lazy}{If FALSE (default), the future is resolved
