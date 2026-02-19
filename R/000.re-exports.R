@@ -14,12 +14,10 @@
 #    Used by: <none>
 #' * [parallelly::availableCores()]
 #    Used by: ale (1), BatchGetSymbols (2), bistablehistory (1), codalm (1),
-#             cft (1), couplr (1), deseats, dipsaus (1), drimmR (1),
-#             elevatr (1), gtfs2emis (2), gtfs2gps (1),
-#             heterogen, ldaPrototype (1), PINstimation (1), powRICLPM (1),
-#             rBiasCorrection (1), readsdr (1), recforest, sigminer (2),
-#             skpr (1), smoots, sovereign (1), TriDimRegression (1),
-#             uci (1), updog (2)
+#             cft (1), couplr (1), deseats, dipsaus (1), elevatr (1), 
+#             heterogen, PINstimation (1), powRICLPM (1), rBiasCorrection (1),
+#             readsdr (1), recforest, sigminer (2), skpr (1), smoots,
+#             sovereign (1), TriDimRegression (1), uci (1), updog (2)
 #             [2025-12-22, 2026-01-31]
 #' * [parallelly::availableWorkers()]
 #    Used by: wqspt (1) [2025-03-15]
@@ -30,7 +28,7 @@
 #' * [parallelly::makeNodePSOCK()]     (no longer re-exported)
 #    Used by: <none>
 #' * [parallelly::supportsMulticore()]
-#    Used by: furrr(2)
+#    Used by: furrr (2)
 #
 #  (1) Issue filed or PR sent
 #  (2) In the next release
