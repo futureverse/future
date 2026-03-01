@@ -6,7 +6,7 @@ uuid <- local({
   if ("bytes" %in% names(formals(md5sum))) {
     md5 <- function(x) md5sum(bytes = serialize(x, connection = NULL))
   } else {
-    md5 <- function(x) digest(x, skip = 0L)
+    md5 <- function(x) digest(x, algo = "md5", serialize = TRUE, skip = 0L)
   }
   
   function(source, keep_source = FALSE) {
