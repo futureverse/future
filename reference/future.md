@@ -102,7 +102,9 @@ minifuture(
 - packages:
 
   (optional) a character vector specifying packages to be attached in
-  the R environment evaluating the future.
+  the R environment evaluating the future, *in addition to packages
+  required by global variables* specified or identified via argument
+  `globals`.
 
 - stdout:
 
@@ -211,6 +213,7 @@ functions) that are needed in order for the future expression to be
 evaluated while not being local objects that are defined by the future
 expression. For example, in
 
+
       a <- 42
       f <- future({ b <- 2; a * b })
 
@@ -232,16 +235,19 @@ However, for full control, it is also possible to explicitly specify
 exactly which globals are by providing their names as a character
 vector. In the above example, we could use
 
+
       a <- 42
       f <- future({ b <- 2; a * b }, globals = "a")
 
 Yet another alternative is to explicitly also specify their values using
 a named list as in
 
+
       a <- 42
       f <- future({ b <- 2; a * b }, globals = list(a = a))
 
 or
+
 
       f <- future({ b <- 2; a * b }, globals = list(a = 42))
 
@@ -251,6 +257,7 @@ Furthermore, if we know that the future expression does not make use of
 any global variables, we can disable the automatic search for globals by
 using
 
+
       f <- future({ a <- 42; b <- 2; a * b }, globals = FALSE)
 
 Future expressions often make use of functions from one or more
@@ -259,6 +266,7 @@ future package will make sure that those packages are attached when the
 future is resolved. Because there is no need for such globals to be
 frozen or exported, the future package will not export them, which
 reduces the amount of transferred objects. For example, in
+
 
       x <- rnorm(1000)
       f <- future({ median(x) })
@@ -270,6 +278,7 @@ stats package, is not exported. Instead, it ensures that the stats
 package is on the search path when the future expression is evaluated.
 Effectively, the above becomes
 
+
       x <- rnorm(1000)
       f <- future({
         library(stats)
@@ -278,12 +287,14 @@ Effectively, the above becomes
 
 To manually specify this, one can either do
 
+
       x <- rnorm(1000)
       f <- future({
         median(x)
       }, globals = list(x = x, median = stats::median)
 
 or
+
 
       x <- rnorm(1000)
       f <- future({

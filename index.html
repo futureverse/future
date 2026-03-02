@@ -35,7 +35,7 @@
 
     <a class="navbar-brand me-2" href="index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.69.0-9008</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.69.0-9012</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -220,13 +220,13 @@
 <col width="15%">
 <col width="64%">
 </colgroup>
-<thead><tr class="header">
+<thead><tr>
 <th align="left">Package / Backend</th>
 <th align="left">Features</th>
 <th align="left">How futures are evaluated</th>
 </tr></thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td align="left">
 <strong>future</strong><br><code>sequential</code>
 </td>
@@ -234,7 +234,7 @@
 </td>
 <td align="left">sequentially and in the current R process; default</td>
 </tr>
-<tr class="even">
+<tr>
 <td align="left">
 <strong>future</strong><br><code>multisession</code>
 </td>
@@ -242,7 +242,7 @@
 </td>
 <td align="left">parallelly via background R sessions on current machine</td>
 </tr>
-<tr class="odd">
+<tr>
 <td align="left">
 <strong>future</strong><br><code>cluster</code>
 </td>
@@ -250,7 +250,7 @@
 </td>
 <td align="left">parallelly in external R sessions on current, local, and/or remote machines</td>
 </tr>
-<tr class="even">
+<tr>
 <td align="left">
 <strong>future</strong><br><code>multicore</code>
 </td>
@@ -258,7 +258,7 @@
 </td>
 <td align="left">(not recommended) parallelly via forked R processes on current machine; not with GUIs like RStudio; not on Windows</td>
 </tr>
-<tr class="odd">
+<tr>
 <td align="left">
 <strong><a href="https://future.callr.futureverse.org" class="external-link">future.callr</a></strong><br><code>callr</code>
 </td>
@@ -266,7 +266,7 @@
 </td>
 <td align="left">parallelly via transient <strong><a href="https://cran.r-project.org/package=callr" class="external-link">callr</a></strong> background R sessions on current machine; all memory is returned as each future is resolved</td>
 </tr>
-<tr class="even">
+<tr>
 <td align="left">
 <strong><a href="https://future.mirai.futureverse.org" class="external-link">future.mirai</a></strong><br><code>mirai_multisession</code>
 </td>
@@ -274,7 +274,7 @@
 </td>
 <td align="left">parallelly via <strong><a href="https://cran.r-project.org/package=mirai" class="external-link">mirai</a></strong> background R sessions on current machine; low latency</td>
 </tr>
-<tr class="odd">
+<tr>
 <td align="left">
 <strong><a href="https://future.mirai.futureverse.org" class="external-link">future.mirai</a></strong><br><code>mirai_cluster</code>
 </td>
@@ -282,7 +282,7 @@
 </td>
 <td align="left">parallelly via <strong><a href="https://cran.r-project.org/package=mirai" class="external-link">mirai</a></strong> daemons running locally or remotely</td>
 </tr>
-<tr class="even">
+<tr>
 <td align="left">
 <strong><a href="https://future.batchtools.futureverse.org" class="external-link">future.batchtools</a></strong><br><code>batchtools_lsf</code><br><code>batchtools_openlava</code><br><code>batchtools_sge</code><br><code>batchtools_slurm</code><br><code>batchtools_torque</code>
 </td>

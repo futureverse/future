@@ -23,7 +23,7 @@ is available via value()."><meta property="og:image" content="https://future.fut
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.69.0-9008</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.69.0-9012</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -170,8 +170,10 @@ in the help for <code><a href="future.html">future()</a></code>.</p></dd>
 
 
 <dt id="arg-packages">packages<a class="anchor" aria-label="anchor" href="#arg-packages"></a></dt>
-<dd><p>(optional) a character vector specifying packages
-to be attached in the <span style="R">R</span> environment evaluating the future.</p></dd>
+<dd><p>(optional) a character vector specifying packages to be
+attached in the <span style="R">R</span> environment evaluating the future, <em>in addition to
+packages required by global variables</em> specified or identified via argument
+<code>globals</code>.</p></dd>
 
 
 <dt id="arg-seed">seed<a class="anchor" aria-label="anchor" href="#arg-seed"></a></dt>

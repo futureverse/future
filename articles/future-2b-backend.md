@@ -13,7 +13,7 @@ can choose from.
 [TABLE]
 
 📶: futures relay progress updates in real-time,
-e.g. **[progressr](https://progressr.futureverse.org)**  
+e.g. **[progressr](https://progressr.futureverse.org)**\
 ♻️: futures are interruptible and restartable; \* interrupts are
-disabled by default  
+disabled by default\
 (next): next release; (soon): in a near-future release

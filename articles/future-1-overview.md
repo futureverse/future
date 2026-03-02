@@ -141,8 +141,8 @@ can choose from.
 [TABLE]
 
 📶: futures relay progress updates in real-time,
-e.g. **[progressr](https://progressr.futureverse.org)**  
-♻️: futures are interruptible and restartable; \* disabled by default  
+e.g. **[progressr](https://progressr.futureverse.org)**\
+♻️: futures are interruptible and restartable; \* disabled by default\
 (next): next release; (soon): in a near-future release
 
 By default, future expressions are evaluated synchronously in the
@@ -363,6 +363,7 @@ spawning R sessions in the background is to fork the existing R process.
 To use multicore futures, when supported, specify:
 
 ``` r
+
 plan(multicore)
 ```
 
@@ -434,6 +435,7 @@ creates can be used for cluster futures. For instance, the above cluster
 can be explicitly set up as:
 
 ``` r
+
 cl <- parallel::makeCluster(c("n1", "n2", "n3"))
 plan(cluster, workers = cl)
 ```
@@ -524,6 +526,7 @@ clarify, first, the same sequence of backends as used above can be
 explicitly specified as:
 
 ``` r
+
 plan(list(multisession, sequential))
 ```
 
@@ -825,6 +828,7 @@ evaluated, run the Mandelbrot demo of this package. First, try with the
 sequential evaluation,
 
 ``` r
+
 library(future)
 plan(sequential)
 demo("mandelbrot", package = "future", ask = FALSE)
@@ -835,6 +839,7 @@ try multisession evaluation, which calculates the different Mandelbrot
 planes using parallel R processes running in the background. Try,
 
 ``` r
+
 plan(multisession)
 demo("mandelbrot", package = "future", ask = FALSE)
 ```
@@ -843,6 +848,7 @@ Finally, if you have access to multiple machines you can try to set up a
 cluster of workers and use them, e.g.
 
 ``` r
+
 plan(cluster, workers = c("n2", "n5", "n6", "n6", "n9"))
 demo("mandelbrot", package = "future", ask = FALSE)
 ```

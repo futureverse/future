@@ -5,6 +5,7 @@ futures and so on. This may, for instance, occur within nested for
 loops, e.g.
 
 ``` r
+
 library(future)
 library(listenv)
 x <- listenv()
@@ -42,6 +43,7 @@ Here is the layout of what such an analysis could look like in R using
 futures.
 
 ``` r
+
 library(future)
 library(listenv)
 htseq_align <- function(fq, chr) { chr }
@@ -79,6 +81,7 @@ multisession futures and the inner ones as sequential futures. This can
 be specified as:
 
 ``` r
+
 plan(list(multisession, sequential))
 ```
 
@@ -96,6 +99,7 @@ If we instead would like to process the samples sequentially and the
 chromosomes in parallel, we can use:
 
 ``` r
+
 plan(list(sequential, multisession))
 ```
 
@@ -106,6 +110,7 @@ parallel. What if we want to process both layers in parallel? It’s
 tempting to use:
 
 ``` r
+
 plan(list(multisession, multisession))
 ```
 
@@ -125,6 +130,7 @@ In that case, we would end up running on at most eight cores (= 2 \* 4).
 This can be achieved by forcing a fixed number of workers at each layer:
 
 ``` r
+
 plan(list(tweak(multisession, workers = 2), tweak(multisession, workers = I(4))))
 ```
 
@@ -167,6 +173,7 @@ To make sure we stay within the limits of the current machine, it’s best
 to use something like:
 
 ``` r
+
 plan(list(
   tweak(multisession, workers = availableCores() %/% 4),
   tweak(multisession, workers = I(4))
@@ -184,6 +191,7 @@ to 48 alignment processes in parallel. A natural setup is to have one
 machine process one sample in parallel. We could specify this as:
 
 ``` r
+
 nodes <- c("n1", "n2", "n3")
 plan(list(tweak(cluster, workers = nodes), multisession))
 ```
@@ -200,6 +208,7 @@ processes running on each machine leaving the remaining cores
 idle/unused. An alternative set up is then to use the following setup:
 
 ``` r
+
 nodes <- rep(c("n1", "n2", "n3"), each = 8)
 plan(list(
   tweak(cluster, workers = nodes),
@@ -224,6 +233,7 @@ nodes. Here is a proof of concept illustrating how the different nested
 futures are evaluated on different machines.
 
 ``` r
+
 library(future)
 library(listenv)
 
@@ -290,6 +300,7 @@ Try the above `x %<-% { ... }` future with, say,
 When using
 
 ``` r
+
 nodes <- c("n1", "n2", "n3")
 plan(list(tweak(cluster, workers = nodes), multisession))
 ```
@@ -318,6 +329,7 @@ the nodes will use four, four, and 16 cores, respectively.
 Another example is:
 
 ``` r
+
 customWorkers <- function() {
   switch(Sys.info()[["nodename"]],
     "n1" = 2L,

@@ -11,6 +11,7 @@ The default future backend can be controlled via R option `future.plan`.
 For instance, if we add
 
 ``` r
+
 options(future.plan = "multisession")
 ```
 

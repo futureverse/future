@@ -42,9 +42,9 @@ res <- tryCatch({
 #> [[1]]
 #> base::tryCatch(base::withCallingHandlers({
 #>     NULL
-#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/Rtmp2qqo3o/callr-fun-dfeb12ebf11b5"), 
+#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/Rtmp1qhCYg/callr-fun-d117274fb7367"), 
 #>         base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
-#>         quote = TRUE), file = "/tmp/hb/Rtmp2qqo3o/callr-res-dfeb15b975861", 
+#>         quote = TRUE), file = "/tmp/hb/Rtmp1qhCYg/callr-res-d1172379b604", 
 #>         compress = FALSE)
 #>     base::flush(base::stdout())
 #>     base::flush(base::stderr())
@@ -70,7 +70,7 @@ res <- tryCatch({
 #>         if (!base::is.na(cut)) {
 #>             e2$trace <- e2$trace[-(1:cut), ]
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/Rtmp2qqo3o/callr-res-dfeb15b975861", 
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/Rtmp1qhCYg/callr-res-d1172379b604", 
 #>             ".error"))
 #>     }
 #> }, interrupt = function(e) {
@@ -93,7 +93,7 @@ res <- tryCatch({
 #>         if (!base::is.na(cut)) {
 #>             e2$trace <- e2$trace[-(1:cut), ]
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/Rtmp2qqo3o/callr-res-dfeb15b975861", 
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/Rtmp1qhCYg/callr-res-d1172379b604", 
 #>             ".error"))
 #>     }
 #> }, callr_message = function(e) {
@@ -138,9 +138,9 @@ res <- tryCatch({
 #> [[8]]
 #> base::withCallingHandlers({
 #>     NULL
-#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/Rtmp2qqo3o/callr-fun-dfeb12ebf11b5"), 
+#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/Rtmp1qhCYg/callr-fun-d117274fb7367"), 
 #>         base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
-#>         quote = TRUE), file = "/tmp/hb/Rtmp2qqo3o/callr-res-dfeb15b975861", 
+#>         quote = TRUE), file = "/tmp/hb/Rtmp1qhCYg/callr-res-d1172379b604", 
 #>         compress = FALSE)
 #>     base::flush(base::stdout())
 #>     base::flush(base::stderr())
@@ -166,7 +166,7 @@ res <- tryCatch({
 #>         if (!base::is.na(cut)) {
 #>             e2$trace <- e2$trace[-(1:cut), ]
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/Rtmp2qqo3o/callr-res-dfeb15b975861", 
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/Rtmp1qhCYg/callr-res-d1172379b604", 
 #>             ".error"))
 #>     }
 #> }, interrupt = function(e) {
@@ -189,7 +189,7 @@ res <- tryCatch({
 #>         if (!base::is.na(cut)) {
 #>             e2$trace <- e2$trace[-(1:cut), ]
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/Rtmp2qqo3o/callr-res-dfeb15b975861", 
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/Rtmp1qhCYg/callr-res-d1172379b604", 
 #>             ".error"))
 #>     }
 #> }, callr_message = function(e) {
@@ -197,13 +197,13 @@ res <- tryCatch({
 #> })
 #> 
 #> [[9]]
-#> base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/Rtmp2qqo3o/callr-fun-dfeb12ebf11b5"), 
+#> base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/Rtmp1qhCYg/callr-fun-d117274fb7367"), 
 #>     base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
-#>     quote = TRUE), file = "/tmp/hb/Rtmp2qqo3o/callr-res-dfeb15b975861", 
+#>     quote = TRUE), file = "/tmp/hb/Rtmp1qhCYg/callr-res-d1172379b604", 
 #>     compress = FALSE)
 #> 
 #> [[10]]
-#> base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/Rtmp2qqo3o/callr-fun-dfeb12ebf11b5"), 
+#> base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/Rtmp1qhCYg/callr-fun-d117274fb7367"), 
 #>     base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
 #>     quote = TRUE)
 #> 
@@ -220,8 +220,8 @@ res <- tryCatch({
 #>     options(cli.num_colors = cli_colors, cli.hyperlink = hyperlinks, 
 #>         cli.hyperlink_run = hyperlinks)
 #>     pkgdown::build_site(...)
-#> }), base::quote(list(pkg = list(package = "future", version = "1.69.0-9008", 
-#>     src_path = "/tmp/hb/Rtmp2qqo3o/future", meta = list(url = "https://future.futureverse.org", 
+#> }), base::quote(list(pkg = list(package = "future", version = "1.69.0-9012", 
+#>     src_path = "/tmp/hb/Rtmp1qhCYg/future", meta = list(url = "https://future.futureverse.org", 
 #>         home = list(links = list(list(text = "Roadmap/Milestones", 
 #>             href = "https://github.com/futureverse/future/milestones"), 
 #>             list(text = "The Futureverse Project", href = "https://www.futureverse.org/"), 
@@ -254,7 +254,7 @@ res <- tryCatch({
 #>             bootstrap = 5L, `light-switch` = TRUE)), desc = <environment>, 
 #>     bs_version = 5L, development = list(destination = "dev", 
 #>         mode = "default", version_label = "muted", in_dev = FALSE, 
-#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/Rtmp2qqo3o/future/docs", 
+#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/Rtmp1qhCYg/future/docs", 
 #>     lang = "en-US", install_metadata = FALSE, figures = list(
 #>         dev = "ragg::agg_png", dpi = 96L, dev.args = list(), 
 #>         fig.ext = "png", fig.width = 7.29166666666667, fig.height = NULL, 
@@ -510,9 +510,12 @@ res <- tryCatch({
 #>                   "to control how globals are handled.\n", "For details, see section 'Globals used by future expressions'\n", 
 #>                   "in the help for ", list(list("future()")), 
 #>                   ".")), "\n", "\n", list(list("packages"), list(
-#>                   "(optional) a character vector specifying packages\n", 
-#>                   "to be attached in the ", list(), " environment evaluating the future.")), 
-#>                 "\n", "\n", list(list("seed"), list("(optional) If TRUE, the random seed, that is, the state of the\n", 
+#>                   "(optional) a character vector specifying packages to be\n", 
+#>                   "attached in the ", list(), " environment evaluating the future, ", 
+#>                   list("in addition to\n", "packages required by global variables"), 
+#>                   " specified or identified via argument\n", 
+#>                   list("globals"), ".")), "\n", "\n", list(list(
+#>                   "seed"), list("(optional) If TRUE, the random seed, that is, the state of the\n", 
 #>                   "random number generator (RNG) will be set such that statistically sound\n", 
 #>                   "random numbers are produced (also during parallelization).\n", 
 #>                   "If FALSE (default), it is assumed that the future expression neither\n", 
@@ -1033,17 +1036,20 @@ res <- tryCatch({
 #>                     "For details, see section 'Globals used by future expressions'\n", 
 #>                     "in the help for ", list(list("future()")), 
 #>                     ".")), "\n", "\n", list(list("packages"), 
-#>                     list("(optional) a character vector specifying packages\n", 
-#>                       "to be attached in the ", list(), " environment evaluating the future.")), 
-#>                   "\n", "\n", list(list("stdout"), list("If TRUE (default), then the standard output is captured,\n", 
-#>                     "and re-outputted when ", list("value()"), 
-#>                     " is called.\n", "If FALSE, any output is silenced (by sinking it to the null device as\n", 
-#>                     "it is outputted).\n", "Using ", list("stdout = structure(TRUE, drop = TRUE)"), 
-#>                     " causes the captured\n", "standard output to be dropped from the future object as soon as it has\n", 
-#>                     "been relayed. This can help decrease the overall memory consumed by\n", 
-#>                     "captured output across futures.\n", "Using ", 
-#>                     list("stdout = NA"), " fully avoids intercepting the standard output;\n", 
-#>                     "behavior of such unhandled standard output depends on the future backend.")), 
+#>                     list("(optional) a character vector specifying packages to be\n", 
+#>                       "attached in the ", list(), " environment evaluating the future, ", 
+#>                       list("in addition to\n", "packages required by global variables"), 
+#>                       " specified or identified via argument\n", 
+#>                       list("globals"), ".")), "\n", "\n", list(
+#>                     list("stdout"), list("If TRUE (default), then the standard output is captured,\n", 
+#>                       "and re-outputted when ", list("value()"), 
+#>                       " is called.\n", "If FALSE, any output is silenced (by sinking it to the null device as\n", 
+#>                       "it is outputted).\n", "Using ", list("stdout = structure(TRUE, drop = TRUE)"), 
+#>                       " causes the captured\n", "standard output to be dropped from the future object as soon as it has\n", 
+#>                       "been relayed. This can help decrease the overall memory consumed by\n", 
+#>                       "captured output across futures.\n", "Using ", 
+#>                       list("stdout = NA"), " fully avoids intercepting the standard output;\n", 
+#>                       "behavior of such unhandled standard output depends on the future backend.")), 
 #>                   "\n", "\n", list(list("conditions"), list("A character string of condition classes to be captured\n", 
 #>                     "and relayed.  The default is to relay all conditions, including messages\n", 
 #>                     "and warnings.  To drop all conditions, use ", 
@@ -3017,8 +3023,8 @@ res <- tryCatch({
 #>     options(cli.num_colors = cli_colors, cli.hyperlink = hyperlinks, 
 #>         cli.hyperlink_run = hyperlinks)
 #>     pkgdown::build_site(...)
-#> })(pkg = base::quote(list(package = "future", version = "1.69.0-9008", 
-#>     src_path = "/tmp/hb/Rtmp2qqo3o/future", meta = list(url = "https://future.futureverse.org", 
+#> })(pkg = base::quote(list(package = "future", version = "1.69.0-9012", 
+#>     src_path = "/tmp/hb/Rtmp1qhCYg/future", meta = list(url = "https://future.futureverse.org", 
 #>         home = list(links = list(list(text = "Roadmap/Milestones", 
 #>             href = "https://github.com/futureverse/future/milestones"), 
 #>             list(text = "The Futureverse Project", href = "https://www.futureverse.org/"), 
@@ -3051,7 +3057,7 @@ res <- tryCatch({
 #>             bootstrap = 5L, `light-switch` = TRUE)), desc = <environment>, 
 #>     bs_version = 5L, development = list(destination = "dev", 
 #>         mode = "default", version_label = "muted", in_dev = FALSE, 
-#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/Rtmp2qqo3o/future/docs", 
+#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/Rtmp1qhCYg/future/docs", 
 #>     lang = "en-US", install_metadata = FALSE, figures = list(
 #>         dev = "ragg::agg_png", dpi = 96L, dev.args = list(), 
 #>         fig.ext = "png", fig.width = 7.29166666666667, fig.height = NULL, 
@@ -3307,9 +3313,12 @@ res <- tryCatch({
 #>                   "to control how globals are handled.\n", "For details, see section 'Globals used by future expressions'\n", 
 #>                   "in the help for ", list(list("future()")), 
 #>                   ".")), "\n", "\n", list(list("packages"), list(
-#>                   "(optional) a character vector specifying packages\n", 
-#>                   "to be attached in the ", list(), " environment evaluating the future.")), 
-#>                 "\n", "\n", list(list("seed"), list("(optional) If TRUE, the random seed, that is, the state of the\n", 
+#>                   "(optional) a character vector specifying packages to be\n", 
+#>                   "attached in the ", list(), " environment evaluating the future, ", 
+#>                   list("in addition to\n", "packages required by global variables"), 
+#>                   " specified or identified via argument\n", 
+#>                   list("globals"), ".")), "\n", "\n", list(list(
+#>                   "seed"), list("(optional) If TRUE, the random seed, that is, the state of the\n", 
 #>                   "random number generator (RNG) will be set such that statistically sound\n", 
 #>                   "random numbers are produced (also during parallelization).\n", 
 #>                   "If FALSE (default), it is assumed that the future expression neither\n", 
@@ -3830,17 +3839,20 @@ res <- tryCatch({
 #>                     "For details, see section 'Globals used by future expressions'\n", 
 #>                     "in the help for ", list(list("future()")), 
 #>                     ".")), "\n", "\n", list(list("packages"), 
-#>                     list("(optional) a character vector specifying packages\n", 
-#>                       "to be attached in the ", list(), " environment evaluating the future.")), 
-#>                   "\n", "\n", list(list("stdout"), list("If TRUE (default), then the standard output is captured,\n", 
-#>                     "and re-outputted when ", list("value()"), 
-#>                     " is called.\n", "If FALSE, any output is silenced (by sinking it to the null device as\n", 
-#>                     "it is outputted).\n", "Using ", list("stdout = structure(TRUE, drop = TRUE)"), 
-#>                     " causes the captured\n", "standard output to be dropped from the future object as soon as it has\n", 
-#>                     "been relayed. This can help decrease the overall memory consumed by\n", 
-#>                     "captured output across futures.\n", "Using ", 
-#>                     list("stdout = NA"), " fully avoids intercepting the standard output;\n", 
-#>                     "behavior of such unhandled standard output depends on the future backend.")), 
+#>                     list("(optional) a character vector specifying packages to be\n", 
+#>                       "attached in the ", list(), " environment evaluating the future, ", 
+#>                       list("in addition to\n", "packages required by global variables"), 
+#>                       " specified or identified via argument\n", 
+#>                       list("globals"), ".")), "\n", "\n", list(
+#>                     list("stdout"), list("If TRUE (default), then the standard output is captured,\n", 
+#>                       "and re-outputted when ", list("value()"), 
+#>                       " is called.\n", "If FALSE, any output is silenced (by sinking it to the null device as\n", 
+#>                       "it is outputted).\n", "Using ", list("stdout = structure(TRUE, drop = TRUE)"), 
+#>                       " causes the captured\n", "standard output to be dropped from the future object as soon as it has\n", 
+#>                       "been relayed. This can help decrease the overall memory consumed by\n", 
+#>                       "captured output across futures.\n", "Using ", 
+#>                       list("stdout = NA"), " fully avoids intercepting the standard output;\n", 
+#>                       "behavior of such unhandled standard output depends on the future backend.")), 
 #>                   "\n", "\n", list(list("conditions"), list("A character string of condition classes to be captured\n", 
 #>                     "and relayed.  The default is to relay all conditions, including messages\n", 
 #>                     "and warnings.  To drop all conditions, use ", 

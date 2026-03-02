@@ -208,6 +208,7 @@ If you think it is necessary to modify the future backend within a
 function, then make sure to undo the changes when exiting the function.
 This can be achieved by using `with(plan(...), local = TRUE)`, e.g.
 
+
       my_fcn <- function(x) {
         with(plan(multisession), local = TRUE)
         y <- analyze(x)
@@ -341,7 +342,7 @@ with(plan(multisession, workers = 2), {
 })
 print(c(main = Sys.getpid(), worker = w_pid))
 #>   main worker 
-#> 917356 920359 
+#> 856631 859297 
 
 
 
@@ -354,6 +355,6 @@ local({
   print(c(main = Sys.getpid(), worker = w_pid))
 })
 #>   main worker 
-#> 917356 920459 
+#> 856631 859398 
 
 ```
