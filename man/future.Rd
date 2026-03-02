@@ -79,8 +79,10 @@ to control how globals are handled.
 For details, see section 'Globals used by future expressions'
 in the help for \code{\link[=future]{future()}}.}
 
-\item{packages}{(optional) a character vector specifying packages
-to be attached in the \R environment evaluating the future.}
+\item{packages}{(optional) a character vector specifying packages to be
+attached in the \R environment evaluating the future, \emph{in addition to
+packages required by global variables} specified or identified via argument
+\code{globals}.}
 
 \item{stdout}{If TRUE (default), then the standard output is captured,
 and re-outputted when \code{value()} is called.
