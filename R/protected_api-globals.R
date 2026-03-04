@@ -508,7 +508,7 @@ summarize_size_of_globals <- function(globals, sizes = NULL, maxSize = NULL, exp
   }
 
   if (!is.null(maxSize) && total_size > maxSize) {
-      msg <- sprintf('%s. This exceeds the maximum allowed size %s per by R option "future.globals.maxSize". This limit is set to protect against transfering too large objects to parallel workers by mistake, which may not be intended and could be costly. See help("future.globals.maxSize", package = "future") for further explainations and how to adjust or remove this threshold', msg, asIEC(maxSize))
+      msg <- sprintf('%s. This exceeds the maximum allowed size %s per plan() argument \'maxSizeOfObjects\'. This limit is set to protect against transfering too large objects to parallel workers by mistake, which may not be intended and could be costly. See help("future.globals.maxSize", package = "future") for how to adjust or remove the default threshold via an R option', msg, asIEC(maxSize))
   }
 
   if (n == 1) {
