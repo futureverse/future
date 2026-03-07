@@ -1,20 +1,3 @@
-# bamm (0.6.0)
-
-* GitHub: <https://github.com/luismurao/bamm>
-* Email: <mailto:luismurao@gmail.com>
-* GitHub mirror: <https://github.com/cran/bamm>
-
-Run `revdepcheck::revdep_details(, "bamm")` for more info
-
-## In both
-
-*   checking dependencies in R code ... NOTE
-     ```
-     Namespaces in Imports field not imported from:
-       ‘crosstalk’ ‘plotly’
-       All declared Imports should be used.
-     ```
-
 # baseballr (1.6.0)
 
 * GitHub: <https://github.com/BillPetti/baseballr>
@@ -33,76 +16,53 @@ Run `revdepcheck::revdep_details(, "baseballr")` for more info
          ‘chadwick_installation.R’
      ```
 
-# bistablehistory (1.1.3)
+# BayesPET (0.1.0)
 
-* GitHub: <https://github.com/alexander-pastukhov/bistablehistory>
-* Email: <mailto:pastukhov.alexander@gmail.com>
-* GitHub mirror: <https://github.com/cran/bistablehistory>
+* Email: <mailto:xinyi.he@uth.tmc.edu>
+* GitHub mirror: <https://github.com/cran/BayesPET>
 
-Run `revdepcheck::revdep_details(, "bistablehistory")` for more info
+Run `revdepcheck::revdep_details(, "BayesPET")` for more info
 
 ## In both
 
-*   checking tests ...
+*   checking whether package ‘BayesPET’ can be installed ... ERROR
      ```
-     ...
-         1. ├─testthat::expect_s3_class(fixef(fit), "data.frame") at test-fit_and_post_fit_utilities.R:44:3
-         2. │ └─testthat::quasi_label(enquo(object))
-         3. │   └─rlang::eval_bare(expr, quo_get_env(quo))
-         4. ├─bistablehistory::fixef(fit)
-         5. │ └─... %>% ...
-         6. ├─dplyr::mutate(...)
-         7. ├─dplyr::mutate(...)
-         8. ├─dplyr::mutate(., Estimate = c(bF))
-         9. ├─dplyr::ungroup(.)
-        10. ├─dplyr::summarise(...)
-        11. ├─dplyr:::summarise.grouped_df(...)
-        12. │ └─dplyr:::summarise_cols(.data, dplyr_quosures(...), by, "summarise")
-        13. │   └─base::withCallingHandlers(...)
-        14. ├─dplyr:::dplyr_internal_error(...)
-        15. │ └─rlang::abort(class = c(class, "dplyr:::internal_error"), dplyr_error_data = data)
-        16. │   └─rlang:::signal_abort(cnd, .file)
-        17. │     └─base::signalCondition(cnd)
-        18. └─dplyr (local) `<fn>`(`<dpl:::__>`)
-        19.   └─dplyr (local) handler(cnd)
-        20.     └─rlang::abort(message, class = error_class, parent = parent, call = error_call)
-       
-       [ FAIL 1 | WARN 1 | SKIP 0 | PASS 97 ]
-       Error:
-       ! Test failures.
-       Execution halted
+     Installation failed.
+     See ‘/scratch/henrik/revdep/future/checks/BayesPET/new/BayesPET.Rcheck/00install.out’ for details.
      ```
 
-*   checking re-building of vignette outputs ... ERROR
-     ```
-     ...
-      6. └─dplyr:::dplyr_internal_error(...)
-     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-     
-     Error: processing vignette 'cumulative-history.Rmd' failed with diagnostics:
-     ℹ In argument: `t = t`.
-     ℹ In group 1: `h0 = 0`, `S = 1`, `tau = 1`.
-     Caused by error:
-     ! `t` must be size 1, not 100.
-     ℹ To return more or less than 1 row per group, use `reframe()`.
-     --- failed re-building ‘cumulative-history.Rmd’
-     
-     --- re-building ‘usage-examples.Rmd’ using rmarkdown
-     [WARNING] Deprecated: --highlight-style. Use --syntax-highlighting instead.
-     [WARNING] Citeproc: citation loo not found
-     --- finished re-building ‘usage-examples.Rmd’
-     
-     --- re-building ‘writing-stan-code.Rmd’ using rmarkdown
-     [WARNING] Deprecated: --highlight-style. Use --syntax-highlighting instead.
-     --- finished re-building ‘writing-stan-code.Rmd’
-     
-     SUMMARY: processing the following file failed:
-       ‘cumulative-history.Rmd’
-     
-     Error: Vignette re-building failed.
-     Execution halted
-     ```
+## Installation
 
+### Devel
+
+```
+* installing *source* package ‘BayesPET’ ...
+** this is package ‘BayesPET’ version ‘0.1.0’
+** package ‘BayesPET’ successfully unpacked and MD5 sums checked
+** using staged installation
+Error in loadNamespace(x) : there is no package called ‘rstantools’
+Calls: loadNamespace -> withRestarts -> withOneRestart -> doWithOneRestart
+Execution halted
+ERROR: configuration failed for package ‘BayesPET’
+* removing ‘/scratch/henrik/revdep/future/checks/BayesPET/new/BayesPET.Rcheck/BayesPET’
+
+
+```
+### CRAN
+
+```
+* installing *source* package ‘BayesPET’ ...
+** this is package ‘BayesPET’ version ‘0.1.0’
+** package ‘BayesPET’ successfully unpacked and MD5 sums checked
+** using staged installation
+Error in loadNamespace(x) : there is no package called ‘rstantools’
+Calls: loadNamespace -> withRestarts -> withOneRestart -> doWithOneRestart
+Execution halted
+ERROR: configuration failed for package ‘BayesPET’
+* removing ‘/scratch/henrik/revdep/future/checks/BayesPET/old/BayesPET.Rcheck/BayesPET’
+
+
+```
 # ceRNAnetsim (1.22.0)
 
 * GitHub: <https://github.com/selcenari/ceRNAnetsim>
@@ -399,6 +359,51 @@ Run `revdepcheck::revdep_details(, "envi")` for more info
      See ‘/scratch/henrik/revdep/future/checks/envi/new/envi.Rcheck/00install.out’ for details.
      ```
 
+# EpiForsk (0.2.0)
+
+* GitHub: <https://github.com/Laksafoss/EpiForsk>
+* Email: <mailto:kija@ssi.dk>
+* GitHub mirror: <https://github.com/cran/EpiForsk>
+
+Run `revdepcheck::revdep_details(, "EpiForsk")` for more info
+
+## In both
+
+*   checking examples ... ERROR
+     ```
+     ...
+     > ### ** Examples
+     > 
+     > data <- 1:5 |>
+     +   purrr::map(
+     +     \(x) {
+     +       name = paste0("cov", x);
+     +       dplyr::tibble("{name}" := rnorm(100, 1))
+     +     }
+     +   ) |>
+     +   purrr::list_cbind() |>
+     +   dplyr::mutate(
+     +   y = rowSums(dplyr::across(dplyr::everything())) + rnorm(100)
+     +   )
+     > lm <- lm(
+     +  as.formula(
+     +   paste0("y ~ 0 + ", paste0(names(data)[names(data) != "y"], collapse = " + "))
+     +  ),
+     +  data
+     + )
+     > fct_confint(lm, sum)
+     Error in (function (.x, .f, ..., .progress = FALSE)  : ℹ In index: 1.
+     Caused by error:
+     ! 'solve' is not an exported object from 'namespace:CVXR'
+     Calls: fct_confint ... tryCatchList -> tryCatchOne -> <Anonymous> -> ci_fct_error_handler
+     Execution halted
+     ```
+
+*   checking dependencies in R code ... WARNING
+     ```
+     Missing or unexported object: ‘CVXR::solve’
+     ```
+
 # fastRhockey (0.4.0)
 
 * GitHub: <https://github.com/sportsdataverse/fastRhockey>
@@ -595,6 +600,46 @@ Run `revdepcheck::revdep_details(, "greenSD")` for more info
      Warning: GDAL/OGR not compiled with libcurl support, remote requests not supported. (GDAL error 6)
      Error: Cannot open "https://raw.githubusercontent.com/billbillbilly/greenSD/main/scripts/city_urban_boundaries.geojson"; The file doesn't seem to exist.
      Execution halted
+     ```
+
+# httpgd (2.1.4)
+
+* GitHub: <https://github.com/nx10/httpgd>
+* Email: <mailto:floruppr@gmail.com>
+* GitHub mirror: <https://github.com/cran/httpgd>
+
+Run `revdepcheck::revdep_details(, "httpgd")` for more info
+
+## In both
+
+*   checking tests ...
+     ```
+     ...
+       ── Failure ('test-server.R:140:3'): Delete plot ────────────────────────────────
+       Expected `grepl("\"str\": \"plot_6\"", json_p5)` to be TRUE.
+       Differences:
+       `actual`:   FALSE
+       `expected`: TRUE 
+       
+       ── Failure ('test-server.R:151:3'): Delete plot status ─────────────────────────
+       Expected `httr::status_code(fetch_get(hgd_url("remove", index = 4)))` to equal 200.
+       Differences:
+       1/1 mismatches
+       [1] 503 - 200 == 303
+       ── Failure ('test-server.R:152:3'): Delete plot status ─────────────────────────
+       Expected `httr::status_code(fetch_get(hgd_url("remove", index = 99)))` to equal 404.
+       Differences:
+       1/1 mismatches
+       [1] 503 - 404 == 99
+       
+       [ FAIL 16 | WARN 0 | SKIP 0 | PASS 2 ]
+       Error:
+       ! Test failures.
+       Execution halted
+       
+        *** caught segfault ***
+       address (nil), cause 'unknown'
+       An irrecoverable exception occurred. R is aborting now ...
      ```
 
 # infercnv (1.26.0)
@@ -847,7 +892,7 @@ Run `revdepcheck::revdep_details(, "mistyR")` for more info
             |                                                   ^
      ```
 
-# mlr3resampling (2025.11.19)
+# mlr3resampling (2026.2.24)
 
 * GitHub: <https://github.com/tdhock/mlr3resampling>
 * Email: <mailto:toby.hocking@r-project.org>
@@ -857,69 +902,9 @@ Run `revdepcheck::revdep_details(, "mlr3resampling")` for more info
 
 ## In both
 
-*   checking examples ... ERROR
-     ```
-     ...
-             <fctr>        <char>  <int>     <int> <int>          <int>     <int>
-     1:       Alice           all     52         1     1             52         1
-     2:         Bob           all     52         1     1             52         2
-        Train_subsets
-               <fctr>
-     1:           all
-     2:           all
-     > mlr3resampling::proj_compute(1, pkg.proj.dir)
-     [c4-n43:2139761] OPAL ERROR: Not initialized in file ext2x_client.c at line 112
-     --------------------------------------------------------------------------
-     The application appears to have been direct launched using "srun",
-     but OMPI was not built with SLURM's PMI support and therefore cannot
-     execute. There are several options for building PMI support under
-     SLURM, depending upon the SLURM version you are using:
-     
-       version 16.05 or later: you can use SLURM's PMIx support. This
-       requires that you configure and build SLURM --with-pmix.
-     
-       Versions earlier than 16.05: you must use either SLURM's PMI-1 or
-       PMI-2 support. SLURM builds PMI-1 by default, or you can manually
-       install PMI-2. You must then build Open MPI using --with-pmi pointing
-       to the SLURM PMI library location.
-     
-     Please configure as appropriate and try again.
-     --------------------------------------------------------------------------
-     ```
-
-*   checking tests ...
-     ```
-     ...
-       > if(require(testthat))test_check("mlr3resampling")
-       Loading required package: testthat
-       Loading required package: mlr3resampling
-       [c4-n43:2142660] OPAL ERROR: Not initialized in file ext2x_client.c at line 112
-       --------------------------------------------------------------------------
-       The application appears to have been direct launched using "srun",
-       but OMPI was not built with SLURM's PMI support and therefore cannot
-       execute. There are several options for building PMI support under
-       SLURM, depending upon the SLURM version you are using:
-       
-         version 16.05 or later: you can use SLURM's PMIx support. This
-         requires that you configure and build SLURM --with-pmix.
-       
-         Versions earlier than 16.05: you must use either SLURM's PMI-1 or
-         PMI-2 support. SLURM builds PMI-1 by default, or you can manually
-         install PMI-2. You must then build Open MPI using --with-pmi pointing
-         to the SLURM PMI library location.
-       
-       Please configure as appropriate and try again.
-       --------------------------------------------------------------------------
-       *** An error occurred in MPI_Init
-       *** on a NULL communicator
-       *** MPI_ERRORS_ARE_FATAL (processes in this communicator will now abort,
-       ***    and potentially your MPI job)
-       [c4-n43:2142660] Local abort before MPI_INIT completed completed successfully, but am not able to aggregate error messages, and not able to guarantee that all other processes were killed!
-     ```
-
 *   checking dependencies in R code ... NOTE
      ```
-     [c4-n43:2127791] OPAL ERROR: Not initialized in file ext2x_client.c at line 112
+     [c4-n43:258128] OPAL ERROR: Not initialized in file ext2x_client.c at line 112
      --------------------------------------------------------------------------
      The application appears to have been direct launched using "srun",
      but OMPI was not built with SLURM's PMI support and therefore cannot
@@ -956,23 +941,6 @@ Run `revdepcheck::revdep_details(, "multiverse")` for more info
          ‘accessors.R’ ‘export_json.R’ ‘extract.R’
      ```
 
-# nfl4th (1.0.4)
-
-* GitHub: <https://github.com/nflverse/nfl4th>
-* Email: <mailto:bbaldwin206@gmail.com>
-* GitHub mirror: <https://github.com/cran/nfl4th>
-
-Run `revdepcheck::revdep_details(, "nfl4th")` for more info
-
-## In both
-
-*   checking R code for possible problems ... NOTE
-     ```
-     get_4th_plays: no visible binding for global variable ‘id’
-     Undefined global functions or variables:
-       id
-     ```
-
 # nixtlar (0.6.2)
 
 * GitHub: <https://github.com/Nixtla/nixtlar>
@@ -993,46 +961,6 @@ Run `revdepcheck::revdep_details(, "nixtlar")` for more info
          ‘nixtla_client_forecast.R’ ‘nixtla_client_historic.R’
          ‘nixtla_client_plot.R’ ‘nixtla_validate_api_key.R’
          ‘validate_exogenous.R’
-     ```
-
-# oncomsm (0.1.4)
-
-* GitHub: <https://github.com/Boehringer-Ingelheim/oncomsm>
-* Email: <mailto:kevin.kunzmann@boehringer-ingelheim.com>
-* GitHub mirror: <https://github.com/cran/oncomsm>
-
-Run `revdepcheck::revdep_details(, "oncomsm")` for more info
-
-## In both
-
-*   checking re-building of vignette outputs ... ERROR
-     ```
-     ...
-      4. ├─dplyr::filter(., to != "stable")
-      5. ├─dplyr::summarize(...)
-      6. ├─dplyr:::summarise.grouped_df(., dt = t - lag(t), from = lag(state), to = state, .groups = "drop")
-      7. │ └─dplyr:::summarise_cols(.data, dplyr_quosures(...), by, "summarise")
-      8. │   └─base::withCallingHandlers(...)
-      9. └─dplyr:::dplyr_internal_error(...)
-     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-     
-     Error: processing vignette 'oncomsm.Rmd' failed with diagnostics:
-     ℹ In argument: `dt = t - lag(t)`.
-     ℹ In group 1: `iter = 1`, `group_id = "A"`, `subject_id = "ID00827488"`.
-     Caused by error:
-     ! `dt` must be size 1, not 3.
-     ℹ To return more or less than 1 row per group, use `reframe()`.
-     --- failed re-building ‘oncomsm.Rmd’
-     
-     --- re-building ‘prior-choice.Rmd’ using rmarkdown
-     [WARNING] Deprecated: --highlight-style. Use --syntax-highlighting instead.
-     --- finished re-building ‘prior-choice.Rmd’
-     
-     SUMMARY: processing the following file failed:
-       ‘oncomsm.Rmd’
-     
-     Error: Vignette re-building failed.
-     Execution halted
      ```
 
 # OutSeekR (1.1.0)
@@ -1065,6 +993,148 @@ Run `revdepcheck::revdep_details(, "partR2")` for more info
      ```
      Namespace in Imports field not imported from: ‘methods’
        All declared Imports should be used.
+     ```
+
+# PCRedux (1.2-1)
+
+* GitHub: <https://github.com/PCRuniversum/PCRedux>
+* Email: <mailto:draspiess@gmail.com>
+* GitHub mirror: <https://github.com/cran/PCRedux>
+
+Run `revdepcheck::revdep_details(, "PCRedux")` for more info
+
+## In both
+
+*   checking re-building of vignette outputs ... WARNING
+     ```
+     ...
+       ...
+     --- re-building ‘PCRedux.Rmd’ using rmarkdown
+     [WARNING] Deprecated: --highlight-style. Use --syntax-highlighting instead.
+     A new version of TeX Live has been released. If you need to install or update any LaTeX packages, you have to upgrade TinyTeX with tinytex::reinstall_tinytex(repository = "illinois").
+     
+     tlmgr: Local TeX Live (2025) is older than remote repository (2026).
+     Cross release updates are only supported with
+       update-tlmgr-latest(.sh/.exe) --update
+     See https://tug.org/texlive/upgrade.html for details.
+     Warning in system2("tlmgr", args, ...) :
+       running command ''tlmgr' search --file --global '/caption.sty'' had status 1
+     ! LaTeX Error: File `caption.sty' not found.
+     
+     ! Emergency stop.
+     <read *> 
+     
+     Error: processing vignette 'PCRedux.Rmd' failed with diagnostics:
+     LaTeX failed to compile /scratch/henrik/revdep/future/checks/PCRedux/new/PCRedux.Rcheck/vign_test/PCRedux/vignettes/PCRedux.tex. See https://yihui.org/tinytex/r/#debugging for debugging tips. See PCRedux.log for more info.
+     --- failed re-building ‘PCRedux.Rmd’
+     
+     SUMMARY: processing the following file failed:
+       ‘PCRedux.Rmd’
+     
+     Error: Vignette re-building failed.
+     Execution halted
+     ```
+
+# pgxRpi (1.6.0)
+
+* GitHub: <https://github.com/progenetix/pgxRpi>
+* Email: <mailto:hangjia.zhao@uzh.ch>
+
+Run `revdepcheck::revdep_details(, "pgxRpi")` for more info
+
+## In both
+
+*   checking examples ... ERROR
+     ```
+     Running examples in ‘pgxRpi-Ex.R’ failed
+     The error most likely occurred in:
+     
+     > ### Name: pgxMetaplot
+     > ### Title: Plot survival data of individuals
+     > ### Aliases: pgxMetaplot
+     > 
+     > ### ** Examples
+     > 
+     > individuals <- pgxLoader(type="individuals",filters="NCIT:C3512")
+     Warning in beacon_query(encoded_url, type, dataset, domain, "filter", transformed_filter) :
+       
+      Request failed for filter NCIT:C3512 in progenetix.org (status code: 524)
+     
+     Warning in pgxmetaLoader(type = type, biosample_id = biosample_id, individual_id = individual_id,  :
+       No data retrieved
+     > pgxMetaplot(individuals, group_id="age_iso", condition="P65Y")
+     Error in if (nrow(meta.sel.df) == 0) stop("\n No available survival data \n") : 
+       argument is of length zero
+     Calls: pgxMetaplot
+     Execution halted
+     ```
+
+*   checking tests ...
+     ```
+     ...
+       x[1]: "text/html"
+       y[1]: "text/plain"
+       ── Failure ('test_variants.R:56:5'): retrieve pgxmatrix variant with individual id ──
+       Expected `... <- NULL` not to throw any errors.
+       Actually got a <simpleError> with message:
+         cannot open the connection to 'https://progenetix.org/services/samplematrix/?individualIds=pgxind-kftx3565,pgxind-kftx5g4v'
+       ── Error ('test_variants.R:57:5'): retrieve pgxmatrix variant with individual id ──
+       Error in `eval(code, test_env)`: object 'result' not found
+       Backtrace:
+           ▆
+        1. ├─testthat::expect_gt(nrow(result), 0) at test_variants.R:57:5
+        2. │ └─testthat::quasi_label(enquo(object), label)
+        3. │   └─rlang::eval_bare(expr, quo_get_env(quo))
+        4. └─base::nrow(result)
+       ── Failure ('test_variants.R:64:5'): retrieve pgxmatrix variant with filters ───
+       Expected `http_type(r)` to equal "text/plain".
+       Differences:
+       1/1 mismatches
+       x[1]: "text/html"
+       y[1]: "text/plain"
+       
+       [ FAIL 10 | WARN 3 | SKIP 0 | PASS 29 ]
+       Error:
+       ! Test failures.
+       Execution halted
+     ```
+
+*   checking re-building of vignette outputs ... ERROR
+     ```
+     ...
+         ▆
+      1. └─pgxRpi::segtoFreq(segdata, cnv_column_idx = 6, cohort_name = "c1")
+      2.   └─base::colSums(bin.dup.data1)
+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     
+     Error: processing vignette 'Introduction_3_access_cnv_frequency.Rmd' failed with diagnostics:
+     'x' must be an array of at least two dimensions
+     --- failed re-building ‘Introduction_3_access_cnv_frequency.Rmd’
+     
+     --- re-building ‘Introduction_4_process_pgxseg.Rmd’ using rmarkdown
+     The magick package is required to crop "/scratch/henrik/revdep/future/checks/pgxRpi/new/pgxRpi.Rcheck/vign_test/pgxRpi/vignettes/Introduction_4_process_pgxseg_files/figure-html/unnamed-chunk-6-1.png" but not available.
+     The magick package is required to crop "/scratch/henrik/revdep/future/checks/pgxRpi/new/pgxRpi.Rcheck/vign_test/pgxRpi/vignettes/Introduction_4_process_pgxseg_files/figure-html/unnamed-chunk-7-1.png" but not available.
+     The magick package is required to crop "/scratch/henrik/revdep/future/checks/pgxRpi/new/pgxRpi.Rcheck/vign_test/pgxRpi/vignettes/Introduction_4_process_pgxseg_files/figure-html/unnamed-chunk-8-1.png" but not available.
+     The magick package is required to crop "/scratch/henrik/revdep/future/checks/pgxRpi/new/pgxRpi.Rcheck/vign_test/pgxRpi/vignettes/Introduction_4_process_pgxseg_files/figure-html/unnamed-chunk-13-1.png" but not available.
+     The magick package is required to crop "/scratch/henrik/revdep/future/checks/pgxRpi/new/pgxRpi.Rcheck/vign_test/pgxRpi/vignettes/Introduction_4_process_pgxseg_files/figure-html/unnamed-chunk-14-1.png" but not available.
+     The magick package is required to crop "/scratch/henrik/revdep/future/checks/pgxRpi/new/pgxRpi.Rcheck/vign_test/pgxRpi/vignettes/Introduction_4_process_pgxseg_files/figure-html/unnamed-chunk-15-1.png" but not available.
+     The magick package is required to crop "/scratch/henrik/revdep/future/checks/pgxRpi/new/pgxRpi.Rcheck/vign_test/pgxRpi/vignettes/Introduction_4_process_pgxseg_files/figure-html/unnamed-chunk-16-1.png" but not available.
+     --- finished re-building ‘Introduction_4_process_pgxseg.Rmd’
+     
+     SUMMARY: processing the following files failed:
+       ‘Introduction_2_query_variants.Rmd’
+       ‘Introduction_3_access_cnv_frequency.Rmd’
+     
+     Error: Vignette re-building failed.
+     Execution halted
+     ```
+
+*   checking R code for possible problems ... NOTE
+     ```
+     pgxSegprocess: no visible binding for global variable
+       ‘followup_state_id’
+     Undefined global functions or variables:
+       followup_state_id
      ```
 
 # photosynthesis (2.1.5)
@@ -1244,53 +1314,33 @@ Run `revdepcheck::revdep_details(, "receptiviti")` for more info
        Execution halted
      ```
 
-# regmedint (1.0.1)
+# SCArray.sat (1.10.1)
 
-* GitHub: <https://github.com/kaz-yos/regmedint>
-* Email: <mailto:yi.li10@mail.mcgill.ca>
-* GitHub mirror: <https://github.com/cran/regmedint>
+* GitHub: <https://github.com/AbbVie-ComputationalGenomics/SCArray>
+* Email: <mailto:xiuwen.zheng@abbvie.com>
 
-Run `revdepcheck::revdep_details(, "regmedint")` for more info
+Run `revdepcheck::revdep_details(, "SCArray.sat")` for more info
 
 ## In both
 
-*   checking tests ...
-     ```
-     ...
-       ── Error ('test-05_calc_myreg.R:194:9'): calc_myreg / calls calc_myreg_mreg_logistic_yreg_linear when mreg logistic / yreg linear ──
-       <lifecycle_error_deprecated/defunctError/rlang_error/error/condition>
-       Error: `with_mock()` was deprecated in testthat 3.2.0 and is now defunct.
-       ℹ Please use `with_mocked_bindings()` instead.
-       Backtrace:
-           ▆
-        1. └─testthat::with_mock(...) at test-05_calc_myreg.R:194:9
-        2.   └─lifecycle::deprecate_stop("3.2.0", "with_mock()", "with_mocked_bindings()")
-        3.     └─lifecycle:::deprecate_stop0(msg)
-        4.       └─rlang::cnd_signal(...)
-       ── Error ('test-05_calc_myreg.R:235:9'): calc_myreg / calls calc_myreg_mreg_logistic_yreg_logistic when mreg logistic / yreg logistic ──
-       <lifecycle_error_deprecated/defunctError/rlang_error/error/condition>
-       Error: `with_mock()` was deprecated in testthat 3.2.0 and is now defunct.
-       ℹ Please use `with_mocked_bindings()` instead.
-       Backtrace:
-           ▆
-        1. └─testthat::with_mock(...) at test-05_calc_myreg.R:235:9
-        2.   └─lifecycle::deprecate_stop("3.2.0", "with_mock()", "with_mocked_bindings()")
-        3.     └─lifecycle:::deprecate_stop0(msg)
-        4.       └─rlang::cnd_signal(...)
-       
-       [ FAIL 4 | WARN 0 | SKIP 2 | PASS 4128 ]
-       Error:
-       ! Test failures.
-       Execution halted
-     ```
-
 *   checking dependencies in R code ... NOTE
      ```
-     Namespace in Imports field not imported from: ‘Deriv’
-       All declared Imports should be used.
+     Unexported objects imported by ':::' calls:
+       ‘Seurat:::DEmethods_counts’ ‘Seurat:::DEmethods_nocorrect’
+       ‘Seurat:::FastExpMean’ ‘Seurat:::FastLogVMR’ ‘Seurat:::NBResiduals’
+       ‘Seurat:::UpdateKey’ ‘Seurat:::ValidateDataForMerge’
+       See the note in ?`:::` about the use of this operator.
      ```
 
-# shinyOAuth (0.3.0)
+*   checking R code for possible problems ... NOTE
+     ```
+     CreateAssayObject2: no visible global function definition for
+       ‘CreateAssay5Object’
+     Undefined global functions or variables:
+       CreateAssay5Object
+     ```
+
+# shinyOAuth (0.4.0)
 
 * GitHub: <https://github.com/lukakoning/shinyOAuth>
 * Email: <mailto:koningluka@gmail.com>
@@ -1324,7 +1374,7 @@ Run `revdepcheck::revdep_details(, "shinyOAuth")` for more info
         10.       │ └─base::force(expr)
         11.       └─rlang::abort(...)
        
-       [ FAIL 13 | WARN 0 | SKIP 47 | PASS 1180 ]
+       [ FAIL 13 | WARN 0 | SKIP 83 | PASS 1977 ]
        Error:
        ! Test failures.
        Execution halted
@@ -1454,7 +1504,7 @@ Run `revdepcheck::revdep_details(, "SpaDES.core")` for more info
      +   convertToPackage("test", path = tmpdir)
      + }
      Loading required namespace: pkgload
-     New module test created at /scratch/henrik/1031713/RtmpYA6RUH/reproducible/U3C0xYmG
+     New module test created at /scratch/henrik/1066200/RtmppwHs3M/reproducible/U3C0xYmG
      ```
 
 # sparrpowR (0.2.9)
@@ -1530,6 +1580,76 @@ Run `revdepcheck::revdep_details(, "sperrorest")` for more info
      checkRd: (-1) summary.sperrorestimportance.Rd:5: Lost braces; missing escapes or markup?
           5 | \title{Summarize variable importance statistics obtained by {sperrorest}}
             |                                                             ^
+     ```
+
+# spStack (1.1.2)
+
+* GitHub: <https://github.com/SPan-18/spStack-dev>
+* Email: <mailto:span18@ucla.edu>
+* GitHub mirror: <https://github.com/cran/spStack>
+
+Run `revdepcheck::revdep_details(, "spStack")` for more info
+
+## In both
+
+*   checking examples ... ERROR
+     ```
+     ...
+     > 
+     > mod1 <- spLMstack(y ~ x1, data = dat,
+     +                   coords = as.matrix(dat[, c("s1", "s2")]),
+     +                   cor.fn = "matern",
+     +                   params.list = list(phi = c(1.5, 3),
+     +                                      nu = c(0.5, 1),
+     +                                      noise_sp_ratio = c(1)),
+     +                   n.samples = 1000, loopd.method = "exact",
+     +                   parallel = FALSE, solver = "ECOS", verbose = TRUE)
+     Error in `method(solve_via_data, CVXR::ECOS_Solver)`:
+     ! Package ECOSolveR is required but not installed.
+     Backtrace:
+          ▆
+       1. └─spStack::spLMstack(...)
+       2.   └─spStack::get_stacking_weights(loopd_mat, solver = solver)
+       3.     └─CVXR::psolve(prob, solver = solver)
+       4.       └─CVXR::solve_via_data(...)
+       5.         ├─S7::S7_dispatch()
+       6.         └─CVXR (local) `method(solve_via_data, CVXR::SolvingChain)`(...)
+       7.           └─CVXR::solve_via_data(...)
+       8.             ├─S7::S7_dispatch()
+       9.             └─CVXR (local) `method(solve_via_data, CVXR::ECOS_Solver)`(...)
+      10.               └─cli::cli_abort("Package {.pkg ECOSolveR} is required but not installed.")
+      11.                 └─rlang::abort(...)
+     Execution halted
+     ```
+
+*   checking re-building of vignette outputs ... ERROR
+     ```
+     ...
+      1. └─spStack::spLMstack(...)
+      2.   └─spStack::get_stacking_weights(loopd_mat, solver = solver)
+      3.     └─CVXR::psolve(prob, solver = solver)
+      4.       └─CVXR::solve_via_data(...)
+      5.         ├─S7::S7_dispatch()
+      6.         └─CVXR (local) `method(solve_via_data, CVXR::SolvingChain)`(...)
+      7.           └─CVXR::solve_via_data(...)
+      8.             ├─S7::S7_dispatch()
+      9.             └─CVXR (local) `method(solve_via_data, CVXR::ECOS_Solver)`(...)
+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     
+     Error: processing vignette 'spatial.Rmd' failed with diagnostics:
+     Package ECOSolveR is required but not installed.
+     --- failed re-building ‘spatial.Rmd’
+     
+     --- re-building ‘technical_overview.Rmd’ using rmarkdown
+     [WARNING] Deprecated: --highlight-style. Use --syntax-highlighting instead.
+     --- finished re-building ‘technical_overview.Rmd’
+     
+     SUMMARY: processing the following files failed:
+       ‘posterior-predictive.Rmd’ ‘spStack.Rmd’ ‘spatial-temporal.Rmd’
+       ‘spatial.Rmd’
+     
+     Error: Vignette re-building failed.
+     Execution halted
      ```
 
 # sRACIPE (2.2.0)
@@ -1664,7 +1784,7 @@ Run `revdepcheck::revdep_details(, "synergyfinder")` for more info
             |          ^
      ```
 
-# targets (1.11.4)
+# targets (1.12.0)
 
 * GitHub: <https://github.com/ropensci/targets>
 * Email: <mailto:will.landau.oss@gmail.com>
@@ -1674,9 +1794,32 @@ Run `revdepcheck::revdep_details(, "targets")` for more info
 
 ## In both
 
-*   checking Rd cross-references ... NOTE
+*   checking examples ... ERROR
      ```
-     Unknown package ‘qs’ in Rd xrefs
+     Running examples in ‘targets-Ex.R’ failed
+     The error most likely occurred in:
+     
+     > ### Name: tar_renv
+     > ### Title: Set up package dependencies for compatibility with 'renv'
+     > ### Aliases: tar_renv
+     > 
+     > ### ** Examples
+     > 
+     > tar_dir({ # tar_dir() runs code from a temp dir for CRAN.
+     +   tar_script({
+     +     library(targets)
+     +     library(tarchetypes)
+     +     tar_option_set(packages = c("tibble", "qs"))
+     +     list()
+     +   }, ask = FALSE)
+     +   tar_renv()
+     +   writeLines(readLines("_targets_packages.R"))
+     + })
+     Error:
+     ! Error in tar_renv():
+       there is no package called ‘tarchetypes’
+       See https://books.ropensci.org/targets/debugging.html
+     Execution halted
      ```
 
 # tramvs (0.0-8)
@@ -1766,46 +1909,6 @@ ERROR: configuration failed for package ‘TriDimRegression’
 
 
 ```
-# tsdistributions (1.0.3)
-
-* GitHub: <https://github.com/tsmodels/tsdistributions>
-* Email: <mailto:alexios@4dscape.com>
-* GitHub mirror: <https://github.com/cran/tsdistributions>
-
-Run `revdepcheck::revdep_details(, "tsdistributions")` for more info
-
-## In both
-
-*   checking re-building of vignette outputs ... ERROR
-     ```
-     ...
-     --- finished re-building ‘estimation_demo.Rmd’
-     
-     --- re-building ‘location_scale_distributions.Rmd’ using rmarkdown
-     [WARNING] Deprecated: --highlight-style. Use --syntax-highlighting instead.
-     ! Undefined control sequence.
-     l.56 \NewDocumentCommand
-                             \citeproctext{}{} 
-     
-     Error: processing vignette 'location_scale_distributions.Rmd' failed with diagnostics:
-     LaTeX failed to compile /scratch/henrik/revdep/future/checks/tsdistributions/new/tsdistributions.Rcheck/vign_test/tsdistributions/vignettes/location_scale_distributions.tex. See https://yihui.org/tinytex/r/#debugging for debugging tips. See location_scale_distributions.log for more info.
-     --- failed re-building ‘location_scale_distributions.Rmd’
-     
-     --- re-building ‘profile_demo.Rmd’ using rmarkdown
-     [WARNING] Deprecated: --highlight-style. Use --syntax-highlighting instead.
-     --- finished re-building ‘profile_demo.Rmd’
-     
-     --- re-building ‘spd_demo.Rmd’ using rmarkdown
-     [WARNING] Deprecated: --highlight-style. Use --syntax-highlighting instead.
-     --- finished re-building ‘spd_demo.Rmd’
-     
-     SUMMARY: processing the following file failed:
-       ‘location_scale_distributions.Rmd’
-     
-     Error: Vignette re-building failed.
-     Execution halted
-     ```
-
 # tsgarch (1.0.3)
 
 * GitHub: <https://github.com/tsmodels/tsgarch>
@@ -1822,41 +1925,6 @@ Run `revdepcheck::revdep_details(, "tsgarch")` for more info
        |> or function shorthand \(...) syntax added in R 4.1.0.
        File(s) using such syntax:
          ‘benchmark.R’ ‘print.R’
-     ```
-
-# tsmarch (1.0.0)
-
-* GitHub: <https://github.com/tsmodels/tsmarch>
-* Email: <mailto:alexios@4dscape.com>
-* GitHub mirror: <https://github.com/cran/tsmarch>
-
-Run `revdepcheck::revdep_details(, "tsmarch")` for more info
-
-## In both
-
-*   checking re-building of vignette outputs ... ERROR
-     ```
-     Error(s) in re-building vignettes:
-       ...
-     --- re-building ‘feasible_multivariate_garch.Rmd’ using rmarkdown
-     [WARNING] Deprecated: --highlight-style. Use --syntax-highlighting instead.
-     ! Undefined control sequence.
-     l.97 \NewDocumentCommand
-                             \citeproctext{}{} 
-     
-     Error: processing vignette 'feasible_multivariate_garch.Rmd' failed with diagnostics:
-     LaTeX failed to compile /scratch/henrik/revdep/future/checks/tsmarch/new/tsmarch.Rcheck/vign_test/tsmarch/vignettes/feasible_multivariate_garch.tex. See https://yihui.org/tinytex/r/#debugging for debugging tips. See feasible_multivariate_garch.log for more info.
-     --- failed re-building ‘feasible_multivariate_garch.Rmd’
-     
-     --- re-building ‘tsmarch_demo.Rmd’ using rmarkdown
-     [WARNING] Deprecated: --highlight-style. Use --syntax-highlighting instead.
-     --- finished re-building ‘tsmarch_demo.Rmd’
-     
-     SUMMARY: processing the following file failed:
-       ‘feasible_multivariate_garch.Rmd’
-     
-     Error: Vignette re-building failed.
-     Execution halted
      ```
 
 # txshift (0.3.8)
