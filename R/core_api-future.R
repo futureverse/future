@@ -176,18 +176,6 @@ future <- function(expr, envir = parent.frame(), substitute = TRUE, lazy = FALSE
   onReference <- getOption("future.globals.onReference")
   if (is.null(onReference)) onReference <- "ignore"
 
-  if (!is.null(globals)) {
-    gp <- getGlobalsAndPackages(expr, envir = envir, tweak = tweakExpression, globals = globals, onReference = onReference, maxSize = +Inf)
-    expr <- gp[["expr"]]
-    globals <- gp[["globals"]]
-    ## Record packages?
-    if (length(packages) > 0 || length(gp[["packages"]]) > 0) {
-      packages <- c(gp[["packages"]], packages)
-    }
-    gp <- NULL
-    attr(globals, "already-done") <- TRUE
-  }
-
   future <- Future(expr, substitute = FALSE,
                    envir = envir,
                    lazy = TRUE,

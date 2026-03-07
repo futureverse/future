@@ -49,8 +49,10 @@
 #' For details, see section 'Globals used by future expressions'
 #' in the help for [future()].
 #' 
-#' @param packages (optional) a character vector specifying packages
-#' to be attached in the \R environment evaluating the future.
+#' @param packages (optional) a character vector specifying packages to be
+#' attached in the \R environment evaluating the future, _in addition to
+#' packages required by global variables_ specified or identified via argument
+#' `globals`.
 #'
 #' @param seed (optional) If TRUE, the random seed, that is, the state of the
 #' random number generator (RNG) will be set such that statistically sound
@@ -137,11 +139,12 @@ Future <- function(expr = NULL, envir = parent.frame(), substitute = TRUE, stdou
       expr <- gp[["expr"]]
     
       ## Record packages?
-      if (length(packages) > 0 || (length(gp[["packages"]]) > 0 && lazy)) {
+      if (length(packages) > 0 || (length(gp[["packages"]]) > 0)) {
         packages <- c(gp[["packages"]], packages)
       }
       
       gp <- NULL
+      attr(globals, "already-done") <- TRUE
     }
   }
   

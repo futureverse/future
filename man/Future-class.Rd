@@ -59,8 +59,10 @@ to control how globals are handled.
 For details, see section 'Globals used by future expressions'
 in the help for \code{\link[=future]{future()}}.}
 
-\item{packages}{(optional) a character vector specifying packages
-to be attached in the \R environment evaluating the future.}
+\item{packages}{(optional) a character vector specifying packages to be
+attached in the \R environment evaluating the future, \emph{in addition to
+packages required by global variables} specified or identified via argument
+\code{globals}.}
 
 \item{seed}{(optional) If TRUE, the random seed, that is, the state of the
 random number generator (RNG) will be set such that statistically sound
