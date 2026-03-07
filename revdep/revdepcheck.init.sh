@@ -1,19 +1,27 @@
 #! /usr/bin/env bash
 
+## Missing or outdated LaTeX packages
+false && R --quiet --no-save <<EOF
+    tinytex::install_tinytex(force = TRUE)
+    message("TeX root: ", tinytex::tinytex_root())
+    tinytex::tlmgr_update()
+    tinytex::tlmgr_install("nowidow")  # QDNAseq
+    tinytex::tlmgr_install("wrapfig")  # tramvs
+    tinytex::tlmgr_install("apacite")  # ctsem
+    tinytex::tlmgr_install("textpos")  # WeightedCluster
+EOF
+
 ## Add packages to check
 revdep/run.R --add-children
 
-## Drop packages failing on CRAN (2026-01-31)
-revdep/run.R --rm arkdb dispositionEffect forecastML mbbe
+## Drop packages failing on CRAN (2026-03-07)
+revdep/run.R --rm dispositionEffect
 
-## Drop packages failing on CRAN (2026-02-08)
-revdep/run.R --rm delimtools bistablehistory
+## Drop packages no longer on CRAN (2026-03-07)
+revdep/run.R --rm forecastML mbbe oncomsm
 
-## Drop packages no longer on CRAN (2026-02-08)
-revdep/run.R --rm oncomsm
-
-## Drop packages failing on Bioconductor (2026-01-31/2026-02-08)
-revdep/run.R --rm dar MineICA pgxRpi RFLOMICS SCArray.sat scLANE
+## Drop packages failing on Bioconductor (2026-03-07)
+revdep/run.R --rm dar MineICA
 
 ## Too many cores
 # NSLOTS=112 revdep/run.R --add ale couplr fmeffects gtfs2emis gtfs2gps signeR simIDM
