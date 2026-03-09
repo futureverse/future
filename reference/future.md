@@ -349,7 +349,7 @@ print(fitA)
 #> 
 #> Coefficients:
 #> (Intercept)            x  
-#>       0.338        1.977  
+#>      0.2778       2.0244  
 #> 
 print(fitB)
 #> 
@@ -358,7 +358,7 @@ print(fitB)
 #> 
 #> Coefficients:
 #>     x  
-#> 1.993  
+#> 2.028  
 #> 
 print(fitC)
 #> 
@@ -367,7 +367,7 @@ print(fitC)
 #> 
 #> Coefficients:
 #> (Intercept)            x  
-#>      0.3408       1.9513  
+#>      0.2938       1.9952  
 #> 
 
 
@@ -385,7 +385,7 @@ print(fitA)
 #> 
 #> Coefficients:
 #> (Intercept)            x  
-#>      0.3408       1.9513  
+#>      0.2938       1.9952  
 #> 
 print(fitB)
 #> 
@@ -394,7 +394,7 @@ print(fitB)
 #> 
 #> Coefficients:
 #>     x  
-#> 1.971  
+#> 2.005  
 #> 
 print(fitC)
 #> 
@@ -403,7 +403,7 @@ print(fitC)
 #> 
 #> Coefficients:
 #> (Intercept)            x  
-#>      0.3408       1.9513  
+#>      0.2938       1.9952  
 #> 
 
 
@@ -425,7 +425,7 @@ print(fitA)
 #> 
 #> Coefficients:
 #> (Intercept)            x  
-#>      0.3408       1.9513  
+#>      0.2938       1.9952  
 #> 
 print(fitB)
 #> 
@@ -434,7 +434,7 @@ print(fitB)
 #> 
 #> Coefficients:
 #>     x  
-#> 1.971  
+#> 2.005  
 #> 
 print(fitC)
 #> 
@@ -443,7 +443,7 @@ print(fitC)
 #> 
 #> Coefficients:
 #> (Intercept)            x  
-#>      0.3408       1.9513  
+#>      0.2938       1.9952  
 #> 
 
 ## EXAMPLE: futureCall() and do.call()

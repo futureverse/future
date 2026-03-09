@@ -29,12 +29,14 @@ Nothing.
 plan(multisession, workers = 2)
 futureSessionInfo()
 #> *** Package versions
-#> future 1.69.0.9012, parallelly 1.46.1.9008, parallel 4.5.2, globals 0.19.0, listenv 0.10.0.9002
+#> future 1.69.0.9017, parallelly 1.46.1.9020, parallel 4.5.2, globals 0.19.0.9001, listenv 0.10.0.9010
 #> 
 #> *** Allocations
 #> availableCores():
-#>            system /proc/self/status             nproc 
-#>                 8                 8                 8 
+#>                         system              /proc/self/status 
+#>                              8                              8 
+#> cgroups2.cpuset.cpus.effective                          nproc 
+#>                              8                              8 
 #> availableWorkers():
 #> $nproc
 #> [1] "localhost" "localhost" "localhost" "localhost" "localhost" "localhost"
@@ -66,16 +68,16 @@ futureSessionInfo()
 #> 
 #> *** Basic tests
 #> Main R session details:
-#>      pid     r sysname           release
-#> 1 856631 4.5.2   Linux 6.17.0-14-generic
+#>       pid     r sysname           release
+#> 1 1521169 4.5.2   Linux 6.17.0-14-generic
 #>                                                            version nodename
 #> 1 #14~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Thu Jan 15 15:52:10 UTC 2  host001
 #>   machine   login    user effective_user
 #> 1  x86_64 user001 user001        user001
 #> Worker R session details:
-#>   worker    pid     r sysname           release
-#> 1      1 857518 4.5.2   Linux 6.17.0-14-generic
-#> 2      2 857517 4.5.2   Linux 6.17.0-14-generic
+#>   worker     pid     r sysname           release
+#> 1      1 1522040 4.5.2   Linux 6.17.0-14-generic
+#> 2      2 1522039 4.5.2   Linux 6.17.0-14-generic
 #>                                                            version nodename
 #> 1 #14~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Thu Jan 15 15:52:10 UTC 2  host001
 #> 2 #14~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Thu Jan 15 15:52:10 UTC 2  host001

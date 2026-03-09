@@ -157,7 +157,7 @@ x <- sample(100, size = 50)
 f <- future(mean(x))
 v <- value(f)
 message("The average of 50 random numbers in [1,100] is: ", v)
-#> The average of 50 random numbers in [1,100] is: 49.58
+#> The average of 50 random numbers in [1,100] is: 50
 
 
 
@@ -173,30 +173,30 @@ message("The ten averages are:")
 #> The ten averages are:
 str(vs)
 #> List of 10
-#>  $ : num 52.1
-#>  $ : num 50.8
-#>  $ : num 48
-#>  $ : num 52.8
-#>  $ : num 50.9
+#>  $ : num 48.8
+#>  $ : num 50.7
+#>  $ : num 48.6
+#>  $ : num 54.3
 #>  $ : num 49.1
-#>  $ : num 51.1
-#>  $ : num 51.1
-#>  $ : num 48.1
+#>  $ : num 46.5
+#>  $ : num 48.4
+#>  $ : num 49.8
 #>  $ : num 47.1
+#>  $ : num 50.2
 
 ## The 10 values as a vector (by manually unlisting)
 vs <- value(fs)
 vs <- unlist(vs)
 message("The ten averages are: ", paste(vs, collapse = ", "))
-#> The ten averages are: 52.1, 50.76, 48.02, 52.82, 50.9, 49.06, 51.08, 51.06, 48.08, 47.1
+#> The ten averages are: 48.84, 50.68, 48.56, 54.3, 49.1, 46.52, 48.42, 49.76, 47.12, 50.24
 
 ## The values as a vector (by reducing)
 vs <- value(fs, reduce = c)
 message("The ten averages are: ", paste(vs, collapse = ", "))
-#> The ten averages are: 52.1, 50.76, 48.02, 52.82, 50.9, 49.06, 51.08, 51.06, 48.08, 47.1
+#> The ten averages are: 48.84, 50.68, 48.56, 54.3, 49.1, 46.52, 48.42, 49.76, 47.12, 50.24
 
 ## Calculate the sum of the averages (by reducing)
 total <- value(fs, reduce = `+`)
 message("The sum of the ten averages is: ", total)
-#> The sum of the ten averages is: 500.98
+#> The sum of the ten averages is: 493.54
 ```

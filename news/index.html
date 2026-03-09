@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.69.0-9012</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.69.0-9017</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -85,7 +85,8 @@
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-development-version">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h3>
-<ul><li>Cancellation of ‘multisession’ futures could produce a warning on “In .Internal(gc(verbose, reset, full)) : closing unused connection 3 (&lt;-localhost:11825)”.</li>
+<ul><li><p>Cancellation of ‘multisession’ futures could produce a warning on “In .Internal(gc(verbose, reset, full)) : closing unused connection 3 (&lt;-localhost:11825)”.</p></li>
+<li><p>The search for globals would not fall back to the “ordered” algorithm as intended when “deep-first-search” failed.</p></li>
 </ul></div>
 </div>
     <div class="section level2">
