@@ -620,7 +620,7 @@ value.list <- function(x, idxs = NULL, recursive = 0, reduce = NULL, stdout = TR
   while (length(remaining) > 0) {
     if (debug) mdebug("Number of remaining objects: ", length(remaining))
     for (ii in remaining) {
-      mdebugf("checking value #%d:", ii)
+      if (debug) mdebugf("checking value #%d:", ii)
       obj <- x[[ii]]
 
       if (is.atomic(obj)) {
@@ -673,7 +673,7 @@ value.list <- function(x, idxs = NULL, recursive = 0, reduce = NULL, stdout = TR
           value <- local({
             if (debug) {
               mdebugf_push("value(<%s>, ...) ...", class(obj)[1])
-              mdebugf_pop()
+              on.exit(mdebugf_pop())
             }
             value <- value(obj, stdout = !inorder, signal = !inorder, drop = drop)
             if (debug) mdebugf("value: <%s>", class(value)[1])
@@ -691,7 +691,7 @@ value.list <- function(x, idxs = NULL, recursive = 0, reduce = NULL, stdout = TR
               local({
                 if (debug) {
                   mdebugf_push("cancel(y, interrupt = %s) ...", interrupt)
-                  mdebug_pop()
+                  on.exit(mdebug_pop())
                 }
                 cancel(y, interrupt = interrupt)
               })
@@ -788,7 +788,6 @@ value.list <- function(x, idxs = NULL, recursive = 0, reduce = NULL, stdout = TR
       remaining <- setdiff(remaining, ii)
       if (debug) mdebugf("length: %d (resolved future %s)", length(remaining), ii)
       stop_if_not(!anyNA(remaining))
-      mdebugf_pop()
     } # for (ii ...)
 
     ## Wait a bit before checking again
