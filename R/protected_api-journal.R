@@ -144,7 +144,6 @@ journal.FutureJournal <- function(x, baseline = NULL, ...) {
 journal.list <- function(x, baseline = TRUE, ...) {
   ## Reset relative time zero to the first observed timestamp?
   if (isTRUE(baseline)) {
-    stop_if_not(baseline >= 1L, baseline <= length(x))
     x <- lapply(x, FUN = journal, ...)
     start <- lapply(x, FUN = function(x) min(x[["start"]], na.rm = TRUE))
     start <- Reduce(c, start)
