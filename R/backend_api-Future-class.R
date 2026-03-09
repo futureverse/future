@@ -814,8 +814,6 @@ getFutureContext <- function(future, mc.cores = NULL, local = TRUE, ..., debug =
 
     future.fork.multithreading.enable = getOption("future.fork.multithreading.enable"),
 
-    future.globalenv.onMisuse         = getOption("future.globalenv.onMisuse"),
-
     future.makeExpression.skip        = getOption("future.makeExpression.skip"),
     future.makeExpression.skip.local  = getOption("future.makeExpression.skip.local"),
     
