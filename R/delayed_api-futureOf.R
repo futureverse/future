@@ -9,7 +9,7 @@
 #' @param envir the environment where to search from.
 #'
 #' @param mustExist If TRUE and the variable does not exist, then
-#' an informative error is thrown, otherwise NA is returned.
+#' an informative error is thrown, otherwise `default` is returned.
 #'
 #' @param default the default value if future was not found.
 #'
@@ -46,9 +46,7 @@ futureOf <- function(var = NULL, envir = parent.frame(), mustExist = TRUE, defau
     for (idx in seq_along(res)) {
       target <- parse_env_subset(idx, envir = envir, substitute = FALSE)
       future <- get_future(target, mustExist = FALSE, default = default)
-      if (!is.null(future) || !is.atomic(future) || !is.na(future)) {
-        res[[idx]] <- future
-      }
+      res[idx] <- list(future)
     }
   } else {
     ## names(x) is only supported in R (>= 3.2.0)

@@ -19,7 +19,7 @@ environment are returned.}
 \item{envir}{the environment where to search from.}
 
 \item{mustExist}{If TRUE and the variable does not exist, then
-an informative error is thrown, otherwise NA is returned.}
+an informative error is thrown, otherwise \code{default} is returned.}
 
 \item{default}{the default value if future was not found.}
 
