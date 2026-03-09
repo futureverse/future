@@ -109,7 +109,7 @@ resolve.Future <- function(x, idxs = NULL, recursive = 0, result = FALSE, stdout
       future[["result"]] <- result(future)
       msg <- sprintf("%s and its result was collected", msg)
     } else {
-      sprintf("%s and its result was already collected", msg)
+      msg <- sprintf("%s and its result was already collected", msg)
     }
     
     ## Recursively resolve result value?
