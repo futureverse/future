@@ -6,6 +6,7 @@
 library(future)
 library(listenv)
 
+## Make sure futures are automatically resolved
 oopts <- c(oopts, options(future.globals.resolve = TRUE))
 setTimeLimit(cpu = 10, elapsed = 10, transient = TRUE)
 
@@ -44,6 +45,15 @@ str(as.list(env))
 y %<-% { env[[b]] }
 ## Resolve future #4
 message(sprintf("y = %s\n", y))
+
+## Create future #5
+f <- future(42)
+g <- future({ value(f) }, lazy = TRUE)
+## Assert that global 'f' of future 'g' is resolved
+stopifnot(
+  inherits(g[["globals"]][["f"]], "Future"),
+  inherits(g[["globals"]][["f"]], "ConstantFuture")
+)
 
 message("*** Tricky use cases related to globals (part 2) ... DONE")
 
