@@ -114,7 +114,7 @@ getGlobalsAndPackages <- function(expr, envir = parent.frame(), tweak = tweakExp
       idx <- which(globals.method == "dfs")
       if (length(idx) > 0L) {
          res <- tryCatch(findGlobals(expr, method = "dfs"), error = identity)
-         if (inherits(names, "res")) {
+         if (inherits(res, "error")) {
            globals.method <- globals.method[-idx]
            if (length(globals.method) == 0L) globals.method <- "ordered"
          }

@@ -19,6 +19,9 @@
  * Cancellation of 'multisession' futures could produce a warning on
    "In .Internal(gc(verbose, reset, full)) : closing unused connection
    3 (<-localhost:11825)".
+   
+ * The search for globals would not fall back to the "ordered"
+   algorithm as intended when "deep-first-search" failed.
 
 
 # Version 1.69.0 [2026-01-15]
