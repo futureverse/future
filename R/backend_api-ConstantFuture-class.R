@@ -1,6 +1,6 @@
 # Used by getGlobalsAndPackages()
-ConstantFuture <- function(..., globals = NULL, packages = NULL, stdout = NA, conditions = NULL, seed = NULL, lazy = FALSE, envir = emptyenv()) {
-  future <- Future(..., NULL, packages = NULL, stdout = NA, conditions = NULL, seed = NULL, lazy = FALSE, envir = envir)
+ConstantFuture <- function(..., substitute = FALSE, globals = NULL, packages = NULL, stdout = NA, conditions = NULL, seed = NULL, lazy = FALSE, envir = emptyenv()) {
+  future <- Future(..., substitute = substitute, globals = NULL, packages = NULL, stdout = NA, conditions = NULL, seed = NULL, lazy = FALSE, envir = envir)
   t_start <- Sys.time()
   future[["result"]] <- FutureResult(
     value = eval(future[["expr"]], envir = envir),
