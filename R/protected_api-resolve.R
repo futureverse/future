@@ -101,15 +101,15 @@ resolve.Future <- function(x, idxs = NULL, recursive = 0, result = FALSE, stdout
     Sys.sleep(sleep)
   }
 
-  msg <- sprintf("A %s was resolved", class(future)[1])
+  if (debug) msg <- sprintf("A %s was resolved", class(future)[1])
 
   ## Retrieve results?
   if (result) {
     if (is.null(future[["result"]])) {
       future[["result"]] <- result(future)
-      msg <- sprintf("%s and its result was collected", msg)
+      if (debug) msg <- sprintf("%s and its result was collected", msg)
     } else {
-      msg <- sprintf("%s and its result was already collected", msg)
+      if (debug) msg <- sprintf("%s and its result was already collected", msg)
     }
     
     ## Recursively resolve result value?
@@ -117,7 +117,7 @@ resolve.Future <- function(x, idxs = NULL, recursive = 0, result = FALSE, stdout
       value <- future[["result"]][["value"]]
       if (!is.atomic(value)) {
         resolve(value, recursive = recursive - 1, result = TRUE, stdout = stdout, signal = signal, sleep = sleep, ...)
-        msg <- sprintf("%s (and resolved itself)", msg)
+        if (debug) msg <- sprintf("%s (and resolved itself)", msg)
       }
       value <- NULL  ## Not needed anymore
     }
@@ -139,7 +139,7 @@ resolve.Future <- function(x, idxs = NULL, recursive = 0, result = FALSE, stdout
       signalConditions(future, exclude = immediateConditionClasses, resignal = TRUE, force = TRUE)
     }
   } else {
-    msg <- sprintf("%s (result was not collected)", msg)
+    if (debug) msg <- sprintf("%s (result was not collected)", msg)
   }
 
   if (debug) mdebug(msg)
