@@ -42,9 +42,9 @@ res <- tryCatch({
 #> [[1]]
 #> base::tryCatch(base::withCallingHandlers({
 #>     NULL
-#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpiWBdoC/callr-fun-17356149024e24"), 
+#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpqROYGd/callr-fun-18d2b035cb4604"), 
 #>         base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
-#>         quote = TRUE), file = "/tmp/hb/RtmpiWBdoC/callr-res-173561463b0256", 
+#>         quote = TRUE), file = "/tmp/hb/RtmpqROYGd/callr-res-18d2b021b0a225", 
 #>         compress = FALSE)
 #>     base::flush(base::stdout())
 #>     base::flush(base::stderr())
@@ -70,7 +70,7 @@ res <- tryCatch({
 #>         if (!base::is.na(cut)) {
 #>             e2$trace <- e2$trace[-(1:cut), ]
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpiWBdoC/callr-res-173561463b0256", 
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpqROYGd/callr-res-18d2b021b0a225", 
 #>             ".error"))
 #>     }
 #> }, interrupt = function(e) {
@@ -93,7 +93,7 @@ res <- tryCatch({
 #>         if (!base::is.na(cut)) {
 #>             e2$trace <- e2$trace[-(1:cut), ]
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpiWBdoC/callr-res-173561463b0256", 
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpqROYGd/callr-res-18d2b021b0a225", 
 #>             ".error"))
 #>     }
 #> }, callr_message = function(e) {
@@ -138,9 +138,9 @@ res <- tryCatch({
 #> [[8]]
 #> base::withCallingHandlers({
 #>     NULL
-#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpiWBdoC/callr-fun-17356149024e24"), 
+#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpqROYGd/callr-fun-18d2b035cb4604"), 
 #>         base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
-#>         quote = TRUE), file = "/tmp/hb/RtmpiWBdoC/callr-res-173561463b0256", 
+#>         quote = TRUE), file = "/tmp/hb/RtmpqROYGd/callr-res-18d2b021b0a225", 
 #>         compress = FALSE)
 #>     base::flush(base::stdout())
 #>     base::flush(base::stderr())
@@ -166,7 +166,7 @@ res <- tryCatch({
 #>         if (!base::is.na(cut)) {
 #>             e2$trace <- e2$trace[-(1:cut), ]
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpiWBdoC/callr-res-173561463b0256", 
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpqROYGd/callr-res-18d2b021b0a225", 
 #>             ".error"))
 #>     }
 #> }, interrupt = function(e) {
@@ -189,7 +189,7 @@ res <- tryCatch({
 #>         if (!base::is.na(cut)) {
 #>             e2$trace <- e2$trace[-(1:cut), ]
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpiWBdoC/callr-res-173561463b0256", 
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpqROYGd/callr-res-18d2b021b0a225", 
 #>             ".error"))
 #>     }
 #> }, callr_message = function(e) {
@@ -197,13 +197,13 @@ res <- tryCatch({
 #> })
 #> 
 #> [[9]]
-#> base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpiWBdoC/callr-fun-17356149024e24"), 
+#> base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpqROYGd/callr-fun-18d2b035cb4604"), 
 #>     base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
-#>     quote = TRUE), file = "/tmp/hb/RtmpiWBdoC/callr-res-173561463b0256", 
+#>     quote = TRUE), file = "/tmp/hb/RtmpqROYGd/callr-res-18d2b021b0a225", 
 #>     compress = FALSE)
 #> 
 #> [[10]]
-#> base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpiWBdoC/callr-fun-17356149024e24"), 
+#> base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpqROYGd/callr-fun-18d2b035cb4604"), 
 #>     base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
 #>     quote = TRUE)
 #> 
@@ -220,8 +220,8 @@ res <- tryCatch({
 #>     options(cli.num_colors = cli_colors, cli.hyperlink = hyperlinks, 
 #>         cli.hyperlink_run = hyperlinks)
 #>     pkgdown::build_site(...)
-#> }), base::quote(list(pkg = list(package = "future", version = "1.69.0-9017", 
-#>     src_path = "/tmp/hb/RtmpiWBdoC/future", meta = list(url = "https://future.futureverse.org", 
+#> }), base::quote(list(pkg = list(package = "future", version = "1.69.0-9020", 
+#>     src_path = "/tmp/hb/RtmpqROYGd/future", meta = list(url = "https://future.futureverse.org", 
 #>         home = list(links = list(list(text = "Roadmap/Milestones", 
 #>             href = "https://github.com/futureverse/future/milestones"), 
 #>             list(text = "The Futureverse Project", href = "https://www.futureverse.org/"), 
@@ -254,7 +254,7 @@ res <- tryCatch({
 #>             bootstrap = 5L, `light-switch` = TRUE)), desc = <environment>, 
 #>     bs_version = 5L, development = list(destination = "dev", 
 #>         mode = "default", version_label = "muted", in_dev = FALSE, 
-#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/RtmpiWBdoC/future/docs", 
+#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/RtmpqROYGd/future/docs", 
 #>     lang = "en-US", install_metadata = FALSE, figures = list(
 #>         dev = "ragg::agg_png", dpi = 96L, dev.args = list(), 
 #>         fig.ext = "png", fig.width = 7.29166666666667, fig.height = NULL, 
@@ -1463,8 +1463,9 @@ res <- tryCatch({
 #>                   "environment are returned.")), "\n", "\n", 
 #>                   list(list("envir"), list("the environment where to search from.")), 
 #>                   "\n", "\n", list(list("mustExist"), list("If TRUE and the variable does not exist, then\n", 
-#>                     "an informative error is thrown, otherwise NA is returned.")), 
-#>                   "\n", "\n", list(list("default"), list("the default value if future was not found.")), 
+#>                     "an informative error is thrown, otherwise ", 
+#>                     list("default"), " is returned.")), "\n", 
+#>                   "\n", list(list("default"), list("the default value if future was not found.")), 
 #>                   "\n", "\n", list(list("drop"), list("if TRUE and ", 
 #>                     list("var"), " is NULL, then returned list\n", 
 #>                     "only contains futures, otherwise also ", 
@@ -3023,8 +3024,8 @@ res <- tryCatch({
 #>     options(cli.num_colors = cli_colors, cli.hyperlink = hyperlinks, 
 #>         cli.hyperlink_run = hyperlinks)
 #>     pkgdown::build_site(...)
-#> })(pkg = base::quote(list(package = "future", version = "1.69.0-9017", 
-#>     src_path = "/tmp/hb/RtmpiWBdoC/future", meta = list(url = "https://future.futureverse.org", 
+#> })(pkg = base::quote(list(package = "future", version = "1.69.0-9020", 
+#>     src_path = "/tmp/hb/RtmpqROYGd/future", meta = list(url = "https://future.futureverse.org", 
 #>         home = list(links = list(list(text = "Roadmap/Milestones", 
 #>             href = "https://github.com/futureverse/future/milestones"), 
 #>             list(text = "The Futureverse Project", href = "https://www.futureverse.org/"), 
@@ -3057,7 +3058,7 @@ res <- tryCatch({
 #>             bootstrap = 5L, `light-switch` = TRUE)), desc = <environment>, 
 #>     bs_version = 5L, development = list(destination = "dev", 
 #>         mode = "default", version_label = "muted", in_dev = FALSE, 
-#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/RtmpiWBdoC/future/docs", 
+#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/RtmpqROYGd/future/docs", 
 #>     lang = "en-US", install_metadata = FALSE, figures = list(
 #>         dev = "ragg::agg_png", dpi = 96L, dev.args = list(), 
 #>         fig.ext = "png", fig.width = 7.29166666666667, fig.height = NULL, 
@@ -4266,8 +4267,9 @@ res <- tryCatch({
 #>                   "environment are returned.")), "\n", "\n", 
 #>                   list(list("envir"), list("the environment where to search from.")), 
 #>                   "\n", "\n", list(list("mustExist"), list("If TRUE and the variable does not exist, then\n", 
-#>                     "an informative error is thrown, otherwise NA is returned.")), 
-#>                   "\n", "\n", list(list("default"), list("the default value if future was not found.")), 
+#>                     "an informative error is thrown, otherwise ", 
+#>                     list("default"), " is returned.")), "\n", 
+#>                   "\n", list(list("default"), list("the default value if future was not found.")), 
 #>                   "\n", "\n", list(list("drop"), list("if TRUE and ", 
 #>                     list("var"), " is NULL, then returned list\n", 
 #>                     "only contains futures, otherwise also ", 
