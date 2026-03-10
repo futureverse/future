@@ -315,15 +315,21 @@ getGlobalsAndPackages <- function(expr, envir = parent.frame(), tweak = tweakExp
     globals <- as.FutureGlobals(globals)
 
     ## Unless already resolved, perform a shallow resolve
-    if (attr(globals, "resolved", exact = TRUE)) {
-      idxs <- which(unlist(lapply(globals, FUN = inherits, "Future"), use.names = FALSE))
-      if (debug) mdebugf("Number of global futures: %d", length(idxs))
+    if (!attr(globals, "resolved", exact = TRUE)) {
+      idxs <- which(unlist(lapply(globals, FUN = function(g) {
+        inherits(g, "Future") && !inherits(g, "ConstantFuture")
+      }), use.names = FALSE))
+      if (debug) mdebugf("Number of non-constant global futures: %d", length(idxs))
       
       ## Nothing to do?
       if (length(idxs) > 0) {
-        if (debug) mdebugf("Global futures (not constant): %s", commaq(names(globals[idxs])))
-        valuesF <- value(globals[idxs])
-        globals[idxs] <- lapply(valuesF, FUN = ConstantFuture)
+        gnames <- names(globals)[idxs]
+        if (debug) mdebugf("Global futures (not constant): %s", commaq(gnames))
+        ## FIXME: value(globals[gnames]) fails because of
+        ## https://github.com/futureverse/globals/issues/101
+        gvalues <- lapply(globals[gnames], FUN = value)
+        gvalues <- lapply(gvalues, FUN = ConstantFuture)
+        globals[gnames] <- gvalues
       }
     }
 
