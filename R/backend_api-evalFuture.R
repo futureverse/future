@@ -588,7 +588,7 @@ evalFutureInternal <- function(data) {
       length(split) == 1L && is.logical(split) && !is.na(split),
       is.null(conditionClasses) || (is.character(conditionClasses) && !anyNA(conditionClasses) && all(nzchar(conditionClasses))),
       is.null(immediateConditionClasses) || (is.character(immediateConditionClasses) && !anyNA(immediateConditionClasses) && all(nzchar(immediateConditionClasses))),
-      is.null(seed) || parallel_rng_kind()[["is_seed"]](seed) || (is.logical(seed) && !is.na(seed) || !seed),
+      is.null(seed) || parallel_rng_kind()[["is_seed"]](seed) || (is.logical(seed) && !is.na(seed)),
       is.character(backendPackages) && !anyNA(backendPackages) && all(nzchar(backendPackages)),
       length(threads) == 1L && is.integer(threads) && (is.na(threads) || threads >= 1L),
       is.character(reset), !anyNA(reset)
