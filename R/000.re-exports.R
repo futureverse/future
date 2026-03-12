@@ -13,7 +13,7 @@
 #' * [parallelly::autoStopCluster()]   (no longer re-exported)
 #    Used by: <none>
 #' * [parallelly::availableCores()]
-#    Used by: ale (1), BatchGetSymbols (2), bistablehistory (1), codalm (1),
+#    Used by: ale (1), BatchGetSymbols (2), codalm (1),
 #             cft (1), couplr (1), deseats, dipsaus (1), elevatr (1), 
 #             heterogen, PINstimation (1), powRICLPM (1),
 #             readsdr (1), recforest, sigminer (2), skpr (1), smoots,
