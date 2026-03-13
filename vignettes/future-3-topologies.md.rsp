@@ -81,7 +81,7 @@ plan(list(multisession, sequential))
 
 The internals for processing multisession future queries `availableCores()` to infer how many cores can be used simultaneously, so there is no need to explicitly specify that there are 8 cores available.
 
-_Comment_: Since synchronous is the default future, we could skip trailing sequential futures in the setup, e.g. `plan(list(multisession))` or just `plan(multisession)`.  However, it does not hurt to be explicit.
+_Comment_: Since sequential evaluation is the default, we could skip trailing sequential futures in the setup, e.g. `plan(list(multisession))` or just `plan(multisession)`.  However, it does not hurt to be explicit.
 
 If we instead would like to process the samples sequentially and the chromosomes in parallel, we can use:
 
@@ -145,7 +145,7 @@ nodes <- c("n1", "n2", "n3")
 plan(list(tweak(cluster, workers = nodes), multisession))
 ```
 
-_Comment:_ Multisession futures are agile to its environment, that is, they will query the machine they are running on to find out how many parallel processes it can run at the same time.
+_Comment:_ Multisession futures are agile to their environment, that is, they will query the machine they are running on to find out how many parallel processes it can run at the same time.
 
 One possible downside to the above setup is that we might not utilize all available cores all the time.  This is because the alignment of the shorter chromosomes will finish sooner than the longer ones, which means that we might at the end of each sample have only a few alignment processes running on each machine leaving the remaining cores idle/unused.  An alternative set up is then to use the following setup:
 
