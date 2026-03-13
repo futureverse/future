@@ -325,8 +325,8 @@ getGlobalsAndPackages <- function(expr, envir = parent.frame(), tweak = tweakExp
       if (length(idxs) > 0) {
         gnames <- names(globals)[idxs]
         if (debug) mdebugf("Global futures (not constant): %s", commaq(gnames))
-        ## FIXME: value(globals[gnames]) fails because of
-        ## https://github.com/futureverse/globals/issues/101
+        ## FIXME: value(globals[gnames]) requires globals (>=0.19.1) [2026-03-13]
+        ##        - give it 2-4 weeks to make sure there are no regression bugs
         gvalues <- lapply(globals[gnames], FUN = value)
         gvalues <- lapply(gvalues, FUN = ConstantFuture)
         globals[gnames] <- gvalues
