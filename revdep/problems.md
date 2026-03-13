@@ -266,6 +266,122 @@ Run `revdepcheck::revdep_details(, "ctsem")` for more info
      Execution halted
      ```
 
+# dar (1.6.0)
+
+* GitHub: <https://github.com/MicrobialGenomics-IrsicaixaOrg/dar>
+* Email: <mailto:fcatala@irsicaixa.es>
+
+Run `revdepcheck::revdep_details(, "dar")` for more info
+
+## In both
+
+*   checking examples ... ERROR
+     ```
+     ...
+     > 
+     > ## Create a Recipe with steps
+     > rec <- 
+     +   recipe(metaHIV_phy, "RiskGroup2", "Species") |>
+     +   step_subset_taxa(tax_level = "Kingdom", taxa = c("Bacteria", "Archaea")) |>
+     +   step_filter_taxa(.f = "function(x) sum(x > 0) >= (0.3 * length(x))") |>
+     +   step_filter_by_prevalence(0.4) |>
+     +   step_maaslin()
+     ℹ 1 package is needed for step_maaslin() and is not installed: (Maaslin2)
+     • Start a clean R session then run: BiocManager::install(c("Maaslin2"))
+     >  
+     > ## Prep Recipe   
+     > rec <- prep(rec, parallel = TRUE)
+     ℹ 1 package is needed for step_maaslin() and is not installed: (Maaslin2)
+     • Start a clean R session then run: BiocManager::install(c("Maaslin2"))
+     Error in (function (.x, .f, ..., .progress = FALSE)  : ℹ In index: 1.
+     Caused by error in `purrr::map()`:
+     ℹ In index: 1.
+     ℹ With name: RiskGroup2.
+     Caused by error in `map()`:
+     ℹ In index: 1.
+     Caused by error in `loadNamespace()`:
+     ! there is no package called ‘Maaslin2’
+     Calls: prep ... furrr_map_template -> furrr_template -> <Anonymous> -> value.list
+     Execution halted
+     ```
+
+*   checking tests ...
+     ```
+     ...
+        77. ├─purrr::pluck(., "results")
+        78. │ └─purrr:::pluck_raw(.x, list2(...), .default = .default)
+        79. ├─base::loadNamespace(x)
+        80. │ ├─base::withRestarts(stop(cond), retry_loadNamespace = function() NULL)
+        81. │ │ └─base (local) withOneRestart(expr, restarts[[1L]])
+        82. │ │   └─base (local) doWithOneRestart(return(expr), restart)
+        83. │ └─base::stop(cond)
+        84. ├─purrr (local) `<fn>`(`<pckgNtFE>`)
+        85. │ └─cli::cli_abort(...)
+        86. │   └─rlang::abort(...)
+        87. │     └─rlang:::signal_abort(cnd, .file)
+        88. │       └─base::signalCondition(cnd)
+        89. ├─purrr (local) `<fn>`(`<prrr_rr_>`)
+        90. │ └─cli::cli_abort(...)
+        91. │   └─rlang::abort(...)
+        92. │     └─rlang:::signal_abort(cnd, .file)
+        93. │       └─base::signalCondition(cnd)
+        94. └─purrr (local) `<fn>`(`<prrr_rr_>`)
+        95.   └─cli::cli_abort(...)
+        96.     └─rlang::abort(...)
+       
+       [ FAIL 2 | WARN 3 | SKIP 8 | PASS 95 ]
+       Error:
+       ! Test failures.
+       Execution halted
+     ```
+
+*   checking re-building of vignette outputs ... ERROR
+     ```
+     ...
+      59. ├─purrr (local) `<fn>`(`<prrr_rr_>`)
+      60. │ └─cli::cli_abort(...)
+      61. │   └─rlang::abort(...)
+      62. │     └─rlang:::signal_abort(cnd, .file)
+      63. │       └─base::signalCondition(cnd)
+      64. └─base (local) `<fn>`(`<prrr_rr_>`)
+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     
+     Error: processing vignette 'import_export_recipes.Rmd' failed with diagnostics:
+     error in evaluating the argument 'rec' in selecting a method for function 'bake': ℹ In index: 1.
+     Caused by error in `purrr::map()`:
+     ℹ In index: 1.
+     ℹ With name: RiskGroup2.
+     Caused by error in `map()`:
+     ℹ In index: 1.
+     Caused by error in `loadNamespace()`:
+     ! there is no package called 'Maaslin2'
+     --- failed re-building ‘import_export_recipes.Rmd’
+     
+     SUMMARY: processing the following files failed:
+       ‘article.Rmd’ ‘bioinformatics_vignette.Rmd’ ‘dar.Rmd’
+       ‘import_export_recipes.Rmd’
+     
+     Error: Vignette re-building failed.
+     Execution halted
+     ```
+
+# dartR.popgen (1.0.0)
+
+* Email: <mailto:bernd.gruber@canberra.edu.au>
+* GitHub mirror: <https://github.com/cran/dartR.popgen>
+
+Run `revdepcheck::revdep_details(, "dartR.popgen")` for more info
+
+## In both
+
+*   checking whether package ‘dartR.popgen’ can be installed ... WARNING
+     ```
+     Found the following significant warnings:
+       Warning: replacing previous import ‘adegenet::glMean’ by ‘dartR.base::glMean’ when loading ‘dartR.popgen’
+       Warning: replacing previous import ‘adegenet::glSum’ by ‘dartR.base::glSum’ when loading ‘dartR.popgen’
+     See ‘/scratch/henrik/revdep/future/checks/dartR.popgen/new/dartR.popgen.Rcheck/00install.out’ for details.
+     ```
+
 # delimtools (0.2.1)
 
 * GitHub: <https://github.com/legalLab/delimtools>
@@ -324,6 +440,46 @@ Run `revdepcheck::revdep_details(, "disk.frame")` for more info
      checkRd: (-1) purrr_as_mapper.Rd:10: Lost braces; missing escapes or markup?
          10 | \item{.f}{a normal function or purrr syntax function i.e. `~{ ...code...}`}
             |                                                             ^
+     ```
+
+# dispositionEffect (1.0.1)
+
+* GitHub: <https://github.com/marcozanotti/dispositionEffect>
+* Email: <mailto:zanottimarco17@gmail.com>
+* GitHub mirror: <https://github.com/cran/dispositionEffect>
+
+Run `revdepcheck::revdep_details(, "dispositionEffect")` for more info
+
+## In both
+
+*   checking tests ...
+     ```
+     ...
+       ── Failure ('test-realized_duration.R:152:2'): realized_duration works (realized_only = TRUE) ──
+       Expected `realized_duration(...)` to equal `c(...)`.
+       Differences:
+       1/4 mismatches
+       [2] 34 - 28 == 6
+       ── Failure ('test-realized_duration.R:155:2'): realized_duration works (realized_only = TRUE) ──
+       Expected `realized_duration(...)` to equal `c(...)`.
+       Differences:
+       1/4 mismatches
+       [1] 34 - 28 == 6
+       ── Failure ('test-realized_duration.R:158:2'): realized_duration works (realized_only = TRUE) ──
+       Expected `realized_duration(...)` to equal `c(...)`.
+       Differences:
+       1/4 mismatches
+       [2] 34 - 28 == 6
+       ── Failure ('test-realized_duration.R:161:2'): realized_duration works (realized_only = TRUE) ──
+       Expected `realized_duration(...)` to equal `c(...)`.
+       Differences:
+       1/4 mismatches
+       [1] 34 - 28 == 6
+       
+       [ FAIL 36 | WARN 0 | SKIP 0 | PASS 331 ]
+       Error:
+       ! Test failures.
+       Execution halted
      ```
 
 # EFAtools (0.6.1)
@@ -519,7 +675,7 @@ Run `revdepcheck::revdep_details(, "FracFixR")` for more info
      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      
      Error: processing vignette 'FracFixR-intro.Rmd' failed with diagnostics:
-     Attempting to set up 255 localhost parallel workers with only 5 CPU cores available for this R process (per 'N/A'), which could result in a 5100% load. The hard limit is set to 300%. Overusing the CPUs has negative impact on the current R process, but also on all other processes of yours and others running on the same machine. See help("parallelly.maxWorkers.localhost", package = "parallelly") for further explanations and how to override the hard limit that triggered this error. By the way, was parallel::detectCores() used, because the number of workers (255) equals detectCores() - 1? If so, please use parallelly::availableCores() instead
+     Attempting to set up 255 localhost parallel workers with only 4 CPU cores available for this R process (per 'N/A'), which could result in a 6375% load. The hard limit is set to 300%. Overusing the CPUs has negative impact on the current R process, but also on all other processes of yours and others running on the same machine. See help("parallelly.maxWorkers.localhost", package = "parallelly") for further explanations and how to override the hard limit that triggered this error. By the way, was parallel::detectCores() used, because the number of workers (255) equals detectCores() - 1? If so, please use parallelly::availableCores() instead
      --- failed re-building ‘FracFixR-intro.Rmd’
      
      SUMMARY: processing the following file failed:
@@ -830,6 +986,46 @@ Run `revdepcheck::revdep_details(, "mapme.biodiversity")` for more info
        Execution halted
      ```
 
+# mbbe (0.1.0)
+
+* GitHub: <https://github.com/certara/mbbe>
+* Email: <mailto:mark.sale@certara.com>
+* GitHub mirror: <https://github.com/cran/mbbe>
+
+Run `revdepcheck::revdep_details(, "mbbe")` for more info
+
+## In both
+
+*   checking tests ...
+     ```
+     ...
+       > # * https://testthat.r-lib.org/articles/special-files.html
+       > 
+       > library(testthat)
+       > library(mbbe)
+       > 
+       > test_check("mbbe")
+       Saving _problems/test-check_requirements-52.R
+       [ FAIL 1 | WARN 0 | SKIP 0 | PASS 11 ]
+       
+       ══ Failed tests ════════════════════════════════════════════════════════════════
+       ── Error ('test-check_requirements.R:39:3'): check_requirements works ──────────
+       <lifecycle_error_deprecated/defunctError/rlang_error/error/condition>
+       Error: `with_mock()` was deprecated in testthat 3.2.0 and is now defunct.
+       ℹ Please use `with_mocked_bindings()` instead.
+       Backtrace:
+           ▆
+        1. └─testthat::with_mock(...) at test-check_requirements.R:39:3
+        2.   └─lifecycle::deprecate_stop("3.2.0", "with_mock()", "with_mocked_bindings()")
+        3.     └─lifecycle:::deprecate_stop0(msg)
+        4.       └─rlang::cnd_signal(...)
+       
+       [ FAIL 1 | WARN 0 | SKIP 0 | PASS 11 ]
+       Error:
+       ! Test failures.
+       Execution halted
+     ```
+
 # mikropml (1.7.0)
 
 * GitHub: <https://github.com/SchlossLab/mikropml>
@@ -844,6 +1040,191 @@ Run `revdepcheck::revdep_details(, "mikropml")` for more info
      ```
      Namespace in Imports field not imported from: ‘methods’
        All declared Imports should be used.
+     ```
+
+# MineICA (1.49.0)
+
+* Email: <mailto:anne.biton@gmail.com>
+
+Run `revdepcheck::revdep_details(, "MineICA")` for more info
+
+## In both
+
+*   checking examples ... ERROR
+     ```
+     ...
+     > nodeDescr <- nodeAttrs(nbAn = nbAn, nbComp = nbComp, labComp = labComp,
+     +                        labAn = c("toy1","toy2"), file = "nodeInfo.txt")
+     > 
+     > ## Plot correlation graph, slightly move the attached nodes to make the cliques visible
+     > ## use tkplot=TRUE to have an interactive graph
+     > res <- plotCorGraph(title = "Compare toy 1 and 2", dataGraph = dataGraph, nodeName = "indComp", tkplot = FALSE,
+     +                  nodeAttrs = nodeDescr, edgeWeight = "cor", nodeShape = "labAn", reciproCol = "reciprocal")
+     Warning in brewer.pal(nbAn, "Set3") :
+       minimal value for n is 3, returning requested palette with 3 different levels
+     
+     Error:
+     ! The `area` argument of `layout_with_fr()` was deprecated in igraph
+       0.8.0 and is now defunct.
+     Backtrace:
+         ▆
+      1. └─MineICA::plotCorGraph(...)
+      2.   └─igraph::layout.fruchterman.reingold(...)
+      3.     ├─igraph:::do_call(layout_with_fr, .args = c(list(...), params))
+      4.     │ └─base::eval(call, .env)
+      5.     │   └─base::eval(call, .env)
+      6.     └─igraph::layout_with_fr(...)
+      7.       └─lifecycle::deprecate_stop("0.8.0", "layout_with_fr(area = )")
+      8.         └─lifecycle:::deprecate_stop0(msg)
+      9.           └─rlang::cnd_signal(...)
+     Execution halted
+     ```
+
+*   checking dependencies in R code ... WARNING
+     ```
+     Namespace in Imports field not imported from: ‘lumiHumanAll.db’
+       All declared Imports should be used.
+     Packages in Depends field not imported from:
+       ‘GOstats’ ‘Hmisc’ ‘JADE’ ‘RColorBrewer’ ‘Rgraphviz’ ‘annotate’
+       ‘biomaRt’ ‘cluster’ ‘colorspace’ ‘fastICA’ ‘foreach’ ‘ggplot2’
+       ‘graph’ ‘gtools’ ‘igraph’ ‘marray’ ‘mclust’ ‘methods’ ‘plyr’ ‘scales’
+       ‘xtable’
+       These packages need to be imported from (in the NAMESPACE file)
+       for when this namespace is loaded but not attached.
+     Missing or unexported object: ‘GOstats::geneIdsByCategory’
+     ':::' calls which should be '::':
+       ‘Biobase:::annotation<-’ ‘Biobase:::validMsg’ ‘fpc:::pamk’
+       ‘lumi:::getChipInfo’ ‘mclust:::adjustedRandIndex’
+       See the note in ?`:::` about the use of this operator.
+     Unexported object imported by a ':::' call: ‘Biobase:::isValidVersion’
+       See the note in ?`:::` about the use of this operator.
+     ```
+
+*   checking Rd cross-references ... WARNING
+     ```
+     Missing link(s) in Rd file 'Alist.Rd':
+       ‘class-IcaSet’
+     
+     Missing link(s) in Rd file 'Slist.Rd':
+       ‘class-IcaSet’
+     
+     Missing link(s) in Rd file 'class-IcaSet.Rd':
+       ‘class-IcaSet’
+     
+     Missing link(s) in Rd file 'getComp.Rd':
+       ‘class-IcaSet’
+     
+     Missing link(s) in Rd file 'runAn.Rd':
+       ‘[Category:class-GOHyperGParams]{GOHyperGParams}’
+     
+     See section 'Cross-references' in the 'Writing R Extensions' manual.
+     ```
+
+*   checking for missing documentation entries ... WARNING
+     ```
+     Undocumented S4 classes:
+       ‘MineICAParams’
+     All user-level objects in a package (including S4 classes and methods)
+     should have documentation entries.
+     See chapter ‘Writing R documentation files’ in the ‘Writing R
+     Extensions’ manual.
+     ```
+
+*   checking re-building of vignette outputs ... WARNING
+     ```
+     ...
+       The `axis.ticks.margin` theme element is not defined in the element hierarchy.
+     `geom_smooth()` using formula = 'y ~ x'
+     Warning in texi2dvi(file = file, pdf = TRUE, clean = clean, quiet = quiet,  :
+       texi2dvi script/program not available, using emulation
+     Error: processing vignette 'MineICA.Rnw' failed with diagnostics:
+     unable to run pdflatex on 'MineICA.tex'
+     LaTeX errors:
+     ! LaTeX Error: File `appendix.sty' not found.
+     
+     Type X to quit or <RETURN> to proceed,
+     or enter new name. (Default extension: sty)
+     
+     ! Emergency stop.
+     <read *> 
+              
+     l.23 \usepackage
+                     {subfig}^^M
+     !  ==> Fatal error occurred, no output PDF file produced!
+     --- failed re-building ‘MineICA.Rnw’
+     
+     SUMMARY: processing the following file failed:
+       ‘MineICA.Rnw’
+     
+     Error: Vignette re-building failed.
+     Execution halted
+     ```
+
+*   checking DESCRIPTION meta-information ... NOTE
+     ```
+     Packages listed in more than one of Depends, Imports, Suggests, Enhances:
+       ‘biomaRt’ ‘GOstats’ ‘cluster’ ‘mclust’ ‘igraph’
+     A package should be listed in only one of these fields.
+     ```
+
+*   checking R code for possible problems ... NOTE
+     ```
+     ...
+       igraph.from.graphNEL kmeans kruskal.test layout
+       layout.fruchterman.reingold legend listAttributes listFilters llply
+       lm maColorBar maPalette median mtext na.omit new odd order.dendrogram
+       p.adjust pam par pdf plot.new points position_jitter pushViewport
+       quantile rainbow_hcl rcorr read.table reorder scale_colour_gradientn
+       scale_colour_manual scale_fill_manual scale_linetype_manual
+       scale_shape_manual scale_x_continuous scale_x_discrete
+       scale_y_continuous shapiro.test sigCategories terrain_hcl theme
+       theme_bw title tkplot.fit.to.screen unit useMart validObject vcount
+       viewport wilcox.test write.table xlab xtable
+     Consider adding
+       importFrom("grDevices", "cm.colors", "dev.off", "graphics.off",
+                  "heat.colors", "pdf")
+       importFrom("graphics", "abline", "axis", "frame", "hist", "layout",
+                  "legend", "mtext", "par", "plot.new", "points", "title")
+       importFrom("methods", "callNextMethod", "new", "validObject")
+       importFrom("stats", "aggregate", "as.dendrogram", "as.dist",
+                  "as.hclust", "chisq.test", "cor", "cor.test", "cutree",
+                  "dist", "hclust", "kmeans", "kruskal.test", "lm", "median",
+                  "na.omit", "order.dendrogram", "p.adjust", "quantile",
+                  "reorder", "shapiro.test", "wilcox.test")
+       importFrom("utils", "capture.output", "combn", "read.table",
+                  "write.table")
+     to your NAMESPACE file (and ensure that your DESCRIPTION Imports field
+     contains 'methods').
+     ```
+
+*   checking Rd files ... NOTE
+     ```
+     ...
+            |                                            ^
+     checkRd: (-1) clusterFastICARuns.Rd:52: Lost braces
+         52 |   item{W}{the estimated unmixing matrix}, \item{Iq}{Iq
+            |       ^
+     checkRd: (-1) clusterFastICARuns.Rd:52: Lost braces
+         52 |   item{W}{the estimated unmixing matrix}, \item{Iq}{Iq
+            |          ^
+     checkRd: (-1) plotDensOneAnnotInAllComp.Rd:104: Lost braces
+        104 |   code{\link{writeHtmlResTestsByAnnot}},
+            |       ^
+     checkRd: (-1) plotDensOneAnnotInAllComp.Rd:105: Lost braces
+        105 |   code{\link{wilcox.test}}, code{\link{kruskal.test}}
+            |       ^
+     checkRd: (-1) plotDensOneAnnotInAllComp.Rd:105: Lost braces
+        105 |   code{\link{wilcox.test}}, code{\link{kruskal.test}}
+            |                                 ^
+     checkRd: (-1) runICA.Rd:44: Lost braces
+         44 |   item{W}{the estimated unmixing matrix}}
+            |       ^
+     checkRd: (-1) runICA.Rd:44: Lost braces
+         44 |   item{W}{the estimated unmixing matrix}}
+            |          ^
+     checkRd: (-1) writeProjByComp.Rd:38: Lost braces
+         38 | their annotations, please remember to modify code{genesPath(params)}, or
+            |                                                  ^
      ```
 
 # mistyR (1.18.0)
@@ -904,22 +1285,31 @@ Run `revdepcheck::revdep_details(, "mlr3resampling")` for more info
 
 *   checking dependencies in R code ... NOTE
      ```
-     [c4-n43:258128] OPAL ERROR: Not initialized in file ext2x_client.c at line 112
+     ...
+     c4-n43:pid100115.R: Unable to create UDP socket for ens13f0np0: Address family not supported by protocol
+     c4-n43:pid100115.R: Unable to initialize sockets NIC /sys/class/net/ens13f0np0 (unit 0:0)
+     c4-n43:pid100115: PSM3 can't open nic unit: 1 (err=23)
+     c4-n43:pid100115.R: Unable to create UDP socket for ens13f1np1: Address family not supported by protocol
+     c4-n43:pid100115.R: Unable to initialize sockets NIC /sys/class/net/ens13f1np1 (unit 1:0)
+     c4-n43:pid100115: PSM3 can't open nic unit: 0 (err=23)
+     c4-n43:pid100115.R: Unable to create UDP socket for ens13f0np0: Address family not supported by protocol
+     c4-n43:pid100115.R: Unable to initialize sockets NIC /sys/class/net/ens13f0np0 (unit 0:0)
+     c4-n43:pid100115: PSM3 can't open nic unit: 0 (err=23)
+     c4-n43:pid100115.R: Unable to create UDP socket for ens13f0np0: Address family not supported by protocol
+     c4-n43:pid100115.R: Unable to initialize sockets NIC /sys/class/net/ens13f0np0 (unit 0:0)
+     c4-n43:pid100115: PSM3 can't open nic unit: 1 (err=23)
+     c4-n43:pid100115.R: Unable to create UDP socket for ens13f1np1: Address family not supported by protocol
+     c4-n43:pid100115.R: Unable to initialize sockets NIC /sys/class/net/ens13f1np1 (unit 1:0)
+     c4-n43:pid100115: PSM3 can't open nic unit: 1 (err=23)
+     c4-n43:pid100115.R: Unable to create UDP socket for ens13f1np1: Address family not supported by protocol
+     c4-n43:pid100115.R: Unable to initialize sockets NIC /sys/class/net/ens13f1np1 (unit 1:0)
      --------------------------------------------------------------------------
-     The application appears to have been direct launched using "srun",
-     but OMPI was not built with SLURM's PMI support and therefore cannot
-     execute. There are several options for building PMI support under
-     SLURM, depending upon the SLURM version you are using:
+     Open MPI failed an OFI Libfabric library call (fi_endpoint).  This is highly
+     unusual; your job may behave unpredictably (and/or abort) after this.
      
-       version 16.05 or later: you can use SLURM's PMIx support. This
-       requires that you configure and build SLURM --with-pmix.
-     
-       Versions earlier than 16.05: you must use either SLURM's PMI-1 or
-       PMI-2 support. SLURM builds PMI-1 by default, or you can manually
-       install PMI-2. You must then build Open MPI using --with-pmi pointing
-       to the SLURM PMI library location.
-     
-     Please configure as appropriate and try again.
+       Local host: c4-n43
+       Location: mtl_ofi_component.c:513
+       Error: Invalid argument (22)
      --------------------------------------------------------------------------
      ```
 
@@ -963,6 +1353,46 @@ Run `revdepcheck::revdep_details(, "nixtlar")` for more info
          ‘validate_exogenous.R’
      ```
 
+# oncomsm (0.1.4)
+
+* GitHub: <https://github.com/Boehringer-Ingelheim/oncomsm>
+* Email: <mailto:kevin.kunzmann@boehringer-ingelheim.com>
+* GitHub mirror: <https://github.com/cran/oncomsm>
+
+Run `revdepcheck::revdep_details(, "oncomsm")` for more info
+
+## In both
+
+*   checking re-building of vignette outputs ... ERROR
+     ```
+     ...
+      4. ├─dplyr::filter(., to != "stable")
+      5. ├─dplyr::summarize(...)
+      6. ├─dplyr:::summarise.grouped_df(., dt = t - lag(t), from = lag(state), to = state, .groups = "drop")
+      7. │ └─dplyr:::summarise_cols(.data, dplyr_quosures(...), by, "summarise")
+      8. │   └─base::withCallingHandlers(...)
+      9. └─dplyr:::dplyr_internal_error(...)
+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     
+     Error: processing vignette 'oncomsm.Rmd' failed with diagnostics:
+     ℹ In argument: `dt = t - lag(t)`.
+     ℹ In group 1: `iter = 1`, `group_id = "A"`, `subject_id = "ID00827488"`.
+     Caused by error:
+     ! `dt` must be size 1, not 3.
+     ℹ To return more or less than 1 row per group, use `reframe()`.
+     --- failed re-building ‘oncomsm.Rmd’
+     
+     --- re-building ‘prior-choice.Rmd’ using rmarkdown
+     [WARNING] Deprecated: --highlight-style. Use --syntax-highlighting instead.
+     --- finished re-building ‘prior-choice.Rmd’
+     
+     SUMMARY: processing the following file failed:
+       ‘oncomsm.Rmd’
+     
+     Error: Vignette re-building failed.
+     Execution halted
+     ```
+
 # OutSeekR (1.1.0)
 
 * Email: <mailto:pboutros@sbpdiscovery.org>
@@ -995,46 +1425,6 @@ Run `revdepcheck::revdep_details(, "partR2")` for more info
        All declared Imports should be used.
      ```
 
-# PCRedux (1.2-1)
-
-* GitHub: <https://github.com/PCRuniversum/PCRedux>
-* Email: <mailto:draspiess@gmail.com>
-* GitHub mirror: <https://github.com/cran/PCRedux>
-
-Run `revdepcheck::revdep_details(, "PCRedux")` for more info
-
-## In both
-
-*   checking re-building of vignette outputs ... WARNING
-     ```
-     ...
-       ...
-     --- re-building ‘PCRedux.Rmd’ using rmarkdown
-     [WARNING] Deprecated: --highlight-style. Use --syntax-highlighting instead.
-     A new version of TeX Live has been released. If you need to install or update any LaTeX packages, you have to upgrade TinyTeX with tinytex::reinstall_tinytex(repository = "illinois").
-     
-     tlmgr: Local TeX Live (2025) is older than remote repository (2026).
-     Cross release updates are only supported with
-       update-tlmgr-latest(.sh/.exe) --update
-     See https://tug.org/texlive/upgrade.html for details.
-     Warning in system2("tlmgr", args, ...) :
-       running command ''tlmgr' search --file --global '/caption.sty'' had status 1
-     ! LaTeX Error: File `caption.sty' not found.
-     
-     ! Emergency stop.
-     <read *> 
-     
-     Error: processing vignette 'PCRedux.Rmd' failed with diagnostics:
-     LaTeX failed to compile /scratch/henrik/revdep/future/checks/PCRedux/new/PCRedux.Rcheck/vign_test/PCRedux/vignettes/PCRedux.tex. See https://yihui.org/tinytex/r/#debugging for debugging tips. See PCRedux.log for more info.
-     --- failed re-building ‘PCRedux.Rmd’
-     
-     SUMMARY: processing the following file failed:
-       ‘PCRedux.Rmd’
-     
-     Error: Vignette re-building failed.
-     Execution halted
-     ```
-
 # pgxRpi (1.6.0)
 
 * GitHub: <https://github.com/progenetix/pgxRpi>
@@ -1044,90 +1434,8 @@ Run `revdepcheck::revdep_details(, "pgxRpi")` for more info
 
 ## In both
 
-*   checking examples ... ERROR
-     ```
-     Running examples in ‘pgxRpi-Ex.R’ failed
-     The error most likely occurred in:
-     
-     > ### Name: pgxMetaplot
-     > ### Title: Plot survival data of individuals
-     > ### Aliases: pgxMetaplot
-     > 
-     > ### ** Examples
-     > 
-     > individuals <- pgxLoader(type="individuals",filters="NCIT:C3512")
-     Warning in beacon_query(encoded_url, type, dataset, domain, "filter", transformed_filter) :
-       
-      Request failed for filter NCIT:C3512 in progenetix.org (status code: 524)
-     
-     Warning in pgxmetaLoader(type = type, biosample_id = biosample_id, individual_id = individual_id,  :
-       No data retrieved
-     > pgxMetaplot(individuals, group_id="age_iso", condition="P65Y")
-     Error in if (nrow(meta.sel.df) == 0) stop("\n No available survival data \n") : 
-       argument is of length zero
-     Calls: pgxMetaplot
-     Execution halted
-     ```
+*   R CMD check timed out
 
-*   checking tests ...
-     ```
-     ...
-       x[1]: "text/html"
-       y[1]: "text/plain"
-       ── Failure ('test_variants.R:56:5'): retrieve pgxmatrix variant with individual id ──
-       Expected `... <- NULL` not to throw any errors.
-       Actually got a <simpleError> with message:
-         cannot open the connection to 'https://progenetix.org/services/samplematrix/?individualIds=pgxind-kftx3565,pgxind-kftx5g4v'
-       ── Error ('test_variants.R:57:5'): retrieve pgxmatrix variant with individual id ──
-       Error in `eval(code, test_env)`: object 'result' not found
-       Backtrace:
-           ▆
-        1. ├─testthat::expect_gt(nrow(result), 0) at test_variants.R:57:5
-        2. │ └─testthat::quasi_label(enquo(object), label)
-        3. │   └─rlang::eval_bare(expr, quo_get_env(quo))
-        4. └─base::nrow(result)
-       ── Failure ('test_variants.R:64:5'): retrieve pgxmatrix variant with filters ───
-       Expected `http_type(r)` to equal "text/plain".
-       Differences:
-       1/1 mismatches
-       x[1]: "text/html"
-       y[1]: "text/plain"
-       
-       [ FAIL 10 | WARN 3 | SKIP 0 | PASS 29 ]
-       Error:
-       ! Test failures.
-       Execution halted
-     ```
-
-*   checking re-building of vignette outputs ... ERROR
-     ```
-     ...
-         ▆
-      1. └─pgxRpi::segtoFreq(segdata, cnv_column_idx = 6, cohort_name = "c1")
-      2.   └─base::colSums(bin.dup.data1)
-     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-     
-     Error: processing vignette 'Introduction_3_access_cnv_frequency.Rmd' failed with diagnostics:
-     'x' must be an array of at least two dimensions
-     --- failed re-building ‘Introduction_3_access_cnv_frequency.Rmd’
-     
-     --- re-building ‘Introduction_4_process_pgxseg.Rmd’ using rmarkdown
-     The magick package is required to crop "/scratch/henrik/revdep/future/checks/pgxRpi/new/pgxRpi.Rcheck/vign_test/pgxRpi/vignettes/Introduction_4_process_pgxseg_files/figure-html/unnamed-chunk-6-1.png" but not available.
-     The magick package is required to crop "/scratch/henrik/revdep/future/checks/pgxRpi/new/pgxRpi.Rcheck/vign_test/pgxRpi/vignettes/Introduction_4_process_pgxseg_files/figure-html/unnamed-chunk-7-1.png" but not available.
-     The magick package is required to crop "/scratch/henrik/revdep/future/checks/pgxRpi/new/pgxRpi.Rcheck/vign_test/pgxRpi/vignettes/Introduction_4_process_pgxseg_files/figure-html/unnamed-chunk-8-1.png" but not available.
-     The magick package is required to crop "/scratch/henrik/revdep/future/checks/pgxRpi/new/pgxRpi.Rcheck/vign_test/pgxRpi/vignettes/Introduction_4_process_pgxseg_files/figure-html/unnamed-chunk-13-1.png" but not available.
-     The magick package is required to crop "/scratch/henrik/revdep/future/checks/pgxRpi/new/pgxRpi.Rcheck/vign_test/pgxRpi/vignettes/Introduction_4_process_pgxseg_files/figure-html/unnamed-chunk-14-1.png" but not available.
-     The magick package is required to crop "/scratch/henrik/revdep/future/checks/pgxRpi/new/pgxRpi.Rcheck/vign_test/pgxRpi/vignettes/Introduction_4_process_pgxseg_files/figure-html/unnamed-chunk-15-1.png" but not available.
-     The magick package is required to crop "/scratch/henrik/revdep/future/checks/pgxRpi/new/pgxRpi.Rcheck/vign_test/pgxRpi/vignettes/Introduction_4_process_pgxseg_files/figure-html/unnamed-chunk-16-1.png" but not available.
-     --- finished re-building ‘Introduction_4_process_pgxseg.Rmd’
-     
-     SUMMARY: processing the following files failed:
-       ‘Introduction_2_query_variants.Rmd’
-       ‘Introduction_3_access_cnv_frequency.Rmd’
-     
-     Error: Vignette re-building failed.
-     Execution halted
-     ```
 
 *   checking R code for possible problems ... NOTE
      ```
@@ -1477,6 +1785,46 @@ Run `revdepcheck::revdep_details(, "simhelpers")` for more info
          ‘utilities.R’
      ```
 
+# sovereign (1.2.1)
+
+* GitHub: <https://github.com/tylerJPike/sovereign>
+* Email: <mailto:tjpike7@gmail.com>
+* GitHub mirror: <https://github.com/cran/sovereign>
+
+Run `revdepcheck::revdep_details(, "sovereign")` for more info
+
+## In both
+
+*   checking re-building of vignette outputs ... ERROR
+     ```
+     ...
+     <error/rlang_error>
+     Error:
+     ! object 'GDPC1' not found
+     ---
+     Backtrace:
+         ▆
+      1. ├─... %>% dplyr::select(date, y, p)
+      2. ├─dplyr::select(., date, y, p)
+      3. ├─dplyr::mutate(...)
+      4. ├─purrr::reduce(...)
+      5. │ └─purrr:::reduce_impl(.x, .f, ..., .init = .init, .dir = .dir)
+      6. │   └─purrr:::reduce_init(.x, .init, left = left, error_call = .purrr_error_call)
+      7. │     └─rlang::is_empty(x)
+      8. └─base::data.frame(GDPC1, date = zoo::index(GDPC1))
+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     
+     Error: processing vignette 'getting_started.Rmd' failed with diagnostics:
+     object 'GDPC1' not found
+     --- failed re-building ‘getting_started.Rmd’
+     
+     SUMMARY: processing the following file failed:
+       ‘getting_started.Rmd’
+     
+     Error: Vignette re-building failed.
+     Execution halted
+     ```
+
 # SpaDES.core (3.0.4)
 
 * GitHub: <https://github.com/PredictiveEcology/SpaDES.core>
@@ -1504,7 +1852,7 @@ Run `revdepcheck::revdep_details(, "SpaDES.core")` for more info
      +   convertToPackage("test", path = tmpdir)
      + }
      Loading required namespace: pkgload
-     New module test created at /scratch/henrik/1066200/RtmppwHs3M/reproducible/U3C0xYmG
+     New module test created at /scratch/henrik/RtmpzCRSSi/reproducible/U3C0xYmG
      ```
 
 # sparrpowR (0.2.9)
@@ -1699,6 +2047,23 @@ Run `revdepcheck::revdep_details(, "sRACIPE")` for more info
      checkRd: (-1) sracipeHeatmapSimilarity.Rd:32: Lost braces
          32 | and /code{distance  = (1-cor(x, method = "spear"))/2} will be used to 
             |          ^
+     ```
+
+# steps (1.3.0)
+
+* GitHub: <https://github.com/steps-dev/steps>
+* Email: <mailto:casey.visintin@unimelb.edu.au>
+* GitHub mirror: <https://github.com/cran/steps>
+
+Run `revdepcheck::revdep_details(, "steps")` for more info
+
+## In both
+
+*   checking whether package ‘steps’ can be installed ... WARNING
+     ```
+     Found the following significant warnings:
+       Warning: src/Makevars: Unknown C++ standard ‘C++11’ was ignored
+     See ‘/scratch/henrik/revdep/future/checks/steps/new/steps.Rcheck/00install.out’ for details.
      ```
 
 # survstan (0.0.7.1)

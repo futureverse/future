@@ -45,6 +45,26 @@ ERROR: configuration failed for package ‘BayesPET’
 
 
 ```
+# pgxRpi (1.6.0)
+
+* GitHub: <https://github.com/progenetix/pgxRpi>
+* Email: <mailto:hangjia.zhao@uzh.ch>
+
+Run `revdepcheck::revdep_details(, "pgxRpi")` for more info
+
+## In both
+
+*   R CMD check timed out
+
+
+*   checking R code for possible problems ... NOTE
+     ```
+     pgxSegprocess: no visible binding for global variable
+       ‘followup_state_id’
+     Undefined global functions or variables:
+       followup_state_id
+     ```
+
 # TriDimRegression (1.0.3)
 
 * GitHub: <https://github.com/alexander-pastukhov/tridim-regression>
