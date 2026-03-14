@@ -22,7 +22,7 @@ Since correctness and reproducibility is essential to all data processing, valid
 First, all the essential core packages part of the future framework,
 **[future]**, **[parallelly]**, **[globals]**, and **[listenv]**, implement a
 rich set of package tests.  These are validated regularly across the
-wide-range of operating systems (Linux, macOS, and MS Windows) and R
+wide range of operating systems (Linux, macOS, and MS Windows) and R
 versions available on CRAN, on continuous integration (CI) services
 (GitHub Actions), and on [R-hub]. The core packages are also tested with
 non-English locale settings, including Korean, Simplified Chinese

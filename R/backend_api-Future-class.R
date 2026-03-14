@@ -974,9 +974,9 @@ getExpression.Future <- local({
 #     completed.
 #     Examples:
 #       A future that failed to launch.
-#       An internal error occured while evaluating the future.
-#       An internal error occured after finishing future evaluation, but
-#       before return the results.
+#       An internal error occurred while evaluating the future.
+#       An internal error occurred after finishing future evaluation, but
+#       before returning the results.
 #
 #  6. `interrupted`:
 #     The evaluation of the future has terminated, but was interrupted before
