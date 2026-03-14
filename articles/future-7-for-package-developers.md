@@ -7,7 +7,7 @@ of surprises to the end user.
 
 ## The future smell test
 
-The by far most common and popular future backend is to parallelize on
+By far the most common and popular future backend is to parallelize on
 the local machine, e.g. `plan(multisession)`. This is often good enough
 in most situations but note that some end-users have access to multiple
 machines and might want to run your code using all of them to speed it
@@ -23,7 +23,7 @@ embraced the core philosophy of the future framework. If you answer
 “Maybe” or “No”, see if you can rewrite it.
 
 For instance, if your future code made an assumption that it will have
-access to our local file system, as in:
+access to the local file system, as in:
 
 ``` r
 
@@ -76,7 +76,7 @@ futures to parallelize a function call in some other package and that
 package code calls your package internally. If you set
 `plan(multisession)` internally without undoing, you might mess up the
 [`plan()`](https://future.futureverse.org/reference/plan.md) that is
-already set breaking any further parallelization.
+already set, breaking any further parallelization.
 
 If you still think it is necessary to set
 [`plan()`](https://future.futureverse.org/reference/plan.md), make sure
@@ -95,7 +95,7 @@ my_fcn <- function(x) {
 The need for setting the future backend within a function often comes
 from developers wanting to add an argument to their function that allows
 the end-user to specify whether they want to run the function in
-parallel or sequentially. This often result in code like:
+parallel or sequentially. This often results in code like:
 
 ``` r
 
@@ -237,7 +237,7 @@ Don’t forget to stop the parallel workers by calling
 plan(sequential)
 ```
 
-at the end of you vignette.
+at the end of your vignette.
 
 ## Testing a package that relies on futures
 

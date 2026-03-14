@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.69.0-9022</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.70.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -78,13 +78,13 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="development version" id="version-development-version">Version (development version)<a class="anchor" aria-label="anchor" href="#version-development-version"></a></h2>
+<h2 class="pkg-version" data-toc-text="1.70.0" id="version-1700">Version 1.70.0<a class="anchor" aria-label="anchor" href="#version-1700"></a></h2>
 <div class="section level3">
-<h3 id="significant-changes-development-version">Significant Changes<a class="anchor" aria-label="anchor" href="#significant-changes-development-version"></a></h3>
-<ul><li>The packages has been using a secondary “deep-first-search” algorithm for identifying global variables needed by a future since <strong>future</strong> 1.49.0 (2025-05-08), in addition to the ordinary “ordered” algorithm that has been in place since <strong>future</strong> 0.9.0 (2015-12-11). In this release, after having done thorough testing, we are making the deep-first-search algorithm the default and the only search algorithm. This will lower the overhead of finding globals. If someone is experiencing issues from this update, it will be possible for the time being to switch back to the old behavior via an R option - see <code><a href="../reference/zzz-future.options.html">help("future.options", package = "future")</a></code> for how to do this.</li>
+<h3 id="significant-changes-1-70-0">Significant Changes<a class="anchor" aria-label="anchor" href="#significant-changes-1-70-0"></a></h3>
+<ul><li>The package has been using a secondary “deep-first-search” algorithm for identifying global variables needed by a future since <strong>future</strong> 1.49.0 (2025-05-08), in addition to the ordinary “ordered” algorithm that has been in place since <strong>future</strong> 0.9.0 (2015-12-11). In this release, after having done thorough testing, we are making the deep-first-search algorithm the default and the only search algorithm. This will lower the overhead of finding globals. If someone is experiencing issues from this update, it will be possible for the time being to switch back to the old behavior via an R option - see <code><a href="../reference/zzz-future.options.html">help("future.options", package = "future")</a></code> for how to do this.</li>
 </ul></div>
 <div class="section level3">
-<h3 id="bug-fixes-development-version">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h3>
+<h3 id="bug-fixes-1-70-0">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-1-70-0"></a></h3>
 <ul><li><p>The search for globals would not fall back to the “ordered” algorithm as intended when “deep-first-search” failed.</p></li>
 <li><p>Globals found to be non-resolved futures were not automatically resolved with <code>options(future.globals.resolve = TRUE)</code>.</p></li>
 <li><p>Cancellation of ‘multisession’ futures could produce a warning on “In .Internal(gc(verbose, reset, full)) : closing unused connection 3 (&lt;-localhost:11825)”.</p></li>
@@ -224,7 +224,7 @@
 <li><p>A future must close any connections or graphical devices it opens, and must never close ones that it did not open. Now <code><a href="../reference/value.html">value()</a></code> produces a warning if such misuse is detected. This may be upgraded to an error in future releases. The default behavior can be controlled via an R option. Reverse dependency checks spotted one CRAN package, out of 426, that left stray connections behind.</p></li>
 <li><p>All parallel backends now prevent nested parallelization, unless explicitly allowed, e.g. settings recognized by <code><a href="https://parallelly.futureverse.org/reference/availableCores.html" class="external-link">parallelly::availableCores()</a></code> or set by the future <code><a href="../reference/plan.html">plan()</a></code>. Previously, this had to be implemented by each backend, but now it’s handled automatically by the future framework.</p></li>
 <li><p>Add new FutureBackend API for writing future backends. Please use with care, because there will be further updates in the next few release cycles.</p></li>
-<li><p>The maximum total size of objects send to and from the worker can now be configured per backend, e.g. <code>plan(multisession, maxSizeOfObjects = 10e6)</code> will produce an error if the total size of globals exceeds 10 MB.</p></li>
+<li><p>The maximum total size of objects sent to and from the worker can now be configured per backend, e.g. <code>plan(multisession, maxSizeOfObjects = 10e6)</code> will produce an error if the total size of globals exceeds 10 MB.</p></li>
 <li><p>Backends <code>sequential</code> and <code>multicore</code> no longer have a limit on the maximum size of globals, i.e. they now default to <code>maxSizeOfObjects = +Inf</code>. Backends <code>cluster</code> and <code>multisession</code> also default to <code>maxSizeOfObjects = +Inf</code>, unless R option <code>future.globals.maxSize</code> (sic!) is set.</p></li>
 </ul></div>
 <div class="section level3">

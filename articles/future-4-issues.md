@@ -60,7 +60,7 @@ y
 ## [1] 2
 ```
 
-*Comment:* The goal is to in a future version of the package detect
+*Comment:* The goal is, in a future version of the package, to detect
 globals also in expressions where the local-global state of a variable
 is only known at run time.
 
@@ -239,8 +239,8 @@ strings dynamically, e.g.
 The value of a is 42.
 ```
 
-Attempt to perform the same via a future that is resolved in another R
-session will produce an “object not found” error;
+Attempting to perform the same via a future that is resolved in another
+R session will produce an “object not found” error;
 
 ``` r
 > library(glue)
@@ -406,7 +406,7 @@ might result in an error on:
 
     Error: '...' used in an incorrect context
 
-Even you do not get this error, it is always a good idea to make sure
+Even if you do not get this error, it is always a good idea to make sure
 `...` is passed as an argument all the way down to where it is used,
 e.g.
 
@@ -554,7 +554,7 @@ regardless of the type of future used.
 
 ### Capturing errors, outputting their messages, and returning a default value
 
-Sometimes a function call produce an error for a particular input. In
+Sometimes a function call produces an error for a particular input. In
 such cases, we might want to return a default value, say, a missing
 value, instead of signaling an error. This can be done using:
 

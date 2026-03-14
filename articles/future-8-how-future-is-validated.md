@@ -10,7 +10,7 @@ First, all the essential core packages part of the future framework,
 **[parallelly](https://parallelly.futureverse.org)**,
 **[globals](https://globals.futureverse.org)**, and
 **[listenv](https://listenv.futureverse.org)**, implement a rich set of
-package tests. These are validated regularly across the wide-range of
+package tests. These are validated regularly across the wide range of
 operating systems (Linux, macOS, and MS Windows) and R versions
 available on CRAN, on continuous integration (CI) services (GitHub
 Actions), and on [R-hub](https://r-hub.github.io/rhub/). The core

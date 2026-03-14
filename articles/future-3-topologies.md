@@ -90,7 +90,7 @@ The internals for processing multisession future queries
 to infer how many cores can be used simultaneously, so there is no need
 to explicitly specify that there are 8 cores available.
 
-*Comment*: Since synchronous is the default future, we could skip
+*Comment*: Since sequential evaluation is the default, we could skip
 trailing sequential futures in the setup,
 e.g. `plan(list(multisession))` or just `plan(multisession)`. However,
 it does not hurt to be explicit.
@@ -196,7 +196,7 @@ nodes <- c("n1", "n2", "n3")
 plan(list(tweak(cluster, workers = nodes), multisession))
 ```
 
-*Comment:* Multisession futures are agile to its environment, that is,
+*Comment:* Multisession futures are agile to their environment, that is,
 they will query the machine they are running on to find out how many
 parallel processes it can run at the same time.
 

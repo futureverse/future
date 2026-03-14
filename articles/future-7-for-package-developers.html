@@ -32,7 +32,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.69.0-9022</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.70.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -125,7 +125,7 @@ of surprises to the end user.</p>
 <div class="section level2">
 <h2 id="the-future-smell-test">The future smell test<a class="anchor" aria-label="anchor" href="#the-future-smell-test"></a>
 </h2>
-<p>The by far most common and popular future backend is to parallelize
+<p>By far the most common and popular future backend is to parallelize
 on the local machine, e.g. <code>plan(multisession)</code>. This is
 often good enough in most situations but note that some end-users have
 access to multiple machines and might want to run your code using all of
@@ -139,7 +139,7 @@ side of the world?</em></p>
 embraced the core philosophy of the future framework. If you answer
 “Maybe” or “No”, see if you can rewrite it.</p>
 <p>For instance, if your future code made an assumption that it will
-have access to our local file system, as in:</p>
+have access to the local file system, as in:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">f</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/future.html">future</a></span><span class="op">(</span><span class="op">{</span></span>
 <span>  <span class="va">data</span> <span class="op">&lt;-</span> <span class="fu">read_tsv</span><span class="op">(</span><span class="va">file</span><span class="op">)</span></span>
@@ -178,7 +178,7 @@ that we can never know how and in what context our code will run. For
 example, they might use futures to parallelize a function call in some
 other package and that package code calls your package internally. If
 you set <code>plan(multisession)</code> internally without undoing, you
-might mess up the <code><a href="../reference/plan.html">plan()</a></code> that is already set breaking any
+might mess up the <code><a href="../reference/plan.html">plan()</a></code> that is already set, breaking any
 further parallelization.</p>
 <p>If you still think it is necessary to set <code><a href="../reference/plan.html">plan()</a></code>, make
 sure to undo it when the function exits, also on errors. This can be
@@ -192,7 +192,7 @@ done by using <code>with(plan(...), local = TRUE)</code>, e.g.</p>
 <p>The need for setting the future backend within a function often comes
 from developers wanting to add an argument to their function that allows
 the end-user to specify whether they want to run the function in
-parallel or sequentially. This often result in code like:</p>
+parallel or sequentially. This often results in code like:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">my_fcn</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">parallel</span> <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="kw">if</span> <span class="op">(</span><span class="va">parallel</span><span class="op">)</span> <span class="op">{</span></span>
@@ -298,7 +298,7 @@ that the operating system has given our R process.</p>
 <p>Don’t forget to stop the parallel workers by calling</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plan.html">plan</a></span><span class="op">(</span><span class="va">sequential</span><span class="op">)</span></span></code></pre></div>
-<p>at the end of you vignette.</p>
+<p>at the end of your vignette.</p>
 </div>
 <div class="section level2">
 <h2 id="testing-a-package-that-relies-on-futures">Testing a package that relies on futures<a class="anchor" aria-label="anchor" href="#testing-a-package-that-relies-on-futures"></a>

@@ -32,7 +32,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.69.0-9022</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.70.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -196,8 +196,8 @@ be specified as:</p>
 <code><a href="../reference/re-exports.html">availableCores()</a></code> to infer how many cores can be used
 simultaneously, so there is no need to explicitly specify that there are
 8 cores available.</p>
-<p><em>Comment</em>: Since synchronous is the default future, we could
-skip trailing sequential futures in the setup,
+<p><em>Comment</em>: Since sequential evaluation is the default, we
+could skip trailing sequential futures in the setup,
 e.g. <code>plan(list(multisession))</code> or just
 <code>plan(multisession)</code>. However, it does not hurt to be
 explicit.</p>
@@ -279,9 +279,9 @@ machine process one sample in parallel. We could specify this as:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">nodes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"n1"</span>, <span class="st">"n2"</span>, <span class="st">"n3"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/plan.html">plan</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="../reference/plan.html">tweak</a></span><span class="op">(</span><span class="va">cluster</span>, workers <span class="op">=</span> <span class="va">nodes</span><span class="op">)</span>, <span class="va">multisession</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><em>Comment:</em> Multisession futures are agile to its environment,
-that is, they will query the machine they are running on to find out how
-many parallel processes it can run at the same time.</p>
+<p><em>Comment:</em> Multisession futures are agile to their
+environment, that is, they will query the machine they are running on to
+find out how many parallel processes it can run at the same time.</p>
 <p>One possible downside to the above setup is that we might not utilize
 all available cores all the time. This is because the alignment of the
 shorter chromosomes will finish sooner than the longer ones, which means

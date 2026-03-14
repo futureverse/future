@@ -162,13 +162,14 @@ and not the developer. In other words, the code should not make any
 assumptions on where and when futures are resolved.
 
 One of the designs of the Future API was to encapsulate any differences
-such that all types of futures will appear to work the same. This
-despite expressions may be evaluated locally in the current R session or
-across the world in remote R sessions. Another obvious advantage of
-having a consistent API and behavior among different types of futures is
-that it helps while prototyping. Typically one would use sequential
-evaluation while building up a script and, later, when the script is
-fully developed, one may turn on asynchronous processing.
+such that all types of futures will appear to work the same. This is
+despite the fact that expressions may be evaluated locally in the
+current R session or across the world in remote R sessions. Another
+obvious advantage of having a consistent API and behavior among
+different types of futures is that it helps while prototyping. Typically
+one would use sequential evaluation while building up a script and,
+later, when the script is fully developed, one may turn on asynchronous
+processing.
 
 Because of this, the defaults of the different backends are such that
 the results and side effects of evaluating a future expression are as
@@ -230,7 +231,7 @@ illustrating their properties:
 > plan(sequential)
 > pid <- Sys.getpid()
 > pid
-[1] 2164616
+[1] 2974478
 > a %<-% {
 +     pid <- Sys.getpid()
 +     cat("Future 'a' ...\n")
@@ -249,14 +250,14 @@ Future 'a' ...
 > b
 Future 'b' ...
 Warning in rm(pid): object 'pid' not found
-[1] 2164616
+[1] 2974478
 > c
 Future 'c' ...
 [1] 6.28
 > a
 [1] 3.14
 > pid
-[1] 2164616
+[1] 2974478
 ```
 
 Since eager sequential evaluation is taking place, each of the three
@@ -289,7 +290,7 @@ our example with multisession evaluation:
 > plan(multisession, workers = 2)
 > pid <- Sys.getpid()
 > pid
-[1] 2164616
+[1] 2974478
 > a %<-% {
 +     pid <- Sys.getpid()
 +     cat("Future 'a' ...\n")
@@ -308,14 +309,14 @@ Future 'a' ...
 > b
 Future 'b' ...
 Warning in rm(pid): object 'pid' not found
-[1] 2164671
+[1] 2974536
 > c
 Future 'c' ...
 [1] 6.28
 > a
 [1] 3.14
 > pid
-[1] 2164616
+[1] 2974478
 ```
 
 The first thing we observe is that the values of `a`, `c` and `pid` are
@@ -400,7 +401,7 @@ asynchronous evaluation as:
 > plan(cluster, workers = c("n1", "n2", "n3"))
 > pid <- Sys.getpid()
 > pid
-[1] 2164616
+[1] 2974478
 > a %<-% {
 +     pid <- Sys.getpid()
 +     cat("Future 'a' ...\n")
@@ -419,14 +420,14 @@ Future 'a' ...
 > b
 Future 'b' ...
 Warning in rm(pid): object 'pid' not found
-[1] 2164771
+[1] 2974640
 > c
 Future 'c' ...
 [1] 6.28
 > a
 [1] 3.14
 > pid
-[1] 2164616
+[1] 2974478
 ```
 
 Any types of clusters that
@@ -495,23 +496,23 @@ uses two internal futures:
 +     c(b.pid = Sys.getpid(), b1.pid = b1, b2.pid = b2)
 + }
 > pid
-[1] 2164616
+[1] 2974478
 > a
 Future 'a' ...
-[1] 2164891
+[1] 2974768
 > b
 Future 'b' ...
 Future 'b1' ...
 Future 'b2' ...
   b.pid  b1.pid  b2.pid 
-2164892 2164892 2164892 
+2974767 2974767 2974767 
 ```
 
 By inspecting the process IDs, we see that there are in total three
 different processes involved for resolving the futures. There is the
-main R process (pid 2164616), and there are the two processes used by
-`a` (pid 2164891) and `b` (pid 2164892). However, the two futures (`b1`
-and `b2`) that is nested by `b` are evaluated by the same R process as
+main R process (pid 2974478), and there are the two processes used by
+`a` (pid 2974768) and `b` (pid 2974767). However, the two futures (`b1`
+and `b2`) that are nested by `b` are evaluated by the same R process as
 `b`. This is because nested futures use sequential evaluation unless
 otherwise specified. There are a few reasons for this, but the main
 reason is that it protects us from spawning off a large number of
@@ -537,16 +538,16 @@ of multisession evaluations;
 > plan(list(multisession, multisession))
 [...]
 > pid
-[1] 2164616
+[1] 2974478
 > a
 Future 'a' ...
-[1] 2164986
+[1] 2974873
 > b
 Future 'b' ...
 Future 'b1' ...
 Future 'b2' ...
   b.pid  b1.pid  b2.pid 
-2164987 2164987 2164987 
+2974872 2974872 2974872 
 ```
 
 The second multisession backend will default to single, sequential
@@ -561,21 +562,21 @@ multisession backend for any nested futures, we get:
 > plan(list(sequential, multisession))
 [...]
 > pid
-[1] 2164616
+[1] 2974478
 > a
 Future 'a' ...
-[1] 2164616
+[1] 2974478
 > b
 Future 'b' ...
 Future 'b1' ...
 Future 'b2' ...
   b.pid  b1.pid  b2.pid 
-2164616 2165086 2165085 
+2974478 2974975 2974974 
 ```
 
 which clearly show that `a` and `b` are resolved in the calling process
-(pid 2164616) whereas the two nested futures (`b1` and `b2`) are
-resolved in two separate R processes (pids 2165086 and 2165085).
+(pid 2974478) whereas the two nested futures (`b1` and `b2`) are
+resolved in two separate R processes (pids 2974975 and 2974974).
 
 Having said this, it is indeed possible to use nested multisession
 backend that are not forced to sequential processing by explicitly
@@ -588,22 +589,22 @@ which can be done as follows:
 +     workers = 2)))
 [...]
 > pid
-[1] 2164616
+[1] 2974478
 > a
 Future 'a' ...
-[1] 2165181
+[1] 2975080
 > b
 Future 'b' ...
 Future 'b1' ...
 Future 'b2' ...
   b.pid  b1.pid  b2.pid 
-2165180 2165302 2165303 
+2975079 2975210 2975211 
 ```
 
 First, we see that both `a` and `b` are resolved in different processes
-(pids 2165181 and 2165180) than the calling process (pid 2164616).
+(pids 2975080 and 2975079) than the calling process (pid 2974478).
 Second, the two nested futures (`b1` and `b2`) are resolved in yet two
-other R processes (pids 2165302 and 2165303).
+other R processes (pids 2975210 and 2975211).
 
 For more details on working with nested futures and different future
 backends at each level, see Vignette ‘[A Future for R: Future
@@ -649,7 +650,7 @@ Waiting for 'a' to be resolved ...
 Waiting for 'a' to be resolved ... DONE
 > a
 Future 'a' ...done
-[1] 2165406
+[1] 2975315
 ```
 
 ## Failed Futures
@@ -760,9 +761,9 @@ create several of them in a loop and assign them to a list, e.g.
 > v <- value(fs)
 > str(v)
 List of 3
- $ : int 2165508
- $ : int 2165509
- $ : int 2165509
+ $ : int 2975426
+ $ : int 2975425
+ $ : int 2975426
 ```
 
 This is *not* possible to do when using implicit futures. This is
@@ -784,9 +785,9 @@ e.g.
 > v <- as.list(v)
 > str(v)
 List of 3
- $ a: int 2165508
- $ b: int 2165509
- $ c: int 2165508
+ $ a: int 2975426
+ $ b: int 2975425
+ $ c: int 2975426
 ```
 
 Here `as.list(v)` blocks until all futures in the environment `v` have
@@ -814,9 +815,9 @@ example,
 > v <- as.list(v)
 > str(v)
 List of 3
- $ : int 2165508
- $ : int 2165509
- $ : int 2165508
+ $ : int 2975426
+ $ : int 2975425
+ $ : int 2975426
 ```
 
 As previously, `as.list(v)` blocks until all futures are resolved.

@@ -32,7 +32,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.69.0-9022</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.70.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -166,7 +166,7 @@ expression, e.g.</p>
 <span><span class="va">y</span> <span class="op"><a href="../reference/futureAssign.html">%&lt;-%</a></span> <span class="op">{</span> <span class="va">x</span>; <span class="kw">if</span> <span class="op">(</span><span class="va">reset</span><span class="op">)</span> <span class="va">x</span> <span class="op">&lt;-</span> <span class="fl">0</span>; <span class="va">x</span> <span class="op">+</span> <span class="fl">1</span> <span class="op">}</span></span>
 <span><span class="va">y</span></span>
 <span><span class="co">## [1] 2</span></span></code></pre></div>
-<p><em>Comment:</em> The goal is to in a future version of the package
+<p><em>Comment:</em> The goal is, in a future version of the package, to
 detect globals also in expressions where the local-global state of a
 variable is only known at run time.</p>
 <div class="section level4">
@@ -306,8 +306,8 @@ to generate strings dynamically, e.g.</p>
 <span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a><span class="sc">&gt;</span> s <span class="ot">&lt;-</span> <span class="fu">glue</span>(<span class="st">"The value of a is {a}."</span>)</span>
 <span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a><span class="sc">&gt;</span> s</span>
 <span id="cb14-5"><a href="#cb14-5" tabindex="-1"></a>The value of a is <span class="fl">42.</span></span></code></pre></div>
-<p>Attempt to perform the same via a future that is resolved in another
-R session will produce an “object not found” error;</p>
+<p>Attempting to perform the same via a future that is resolved in
+another R session will produce an “object not found” error;</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">library</span>(glue)</span>
 <span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">library</span>(future)</span>
 <span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">plan</span>(multisession)</span>
@@ -434,9 +434,9 @@ parallel frameworks, it might not work. For example, using:</p>
 <span><span class="op">}</span></span></code></pre></div>
 <p>might result in an error on:</p>
 <pre><code>Error: '...' used in an incorrect context</code></pre>
-<p>Even you do not get this error, it is always a good idea to make sure
-<code>...</code> is passed as an argument all the way down to where it
-is used, e.g.</p>
+<p>Even if you do not get this error, it is always a good idea to make
+sure <code>...</code> is passed as an argument all the way down to where
+it is used, e.g.</p>
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">my_fcn</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">X</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">y</span> <span class="op">&lt;-</span> <span class="fu">future.apply</span><span class="fu">::</span><span class="fu"><a href="https://future.apply.futureverse.org/reference/future_lapply.html" class="external-link">future_lapply</a></span><span class="op">(</span><span class="va">X</span>, FUN <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
@@ -559,8 +559,8 @@ behave consistently regardless of the type of future used.</p>
 <h3 id="capturing-errors-outputting-their-messages-and-returning-a-default-value">Capturing errors, outputting their messages, and returning a default
 value<a class="anchor" aria-label="anchor" href="#capturing-errors-outputting-their-messages-and-returning-a-default-value"></a>
 </h3>
-<p>Sometimes a function call produce an error for a particular input. In
-such cases, we might want to return a default value, say, a missing
+<p>Sometimes a function call produces an error for a particular input.
+In such cases, we might want to return a default value, say, a missing
 value, instead of signaling an error. This can be done using:</p>
 <div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="kw"><a href="https://rdrr.io/r/base/conditions.html" class="external-link">tryCatch</a></span><span class="op">(</span><span class="op">{</span></span>

@@ -32,7 +32,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.69.0-9022</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.70.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -188,8 +188,8 @@ exported without causing problems.</p>
 </h2>
 <p>The below table and sections provide a few examples of non-exportable
 R objects that you may run into when trying to parallelize your code, or
-simply from trying reload objects saved in a previous R session. <em>If
-you identify other cases, please consider <a href="https://github.com/futureverse/future/issues/" class="external-link">reporting</a> them
+simply from trying to reload objects saved in a previous R session.
+<em>If you identify other cases, please consider <a href="https://github.com/futureverse/future/issues/" class="external-link">reporting</a> them
 so they can be documented here and possibly even be fixed.</em></p>
 <table class="table">
 <colgroup>
@@ -304,8 +304,8 @@ python.builtin.module (<code>externalptr</code>)</td>
 <p>These are illustrated in sections ‘Packages that rely on external
 pointers’ and ‘Packages with other types of non-external objects’
 below.</p>
-<p>Importantly, there are objects with external pointer than can indeed
-be exported. Here are some example,</p>
+<p>Importantly, there are objects with external pointers that can indeed
+be exported. Here are some examples,</p>
 <table class="table">
 <thead><tr class="header">
 <th align="left">Package</th>
@@ -364,7 +364,7 @@ launching the future on a parallel worker, and throw an error if one is
 detected.</p>
 <p>However, there are objects with external pointers that can be
 exported, e.g. <code>data.table</code> objects of the <strong><a href="https://cran.r-project.org/package=data.table" class="external-link">data.table</a></strong>
-package is one such example. In other words, the existence of a
+package are one such example. In other words, the existence of a
 <em>external pointer</em> is just a suggestion for an object being
 non-exportable - it is not a sufficient condition.</p>
 <p>Below are some examples of packages that produce non-exportable
@@ -505,8 +505,7 @@ C++, e.g.</p>
 <p><strong><a href="https://cran.r-project.org/package=DBI" class="external-link">DBI</a></strong> provides
 a unified database interface for communication between R and various
 database engines. Analogously to regular connections in R, DBIConnection
-objects can <em>not</em> safely be exported to another R process,
-e.g.</p>
+objects cannot safely be exported to another R process, e.g.</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://future.futureverse.org">future</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>future.globals.onReference <span class="op">=</span> <span class="st">"error"</span><span class="op">)</span></span>
@@ -964,8 +963,8 @@ structures use external pointers. For example,</p>
 <span><span class="va">d</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">train</span><span class="op">)</span></span>
 <span><span class="va">d</span></span>
 <span><span class="co">## [1] 6513  126</span></span></code></pre></div>
-<p>works just fine but if we attempt to pass on the ‘xgb.DMatrix’ object
-<code>train</code> to an external worker, we silently get a incorrect
+<p>works just fine, but if we attempt to pass the ‘xgb.DMatrix’ object
+<code>train</code> to an external worker, we silently get an incorrect
 value:</p>
 <div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">f</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/future.html">future</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">train</span><span class="op">)</span><span class="op">)</span></span>

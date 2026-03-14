@@ -32,7 +32,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.69.0-9022</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.70.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -127,7 +127,7 @@ value of the future is queried</em>. Messages produced by
 captured and resignaled (“relayed”) as messages in the main R session.
 Importantly, this works identically regardless of future backend
 used.</p>
-<p>For simplicity, lets start with an illustration on how standard
+<p>For simplicity, let’s start with an illustration on how standard
 output (“stdout”) is captured and relayed:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">library</span>(future)</span>
 <span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">plan</span>(multisession)</span>
@@ -200,7 +200,7 @@ only print its value, because it is now a regular R object:</p>
 <span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">42</span></span>
 <span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a><span class="sc">&gt;</span> a</span>
 <span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">42</span></span></code></pre></div>
-<p>Next, lets see what happens if we use <code><a href="https://rdrr.io/r/base/message.html" class="external-link">message()</a></code> to
+<p>Next, let’s see what happens if we use <code><a href="https://rdrr.io/r/base/message.html" class="external-link">message()</a></code> to
 produce output:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">library</span>(future)</span>
 <span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">plan</span>(multisession)</span>
@@ -212,7 +212,7 @@ produce output:</p>
 single block output, messages are conditions that are captured
 separately. Unfortunately, it is <em>not</em> possible to preserve the
 ordering of interweaved stdout and message output. When using futures,
-stdout output will always be relayed first followed by each of the
+stdout output will always be relayed first, followed by each of the
 individual conditions captured. For example,</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">library</span>(future)</span>
 <span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">plan</span>(multisession)</span>
@@ -324,7 +324,7 @@ elsewhere in R. For example,</p>
 <h2 id="known-limitations">Known limitations<a class="anchor" aria-label="anchor" href="#known-limitations"></a>
 </h2>
 <p>It is only the standard output that is relayed. It is <em>not
-possible</em> to relay output send to the standard error (stderr),
+possible</em> to relay output sent to the standard error (stderr),
 e.g. output sent by <code>cat(..., file = stderr())</code> will be lost.
 This is due to a <a href="https://github.com/HenrikBengtsson/Wishlist-for-R/issues/55" class="external-link">limitation
 in R</a>, preventing us from capturing stderr in a reliable way,

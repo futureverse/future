@@ -12,7 +12,7 @@ conditions are also captured and resignaled (“relayed”) as messages in
 the main R session. Importantly, this works identically regardless of
 future backend used.
 
-For simplicity, lets start with an illustration on how standard output
+For simplicity, let’s start with an illustration on how standard output
 (“stdout”) is captured and relayed:
 
 ``` r
@@ -102,7 +102,7 @@ its value, because it is now a regular R object:
 [1] 42
 ```
 
-Next, lets see what happens if we use
+Next, let’s see what happens if we use
 [`message()`](https://rdrr.io/r/base/message.html) to produce output:
 
 ``` r
@@ -118,7 +118,7 @@ Note that contrary to the captured stdout, which is captured as one
 single block output, messages are conditions that are captured
 separately. Unfortunately, it is *not* possible to preserve the ordering
 of interweaved stdout and message output. When using futures, stdout
-output will always be relayed first followed by each of the individual
+output will always be relayed first, followed by each of the individual
 conditions captured. For example,
 
 ``` r
@@ -244,7 +244,7 @@ ping
 ## Known limitations
 
 It is only the standard output that is relayed. It is *not possible* to
-relay output send to the standard error (stderr), e.g. output sent by
+relay output sent to the standard error (stderr), e.g. output sent by
 `cat(..., file = stderr())` will be lost. This is due to a [limitation
 in R](https://github.com/HenrikBengtsson/Wishlist-for-R/issues/55),
 preventing us from capturing stderr in a reliable way, particularly

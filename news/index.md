@@ -1,10 +1,10 @@
 # Changelog
 
-## Version (development version)
+## Version 1.70.0
 
 ### Significant Changes
 
-- The packages has been using a secondary “deep-first-search” algorithm
+- The package has been using a secondary “deep-first-search” algorithm
   for identifying global variables needed by a future since **future**
   1.49.0 (2025-05-08), in addition to the ordinary “ordered” algorithm
   that has been in place since **future** 0.9.0 (2015-12-11). In this
@@ -495,7 +495,7 @@ reverse-dependency checks, **future.tests** checks, and more.
   care, because there will be further updates in the next few release
   cycles.
 
-- The maximum total size of objects send to and from the worker can now
+- The maximum total size of objects sent to and from the worker can now
   be configured per backend,
   e.g. `plan(multisession, maxSizeOfObjects = 10e6)` will produce an
   error if the total size of globals exceeds 10 MB.

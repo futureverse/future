@@ -84,8 +84,8 @@ of external pointers can be exported without causing problems.
 
 The below table and sections provide a few examples of non-exportable R
 objects that you may run into when trying to parallelize your code, or
-simply from trying reload objects saved in a previous R session. *If you
-identify other cases, please consider
+simply from trying to reload objects saved in a previous R session. *If
+you identify other cases, please consider
 [reporting](https://github.com/futureverse/future/issues/) them so they
 can be documented here and possibly even be fixed.*
 
@@ -117,8 +117,8 @@ can be documented here and possibly even be fixed.*
 These are illustrated in sections ‘Packages that rely on external
 pointers’ and ‘Packages with other types of non-external objects’ below.
 
-Importantly, there are objects with external pointer than can indeed be
-exported. Here are some example,
+Importantly, there are objects with external pointers that can indeed be
+exported. Here are some examples,
 
 | Package        | Examples of exportable types or classes |
 |:---------------|:----------------------------------------|
@@ -170,7 +170,7 @@ and throw an error if one is detected.
 However, there are objects with external pointers that can be exported,
 e.g. `data.table` objects of the
 **[data.table](https://cran.r-project.org/package=data.table)** package
-is one such example. In other words, the existence of a *external
+are one such example. In other words, the existence of a *external
 pointer* is just a suggestion for an object being non-exportable - it is
 not a sufficient condition.
 
@@ -344,7 +344,7 @@ n
 **[DBI](https://cran.r-project.org/package=DBI)** provides a unified
 database interface for communication between R and various database
 engines. Analogously to regular connections in R, DBIConnection objects
-can *not* safely be exported to another R process, e.g.
+cannot safely be exported to another R process, e.g.
 
 ``` r
 
@@ -909,8 +909,8 @@ d
 ## [1] 6513  126
 ```
 
-works just fine but if we attempt to pass on the ‘xgb.DMatrix’ object
-`train` to an external worker, we silently get a incorrect value:
+works just fine, but if we attempt to pass the ‘xgb.DMatrix’ object
+`train` to an external worker, we silently get an incorrect value:
 
 ``` r
 
