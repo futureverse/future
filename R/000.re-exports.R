@@ -13,22 +13,22 @@
 #' * [parallelly::autoStopCluster()]   (no longer re-exported)
 #    Used by: <none>
 #' * [parallelly::availableCores()]
-#    Used by: BatchGetSymbols, bistablehistory, codalm, cft,
-#             deseats, dipsaus, drimmR, elevatr, fect (2), GetBCBData,
-#             gtfs2emis, heterogen, ldaPrototype, origami, PINstimation (1),
-#             powRICLPM, rBiasCorrection, readsdr (1), recforest,
-#             sigminer (2), skpr (1), smoots, sovereign, TriDimRegression,
-#             uci (1), updog, whitewater, yfR [2025-12-22]
+#    Used by: ale (1), BatchGetSymbols (2), codalm (1),
+#             cft (1), couplr (1), deseats, dipsaus (1), elevatr (1), 
+#             heterogen, PINstimation (1), powRICLPM (1),
+#             readsdr (1), recforest, sigminer (2), skpr (1), smoots,
+#             sovereign (1), TriDimRegression (1), uci (1), updog (2)
+#             [2025-12-22, 2026-01-31]
 #' * [parallelly::availableWorkers()]
 #    Used by: wqspt (1) [2025-03-15]
 #' * [parallelly::makeClusterMPI()]    (no longer re-exported)
 #    Used by: <none>
 #' * [parallelly::makeClusterPSOCK()]
-#    Used by: eatRep (1), fect (2), interflex (1), ivDiag (1) [2025-12-11]
+#    Used by: eatRep (1), interflex (1), ivDiag (1) [2025-12-11]
 #' * [parallelly::makeNodePSOCK()]     (no longer re-exported)
 #    Used by: <none>
 #' * [parallelly::supportsMulticore()]
-#    Used by: furrr(1)
+#    Used by: furrr (2)
 #
 #  (1) Issue filed or PR sent
 #  (2) In the next release

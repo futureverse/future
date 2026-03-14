@@ -114,7 +114,7 @@ getGlobalsAndPackages <- function(expr, envir = parent.frame(), tweak = tweakExp
       idx <- which(globals.method == "dfs")
       if (length(idx) > 0L) {
          res <- tryCatch(findGlobals(expr, method = "dfs"), error = identity)
-         if (inherits(names, "res")) {
+         if (inherits(res, "error")) {
            globals.method <- globals.method[-idx]
            if (length(globals.method) == 0L) globals.method <- "ordered"
          }
@@ -315,15 +315,21 @@ getGlobalsAndPackages <- function(expr, envir = parent.frame(), tweak = tweakExp
     globals <- as.FutureGlobals(globals)
 
     ## Unless already resolved, perform a shallow resolve
-    if (attr(globals, "resolved", exact = TRUE)) {
-      idxs <- which(unlist(lapply(globals, FUN = inherits, "Future"), use.names = FALSE))
-      if (debug) mdebugf("Number of global futures: %d", length(idxs))
+    if (!attr(globals, "resolved", exact = TRUE)) {
+      idxs <- which(unlist(lapply(globals, FUN = function(g) {
+        inherits(g, "Future") && !inherits(g, "ConstantFuture")
+      }), use.names = FALSE))
+      if (debug) mdebugf("Number of non-constant global futures: %d", length(idxs))
       
       ## Nothing to do?
       if (length(idxs) > 0) {
-        if (debug) mdebugf("Global futures (not constant): %s", commaq(names(globals[idxs])))
-        valuesF <- value(globals[idxs])
-        globals[idxs] <- lapply(valuesF, FUN = ConstantFuture)
+        gnames <- names(globals)[idxs]
+        if (debug) mdebugf("Global futures (not constant): %s", commaq(gnames))
+        ## FIXME: value(globals[gnames]) requires globals (>=0.19.1) [2026-03-13]
+        ##        - give it 2-4 weeks to make sure there are no regression bugs
+        gvalues <- lapply(globals[gnames], FUN = value)
+        gvalues <- lapply(gvalues, FUN = ConstantFuture)
+        globals[gnames] <- gvalues
       }
     }
 
@@ -508,7 +514,7 @@ summarize_size_of_globals <- function(globals, sizes = NULL, maxSize = NULL, exp
   }
 
   if (!is.null(maxSize) && total_size > maxSize) {
-      msg <- sprintf('%s. This exceeds the maximum allowed size %s per by R option "future.globals.maxSize". This limit is set to protect against transfering too large objects to parallel workers by mistake, which may not be intended and could be costly. See help("future.globals.maxSize", package = "future") for further explainations and how to adjust or remove this threshold', msg, asIEC(maxSize))
+      msg <- sprintf('%s. This exceeds the maximum allowed size %s per plan() argument \'maxSizeOfObjects\'. This limit is set to protect against transfering too large objects to parallel workers by mistake, which may not be intended and could be costly. See help("future.globals.maxSize", package = "future") for how to adjust or remove the default threshold via an R option', msg, asIEC(maxSize))
   }
 
   if (n == 1) {

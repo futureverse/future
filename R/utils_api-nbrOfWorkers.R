@@ -109,7 +109,7 @@ nbrOfFreeWorkers.multiprocess <- function(evaluator, background = FALSE, ...) {
   if (inherits(backend, "FutureBackend")) {
     return(nbrOfFreeWorkers(backend, background = background, ...))
   }  
-  stopf("nbrOfFreeWorkers() is not implemented for this type of future backend (please contacts the maintainer of that backend): %s", commaq(class(evaluator)))
+  stopf("nbrOfFreeWorkers() is not implemented for this type of future backend (please contact the maintainer of that backend): %s", commaq(class(evaluator)))
 }
 
 
@@ -125,7 +125,7 @@ nbrOfFreeWorkers.future <- function(evaluator, background = FALSE, ...) {
   workers <- nbrOfWorkers(evaluator)
   if (is.infinite(workers)) return(workers)
 
-  stopf("nbrOfFreeWorkers() is not implemented for this type of future backend (please contacts the maintainer of that backend): %s", commaq(class(evaluator)))
+  stopf("nbrOfFreeWorkers() is not implemented for this type of future backend (please contact the maintainer of that backend): %s", commaq(class(evaluator)))
 }
 
 
@@ -153,7 +153,7 @@ nbrOfFreeWorkers.NULL <- function(evaluator, background = FALSE, ...) {
 nbrOfFreeWorkers.logical <- function(evaluator, background = FALSE, ...) {
   assert_no_positional_args_but_first()
   if (missing(background)) {
-    stop("Arguments 'background' of nbrOfFreeWorkers() must be named, if used")
+    stop("Argument 'background' of nbrOfFreeWorkers() must be named, if used")
   }
   nbrOfFreeWorkers(NULL, background = force(background), ...)
 }

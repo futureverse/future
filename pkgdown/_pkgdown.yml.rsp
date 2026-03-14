@@ -1,8 +1,8 @@
 <%
-pkgs_mapreduce <- c("future.apply", "doFuture", "furrr")
+pkgs_mapreduce <- c("futurize", "future.apply", "doFuture", "furrr")
 pkgs_backend <- c("future.batchtools", "future.callr", "future.mirai")
 pkgs <- c("globals", "listenv", "parallelly", "future", "future.tests", "progressr", pkgs_mapreduce, pkgs_backend)
-pkgs_extra <- c("BiocParallel.FutureParam", "future.tools", "future.mapreduce", "marshal")
+pkgs_extra <- c("future.p2p", "future.tools", "marshal")
 pkgs <- c(sort(pkgs), pkgs_extra)
 urls <- sprintf("https://%s.futureverse.org", pkgs)
 names(urls) <- pkgs
@@ -10,8 +10,6 @@ names(urls) <- pkgs
 file <- file.path(c(".", ".."), "DESCRIPTION")
 file <- file[utils::file_test("-f", file)]
 pkg <- read.dcf(file)[,"Package"]
-
-#common_support <- c("future", "future.apply", "future.callr", "future.batchtools", "doFuture", "BiocParallel.FutureParam")
 %>
 url: https://<%= pkg %>.futureverse.org
 

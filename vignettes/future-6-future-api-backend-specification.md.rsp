@@ -24,7 +24,7 @@ release cycles._
 
 This document is written to serve as a reference for developers who
 are developing a future backend to the future framework as implemented
-in the **[future]** package for R that available on CRAN.  The Future
+in the **[future]** package for R that is available on CRAN.  The Future
 Application Programming Interface (API) has three fundamental
 functions at its core:
 
@@ -63,7 +63,7 @@ a set of rules.  Rules that are documented below.
 
 A supplement to the specification herein is the 'Test Suite for Future
 API Backends', which consists of a set of tests that can be used to
-validated that a future backend meets the minimal requirements of the
+validate that a future backend meets the minimal requirements of the
 Future API.  These tests run from the command-line, from the R prompt,
 or as part of the package tests of a backend package.  This test suite
 is documented and implemented in the **[future.tests]** package available
@@ -103,7 +103,7 @@ the following components:
   must never be called - it is used as a no-op placeholder for setting
   the future backend via `plan()`.
 
-* A `MyParallelFutureBackend` function that returns and an object of
+* A `MyParallelFutureBackend` function that returns an object of
   class `MyParallelFutureBackend` inheriting the `FutureBackend`.
   This function should be set as attribute `factory` for the above
   `myparallel` function.
@@ -128,11 +128,11 @@ the following components:
   resolved.
 
 With this in place, the selection of using this backend as the future
-plan, will be done as `plan(myparallel)` with the option of specifying
+plan,   done as `plan(myparallel)` with the option of specifying
 certain arguments to be passed to `myparallel()`.  With the plan set,
 a call to `f <- future(expr)` will then launch the evaluation of the
 future via the `launchFuture()` method for the current set future
-backend and return then launch the future now inheriting
+backend and return the future now inheriting
 `MyParallelFuture`.  When calling `resolved(f)` to query whether the
 future expression is resolved or not, the underlying S3 method for
 this class will then check in with the parallel worker whether the
@@ -159,7 +159,7 @@ functions mentioned below are from the **[future]** package.
 ### Constructor function creating a Future
 
 The place-holder function `myparallel()` that is used by `plan()` must
-inherits from class `future` such that `inherits(myparallel,
+inherit from class `future` such that `inherits(myparallel,
 "future")` is true. It must also have attribute `factory` set to the
 corresponding `FutureBackend` function,
 i.e. `MyParallelFutureBackend`.
@@ -175,7 +175,7 @@ as the second is required.  It should accept additional arguments via
 The `launchFuture()` method should invisibly return the `Future`
 object of desired class, e.g. `MyParallelFuture`.
 
-The `launchFuture()` method is responsible for evaluation the `Future`
+The `launchFuture()` method is responsible for evaluating the `Future`
 object.  The evaluation of the future expression should respect any
 global variables in the `FutureGlobals` object returned by `globals()`
 with the `Future` object as the first argument.  The evaluation should
@@ -186,7 +186,7 @@ If the backend provides parallel processing, then `launchFuture()`
 should return the future as soon as possible and without waiting for
 it to be resolved.  If all workers are occupied, then `launchFuture()`
 is responsible for waiting until a worker becomes available and then
-launch the future on that worker and immediatedly return the future.
+launch the future on that worker and immediately return the future.
 
 The `launchFuture()` method may produce an error of class
 `FutureError` in case it fails to launch the future on the worker or
@@ -205,7 +205,7 @@ currently not used.
 The method may be called zero or more times.
 
 The method should return `FALSE` as long as the future is
-unresolved. It may also return `FALSE` if it fail to establish the
+unresolved. It may also return `FALSE` if it fails to establish the
 state of the future within a reasonable time period ("timeout").  It
 should return `TRUE` as soon as it can be established that the future
 is resolved.  After it has returned `TRUE` once, any succeeding calls
@@ -226,7 +226,7 @@ The `resolved()` method must not update the RNG state.
 ### result() method for the Future class
 
 An S3 method `result()` for `MyParallelFuture` that takes a `Future`
-object as its first argument and return a `FutureResult` object is
+object as its first argument and returns a `FutureResult` object is
 required.  It should accept additional arguments via `...`, which are
 currently not used.
 

@@ -65,7 +65,7 @@ of the future expression (as a promise).}
 identified.}
 
 \item{substitute}{If TRUE, argument \code{expr} is
-\code{\link[base]{substitute}()}:ed, otherwise not.}
+\code{\link[base]{substitute}()}:d, otherwise not.}
 
 \item{lazy}{If FALSE (default), the future is resolved
 eagerly (starting immediately), otherwise not.}
@@ -73,9 +73,9 @@ eagerly (starting immediately), otherwise not.}
 \item{seed}{(optional) If TRUE, the random seed, that is, the state of the
 random number generator (RNG) will be set such that statistically sound
 random numbers are produced (also during parallelization).
-If FALSE (default), it is assumed that the future expression does neither
-need nor use random numbers generation.
-To use a fixed random seed, specify a L'Ecuyer-CMRG seed (seven integer)
+If FALSE (default), it is assumed that the future expression neither
+needs nor uses random number generation.
+To use a fixed random seed, specify a L'Ecuyer-CMRG seed (seven integers)
 or a regular RNG seed (a single integer).  If the latter, then a
 L'Ecuyer-CMRG seed will be automatically created based on the given seed.
 Furthermore, if FALSE, then the future will be monitored to make sure it
@@ -104,15 +104,15 @@ captured output across futures.
 Using \code{stdout = NA} fully avoids intercepting the standard output;
 behavior of such unhandled standard output depends on the future backend.}
 
-\item{conditions}{A character string of conditions classes to be captured
+\item{conditions}{A character string of condition classes to be captured
 and relayed.  The default is to relay all conditions, including messages
 and warnings.  To drop all conditions, use \code{conditions = character(0)}.
 Errors are always relayed.
 Attribute \code{exclude} can be used to ignore specific classes, e.g.
 \code{conditions = structure("condition", exclude = "message")} will capture
-all \code{condition} classes except those that inherits from the \code{message} class.
+all \code{condition} classes except those that inherit from the \code{message} class.
 Using \code{conditions = structure(..., drop = TRUE)} causes any captured
-conditions to be dropped from the future object as soon as it has
+conditions to be dropped from the future object as soon as they have
 been relayed, e.g. by \code{value(f)}. This can help decrease the overall
 memory consumed by captured conditions across futures.
 Using \code{conditions = NULL} (not recommended) avoids intercepting conditions,
@@ -146,8 +146,8 @@ e.g. \code{f <- futureAssign("x", expr)} and \code{f <- (x \%<-\% expr)}.
 \code{futureAssign("x", value)} create a \link{Future} that evaluates the expression
 (\code{value}) and binds it to variable \code{x} (as a
 \link[base:delayedAssign]{promise}). The expression is evaluated in parallel
-in the background. Later on, when \code{x} is first queried, the value of future
-is automatically retrieved as it were a regular variable and \code{x} is
+in the background. Later on, when \code{x} is first queried, the value of the future
+is automatically retrieved as if it were a regular variable and \code{x} is
 materialized as a regular value.
 }
 \details{
@@ -162,7 +162,7 @@ immediately give the value.
 
 The future assignment construct \code{x \%<-\% value} is not a formal assignment
 per se, but a binary infix operator on objects \code{x} and expression \code{value}.
-However, by using non-standard evaluation, this constructs can emulate an
+However, by using non-standard evaluation, this construct can emulate an
 assignment operator similar to \code{x <- value}. Due to \R's precedence rules
 of operators, future expressions often need to be explicitly bracketed,
 e.g. \code{x \%<-\% { a + b }}.
@@ -177,11 +177,11 @@ e.g. whether output should be relayed or not. When using a future
 assignment, these arguments can be specified via corresponding
 assignment expression.  For example, \code{x \%<-\% { rnorm(10) } \%seed\% TRUE}
 corresponds to \code{futureAssign("x", { rnorm(10) }, seed = TRUE)}. Here are
-a several examples.
+several examples.
 
 To explicitly specify variables and functions that a future assignment
 should use, use \verb{\%globals\%}. To explicitly specify which packages need
-to be attached for the evaluate to success, use \verb{\%packages\%}. For
+to be attached for the evaluation to succeed, use \verb{\%packages\%}. For
 example,
 
 \if{html}{\out{<div class="sourceCode">}}\preformatted{> x <- rnorm(1000)
@@ -228,7 +228,7 @@ Hello
 [1] 55
 }\if{html}{\out{</div>}}
 
-To create a future without launching in such that it will only be
+To create a future without launching it such that it will only be
 processed if the value is really needed, use \verb{\%lazy\%}, e.g.
 
 \if{html}{\out{<div class="sourceCode">}}\preformatted{> x \%<-\% \{ Sys.sleep(5); 42 \} \%lazy\% TRUE
@@ -244,9 +244,9 @@ processed if the value is really needed, use \verb{\%lazy\%}, e.g.
 \section{Error handling}{
 
 
-Because future assignments are promises, errors produced by the the
+Because future assignments are promises, errors produced by the
 future expression will not be signaled until the value of the future is
-requested. For example, if you create a future assignment that produce
+requested. For example, if you create a future assignment that produces
 an error, you will not be affected by the error until you "touch" the
 future-assignment variable. For example,
 
@@ -262,7 +262,7 @@ Error in eval(quote(\{ : boom
 
 Futures are evaluated on the future backend that the user has specified
 by \code{\link[=plan]{plan()}}. With regular futures, we can temporarily use another future
-backend by wrapping our code in \verb{with(plan(...), \{ ... \}]}, or temporarily
+backend by wrapping our code in \code{with(plan(...), { ... })}, or temporarily
 inside a function using \code{with(plan(...), local = TRUE)}. To achieve the
 same for a specific future assignment, use \verb{\%plan\%}, e.g.
 

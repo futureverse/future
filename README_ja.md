@@ -699,10 +699,10 @@ Future 'b2' ...
 ```
 
 <!--
-By inspection the process IDs, we see that there are in total three different processes involved for resolving the futures.
-There is the main R process (pid 1427324), and there are the two processes used by a (pid 1427606) and b (pid 1427607). 
-However, the two futures (b1 and b2) that is nested by b are evaluated by the same R process as b.
-This is because nested futures use sequential evaluation unless otherwise specified. 
+By inspecting the process IDs, we see that there are in total three different processes involved for resolving the futures.
+The main R process
+(pid 831123)
+and the two processes used by `a`This is because nested futures use sequential evaluation unless otherwise specified. 
 There are a few reasons for this, but the main reason is that it protects us from spawning off a large number of background processes by mistake, e.g. via recursive calls.
 -->
 
@@ -948,7 +948,7 @@ The future package tries to automate these tasks as far as possible.
 It does this with help of the globals package, which uses static-code inspection to identify global variables. 
 If a global variable is identified, it is captured and made available to the evaluating process.
 Moreover, if a global is defined in a package, then that global is not exported. 
-Instead, it is made sure that the corresponding package is attached when the future is evaluated.
+Instead, it ensures that the corresponding package is attached when the future is evaluated.
 This not only better reflects the setup of the main R session, but it also minimizes the need for exporting globals, which saves not only memory but also time and bandwidth, especially when using remote compute nodes.
 -->
 

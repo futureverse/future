@@ -24,3 +24,6 @@ R_FUTURE_FUTURE_EARLYSIGNAL=defunct
 R_FUTURE_FUTURE_LOCAL=defunct
 R_FUTURE_FUTURE_GC=defunct
 R_FUTURE_RESOLVED_RUN=defunct
+
+## https://github.com/futureverse/future/issues/821
+#R_FUTURE_GLOBALS_METHOD_DEFAULT="dfs"

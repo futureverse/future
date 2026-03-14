@@ -19,6 +19,7 @@ jobs:
           - { r: "release", pkg: "future.batchtools" }
           - { r: "release", pkg: "future.callr"      }
           - { r: "release", pkg: "future.mirai"      }
+          - { r: "release", pkg: "futurize"          , force_suggests: false }
           - { r: "release", pkg: "doFuture"          }
           - { r: "release", pkg: "future.apply"      }
           - { r: "release", pkg: "furrr", not_cran: false }
@@ -26,6 +27,7 @@ jobs:
           - { r: "release", pkg: "promises"          , force_suggests: false }
           - { r: "release", pkg: "shiny"             , force_suggests: false , not_cran: false }
           - { r: "release", pkg: "plumber"           }
+          - { r: "release", pkg: "futurize"          , plan: multisession, label: multisession, force_suggests: false }
           - { r: "release", pkg: "doFuture"          , plan: multisession, label: multisession }
           - { r: "release", pkg: "future.apply"      , plan: multisession, label: multisession }
           - { r: "release", pkg: "furrr", not_cran: false, plan: multisession, label: multisession }
@@ -39,7 +41,6 @@ jobs:
       ## Specific to futures
       R_FUTURE_RNG_ONMISUSE: error
       R_FUTURE_PLAN: ${{ matrix.config.plan }}
-      R_FUTURE_GLOBALS_KEEPWHERE: ${{ matrix.config.globals_keepWhere }}
       R_GLOBALS_BRANCH: ${{ matrix.config.globals }}
       NOT_CRAN: true
 

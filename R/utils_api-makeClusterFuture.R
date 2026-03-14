@@ -90,6 +90,25 @@
 #' is produced. The error can be de-escalated to a warning by setting
 #' R option `future.ClusterFuture.clusterEvalQ` to `"warning"`.
 #'
+#' @section Benefits of using makeClusterFuture():
+#' 
+#' Many packages rely on traditional **parallel** functions such as
+#' `parallel::parLapply()` and `parallel::clusterApply()`. Some of them
+#' expose arguments (e.g. `cl` or `cluster`), or supports
+#' `parallel::getDefaultCluster()`, for using a custom **parallel**
+#' `cluster` object. The `makeClusterFuture()` function brings the all
+#' benefits of the future ecosystem to those packages and functions.
+#' 
+#' One benefit is that you can use _any_ future parallel backend,
+#' e.g. `plan(multisession)`, `plan(future.mirai::mirai_multisession)`,
+#' `plan(future.batchtools::batchtools_slurm)`.
+#' 
+#' Another benefit is that output, messages, warnings, and other types of
+#' conditions produced on parallel workers are automatically relayed in
+#' the main R session. This can be very helpful for progress reporting
+#' and troubleshooting. Among all parallel frameworks in R, only the
+#' future ecosystem does this.
+#'
 #' @aliases FUTURE
 #' @keywords internal
 #' 

@@ -1,3 +1,33 @@
+# Version 1.70.0 [2026-03-13]
+
+## Significant Changes
+
+ * The package has been using a secondary "deep-first-search"
+   algorithm for identifying global variables needed by a future since
+   **future** 1.49.0 (2025-05-08), in addition to the ordinary
+   "ordered" algorithm that has been in place since **future** 0.9.0
+   (2015-12-11). In this release, after having done thorough testing,
+   we are making the deep-first-search algorithm the default and the
+   only search algorithm. This will lower the overhead of finding
+   globals. If someone is experiencing issues from this update, it
+   will be possible for the time being to switch back to the old
+   behavior via an R option - see `help("future.options", package =
+   "future")` for how to do this.
+
+## Bug Fixes
+
+ * The search for globals would not fall back to the "ordered"
+   algorithm as intended when "deep-first-search" failed.
+   
+ * Globals found to be non-resolved futures were not automatically
+   resolved with `options(future.globals.resolve = TRUE)`.
+ 
+ * Cancellation of 'multisession' futures could produce a warning on
+   "In .Internal(gc(verbose, reset, full)) : closing unused connection
+   3 (<-localhost:11825)".
+
+
+
 # Version 1.69.0 [2026-01-15]
 
 ## Significant Changes
@@ -9,7 +39,7 @@
 ## New Features
 
  * Add `conditionMessage()` for `FutureCondition`, which appends
-   meta-data information to the original message.
+   metadata information to the original message.
 
  * Add more metadata to `FutureCondition` objects by default, e.g. in
    which session (including UUID, hostname, and PID) and when the
@@ -20,10 +50,11 @@
 ## Bug Fixes
 
  * `makeClusterFuture()` clusters would not signal errors as other
-   **parallel** clusters. Instead they were signals as-is instantly.
+   **parallel** clusters. Instead they were signaled as-is instantly.
  
  * `future(..., packages = "missing-package")` did not result in an
-   error despite requesting a non-installed package.
+   error despite requesting a non-installed package. This bug was 
+   introduced around **future** 1.40.0 (2025-04-10).
 
  * `plan(..., interrupts = ...)` would produce a warning on "Detected
    1 unknown future arguments: 'interrupts'" for third-party future
@@ -57,7 +88,7 @@
  
 # Version 1.68.0 [2025-11-16]
 
-This is the fifth rollout out of several towards a near-future major
+This is the fifth rollout of several towards a near-future major
 release. This has been made possible due to a multi-year effort of
 internal re-designs, work with package maintainers, release, and
 repeat. This release fixes a few more regressions introduced in
@@ -78,7 +109,7 @@ repeat. This release fixes a few more regressions introduced in
    created by `parallel::makeCluster(..., type = "MPI")`. This bug was
    introduced in **future** 1.40.0 [2025-04-10].
 
- * Setting `R_FUTURE_PLAN=multisession` in an Renviron file, or a
+ * Setting `R_FUTURE_PLAN=multisession` in an .Renviron file, or a
    shell startup script, would result in a "fork bomb" when loading
    the **future** package. This happened because the setup of the
    future backend happened eagerly when the **future** package was
@@ -97,7 +128,7 @@ repeat. This release fixes a few more regressions introduced in
 
 # Version 1.67.0 [2025-07-29]
 
-This is the fourth rollout out of several towards a near-future major
+This is the fourth rollout of several towards a near-future major
 release. This has been made possible due to a multi-year effort of
 internal re-designs, work with package maintainers, release, and
 repeat. This release fixes a few more regressions introduced in
@@ -136,8 +167,8 @@ repeat. This release fixes a few more regressions introduced in
 
 ## Bug Fixes
 
- * If a multicore future that was terminated abruptly (e.g. via
-   `tools::pskill()` or by the operating system), then it was not
+ * If a multicore future was terminated abruptly (e.g. via
+   `tools::pskill()` or by the operating system), it was not
    detected as such. Instead it resulted in an unexpected error that
    could not be recovered from. Now it is detected and a
    `FutureInterruptError` is signaled, which can then be handled and
@@ -151,7 +182,7 @@ repeat. This release fixes a few more regressions introduced in
 
 # Version 1.58.0 [2025-06-05]
 
-This is the third rollout out of several towards a near-future major
+This is the third rollout of several towards a near-future major
 release that I am really excited about. This has been made possible
 due to a multi-year effort of internal re-designs, work with package
 maintainers, release, and repeat. This release fixes a few regressions
@@ -168,7 +199,7 @@ tests](https://www.futureverse.org/quality.html).
    the _default_ graphics device in parallel processing, which
    typically ends up plotting to a `Rplots.pdf` file that is local to
    the parallel worker. If that is truly wanted, please open a
-   graphics devices explicitly (e.g. `pdf()` or `png()`) before
+   graphics device explicitly (e.g. `pdf()` or `png()`) before
    plotting. Alternatively, explicitly set R option `device` inside
    the future expression.
 
@@ -180,12 +211,12 @@ tests](https://www.futureverse.org/quality.html).
    `help("makeClusterFuture", package = "future")` to learn about
    potential pitfalls. The plan is to support more corner cases in
    future releases, and when not possible, add more mechanisms for
-   detecting non-supported cases and given an informative error.
+   detecting non-supported cases and give an informative error.
 
 ## Bug Fixes
 
  * Setting `options(warn = 2)` on a parallel worker was ignored -
-   warnings were not escalated to errors on the worker, and was
+   warnings were not escalated to errors on the worker, and were
    instead relayed as-is in the parent R session, unless `options(warn
    = 2)` was also set in the parent. Now `options(warn = 2)` on a
    worker causes warnings to be escalated immediately to errors on the
@@ -197,9 +228,9 @@ tests](https://www.futureverse.org/quality.html).
    instance, `packageStartupMessage`:s, causing them to be displayed
    in sequential and multicore processing.
  
- * When the using `cluster` and `multisession` backends, one could, in
+ * When using cluster and multisession backends, one could, in
    some cases, end up with warnings on "package may not be available
-   when loading" that are produced by `serialize()`. These type of
+   when loading" that are produced by `serialize()`. These types of
    warnings are now suppressed.
  
  * Now the cluster future backend tries even harder to shut down
@@ -217,7 +248,7 @@ tests](https://www.futureverse.org/quality.html).
    before the check.
 
  * The `multicore` backend did not relay `immediateCondition`:s in a
-   near-live fashion, but only when the results of the futures where
+   near-live fashion, but only when the results of the futures were
    collected.
 
  * The `sequential`, `cluster`, `multisession`, and `multicore`
@@ -227,7 +258,7 @@ tests](https://www.futureverse.org/quality.html).
 
 # Version 1.49.0 [2025-05-08]
 
-This is the second rollout out of three-four major updates, which is
+This is the second rollout of three-four major updates, which is
 now possible due to a multi-year effort of internal re-designs, work
 with package maintainers, release, and repeat. This release fixes two
 regressions introduced in **future** 1.40.0 (2025-04-10), despite
@@ -236,7 +267,7 @@ tests](https://www.futureverse.org/quality.html) of the Future API
 that we have built up over the years. On the upside, fixing these
 issues led to a greatly improved static-code analyzer for
 automatically finding global variables in future expressions. Also,
-with this release, we can now move on top releasing modern versions of
+with this release, we can now move on to releasing modern versions of
 future backends **future.callr** and **future.mirai** that support
 interrupting futures and near-live progress updates using the
 **progressr** package. In addition, map-reduce packages such as
@@ -246,8 +277,8 @@ advantage of early exiting on errors via cancellation of futures.
 ## New Features
 
  * `future()` does a better job in identifying global variables in the
-   future expression. This is achieved by the static-code analysis now
-   walks the abstract syntax tree (AST) of the future expression using
+   future expression. This is achieved by the static-code analyzer now
+   walking the abstract syntax tree (AST) of the future expression using
    a strategy that better emulates how the R engine identifies global
    variables at run-time.
 
@@ -256,7 +287,7 @@ advantage of early exiting on errors via cancellation of futures.
    `interrupt()` method introduced in the previous version, which now
    has been removed.
  
- * Now `print()` for `Future` reports also on the current state of the
+ * Now `print()` for `Future` also reports on the current state of the
    future, e.g. 'created', 'running', 'finished', and 'interrupted'.
 
  * Now `print(plan())` reports on the number of created, launched, and
@@ -278,10 +309,10 @@ advantage of early exiting on errors via cancellation of futures.
    at the same time fail to handle such errors. That would result in
    hard-to-understand, obscure errors. In case the future backend does
    not detect this itself, such errors are now caught by the
-   **future** package and resignaled as informative errors of class
+   package and resignaled as informative errors of class
    `FutureLaunchError`. By always handling launch errors, we assure
    that futures failing to launch can always be reset and relaunched
-   again, possible on alternative backend.
+   again, possibly on an alternative backend.
    
  * When a future fails to launch due to issues with the parallel
    worker, querying it with `value()` produces a
@@ -292,7 +323,7 @@ advantage of early exiting on errors via cancellation of futures.
    and the `FutureLaunchError` error never being signaled.
 
  * Shutdown of `cluster` and `multisession` workers could fail if one
-   of the the workers was already terminated, e.g. interrupted or
+   of the workers was already terminated, e.g. interrupted or
    crashed. Now the shutdown of each worker is independent of the
    others, lowering the risk of leaving stray PSOCK workers behind.
 
@@ -315,7 +346,7 @@ advantage of early exiting on errors via cancellation of futures.
 
 # Version 1.40.0 [2025-04-10]
 
-This is the first rollout out of three major updates, which is now
+This is the first rollout of three major updates, which is now
 possible due to a multi-year effort of internal re-designs, work with
 package maintainers, release, and repeat. This release comes with a
 large redesign of how future backends are implemented internally. One
@@ -357,13 +388,13 @@ reverse-dependency checks, **future.tests** checks, and more.
    future that can be relaunched.
 
  * `value()` on containers gained argument `reduce`, which specifies a
-   function for reducing the values, e.g. ``values(fs, reduce =
+   function for reducing the values, e.g. ``value(fs, reduce =
    `+`)``. Optional attribute `init` controls the initial value. Note
    that attributes must not be set on primitive functions. As a
    workaround, use `reduce = structure("+", init = 42)`.
 
  * `value()` on containers gained argument `inorder`, which can be
-   used control whether standard output and conditions are relayed in
+   used to control whether standard output and conditions are relayed in
    order of `x`, or as soon as a future in `x` is resolved. It also
    controls the order of how values are reduced.
 
@@ -392,7 +423,7 @@ reverse-dependency checks, **future.tests** checks, and more.
 
  * Timeout errors triggered by `setTimeLimit()` are now relayed.
  
- * Failures to launch a future is now detected, handled, and relayed
+ * Failures to launch a future are now detected, handled, and relayed
    as an error with details on why it failed.
    
  * Failed workers are automatically detected and relaunched, if
@@ -402,7 +433,7 @@ reverse-dependency checks, **future.tests** checks, and more.
 
  * A future must close any connections or graphical devices it opens,
    and must never close ones that it did not open. Now `value()`
-   produces a warning if such misuse is detected. This may be upgrade
+   produces a warning if such misuse is detected. This may be upgraded
    to an error in future releases. The default behavior can be
    controlled via an R option.  Reverse dependency checks spotted one
    CRAN package, out of 426, that left stray connections behind.
@@ -417,12 +448,12 @@ reverse-dependency checks, **future.tests** checks, and more.
    with care, because there will be further updates in the next few
    release cycles.
 
- * The maximum total size of objects send to and from the worker can
+ * The maximum total size of objects sent to and from the worker can
    now be configured per backend, e.g. `plan(multisession,
    maxSizeOfObjects = 10e6)` will produce an error if the total size
    of globals exceeds 10 MB.  
 
- * Backends `sequential` and `multicore` no longer has a limit on the
+ * Backends `sequential` and `multicore` no longer have a limit on the
    maximum size of globals, i.e. they now default to `maxSizeOfObjects
    = +Inf`. Backends `cluster` and `multisession` also default to
    `maxSizeOfObjects = +Inf`, unless R option `future.globals.maxSize`
@@ -431,14 +462,14 @@ reverse-dependency checks, **future.tests** checks, and more.
 ## Bug Fixes
 
  * Now 'interrupt' conditions are captured during the evaluation of
-   the future, and results in the evaluation being terminated with a
+   the future, and result in the evaluation being terminated with a
    `FutureInterruptError`. Not all backends manage to catch
    interrupts, leading to the parallel R workers to terminate,
    resulting in a regular `FutureError`. Previously, interrupts would
-   result in non-deterministic behavior and errors depending of future
-   backend.
+   result in non-deterministic behavior and errors depending on the
+   future backend.
 
- * Timeout errors triggered by `setTimeLimit()` was likely to render
+ * Timeout errors triggered by `setTimeLimit()` were likely to render
    the future and the corresponding worker invalid.
    
  * Identified and fixed one reason for why `cluster` and
@@ -601,8 +632,8 @@ reverse-dependency checks, **future.tests** checks, and more.
 
  * Error messages that contain a deparsed version of the future
    expression could become very large in cases where the expression
-   comprise expanded, large objects. Now only the first 100 lines
-   of the expression is deparsed.
+   comprises expanded, large objects. Now only the first 100 lines
+   of the expression are deparsed.
    
 ## Deprecated and Defunct
 
@@ -659,7 +690,7 @@ reverse-dependency checks, **future.tests** checks, and more.
 
  * Using the deprecated `plan(multiprocess)` will now trigger a
    deprecation warning _each_ time a `multiprocess` future is created.
-   This means that there could be a lot of warnings produced.  Note
+   This means that a lot of warnings could be produced.  Note
    that `multiprocess` has been deprecated since **future** 1.20.0
    [2020-10-30].  Please use `multisession` (recommended) or
    `multicore` instead.
@@ -726,7 +757,7 @@ reverse-dependency checks, **future.tests** checks, and more.
    trigger a NOTE on "Check: for detritus in the temp directory" and
    "Found the following files/directories: 'Rscript1349cb8aeeba0'
    ...". There were two package tests that explicitly created PSOCK
-   cluster without stopping them. A third test launched multisession
+   clusters without stopping them. A third test launched multisession
    future without resolving it, which prevented the PSOCK worker to
    terminate. This was not detected in R 4.2.0.  It is not a problem
    on macOS and Linux, because there background workers are
@@ -739,7 +770,7 @@ reverse-dependency checks, **future.tests** checks, and more.
 
  * R options and environment variables are now reset on the workers
    after future is resolved as they were after any packages required
-   by the future has been loaded and attached. Previously, they were
+   by the future have been loaded and attached. Previously, they were
    reset to what they were before these were loaded and attached. In
    addition, only pre-existing R options and environment variables are
    reset. Any new ones added are not removed for now, because we do
@@ -747,7 +778,7 @@ reverse-dependency checks, **future.tests** checks, and more.
    been added from loading a package and that are essential for that
    package to work.
 
- * If it was changed while evaluating the future expression, the
+ * If the current working directory was changed while evaluating the future expression, the
    current working directory is now reset when the future has been
    resolved.
 
@@ -756,7 +787,7 @@ reverse-dependency checks, **future.tests** checks, and more.
  * `futureSessionInfo()` gained argument `anonymize`. If TRUE
    (default), host and user names are anonymized.
 
- * `futureSessionInfo()` now also report on the main R session
+ * `futureSessionInfo()` now also reports on the main R session
    details.
 
 ## Bug Fixes
@@ -957,7 +988,7 @@ reverse-dependency checks, **future.tests** checks, and more.
 
 ## Performance
 
- * The overhead of initiating futures have been significantly reduced.
+ * The overhead of initiating futures has been significantly reduced.
    For example, the roundtrip time for `value(future(NULL))` is about
    twice as fast for 'sequential', 'cluster', and 'multisession'
    futures.  For 'multicore' futures the roundtrip speedup is about
@@ -982,7 +1013,7 @@ reverse-dependency checks, **future.tests** checks, and more.
    invalid `xml_document` object if run in parallel, because such
    objects cannot be transferred between R processes.
 
- * In addition to specify which condition classes to be captured and
+ * In addition to specifying which condition classes to be captured and
    relayed, it is now possible to also specify condition classes to be
    ignored.  For example, `conditions = structure("condition", exclude
    = "message")` captures all conditions but message conditions.
@@ -992,7 +1023,7 @@ reverse-dependency checks, **future.tests** checks, and more.
    **parallelly** package trying to infer whether TRUE or FALSE should
    be used based on the `workers` argument.
 
- * Now the the post-mortem analysis report of multicore and cluster
+ * Now the post-mortem analysis report of multicore and cluster
    futures in case their results could not be retrieved include
    information on globals and their sizes, and if some of them are
    non-exportable.  A similar, detailed report is also produced when a
@@ -1001,7 +1032,7 @@ reverse-dependency checks, **future.tests** checks, and more.
 
  * if option `future.fork.multithreading.enable` is FALSE,
    **RcppParallel**, in addition to **OpenMP**, is forced to run with
-   a single threaded whenever running in a forked process
+   a single-threaded whenever running in a forked process
    (='multicore' futures).  This is done by setting environment
    variable `RCPP_PARALLEL_NUM_THREADS` to 1.
 
@@ -1036,7 +1067,7 @@ reverse-dependency checks, **future.tests** checks, and more.
    future.globals = list(a = 42))`.
 
  * Resolving a 'sequential' future without globals would result in
-   internal several `...future.*` objects being written to the calling
+   several internal `...future.*` objects being written to the calling
    environment, which might be the global environment.
 
  * Environment variable `R_FUTURE_PLAN` would propagate down with
@@ -1289,7 +1320,7 @@ reverse-dependency checks, **future.tests** checks, and more.
    `SLURM_JOB_NUM_NODES=1`, then it falls back to using
    `SLURM_CPUS_ON_NODE`, e.g. when using `--ntasks=n`.
 
- * Now `availableCores()` and `availableWorkers()` supports
+ * Now `availableCores()` and `availableWorkers()` support
    LSF/OpenLava.  Specifically, they acknowledge environment variable
    `LSB_DJOB_NUMPROC` and `LSB_HOSTS`, respectively.
 
@@ -1358,8 +1389,8 @@ reverse-dependency checks, **future.tests** checks, and more.
    informative than "Unexpected result (of class 'NULL' !=
    'FutureResult')".  For example, if the **future** package is not
    installed on the worker, then the error message clearly says so.
-   Even, if there is an unexpected result error from a PSOCK cluster
-   future, then the error produced give extra information on node
+   Even if there is an unexpected result error from a PSOCK cluster
+   future, then the error produced gives extra information on the node
    where it failed, e.g. "Unexpected result (of class 'NULL' !=
    'FutureResult') retrieved for ClusterFuture future (label =
    '<none>', expression = '...'): This suggests that the communication
@@ -1368,7 +1399,7 @@ reverse-dependency checks, **future.tests** checks, and more.
    of sync."
 
  * It is now possible to set environment variables on workers before
-   they are launched by `makeClusterPSOCK()` by specify them as as
+   they are launched by `makeClusterPSOCK()` by specifying them as
    `"<name>=<value>"` as part of the `rscript` vector argument,
    e.g. `rscript = c("ABC=123", "DEF='hello world'", "Rscript")`. This
    works because elements in `rscript` that match regular expression
@@ -1491,7 +1522,7 @@ reverse-dependency checks, **future.tests** checks, and more.
 
 ## Beta Features
 
- * Add support for automatically disable multi-threading when using
+ * Add support for automatically disabling multi-threading when using
    'multicore' futures. For now, the default is to allow
    multi-threaded processing but this might change in the future. To
    disable multi-threaded, set option
@@ -1499,7 +1530,7 @@ reverse-dependency checks, **future.tests** checks, and more.
    `R_FUTURE_FORK_MULTITHREADING_ENABLE` to `FALSE`. This requires
    that **RhpcBLASctl** package is installed. Parallelization via
    multi-threaded processing (done in native code by some packages and
-   externally library) while at the same time using forked (aka
+   external libraries) while at the same time using forked (aka
    "multicore") parallel processing is unstable in some cases.  Note
    that this is not only true when using `plan(multicore)` but also
    when using, for instance, `parallel::mclapply()`.  This is in beta
@@ -1559,7 +1590,7 @@ reverse-dependency checks, **future.tests** checks, and more.
 
  * Added 'Troubleshooting' section to `?makeClusterPSOCK` with
    instructions on how to troubleshoot when the setup of local and
-   remote clusters fail.
+   remote clusters fails.
 
 ## Bug Fixes
 
@@ -1576,9 +1607,9 @@ reverse-dependency checks, **future.tests** checks, and more.
  * Package could set `.Random.seed` to NULL, instead of removing it,
    which in turn would produce a warning on "'.Random.seed' is not an
    integer vector but of type 'NULL', so ignored" when the next random
-   number generated.
+   number is generated.
 
- * Now a future assignment to list environments produce more
+ * Now a future assignment to list environments produces more
    informative error messages if attempting to assign to more than one
    element.
    
@@ -1608,7 +1639,7 @@ reverse-dependency checks, **future.tests** checks, and more.
 
 ## New Features
 
- * `values()` now relays `stdout` and signal as soon as possible as
+ * `values()` now relays `stdout` and signals as soon as possible as
    long as the standard output and the conditions are relayed in their
    original order.
 
@@ -1624,7 +1655,7 @@ reverse-dependency checks, **future.tests** checks, and more.
    **future** 1.13.0.  This change caught several RStudio users by
    surprise.  Starting with **future** 1.14.0, an informative
    one-time-per-session warning will be produced when attempts to use
-   'multicore' is made in non-supported environments such as RStudio.
+   'multicore' are made in non-supported environments such as RStudio.
    This warning will also be produced when using 'multiprocess', which
    will fall back to using 'multisession' futures.  The warning can be
    disabled by setting R option `future.supportsMulticore.unstable`,
@@ -1680,7 +1711,7 @@ reverse-dependency checks, **future.tests** checks, and more.
 ## Significant Changes
 
  * Forked processing is now disabled by default when running R via
-   RStudio When disabled, 'multicore' futures fall back to a
+   RStudio. When disabled, 'multicore' futures fall back to
    'sequential' futures.  This update follows from an RStudio
    recommendation against using _forked_ parallel processing from
    within RStudio because it is likely to break the RStudio R session.
@@ -1705,7 +1736,7 @@ reverse-dependency checks, **future.tests** checks, and more.
  * Now `availableCores()` also recognizes PBS environment variable
    `NCPUS`, because the PBSPro scheduler does not set `PBS_NUM_PPN`.
 
- * If, option `future.availableCores.custom` is set to a function,
+ * If option `future.availableCores.custom` is set to a function,
    then `availableCores()` will call that function and interpret its
    value as number of cores.  Analogously, option
    `future.availableWorkers.custom` can be used to specify a hostnames
@@ -1776,7 +1807,7 @@ reverse-dependency checks, **future.tests** checks, and more.
 
  * Validation of L'Ecuyer-CMRG RNG seeds failed in recent R devel.
 
- * With `options(OutDec = ",")`, the default value of several argument
+ * With `options(OutDec = ",")`, the default value of several arguments
    would resolve to `NA_real_` rather than a numeric value resulting
    in errors such as "is.finite(alpha) is not TRUE".
 
@@ -1805,7 +1836,7 @@ reverse-dependency checks, **future.tests** checks, and more.
 
  * The defaults of several arguments of `makeClusterPSOCK()` and
    `makeNodePSOCK()` can now be controlled via environment variables
-   in addition to R options that was supported in the past. An
+   in addition to R options that were supported in the past. An
    advantage of using environment variables is that they will be
    inherited by child processes, also nested ones.
 
@@ -1851,7 +1882,7 @@ reverse-dependency checks, **future.tests** checks, and more.
    evaluation of a future produces an error.  Use `backtrace()` on the
    future to retrieve it.
 
- * Now `futureCall()` defaults to `args = list()` making is easier to
+ * Now `futureCall()` defaults to `args = list()` making it easier to
    call functions that do not take arguments,
    e.g. `futureCall(function() 42)`.
 
@@ -1973,7 +2004,7 @@ reverse-dependency checks, **future.tests** checks, and more.
 
 ## Bug Fixes
 
- * When using forced, nested 'multicore' parallel processing, such as,
+ * When using forced, nested 'multicore' parallel processing, such as
    `plan(list(tweak(multicore, workers = 2), tweak(multicore, workers
    = 2)))`, then the child process would attempt to resolve futures
    owned by the parent process resulting in an error (on 'bad error
@@ -2039,7 +2070,7 @@ reverse-dependency checks, **future.tests** checks, and more.
 
 ## Significant Changes
 
- * Errors produces when evaluating futures are now (re-)signaled on
+ * Errors produced when evaluating futures are now (re-)signaled on
    the master R process as-is with the original content and class
    attributes.
  
@@ -2081,7 +2112,7 @@ reverse-dependency checks, **future.tests** checks, and more.
    `closeAllConnections()` have been called.)
 
  * `futureCall(..., globals = FALSE)` would produce "Error: second
-   argument must be a list", because the explicit arguments where not
+   argument must be a list", because the explicit arguments were not
    exported.  This could also happen when specifying globals by name
    or as a named list.
 
@@ -2136,7 +2167,7 @@ reverse-dependency checks, **future.tests** checks, and more.
    occur while a future is setup, launched, queried, or retrieved.
    They do *not* represent conditions that occur while evaluating the
    future expression.  For those conditions, new classes
-   `FutureEvaluationCondition`, `FutureEvaulationMessage`,
+   `FutureEvaluationCondition`, `FutureEvaluationMessage`,
    `FutureEvaluationWarning`, and `FutureEvaluationError` exists.
 
 ## Documentation
@@ -2164,7 +2195,7 @@ reverse-dependency checks, **future.tests** checks, and more.
 
  * The total size of global variables was overestimated, and
    dramatically so if defined in the global environment and there were
-   are large objects there too.  This would sometimes result in a
+   large objects there too.  This would sometimes result in a
    false error saying that the total size is larger than the allowed
    limit.
 
@@ -2302,7 +2333,7 @@ reverse-dependency checks, **future.tests** checks, and more.
    recursive parallel processes by mistake.  Because 'mc.cores'
    controls _additional_ processes, it was previously set to zero.
    However, since some functions
-   such as `mclapply()` does not support that, it is now set to one instead.   
+   such as `mclapply()` do not support that, it is now set to one instead.   
 
 ## Documentation
 
@@ -2806,7 +2837,7 @@ reverse-dependency checks, **future.tests** checks, and more.
 
  * Add support for early signaling of conditions.  The default is (as
    before) to signal conditions when the value is queried.  In
-   addition, they may be signals as soon as possible, e.g. when
+   addition, they may be signaled as soon as possible, e.g. when
    checking whether a future is resolved or not.
 
  * Signaling of conditions when calling `value()` is now controlled by
@@ -2855,7 +2886,7 @@ reverse-dependency checks, **future.tests** checks, and more.
 
  * ROBUSTNESS: Now `value()` for multicore futures detects if the
    underlying forked R process was terminated before completing and if
-   so generates an informative error messages.
+   so generates an informative error message.
 
 ## Performance
 

@@ -1,6 +1,6 @@
 #' A future represents a value that will be available at some point in the future
 #'
-#' A _future_ is an abstraction for a _value_ that may
+#' A _future_ is an abstraction for a _value_ that may be
 #' available at some point in the future.  A future can either be
 #' `unresolved` or `resolved`, a state which can be checked
 #' with [resolved()].  As long as it is _unresolved_, the
@@ -15,7 +15,7 @@
 #' identified.
 #'
 #' @param substitute If TRUE, argument `expr` is
-#' \code{\link[base]{substitute}()}:ed, otherwise not.
+#' \code{\link[base]{substitute}()}:d, otherwise not.
 #'
 #' @param stdout If TRUE (default), then the standard output is captured,
 #' and re-outputted when `value()` is called.
@@ -29,15 +29,15 @@
 #' behavior of such unhandled standard output depends on the future backend.
 #  backend and the environment from which R runs.
 #' 
-#' @param conditions A character string of conditions classes to be captured
+#' @param conditions A character string of condition classes to be captured
 #' and relayed.  The default is to relay all conditions, including messages
 #' and warnings.  To drop all conditions, use `conditions = character(0)`.
 #' Errors are always relayed.
 #' Attribute `exclude` can be used to ignore specific classes, e.g.
 #' `conditions = structure("condition", exclude = "message")` will capture
-#' all `condition` classes except those that inherits from the `message` class.
+#' all `condition` classes except those that inherit from the `message` class.
 #' Using `conditions = structure(..., drop = TRUE)` causes any captured
-#' conditions to be dropped from the future object as soon as it has
+#' conditions to be dropped from the future object as soon as they have
 #' been relayed, e.g. by `value(f)`. This can help decrease the overall
 #' memory consumed by captured conditions across futures.
 #' Using `conditions = NULL` (not recommended) avoids intercepting conditions,
@@ -49,15 +49,17 @@
 #' For details, see section 'Globals used by future expressions'
 #' in the help for [future()].
 #' 
-#' @param packages (optional) a character vector specifying packages
-#' to be attached in the \R environment evaluating the future.
+#' @param packages (optional) a character vector specifying packages to be
+#' attached in the \R environment evaluating the future, _in addition to
+#' packages required by global variables_ specified or identified via argument
+#' `globals`.
 #'
 #' @param seed (optional) If TRUE, the random seed, that is, the state of the
 #' random number generator (RNG) will be set such that statistically sound
 #' random numbers are produced (also during parallelization).
-#' If FALSE (default), it is assumed that the future expression does neither
-#' need nor use random numbers generation.
-#' To use a fixed random seed, specify a L'Ecuyer-CMRG seed (seven integer)
+#' If FALSE (default), it is assumed that the future expression neither
+#' needs nor uses random number generation.
+#' To use a fixed random seed, specify a L'Ecuyer-CMRG seed (seven integers)
 #' or a regular RNG seed (a single integer).  If the latter, then a
 #' L'Ecuyer-CMRG seed will be automatically created based on the given seed.
 #' Furthermore, if FALSE, then the future will be monitored to make sure it
@@ -137,11 +139,12 @@ Future <- function(expr = NULL, envir = parent.frame(), substitute = TRUE, stdou
       expr <- gp[["expr"]]
     
       ## Record packages?
-      if (length(packages) > 0 || (length(gp[["packages"]]) > 0 && lazy)) {
+      if (length(packages) > 0 || (length(gp[["packages"]]) > 0)) {
         packages <- c(gp[["packages"]], packages)
       }
       
       gp <- NULL
+      attr(globals, "already-done") <- TRUE
     }
   }
   
@@ -228,7 +231,7 @@ Future <- function(expr = NULL, envir = parent.frame(), substitute = TRUE, stdou
   ## Additional named arguments
   for (key in args_names) core[[key]] <- args[[key]]
 
-  ## Backward compatibility: drop field 'envir' in future (> 1.68.0)
+  ## Backward compatibility: drop field 'envir' in future (>= 1.69.0)
   ## 1. civis::CivisFuture() relies on 'envir'
   ## 2. there might be other unknown dependencies out there => option
   if (getOption("future.Future.envir.keep", FALSE)) {
@@ -811,8 +814,6 @@ getFutureContext <- function(future, mc.cores = NULL, local = TRUE, ..., debug =
 
     future.fork.multithreading.enable = getOption("future.fork.multithreading.enable"),
 
-    future.globalenv.onMisuse         = getOption("future.globalenv.onMisuse"),
-
     future.makeExpression.skip        = getOption("future.makeExpression.skip"),
     future.makeExpression.skip.local  = getOption("future.makeExpression.skip.local"),
     
@@ -973,9 +974,9 @@ getExpression.Future <- local({
 #     completed.
 #     Examples:
 #       A future that failed to launch.
-#       An internal error occured while evaluating the future.
-#       An internal error occured after finishing future evaluation, but
-#       before return the results.
+#       An internal error occurred while evaluating the future.
+#       An internal error occurred after finishing future evaluation, but
+#       before returning the results.
 #
 #  6. `interrupted`:
 #     The evaluation of the future has terminated, but was interrupted before

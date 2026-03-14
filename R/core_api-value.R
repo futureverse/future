@@ -3,7 +3,7 @@
 #'
 #' Gets the value of a future or the values of all elements (including futures)
 #' in a container such as a list, an environment, or a list environment.
-#' If one or more futures is unresolved, then this function blocks until all
+#' If one or more futures are unresolved, then this function blocks until all
 #' queried futures are resolved.
 #'
 #' @param future,x A [Future], an environment, a list, or a list environment.
@@ -15,15 +15,15 @@
 #' futures are relayed, otherwise not.
 #' 
 #' @param inorder If TRUE, then standard output and conditions are relayed,
-#' and value reduction, is done in the order the futures occur in `x`, but
+#' and value reduction is done in the order the futures occur in `x`, but
 #' always as soon as possible. This is achieved by buffering the details
 #' until they can be released. By setting `inorder = FALSE`, no buffering
 #' takes place and everything is relayed and reduced as soon as a new future
-#' is resolved. Regardlessly, the values are always returned in the same
+#' is resolved. Regardless, the values are always returned in the same
 #' order as `x`.
 #'
 #' @param drop If TRUE, resolved futures are minimized in size and invalidated
-#' as soon the as their values have been collected and any output and
+#' as soon as their values have been collected and any output and
 #' conditions have been relayed.
 #' Combining `drop = TRUE` with `inorder = FALSE` reduces the memory use
 #' sooner, especially avoiding the risk of holding on to future values until
@@ -620,7 +620,7 @@ value.list <- function(x, idxs = NULL, recursive = 0, reduce = NULL, stdout = TR
   while (length(remaining) > 0) {
     if (debug) mdebug("Number of remaining objects: ", length(remaining))
     for (ii in remaining) {
-      mdebugf("checking value #%d:", ii)
+      if (debug) mdebugf("checking value #%d:", ii)
       obj <- x[[ii]]
 
       if (is.atomic(obj)) {
@@ -673,7 +673,7 @@ value.list <- function(x, idxs = NULL, recursive = 0, reduce = NULL, stdout = TR
           value <- local({
             if (debug) {
               mdebugf_push("value(<%s>, ...) ...", class(obj)[1])
-              mdebugf_pop()
+              on.exit(mdebugf_pop())
             }
             value <- value(obj, stdout = !inorder, signal = !inorder, drop = drop)
             if (debug) mdebugf("value: <%s>", class(value)[1])
@@ -691,7 +691,7 @@ value.list <- function(x, idxs = NULL, recursive = 0, reduce = NULL, stdout = TR
               local({
                 if (debug) {
                   mdebugf_push("cancel(y, interrupt = %s) ...", interrupt)
-                  mdebug_pop()
+                  on.exit(mdebug_pop())
                 }
                 cancel(y, interrupt = interrupt)
               })
@@ -788,7 +788,6 @@ value.list <- function(x, idxs = NULL, recursive = 0, reduce = NULL, stdout = TR
       remaining <- setdiff(remaining, ii)
       if (debug) mdebugf("length: %d (resolved future %s)", length(remaining), ii)
       stop_if_not(!anyNA(remaining))
-      mdebugf_pop()
     } # for (ii ...)
 
     ## Wait a bit before checking again

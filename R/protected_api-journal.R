@@ -144,7 +144,6 @@ journal.FutureJournal <- function(x, baseline = NULL, ...) {
 journal.list <- function(x, baseline = TRUE, ...) {
   ## Reset relative time zero to the first observed timestamp?
   if (isTRUE(baseline)) {
-    stop_if_not(baseline >= 1L, baseline <= length(x))
     x <- lapply(x, FUN = journal, ...)
     start <- lapply(x, FUN = function(x) min(x[["start"]], na.rm = TRUE))
     start <- Reduce(c, start)
@@ -270,7 +269,7 @@ makeFutureJournal <- function(x, event = "create", category = "other", parent = 
     inherits(x, "Future"),
     is.null(x[[".journal"]]),
     length(event) == 1L, is.character(event), !is.na(event),
-    length(category) == 1L, is.character(category), !is.na(event),
+    length(category) == 1L, is.character(category), !is.na(category),
     length(parent) == 1L, is.character(parent),
     length(start) == 1L, inherits(start, "POSIXct"),
     length(stop) == 1L, inherits(stop, "POSIXct")
@@ -318,7 +317,7 @@ appendToFutureJournal <- function(x, event, category = "other", parent = NA_char
   stop_if_not(
     inherits(x, "Future"),
     length(event) == 1L, is.character(event), !is.na(event),
-    length(category) == 1L, is.character(category), !is.na(event),
+    length(category) == 1L, is.character(category), !is.na(category),
     length(parent) == 1L, is.character(parent),
     length(start) == 1L, inherits(start, "POSIXct"),
     length(stop) == 1L, inherits(stop, "POSIXct")

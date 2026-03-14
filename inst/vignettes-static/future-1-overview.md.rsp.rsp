@@ -2,7 +2,7 @@
   This *.md.rsp.rsp file is used to generate the *.md.rsp that
   is the copied to vignettes/.  The latter contains no dynamic
   code.   The reason for this is that this RSP file uses
-  multisession futures and for some unknown reason those gives
+  multisession futures and for some unknown reason those give
   errors during R CMD build on Windows.  Everywhere else they
   work including when building this RSP manually.  /HB 2016-04-12
  ---------------------------------------------------------------------%>
@@ -43,7 +43,25 @@ file found under inst/vignettes-static/ of the source package.
 --------------------------------------------------------------------"%>
 <%
 R.utils::use("R.utils")
+withCapture <- function(expr, ..., envir = parent.frame()) {
+  expr <- substitute(expr)
+  res <- withCallingHandlers({
+    do.call(R.utils::withCapture, args = list(expr, ..., envir = envir))
+  }, warning = function(w) {
+    cat(sprintf("Warning in %s: %s\n", deparse(conditionCall(w)), conditionMessage(w)))
+    invokeRestart("muffleWarning")
+  }, message = function(m) {
+    cat(conditionMessage(m))
+    invokeRestart("muffleMessage")
+  })
+  res
+}
+
+## Avoid warnings on 'Careful, you are setting up 2 localhost parallel workers ...'
+Sys.setenv("R_PARALLELLY_MAXWORKERS_LOCALHOST" = "+Inf")
+Sys.setenv("R_FUTURE_CONNECTIONS_ONMISUSE" = "ignore")
 use("future")
+
 `%<-%` <- future::`%<-%`
 options("withCapture/newline" = FALSE)
 options(mc.cores = 2L)
@@ -100,7 +118,7 @@ Hello world!
 ```
 
 With asynchronous futures, the current/main R process does _not_ block, which means it is available for further processing while the futures are being resolved
-in separate processes running in the background.  In other words, futures provide a simple but yet powerful construct for parallel and / or distributed processing in R.
+in separate processes that run in the background.  In other words, futures provide a simple but yet powerful construct for parallel and distributed processing in R.
 
 
 Now, if you cannot be bothered to read all the nitty-gritty details about futures, but just want to try them out, then skip to the end to play with the Mandelbrot demo using both parallel and non-parallel evaluation.
@@ -144,7 +162,7 @@ To keep it simple, we will use the implicit style in the rest of this document, 
 
 ## Controlling How Futures are Resolved
 
-The **future** package comes with built-in future backends that leverage the **parallel** package part of R itself. In addition to these backends, others exist in package extensions, e.g. **[future.callr]**, **[future.mirai]**, and **[future.batchtools]**. Below is an overview of the most common backends that you as an end-user can chose from.
+The **future** package comes with built-in future backends that leverage the **parallel** package part of R itself. In addition to these backends, others exist in package extensions, e.g. **[future.callr]**, **[future.mirai]**, and **[future.batchtools]**. Below is an overview of the most common backends that you as an end-user can choose from.
 
 | Package / Backend             | Features    | How futures are evaluated
 |:----------------|:------------|:-----------------------------------------------------
@@ -152,7 +170,7 @@ The **future** package comes with built-in future backends that leverage the **p
 | **future**<br> `multisession`  | 📶<br>♻️<br>        | parallelly via background R sessions on current machine
 | **future**<br> `cluster`       | 📶<br>♻️*<br>       | parallelly in external R sessions on current, local, and/or remote machines
 | **future**<br> `multicore`     | 📶<br>♻️<br> | (not recommended) parallelly via forked R processes on current machine; not with GUIs like RStudio; not on Windows
-| **[future.callr]**<br> `callr`                    | 📶<br>♻️<br> | parallelly via transient **[callr]** background R sessions on current machine; all memory is returned when as each future is resolved
+| **[future.callr]**<br> `callr`                    | 📶<br>♻️<br> | parallelly via transient **[callr]** background R sessions on current machine; all memory is returned as each future is resolved
 | **[future.mirai]**<br> `mirai_multisession`       | 📶<br>♻️<br> | parallelly via **[mirai]** background R sessions on current machine; low latency
 | **[future.mirai]**<br> `mirai_cluster`            |♻️<br> | parallelly via **[mirai]** daemons running locally or remotely
 | **[future.batchtools]**<br> `batchtools_lsf`<br>`batchtools_openlava`<br>`batchtools_sge`<br>`batchtools_slurm`<br>`batchtools_torque` | 📶(soon)<br> ♻️<br> | parallelly on HPC job schedulers (Load Sharing Facility [LSF], OpenLava, TORQUE/PBS, Son/Sun/Oracle/Univa Grid Engine [SGE], Slurm) via **[batchtools]**; for long-running tasks; high latency |
@@ -168,7 +186,7 @@ By default, future expressions are evaluated synchronously in the current R sess
 
 Before going through each of the different future backends, it is probably helpful to clarify the objectives of the Future API (as defined by the **future** package).  When programming with futures, it should not matter what future backend is used for executing code.  This is because we cannot really know what computational resources the user has access to, so the choice of parallel backend should be in the hands of the user and not the developer. In other words, the code should not make any assumptions on where and when futures are resolved.
 
-One of the designs of the Future API was to encapsulate any differences such that all types of futures will appear to work the same.  This despite expressions may be evaluated locally in the current R session or across the world in remote R sessions.  Another obvious advantage of having a consistent API and behavior among different types of futures is that it helps while prototyping.  Typically one would use sequential evaluation while building up a script and, later, when the script is fully developed, one may turn on asynchronous processing.
+One of the designs of the Future API was to encapsulate any differences such that all types of futures will appear to work the same.  This is despite the fact that expressions may be evaluated locally in the current R session or across the world in remote R sessions.  Another obvious advantage of having a consistent API and behavior among different types of futures is that it helps while prototyping.  Typically one would use sequential evaluation while building up a script and, later, when the script is fully developed, one may turn on asynchronous processing.
 
 Because of this, the defaults of the different backends are such that the results and side effects of evaluating a future expression are as similar as possible.  More specifically, the following is true for all futures:
 
@@ -235,7 +253,7 @@ stopifnot(b == pid)
 
 ### Asynchronous Futures
 
-Next, we will turn to asynchronous futures, which are futures that are resolved in the background.  By design, these futures are non-blocking, that is, after being created the calling process is available for other tasks including creating additional futures.  It is only when the calling process tries to access the value of a future that is not yet resolved, or trying to create another asynchronous future when all available R processes are busy serving other futures, that it blocks.
+Next, we will turn to asynchronous futures, which are futures that are resolved in the background.  By design, these futures are non-blocking, that is, after being created the calling process is available for other tasks including creating additional futures.  It is only when the calling process tries to access the value of a future that is not yet resolved, or tries to create another asynchronous future when all available R processes are busy serving other futures, that it blocks.
 
 
 #### Multisession Futures
@@ -268,12 +286,12 @@ availableCores()
 })%>
 ```
 
-This particular result tells us that the `mc.cores` option was set such that we are allowed to use in total two (2) processes including the main process.  In other words, with these settings, there will be two (2) background processes serving the multisession futures.  The `availableCores()` is also agile to different options and system environment variables.  For instance, if compute cluster schedulers are used (e.g. TORQUE/PBS and Slurm), they set specific environment variable specifying the number of cores that was allotted to any given job; `availableCores()` acknowledges these as well.  If nothing else is specified, all available cores on the machine will be utilized, cf. `parallel::detectCores()`.  For more details, please see `help("availableCores", package = "parallelly")`.
+This particular result tells us that the `mc.cores` option was set such that we are allowed to use in total two (2) processes including the main process.  In other words, with these settings, there will be two (2) background processes serving the multisession futures.  The `availableCores()` is also agile to different options and system environment variables.  For instance, if compute cluster schedulers are used (e.g. TORQUE/PBS and Slurm), they set specific environment variables specifying the number of cores that was allotted to any given job; `availableCores()` acknowledges these as well.  If nothing else is specified, all available cores on the machine will be utilized, cf. `parallel::detectCores()`.  For more details, please see `help("availableCores", package = "parallelly")`.
 
 
 #### Multicore Futures
 
-On operating systems where R supports _forking_ of processes, which is basically all operating system except Windows, an alternative to spawning R sessions in the background is to fork the existing R process.  To use multicore futures, when supported, specify:
+On operating systems where R supports _forking_ of processes, which is basically all operating systems except Windows, an alternative to spawning R sessions in the background is to fork the existing R process.  To use multicore futures, when supported, specify:
 
 ```r
 plan(multicore)
@@ -300,7 +318,7 @@ Just like for multisession futures, the maximum number of parallel processes run
 
 Forking an R process can be faster than working with a separate R session running in the background.  One reason is that the overhead of exporting large globals to the background session can be greater than when forking, and therefore shared memory, is used.  On the other hand, the shared memory is _read only_, meaning any modifications to shared objects by one of the forked processes ("workers") will cause a copy by the operating system.  This can also happen when the R garbage collector runs in one of the forked processes.
 
-On the other hand, process forking is also considered unstable in some R environments.  For instance, when running R from within RStudio process forking may resulting in crashed R sessions.  Because of this, the **future** package disables multicore futures by default when running from RStudio.  See `help("supportsMulticore")` for more details.
+On the other hand, process forking is also considered unstable in some R environments.  For instance, when running R from within RStudio process forking may result in crashed R sessions.  Because of this, the **future** package disables multicore futures by default when running from RStudio.  See `help("supportsMulticore")` for more details.
 
 
 #### Cluster Futures
@@ -386,7 +404,7 @@ However, using different backends for individual futures has the drawback of har
 
 ### Nested Futures and Evaluation Topologies
 
-This far we have discussed what can be referred to as "flat topology" of futures, that is, all futures are created in and assigned to the same environment.  However, there is nothing stopping us from using a "nested topology" of futures, where one set of futures may, in turn, create another set of futures internally and so on.
+Thus far we have discussed what can be referred to as "flat topology" of futures, that is, all futures are created in and assigned to the same environment.  However, there is nothing stopping us from using a "nested topology" of futures, where one set of futures may, in turn, create another set of futures internally and so on.
 
 For instance, here is an example of two "top" futures (`a` and `b`) that uses multisession evaluation and where the second future (`b`) in turn uses two internal futures:
 
@@ -400,13 +418,13 @@ b
 })%>
 ```
 
-By inspection the process IDs, we see that there are in total three different processes involved for resolving the futures.  There is the main R process
+By inspecting the process IDs, we see that there are in total three different processes involved for resolving the futures.  There is the main R process
 (pid <%= pid %>),
 and there are the two processes used by `a`
 (pid <%= a %>)
 and `b`
 (pid <%= b[1] %>).
-However, the two futures (`b1` and `b2`) that is nested by `b` are evaluated by the same R process as `b`.  This is because nested futures use sequential evaluation unless otherwise specified.  There are a few reasons for this, but the main reason is that it protects us from spawning off a large number of background processes by mistake, e.g. via recursive calls.
+However, the two futures (`b1` and `b2`) that are nested by `b` are evaluated by the same R process as `b`.  This is because nested futures use sequential evaluation unless otherwise specified.  There are a few reasons for this, but the main reason is that it protects us from spawning off a large number of background processes by mistake, e.g. via recursive calls.
 
 <%
 ## Sanity checks
@@ -420,7 +438,7 @@ if (availableCores() == 1L) {
 %>
 
 
-To specify a different type of _evaluation topology_, other than the first level of futures being resolved by multisession evaluation and the second level by sequential evaluation, we can provide a sequence of nested backend by specifying a list to `plan()`.  To clarify, first, the same sequence of backends as used above can be explicitly specified as:
+To specify a different type of _evaluation topology_, other than the first level of futures being resolved by multisession evaluation and the second level by sequential evaluation, we can provide a sequence of nested backends by specifying a list to `plan()`.  To clarify, first, the same sequence of backends as used above can be explicitly specified as:
 
 ```r
 plan(list(multisession, sequential))
@@ -549,7 +567,7 @@ a %<-% {
 cat("Waiting for 'a' to be resolved ...\n")
 f <- futureOf(a)
 count <- 1
-while(!resolved(f)) {
+while (!resolved(f)) {
   cat(count, "\n")
   Sys.sleep(0.2)
   count <- count + 1
@@ -581,7 +599,7 @@ Future 'a' ...
 Error in log(b) : non-numeric argument to mathematical function
 ```
 
-The error is thrown each time the value is requested, that is, if we try to get the value again will generate the same error (and output):
+The error is thrown each time the value is requested, that is, if we try to get the value again, it will generate the same error (and output):
 
 ```r
 > a
@@ -625,7 +643,7 @@ failed to locate the corresponding object in the relevant environments: 'a'
 ```
 
 ---%>
-Moreover, if a global is defined in a package, then that global is not exported.  Instead, it is made sure that the corresponding package is attached when the future is evaluated.  This not only better reflects the setup of the main R session, but it also minimizes the need for exporting globals, which saves not only memory but also time and bandwidth, especially when using remote compute nodes.
+Moreover, if a global is defined in a package, then that global is not exported.  Instead, it ensures that the corresponding package is attached when the future is evaluated.  This not only better reflects the setup of the main R session, but it also minimizes the need for exporting globals, which saves not only memory but also time and bandwidth, especially when using remote compute nodes.
 <%---
 As mentioned previously, for consistency across future backends, all types of futures collect and validate globals when created. This takes place before the future is sent to the future backend, meaning this validation takes place also for sequential and multicore (forks the calling process "as-is") futures where it would technically not be needed. This done in order for a future be send to any type of backend at any time. It also helps to assure that futures are resolved identically regardless of future backend.
 ---%>
@@ -640,11 +658,11 @@ There is one limitation with implicit futures that does not exist for explicit o
 ```r
 <%=withCapture({
 plan(multisession, workers = 2)
-f <- list()
+fs <- list()
 for (ii in 1:3) {
-  f[[ii]] <- future({ Sys.getpid() })
+  fs[[ii]] <- future({ Sys.getpid() })
 }
-v <- lapply(f, FUN = value)
+v <- value(fs)
 str(v)
 })%>
 ```
@@ -686,7 +704,7 @@ As previously, `as.list(v)` blocks until all futures are resolved.
 
 ## Demos
 
-To see a live illustration how different types of futures are evaluated, run the Mandelbrot demo of this package.  First, try with the sequential evaluation,
+To see a live illustration of how different types of futures are evaluated, run the Mandelbrot demo of this package.  First, try with the sequential evaluation,
 
 ```r
 library(future)

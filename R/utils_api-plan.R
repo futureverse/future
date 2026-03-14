@@ -259,7 +259,7 @@ all.equal.FutureStrategyList <- function(target, current, ..., debug = FALSE) {
 #' Plan how to resolve a future
 #'
 #' This function allows _the user_ to plan the future, more specifically,
-#' it specifies how [future()]:s are resolved,
+#' it specifies how [future()]s are resolved,
 #' e.g. sequentially or in parallel.
 #'
 #' @param strategy The type of future backend (function or name of one) to use
@@ -284,7 +284,7 @@ all.equal.FutureStrategyList <- function(target, current, ..., debug = FALSE) {
 #' @param .init (internal) Used to initiate workers.
 #'
 #' @return
-#' `plan()` returns a the previous plan invisibly if a new future backend
+#' `plan()` returns the previous plan invisibly if a new future backend
 #' is chosen, otherwise it returns the current one visibly.
 #'
 #' @example incl/plan.R
@@ -292,7 +292,7 @@ all.equal.FutureStrategyList <- function(target, current, ..., debug = FALSE) {
 #' @details
 #' The default backend is [`sequential`], but another one can be set
 #' using `plan()`, e.g. `plan(multisession)` will launch parallel workers
-#' running in the background, which then will be used to resolve future.
+#' running in the background, which then will be used to resolve futures.
 #' To shut down background workers launched this way, call `plan(sequential)`.
 #'
 #'
@@ -334,27 +334,27 @@ all.equal.FutureStrategyList <- function(target, current, ..., debug = FALSE) {
 #'
 #' \describe{
 #'  \item{`callr`:}{
-#'   Similar to `multisession`, this resolved futures in parallel in
+#'   Similar to `multisession`, this resolves futures in parallel in
 #'   background \R sessions on the local machine via the \pkg{callr}
 #'   package, e.g. `plan(future.callr::callr)` and
 #'   `plan(future.callr::callr, workers = 2)`. The difference is that
 #'   each future is processed in a fresh parallel R worker, which is
 #'   automatically shut down as soon as the future is resolved.
-#'   This can help decrease the overall memory. Moreover, contrary
+#'   This can help decrease the overall memory usage. Moreover, contrary
 #'   to `multisession`, `callr` does not rely on socket connections,
 #'   which means it is not limited by the number of connections that
 #'   \R can have open at any time.
 #'  }
 #' 
 #'  \item{`mirai_multisession`:}{
-#'   Similar to `multisession`, this resolved futures in parallel in
+#'   Similar to `multisession`, this resolves futures in parallel in
 #'   background \R sessions on the local machine via the \pkg{mirai}
 #'   package, e.g. `plan(future.mirai::mirai_multisession)` and
 #'   `plan(future.mirai::mirai_multisession, workers = 2)`.
 #'  }
 #' 
 #'  \item{`mirai_cluster`:}{
-#'   Similar to `cluster`, this resolved futures in parallel via
+#'   Similar to `cluster`, this resolves futures in parallel via
 #'   pre-configured \R \pkg{mirai} daemon processes, e.g.
 #'   `plan(future.mirai::mirai_cluster)`.
 #'  }
@@ -367,27 +367,27 @@ all.equal.FutureStrategyList <- function(target, current, ..., debug = FALSE) {
 #'
 #' \describe{
 #'  \item{`batchtools_slurm`:}{
-#'   The backend resolved futures via the Slurm scheduler, e.g.
+#'   The backend resolves futures via the Slurm scheduler, e.g.
 #'   `plan(future.batchtools::batchtools_slurm)`.
 #'  }
 #'
 #'  \item{`batchtools_torque`:}{
-#'   The backend resolved futures via the TORQUE/PBS scheduler, e.g.
+#'   The backend resolves futures via the TORQUE/PBS scheduler, e.g.
 #'   `plan(future.batchtools::batchtools_torque)`.
 #'  }
 #'
 #'  \item{`batchtools_sge`:}{
-#'   The backend resolved futures via the Grid Engine (SGE, AGE) scheduler,
+#'   The backend resolves futures via the Grid Engine (SGE, AGE) scheduler,
 #'   e.g. `plan(future.batchtools::batchtools_sge)`.
 #'  }
 #'
 #'  \item{`batchtools_lsf`:}{
-#'   The backend resolved futures via the Load Sharing Facility (LSF)
+#'   The backend resolves futures via the Load Sharing Facility (LSF)
 #'   scheduler, e.g. `plan(future.batchtools::batchtools_lsf)`.
 #'  }
 #'
 #'  \item{`batchtools_openlava`:}{
-#'   The backend resolved futures via the OpenLava scheduler, e.g.
+#'   The backend resolves futures via the OpenLava scheduler, e.g.
 #'  `plan(future.batchtools::batchtools_openlava)`.
 #'  }
 #' }
@@ -416,7 +416,7 @@ all.equal.FutureStrategyList <- function(target, current, ..., debug = FALSE) {
 #' }
 #'
 #' This is important because the end-user might have already set the future
-#' strategy elsewhere for other purposes and will most likely not known that
+#' strategy elsewhere for other purposes and will most likely not know that
 #' calling your function will break their setup.
 #' _Remember, your package and its functions might be used in a greater
 #' context where multiple packages and functions are involved and those might
@@ -861,7 +861,7 @@ print.FutureStrategyList <- function(x, ...) {
 #' @export
 #'
 #' @details
-#' This function will resolve any active futures that is currently
+#' This function will resolve any active futures that are currently
 #' being evaluated on background workers.
 #'
 #' @examples

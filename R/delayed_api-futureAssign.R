@@ -4,8 +4,8 @@
 #' `futureAssign("x", value)` create a [Future] that evaluates the expression
 #' (`value`) and binds it to variable `x` (as a
 #' \link[base:delayedAssign]{promise}). The expression is evaluated in parallel
-#' in the background. Later on, when `x` is first queried, the value of future
-#' is automatically retrieved as it were a regular variable and `x` is
+#' in the background. Later on, when `x` is first queried, the value of the future
+#' is automatically retrieved as if it were a regular variable and `x` is
 #' materialized as a regular value.
 #'
 #' @inheritParams Future-class
@@ -38,7 +38,7 @@
 #'
 #' The future assignment construct `x %<-% value` is not a formal assignment
 #' per se, but a binary infix operator on objects `x` and expression `value`.
-#' However, by using non-standard evaluation, this constructs can emulate an
+#' However, by using non-standard evaluation, this construct can emulate an
 #' assignment operator similar to `x <- value`. Due to \R's precedence rules
 #' of operators, future expressions often need to be explicitly bracketed,
 #' e.g. `x %<-% { a + b }`.
@@ -54,11 +54,11 @@
 # '`%<argument name>%` infix operators that are appended after the future
 #' assignment expression.  For example, `x %<-% { rnorm(10) } %seed% TRUE`
 #' corresponds to `futureAssign("x", { rnorm(10) }, seed = TRUE)`. Here are
-#' a several examples.
+#' several examples.
 #'
 #' To explicitly specify variables and functions that a future assignment
 #' should use, use `%globals%`. To explicitly specify which packages need
-#' to be attached for the evaluate to success, use `%packages%`. For
+#' to be attached for the evaluation to succeed, use `%packages%`. For
 #' example,
 #'
 #' ```
@@ -111,7 +111,7 @@
 #' [1] 55
 #' ```
 #'
-#' To create a future without launching in such that it will only be
+#' To create a future without launching it such that it will only be
 #' processed if the value is really needed, use `%lazy%`, e.g.
 #'
 #' ```
@@ -127,9 +127,9 @@
 #'
 #' @section Error handling:
 #'
-#' Because future assignments are promises, errors produced by the the
+#' Because future assignments are promises, errors produced by the
 #' future expression will not be signaled until the value of the future is
-#' requested. For example, if you create a future assignment that produce
+#' requested. For example, if you create a future assignment that produces
 #' an error, you will not be affected by the error until you "touch" the
 #' future-assignment variable. For example, 
 #'
@@ -145,7 +145,7 @@
 #'
 #' Futures are evaluated on the future backend that the user has specified
 #' by [plan()]. With regular futures, we can temporarily use another future
-#' backend by wrapping our code in `with(plan(...), { ... }]`, or temporarily
+#' backend by wrapping our code in `with(plan(...), { ... })`, or temporarily
 #' inside a function using `with(plan(...), local = TRUE)`. To achieve the
 #' same for a specific future assignment, use `%plan%`, e.g.
 #'
