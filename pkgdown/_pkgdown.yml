@@ -11,8 +11,13 @@ home:
 
 navbar:
   structure:
+    left: [intro, reference, news]
     right: [search, futureverse, pkgs, cran, github, lightswitch]
   components:
+
+    news:
+      text: News
+      href: news/index.html
     futureverse:
       icon: fas fa-home
       href: https://www.futureverse.org/

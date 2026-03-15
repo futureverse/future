@@ -10,6 +10,13 @@ names(urls) <- pkgs
 file <- file.path(c(".", ".."), "DESCRIPTION")
 file <- file[utils::file_test("-f", file)]
 pkg <- read.dcf(file)[,"Package"]
+
+## Customized menus
+if (utils::file_test("-f", "_pkgdown.menus.yml")) {
+  menus <- yaml::read_yaml("_pkgdown.menus.yml")
+} else {
+  menus <- NULL
+}
 %>
 url: https://<%= pkg %>.futureverse.org
 
@@ -24,8 +31,17 @@ home:
 
 navbar:
   structure:
+    left: [<%= paste(c("intro", "reference", names(menus), "news"), collapse = ", ") %>]
     right: [search, futureverse, pkgs, cran, github, lightswitch]
   components:
+<%= if (length(menus) > 0) {
+   bfr <- yaml::as.yaml(menus)
+   bfr <- strsplit(bfr, split = "\n")[[1]]
+   paste0("    ", bfr, "\n")
+} %>
+    news:
+      text: News
+      href: news/index.html
     futureverse:
       icon: fas fa-home
       href: https://www.futureverse.org/
