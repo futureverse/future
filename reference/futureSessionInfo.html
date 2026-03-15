@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.70.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.70.0-9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -22,20 +22,7 @@
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto"><li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
-<li class="nav-item dropdown">
-  <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
-  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/future-1-overview.html">A Future for R: A Comprehensive Overview</a></li>
-    <li><a class="dropdown-item" href="../articles/future-2-output.html">A Future for R: Text and Message Output</a></li>
-    <li><a class="dropdown-item" href="../articles/future-2b-backend.html">A Future for R: Available Future Backends</a></li>
-    <li><a class="dropdown-item" href="../articles/future-3-topologies.html">A Future for R: Future Topologies</a></li>
-    <li><a class="dropdown-item" href="../articles/future-4-issues.html">A Future for R: Common Issues with Solutions</a></li>
-    <li><a class="dropdown-item" href="../articles/future-4-non-exportable-objects.html">A Future for R: Non-Exportable Objects</a></li>
-    <li><a class="dropdown-item" href="../articles/future-5-startup.html">A Future for R: Controlling Default Future Strategy</a></li>
-    <li><a class="dropdown-item" href="../articles/future-6-future-api-backend-specification.html">A Future for R: Future API Backend Specification</a></li>
-    <li><a class="dropdown-item" href="../articles/future-7-for-package-developers.html">A Future for R: Best Practices for Package Developers</a></li>
-    <li><a class="dropdown-item" href="../articles/future-8-how-future-is-validated.html">A Future for R: How the Future Framework is Validated</a></li>
-  </ul></li>
-<li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
+<li class="nav-item"><a class="nav-link" href="../news/index.html">News</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
 <li class="nav-item"><a class="external-link nav-link" href="https://www.futureverse.org/"><span class="fa fas fa-home"></span></a></li>
@@ -110,7 +97,7 @@ and validate their information.</p></dd>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="plan.html">plan</a></span><span class="op">(</span><span class="va">multisession</span>, workers <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">futureSessionInfo</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> *** Package versions</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> future 1.70.0, parallelly 1.46.1.9033, parallel 4.5.3, globals 0.19.1, listenv 0.10.1</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> future 1.70.0.9000, parallelly 1.46.1.9033, parallel 4.5.3, globals 0.19.1, listenv 0.10.1</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> *** Allocations</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> availableCores():</span>
@@ -150,15 +137,15 @@ and validate their information.</p></dd>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> *** Basic tests</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Main R session details:</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>       pid     r sysname           release</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 1 3179133 4.5.3   Linux 6.17.0-14-generic</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 1 3661676 4.5.3   Linux 6.17.0-14-generic</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>                                                            version nodename</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 1 #14~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Thu Jan 15 15:52:10 UTC 2  host001</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   machine   login    user effective_user</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 1  x86_64 user001 user001        user001</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Worker R session details:</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   worker     pid     r sysname           release</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 1      1 3180012 4.5.3   Linux 6.17.0-14-generic</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 2      2 3180013 4.5.3   Linux 6.17.0-14-generic</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 1      1 3662768 4.5.3   Linux 6.17.0-14-generic</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2      2 3662769 4.5.3   Linux 6.17.0-14-generic</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>                                                            version nodename</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 1 #14~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Thu Jan 15 15:52:10 UTC 2  host001</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 2 #14~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Thu Jan 15 15:52:10 UTC 2  host001</span>

@@ -1,6 +1,12 @@
 # Changelog
 
+## Version (development version)
+
+- …
+
 ## Version 1.70.0
+
+CRAN release: 2026-03-14
 
 ### Significant Changes
 

@@ -42,9 +42,9 @@ res <- tryCatch({
 #> [[1]]
 #> base::tryCatch(base::withCallingHandlers({
 #>     NULL
-#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpleA486/callr-fun-3081dbbe39354"), 
+#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpxYPZU3/callr-fun-37de824aed50d2"), 
 #>         base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
-#>         quote = TRUE), file = "/tmp/hb/RtmpleA486/callr-res-3081db45849e48", 
+#>         quote = TRUE), file = "/tmp/hb/RtmpxYPZU3/callr-res-37de8242ec0394", 
 #>         compress = FALSE)
 #>     base::flush(base::stdout())
 #>     base::flush(base::stderr())
@@ -70,7 +70,7 @@ res <- tryCatch({
 #>         if (!base::is.na(cut)) {
 #>             e2$trace <- e2$trace[-(1:cut), ]
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpleA486/callr-res-3081db45849e48", 
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpxYPZU3/callr-res-37de8242ec0394", 
 #>             ".error"))
 #>     }
 #> }, interrupt = function(e) {
@@ -93,7 +93,7 @@ res <- tryCatch({
 #>         if (!base::is.na(cut)) {
 #>             e2$trace <- e2$trace[-(1:cut), ]
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpleA486/callr-res-3081db45849e48", 
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpxYPZU3/callr-res-37de8242ec0394", 
 #>             ".error"))
 #>     }
 #> }, callr_message = function(e) {
@@ -138,9 +138,9 @@ res <- tryCatch({
 #> [[8]]
 #> base::withCallingHandlers({
 #>     NULL
-#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpleA486/callr-fun-3081dbbe39354"), 
+#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpxYPZU3/callr-fun-37de824aed50d2"), 
 #>         base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
-#>         quote = TRUE), file = "/tmp/hb/RtmpleA486/callr-res-3081db45849e48", 
+#>         quote = TRUE), file = "/tmp/hb/RtmpxYPZU3/callr-res-37de8242ec0394", 
 #>         compress = FALSE)
 #>     base::flush(base::stdout())
 #>     base::flush(base::stderr())
@@ -166,7 +166,7 @@ res <- tryCatch({
 #>         if (!base::is.na(cut)) {
 #>             e2$trace <- e2$trace[-(1:cut), ]
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpleA486/callr-res-3081db45849e48", 
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpxYPZU3/callr-res-37de8242ec0394", 
 #>             ".error"))
 #>     }
 #> }, interrupt = function(e) {
@@ -189,7 +189,7 @@ res <- tryCatch({
 #>         if (!base::is.na(cut)) {
 #>             e2$trace <- e2$trace[-(1:cut), ]
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpleA486/callr-res-3081db45849e48", 
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpxYPZU3/callr-res-37de8242ec0394", 
 #>             ".error"))
 #>     }
 #> }, callr_message = function(e) {
@@ -197,13 +197,13 @@ res <- tryCatch({
 #> })
 #> 
 #> [[9]]
-#> base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpleA486/callr-fun-3081dbbe39354"), 
+#> base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpxYPZU3/callr-fun-37de824aed50d2"), 
 #>     base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
-#>     quote = TRUE), file = "/tmp/hb/RtmpleA486/callr-res-3081db45849e48", 
+#>     quote = TRUE), file = "/tmp/hb/RtmpxYPZU3/callr-res-37de8242ec0394", 
 #>     compress = FALSE)
 #> 
 #> [[10]]
-#> base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpleA486/callr-fun-3081dbbe39354"), 
+#> base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpxYPZU3/callr-fun-37de824aed50d2"), 
 #>     base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
 #>     quote = TRUE)
 #> 
@@ -220,15 +220,17 @@ res <- tryCatch({
 #>     options(cli.num_colors = cli_colors, cli.hyperlink = hyperlinks, 
 #>         cli.hyperlink_run = hyperlinks)
 #>     pkgdown::build_site(...)
-#> }), base::quote(list(pkg = list(package = "future", version = "1.70.0", 
-#>     src_path = "/tmp/hb/RtmpleA486/future", meta = list(url = "https://future.futureverse.org", 
+#> }), base::quote(list(pkg = list(package = "future", version = "1.70.0-9000", 
+#>     src_path = "/tmp/hb/RtmpxYPZU3/future", meta = list(url = "https://future.futureverse.org", 
 #>         home = list(links = list(list(text = "Roadmap/Milestones", 
 #>             href = "https://github.com/futureverse/future/milestones"), 
 #>             list(text = "The Futureverse Project", href = "https://www.futureverse.org/"), 
 #>             list(text = "Futureverse User Forum", href = "https://github.com/futureverse/future/discussions"))), 
-#>         navbar = list(structure = list(right = c("search", "futureverse", 
-#>         "pkgs", "cran", "github", "lightswitch")), components = list(
-#>             futureverse = list(icon = "fas fa-home", href = "https://www.futureverse.org/"), 
+#>         navbar = list(structure = list(left = c("intro", "reference", 
+#>         "news"), right = c("search", "futureverse", "pkgs", "cran", 
+#>         "github", "lightswitch")), components = list(news = list(
+#>             text = "News", href = "news/index.html"), futureverse = list(
+#>             icon = "fas fa-home", href = "https://www.futureverse.org/"), 
 #>             pkgs = list(text = "Packages", menu = list(list(text = "doFuture (map-reduce)", 
 #>                 href = "https://doFuture.futureverse.org"), list(
 #>                 text = "furrr (map-reduce)", href = "https://furrr.futureverse.org"), 
@@ -254,7 +256,7 @@ res <- tryCatch({
 #>             bootstrap = 5L, `light-switch` = TRUE)), desc = <environment>, 
 #>     bs_version = 5L, development = list(destination = "dev", 
 #>         mode = "default", version_label = "muted", in_dev = FALSE, 
-#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/RtmpleA486/future/docs", 
+#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/RtmpxYPZU3/future/docs", 
 #>     lang = "en-US", install_metadata = FALSE, figures = list(
 #>         dev = "ragg::agg_png", dpi = 96L, dev.args = list(), 
 #>         fig.ext = "png", fig.width = 7.29166666666667, fig.height = NULL, 
@@ -3024,15 +3026,17 @@ res <- tryCatch({
 #>     options(cli.num_colors = cli_colors, cli.hyperlink = hyperlinks, 
 #>         cli.hyperlink_run = hyperlinks)
 #>     pkgdown::build_site(...)
-#> })(pkg = base::quote(list(package = "future", version = "1.70.0", 
-#>     src_path = "/tmp/hb/RtmpleA486/future", meta = list(url = "https://future.futureverse.org", 
+#> })(pkg = base::quote(list(package = "future", version = "1.70.0-9000", 
+#>     src_path = "/tmp/hb/RtmpxYPZU3/future", meta = list(url = "https://future.futureverse.org", 
 #>         home = list(links = list(list(text = "Roadmap/Milestones", 
 #>             href = "https://github.com/futureverse/future/milestones"), 
 #>             list(text = "The Futureverse Project", href = "https://www.futureverse.org/"), 
 #>             list(text = "Futureverse User Forum", href = "https://github.com/futureverse/future/discussions"))), 
-#>         navbar = list(structure = list(right = c("search", "futureverse", 
-#>         "pkgs", "cran", "github", "lightswitch")), components = list(
-#>             futureverse = list(icon = "fas fa-home", href = "https://www.futureverse.org/"), 
+#>         navbar = list(structure = list(left = c("intro", "reference", 
+#>         "news"), right = c("search", "futureverse", "pkgs", "cran", 
+#>         "github", "lightswitch")), components = list(news = list(
+#>             text = "News", href = "news/index.html"), futureverse = list(
+#>             icon = "fas fa-home", href = "https://www.futureverse.org/"), 
 #>             pkgs = list(text = "Packages", menu = list(list(text = "doFuture (map-reduce)", 
 #>                 href = "https://doFuture.futureverse.org"), list(
 #>                 text = "furrr (map-reduce)", href = "https://furrr.futureverse.org"), 
@@ -3058,7 +3062,7 @@ res <- tryCatch({
 #>             bootstrap = 5L, `light-switch` = TRUE)), desc = <environment>, 
 #>     bs_version = 5L, development = list(destination = "dev", 
 #>         mode = "default", version_label = "muted", in_dev = FALSE, 
-#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/RtmpleA486/future/docs", 
+#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/RtmpxYPZU3/future/docs", 
 #>     lang = "en-US", install_metadata = FALSE, figures = list(
 #>         dev = "ragg::agg_png", dpi = 96L, dev.args = list(), 
 #>         fig.ext = "png", fig.width = 7.29166666666667, fig.height = NULL, 
