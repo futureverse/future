@@ -42,6 +42,21 @@
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
 <li class="nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
+<li class="active nav-item dropdown">
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
+<li><a class="dropdown-item" href="../articles/future-1-overview.html">A Future for R: A Comprehensive Overview</a></li>
+    <li><a class="dropdown-item" href="../articles/future-2-output.html">A Future for R: Text and Message Output</a></li>
+    <li><a class="dropdown-item" href="../articles/future-2b-backend.html">A Future for R: Available Future Backends</a></li>
+    <li><a class="dropdown-item" href="../articles/future-3-topologies.html">A Future for R: Future Topologies</a></li>
+    <li><a class="dropdown-item" href="../articles/future-4-issues.html">A Future for R: Common Issues with Solutions</a></li>
+    <li><a class="dropdown-item" href="../articles/future-4-non-exportable-objects.html">A Future for R: Non-Exportable Objects</a></li>
+    <li><a class="dropdown-item" href="../articles/future-5-startup.html">A Future for R: Controlling Default Future Strategy</a></li>
+    <li><a class="dropdown-item" href="../articles/future-6-future-api-backend-specification.html">A Future for R: Future API Backend Specification</a></li>
+    <li><a class="dropdown-item" href="../articles/future-7-for-package-developers.html">A Future for R: Best Practices for Package Developers</a></li>
+    <li><a class="dropdown-item" href="../articles/future-8-how-future-is-validated.html">A Future for R: How the Future Framework is Validated</a></li>
+  </ul>
+</li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">News</a></li>
       </ul>
 <ul class="navbar-nav">
@@ -758,7 +773,7 @@ objects cannot be exported to external R processes.</p>
 <div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://future.futureverse.org">future</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/plan.html">plan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://www.rforge.net/rJava/" class="external-link">rJava</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://www.rforge.net/rJava/" class="external-link">rJava</a></span><span class="op">)</span></span>
 <span><span class="fu">.jinit</span><span class="op">(</span><span class="op">)</span> <span class="co">## Initialize Java VM on master</span></span>
 <span></span>
 <span><span class="va">Double</span> <span class="op">&lt;-</span> <span class="fu">J</span><span class="op">(</span><span class="st">"java.lang.Double"</span><span class="op">)</span></span>
