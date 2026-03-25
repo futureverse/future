@@ -31,7 +31,7 @@ home:
 
 navbar:
   structure:
-    left: [<%= paste(c("intro", "reference", names(menus), "news"), collapse = ", ") %>]
+    left: [<%= paste(c("intro", "reference", if (length(menus) > 0) names(menus) else "articles", "news"), collapse = ", ") %>]
     right: [search, futureverse, pkgs, cran, github, lightswitch]
   components:
 <%= if (length(menus) > 0) {

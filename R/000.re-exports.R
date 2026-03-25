@@ -13,12 +13,11 @@
 #' * [parallelly::autoStopCluster()]   (no longer re-exported)
 #    Used by: <none>
 #' * [parallelly::availableCores()]
-#    Used by: ale (1), BatchGetSymbols (2), codalm (1),
-#             cft (1), couplr (1), deseats, dipsaus (1), elevatr (1), 
-#             heterogen, PINstimation (1), powRICLPM (1),
-#             readsdr (1), recforest, sigminer (2), skpr (1), smoots,
-#             sovereign (1), TriDimRegression (1), uci (1), updog (2)
-#             [2025-12-22, 2026-01-31]
+#    Used by: ale (1), BatchGetSymbols (2), codalm (1), cft (1),
+#             couplr (2), deseats, dipsaus (1), elevatr (1), heterogen,
+#             PINstimation (1), powRICLPM (1), readsdr (1), recforest,
+#             sigminer (2), skpr (1), smoots, sovereign (1),
+#             TriDimRegression (1), uci (1) [2025-12-22, 2026-01-31]
 #' * [parallelly::availableWorkers()]
 #    Used by: wqspt (1) [2025-03-15]
 #' * [parallelly::makeClusterMPI()]    (no longer re-exported)
