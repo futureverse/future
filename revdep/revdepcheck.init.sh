@@ -13,7 +13,8 @@ EOF
 
 ## Non-default system dependencies
 if command -v module &> /dev/null; then
-    module try-load CBI htslib  ## iscream
+    module try-load CBI libblosc  ## pizzarr
+    module try-load CBI htslib    ## iscream
 fi    
 
 

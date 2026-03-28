@@ -324,7 +324,7 @@
 |[photosynthesis](problems.md#photosynthesis)|2.1.5        |      |        |1    |
 |phylospatial                 |1.2.1        |      |        |     |
 |PINstimation                 |0.2.0        |      |        |     |
-|[pizzarr](problems.md#pizzarr)|0.1.1        |1     |        |     |
+|pizzarr                      |0.1.1        |      |        |     |
 |PLNmodels                    |1.2.2        |      |        |     |
 |plumber                      |1.3.3        |      |        |     |
 |polarisR                     |0.1.4        |      |        |     |

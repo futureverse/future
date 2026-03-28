@@ -687,46 +687,6 @@ Run `revdepcheck::revdep_details(, "photosynthesis")` for more info
          ‘simulate_error.R’ ‘simulate_error.Rd’ ‘utils.R’
      ```
 
-# pizzarr (0.1.1)
-
-* GitHub: <https://github.com/zarr-developers/pizzarr>
-* Email: <mailto:dblodgett@usgs.gov>
-* GitHub mirror: <https://github.com/cran/pizzarr>
-
-Run `revdepcheck::revdep_details(, "pizzarr")` for more info
-
-## In both
-
-*   checking tests ...
-     ```
-     ...
-        3.     └─pizzarr (local) initialize(...)
-        4.       └─private$load_metadata()
-        5.         └─private$load_metadata_nosync()
-        6.           └─pizzarr:::get_codec(meta$compressor)
-        7.             ├─base::do.call(BloscCodec$new, config)
-        8.             └─R6 (local) `<fn>`(blocksize = 0L, clevel = 5L, cname = "lz4", shuffle = 1L)
-        9.               └─pizzarr (local) initialize(...)
-       
-       [ FAIL 1 | WARN 0 | SKIP 58 | PASS 1103 ]
-       Error:
-       ! Test failures.
-       Warning messages:
-       1: `setup()` was deprecated in the 3rd edition.
-       ℹ Please use test fixtures instead see vignette('test-fixtures') for details 
-       2: `teardown()` was deprecated in the 3rd edition.
-       ℹ Please use test fixtures instead see vignette('test-fixtures') for details 
-       3: In .Internal(gc(verbose, reset, full)) :
-         closing unused connection 9 (<-localhost:11114)
-       4: In .Internal(gc(verbose, reset, full)) :
-         closing unused connection 8 (<-localhost:11114)
-       5: In .Internal(gc(verbose, reset, full)) :
-         closing unused connection 7 (<-localhost:11114)
-       6: In .Internal(gc(verbose, reset, full)) :
-         closing unused connection 6 (<-localhost:11114)
-       Execution halted
-     ```
-
 # powRICLPM (0.2.1)
 
 * GitHub: <https://github.com/JeroenDMulder/powRICLPM>
