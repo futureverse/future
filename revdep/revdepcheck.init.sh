@@ -24,13 +24,13 @@ fi
 ## Add packages to check
 revdep/run.R --add-children
 
-## Drop packages failing on CRAN (2026-03-13)
-revdep/run.R --rm aramappings delimtools dispositionEffect EpiForsk fmeffects sovereign spStack
+## Drop packages failing on CRAN (2026-03-27)
+revdep/run.R --rm aramappings dispositionEffect EpiForsk sovereign
 
 ## Drop packages failing on Bioconductor (2026-03-13)
 revdep/run.R --rm dar MineICA pgxRpi
 
-## Drop packages no longer on CRAN (2026-03-13)
+## Drop packages no longer on CRAN (2026-03-27)
 revdep/run.R --rm mbbe oncomsm
 
 ## Drop packages failing on Bioconductor (2026-03-07)
@@ -59,11 +59,11 @@ revdep/run.R --rm tsmarch               ## "Segmentation fault"
 revdep/run.R --rm iscream
 
 ## Requires sequential processing due to clashes, e.g. port and cache 
-pkgs_seq=(dipsaus fiery)
+pkgs_seq=(dipsaus fiery robust2sls)
 revdep/run.R --rm "${pkgs_seq[@]}"
 
 ## Too many cores
-pkgs_limit=(scStability)
+pkgs_limit=(fmeffects scStability)
 revdep/run.R --rm "${pkgs_limit[@]}"
 
 ## Too many cores due to detectCores

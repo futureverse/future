@@ -1,13 +1,7 @@
 ## revdepcheck results
 
-We checked 476 reverse dependencies (453 from CRAN + 23 from Bioconductor), comparing R CMD check results across CRAN and dev versions of this package.
+We checked 467 reverse dependencies (447 from CRAN + 20 from Bioconductor), comparing R CMD check results across CRAN and dev versions of this package.
 
  * We saw 0 new problems
- * We failed to check 2 packages
+ * We failed to check 0 packages
 
-Issues with CRAN packages are summarised below.
-
-### Failed to check
-
-* BayesPET         (NA)
-* TriDimRegression (NA)
