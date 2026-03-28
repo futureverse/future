@@ -232,13 +232,7 @@ Future <- function(expr = NULL, envir = parent.frame(), substitute = TRUE, stdou
   for (key in args_names) core[[key]] <- args[[key]]
 
   ## Backward compatibility: drop field 'envir' in future (>= 1.69.0)
-  ## 1. civis::CivisFuture() relies on 'envir'
-  ## 2. there might be other unknown dependencies out there => option
   if (getOption("future.Future.envir.keep", FALSE)) {
-    core[["envir"]] <- envir
-  } else if (all(c("required_resources", "docker_image_name",
-    "docker_image_tag") %in% args_names) && "civis" %in% loadedNamespaces()) {
-    ## Looks like Future() was called from CivisFuture
     core[["envir"]] <- envir
   }
   
@@ -604,7 +598,6 @@ run.Future <- function(future, ...) {
   args <- list(
     quote(future[["expr"]]),
     substitute = FALSE,
-    envir = future[["envir"]],   ## For backward compatibility with 'civis'
     lazy = TRUE,
     stdout = future[["stdout"]],
     conditions = future[["conditions"]],
@@ -615,6 +608,11 @@ run.Future <- function(future, ...) {
     reset = future[["reset"]],
     calls = future[["calls"]]
   )
+
+  ## For backward compatibility since future (>= 1.69.0)
+  if ("envir" %in% names(future)) {
+    args[["envir"]] <- future[["envir"]]
+  }
 
   ## SPECIAL: 'cluster' takes argument 'persistent' for now /HB 2023-01-17
   has_persistent <- ("persistent" %in% names(future))
