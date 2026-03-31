@@ -12,6 +12,7 @@
 #'
 #' @keywords internal
 #' @rdname FutureBackend-class
+#" @importFrom parallelly supportsMulticore
 #' @export
 MultisessionFutureBackend <- function(workers = availableCores(constraints = "connections-16"), rscript_libs = .libPaths(), interrupts = TRUE, gc = FALSE, earlySignal = FALSE, ...) {
   debug <- isTRUE(getOption("future.debug"))

@@ -9,6 +9,8 @@
 #' @return A non-negative integer.
 #'
 #' @keywords internal
+#'
+#' @importFrom parallelly supportsMulticore
 usedCores <- function() {
   ## If multicore processing is not supported, then there should be no
   ## multicore workers in use
@@ -133,6 +135,8 @@ requestCore <- function(await, workers = availableCores(constraints = "multicore
 #'
 #' @keywords internal
 #' @rdname FutureBackend-class
+#'
+#' @importFrom parallelly supportsMulticore
 #' @export
 MulticoreFutureBackend <- function(workers = availableCores(constraints = "multicore"), maxSizeOfObjects = +Inf, ...) {
   default_workers <- missing(workers)

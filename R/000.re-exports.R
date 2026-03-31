@@ -8,10 +8,6 @@
 #' _If you are using any of these from the \pkg{future} package, please
 #'  switch to use the ones from the \pkg{parallelly} package. Thank you!_
 #'
-#' * [parallelly::as.cluster()]    (no longer re-exported)
-#    Used by: <none>
-#' * [parallelly::autoStopCluster()]   (no longer re-exported)
-#    Used by: <none>
 #' * [parallelly::availableCores()]
 #    Used by: ale (1), BatchGetSymbols (2), codalm (1), cft (1),
 #             couplr (2), deseats, dipsaus (1), elevatr (1), heterogen,
@@ -20,14 +16,8 @@
 #             TriDimRegression (1), uci (1) [2025-12-22, 2026-01-31]
 #' * [parallelly::availableWorkers()]
 #    Used by: wqspt (1) [2025-03-15]
-#' * [parallelly::makeClusterMPI()]    (no longer re-exported)
-#    Used by: <none>
 #' * [parallelly::makeClusterPSOCK()]
 #    Used by: eatRep (1), interflex (1), ivDiag (1) [2025-12-11]
-#' * [parallelly::makeNodePSOCK()]     (no longer re-exported)
-#    Used by: <none>
-#' * [parallelly::supportsMulticore()]
-#    Used by: furrr (2)
 #
 #  (1) Issue filed or PR sent
 #  (2) In the next release
@@ -59,10 +49,6 @@
 #' @importFrom parallelly makeClusterPSOCK
 #' @export makeClusterPSOCK
 #' @aliases makeClusterPSOCK
-#'
-#' @importFrom parallelly supportsMulticore
-#' @export supportsMulticore
-#' @aliases supportsMulticore
 #'
 #' @name re-exports
 #' @keywords internal

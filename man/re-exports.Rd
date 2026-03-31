@@ -5,7 +5,6 @@
 \alias{availableCores}
 \alias{availableWorkers}
 \alias{makeClusterPSOCK}
-\alias{supportsMulticore}
 \title{Functions Moved to 'parallelly'}
 \description{
 The following function used to be part of \pkg{future}, but has since
@@ -17,14 +16,9 @@ are also useful outside of the \pkg{future} framework.
 \emph{If you are using any of these from the \pkg{future} package, please
 switch to use the ones from the \pkg{parallelly} package. Thank you!}
 \itemize{
-\item \code{\link[parallelly:as.cluster]{parallelly::as.cluster()}}    (no longer re-exported)
-\item \code{\link[parallelly:autoStopCluster]{parallelly::autoStopCluster()}}   (no longer re-exported)
 \item \code{\link[parallelly:availableCores]{parallelly::availableCores()}}
 \item \code{\link[parallelly:availableWorkers]{parallelly::availableWorkers()}}
-\item \code{\link[parallelly:makeClusterMPI]{parallelly::makeClusterMPI()}}    (no longer re-exported)
 \item \code{\link[parallelly:makeClusterPSOCK]{parallelly::makeClusterPSOCK()}}
-\item \code{\link[parallelly:makeClusterPSOCK]{parallelly::makeNodePSOCK()}}     (no longer re-exported)
-\item \code{\link[parallelly:supportsMulticore]{parallelly::supportsMulticore()}}
 }
 
 For backward-compatible reasons, \emph{some} of these functions remain

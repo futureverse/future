@@ -97,7 +97,7 @@ if (!identical(getOption("future.plan.earlySignal"), "defunct")) {
   message("*** Early signaling of conditions with multisession futures ... DONE")
   
   
-  if (supportsMulticore()) {
+  if (parallelly::supportsMulticore()) {
     message("*** Early signaling of conditions with multicore futures ...")
     
     plan(multicore)

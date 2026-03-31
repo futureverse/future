@@ -20,7 +20,7 @@ message("TMPDIR for parallel workers: ", sQuote(Sys.getenv("TMPDIR")))
 types <- NULL
 if (!covr_testing) {
   types <- c(types, "PSOCK")
-  if (supportsMulticore()) types <- c(types, "FORK")
+  if (parallelly::supportsMulticore()) types <- c(types, "FORK")
 }
 
 pid <- Sys.getpid()

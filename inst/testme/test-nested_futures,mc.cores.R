@@ -23,7 +23,7 @@ message("*** Nested futures - mc.cores ...")
 
 strategies <- NULL
 if (!covr_testing) strategies <- c(strategies, "multisession")
-if (supportsMulticore()) strategies <- c(strategies, "multicore")
+if (parallelly::supportsMulticore()) strategies <- c(strategies, "multicore")
 
 pid <- Sys.getpid()
 cat(sprintf("Main PID: %d\n", pid))

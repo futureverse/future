@@ -43,6 +43,7 @@ all.equal.future <- function(target, current, ..., debug = FALSE) {
 } ## all.equal() for 'future'
 
 
+#' @importFrom parallelly supportsMulticore
 #' @exportS3Method all.equal FutureStrategyList
 all.equal.FutureStrategyList <- function(target, current, ..., debug = FALSE) {
   if (debug) {

@@ -20,7 +20,7 @@ stopifnot(inherits(res, "try-error"))
 message("*** requestCore() - exceptions ... DONE")
 
 
-if (supportsMulticore()) {
+if (parallelly::supportsMulticore()) {
   message("*** requestCore() - timeout ...")
   
   plan(multicore, workers = 2L)

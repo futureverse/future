@@ -5,7 +5,7 @@ library(future)
 
 message("*** multicore() - terminating workers ...")
 
-if (supportsMulticore() && availableCores("multicore") >= 2L) {
+if (parallelly::supportsMulticore() && availableCores("multicore") >= 2L) {
   plan(multicore, workers = 2L)
 
   all <- nbrOfWorkers()
