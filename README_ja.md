@@ -398,8 +398,7 @@ plan(multicore)
 セッションがクラッシュする可能性がある。 このため、future
 パッケージでは、RStudio
 上でマルチコアフューチャの使用をデフォルトで無効にしている。 詳細は
-[`help("supportsMulticore")`](https://future.futureverse.org/reference/re-exports.md)
-を参照してほしい。
+`help("supportsMulticore")` を参照してほしい。
 
 #### クラスタフューチャ (Cluster Future)
 

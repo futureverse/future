@@ -42,9 +42,9 @@ res <- tryCatch({
 #> [[1]]
 #> base::tryCatch(base::withCallingHandlers({
 #>     NULL
-#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/Rtmpogb71C/callr-fun-1fea8a4b8c3d48"), 
+#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/Rtmp0RRrLo/callr-fun-18aecc6d157372"), 
 #>         base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
-#>         quote = TRUE), file = "/tmp/hb/Rtmpogb71C/callr-res-1fea8adf9740c", 
+#>         quote = TRUE), file = "/tmp/hb/Rtmp0RRrLo/callr-res-18aecc6a748993", 
 #>         compress = FALSE)
 #>     base::flush(base::stdout())
 #>     base::flush(base::stderr())
@@ -70,7 +70,7 @@ res <- tryCatch({
 #>         if (!base::is.na(cut)) {
 #>             e2$trace <- e2$trace[-(1:cut), ]
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/Rtmpogb71C/callr-res-1fea8adf9740c", 
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/Rtmp0RRrLo/callr-res-18aecc6a748993", 
 #>             ".error"))
 #>     }
 #> }, interrupt = function(e) {
@@ -93,7 +93,7 @@ res <- tryCatch({
 #>         if (!base::is.na(cut)) {
 #>             e2$trace <- e2$trace[-(1:cut), ]
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/Rtmpogb71C/callr-res-1fea8adf9740c", 
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/Rtmp0RRrLo/callr-res-18aecc6a748993", 
 #>             ".error"))
 #>     }
 #> }, callr_message = function(e) {
@@ -138,9 +138,9 @@ res <- tryCatch({
 #> [[8]]
 #> base::withCallingHandlers({
 #>     NULL
-#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/Rtmpogb71C/callr-fun-1fea8a4b8c3d48"), 
+#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/Rtmp0RRrLo/callr-fun-18aecc6d157372"), 
 #>         base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
-#>         quote = TRUE), file = "/tmp/hb/Rtmpogb71C/callr-res-1fea8adf9740c", 
+#>         quote = TRUE), file = "/tmp/hb/Rtmp0RRrLo/callr-res-18aecc6a748993", 
 #>         compress = FALSE)
 #>     base::flush(base::stdout())
 #>     base::flush(base::stderr())
@@ -166,7 +166,7 @@ res <- tryCatch({
 #>         if (!base::is.na(cut)) {
 #>             e2$trace <- e2$trace[-(1:cut), ]
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/Rtmpogb71C/callr-res-1fea8adf9740c", 
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/Rtmp0RRrLo/callr-res-18aecc6a748993", 
 #>             ".error"))
 #>     }
 #> }, interrupt = function(e) {
@@ -189,7 +189,7 @@ res <- tryCatch({
 #>         if (!base::is.na(cut)) {
 #>             e2$trace <- e2$trace[-(1:cut), ]
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/Rtmpogb71C/callr-res-1fea8adf9740c", 
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/Rtmp0RRrLo/callr-res-18aecc6a748993", 
 #>             ".error"))
 #>     }
 #> }, callr_message = function(e) {
@@ -197,13 +197,13 @@ res <- tryCatch({
 #> })
 #> 
 #> [[9]]
-#> base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/Rtmpogb71C/callr-fun-1fea8a4b8c3d48"), 
+#> base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/Rtmp0RRrLo/callr-fun-18aecc6d157372"), 
 #>     base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
-#>     quote = TRUE), file = "/tmp/hb/Rtmpogb71C/callr-res-1fea8adf9740c", 
+#>     quote = TRUE), file = "/tmp/hb/Rtmp0RRrLo/callr-res-18aecc6a748993", 
 #>     compress = FALSE)
 #> 
 #> [[10]]
-#> base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/Rtmpogb71C/callr-fun-1fea8a4b8c3d48"), 
+#> base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/Rtmp0RRrLo/callr-fun-18aecc6d157372"), 
 #>     base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
 #>     quote = TRUE)
 #> 
@@ -220,8 +220,8 @@ res <- tryCatch({
 #>     options(cli.num_colors = cli_colors, cli.hyperlink = hyperlinks, 
 #>         cli.hyperlink_run = hyperlinks)
 #>     pkgdown::build_site(...)
-#> }), base::quote(list(pkg = list(package = "future", version = "1.70.0-9000", 
-#>     src_path = "/tmp/hb/Rtmpogb71C/future", meta = list(url = "https://future.futureverse.org", 
+#> }), base::quote(list(pkg = list(package = "future", version = "1.70.0-9002", 
+#>     src_path = "/tmp/hb/Rtmp0RRrLo/future", meta = list(url = "https://future.futureverse.org", 
 #>         home = list(links = list(list(text = "Roadmap/Milestones", 
 #>             href = "https://github.com/futureverse/future/milestones"), 
 #>             list(text = "The Futureverse Project", href = "https://www.futureverse.org/"), 
@@ -256,7 +256,7 @@ res <- tryCatch({
 #>             bootstrap = 5L, `light-switch` = TRUE)), desc = <environment>, 
 #>     bs_version = 5L, development = list(destination = "dev", 
 #>         mode = "default", version_label = "muted", in_dev = FALSE, 
-#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/Rtmpogb71C/future/docs", 
+#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/Rtmp0RRrLo/future/docs", 
 #>     lang = "en-US", install_metadata = FALSE, figures = list(
 #>         dev = "ragg::agg_png", dpi = 96L, dev.args = list(), 
 #>         fig.ext = "png", fig.width = 7.29166666666667, fig.height = NULL, 
@@ -350,7 +350,7 @@ res <- tryCatch({
 #>         "nbrOfFreeWorkers"), nullcon.Rd = "nullcon", plan.Rd = c("plan", 
 #>         "with.FutureStrategyList", "tweak"), private_length.Rd = ".length", 
 #>         `re-exports.Rd` = c("re-exports", "availableCores", "availableWorkers", 
-#>         "makeClusterPSOCK", "supportsMulticore"), readImmediateConditions.Rd = c("readImmediateConditions", 
+#>         "makeClusterPSOCK"), readImmediateConditions.Rd = c("readImmediateConditions", 
 #>         "saveImmediateCondition"), requestCore.Rd = "requestCore", 
 #>         reset.Rd = "reset", resetWorkers.Rd = "resetWorkers", 
 #>         resolve.Rd = "resolve", resolved.Rd = c("resolved.ClusterFuture", 
@@ -2127,8 +2127,7 @@ res <- tryCatch({
 #>                 "\n", "% Please edit documentation in R/000.re-exports.R", 
 #>                 "\n", list("re-exports"), "\n", list("re-exports"), 
 #>                 "\n", list("availableCores"), "\n", list("availableWorkers"), 
-#>                 "\n", list("makeClusterPSOCK"), "\n", list("supportsMulticore"), 
-#>                 "\n", list("Functions Moved to 'parallelly'"), 
+#>                 "\n", list("makeClusterPSOCK"), "\n", list("Functions Moved to 'parallelly'"), 
 #>                 "\n", list("\n", "The following function used to be part of ", 
 #>                   list("future"), ", but has since\n", "been migrated to ", 
 #>                   list("parallelly"), ". The migration started with\n", 
@@ -2137,18 +2136,9 @@ res <- tryCatch({
 #>                   " framework.\n"), "\n", list("\n", list("If you are using any of these from the ", 
 #>                   list("future"), " package, please\n", "switch to use the ones from the ", 
 #>                   list("parallelly"), " package. Thank you!"), 
-#>                   "\n", list("\n", list(), " ", list(list("parallelly::as.cluster()")), 
-#>                     "    (no longer re-exported)\n", list(), 
-#>                     " ", list(list("parallelly::autoStopCluster()")), 
-#>                     "   (no longer re-exported)\n", list(), " ", 
-#>                     list(list("parallelly::availableCores()")), 
+#>                   "\n", list("\n", list(), " ", list(list("parallelly::availableCores()")), 
 #>                     "\n", list(), " ", list(list("parallelly::availableWorkers()")), 
-#>                     "\n", list(), " ", list(list("parallelly::makeClusterMPI()")), 
-#>                     "    (no longer re-exported)\n", list(), 
-#>                     " ", list(list("parallelly::makeClusterPSOCK()")), 
-#>                     "\n", list(), " ", list(list("parallelly::makeNodePSOCK()")), 
-#>                     "     (no longer re-exported)\n", list(), 
-#>                     " ", list(list("parallelly::supportsMulticore()")), 
+#>                     "\n", list(), " ", list(list("parallelly::makeClusterPSOCK()")), 
 #>                     "\n"), "\n", "\n", "For backward-compatible reasons, ", 
 #>                   list("some"), " of these functions remain\n", 
 #>                   "available as exact copies also from this package (as re-exports), e.g.\n", 
@@ -3026,8 +3016,8 @@ res <- tryCatch({
 #>     options(cli.num_colors = cli_colors, cli.hyperlink = hyperlinks, 
 #>         cli.hyperlink_run = hyperlinks)
 #>     pkgdown::build_site(...)
-#> })(pkg = base::quote(list(package = "future", version = "1.70.0-9000", 
-#>     src_path = "/tmp/hb/Rtmpogb71C/future", meta = list(url = "https://future.futureverse.org", 
+#> })(pkg = base::quote(list(package = "future", version = "1.70.0-9002", 
+#>     src_path = "/tmp/hb/Rtmp0RRrLo/future", meta = list(url = "https://future.futureverse.org", 
 #>         home = list(links = list(list(text = "Roadmap/Milestones", 
 #>             href = "https://github.com/futureverse/future/milestones"), 
 #>             list(text = "The Futureverse Project", href = "https://www.futureverse.org/"), 
@@ -3062,7 +3052,7 @@ res <- tryCatch({
 #>             bootstrap = 5L, `light-switch` = TRUE)), desc = <environment>, 
 #>     bs_version = 5L, development = list(destination = "dev", 
 #>         mode = "default", version_label = "muted", in_dev = FALSE, 
-#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/Rtmpogb71C/future/docs", 
+#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/Rtmp0RRrLo/future/docs", 
 #>     lang = "en-US", install_metadata = FALSE, figures = list(
 #>         dev = "ragg::agg_png", dpi = 96L, dev.args = list(), 
 #>         fig.ext = "png", fig.width = 7.29166666666667, fig.height = NULL, 
@@ -3156,7 +3146,7 @@ res <- tryCatch({
 #>         "nbrOfFreeWorkers"), nullcon.Rd = "nullcon", plan.Rd = c("plan", 
 #>         "with.FutureStrategyList", "tweak"), private_length.Rd = ".length", 
 #>         `re-exports.Rd` = c("re-exports", "availableCores", "availableWorkers", 
-#>         "makeClusterPSOCK", "supportsMulticore"), readImmediateConditions.Rd = c("readImmediateConditions", 
+#>         "makeClusterPSOCK"), readImmediateConditions.Rd = c("readImmediateConditions", 
 #>         "saveImmediateCondition"), requestCore.Rd = "requestCore", 
 #>         reset.Rd = "reset", resetWorkers.Rd = "resetWorkers", 
 #>         resolve.Rd = "resolve", resolved.Rd = c("resolved.ClusterFuture", 
@@ -4933,8 +4923,7 @@ res <- tryCatch({
 #>                 "\n", "% Please edit documentation in R/000.re-exports.R", 
 #>                 "\n", list("re-exports"), "\n", list("re-exports"), 
 #>                 "\n", list("availableCores"), "\n", list("availableWorkers"), 
-#>                 "\n", list("makeClusterPSOCK"), "\n", list("supportsMulticore"), 
-#>                 "\n", list("Functions Moved to 'parallelly'"), 
+#>                 "\n", list("makeClusterPSOCK"), "\n", list("Functions Moved to 'parallelly'"), 
 #>                 "\n", list("\n", "The following function used to be part of ", 
 #>                   list("future"), ", but has since\n", "been migrated to ", 
 #>                   list("parallelly"), ". The migration started with\n", 
@@ -4943,18 +4932,9 @@ res <- tryCatch({
 #>                   " framework.\n"), "\n", list("\n", list("If you are using any of these from the ", 
 #>                   list("future"), " package, please\n", "switch to use the ones from the ", 
 #>                   list("parallelly"), " package. Thank you!"), 
-#>                   "\n", list("\n", list(), " ", list(list("parallelly::as.cluster()")), 
-#>                     "    (no longer re-exported)\n", list(), 
-#>                     " ", list(list("parallelly::autoStopCluster()")), 
-#>                     "   (no longer re-exported)\n", list(), " ", 
-#>                     list(list("parallelly::availableCores()")), 
+#>                   "\n", list("\n", list(), " ", list(list("parallelly::availableCores()")), 
 #>                     "\n", list(), " ", list(list("parallelly::availableWorkers()")), 
-#>                     "\n", list(), " ", list(list("parallelly::makeClusterMPI()")), 
-#>                     "    (no longer re-exported)\n", list(), 
-#>                     " ", list(list("parallelly::makeClusterPSOCK()")), 
-#>                     "\n", list(), " ", list(list("parallelly::makeNodePSOCK()")), 
-#>                     "     (no longer re-exported)\n", list(), 
-#>                     " ", list(list("parallelly::supportsMulticore()")), 
+#>                     "\n", list(), " ", list(list("parallelly::makeClusterPSOCK()")), 
 #>                     "\n"), "\n", "\n", "For backward-compatible reasons, ", 
 #>                   list("some"), " of these functions remain\n", 
 #>                   "available as exact copies also from this package (as re-exports), e.g.\n", 

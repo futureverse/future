@@ -35,7 +35,7 @@
 
     <a class="navbar-brand me-2" href="index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.70.0-9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.70.0-9002</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -412,7 +412,7 @@
 <code class="sourceCode R"><span><span class="fu"><a href="reference/plan.html">plan</a></span><span class="op">(</span><span class="va">multicore</span><span class="op">)</span></span></code></pre></div>
 <p>Just like for multisession futures, the maximum number of parallel processes running will be decided by <code><a href="reference/re-exports.html">availableCores()</a></code>, since in both cases the evaluation is done on the local machine.</p>
 <p>Forking an R process can be faster than working with a separate R session running in the background. One reason is that the overhead of exporting large globals to the background session can be greater than when forking, and therefore shared memory, is used. On the other hand, the shared memory is <em>read only</em>, meaning any modifications to shared objects by one of the forked processes (“workers”) will cause a copy by the operating system. This can also happen when the R garbage collector runs in one of the forked processes.</p>
-<p>On the other hand, process forking is also considered unstable in some R environments. For instance, when running R from within RStudio process forking may result in crashed R sessions. Because of this, the <strong>future</strong> package disables multicore futures by default when running from RStudio. See <code><a href="reference/re-exports.html">help("supportsMulticore")</a></code> for more details.</p>
+<p>On the other hand, process forking is also considered unstable in some R environments. For instance, when running R from within RStudio process forking may result in crashed R sessions. Because of this, the <strong>future</strong> package disables multicore futures by default when running from RStudio. See <code>help("supportsMulticore")</code> for more details.</p>
 </div>
 <div class="section level4">
 <h4 id="cluster-futures">Cluster Futures<a class="anchor" aria-label="anchor" href="#cluster-futures"></a>

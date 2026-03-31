@@ -386,9 +386,7 @@ On the other hand, process forking is also considered unstable in some R
 environments. For instance, when running R from within RStudio process
 forking may result in crashed R sessions. Because of this, the
 **future** package disables multicore futures by default when running
-from RStudio. See
-[`help("supportsMulticore")`](https://future.futureverse.org/reference/re-exports.md)
-for more details.
+from RStudio. See `help("supportsMulticore")` for more details.
 
 #### Cluster Futures
 
