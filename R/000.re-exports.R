@@ -17,7 +17,7 @@
 #' * [parallelly::availableWorkers()]
 #    Used by: wqspt (1) [2025-03-15]
 #' * [parallelly::makeClusterPSOCK()]
-#    Used by: eatRep (1), interflex (1), ivDiag (1) [2025-12-11]
+#    Used by: eatRep (1), interflex (2), ivDiag (1) [2026-04-08]
 #
 #  (1) Issue filed or PR sent
 #  (2) In the next release

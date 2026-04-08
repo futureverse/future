@@ -1,7 +1,7 @@
 <%
 pkgs_mapreduce <- c("futurize", "future.apply", "doFuture", "furrr")
 pkgs_backend <- c("future.batchtools", "future.callr", "future.mirai")
-pkgs <- c("globals", "listenv", "parallelly", "future", "future.tests", "progressr", pkgs_mapreduce, pkgs_backend)
+pkgs <- c("globals", "listenv", "parallelly", "future", "future.tests", "progressify", "progressr", pkgs_mapreduce, pkgs_backend)
 pkgs_extra <- c("future.p2p", "future.tools", "marshal")
 pkgs <- c(sort(pkgs), pkgs_extra)
 urls <- sprintf("https://%s.futureverse.org", pkgs)

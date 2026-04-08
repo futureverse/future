@@ -48,6 +48,8 @@ navbar:
         href: https://listenv.futureverse.org
       - text: parallelly 
         href: https://parallelly.futureverse.org
+      - text: progressify 
+        href: https://progressify.futureverse.org
       - text: progressr 
         href: https://progressr.futureverse.org
       - text: future.p2p (experimental)
