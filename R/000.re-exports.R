@@ -18,6 +18,8 @@
 #    Used by: wqspt (1) [2025-03-15]
 #' * [parallelly::makeClusterPSOCK()]
 #    Used by: eatRep (1), interflex (2), ivDiag (1) [2026-04-08]
+#' * [parallelly::supportsMulticore()]
+#    Used by: LandComp (1), polarisR (1) [2026-04-16]
 #
 #  (1) Issue filed or PR sent
 #  (2) In the next release
@@ -49,6 +51,10 @@
 #' @importFrom parallelly makeClusterPSOCK
 #' @export makeClusterPSOCK
 #' @aliases makeClusterPSOCK
+#'
+#' @importFrom parallelly supportsMulticore
+#' @export supportsMulticore
+#' @aliases supportsMulticore
 #'
 #' @name re-exports
 #' @keywords internal
