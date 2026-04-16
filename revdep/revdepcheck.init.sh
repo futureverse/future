@@ -25,14 +25,14 @@ fi
 ## Add packages to check
 revdep/run.R --add-children
 
-## Drop packages failing on CRAN (2026-03-27)
-revdep/run.R --rm aramappings dispositionEffect EpiForsk sovereign
+## Drop packages failing on CRAN (2026-04-16)
+revdep/run.R --rm fmeffects DeclareDesign dispositionEffect
 
-## Drop packages failing on Bioconductor (2026-03-13)
+## Drop packages failing on Bioconductor (2026-04-16)
 revdep/run.R --rm dar MineICA pgxRpi
 
-## Drop packages no longer on CRAN (2026-03-27)
-revdep/run.R --rm mbbe oncomsm
+## Drop packages no longer on CRAN (2026-04-16)
+revdep/run.R --rm mbbe oncomsm sovereign
 
 ## Drop packages failing on Bioconductor (2026-03-07)
 # revdep/run.R --rm ...
@@ -63,9 +63,14 @@ revdep/run.R --rm iscream
 pkgs_seq=(dipsaus fiery robust2sls)
 revdep/run.R --rm "${pkgs_seq[@]}"
 
-## Too many cores
-pkgs_limit=(fmeffects scStability)
-revdep/run.R --rm "${pkgs_limit[@]}"
+## Too many threads /2026-04-16
+pkgs_threads=()
+#revdep/run.R --rm "${pkgs_threads[@]}"
+
+# Too many cores /2026-04-16
+## FIXME: Some of these package should be moved to 'pkgs_treads'
+pkgs_cores=(scStability)
+revdep/run.R --rm "${pkgs_cores[@]}"
 
 ## Too many cores due to detectCores
 pkgs_detectCores=(FracFixR lavDiag)
@@ -78,8 +83,12 @@ revdep/run.R
 ## ---------------------------------------------------------------------
 ## Phase 2
 ## ---------------------------------------------------------------------
-## Limit CPU use
-revdep/run.R --add "${pkgs_limit[@]}"
+## Set: Too many threads
+revdep/run.R --add "${pkgs_threads[@]}"
+OMP_NUM_THREADS=4 revdep/run.R
+
+## Set: Too many cores
+revdep/run.R --add "${pkgs_cores[@]}"
 OMP_NUM_THREADS=4 NSLOTS=4 revdep/run.R
 
 ## Sequential
