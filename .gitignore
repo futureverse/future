@@ -24,3 +24,4 @@ revdep/checks/*
 revdep/library/*
 .Rdump
 .local/gh
+.osgrep

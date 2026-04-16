@@ -5,6 +5,7 @@
 \alias{availableCores}
 \alias{availableWorkers}
 \alias{makeClusterPSOCK}
+\alias{supportsMulticore}
 \title{Functions Moved to 'parallelly'}
 \description{
 The following function used to be part of \pkg{future}, but has since
@@ -19,6 +20,7 @@ switch to use the ones from the \pkg{parallelly} package. Thank you!}
 \item \code{\link[parallelly:availableCores]{parallelly::availableCores()}}
 \item \code{\link[parallelly:availableWorkers]{parallelly::availableWorkers()}}
 \item \code{\link[parallelly:makeClusterPSOCK]{parallelly::makeClusterPSOCK()}}
+\item \code{\link[parallelly:supportsMulticore]{parallelly::supportsMulticore()}}
 }
 
 For backward-compatible reasons, \emph{some} of these functions remain

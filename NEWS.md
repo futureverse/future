@@ -1,10 +1,6 @@
 # Version (development version)
 
-## Significant Changes
-
- * Removed `supportsMulticore()`, which has been re-exported
-   from the **parallelly** package since 2020. If needed, please use
-   it from the **parallelly** package instead.
+ * ...
  
 
 # Version 1.70.0 [2026-03-13]
