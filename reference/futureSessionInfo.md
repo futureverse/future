@@ -29,7 +29,7 @@ Nothing.
 plan(multisession, workers = 2)
 futureSessionInfo()
 #> *** Package versions
-#> future 1.70.0.9002, parallelly 1.46.1.9033, parallel 4.5.3, globals 0.19.1, listenv 0.10.1
+#> future 1.70.0.9004, parallelly 1.47.0, parallel 4.6.0, globals 0.19.1, listenv 0.10.1
 #> 
 #> *** Allocations
 #> availableCores():
@@ -68,19 +68,19 @@ futureSessionInfo()
 #> 
 #> *** Basic tests
 #> Main R session details:
-#>      pid     r sysname           release
-#> 1 275224 4.5.3   Linux 6.17.0-20-generic
+#>       pid     r sysname           release
+#> 1 1177874 4.6.0   Linux 6.17.0-22-generic
 #>                                                            version nodename
-#> 1 #20~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Thu Mar 19 01:28:37 UTC 2  host001
+#> 1 #22~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Thu Mar 26 15:25:54 UTC 2  host001
 #>   machine   login    user effective_user
 #> 1  x86_64 user001 user001        user001
 #> Worker R session details:
-#>   worker    pid     r sysname           release
-#> 1      1 276166 4.5.3   Linux 6.17.0-20-generic
-#> 2      2 276167 4.5.3   Linux 6.17.0-20-generic
+#>   worker     pid     r sysname           release
+#> 1      1 1178751 4.6.0   Linux 6.17.0-22-generic
+#> 2      2 1178750 4.6.0   Linux 6.17.0-22-generic
 #>                                                            version nodename
-#> 1 #20~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Thu Mar 19 01:28:37 UTC 2  host001
-#> 2 #20~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Thu Mar 19 01:28:37 UTC 2  host001
+#> 1 #22~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Thu Mar 26 15:25:54 UTC 2  host001
+#> 2 #22~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Thu Mar 26 15:25:54 UTC 2  host001
 #>   machine   login    user effective_user
 #> 1  x86_64 user001 user001        user001
 #> 2  x86_64 user001 user001        user001

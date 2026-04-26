@@ -20,6 +20,10 @@ sequential(..., envir = parent.frame())
 
   Not used.
 
+## Value
+
+Nothing.
+
 ## Details
 
 A sequential future is a future that is evaluated sequentially in the

@@ -447,12 +447,9 @@ globals ('model' of class 'keras.engine.functional.Functional') used in
 the future expression
 ```
 
-Functions
-[`serialize_model()`](https://rdrr.io/pkg/keras/man/serialize_model.html)
-and
-[`unserialize_model()`](https://rdrr.io/pkg/keras/man/serialize_model.html)
-of the **keras** package can be used as workaround to marshal and
-unmarshal non-exportable **keras** objects, e.g.
+Functions `serialize_model()` and `unserialize_model()` of the **keras**
+package can be used as workaround to marshal and unmarshal
+non-exportable **keras** objects, e.g.
 
 ``` r
 

@@ -38,6 +38,10 @@ cluster(
 
   Not used.
 
+## Value
+
+Nothing.
+
 ## Details
 
 A cluster future is a future that uses cluster evaluation, which means

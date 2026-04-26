@@ -42,9 +42,9 @@ res <- tryCatch({
 #> [[1]]
 #> base::tryCatch(base::withCallingHandlers({
 #>     NULL
-#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpAuoCt3/callr-fun-4326019a7c901"), 
+#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpJ6GUIU/callr-fun-11f86a146e363b"), 
 #>         base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
-#>         quote = TRUE), file = "/tmp/hb/RtmpAuoCt3/callr-res-432604dc2212a", 
+#>         quote = TRUE), file = "/tmp/hb/RtmpJ6GUIU/callr-res-11f86a3d65af82", 
 #>         compress = FALSE)
 #>     base::flush(base::stdout())
 #>     base::flush(base::stderr())
@@ -70,7 +70,7 @@ res <- tryCatch({
 #>         if (!base::is.na(cut)) {
 #>             e2$trace <- e2$trace[-(1:cut), ]
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpAuoCt3/callr-res-432604dc2212a", 
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpJ6GUIU/callr-res-11f86a3d65af82", 
 #>             ".error"))
 #>     }
 #> }, interrupt = function(e) {
@@ -93,7 +93,7 @@ res <- tryCatch({
 #>         if (!base::is.na(cut)) {
 #>             e2$trace <- e2$trace[-(1:cut), ]
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpAuoCt3/callr-res-432604dc2212a", 
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpJ6GUIU/callr-res-11f86a3d65af82", 
 #>             ".error"))
 #>     }
 #> }, callr_message = function(e) {
@@ -138,9 +138,9 @@ res <- tryCatch({
 #> [[8]]
 #> base::withCallingHandlers({
 #>     NULL
-#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpAuoCt3/callr-fun-4326019a7c901"), 
+#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpJ6GUIU/callr-fun-11f86a146e363b"), 
 #>         base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
-#>         quote = TRUE), file = "/tmp/hb/RtmpAuoCt3/callr-res-432604dc2212a", 
+#>         quote = TRUE), file = "/tmp/hb/RtmpJ6GUIU/callr-res-11f86a3d65af82", 
 #>         compress = FALSE)
 #>     base::flush(base::stdout())
 #>     base::flush(base::stderr())
@@ -166,7 +166,7 @@ res <- tryCatch({
 #>         if (!base::is.na(cut)) {
 #>             e2$trace <- e2$trace[-(1:cut), ]
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpAuoCt3/callr-res-432604dc2212a", 
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpJ6GUIU/callr-res-11f86a3d65af82", 
 #>             ".error"))
 #>     }
 #> }, interrupt = function(e) {
@@ -189,7 +189,7 @@ res <- tryCatch({
 #>         if (!base::is.na(cut)) {
 #>             e2$trace <- e2$trace[-(1:cut), ]
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpAuoCt3/callr-res-432604dc2212a", 
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpJ6GUIU/callr-res-11f86a3d65af82", 
 #>             ".error"))
 #>     }
 #> }, callr_message = function(e) {
@@ -197,13 +197,13 @@ res <- tryCatch({
 #> })
 #> 
 #> [[9]]
-#> base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpAuoCt3/callr-fun-4326019a7c901"), 
+#> base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpJ6GUIU/callr-fun-11f86a146e363b"), 
 #>     base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
-#>     quote = TRUE), file = "/tmp/hb/RtmpAuoCt3/callr-res-432604dc2212a", 
+#>     quote = TRUE), file = "/tmp/hb/RtmpJ6GUIU/callr-res-11f86a3d65af82", 
 #>     compress = FALSE)
 #> 
 #> [[10]]
-#> base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpAuoCt3/callr-fun-4326019a7c901"), 
+#> base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpJ6GUIU/callr-fun-11f86a146e363b"), 
 #>     base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
 #>     quote = TRUE)
 #> 
@@ -220,8 +220,8 @@ res <- tryCatch({
 #>     options(cli.num_colors = cli_colors, cli.hyperlink = hyperlinks, 
 #>         cli.hyperlink_run = hyperlinks)
 #>     pkgdown::build_site(...)
-#> }), base::quote(list(pkg = list(package = "future", version = "1.70.0-9002", 
-#>     src_path = "/tmp/hb/RtmpAuoCt3/future", meta = list(url = "https://future.futureverse.org", 
+#> }), base::quote(list(pkg = list(package = "future", version = "1.70.0-9004", 
+#>     src_path = "/tmp/hb/RtmpJ6GUIU/future", meta = list(url = "https://future.futureverse.org", 
 #>         home = list(links = list(list(text = "Roadmap/Milestones", 
 #>             href = "https://github.com/futureverse/future/milestones"), 
 #>             list(text = "The Futureverse Project", href = "https://www.futureverse.org/"), 
@@ -257,7 +257,7 @@ res <- tryCatch({
 #>             bootstrap = 5L, `light-switch` = TRUE)), desc = <environment>, 
 #>     bs_version = 5L, development = list(destination = "dev", 
 #>         mode = "default", version_label = "muted", in_dev = FALSE, 
-#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/RtmpAuoCt3/future/docs", 
+#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/RtmpJ6GUIU/future/docs", 
 #>     lang = "en-US", install_metadata = FALSE, figures = list(
 #>         dev = "ragg::agg_png", dpi = 96L, dev.args = list(), 
 #>         fig.ext = "png", fig.width = 7.29166666666667, fig.height = NULL, 
@@ -351,7 +351,7 @@ res <- tryCatch({
 #>         "nbrOfFreeWorkers"), nullcon.Rd = "nullcon", plan.Rd = c("plan", 
 #>         "with.FutureStrategyList", "tweak"), private_length.Rd = ".length", 
 #>         `re-exports.Rd` = c("re-exports", "availableCores", "availableWorkers", 
-#>         "makeClusterPSOCK"), readImmediateConditions.Rd = c("readImmediateConditions", 
+#>         "makeClusterPSOCK", "supportsMulticore"), readImmediateConditions.Rd = c("readImmediateConditions", 
 #>         "saveImmediateCondition"), requestCore.Rd = "requestCore", 
 #>         reset.Rd = "reset", resetWorkers.Rd = "resetWorkers", 
 #>         resolve.Rd = "resolve", resolved.Rd = c("resolved.ClusterFuture", 
@@ -918,7 +918,8 @@ res <- tryCatch({
 #>                   list(list("persistent"), list("If FALSE, the evaluation environment is cleared\n", 
 #>                     "from objects prior to the evaluation of the future.")), 
 #>                   "\n", "\n", list(list(list()), list("Not used.")), 
-#>                   "\n"), "\n", list("\n", list("WARNING: This function must never be called.\n", 
+#>                   "\n"), "\n", list("\n", "Nothing.\n"), "\n", 
+#>                 list("\n", list("WARNING: This function must never be called.\n", 
 #>                   "It may only be used with ", list(list("plan()"))), 
 #>                   "\n"), "\n", list("\n", "A cluster future is a future that uses cluster evaluation,\n", 
 #>                   "which means that its ", list("value is computed and resolved in\n", 
@@ -1740,8 +1741,9 @@ res <- tryCatch({
 #>                   "sequential future. To override this fallback, use ", 
 #>                   list("workers = I(1)"), ".")), "\n", "\n", 
 #>                   list(list(list()), list("Not used.")), "\n"), 
-#>                 "\n", list("\n", list("WARNING: This function must never be called.\n", 
-#>                   "It may only be used with ", list(list("plan()"))), 
+#>                 "\n", list("\n", "Nothing.\n"), "\n", list("\n", 
+#>                   list("WARNING: This function must never be called.\n", 
+#>                     "It may only be used with ", list(list("plan()"))), 
 #>                   "\n"), "\n", list("\n", "A multicore future is a future that uses multicore evaluation,\n", 
 #>                   "which means that its ", list("value is computed and resolved in\n", 
 #>                     "parallel in another process"), ".\n", "\n", 
@@ -2128,7 +2130,8 @@ res <- tryCatch({
 #>                 "\n", "% Please edit documentation in R/000.re-exports.R", 
 #>                 "\n", list("re-exports"), "\n", list("re-exports"), 
 #>                 "\n", list("availableCores"), "\n", list("availableWorkers"), 
-#>                 "\n", list("makeClusterPSOCK"), "\n", list("Functions Moved to 'parallelly'"), 
+#>                 "\n", list("makeClusterPSOCK"), "\n", list("supportsMulticore"), 
+#>                 "\n", list("Functions Moved to 'parallelly'"), 
 #>                 "\n", list("\n", "The following function used to be part of ", 
 #>                   list("future"), ", but has since\n", "been migrated to ", 
 #>                   list("parallelly"), ". The migration started with\n", 
@@ -2140,6 +2143,7 @@ res <- tryCatch({
 #>                   "\n", list("\n", list(), " ", list(list("parallelly::availableCores()")), 
 #>                     "\n", list(), " ", list(list("parallelly::availableWorkers()")), 
 #>                     "\n", list(), " ", list(list("parallelly::makeClusterPSOCK()")), 
+#>                     "\n", list(), " ", list(list("parallelly::supportsMulticore()")), 
 #>                     "\n"), "\n", "\n", "For backward-compatible reasons, ", 
 #>                   list("some"), " of these functions remain\n", 
 #>                   "available as exact copies also from this package (as re-exports), e.g.\n", 
@@ -2412,8 +2416,8 @@ res <- tryCatch({
 #>                   list("environment"), " from where global objects should be\n", 
 #>                   "identified.")), "\n", "\n", list(list(list()), 
 #>                   list("Not used.")), "\n"), "\n", list("\n", 
-#>                   list("WARNING: This function must never be called.\n", 
-#>                     "It may only be used with ", list(list("plan()"))), 
+#>                   "Nothing.\n"), "\n", list("\n", list("WARNING: This function must never be called.\n", 
+#>                   "It may only be used with ", list(list("plan()"))), 
 #>                   "\n"), "\n", list("\n", "A sequential future is a future that is evaluated sequentially in the\n", 
 #>                   "current ", list(), " session similarly to how ", 
 #>                   list(), " expressions are evaluated in ", list(), 
@@ -3017,8 +3021,8 @@ res <- tryCatch({
 #>     options(cli.num_colors = cli_colors, cli.hyperlink = hyperlinks, 
 #>         cli.hyperlink_run = hyperlinks)
 #>     pkgdown::build_site(...)
-#> })(pkg = base::quote(list(package = "future", version = "1.70.0-9002", 
-#>     src_path = "/tmp/hb/RtmpAuoCt3/future", meta = list(url = "https://future.futureverse.org", 
+#> })(pkg = base::quote(list(package = "future", version = "1.70.0-9004", 
+#>     src_path = "/tmp/hb/RtmpJ6GUIU/future", meta = list(url = "https://future.futureverse.org", 
 #>         home = list(links = list(list(text = "Roadmap/Milestones", 
 #>             href = "https://github.com/futureverse/future/milestones"), 
 #>             list(text = "The Futureverse Project", href = "https://www.futureverse.org/"), 
@@ -3054,7 +3058,7 @@ res <- tryCatch({
 #>             bootstrap = 5L, `light-switch` = TRUE)), desc = <environment>, 
 #>     bs_version = 5L, development = list(destination = "dev", 
 #>         mode = "default", version_label = "muted", in_dev = FALSE, 
-#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/RtmpAuoCt3/future/docs", 
+#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/RtmpJ6GUIU/future/docs", 
 #>     lang = "en-US", install_metadata = FALSE, figures = list(
 #>         dev = "ragg::agg_png", dpi = 96L, dev.args = list(), 
 #>         fig.ext = "png", fig.width = 7.29166666666667, fig.height = NULL, 
@@ -3148,7 +3152,7 @@ res <- tryCatch({
 #>         "nbrOfFreeWorkers"), nullcon.Rd = "nullcon", plan.Rd = c("plan", 
 #>         "with.FutureStrategyList", "tweak"), private_length.Rd = ".length", 
 #>         `re-exports.Rd` = c("re-exports", "availableCores", "availableWorkers", 
-#>         "makeClusterPSOCK"), readImmediateConditions.Rd = c("readImmediateConditions", 
+#>         "makeClusterPSOCK", "supportsMulticore"), readImmediateConditions.Rd = c("readImmediateConditions", 
 #>         "saveImmediateCondition"), requestCore.Rd = "requestCore", 
 #>         reset.Rd = "reset", resetWorkers.Rd = "resetWorkers", 
 #>         resolve.Rd = "resolve", resolved.Rd = c("resolved.ClusterFuture", 
@@ -3715,7 +3719,8 @@ res <- tryCatch({
 #>                   list(list("persistent"), list("If FALSE, the evaluation environment is cleared\n", 
 #>                     "from objects prior to the evaluation of the future.")), 
 #>                   "\n", "\n", list(list(list()), list("Not used.")), 
-#>                   "\n"), "\n", list("\n", list("WARNING: This function must never be called.\n", 
+#>                   "\n"), "\n", list("\n", "Nothing.\n"), "\n", 
+#>                 list("\n", list("WARNING: This function must never be called.\n", 
 #>                   "It may only be used with ", list(list("plan()"))), 
 #>                   "\n"), "\n", list("\n", "A cluster future is a future that uses cluster evaluation,\n", 
 #>                   "which means that its ", list("value is computed and resolved in\n", 
@@ -4537,8 +4542,9 @@ res <- tryCatch({
 #>                   "sequential future. To override this fallback, use ", 
 #>                   list("workers = I(1)"), ".")), "\n", "\n", 
 #>                   list(list(list()), list("Not used.")), "\n"), 
-#>                 "\n", list("\n", list("WARNING: This function must never be called.\n", 
-#>                   "It may only be used with ", list(list("plan()"))), 
+#>                 "\n", list("\n", "Nothing.\n"), "\n", list("\n", 
+#>                   list("WARNING: This function must never be called.\n", 
+#>                     "It may only be used with ", list(list("plan()"))), 
 #>                   "\n"), "\n", list("\n", "A multicore future is a future that uses multicore evaluation,\n", 
 #>                   "which means that its ", list("value is computed and resolved in\n", 
 #>                     "parallel in another process"), ".\n", "\n", 
@@ -4925,7 +4931,8 @@ res <- tryCatch({
 #>                 "\n", "% Please edit documentation in R/000.re-exports.R", 
 #>                 "\n", list("re-exports"), "\n", list("re-exports"), 
 #>                 "\n", list("availableCores"), "\n", list("availableWorkers"), 
-#>                 "\n", list("makeClusterPSOCK"), "\n", list("Functions Moved to 'parallelly'"), 
+#>                 "\n", list("makeClusterPSOCK"), "\n", list("supportsMulticore"), 
+#>                 "\n", list("Functions Moved to 'parallelly'"), 
 #>                 "\n", list("\n", "The following function used to be part of ", 
 #>                   list("future"), ", but has since\n", "been migrated to ", 
 #>                   list("parallelly"), ". The migration started with\n", 
@@ -4937,6 +4944,7 @@ res <- tryCatch({
 #>                   "\n", list("\n", list(), " ", list(list("parallelly::availableCores()")), 
 #>                     "\n", list(), " ", list(list("parallelly::availableWorkers()")), 
 #>                     "\n", list(), " ", list(list("parallelly::makeClusterPSOCK()")), 
+#>                     "\n", list(), " ", list(list("parallelly::supportsMulticore()")), 
 #>                     "\n"), "\n", "\n", "For backward-compatible reasons, ", 
 #>                   list("some"), " of these functions remain\n", 
 #>                   "available as exact copies also from this package (as re-exports), e.g.\n", 
@@ -5209,8 +5217,8 @@ res <- tryCatch({
 #>                   list("environment"), " from where global objects should be\n", 
 #>                   "identified.")), "\n", "\n", list(list(list()), 
 #>                   list("Not used.")), "\n"), "\n", list("\n", 
-#>                   list("WARNING: This function must never be called.\n", 
-#>                     "It may only be used with ", list(list("plan()"))), 
+#>                   "Nothing.\n"), "\n", list("\n", list("WARNING: This function must never be called.\n", 
+#>                   "It may only be used with ", list(list("plan()"))), 
 #>                   "\n"), "\n", list("\n", "A sequential future is a future that is evaluated sequentially in the\n", 
 #>                   "current ", list(), " session similarly to how ", 
 #>                   list(), " expressions are evaluated in ", list(), 

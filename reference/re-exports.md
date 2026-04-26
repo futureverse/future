@@ -16,6 +16,8 @@ use the ones from the parallelly package. Thank you!*
 
 - [`parallelly::makeClusterPSOCK()`](https://parallelly.futureverse.org/reference/makeClusterPSOCK.html)
 
+- [`parallelly::supportsMulticore()`](https://parallelly.futureverse.org/reference/supportsMulticore.html)
+
 For backward-compatible reasons, *some* of these functions remain
 available as exact copies also from this package (as re-exports), e.g.
 

@@ -2,11 +2,7 @@
 
 ## Version (development version)
 
-### Significant Changes
-
-- Removed `supportsMulticore()`, which has been re-exported from the
-  **parallelly** package since 2020. If needed, please use it from the
-  **parallelly** package instead.
+- …
 
 ## Version 1.70.0
 
@@ -1289,8 +1285,8 @@ CRAN release: 2020-11-03
   moved to a new **parallelly** package. Specifically, functions
   [`availableCores()`](https://future.futureverse.org/reference/re-exports.md),
   [`availableWorkers()`](https://future.futureverse.org/reference/re-exports.md),
-  `supportsMulticore()`, `as.cluster()`, `autoStopCluster()`,
-  `makeClusterMPI()`,
+  [`supportsMulticore()`](https://future.futureverse.org/reference/re-exports.md),
+  `as.cluster()`, `autoStopCluster()`, `makeClusterMPI()`,
   [`makeClusterPSOCK()`](https://future.futureverse.org/reference/re-exports.md),
   and `makeNodePSOCK()` have been moved. None of them are specific to
   futures per se and are likely useful elsewhere too. Also, having them
@@ -1881,7 +1877,8 @@ CRAN release: 2019-05-08
   RStudio. When disabled, ‘multicore’ futures fall back to ‘sequential’
   futures. This update follows from an RStudio recommendation against
   using *forked* parallel processing from within RStudio because it is
-  likely to break the RStudio R session. See `help("supportsMulticore")`
+  likely to break the RStudio R session. See
+  [`help("supportsMulticore")`](https://future.futureverse.org/reference/re-exports.md)
   for more details, e.g. how to re-enable process forking. Note that
   parallelization via ‘multisession’ is unaffected and will still work
   as before. Also, when forked processing is disabled, or otherwise not
@@ -1897,7 +1894,8 @@ CRAN release: 2019-05-08
   process forking. If set of TRUE, ‘multicore’ will not fall back to
   ‘sequential’. If NA, or not set (the default), a set of best-practices
   rules will decide whether forking is enabled or not. See
-  `help("supportsMulticore")` for more details.
+  [`help("supportsMulticore")`](https://future.futureverse.org/reference/re-exports.md)
+  for more details.
 
 - Now
   [`availableCores()`](https://future.futureverse.org/reference/re-exports.md)

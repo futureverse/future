@@ -23,6 +23,10 @@ multicore(..., workers = availableCores(constraints = "multicore"))
 
   Not used.
 
+## Value
+
+Nothing.
+
 ## Details
 
 A multicore future is a future that uses multicore evaluation, which
