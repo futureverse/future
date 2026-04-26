@@ -643,6 +643,8 @@ interruptFuture.MulticoreFutureBackend <- function(backend, future, ...) {
 #'
 #' @param \ldots Not used.
 #'
+#' @return Nothing.
+#'
 #' @example incl/multicore.R
 #'
 #' @section Support for forked ("multicore") processing:

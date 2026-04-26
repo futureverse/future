@@ -17,6 +17,9 @@ sequential future. To override this fallback, use \code{workers = I(1)}.}
 
 \item{\ldots}{Not used.}
 }
+\value{
+Nothing.
+}
 \description{
 \emph{WARNING: This function must never be called.
 It may only be used with \code{\link[=plan]{plan()}}}

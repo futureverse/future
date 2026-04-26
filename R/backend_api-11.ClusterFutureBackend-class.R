@@ -1673,6 +1673,8 @@ handleInterruptedFuture <- local({
 #' 
 #' @param \ldots Not used.
 #'
+#' @return Nothing.
+#'
 #' @example incl/cluster.R
 #'
 #' @seealso

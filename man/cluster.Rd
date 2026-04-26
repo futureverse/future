@@ -28,6 +28,9 @@ from objects prior to the evaluation of the future.}
 
 \item{\ldots}{Not used.}
 }
+\value{
+Nothing.
+}
 \description{
 \emph{WARNING: This function must never be called.
 It may only be used with \code{\link[=plan]{plan()}}}
