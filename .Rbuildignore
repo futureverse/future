@@ -1,64 +1,13 @@
-#----------------------------
-# Git and SVN related
-#----------------------------
-^.pre-commit-config.yaml$
-^.svn
-^.git
-^.make
+^[.][^a].*/
+^docs/
+^incl/
+^pkgdown/
+^revdep/
 ^INSTALL[.]md$
 ^OVERVIEW[.]md$
-^README.*[.]md$
 ^CONDUCT[.]md$
 ^CONTRIBUTING[.]md$
-^docs
-^pkgdown
-
-#----------------------------
-# devtools
-#----------------------------
-revdep
-
-#----------------------------
-# Travis-CI et al.
-#----------------------------
-^[.]travis[.]yml$
-^travis-tool[.]sh$
-^pkg-build[.]sh$
-^appveyor[.]yml$
-^covr-utils.R$
-^[.]covr[.]R$
-^[.]covr[.]rds$
-
-#----------------------------
-# R related
-#----------------------------
-Rplots.pdf$
-^cran-comments[.].*$
-^vignettes/.*[.](pdf|PDF)$
-^vignettes/.*[.](r|R)$
-^vignettes/[.]install_extras$
+^README.*[.]md$
 ^Makefile$
-^incl
-^NAMESPACE,.*[.]txt$
-^nohup.*$
-^[.]R
-^[.]benchmark
-^[.]devel
-^[.]test
-^[.]check
-^[.]local
 ^.*[.]tar[.]gz$
-
-#----------------------------
-# Package specific
-#----------------------------
-^[.]BatchJobs[.]R$
-^[.]future
-
-#----------------------------
-# Miscellaneous
-#----------------------------
-^.ghi
-^.issues
-^last.dump*
-[.]Rdump
+^[.]pre-commit-config.yaml$
