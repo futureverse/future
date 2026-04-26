@@ -133,6 +133,14 @@ makeClusterFuture <- function(specs = nbrOfWorkers(), ...) {
   }
   
   options <- list(...)
+  opts <- getOption("future.disposable", NULL)
+  if (length(opts) > 0) {
+    options <- c(options, opts)
+    if (!identical(attr(opts, "dispose"), FALSE)) {
+      options(future.disposable = NULL)
+    }
+  }
+  
   if (length(options) > 0L) {
     names <- names(options)
     if (is.null(names) || !all(nzchar(names))) {
