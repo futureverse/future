@@ -94,8 +94,8 @@ MultisessionFutureBackend(
   at home and have set up a future backend with workers running remotely
   at your university or company, then you might want to use this
   protection to avoid transferring giga- or terabytes of data without
-  noticing. (Default: \\500 \cdot 1024^2\\ bytes = 500 MiB, unless
-  overridden by a FutureBackend subclass, or by R option
+  noticing. (Default: +Inf, unless overridden by a FutureBackend
+  subclass, or by R option
   [future.globals.maxSize](https://future.futureverse.org/reference/zzz-future.options.md)
   (sic!))
 

@@ -123,9 +123,9 @@ y <- parallel::parLapply(cl, 11:13, function(x) {
   message("Process ID: ", Sys.getpid())
   mean(rnorm(n = x))
 })
-#> Process ID: 1178897
-#> Process ID: 1178893
-#> Process ID: 1178895
+#> Process ID: 2419435
+#> Process ID: 2419440
+#> Process ID: 2419436
 str(y)
 #> List of 3
 #>  $ : num 0.315

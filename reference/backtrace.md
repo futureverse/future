@@ -42,9 +42,9 @@ res <- tryCatch({
 #> [[1]]
 #> base::tryCatch(base::withCallingHandlers({
 #>     NULL
-#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpJ6GUIU/callr-fun-11f86a146e363b"), 
+#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpCBSK8Z/callr-fun-24e476104e835c"), 
 #>         base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
-#>         quote = TRUE), file = "/tmp/hb/RtmpJ6GUIU/callr-res-11f86a3d65af82", 
+#>         quote = TRUE), file = "/tmp/hb/RtmpCBSK8Z/callr-res-24e4763e679d93", 
 #>         compress = FALSE)
 #>     base::flush(base::stdout())
 #>     base::flush(base::stderr())
@@ -70,7 +70,7 @@ res <- tryCatch({
 #>         if (!base::is.na(cut)) {
 #>             e2$trace <- e2$trace[-(1:cut), ]
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpJ6GUIU/callr-res-11f86a3d65af82", 
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpCBSK8Z/callr-res-24e4763e679d93", 
 #>             ".error"))
 #>     }
 #> }, interrupt = function(e) {
@@ -93,7 +93,7 @@ res <- tryCatch({
 #>         if (!base::is.na(cut)) {
 #>             e2$trace <- e2$trace[-(1:cut), ]
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpJ6GUIU/callr-res-11f86a3d65af82", 
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpCBSK8Z/callr-res-24e4763e679d93", 
 #>             ".error"))
 #>     }
 #> }, callr_message = function(e) {
@@ -138,9 +138,9 @@ res <- tryCatch({
 #> [[8]]
 #> base::withCallingHandlers({
 #>     NULL
-#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpJ6GUIU/callr-fun-11f86a146e363b"), 
+#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpCBSK8Z/callr-fun-24e476104e835c"), 
 #>         base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
-#>         quote = TRUE), file = "/tmp/hb/RtmpJ6GUIU/callr-res-11f86a3d65af82", 
+#>         quote = TRUE), file = "/tmp/hb/RtmpCBSK8Z/callr-res-24e4763e679d93", 
 #>         compress = FALSE)
 #>     base::flush(base::stdout())
 #>     base::flush(base::stderr())
@@ -166,7 +166,7 @@ res <- tryCatch({
 #>         if (!base::is.na(cut)) {
 #>             e2$trace <- e2$trace[-(1:cut), ]
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpJ6GUIU/callr-res-11f86a3d65af82", 
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpCBSK8Z/callr-res-24e4763e679d93", 
 #>             ".error"))
 #>     }
 #> }, interrupt = function(e) {
@@ -189,7 +189,7 @@ res <- tryCatch({
 #>         if (!base::is.na(cut)) {
 #>             e2$trace <- e2$trace[-(1:cut), ]
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpJ6GUIU/callr-res-11f86a3d65af82", 
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpCBSK8Z/callr-res-24e4763e679d93", 
 #>             ".error"))
 #>     }
 #> }, callr_message = function(e) {
@@ -197,13 +197,13 @@ res <- tryCatch({
 #> })
 #> 
 #> [[9]]
-#> base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpJ6GUIU/callr-fun-11f86a146e363b"), 
+#> base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpCBSK8Z/callr-fun-24e476104e835c"), 
 #>     base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
-#>     quote = TRUE), file = "/tmp/hb/RtmpJ6GUIU/callr-res-11f86a3d65af82", 
+#>     quote = TRUE), file = "/tmp/hb/RtmpCBSK8Z/callr-res-24e4763e679d93", 
 #>     compress = FALSE)
 #> 
 #> [[10]]
-#> base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpJ6GUIU/callr-fun-11f86a146e363b"), 
+#> base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpCBSK8Z/callr-fun-24e476104e835c"), 
 #>     base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
 #>     quote = TRUE)
 #> 
@@ -220,8 +220,8 @@ res <- tryCatch({
 #>     options(cli.num_colors = cli_colors, cli.hyperlink = hyperlinks, 
 #>         cli.hyperlink_run = hyperlinks)
 #>     pkgdown::build_site(...)
-#> }), base::quote(list(pkg = list(package = "future", version = "1.70.0-9004", 
-#>     src_path = "/tmp/hb/RtmpJ6GUIU/future", meta = list(url = "https://future.futureverse.org", 
+#> }), base::quote(list(pkg = list(package = "future", version = "1.70.0-9006", 
+#>     src_path = "/tmp/hb/RtmpCBSK8Z/future", meta = list(url = "https://future.futureverse.org", 
 #>         home = list(links = list(list(text = "Roadmap/Milestones", 
 #>             href = "https://github.com/futureverse/future/milestones"), 
 #>             list(text = "The Futureverse Project", href = "https://www.futureverse.org/"), 
@@ -257,7 +257,7 @@ res <- tryCatch({
 #>             bootstrap = 5L, `light-switch` = TRUE)), desc = <environment>, 
 #>     bs_version = 5L, development = list(destination = "dev", 
 #>         mode = "default", version_label = "muted", in_dev = FALSE, 
-#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/RtmpJ6GUIU/future/docs", 
+#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/RtmpCBSK8Z/future/docs", 
 #>     lang = "en-US", install_metadata = FALSE, figures = list(
 #>         dev = "ragg::agg_png", dpi = 96L, dev.args = list(), 
 #>         fig.ext = "png", fig.width = 7.29166666666667, fig.height = NULL, 
@@ -611,8 +611,7 @@ res <- tryCatch({
 #>                   "if you sit at home and have set up a future backend with workers running\n", 
 #>                   "remotely at your university or company, then you might want to use this\n", 
 #>                   "protection to avoid transferring giga- or terabytes of data without noticing.\n", 
-#>                   "(Default: ", list(list("500 \\cdot 1024^2")), 
-#>                   " bytes = 500 MiB, unless overridden by a\n", 
+#>                   "(Default: +Inf, unless overridden by a\n", 
 #>                   "FutureBackend subclass, or by R option ", 
 #>                   list("future.globals.maxSize"), " (sic!))")), 
 #>                 "\n", "\n", list(list("interrupts"), list("If FALSE, attempts to interrupt futures will not take\n", 
@@ -3021,8 +3020,8 @@ res <- tryCatch({
 #>     options(cli.num_colors = cli_colors, cli.hyperlink = hyperlinks, 
 #>         cli.hyperlink_run = hyperlinks)
 #>     pkgdown::build_site(...)
-#> })(pkg = base::quote(list(package = "future", version = "1.70.0-9004", 
-#>     src_path = "/tmp/hb/RtmpJ6GUIU/future", meta = list(url = "https://future.futureverse.org", 
+#> })(pkg = base::quote(list(package = "future", version = "1.70.0-9006", 
+#>     src_path = "/tmp/hb/RtmpCBSK8Z/future", meta = list(url = "https://future.futureverse.org", 
 #>         home = list(links = list(list(text = "Roadmap/Milestones", 
 #>             href = "https://github.com/futureverse/future/milestones"), 
 #>             list(text = "The Futureverse Project", href = "https://www.futureverse.org/"), 
@@ -3058,7 +3057,7 @@ res <- tryCatch({
 #>             bootstrap = 5L, `light-switch` = TRUE)), desc = <environment>, 
 #>     bs_version = 5L, development = list(destination = "dev", 
 #>         mode = "default", version_label = "muted", in_dev = FALSE, 
-#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/RtmpJ6GUIU/future/docs", 
+#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/RtmpCBSK8Z/future/docs", 
 #>     lang = "en-US", install_metadata = FALSE, figures = list(
 #>         dev = "ragg::agg_png", dpi = 96L, dev.args = list(), 
 #>         fig.ext = "png", fig.width = 7.29166666666667, fig.height = NULL, 
@@ -3412,8 +3411,7 @@ res <- tryCatch({
 #>                   "if you sit at home and have set up a future backend with workers running\n", 
 #>                   "remotely at your university or company, then you might want to use this\n", 
 #>                   "protection to avoid transferring giga- or terabytes of data without noticing.\n", 
-#>                   "(Default: ", list(list("500 \\cdot 1024^2")), 
-#>                   " bytes = 500 MiB, unless overridden by a\n", 
+#>                   "(Default: +Inf, unless overridden by a\n", 
 #>                   "FutureBackend subclass, or by R option ", 
 #>                   list("future.globals.maxSize"), " (sic!))")), 
 #>                 "\n", "\n", list(list("interrupts"), list("If FALSE, attempts to interrupt futures will not take\n", 
