@@ -32,7 +32,7 @@
 #' if you sit at home and have set up a future backend with workers running
 #' remotely at your university or company, then you might want to use this
 #' protection to avoid transferring giga- or terabytes of data without noticing.
-#' (Default: \eqn{500 \cdot 1024^2} bytes = 500 MiB, unless overridden by a
+#' (Default: +Inf, unless overridden by a
 #'  FutureBackend subclass, or by R option [future.globals.maxSize] (sic!))
 #'
 #' @param interrupts If FALSE, attempts to interrupt futures will not take
@@ -46,7 +46,7 @@
 #'
 #' @section The FutureBackend API:
 #' The `FutureBackend` class specifies FutureBackend API,
-#' that all backends must implement and comply to. Specifically,
+#' that all backends must implement and comply to.
 #'
 #' @name FutureBackend-class
 #' @keywords internal
