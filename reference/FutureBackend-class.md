@@ -168,7 +168,7 @@ The `MultisessionFutureBackend` backend is selected by
 ## The FutureBackend API
 
 The `FutureBackend` class specifies FutureBackend API, that all backends
-must implement and comply to. Specifically,
+must implement and comply to.
 
 ## See also
 

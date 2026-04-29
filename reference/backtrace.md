@@ -42,9 +42,9 @@ res <- tryCatch({
 #> [[1]]
 #> base::tryCatch(base::withCallingHandlers({
 #>     NULL
-#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpCBSK8Z/callr-fun-24e476104e835c"), 
+#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/Rtmpzt5aQz/callr-fun-25398a4821263a"), 
 #>         base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
-#>         quote = TRUE), file = "/tmp/hb/RtmpCBSK8Z/callr-res-24e4763e679d93", 
+#>         quote = TRUE), file = "/tmp/hb/Rtmpzt5aQz/callr-res-25398a62e4bf81", 
 #>         compress = FALSE)
 #>     base::flush(base::stdout())
 #>     base::flush(base::stderr())
@@ -70,7 +70,7 @@ res <- tryCatch({
 #>         if (!base::is.na(cut)) {
 #>             e2$trace <- e2$trace[-(1:cut), ]
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpCBSK8Z/callr-res-24e4763e679d93", 
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/Rtmpzt5aQz/callr-res-25398a62e4bf81", 
 #>             ".error"))
 #>     }
 #> }, interrupt = function(e) {
@@ -93,7 +93,7 @@ res <- tryCatch({
 #>         if (!base::is.na(cut)) {
 #>             e2$trace <- e2$trace[-(1:cut), ]
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpCBSK8Z/callr-res-24e4763e679d93", 
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/Rtmpzt5aQz/callr-res-25398a62e4bf81", 
 #>             ".error"))
 #>     }
 #> }, callr_message = function(e) {
@@ -138,9 +138,9 @@ res <- tryCatch({
 #> [[8]]
 #> base::withCallingHandlers({
 #>     NULL
-#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpCBSK8Z/callr-fun-24e476104e835c"), 
+#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/Rtmpzt5aQz/callr-fun-25398a4821263a"), 
 #>         base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
-#>         quote = TRUE), file = "/tmp/hb/RtmpCBSK8Z/callr-res-24e4763e679d93", 
+#>         quote = TRUE), file = "/tmp/hb/Rtmpzt5aQz/callr-res-25398a62e4bf81", 
 #>         compress = FALSE)
 #>     base::flush(base::stdout())
 #>     base::flush(base::stderr())
@@ -166,7 +166,7 @@ res <- tryCatch({
 #>         if (!base::is.na(cut)) {
 #>             e2$trace <- e2$trace[-(1:cut), ]
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpCBSK8Z/callr-res-24e4763e679d93", 
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/Rtmpzt5aQz/callr-res-25398a62e4bf81", 
 #>             ".error"))
 #>     }
 #> }, interrupt = function(e) {
@@ -189,7 +189,7 @@ res <- tryCatch({
 #>         if (!base::is.na(cut)) {
 #>             e2$trace <- e2$trace[-(1:cut), ]
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpCBSK8Z/callr-res-24e4763e679d93", 
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/Rtmpzt5aQz/callr-res-25398a62e4bf81", 
 #>             ".error"))
 #>     }
 #> }, callr_message = function(e) {
@@ -197,13 +197,13 @@ res <- tryCatch({
 #> })
 #> 
 #> [[9]]
-#> base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpCBSK8Z/callr-fun-24e476104e835c"), 
+#> base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/Rtmpzt5aQz/callr-fun-25398a4821263a"), 
 #>     base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
-#>     quote = TRUE), file = "/tmp/hb/RtmpCBSK8Z/callr-res-24e4763e679d93", 
+#>     quote = TRUE), file = "/tmp/hb/Rtmpzt5aQz/callr-res-25398a62e4bf81", 
 #>     compress = FALSE)
 #> 
 #> [[10]]
-#> base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpCBSK8Z/callr-fun-24e476104e835c"), 
+#> base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/Rtmpzt5aQz/callr-fun-25398a4821263a"), 
 #>     base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
 #>     quote = TRUE)
 #> 
@@ -221,7 +221,7 @@ res <- tryCatch({
 #>         cli.hyperlink_run = hyperlinks)
 #>     pkgdown::build_site(...)
 #> }), base::quote(list(pkg = list(package = "future", version = "1.70.0-9006", 
-#>     src_path = "/tmp/hb/RtmpCBSK8Z/future", meta = list(url = "https://future.futureverse.org", 
+#>     src_path = "/tmp/hb/Rtmpzt5aQz/future", meta = list(url = "https://future.futureverse.org", 
 #>         home = list(links = list(list(text = "Roadmap/Milestones", 
 #>             href = "https://github.com/futureverse/future/milestones"), 
 #>             list(text = "The Futureverse Project", href = "https://www.futureverse.org/"), 
@@ -257,7 +257,7 @@ res <- tryCatch({
 #>             bootstrap = 5L, `light-switch` = TRUE)), desc = <environment>, 
 #>     bs_version = 5L, development = list(destination = "dev", 
 #>         mode = "default", version_label = "muted", in_dev = FALSE, 
-#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/RtmpCBSK8Z/future/docs", 
+#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/Rtmpzt5aQz/future/docs", 
 #>     lang = "en-US", install_metadata = FALSE, figures = list(
 #>         dev = "ragg::agg_png", dpi = 96L, dev.args = list(), 
 #>         fig.ext = "png", fig.width = 7.29166666666667, fig.height = NULL, 
@@ -655,7 +655,7 @@ res <- tryCatch({
 #>                 " backend is selected by\n", list("plan(multisession, workers = workers)"), 
 #>                 ".\n"), "\n", list(list("The FutureBackend API"), 
 #>                 list("\n", "\n", "The ", list("FutureBackend"), 
-#>                   " class specifies FutureBackend API,\n", "that all backends must implement and comply to. Specifically,\n")), 
+#>                   " class specifies FutureBackend API,\n", "that all backends must implement and comply to.\n")), 
 #>             "\n", "\n", list("\n", "For alternative future backends, see the 'A Future for R: Available Future\n", 
 #>                 "Backends' vignette and ", list("https://www.futureverse.org/backends.html"), 
 #>                 ".\n", "\n", "For alternative future backends, see the 'A Future for R: Available Future\n", 
@@ -3021,7 +3021,7 @@ res <- tryCatch({
 #>         cli.hyperlink_run = hyperlinks)
 #>     pkgdown::build_site(...)
 #> })(pkg = base::quote(list(package = "future", version = "1.70.0-9006", 
-#>     src_path = "/tmp/hb/RtmpCBSK8Z/future", meta = list(url = "https://future.futureverse.org", 
+#>     src_path = "/tmp/hb/Rtmpzt5aQz/future", meta = list(url = "https://future.futureverse.org", 
 #>         home = list(links = list(list(text = "Roadmap/Milestones", 
 #>             href = "https://github.com/futureverse/future/milestones"), 
 #>             list(text = "The Futureverse Project", href = "https://www.futureverse.org/"), 
@@ -3057,7 +3057,7 @@ res <- tryCatch({
 #>             bootstrap = 5L, `light-switch` = TRUE)), desc = <environment>, 
 #>     bs_version = 5L, development = list(destination = "dev", 
 #>         mode = "default", version_label = "muted", in_dev = FALSE, 
-#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/RtmpCBSK8Z/future/docs", 
+#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/Rtmpzt5aQz/future/docs", 
 #>     lang = "en-US", install_metadata = FALSE, figures = list(
 #>         dev = "ragg::agg_png", dpi = 96L, dev.args = list(), 
 #>         fig.ext = "png", fig.width = 7.29166666666667, fig.height = NULL, 
@@ -3455,7 +3455,7 @@ res <- tryCatch({
 #>                 " backend is selected by\n", list("plan(multisession, workers = workers)"), 
 #>                 ".\n"), "\n", list(list("The FutureBackend API"), 
 #>                 list("\n", "\n", "The ", list("FutureBackend"), 
-#>                   " class specifies FutureBackend API,\n", "that all backends must implement and comply to. Specifically,\n")), 
+#>                   " class specifies FutureBackend API,\n", "that all backends must implement and comply to.\n")), 
 #>             "\n", "\n", list("\n", "For alternative future backends, see the 'A Future for R: Available Future\n", 
 #>                 "Backends' vignette and ", list("https://www.futureverse.org/backends.html"), 
 #>                 ".\n", "\n", "For alternative future backends, see the 'A Future for R: Available Future\n", 
