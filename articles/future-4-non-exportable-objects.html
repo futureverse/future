@@ -12,8 +12,8 @@
 <link rel="icon" sizes="any" href="../favicon.ico">
 <link rel="manifest" href="../site.webmanifest">
 <script src="../lightswitch.js"></script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="A Future for R: Non-Exportable Objects">
 <!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-SB3EQSD9FR"></script><script>
@@ -32,7 +32,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.70.0-9006</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.70.0-9008</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -425,7 +425,7 @@ can be updated in-place, which helps save memory. For example,</p>
 <span>  <span class="va">x</span></span>
 <span><span class="op">}</span></span>
 <span></span>
-<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu">big.matrix</span><span class="op">(</span>nrow <span class="op">=</span> <span class="fl">3</span>, ncol <span class="op">=</span> <span class="fl">2</span>, type <span class="op">=</span> <span class="st">"integer"</span><span class="op">)</span></span>
+<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/bigmemory/man/big.matrix.html" class="external-link">big.matrix</a></span><span class="op">(</span>nrow <span class="op">=</span> <span class="fl">3</span>, ncol <span class="op">=</span> <span class="fl">2</span>, type <span class="op">=</span> <span class="st">"integer"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">x</span><span class="op">[</span><span class="fl">1</span>,<span class="fl">1</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] NA</span></span>
 <span></span>
@@ -448,7 +448,7 @@ e.g.</p>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://future.futureverse.org">future</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/plan.html">plan</a></span><span class="op">(</span><span class="va">multisession</span>, workers <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu">big.matrix</span><span class="op">(</span>nrow <span class="op">=</span> <span class="fl">3</span>, ncol <span class="op">=</span> <span class="fl">2</span>, type <span class="op">=</span> <span class="st">"integer"</span><span class="op">)</span></span>
+<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/bigmemory/man/big.matrix.html" class="external-link">big.matrix</a></span><span class="op">(</span>nrow <span class="op">=</span> <span class="fl">3</span>, ncol <span class="op">=</span> <span class="fl">2</span>, type <span class="op">=</span> <span class="st">"integer"</span><span class="op">)</span></span>
 <span><span class="va">f</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/future.html">future</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, packages <span class="op">=</span> <span class="st">"bigmemory"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/value.html">value</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Error in unserialize(node$con) : </span></span>
@@ -529,7 +529,7 @@ and C++, e.g.</p>
 <span><span class="st">  int i;</span></span>
 <span><span class="st">  for (i = 0; i &lt; *n; i++) x[0] = x[0] + (i+1);</span></span>
 <span><span class="st">"</span></span>
-<span><span class="va">sum_1_to_n</span> <span class="op">&lt;-</span> <span class="fu">cfunction</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/methods/GenericFunctions.html" class="external-link">signature</a></span><span class="op">(</span>n<span class="op">=</span><span class="st">"integer"</span>, x<span class="op">=</span><span class="st">"numeric"</span><span class="op">)</span>, <span class="va">code</span>, language <span class="op">=</span> <span class="st">"C"</span>, convention <span class="op">=</span> <span class="st">".C"</span><span class="op">)</span></span>
+<span><span class="va">sum_1_to_n</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/inline/man/cfunction.html" class="external-link">cfunction</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/methods/GenericFunctions.html" class="external-link">signature</a></span><span class="op">(</span>n<span class="op">=</span><span class="st">"integer"</span>, x<span class="op">=</span><span class="st">"numeric"</span><span class="op">)</span>, <span class="va">code</span>, language <span class="op">=</span> <span class="st">"C"</span>, convention <span class="op">=</span> <span class="st">".C"</span><span class="op">)</span></span>
 <span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu">sum_1_to_n</span><span class="op">(</span><span class="fl">10</span>, <span class="fl">0</span><span class="op">)</span><span class="op">$</span><span class="va">x</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span></span>
 <span><span class="co">## 55</span></span></code></pre></div>
@@ -569,14 +569,14 @@ multisession worker, the worker will produce a run-time error:</p>
 <span><span class="fu"><a href="../reference/plan.html">plan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co">## Adopted from the 'keras' vignettes</span></span>
-<span><span class="va">inputs</span> <span class="op">&lt;-</span> <span class="fu">layer_input</span><span class="op">(</span>shape <span class="op">=</span> <span class="fu">shape</span><span class="op">(</span><span class="fl">32</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">outputs</span> <span class="op">&lt;-</span> <span class="fu">layer_dense</span><span class="op">(</span><span class="va">inputs</span>, units <span class="op">=</span> <span class="fl">1L</span><span class="op">)</span></span>
-<span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu">keras_model</span><span class="op">(</span><span class="va">inputs</span>, <span class="va">outputs</span><span class="op">)</span></span>
-<span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu">compile</span><span class="op">(</span><span class="va">model</span>, optimizer <span class="op">=</span> <span class="st">"adam"</span>, loss <span class="op">=</span> <span class="st">"mean_squared_error"</span><span class="op">)</span></span>
+<span><span class="va">inputs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_input.html" class="external-link">layer_input</a></span><span class="op">(</span>shape <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/tensorflow/man/shape.html" class="external-link">shape</a></span><span class="op">(</span><span class="fl">32</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">outputs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_dense.html" class="external-link">layer_dense</a></span><span class="op">(</span><span class="va">inputs</span>, units <span class="op">=</span> <span class="fl">1L</span><span class="op">)</span></span>
+<span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/keras_model.html" class="external-link">keras_model</a></span><span class="op">(</span><span class="va">inputs</span>, <span class="va">outputs</span><span class="op">)</span></span>
+<span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://generics.r-lib.org/reference/compile.html" class="external-link">compile</a></span><span class="op">(</span><span class="va">model</span>, optimizer <span class="op">=</span> <span class="st">"adam"</span>, loss <span class="op">=</span> <span class="st">"mean_squared_error"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">test_input</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/array.html" class="external-link">array</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">128</span> <span class="op">*</span> <span class="fl">32</span><span class="op">)</span>, dim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">128</span>, <span class="fl">32</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">test_target</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/array.html" class="external-link">array</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">128</span><span class="op">)</span>, dim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">128</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu">fit</span><span class="op">(</span><span class="va">model</span>, <span class="va">test_input</span>, <span class="va">test_target</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://generics.r-lib.org/reference/fit.html" class="external-link">fit</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">test_input</span>, <span class="va">test_target</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">f</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/future.html">future</a></span><span class="op">(</span><span class="op">{</span></span>
 <span>  <span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">test_input</span><span class="op">)</span></span>
@@ -590,14 +590,14 @@ clues;</p>
 <div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a>Error<span class="sc">:</span> Detected a non<span class="sc">-</span>exportable <span class="fu">reference</span> (<span class="st">'externalptr'</span>) <span class="cf">in</span> one of the</span>
 <span id="cb22-2"><a href="#cb22-2" tabindex="-1"></a><span class="fu">globals</span> (<span class="st">'model'</span> of class <span class="st">'keras.engine.functional.Functional'</span>) used <span class="cf">in</span></span>
 <span id="cb22-3"><a href="#cb22-3" tabindex="-1"></a>the future expression</span></code></pre></div>
-<p>Functions <code>serialize_model()</code> and
-<code>unserialize_model()</code> of the <strong>keras</strong> package
+<p>Functions <code><a href="https://rdrr.io/pkg/keras/man/serialize_model.html" class="external-link">serialize_model()</a></code> and
+<code><a href="https://rdrr.io/pkg/keras/man/serialize_model.html" class="external-link">unserialize_model()</a></code> of the <strong>keras</strong> package
 can be used as workaround to marshal and unmarshal non-exportable
 <strong>keras</strong> objects, e.g.</p>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">.model</span> <span class="op">&lt;-</span> <span class="fu">serialize_model</span><span class="op">(</span><span class="va">model</span><span class="op">)</span>      <span class="co">## marshal</span></span>
+<code class="sourceCode R"><span><span class="va">.model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/serialize_model.html" class="external-link">serialize_model</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span>      <span class="co">## marshal</span></span>
 <span><span class="va">f</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/future.html">future</a></span><span class="op">(</span><span class="op">{</span></span>
-<span>  <span class="va">model</span> <span class="op">&lt;-</span> <span class="fu">unserialize_model</span><span class="op">(</span><span class="va">.model</span><span class="op">)</span>  <span class="co">## unmarshal</span></span>
+<span>  <span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/serialize_model.html" class="external-link">unserialize_model</a></span><span class="op">(</span><span class="va">.model</span><span class="op">)</span>  <span class="co">## unmarshal</span></span>
 <span>  <span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">test_input</span><span class="op">)</span></span>
 <span><span class="op">}</span>, seed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/rm.html" class="external-link">rm</a></span><span class="op">(</span><span class="va">.model</span><span class="op">)</span> <span class="co">## not needed anymore</span></span>
@@ -735,7 +735,7 @@ package, we get errors like:</p>
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://future.futureverse.org">future</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/plan.html">plan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rstudio.github.io/reticulate/" class="external-link">reticulate</a></span><span class="op">)</span></span>
-<span><span class="va">os</span> <span class="op">&lt;-</span> <span class="fu">import</span><span class="op">(</span><span class="st">"os"</span><span class="op">)</span></span>
+<span><span class="va">os</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rstudio.github.io/reticulate/reference/import.html" class="external-link">import</a></span><span class="op">(</span><span class="st">"os"</span><span class="op">)</span></span>
 <span><span class="va">pwd</span> <span class="op"><a href="../reference/futureAssign.html">%&lt;-%</a></span> <span class="va">os</span><span class="op">$</span><span class="fu">getcwd</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">pwd</span></span>
 <span><span class="co">## Error in eval(quote(os$getcwd()), new.env()) :</span></span>
@@ -751,7 +751,7 @@ globals further, we get:</p>
 that we create ourselves as in:</p>
 <div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"def twice(x):\n    return 2*x\n"</span>, file <span class="op">=</span> <span class="st">"twice.py"</span><span class="op">)</span></span>
-<span><span class="fu">source_python</span><span class="op">(</span><span class="st">"twice.py"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rstudio.github.io/reticulate/reference/source_python.html" class="external-link">source_python</a></span><span class="op">(</span><span class="st">"twice.py"</span><span class="op">)</span></span>
 <span><span class="fu">twice</span><span class="op">(</span><span class="fl">1.2</span><span class="op">)</span></span>
 <span><span class="co">## [1] 2.4</span></span>
 <span><span class="va">y</span> <span class="op"><a href="../reference/futureAssign.html">%&lt;-%</a></span> <span class="fu">twice</span><span class="op">(</span><span class="fl">1.2</span><span class="op">)</span></span>
@@ -816,12 +816,12 @@ a parallel worker:</p>
 <span><span class="fu"><a href="../reference/plan.html">plan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Adopted from example("FastqStreamer", package = "ShortRead")</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">ShortRead</span><span class="op">)</span></span>
-<span><span class="va">sp</span> <span class="op">&lt;-</span> <span class="fu">SolexaPath</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, package <span class="op">=</span> <span class="st">"ShortRead"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">fl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu">analysisPath</span><span class="op">(</span><span class="va">sp</span><span class="op">)</span>, <span class="st">"s_1_sequence.txt"</span><span class="op">)</span></span>
-<span><span class="va">fs</span> <span class="op">&lt;-</span> <span class="fu">FastqStreamer</span><span class="op">(</span><span class="va">fl</span>, <span class="fl">50</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://bioconductor.org/packages/ShortRead" class="external-link">ShortRead</a></span><span class="op">)</span></span>
+<span><span class="va">sp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ShortRead/man/SolexaPath-class.html" class="external-link">SolexaPath</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, package <span class="op">=</span> <span class="st">"ShortRead"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">fl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/ShortRead/man/accessors.html" class="external-link">analysisPath</a></span><span class="op">(</span><span class="va">sp</span><span class="op">)</span>, <span class="st">"s_1_sequence.txt"</span><span class="op">)</span></span>
+<span><span class="va">fs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ShortRead/man/Sampler-class.html" class="external-link">FastqStreamer</a></span><span class="op">(</span><span class="va">fl</span>, <span class="fl">50</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">reads</span> <span class="op"><a href="../reference/futureAssign.html">%&lt;-%</a></span> <span class="fu">yield</span><span class="op">(</span><span class="va">fs</span><span class="op">)</span></span>
+<span><span class="va">reads</span> <span class="op"><a href="../reference/futureAssign.html">%&lt;-%</a></span> <span class="fu"><a href="https://rdrr.io/pkg/ShortRead/man/Sampler-class.html" class="external-link">yield</a></span><span class="op">(</span><span class="va">fs</span><span class="op">)</span></span>
 <span><span class="va">reads</span></span>
 <span><span class="co">## Error in status(update = TRUE) : invalid FastqStreamer</span></span></code></pre></div>
 <p>To catch this earlier, and to get a more informative error message,
@@ -829,7 +829,7 @@ we do as before;</p>
 <div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>future.globals.onReference <span class="op">=</span> <span class="st">"error"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">reads</span> <span class="op"><a href="../reference/futureAssign.html">%&lt;-%</a></span> <span class="fu">yield</span><span class="op">(</span><span class="va">fs</span><span class="op">)</span></span>
+<span><span class="va">reads</span> <span class="op"><a href="../reference/futureAssign.html">%&lt;-%</a></span> <span class="fu"><a href="https://rdrr.io/pkg/ShortRead/man/Sampler-class.html" class="external-link">yield</a></span><span class="op">(</span><span class="va">fs</span><span class="op">)</span></span>
 <span><span class="co">## Error: Detected a non-exportable reference ('externalptr') in one of the</span></span>
 <span><span class="co">## globals ('fs' of class 'FastqStreamer') used in the future expression</span></span></code></pre></div>
 </div>
@@ -1246,11 +1246,11 @@ state. Consider the following example from
 <span></span>
 <span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">20</span><span class="op">)</span></span>
 <span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>N <span class="op">=</span> <span class="fl">20</span>, y <span class="op">=</span> <span class="va">y</span><span class="op">)</span></span>
-<span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu">stan</span><span class="op">(</span>model_code <span class="op">=</span> <span class="va">code</span>, model_name <span class="op">=</span> <span class="st">"example"</span>,</span>
+<span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/rstan/reference/stan.html" class="external-link">stan</a></span><span class="op">(</span>model_code <span class="op">=</span> <span class="va">code</span>, model_name <span class="op">=</span> <span class="st">"example"</span>,</span>
 <span>            data <span class="op">=</span> <span class="va">data</span>, iter <span class="op">=</span> <span class="fl">2012L</span>, chains <span class="op">=</span> <span class="fl">3L</span>,</span>
 <span>            sample_file <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"norm.csv"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">e</span> <span class="op">&lt;-</span> <span class="fu">extract</span><span class="op">(</span><span class="va">fit</span>, permuted <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">e</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/rstan/reference/stanfit-method-extract.html" class="external-link">extract</a></span><span class="op">(</span><span class="va">fit</span>, permuted <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <p>If we would try the last step with a future with strict checking for
 references enabled, we would get an error:</p>
 <div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" tabindex="-1"></a><span class="fu">library</span>(future)</span>
@@ -1266,7 +1266,7 @@ R process, e.g.</p>
 <div class="sourceCode" id="cb68"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>future.globals.onReference <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">e</span> <span class="op"><a href="../reference/futureAssign.html">%&lt;-%</a></span> <span class="fu">extract</span><span class="op">(</span><span class="va">fit</span>, permuted <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">e</span> <span class="op"><a href="../reference/futureAssign.html">%&lt;-%</a></span> <span class="fu"><a href="https://mc-stan.org/rstan/reference/stanfit-method-extract.html" class="external-link">extract</a></span><span class="op">(</span><span class="va">fit</span>, permuted <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">e</span><span class="op">)</span></span>
 <span><span class="co">#&gt;  num [1:1006, 1:3, 1:2] -0.3028 -0.4017 -0.3379 -0.2358 0.0443 ...</span></span>
 <span><span class="co">#&gt;  - attr(*, "dimnames")=List of 3</span></span>

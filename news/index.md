@@ -2,6 +2,17 @@
 
 ## Version (development version)
 
+### New Features
+
+- [`print()`](https://rdrr.io/r/base/print.html) for `Future` objects
+  now reports a parallelization efficiency breakdown when journaling is
+  enabled via `options(future.journal = TRUE)`. The round-trip is
+  reported as “active” time (overhead + evaluation), with wall-clock and
+  idle time (e.g. time between
+  [`future()`](https://future.futureverse.org/reference/future.md) and
+  [`value()`](https://future.futureverse.org/reference/value.md)) shown
+  separately so that user idle does not penalise the efficiency ratio.
+
 - …
 
 ## Version 1.70.0
@@ -3212,7 +3223,8 @@ CRAN release: 2016-01-20
 - Add
   [`futureCall()`](https://future.futureverse.org/reference/future.md),
   which is for futures what
-  [`do.call()`](https://rdrr.io/r/base/do.call.html) is otherwise.
+  [`do.call()`](https://rdrr.io/pkg/BiocGenerics/man/do.call.html) is
+  otherwise.
 
 - Standardized how options are named, i.e. `future.<option>`. If you
   used any future options previously, make sure to check they follow the

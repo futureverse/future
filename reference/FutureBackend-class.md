@@ -175,7 +175,3 @@ must implement and comply to.
 For alternative future backends, see the 'A Future for R: Available
 Future Backends' vignette and
 <https://www.futureverse.org/backends.html>.
-
-For alternative future backends, see the 'A Future for R: Available
-Future Backends' vignette and
-<https://www.futureverse.org/backends.html>.
