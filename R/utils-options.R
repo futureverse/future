@@ -13,8 +13,8 @@
 #' any of the below `future.*` options.  Only the end-user should set these.
 #' If you find yourself having to tweak one of the options, make sure to
 #' undo your changes immediately afterward.  For example, if you want to
-#' bump up the `future.globals.maxSize` limit when creating a future,
-#' use something like the following inside your function:
+#' temporarily change the `future.globals.maxSize` limit when creating a
+#' future, use something like the following inside your function:
 #'
 #' ```r
 #' oopts <- options(future.globals.maxSize = 1.0 * 1e9)  ## 1.0 GB
@@ -26,7 +26,7 @@
 #' \describe{
 #'  \item{\option{future.plan}:}{(character string or future function) Default future backend used unless otherwise specified via [plan()]. This will also be the future plan set when calling `plan("default")`.  If not specified, this option may be set when the \pkg{future} package is _loaded_ if command-line option `--parallel=ncores` (short `-p ncores`) is specified; if `ncores > 1`, then option \option{future.plan} is set to `multisession` otherwise `sequential` (in addition to option \option{mc.cores} being set to `ncores`, if `ncores >= 1`). (Default: `sequential`)}
 #'
-#'  \item{\option{future.globals.maxSize}:}{(numeric) Maximum allowed total size (in bytes) of global variables identified. This is used to protect against exporting too large objects to parallel workers by mistake. Transferring large objects over a network, or over the internet, can be slow and therefore introduce a large bottleneck that increases the overall processing time. It can also result in large egress or ingress costs, which may exist on some systems. If set of `+Inf`, then the check for large globals is skipped. (Default: `500 * 1024 ^ 2` = 500 MiB)}
+#'  \item{\option{future.globals.maxSize}:}{(numeric) Maximum allowed total size (in bytes) of global variables identified. This is used to protect against exporting too large objects to parallel workers by mistake. Transferring large objects over a network, or over the internet, can be slow and therefore introduce a large bottleneck that increases the overall processing time. It can also result in large egress or ingress costs, which may exist on some systems. If set of `+Inf`, then the check for large globals is skipped. (Default: `+Inf`)}
 #'
 #'   \item{\option{future.globals.onReference}: (_beta feature - may change_)}{(character string) Controls whether the identified globals should be scanned for so called _references_ (e.g. external pointers and connections) or not.  It is unlikely that another \R process ("worker") can use a global that uses a internal reference of the master \R process---we call such objects _non-exportable globals_.
 #'    If this option is `"error"`, an informative error message is produced if a non-exportable global is detected.

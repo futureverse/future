@@ -18,7 +18,7 @@
 #' the purpose of preventing too large exports / transfers happening by
 #' mistake.  If the total size of the global objects are greater than this
 #' limit, an informative error message is produced. If
-#' `maxSize = +Inf`, then this assertion is skipped. (Default: 500 MiB).
+#' `maxSize = +Inf`, then this assertion is skipped. (Default: `+Inf`).
 #'
 #' @param \ldots Not used.
 #'
@@ -30,7 +30,7 @@
 #' @export
 #'
 #' @keywords internal
-getGlobalsAndPackages <- function(expr, envir = parent.frame(), tweak = tweakExpression, globals = TRUE, locals = getOption("future.globals.globalsOf.locals", TRUE), resolve = getOption("future.globals.resolve"), persistent = FALSE, maxSize = getOption("future.globals.maxSize", 500 * 1024 ^ 2), onReference = getOption("future.globals.onReference", "ignore"), ...) {
+getGlobalsAndPackages <- function(expr, envir = parent.frame(), tweak = tweakExpression, globals = TRUE, locals = getOption("future.globals.globalsOf.locals", TRUE), resolve = getOption("future.globals.resolve"), persistent = FALSE, maxSize = getOption("future.globals.maxSize", +Inf), onReference = getOption("future.globals.onReference", "ignore"), ...) {
   if (is.null(resolve)) {
     resolve <- FALSE
   } else {

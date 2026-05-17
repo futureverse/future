@@ -9,8 +9,12 @@
    time (e.g. time between `future()` and `value()`) shown separately
    so that user idle does not penalise the efficiency ratio.
 
- * ...
- 
+## Bug Fixes
+
+ * The default for R option `future.globals.maxSize` is now `+Inf`
+   everywhere. It was still 500 MiB is some cases, e.g. `futureCall()`
+   had a limit although `future()` did not.
+
 
 # Version 1.70.0 [2026-03-13]
 

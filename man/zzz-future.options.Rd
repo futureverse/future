@@ -72,8 +72,8 @@ Just like for other R options, as a package developer you must \emph{not} change
 any of the below \verb{future.*} options.  Only the end-user should set these.
 If you find yourself having to tweak one of the options, make sure to
 undo your changes immediately afterward.  For example, if you want to
-bump up the \code{future.globals.maxSize} limit when creating a future,
-use something like the following inside your function:
+temporarily change the \code{future.globals.maxSize} limit when creating a
+future, use something like the following inside your function:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{oopts <- options(future.globals.maxSize = 1.0 * 1e9)  ## 1.0 GB
 on.exit(options(oopts))
@@ -86,7 +86,7 @@ f <- future(\{ expr \})  ## Launch a future with large objects
 \describe{
 \item{\option{future.plan}:}{(character string or future function) Default future backend used unless otherwise specified via \code{\link[=plan]{plan()}}. This will also be the future plan set when calling \code{plan("default")}.  If not specified, this option may be set when the \pkg{future} package is \emph{loaded} if command-line option \code{--parallel=ncores} (short \verb{-p ncores}) is specified; if \code{ncores > 1}, then option \option{future.plan} is set to \code{multisession} otherwise \code{sequential} (in addition to option \option{mc.cores} being set to \code{ncores}, if \code{ncores >= 1}). (Default: \code{sequential})}
 
-\item{\option{future.globals.maxSize}:}{(numeric) Maximum allowed total size (in bytes) of global variables identified. This is used to protect against exporting too large objects to parallel workers by mistake. Transferring large objects over a network, or over the internet, can be slow and therefore introduce a large bottleneck that increases the overall processing time. It can also result in large egress or ingress costs, which may exist on some systems. If set of \code{+Inf}, then the check for large globals is skipped. (Default: \code{500 * 1024 ^ 2} = 500 MiB)}
+\item{\option{future.globals.maxSize}:}{(numeric) Maximum allowed total size (in bytes) of global variables identified. This is used to protect against exporting too large objects to parallel workers by mistake. Transferring large objects over a network, or over the internet, can be slow and therefore introduce a large bottleneck that increases the overall processing time. It can also result in large egress or ingress costs, which may exist on some systems. If set of \code{+Inf}, then the check for large globals is skipped. (Default: \code{+Inf})}
 
 \item{\option{future.globals.onReference}: (\emph{beta feature - may change})}{(character string) Controls whether the identified globals should be scanned for so called \emph{references} (e.g. external pointers and connections) or not.  It is unlikely that another \R process ("worker") can use a global that uses a internal reference of the master \R process---we call such objects \emph{non-exportable globals}.
 If this option is \code{"error"}, an informative error message is produced if a non-exportable global is detected.
