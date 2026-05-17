@@ -13,7 +13,14 @@
   [`value()`](https://future.futureverse.org/reference/value.md)) shown
   separately so that user idle does not penalise the efficiency ratio.
 
-- …
+### Bug Fixes
+
+- The default for R option `future.globals.maxSize` is now `+Inf`
+  everywhere. It was still 500 MiB is some cases,
+  e.g. [`futureCall()`](https://future.futureverse.org/reference/future.md)
+  had a limit although
+  [`future()`](https://future.futureverse.org/reference/future.md) did
+  not.
 
 ## Version 1.70.0
 

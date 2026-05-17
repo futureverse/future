@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.70.0-9008</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.70.0-9009</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -93,7 +93,7 @@
 <span>  locals <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"future.globals.globalsOf.locals"</span>, <span class="cn">TRUE</span><span class="op">)</span>,</span>
 <span>  resolve <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"future.globals.resolve"</span><span class="op">)</span>,</span>
 <span>  persistent <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  maxSize <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"future.globals.maxSize"</span>, <span class="fl">500</span> <span class="op">*</span> <span class="fl">1024</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span>,</span>
+<span>  maxSize <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"future.globals.maxSize"</span>, <span class="op">+</span><span class="cn">Inf</span><span class="op">)</span>,</span>
 <span>  onReference <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"future.globals.onReference"</span>, <span class="st">"ignore"</span><span class="op">)</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -137,7 +137,7 @@ a function be included or not?</p></dd>
 the purpose of preventing too large exports / transfers happening by
 mistake.  If the total size of the global objects are greater than this
 limit, an informative error message is produced. If
-<code>maxSize = +Inf</code>, then this assertion is skipped. (Default: 500 MiB).</p></dd>
+<code>maxSize = +Inf</code>, then this assertion is skipped. (Default: <code>+Inf</code>).</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>

@@ -23,7 +23,7 @@ further notice."><meta property="og:image" content="https://future.futureverse.o
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.70.0-9008</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.70.0-9009</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -106,8 +106,8 @@ further notice.</em></p>
 any of the below <code>future.*</code> options.  Only the end-user should set these.
 If you find yourself having to tweak one of the options, make sure to
 undo your changes immediately afterward.  For example, if you want to
-bump up the <code>future.globals.maxSize</code> limit when creating a future,
-use something like the following inside your function:</p>
+temporarily change the <code>future.globals.maxSize</code> limit when creating a
+future, use something like the following inside your function:</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">oopts</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>future.globals.maxSize <span class="op">=</span> <span class="fl">1.0</span> <span class="op">*</span> <span class="fl">1e9</span><span class="op">)</span>  <span class="co">## 1.0 GB</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/on.exit.html" class="external-link">on.exit</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span><span class="va">oopts</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">f</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/future.html">future</a></span><span class="op">(</span><span class="op">{</span> <span class="va">expr</span> <span class="op">}</span><span class="op">)</span>  <span class="co">## Launch a future with large objects</span></span></code></pre><p></p></div>
@@ -121,7 +121,7 @@ use something like the following inside your function:</p>
 
 
 <dt><span class="option">future.globals.maxSize</span>:</dt>
-<dd><p>(numeric) Maximum allowed total size (in bytes) of global variables identified. This is used to protect against exporting too large objects to parallel workers by mistake. Transferring large objects over a network, or over the internet, can be slow and therefore introduce a large bottleneck that increases the overall processing time. It can also result in large egress or ingress costs, which may exist on some systems. If set of <code>+Inf</code>, then the check for large globals is skipped. (Default: <code>500 * 1024 ^ 2</code> = 500 MiB)</p></dd>
+<dd><p>(numeric) Maximum allowed total size (in bytes) of global variables identified. This is used to protect against exporting too large objects to parallel workers by mistake. Transferring large objects over a network, or over the internet, can be slow and therefore introduce a large bottleneck that increases the overall processing time. It can also result in large egress or ingress costs, which may exist on some systems. If set of <code>+Inf</code>, then the check for large globals is skipped. (Default: <code>+Inf</code>)</p></dd>
 
 
 <dt><span class="option">future.globals.onReference</span>: (<em>beta feature - may change</em>)</dt>

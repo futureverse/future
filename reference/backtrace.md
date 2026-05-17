@@ -42,9 +42,9 @@ res <- tryCatch({
 #> [[1]]
 #> base::tryCatch(base::withCallingHandlers({
 #>     NULL
-#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpyGgcw3/callr-fun-62d4431005c55"), 
+#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmphMN1Z5/callr-fun-79549122340e8"), 
 #>         base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
-#>         quote = TRUE), file = "/tmp/hb/RtmpyGgcw3/callr-res-62d44590ef328", 
+#>         quote = TRUE), file = "/tmp/hb/RtmphMN1Z5/callr-res-795494cd30070", 
 #>         compress = FALSE)
 #>     base::flush(base::stdout())
 #>     base::flush(base::stderr())
@@ -70,7 +70,7 @@ res <- tryCatch({
 #>         if (!base::is.na(cut)) {
 #>             e2$trace <- e2$trace[-(1:cut), ]
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpyGgcw3/callr-res-62d44590ef328", 
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmphMN1Z5/callr-res-795494cd30070", 
 #>             ".error"))
 #>     }
 #> }, interrupt = function(e) {
@@ -93,7 +93,7 @@ res <- tryCatch({
 #>         if (!base::is.na(cut)) {
 #>             e2$trace <- e2$trace[-(1:cut), ]
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpyGgcw3/callr-res-62d44590ef328", 
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmphMN1Z5/callr-res-795494cd30070", 
 #>             ".error"))
 #>     }
 #> }, callr_message = function(e) {
@@ -138,9 +138,9 @@ res <- tryCatch({
 #> [[8]]
 #> base::withCallingHandlers({
 #>     NULL
-#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpyGgcw3/callr-fun-62d4431005c55"), 
+#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmphMN1Z5/callr-fun-79549122340e8"), 
 #>         base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
-#>         quote = TRUE), file = "/tmp/hb/RtmpyGgcw3/callr-res-62d44590ef328", 
+#>         quote = TRUE), file = "/tmp/hb/RtmphMN1Z5/callr-res-795494cd30070", 
 #>         compress = FALSE)
 #>     base::flush(base::stdout())
 #>     base::flush(base::stderr())
@@ -166,7 +166,7 @@ res <- tryCatch({
 #>         if (!base::is.na(cut)) {
 #>             e2$trace <- e2$trace[-(1:cut), ]
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpyGgcw3/callr-res-62d44590ef328", 
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmphMN1Z5/callr-res-795494cd30070", 
 #>             ".error"))
 #>     }
 #> }, interrupt = function(e) {
@@ -189,7 +189,7 @@ res <- tryCatch({
 #>         if (!base::is.na(cut)) {
 #>             e2$trace <- e2$trace[-(1:cut), ]
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpyGgcw3/callr-res-62d44590ef328", 
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmphMN1Z5/callr-res-795494cd30070", 
 #>             ".error"))
 #>     }
 #> }, callr_message = function(e) {
@@ -197,13 +197,13 @@ res <- tryCatch({
 #> })
 #> 
 #> [[9]]
-#> base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpyGgcw3/callr-fun-62d4431005c55"), 
+#> base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmphMN1Z5/callr-fun-79549122340e8"), 
 #>     base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
-#>     quote = TRUE), file = "/tmp/hb/RtmpyGgcw3/callr-res-62d44590ef328", 
+#>     quote = TRUE), file = "/tmp/hb/RtmphMN1Z5/callr-res-795494cd30070", 
 #>     compress = FALSE)
 #> 
 #> [[10]]
-#> base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpyGgcw3/callr-fun-62d4431005c55"), 
+#> base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmphMN1Z5/callr-fun-79549122340e8"), 
 #>     base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
 #>     quote = TRUE)
 #> 
@@ -220,8 +220,8 @@ res <- tryCatch({
 #>     options(cli.num_colors = cli_colors, cli.hyperlink = hyperlinks, 
 #>         cli.hyperlink_run = hyperlinks)
 #>     pkgdown::build_site(...)
-#> }), base::quote(list(pkg = list(package = "future", version = "1.70.0-9008", 
-#>     src_path = "/tmp/hb/RtmpyGgcw3/future", meta = list(url = "https://future.futureverse.org", 
+#> }), base::quote(list(pkg = list(package = "future", version = "1.70.0-9009", 
+#>     src_path = "/tmp/hb/RtmphMN1Z5/future", meta = list(url = "https://future.futureverse.org", 
 #>         home = list(links = list(list(text = "Roadmap/Milestones", 
 #>             href = "https://github.com/futureverse/future/milestones"), 
 #>             list(text = "The Futureverse Project", href = "https://www.futureverse.org/"), 
@@ -257,7 +257,7 @@ res <- tryCatch({
 #>             bootstrap = 5L, `light-switch` = TRUE)), desc = <environment>, 
 #>     bs_version = 5L, development = list(destination = "dev", 
 #>         mode = "default", version_label = "muted", in_dev = FALSE, 
-#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/RtmpyGgcw3/future/docs", 
+#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/RtmphMN1Z5/future/docs", 
 #>     lang = "en-US", install_metadata = FALSE, figures = list(
 #>         dev = "ragg::agg_png", dpi = 96L, dev.args = list(), 
 #>         fig.ext = "png", fig.width = 7.29166666666667, fig.height = NULL, 
@@ -1555,7 +1555,7 @@ res <- tryCatch({
 #>                   "  tweak = tweakExpression,\n", "  globals = TRUE,\n", 
 #>                   "  locals = getOption(\"future.globals.globalsOf.locals\", TRUE),\n", 
 #>                   "  resolve = getOption(\"future.globals.resolve\"),\n", 
-#>                   "  persistent = FALSE,\n", "  maxSize = getOption(\"future.globals.maxSize\", 500 * 1024^2),\n", 
+#>                   "  persistent = FALSE,\n", "  maxSize = getOption(\"future.globals.maxSize\", +Inf),\n", 
 #>                   "  onReference = getOption(\"future.globals.onReference\", \"ignore\"),\n", 
 #>                   "  ...\n", ")\n"), "\n", list("\n", list(list(
 #>                   "expr"), list("An ", list(), " expression whose globals should be found.")), 
@@ -1577,12 +1577,13 @@ res <- tryCatch({
 #>                     "the purpose of preventing too large exports / transfers happening by\n", 
 #>                     "mistake.  If the total size of the global objects are greater than this\n", 
 #>                     "limit, an informative error message is produced. If\n", 
-#>                     list("maxSize = +Inf"), ", then this assertion is skipped. (Default: 500 MiB).")), 
-#>                   "\n", "\n", list(list(list()), list("Not used.")), 
-#>                   "\n"), "\n", list("\n", "A named list with elements ", 
-#>                   list("expr"), " (the tweaked expression), ", 
-#>                   list("globals"), " (a named list of class ", 
-#>                   list("FutureGlobals"), ") and ", list("packages"), 
+#>                     list("maxSize = +Inf"), ", then this assertion is skipped. (Default: ", 
+#>                     list("+Inf"), ").")), "\n", "\n", list(list(
+#>                     list()), list("Not used.")), "\n"), "\n", 
+#>                 list("\n", "A named list with elements ", list(
+#>                   "expr"), " (the tweaked expression), ", list(
+#>                   "globals"), " (a named list of class ", list(
+#>                   "FutureGlobals"), ") and ", list("packages"), 
 #>                   " (a character string).\n"), "\n", list("\n", 
 #>                   "Retrieves global variables of an expression and their associated packages\n"), 
 #>                 "\n", list("\n", "Internally, ", list(list("globalsOf"), 
@@ -2652,8 +2653,8 @@ res <- tryCatch({
 #>                     list("future.*"), " options.  Only the end-user should set these.\n", 
 #>                     "If you find yourself having to tweak one of the options, make sure to\n", 
 #>                     "undo your changes immediately afterward.  For example, if you want to\n", 
-#>                     "bump up the ", list("future.globals.maxSize"), 
-#>                     " limit when creating a future,\n", "use something like the following inside your function:\n", 
+#>                     "temporarily change the ", list("future.globals.maxSize"), 
+#>                     " limit when creating a\n", "future, use something like the following inside your function:\n", 
 #>                     "\n", list(list("html"), list(list("<div class=\"sourceCode r\">"))), 
 #>                     list("oopts <- options(future.globals.maxSize = 1.0 * 1e9)  ## 1.0 GB\n", 
 #>                       "on.exit(options(oopts))\n", "f <- future({ expr })  ## Launch a future with large objects\n"), 
@@ -2675,21 +2676,21 @@ res <- tryCatch({
 #>                     "\n", "\n", list(list(list("future.globals.maxSize"), 
 #>                       ":"), list("(numeric) Maximum allowed total size (in bytes) of global variables identified. This is used to protect against exporting too large objects to parallel workers by mistake. Transferring large objects over a network, or over the internet, can be slow and therefore introduce a large bottleneck that increases the overall processing time. It can also result in large egress or ingress costs, which may exist on some systems. If set of ", 
 #>                       list("+Inf"), ", then the check for large globals is skipped. (Default: ", 
-#>                       list("500 * 1024 ^ 2"), " = 500 MiB)")), 
-#>                     "\n", "\n", list(list(list("future.globals.onReference"), 
-#>                       ": (", list("beta feature - may change"), 
-#>                       ")"), list("(character string) Controls whether the identified globals should be scanned for so called ", 
-#>                       list("references"), " (e.g. external pointers and connections) or not.  It is unlikely that another ", 
-#>                       list(), " process (\"worker\") can use a global that uses a internal reference of the master ", 
-#>                       list(), " process---we call such objects ", 
-#>                       list("non-exportable globals"), ".\n", 
-#>                       "If this option is ", list("\"error\""), 
-#>                       ", an informative error message is produced if a non-exportable global is detected.\n", 
-#>                       "If ", list("\"warning\""), ", a warning is produced, but the processing will continue; it is likely that the future will be resolved with a run-time error unless processed in the master ", 
-#>                       list(), " process (e.g. ", list("plan(sequential)"), 
-#>                       " and ", list("plan(multicore)"), ").\n", 
-#>                       "If ", list("\"ignore\""), ", no scan is performed.\n", 
-#>                       "(Default: ", list("\"ignore\""), " but may change)\n")), 
+#>                       list("+Inf"), ")")), "\n", "\n", list(list(
+#>                       list("future.globals.onReference"), ": (", 
+#>                       list("beta feature - may change"), ")"), 
+#>                       list("(character string) Controls whether the identified globals should be scanned for so called ", 
+#>                         list("references"), " (e.g. external pointers and connections) or not.  It is unlikely that another ", 
+#>                         list(), " process (\"worker\") can use a global that uses a internal reference of the master ", 
+#>                         list(), " process---we call such objects ", 
+#>                         list("non-exportable globals"), ".\n", 
+#>                         "If this option is ", list("\"error\""), 
+#>                         ", an informative error message is produced if a non-exportable global is detected.\n", 
+#>                         "If ", list("\"warning\""), ", a warning is produced, but the processing will continue; it is likely that the future will be resolved with a run-time error unless processed in the master ", 
+#>                         list(), " process (e.g. ", list("plan(sequential)"), 
+#>                         " and ", list("plan(multicore)"), ").\n", 
+#>                         "If ", list("\"ignore\""), ", no scan is performed.\n", 
+#>                         "(Default: ", list("\"ignore\""), " but may change)\n")), 
 #>                     "\n", "\n", list(list(list("future.resolve.recursive"), 
 #>                       ":"), list("(integer) An integer specifying the maximum recursive depth to which futures should be resolved. If negative, nothing is resolved.  If ", 
 #>                       list("0"), ", only the future itself is resolved.  If ", 
@@ -3018,8 +3019,8 @@ res <- tryCatch({
 #>     options(cli.num_colors = cli_colors, cli.hyperlink = hyperlinks, 
 #>         cli.hyperlink_run = hyperlinks)
 #>     pkgdown::build_site(...)
-#> })(pkg = base::quote(list(package = "future", version = "1.70.0-9008", 
-#>     src_path = "/tmp/hb/RtmpyGgcw3/future", meta = list(url = "https://future.futureverse.org", 
+#> })(pkg = base::quote(list(package = "future", version = "1.70.0-9009", 
+#>     src_path = "/tmp/hb/RtmphMN1Z5/future", meta = list(url = "https://future.futureverse.org", 
 #>         home = list(links = list(list(text = "Roadmap/Milestones", 
 #>             href = "https://github.com/futureverse/future/milestones"), 
 #>             list(text = "The Futureverse Project", href = "https://www.futureverse.org/"), 
@@ -3055,7 +3056,7 @@ res <- tryCatch({
 #>             bootstrap = 5L, `light-switch` = TRUE)), desc = <environment>, 
 #>     bs_version = 5L, development = list(destination = "dev", 
 #>         mode = "default", version_label = "muted", in_dev = FALSE, 
-#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/RtmpyGgcw3/future/docs", 
+#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/RtmphMN1Z5/future/docs", 
 #>     lang = "en-US", install_metadata = FALSE, figures = list(
 #>         dev = "ragg::agg_png", dpi = 96L, dev.args = list(), 
 #>         fig.ext = "png", fig.width = 7.29166666666667, fig.height = NULL, 
@@ -4353,7 +4354,7 @@ res <- tryCatch({
 #>                   "  tweak = tweakExpression,\n", "  globals = TRUE,\n", 
 #>                   "  locals = getOption(\"future.globals.globalsOf.locals\", TRUE),\n", 
 #>                   "  resolve = getOption(\"future.globals.resolve\"),\n", 
-#>                   "  persistent = FALSE,\n", "  maxSize = getOption(\"future.globals.maxSize\", 500 * 1024^2),\n", 
+#>                   "  persistent = FALSE,\n", "  maxSize = getOption(\"future.globals.maxSize\", +Inf),\n", 
 #>                   "  onReference = getOption(\"future.globals.onReference\", \"ignore\"),\n", 
 #>                   "  ...\n", ")\n"), "\n", list("\n", list(list(
 #>                   "expr"), list("An ", list(), " expression whose globals should be found.")), 
@@ -4375,12 +4376,13 @@ res <- tryCatch({
 #>                     "the purpose of preventing too large exports / transfers happening by\n", 
 #>                     "mistake.  If the total size of the global objects are greater than this\n", 
 #>                     "limit, an informative error message is produced. If\n", 
-#>                     list("maxSize = +Inf"), ", then this assertion is skipped. (Default: 500 MiB).")), 
-#>                   "\n", "\n", list(list(list()), list("Not used.")), 
-#>                   "\n"), "\n", list("\n", "A named list with elements ", 
-#>                   list("expr"), " (the tweaked expression), ", 
-#>                   list("globals"), " (a named list of class ", 
-#>                   list("FutureGlobals"), ") and ", list("packages"), 
+#>                     list("maxSize = +Inf"), ", then this assertion is skipped. (Default: ", 
+#>                     list("+Inf"), ").")), "\n", "\n", list(list(
+#>                     list()), list("Not used.")), "\n"), "\n", 
+#>                 list("\n", "A named list with elements ", list(
+#>                   "expr"), " (the tweaked expression), ", list(
+#>                   "globals"), " (a named list of class ", list(
+#>                   "FutureGlobals"), ") and ", list("packages"), 
 #>                   " (a character string).\n"), "\n", list("\n", 
 #>                   "Retrieves global variables of an expression and their associated packages\n"), 
 #>                 "\n", list("\n", "Internally, ", list(list("globalsOf"), 
@@ -5450,8 +5452,8 @@ res <- tryCatch({
 #>                     list("future.*"), " options.  Only the end-user should set these.\n", 
 #>                     "If you find yourself having to tweak one of the options, make sure to\n", 
 #>                     "undo your changes immediately afterward.  For example, if you want to\n", 
-#>                     "bump up the ", list("future.globals.maxSize"), 
-#>                     " limit when creating a future,\n", "use something like the following inside your function:\n", 
+#>                     "temporarily change the ", list("future.globals.maxSize"), 
+#>                     " limit when creating a\n", "future, use something like the following inside your function:\n", 
 #>                     "\n", list(list("html"), list(list("<div class=\"sourceCode r\">"))), 
 #>                     list("oopts <- options(future.globals.maxSize = 1.0 * 1e9)  ## 1.0 GB\n", 
 #>                       "on.exit(options(oopts))\n", "f <- future({ expr })  ## Launch a future with large objects\n"), 
@@ -5473,21 +5475,21 @@ res <- tryCatch({
 #>                     "\n", "\n", list(list(list("future.globals.maxSize"), 
 #>                       ":"), list("(numeric) Maximum allowed total size (in bytes) of global variables identified. This is used to protect against exporting too large objects to parallel workers by mistake. Transferring large objects over a network, or over the internet, can be slow and therefore introduce a large bottleneck that increases the overall processing time. It can also result in large egress or ingress costs, which may exist on some systems. If set of ", 
 #>                       list("+Inf"), ", then the check for large globals is skipped. (Default: ", 
-#>                       list("500 * 1024 ^ 2"), " = 500 MiB)")), 
-#>                     "\n", "\n", list(list(list("future.globals.onReference"), 
-#>                       ": (", list("beta feature - may change"), 
-#>                       ")"), list("(character string) Controls whether the identified globals should be scanned for so called ", 
-#>                       list("references"), " (e.g. external pointers and connections) or not.  It is unlikely that another ", 
-#>                       list(), " process (\"worker\") can use a global that uses a internal reference of the master ", 
-#>                       list(), " process---we call such objects ", 
-#>                       list("non-exportable globals"), ".\n", 
-#>                       "If this option is ", list("\"error\""), 
-#>                       ", an informative error message is produced if a non-exportable global is detected.\n", 
-#>                       "If ", list("\"warning\""), ", a warning is produced, but the processing will continue; it is likely that the future will be resolved with a run-time error unless processed in the master ", 
-#>                       list(), " process (e.g. ", list("plan(sequential)"), 
-#>                       " and ", list("plan(multicore)"), ").\n", 
-#>                       "If ", list("\"ignore\""), ", no scan is performed.\n", 
-#>                       "(Default: ", list("\"ignore\""), " but may change)\n")), 
+#>                       list("+Inf"), ")")), "\n", "\n", list(list(
+#>                       list("future.globals.onReference"), ": (", 
+#>                       list("beta feature - may change"), ")"), 
+#>                       list("(character string) Controls whether the identified globals should be scanned for so called ", 
+#>                         list("references"), " (e.g. external pointers and connections) or not.  It is unlikely that another ", 
+#>                         list(), " process (\"worker\") can use a global that uses a internal reference of the master ", 
+#>                         list(), " process---we call such objects ", 
+#>                         list("non-exportable globals"), ".\n", 
+#>                         "If this option is ", list("\"error\""), 
+#>                         ", an informative error message is produced if a non-exportable global is detected.\n", 
+#>                         "If ", list("\"warning\""), ", a warning is produced, but the processing will continue; it is likely that the future will be resolved with a run-time error unless processed in the master ", 
+#>                         list(), " process (e.g. ", list("plan(sequential)"), 
+#>                         " and ", list("plan(multicore)"), ").\n", 
+#>                         "If ", list("\"ignore\""), ", no scan is performed.\n", 
+#>                         "(Default: ", list("\"ignore\""), " but may change)\n")), 
 #>                     "\n", "\n", list(list(list("future.resolve.recursive"), 
 #>                       ":"), list("(integer) An integer specifying the maximum recursive depth to which futures should be resolved. If negative, nothing is resolved.  If ", 
 #>                       list("0"), ", only the future itself is resolved.  If ", 

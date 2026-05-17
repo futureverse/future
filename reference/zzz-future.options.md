@@ -13,8 +13,9 @@ Just like for other R options, as a package developer you must *not*
 change any of the below `future.*` options. Only the end-user should set
 these. If you find yourself having to tweak one of the options, make
 sure to undo your changes immediately afterward. For example, if you
-want to bump up the `future.globals.maxSize` limit when creating a
-future, use something like the following inside your function:
+want to temporarily change the `future.globals.maxSize` limit when
+creating a future, use something like the following inside your
+function:
 
     oopts <- options(future.globals.maxSize = 1.0 * 1e9)  ## 1.0 GB
     on.exit(options(oopts))
@@ -44,7 +45,7 @@ future, use something like the following inside your function:
   introduce a large bottleneck that increases the overall processing
   time. It can also result in large egress or ingress costs, which may
   exist on some systems. If set of `+Inf`, then the check for large
-  globals is skipped. (Default: `500 * 1024 ^ 2` = 500 MiB)
+  globals is skipped. (Default: `+Inf`)
 
 - future.globals.onReference: (*beta feature - may change*):
 
