@@ -77,7 +77,7 @@ futures are stateless.
 
 \section{clusterExport}{
 
-\code{\link[parallel:clusterApply]{parallel::clusterExport()}} assign values to the cluster nodes.
+\code{\link[parallel:clusterExport]{parallel::clusterExport()}} assign values to the cluster nodes.
 Specifically, these values are recorded and are used as globals
 for all futures created there on.
 }

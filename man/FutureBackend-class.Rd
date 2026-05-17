@@ -161,8 +161,5 @@ that all backends must implement and comply to.
 \seealso{
 For alternative future backends, see the 'A Future for R: Available Future
 Backends' vignette and \url{https://www.futureverse.org/backends.html}.
-
-For alternative future backends, see the 'A Future for R: Available Future
-Backends' vignette and \url{https://www.futureverse.org/backends.html}.
 }
 \keyword{internal}

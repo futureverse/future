@@ -257,7 +257,7 @@ Several functions have been moved to the \pkg{parallelly} package:
 \item \code{\link[parallelly:availableWorkers]{parallelly::availableWorkers()}}
 \item \code{\link[parallelly:makeClusterMPI]{parallelly::makeClusterMPI()}}
 \item \code{\link[parallelly:makeClusterPSOCK]{parallelly::makeClusterPSOCK()}}
-\item \code{\link[parallelly:makeClusterPSOCK]{parallelly::makeNodePSOCK()}}
+\item \code{\link[parallelly:makeNodePSOCK]{parallelly::makeNodePSOCK()}}
 \item \code{\link[parallelly:supportsMulticore]{parallelly::supportsMulticore()}}
 }
 
@@ -269,7 +269,7 @@ For example, option \option{future.fork.enable} has been renamed to
 \env{R_PARALLELLY_FORK_ENABLE}.
 For backward compatibility reasons, the \pkg{parallelly} package will
 support both versions for a long foreseeable time.
-See the \link[parallelly:zzz-parallelly.options]{parallelly::parallelly.options} page for the settings.
+See the \link[parallelly:parallelly.options]{parallelly::parallelly.options} page for the settings.
 }
 
 \examples{

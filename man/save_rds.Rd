@@ -11,7 +11,7 @@ save_rds(object, pathname, ...)
 
 \item{pathname}{RDS file to written.}
 
-\item{\ldots}{(optional) Additional arguments passed to \code{\link[base:readRDS]{base::saveRDS()}}.}
+\item{\ldots}{(optional) Additional arguments passed to \code{\link[base:saveRDS]{base::saveRDS()}}.}
 }
 \value{
 The pathname of the RDS written.
@@ -20,7 +20,7 @@ The pathname of the RDS written.
 Robustly Saves an Object to RDS File Atomically
 }
 \details{
-Uses \link[base:readRDS]{base::saveRDS} internally but writes the object atomically by first
+Uses \link[base:saveRDS]{base::saveRDS} internally but writes the object atomically by first
 writing to a temporary file which is then renamed.
 }
 \keyword{internal}
