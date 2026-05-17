@@ -462,6 +462,60 @@ print.Future <- function(x, ...) {
     t1 <- result[["finished"]]
     cat(sprintf("Duration: %s (started %s)\n", format(t1-t0), t0))
     cat(sprintf("Worker process: %s\n", result[["session_uuid"]]))
+
+    ## Efficiency breakdown (when journaling is enabled)
+    if (inherits(future[[".journal"]], "FutureJournal")) {
+      j <- tryCatch(journal(future), error = function(e) NULL)
+      if (!is.null(j)) {
+        ## Only top-level events; sub-events (parent != NA) overlap in
+        ## wall-clock with their parent and would double-count.
+        j_top <- j[is.na(j[["parent"]]), , drop = FALSE]
+        j_top[["stop"]] <- j_top[["start"]] + j_top[["duration"]]
+        create_idx <- which(j_top[["event"]] == "create")
+        gather_idx <- which(j_top[["event"]] == "gather")
+        over_idx <- which(j_top[["category"]] == "overhead")
+        eval_idx <- which(j_top[["category"]] == "evaluation")
+        if (length(create_idx) > 0L && length(gather_idx) > 0L &&
+            length(eval_idx) > 0L) {
+          g <- gather_idx[length(gather_idx)]
+          walltime <- (j_top[["start"]][g] + j_top[["duration"]][g]) -
+                        j_top[["start"]][create_idx[1]]
+          eval_dur <- sum(j_top[["duration"]][eval_idx])
+          over_dur_raw <- sum(j_top[["duration"]][over_idx])
+          ## For backends like 'sequential' where 'launch' temporally
+          ## wraps 'evaluate', subtract that overlap so it isn't
+          ## double-counted as both overhead and evaluation.
+          overlap_secs <- 0
+          for (i in over_idx) for (k in eval_idx) {
+            ov <- as.numeric(min(j_top[["stop"]][i], j_top[["stop"]][k]) -
+                             max(j_top[["start"]][i], j_top[["start"]][k]),
+                             units = "secs")
+            if (ov > 0) overlap_secs <- overlap_secs + ov
+          }
+          over_secs <- max(as.numeric(over_dur_raw, units = "secs") -
+                             overlap_secs, 0)
+          eval_secs <- as.numeric(eval_dur, units = "secs")
+          ## "Active" round-trip excludes idle time (e.g. between
+          ## future() and value()) and master-blocked-on-worker time
+          ## that runs in parallel with evaluation.
+          active_secs <- over_secs + eval_secs
+          wall_secs <- as.numeric(walltime, units = "secs")
+          idle_secs <- max(wall_secs - active_secs, 0)
+          overhead <- as.difftime(over_secs, units = "secs")
+          active <- as.difftime(active_secs, units = "secs")
+          idle <- as.difftime(idle_secs, units = "secs")
+          cat("Efficiency:\n")
+          cat(sprintf("  Round-trip: %s (active = overhead + evaluation; wall-clock %s, idle %s)\n",
+                      format(active), format(walltime), format(idle)))
+          if (active_secs > 0) {
+            cat(sprintf("  Evaluation: %s (%.1f%%) [worker]\n",
+                        format(eval_dur), 100 * eval_secs / active_secs))
+            cat(sprintf("  Overhead:   %s (%.1f%%) [orchestration]\n",
+                        format(overhead), 100 * over_secs / active_secs))
+          }
+        }
+      }
+    }
   } else {
     cat("Value: <not collected>\n")
     cat("Conditions captured: <none>\n")

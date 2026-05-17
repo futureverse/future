@@ -1,5 +1,14 @@
 # Version (development version)
 
+## New Features
+
+ * `print()` for `Future` objects now reports a parallelization
+   efficiency breakdown when journaling is enabled via
+   `options(future.journal = TRUE)`. The round-trip is reported as
+   "active" time (overhead + evaluation), with wall-clock and idle
+   time (e.g. time between `future()` and `value()`) shown separately
+   so that user idle does not penalise the efficiency ratio.
+
  * ...
  
 
