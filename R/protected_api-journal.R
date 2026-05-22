@@ -146,14 +146,14 @@ journal.list <- function(x, baseline = TRUE, ...) {
   if (isTRUE(baseline)) {
     x <- lapply(x, FUN = journal, ...)
     start <- lapply(x, FUN = function(x) min(x[["start"]], na.rm = TRUE))
-    start <- Reduce(c, start)
+    start <- do.call(c, start)
     baseline <- min(start, na.rm = TRUE)
   }
   
   js <- lapply(x, FUN = journal, baseline = baseline, ...)
 
   class <- class(js[[1]])
-  js <- Reduce(rbind, js)
+  js <- do.call(rbind, js)
   class(js) <- class
   
   js
@@ -169,10 +169,19 @@ print.FutureJournal <- function(x, digits.secs = 3L, ...) {
 
 
 #' @export
-summary.FutureJournal <- function(object, ...) {
+summary.FutureJournal <- function(object, workers = NULL, ...) {
   ## To please 'R CMD check'
   event <- future_uuid <- median <- parent <- category <- NULL
-  
+
+  if (!is.null(workers)) {
+    stop_if_not(
+      length(workers) == 1L,
+      is.numeric(workers),
+      !is.na(workers),
+      workers >= 1
+    )
+  }
+
   dt_top <- subset(object, is.na(parent))
 
   uuids <- unique(dt_top[["future_uuid"]])
@@ -205,6 +214,7 @@ summary.FutureJournal <- function(object, ...) {
   t <- c(t, total = t_total)
   stats <- data.frame(walltime = t)
   
+
   ## -------------------------------------------------------
   ## 2. Calculate efficiency
   ## -------------------------------------------------------
@@ -220,7 +230,7 @@ summary.FutureJournal <- function(object, ...) {
     res[["duration"]] <- t_delta[kk]
     eff[[uuid]] <- res
   }
-  eff <- Reduce(rbind, eff)
+  eff <- do.call(rbind, eff)
 
   ## (b) Summary
   res <- NULL
@@ -231,7 +241,7 @@ summary.FutureJournal <- function(object, ...) {
       rownames(t) <- fcn_name
       t
     })
-    t <- Reduce(rbind, t)
+    t <- do.call(rbind, t)
     res <- t
   }
 
@@ -251,7 +261,62 @@ summary.FutureJournal <- function(object, ...) {
   rownames(stats) <- NULL
   stats <- stats[, c("summary", "evaluate", "evaluate_ratio", "overhead", "overhead_ratio", "duration", "walltime")]
 
+
+  ## -------------------------------------------------------
+  ## 3. Group-level (parallel) metrics
+  ## -------------------------------------------------------
+  ## True wall-clock time for the whole group. This is different from
+  ## walltime[total], which is the cumulative sum across futures)
+  wall_secs <- as.numeric(
+    max(dt_top[["stop"]], na.rm = TRUE) - min(dt_top[["start"]], na.rm = TRUE),
+    units = "secs"
+  )
+  wallclock <- as.difftime(wall_secs, units = "secs")
+
+  cumulative_evaluate <- sum(eff[["evaluate"]])
+  cumulative_overhead <- sum(eff[["overhead"]])
+  cumulative_evaluate_secs <- as.numeric(cumulative_evaluate, units = "secs")
+
+  speedup <- if (wall_secs > 0) cumulative_evaluate_secs / wall_secs else NA_real_
+  critical_path <- max(t_delta, na.rm = TRUE)
+
+  ## Auto-detect peak parallelism: the maximum number of 'evaluate'
+  ## events that overlap in wall-clock time. This is backend-agnostic
+  ## and works for ephemeral backends (e.g. 'multicore', where every
+  ## future runs in a unique short-lived process and counting distinct
+  ## session UUIDs would equal the number of futures rather than the
+  ## pool size).
+  ev_rows <- which(object[["event"]] == "evaluate")
+  if (length(ev_rows) > 0L) {
+    starts_num <- as.numeric(object[["start"]][ev_rows])
+    stops_num <- starts_num +
+      as.numeric(object[["duration"]][ev_rows], units = "secs")
+    edges <- data.frame(
+      t = c(starts_num, stops_num),
+      d = c(rep(1L, length(starts_num)), rep(-1L, length(stops_num)))
+    )
+    ## Process +1 before -1 at identical times so concurrent zero-gap
+    ## intervals aren't undercounted.
+    edges <- edges[order(edges[["t"]], -edges[["d"]]), ]
+    workers_used <- max(cumsum(edges[["d"]]))
+  } else {
+    workers_used <- 1L
+  }
+  
+  ## Denominator for parallel efficiency: caller's 'workers' (e.g. pool
+  ## size from nbrOfWorkers()) if given, otherwise auto-detected count.
+  if (is.null(workers)) workers <- workers_used
+  parallel_eff <- if (!is.na(speedup)) speedup / workers else NA_real_
+
   attr(stats, "nbr_of_futures") <- length(uuids)
+  attr(stats, "workers_used") <- workers_used
+  attr(stats, "workers") <- workers
+  attr(stats, "wallclock") <- wallclock
+  attr(stats, "cumulative_evaluation") <- cumulative_evaluate
+  attr(stats, "cumulative_overhead") <- cumulative_overhead
+  attr(stats, "speedup") <- speedup
+  attr(stats, "parallel_efficiency") <- parallel_eff
+  attr(stats, "critical_path") <- critical_path
   class(stats) <- c("FutureJournalSummary", class(stats))
   stats
 }
@@ -259,7 +324,44 @@ summary.FutureJournal <- function(object, ...) {
 
 #' @export
 print.FutureJournalSummary <- function(x, ...) {
-  cat(sprintf("Number of futures: %d\n", attr(x, "nbr_of_futures")))
+  cat(sprintf("Number of futures:     %d\n", attr(x, "nbr_of_futures")))
+  workers <- attr(x, "workers")
+  workers_used <- attr(x, "workers_used")
+  if (!is.null(workers_used)) {
+    if (!is.null(workers) && workers != workers_used) {
+      cat(sprintf("Workers used (peak):   %d (of %d available) [concurrent]\n",
+                  workers_used, workers))
+    } else {
+      cat(sprintf("Workers used (peak):   %d [concurrent]\n", workers_used))
+    }
+  }
+  wc <- attr(x, "wallclock")
+  if (!is.null(wc)) {
+    cat(sprintf("Wall-clock:            %s\n", format(wc)))
+  }
+  ce <- attr(x, "cumulative_evaluation")
+  if (!is.null(ce)) {
+    cat(sprintf("Cumulative evaluation: %s (serial estimate)\n", format(ce)))
+  }
+  co <- attr(x, "cumulative_overhead")
+  if (!is.null(co)) {
+    cat(sprintf("Cumulative overhead:   %s\n", format(co)))
+  }
+  sp <- attr(x, "speedup")
+  if (!is.null(sp) && !is.na(sp)) {
+    cat(sprintf("Speedup:               %.2fx\n", sp))
+  }
+  pe <- attr(x, "parallel_efficiency")
+  if (!is.null(pe) && !is.na(pe)) {
+    cat(sprintf("Parallel efficiency:   %.1f%% (of %d %s)\n",
+                100 * pe, workers,
+                if (workers == 1L) "worker" else "workers"))
+  }
+  cp <- attr(x, "critical_path")
+  if (!is.null(cp)) {
+    cat(sprintf("Critical path:         %s (longest single future)\n", format(cp)))
+  }
+  cat("\nPer-future statistics:\n")
   NextMethod("print")
 }
 

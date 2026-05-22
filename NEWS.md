@@ -9,6 +9,10 @@
    time (e.g. time between `future()` and `value()`) shown separately
    so that user idle does not penalise the efficiency ratio.
 
+ * `summary()` on a `FutureJournal` now reports group-level
+   parallelization metrics, notably total speedup and total
+   efficiency.
+
 ## Bug Fixes
 
  * The default for R option `future.globals.maxSize` is now `+Inf`

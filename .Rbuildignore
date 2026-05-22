@@ -1,4 +1,4 @@
-^[.][^a].*/
+^[.][a-z].*/
 ^docs/
 ^incl/
 ^pkgdown/
