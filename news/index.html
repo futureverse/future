@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.70.0-9009</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.70.0-9010</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -82,8 +82,8 @@
 <h2 class="pkg-version" data-toc-text="development version" id="version-development-version">Version (development version)<a class="anchor" aria-label="anchor" href="#version-development-version"></a></h2>
 <div class="section level3">
 <h3 id="new-features-development-version">New Features<a class="anchor" aria-label="anchor" href="#new-features-development-version"></a></h3>
-<ul><li>
-<code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> for <code>Future</code> objects now reports a parallelization efficiency breakdown when journaling is enabled via <code>options(future.journal = TRUE)</code>. The round-trip is reported as “active” time (overhead + evaluation), with wall-clock and idle time (e.g. time between <code><a href="../reference/future.html">future()</a></code> and <code><a href="../reference/value.html">value()</a></code>) shown separately so that user idle does not penalise the efficiency ratio.</li>
+<ul><li><p><code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> for <code>Future</code> objects now reports a parallelization efficiency breakdown when journaling is enabled via <code>options(future.journal = TRUE)</code>. The round-trip is reported as “active” time (overhead + evaluation), with wall-clock and idle time (e.g. time between <code><a href="../reference/future.html">future()</a></code> and <code><a href="../reference/value.html">value()</a></code>) shown separately so that user idle does not penalise the efficiency ratio.</p></li>
+<li><p><code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code> on a <code>FutureJournal</code> now reports group-level parallelization metrics, notably total speedup and total efficiency.</p></li>
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-development-version">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h3>

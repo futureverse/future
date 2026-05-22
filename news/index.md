@@ -13,6 +13,10 @@
   [`value()`](https://future.futureverse.org/reference/value.md)) shown
   separately so that user idle does not penalise the efficiency ratio.
 
+- [`summary()`](https://rdrr.io/r/base/summary.html) on a
+  `FutureJournal` now reports group-level parallelization metrics,
+  notably total speedup and total efficiency.
+
 ### Bug Fixes
 
 - The default for R option `future.globals.maxSize` is now `+Inf`
