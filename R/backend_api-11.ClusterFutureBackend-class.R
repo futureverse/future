@@ -38,9 +38,9 @@ ClusterFutureBackend <- local({
       if (is.numeric(workers)) {
         if (debug) mdebugf("workers: %g", workers)
         ## Preserve class attributes, especially "AsIs"
-        clazz <- class(workers)
+        clazz <- setdiff(class(workers), c("integer", "numeric"))
         workers <- as.integer(workers)
-        class(workers) <- clazz
+        if (length(clazz) > 0) class(workers) <- clazz
         stop_if_not(length(workers) == 1, is.finite(workers))
       } else {
         stop_if_not(length(workers) >= 1, !anyNA(workers))
