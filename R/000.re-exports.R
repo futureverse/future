@@ -9,10 +9,10 @@
 #'  switch to use the ones from the \pkg{parallelly} package. Thank you!_
 #'
 #' * [parallelly::availableCores()]
-#    Used by: ale (1), BatchGetSymbols (2), codalm (1), cft (1),
-#             couplr (2), deseats, dipsaus (1), elevatr (1), heterogen,
-#             PINstimation (1), powRICLPM (1), readsdr (1), recforest,
-#             sigminer (2), skpr (1), smoots, TriDimRegression (1), uci (1)
+#    Used by: ale (1), BatchGetSymbols (2), codalm (1), cft (1), deseats,
+#             elevatr (1), heterogen, PINstimation (1), powRICLPM (1),
+#             readsdr (1), recforest, sigminer (2), skpr (1), smoots,
+#             TriDimRegression (1), uci (1)
 #             [2025-12-22, 2026-01-31, 2026-04-04]
 #' * [parallelly::availableWorkers()]
 #    Used by: wqspt (1) [2025-03-15]
