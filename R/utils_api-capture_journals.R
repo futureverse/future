@@ -24,7 +24,7 @@ capture_journals <- function(expr, substitute = TRUE, envir = parent.frame()) {
   oopts <- options(future.journal = TRUE)
   on.exit(options(oopts))
   
-  journals <- NULL
+  journals <- list()
   withCallingHandlers({
     eval(expr, envir = envir)
   }, FutureJournalCondition = function(cond) {
