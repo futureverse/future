@@ -15,9 +15,13 @@
 #' This class extends the \link[globals]{Globals} class by adding
 #' attributes `resolved` and `total_size`.
 #'
-#' @aliases as.FutureGlobals as.FutureGlobals.FutureGlobals
-#' as.FutureGlobals.Globals as.FutureGlobals.list [.FutureGlobals
-#' c.FutureGlobals unique.FutureGlobals
+#' @aliases as.FutureGlobals
+#' @aliases as.FutureGlobals.FutureGlobals
+#' @aliases as.FutureGlobals.Globals
+#' @aliases as.FutureGlobals.list
+#' @aliases [.FutureGlobals
+#' @aliases c.FutureGlobals
+#' @aliases unique.FutureGlobals
 #'
 #' @importFrom globals Globals
 #' @export

@@ -213,65 +213,64 @@
 #' @seealso
 #' To set \R options or environment variables when \R starts (even before the \pkg{future} package is loaded), see the \link[base]{Startup} help page.  The \href{https://cran.r-project.org/package=startup}{\pkg{startup}} package provides a friendly mechanism for configurating \R's startup process.
 #'
-#' @aliases
-#' future.options 
+#' @aliases future.options 
 #'
-#' future.startup.script
-#' future.debug
-#' future.demo.mandelbrot.region
-#' future.demo.mandelbrot.nrow
-#' future.fork.multithreading.enable
-#' future.globals.maxSize
-#' future.globals.method
-#' future.globals.onMissing
-#' future.globals.resolve
-#' future.globals.onReference
-#' future.globals.onReference
-#' future.plan
-#' future.onFutureCondition.keepFuture
-#' future.resolve.recursive
-#' future.connections.onMisuse
-#' future.defaultDevice.onMisuse
-#' future.devices.onMisuse
-#' future.globalenv.onMisuse
-#' future.rng.onMisuse
-#' future.wait.alpha
-#' future.wait.interval
-#' future.wait.timeout
-#' future.output.windows.reencode
-#' future.journal
-#' future.globals.objectSize.method
-#' future.ClusterFuture.clusterEvalQ
+#' @aliases future.startup.script
+#' @aliases future.debug
+#' @aliases future.demo.mandelbrot.region
+#' @aliases future.demo.mandelbrot.nrow
+#' @aliases future.fork.multithreading.enable
+#' @aliases future.globals.maxSize
+#' @aliases future.globals.method
+#' @aliases future.globals.onMissing
+#' @aliases future.globals.resolve
+#' @aliases future.globals.onReference
+#' @aliases future.globals.onReference
+#' @aliases future.plan
+#' @aliases future.onFutureCondition.keepFuture
+#' @aliases future.resolve.recursive
+#' @aliases future.connections.onMisuse
+#' @aliases future.defaultDevice.onMisuse
+#' @aliases future.devices.onMisuse
+#' @aliases future.globalenv.onMisuse
+#' @aliases future.rng.onMisuse
+#' @aliases future.wait.alpha
+#' @aliases future.wait.interval
+#' @aliases future.wait.timeout
+#' @aliases future.output.windows.reencode
+#' @aliases future.journal
+#' @aliases future.globals.objectSize.method
+#' @aliases future.ClusterFuture.clusterEvalQ
 #'
-#' R_FUTURE_STARTUP_SCRIPT
-#' R_FUTURE_DEBUG
-#' R_FUTURE_DEMO_MANDELBROT_REGION
-#' R_FUTURE_DEMO_MANDELBROT_NROW
-#' R_FUTURE_FORK_MULTITHREADING_ENABLE
-#' R_FUTURE_GLOBALS_MAXSIZE
-#' R_FUTURE_GLOBALS_METHOD
-#' R_FUTURE_GLOBALS_ONMISSING
-#' R_FUTURE_GLOBALS_RESOLVE
-#' R_FUTURE_GLOBALS_ONREFERENCE
-#' R_FUTURE_PLAN
-#' R_FUTURE_ONFUTURECONDITION_KEEPFUTURE
-#' R_FUTURE_RESOLVE_RECURSIVE
-#' R_FUTURE_CONNECTIONS_ONMISUSE
-#' R_FUTURE_DEVICES_ONMISUSE
-#' R_FUTURE_DEFAULTDEVICE_ONMISUSE
-#' R_FUTURE_GLOBALENV_ONMISUSE
-#' R_FUTURE_RNG_ONMISUSE
-#' R_FUTURE_WAIT_ALPHA
-#' R_FUTURE_WAIT_INTERVAL
-#' R_FUTURE_WAIT_TIMEOUT
-#' R_FUTURE_RESOLVED_TIMEOUT
-#' R_FUTURE_OUTPUT_WINDOWS_REENCODE
-#' R_FUTURE_JOURNAL
-#' R_FUTURE_GLOBALS_OBJECTSIZE_METHOD
-#' R_FUTURE_CLUSTERFUTURE_CLUSTEREVALQ
+#' @aliases R_FUTURE_STARTUP_SCRIPT
+#' @aliases R_FUTURE_DEBUG
+#' @aliases R_FUTURE_DEMO_MANDELBROT_REGION
+#' @aliases R_FUTURE_DEMO_MANDELBROT_NROW
+#' @aliases R_FUTURE_FORK_MULTITHREADING_ENABLE
+#' @aliases R_FUTURE_GLOBALS_MAXSIZE
+#' @aliases R_FUTURE_GLOBALS_METHOD
+#' @aliases R_FUTURE_GLOBALS_ONMISSING
+#' @aliases R_FUTURE_GLOBALS_RESOLVE
+#' @aliases R_FUTURE_GLOBALS_ONREFERENCE
+#' @aliases R_FUTURE_PLAN
+#' @aliases R_FUTURE_ONFUTURECONDITION_KEEPFUTURE
+#' @aliases R_FUTURE_RESOLVE_RECURSIVE
+#' @aliases R_FUTURE_CONNECTIONS_ONMISUSE
+#' @aliases R_FUTURE_DEVICES_ONMISUSE
+#' @aliases R_FUTURE_DEFAULTDEVICE_ONMISUSE
+#' @aliases R_FUTURE_GLOBALENV_ONMISUSE
+#' @aliases R_FUTURE_RNG_ONMISUSE
+#' @aliases R_FUTURE_WAIT_ALPHA
+#' @aliases R_FUTURE_WAIT_INTERVAL
+#' @aliases R_FUTURE_WAIT_TIMEOUT
+#' @aliases R_FUTURE_RESOLVED_TIMEOUT
+#' @aliases R_FUTURE_OUTPUT_WINDOWS_REENCODE
+#' @aliases R_FUTURE_JOURNAL
+#' @aliases R_FUTURE_GLOBALS_OBJECTSIZE_METHOD
+#' @aliases R_FUTURE_CLUSTERFUTURE_CLUSTEREVALQ
 #'
-#' future.cmdargs 
-#' .future.R
+#' @aliases future.cmdargs 
+#' @aliases .future.R
 #'
 #' @name zzz-future.options 
 NULL
