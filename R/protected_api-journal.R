@@ -323,6 +323,18 @@ summary.FutureJournal <- function(object, workers = NULL, ...) {
 
 
 #' @export
+summary.FutureJournalList <- function(object, ...) {
+  x <- do.call(rbind, object)
+  summary(x, ...)
+}
+
+#' @export
+print.FutureJournalList <- function(x, workers = NULL, ...) {
+  print(summary(x, workers = workers), ...)
+}
+
+
+#' @export
 print.FutureJournalSummary <- function(x, ...) {
   cat(sprintf("Number of futures:     %d\n", attr(x, "nbr_of_futures")))
   workers <- attr(x, "workers")
