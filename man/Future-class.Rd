@@ -28,8 +28,8 @@ identified.}
 \item{substitute}{If TRUE, argument \code{expr} is
 \code{\link[base]{substitute}()}:d, otherwise not.}
 
-\item{stdout}{If TRUE (default), then the standard output is captured,
-and re-outputted when \code{value()} is called.
+\item{stdout}{(evaluation) If TRUE (default), then the standard output is
+captured, and re-outputted when \code{value()} is called.
 If FALSE, any output is silenced (by sinking it to the null device as
 it is outputted).
 Using \code{stdout = structure(TRUE, drop = TRUE)} causes the captured
@@ -39,9 +39,10 @@ captured output across futures.
 Using \code{stdout = NA} fully avoids intercepting the standard output;
 behavior of such unhandled standard output depends on the future backend.}
 
-\item{conditions}{A character string of condition classes to be captured
-and relayed.  The default is to relay all conditions, including messages
-and warnings.  To drop all conditions, use \code{conditions = character(0)}.
+\item{conditions}{(evaluation) A character string of condition classes to
+be captured and relayed.  The default is to relay all conditions,
+including messages and warnings.  To drop all conditions, use
+\code{conditions = character(0)}.
 Errors are always relayed.
 Attribute \code{exclude} can be used to ignore specific classes, e.g.
 \code{conditions = structure("condition", exclude = "message")} will capture
@@ -54,19 +55,20 @@ Using \code{conditions = NULL} (not recommended) avoids intercepting conditions,
 except from errors; behavior of such unhandled conditions depends on the
 future backend and the environment from which R runs.}
 
-\item{globals}{(optional) a logical, a character vector, or a named list
-to control how globals are handled.
+\item{globals}{(resource; optional) a logical, a character vector, or
+a named list to control how globals are handled.
 For details, see section 'Globals used by future expressions'
 in the help for \code{\link[=future]{future()}}.}
 
-\item{packages}{(optional) a character vector specifying packages to be
-attached in the \R environment evaluating the future, \emph{in addition to
-packages required by global variables} specified or identified via argument
-\code{globals}.}
+\item{packages}{(resource; optional) a character vector specifying
+packages to be attached in the \R environment evaluating the future,
+\emph{in addition to packages required by global variables} specified or
+identified via argument \code{globals}.}
 
-\item{seed}{(optional) If TRUE, the random seed, that is, the state of the
-random number generator (RNG) will be set such that statistically sound
-random numbers are produced (also during parallelization).
+\item{seed}{(resource; optional) If TRUE, the random seed, that is, the
+state of the random number generator (RNG) will be set such that
+statistically sound random numbers are produced (also during
+parallelization).
 If FALSE (default), it is assumed that the future expression neither
 needs nor uses random number generation.
 To use a fixed random seed, specify a L'Ecuyer-CMRG seed (seven integers)
@@ -79,7 +81,7 @@ ignored, an informative warning, or error will be produced.
 If \code{seed} is NULL, then the effect is as with \code{seed = FALSE}
 but without the RNG check being performed.}
 
-\item{lazy}{If FALSE (default), the future is resolved
+\item{lazy}{(scheduling) If FALSE (default), the future is resolved
 eagerly (starting immediately), otherwise not.}
 
 \item{label}{A character string label attached to the future.}

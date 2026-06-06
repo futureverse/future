@@ -10,3 +10,4 @@ revdep/data.sqlite
 revdep/checks/*
 revdep/library/*
 
+.osgrep

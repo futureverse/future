@@ -17,8 +17,8 @@
 #' @param substitute If TRUE, argument `expr` is
 #' \code{\link[base]{substitute}()}:d, otherwise not.
 #'
-#' @param stdout If TRUE (default), then the standard output is captured,
-#' and re-outputted when `value()` is called.
+#' @param stdout (evaluation) If TRUE (default), then the standard output is
+#' captured, and re-outputted when `value()` is called.
 #' If FALSE, any output is silenced (by sinking it to the null device as
 #' it is outputted).
 #' Using `stdout = structure(TRUE, drop = TRUE)` causes the captured
@@ -29,9 +29,10 @@
 #' behavior of such unhandled standard output depends on the future backend.
 #  backend and the environment from which R runs.
 #' 
-#' @param conditions A character string of condition classes to be captured
-#' and relayed.  The default is to relay all conditions, including messages
-#' and warnings.  To drop all conditions, use `conditions = character(0)`.
+#' @param conditions (evaluation) A character string of condition classes to
+#' be captured and relayed.  The default is to relay all conditions,
+#' including messages and warnings.  To drop all conditions, use
+#' `conditions = character(0)`.
 #' Errors are always relayed.
 #' Attribute `exclude` can be used to ignore specific classes, e.g.
 #' `conditions = structure("condition", exclude = "message")` will capture
@@ -44,19 +45,20 @@
 #' except from errors; behavior of such unhandled conditions depends on the
 #' future backend and the environment from which R runs.
 #' 
-#' @param globals (optional) a logical, a character vector, or a named list
-#' to control how globals are handled.
+#' @param globals (resource; optional) a logical, a character vector, or
+#' a named list to control how globals are handled.
 #' For details, see section 'Globals used by future expressions'
 #' in the help for [future()].
 #' 
-#' @param packages (optional) a character vector specifying packages to be
-#' attached in the \R environment evaluating the future, _in addition to
-#' packages required by global variables_ specified or identified via argument
-#' `globals`.
+#' @param packages (resource; optional) a character vector specifying
+#' packages to be attached in the \R environment evaluating the future,
+#' _in addition to packages required by global variables_ specified or
+#' identified via argument `globals`.
 #'
-#' @param seed (optional) If TRUE, the random seed, that is, the state of the
-#' random number generator (RNG) will be set such that statistically sound
-#' random numbers are produced (also during parallelization).
+#' @param seed (resource; optional) If TRUE, the random seed, that is, the
+#' state of the random number generator (RNG) will be set such that
+#' statistically sound random numbers are produced (also during
+#' parallelization).
 #' If FALSE (default), it is assumed that the future expression neither
 #' needs nor uses random number generation.
 #' To use a fixed random seed, specify a L'Ecuyer-CMRG seed (seven integers)
@@ -69,7 +71,7 @@
 #' If `seed` is NULL, then the effect is as with `seed = FALSE`
 #' but without the RNG check being performed.
 #'
-#' @param lazy If FALSE (default), the future is resolved
+#' @param lazy (scheduling) If FALSE (default), the future is resolved
 #' eagerly (starting immediately), otherwise not.
 #'
 #' @param label A character string label attached to the future.
