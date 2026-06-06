@@ -342,7 +342,7 @@ with(plan(multisession, workers = 2), {
 })
 print(c(main = Sys.getpid(), worker = w_pid))
 #>   main worker 
-#> 122805 125525 
+#> 903171 905987 
 
 
 
@@ -355,6 +355,6 @@ local({
   print(c(main = Sys.getpid(), worker = w_pid))
 })
 #>   main worker 
-#> 122805 125630 
+#> 903171 906125 
 
 ```

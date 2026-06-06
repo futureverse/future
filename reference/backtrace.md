@@ -42,9 +42,9 @@ res <- tryCatch({
 #> [[1]]
 #> base::tryCatch(base::withCallingHandlers({
 #>     NULL
-#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpWK2Ybu/callr-fun-1df0f2380907b"), 
+#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/Rtmpdloo78/callr-fun-dc6cf69646cb8"), 
 #>         base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
-#>         quote = TRUE), file = "/tmp/hb/RtmpWK2Ybu/callr-res-1df0f29087680", 
+#>         quote = TRUE), file = "/tmp/hb/Rtmpdloo78/callr-res-dc6cf29b8e397", 
 #>         compress = FALSE)
 #>     base::flush(base::stdout())
 #>     base::flush(base::stderr())
@@ -70,7 +70,10 @@ res <- tryCatch({
 #>         if (!base::is.na(cut)) {
 #>             e2$trace <- e2$trace[-(1:cut), ]
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpWK2Ybu/callr-res-1df0f29087680", 
+#>         if (callr_data$has_otel) {
+#>             callr_data$otel_span$record_exception(e2)
+#>         }
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/Rtmpdloo78/callr-res-dc6cf29b8e397", 
 #>             ".error"))
 #>     }
 #> }, interrupt = function(e) {
@@ -93,7 +96,10 @@ res <- tryCatch({
 #>         if (!base::is.na(cut)) {
 #>             e2$trace <- e2$trace[-(1:cut), ]
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpWK2Ybu/callr-res-1df0f29087680", 
+#>         if (callr_data$has_otel) {
+#>             callr_data$otel_span$record_exception(e2)
+#>         }
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/Rtmpdloo78/callr-res-dc6cf29b8e397", 
 #>             ".error"))
 #>     }
 #> }, callr_message = function(e) {
@@ -103,17 +109,16 @@ res <- tryCatch({
 #>     if (FALSE) {
 #>         base::try(base::stop(e))
 #>     }
-#>     else {
-#>         base::invisible()
+#>     if (TRUE) {
+#>         base::q(save = "no", status = 1)
 #>     }
+#>     base::invisible()
 #> }, interrupt = function(e) {
 #>     NULL
-#>     if (FALSE) {
-#>         e
+#>     if (TRUE) {
+#>         base::q(save = "no", status = 1)
 #>     }
-#>     else {
-#>         base::invisible()
-#>     }
+#>     base::invisible()
 #> })
 #> 
 #> [[2]]
@@ -138,9 +143,9 @@ res <- tryCatch({
 #> [[8]]
 #> base::withCallingHandlers({
 #>     NULL
-#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpWK2Ybu/callr-fun-1df0f2380907b"), 
+#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/Rtmpdloo78/callr-fun-dc6cf69646cb8"), 
 #>         base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
-#>         quote = TRUE), file = "/tmp/hb/RtmpWK2Ybu/callr-res-1df0f29087680", 
+#>         quote = TRUE), file = "/tmp/hb/Rtmpdloo78/callr-res-dc6cf29b8e397", 
 #>         compress = FALSE)
 #>     base::flush(base::stdout())
 #>     base::flush(base::stderr())
@@ -166,7 +171,10 @@ res <- tryCatch({
 #>         if (!base::is.na(cut)) {
 #>             e2$trace <- e2$trace[-(1:cut), ]
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpWK2Ybu/callr-res-1df0f29087680", 
+#>         if (callr_data$has_otel) {
+#>             callr_data$otel_span$record_exception(e2)
+#>         }
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/Rtmpdloo78/callr-res-dc6cf29b8e397", 
 #>             ".error"))
 #>     }
 #> }, interrupt = function(e) {
@@ -189,7 +197,10 @@ res <- tryCatch({
 #>         if (!base::is.na(cut)) {
 #>             e2$trace <- e2$trace[-(1:cut), ]
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpWK2Ybu/callr-res-1df0f29087680", 
+#>         if (callr_data$has_otel) {
+#>             callr_data$otel_span$record_exception(e2)
+#>         }
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/Rtmpdloo78/callr-res-dc6cf29b8e397", 
 #>             ".error"))
 #>     }
 #> }, callr_message = function(e) {
@@ -197,13 +208,13 @@ res <- tryCatch({
 #> })
 #> 
 #> [[9]]
-#> base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpWK2Ybu/callr-fun-1df0f2380907b"), 
+#> base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/Rtmpdloo78/callr-fun-dc6cf69646cb8"), 
 #>     base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
-#>     quote = TRUE), file = "/tmp/hb/RtmpWK2Ybu/callr-res-1df0f29087680", 
+#>     quote = TRUE), file = "/tmp/hb/Rtmpdloo78/callr-res-dc6cf29b8e397", 
 #>     compress = FALSE)
 #> 
 #> [[10]]
-#> base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpWK2Ybu/callr-fun-1df0f2380907b"), 
+#> base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/Rtmpdloo78/callr-fun-dc6cf69646cb8"), 
 #>     base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
 #>     quote = TRUE)
 #> 
@@ -220,8 +231,8 @@ res <- tryCatch({
 #>     options(cli.num_colors = cli_colors, cli.hyperlink = hyperlinks, 
 #>         cli.hyperlink_run = hyperlinks)
 #>     pkgdown::build_site(...)
-#> }), base::quote(list(pkg = list(package = "future", version = "1.70.0-9013", 
-#>     src_path = "/tmp/hb/RtmpWK2Ybu/future", meta = list(url = "https://future.futureverse.org", 
+#> }), base::quote(list(pkg = list(package = "future", version = "1.70.0-9015", 
+#>     src_path = "/tmp/hb/Rtmpdloo78/future", meta = list(url = "https://future.futureverse.org", 
 #>         home = list(links = list(list(text = "Roadmap/Milestones", 
 #>             href = "https://github.com/futureverse/future/milestones"), 
 #>             list(text = "The Futureverse Project", href = "https://www.futureverse.org/"), 
@@ -257,7 +268,7 @@ res <- tryCatch({
 #>             bootstrap = 5L, `light-switch` = TRUE)), desc = <environment>, 
 #>     bs_version = 5L, development = list(destination = "dev", 
 #>         mode = "default", version_label = "muted", in_dev = FALSE, 
-#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/RtmpWK2Ybu/future/docs", 
+#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/Rtmpdloo78/future/docs", 
 #>     lang = "en-US", install_metadata = FALSE, figures = list(
 #>         dev = "ragg::agg_png", dpi = 96L, dev.args = list(), 
 #>         fig.ext = "png", fig.width = 7.29166666666667, fig.height = NULL, 
@@ -484,8 +495,8 @@ res <- tryCatch({
 #>                 "identified.")), "\n", "\n", list(list("substitute"), 
 #>                 list("If TRUE, argument ", list("expr"), " is\n", 
 #>                   list(list("substitute"), "()"), ":d, otherwise not.")), 
-#>                 "\n", "\n", list(list("stdout"), list("If TRUE (default), then the standard output is captured,\n", 
-#>                   "and re-outputted when ", list("value()"), 
+#>                 "\n", "\n", list(list("stdout"), list("(evaluation) If TRUE (default), then the standard output is\n", 
+#>                   "captured, and re-outputted when ", list("value()"), 
 #>                   " is called.\n", "If FALSE, any output is silenced (by sinking it to the null device as\n", 
 #>                   "it is outputted).\n", "Using ", list("stdout = structure(TRUE, drop = TRUE)"), 
 #>                   " causes the captured\n", "standard output to be dropped from the future object as soon as it has\n", 
@@ -493,9 +504,9 @@ res <- tryCatch({
 #>                   "captured output across futures.\n", "Using ", 
 #>                   list("stdout = NA"), " fully avoids intercepting the standard output;\n", 
 #>                   "behavior of such unhandled standard output depends on the future backend.")), 
-#>                 "\n", "\n", list(list("conditions"), list("A character string of condition classes to be captured\n", 
-#>                   "and relayed.  The default is to relay all conditions, including messages\n", 
-#>                   "and warnings.  To drop all conditions, use ", 
+#>                 "\n", "\n", list(list("conditions"), list("(evaluation) A character string of condition classes to\n", 
+#>                   "be captured and relayed.  The default is to relay all conditions,\n", 
+#>                   "including messages and warnings.  To drop all conditions, use\n", 
 #>                   list("conditions = character(0)"), ".\n", "Errors are always relayed.\n", 
 #>                   "Attribute ", list("exclude"), " can be used to ignore specific classes, e.g.\n", 
 #>                   list("conditions = structure(\"condition\", exclude = \"message\")"), 
@@ -509,19 +520,21 @@ res <- tryCatch({
 #>                   "Using ", list("conditions = NULL"), " (not recommended) avoids intercepting conditions,\n", 
 #>                   "except from errors; behavior of such unhandled conditions depends on the\n", 
 #>                   "future backend and the environment from which R runs.")), 
-#>                 "\n", "\n", list(list("globals"), list("(optional) a logical, a character vector, or a named list\n", 
-#>                   "to control how globals are handled.\n", "For details, see section 'Globals used by future expressions'\n", 
+#>                 "\n", "\n", list(list("globals"), list("(resource; optional) a logical, a character vector, or\n", 
+#>                   "a named list to control how globals are handled.\n", 
+#>                   "For details, see section 'Globals used by future expressions'\n", 
 #>                   "in the help for ", list(list("future()")), 
 #>                   ".")), "\n", "\n", list(list("packages"), list(
-#>                   "(optional) a character vector specifying packages to be\n", 
-#>                   "attached in the ", list(), " environment evaluating the future, ", 
-#>                   list("in addition to\n", "packages required by global variables"), 
-#>                   " specified or identified via argument\n", 
+#>                   "(resource; optional) a character vector specifying\n", 
+#>                   "packages to be attached in the ", list(), 
+#>                   " environment evaluating the future,\n", list(
+#>                     "in addition to packages required by global variables"), 
+#>                   " specified or\n", "identified via argument ", 
 #>                   list("globals"), ".")), "\n", "\n", list(list(
-#>                   "seed"), list("(optional) If TRUE, the random seed, that is, the state of the\n", 
-#>                   "random number generator (RNG) will be set such that statistically sound\n", 
-#>                   "random numbers are produced (also during parallelization).\n", 
-#>                   "If FALSE (default), it is assumed that the future expression neither\n", 
+#>                   "seed"), list("(resource; optional) If TRUE, the random seed, that is, the\n", 
+#>                   "state of the random number generator (RNG) will be set such that\n", 
+#>                   "statistically sound random numbers are produced (also during\n", 
+#>                   "parallelization).\n", "If FALSE (default), it is assumed that the future expression neither\n", 
 #>                   "needs nor uses random number generation.\n", 
 #>                   "To use a fixed random seed, specify a L'Ecuyer-CMRG seed (seven integers)\n", 
 #>                   "or a regular RNG seed (a single integer).  If the latter, then a\n", 
@@ -532,7 +545,7 @@ res <- tryCatch({
 #>                   "ignored, an informative warning, or error will be produced.\n", 
 #>                   "If ", list("seed"), " is NULL, then the effect is as with ", 
 #>                   list("seed = FALSE"), "\n", "but without the RNG check being performed.")), 
-#>                 "\n", "\n", list(list("lazy"), list("If FALSE (default), the future is resolved\n", 
+#>                 "\n", "\n", list(list("lazy"), list("(scheduling) If FALSE (default), the future is resolved\n", 
 #>                   "eagerly (starting immediately), otherwise not.")), 
 #>                 "\n", "\n", list(list("label"), list("A character string label attached to the future.")), 
 #>                 "\n", "\n", list(list(list()), list("Additional named elements of the future.")), 
@@ -1016,12 +1029,12 @@ res <- tryCatch({
 #>                     list("If TRUE, argument ", list("expr"), 
 #>                       " is\n", list(list("substitute"), "()"), 
 #>                       ":d, otherwise not.")), "\n", "\n", list(
-#>                     list("lazy"), list("If FALSE (default), the future is resolved\n", 
+#>                     list("lazy"), list("(scheduling) If FALSE (default), the future is resolved\n", 
 #>                       "eagerly (starting immediately), otherwise not.")), 
-#>                   "\n", "\n", list(list("seed"), list("(optional) If TRUE, the random seed, that is, the state of the\n", 
-#>                     "random number generator (RNG) will be set such that statistically sound\n", 
-#>                     "random numbers are produced (also during parallelization).\n", 
-#>                     "If FALSE (default), it is assumed that the future expression neither\n", 
+#>                   "\n", "\n", list(list("seed"), list("(resource; optional) If TRUE, the random seed, that is, the\n", 
+#>                     "state of the random number generator (RNG) will be set such that\n", 
+#>                     "statistically sound random numbers are produced (also during\n", 
+#>                     "parallelization).\n", "If FALSE (default), it is assumed that the future expression neither\n", 
 #>                     "needs nor uses random number generation.\n", 
 #>                     "To use a fixed random seed, specify a L'Ecuyer-CMRG seed (seven integers)\n", 
 #>                     "or a regular RNG seed (a single integer).  If the latter, then a\n", 
@@ -1032,28 +1045,29 @@ res <- tryCatch({
 #>                     "ignored, an informative warning, or error will be produced.\n", 
 #>                     "If ", list("seed"), " is NULL, then the effect is as with ", 
 #>                     list("seed = FALSE"), "\n", "but without the RNG check being performed.")), 
-#>                   "\n", "\n", list(list("globals"), list("(optional) a logical, a character vector, or a named list\n", 
-#>                     "to control how globals are handled.\n", 
+#>                   "\n", "\n", list(list("globals"), list("(resource; optional) a logical, a character vector, or\n", 
+#>                     "a named list to control how globals are handled.\n", 
 #>                     "For details, see section 'Globals used by future expressions'\n", 
 #>                     "in the help for ", list(list("future()")), 
 #>                     ".")), "\n", "\n", list(list("packages"), 
-#>                     list("(optional) a character vector specifying packages to be\n", 
-#>                       "attached in the ", list(), " environment evaluating the future, ", 
-#>                       list("in addition to\n", "packages required by global variables"), 
-#>                       " specified or identified via argument\n", 
+#>                     list("(resource; optional) a character vector specifying\n", 
+#>                       "packages to be attached in the ", list(), 
+#>                       " environment evaluating the future,\n", 
+#>                       list("in addition to packages required by global variables"), 
+#>                       " specified or\n", "identified via argument ", 
 #>                       list("globals"), ".")), "\n", "\n", list(
-#>                     list("stdout"), list("If TRUE (default), then the standard output is captured,\n", 
-#>                       "and re-outputted when ", list("value()"), 
-#>                       " is called.\n", "If FALSE, any output is silenced (by sinking it to the null device as\n", 
+#>                     list("stdout"), list("(evaluation) If TRUE (default), then the standard output is\n", 
+#>                       "captured, and re-outputted when ", list(
+#>                         "value()"), " is called.\n", "If FALSE, any output is silenced (by sinking it to the null device as\n", 
 #>                       "it is outputted).\n", "Using ", list("stdout = structure(TRUE, drop = TRUE)"), 
 #>                       " causes the captured\n", "standard output to be dropped from the future object as soon as it has\n", 
 #>                       "been relayed. This can help decrease the overall memory consumed by\n", 
 #>                       "captured output across futures.\n", "Using ", 
 #>                       list("stdout = NA"), " fully avoids intercepting the standard output;\n", 
 #>                       "behavior of such unhandled standard output depends on the future backend.")), 
-#>                   "\n", "\n", list(list("conditions"), list("A character string of condition classes to be captured\n", 
-#>                     "and relayed.  The default is to relay all conditions, including messages\n", 
-#>                     "and warnings.  To drop all conditions, use ", 
+#>                   "\n", "\n", list(list("conditions"), list("(evaluation) A character string of condition classes to\n", 
+#>                     "be captured and relayed.  The default is to relay all conditions,\n", 
+#>                     "including messages and warnings.  To drop all conditions, use\n", 
 #>                     list("conditions = character(0)"), ".\n", 
 #>                     "Errors are always relayed.\n", "Attribute ", 
 #>                     list("exclude"), " can be used to ignore specific classes, e.g.\n", 
@@ -1262,12 +1276,12 @@ res <- tryCatch({
 #>                     list("If TRUE, argument ", list("expr"), 
 #>                       " is\n", list(list("substitute"), "()"), 
 #>                       ":d, otherwise not.")), "\n", "\n", list(
-#>                     list("lazy"), list("If FALSE (default), the future is resolved\n", 
+#>                     list("lazy"), list("(scheduling) If FALSE (default), the future is resolved\n", 
 #>                       "eagerly (starting immediately), otherwise not.")), 
-#>                   "\n", "\n", list(list("seed"), list("(optional) If TRUE, the random seed, that is, the state of the\n", 
-#>                     "random number generator (RNG) will be set such that statistically sound\n", 
-#>                     "random numbers are produced (also during parallelization).\n", 
-#>                     "If FALSE (default), it is assumed that the future expression neither\n", 
+#>                   "\n", "\n", list(list("seed"), list("(resource; optional) If TRUE, the random seed, that is, the\n", 
+#>                     "state of the random number generator (RNG) will be set such that\n", 
+#>                     "statistically sound random numbers are produced (also during\n", 
+#>                     "parallelization).\n", "If FALSE (default), it is assumed that the future expression neither\n", 
 #>                     "needs nor uses random number generation.\n", 
 #>                     "To use a fixed random seed, specify a L'Ecuyer-CMRG seed (seven integers)\n", 
 #>                     "or a regular RNG seed (a single integer).  If the latter, then a\n", 
@@ -1278,25 +1292,25 @@ res <- tryCatch({
 #>                     "ignored, an informative warning, or error will be produced.\n", 
 #>                     "If ", list("seed"), " is NULL, then the effect is as with ", 
 #>                     list("seed = FALSE"), "\n", "but without the RNG check being performed.")), 
-#>                   "\n", "\n", list(list("globals"), list("(optional) a logical, a character vector, or a named list\n", 
-#>                     "to control how globals are handled.\n", 
+#>                   "\n", "\n", list(list("globals"), list("(resource; optional) a logical, a character vector, or\n", 
+#>                     "a named list to control how globals are handled.\n", 
 #>                     "For details, see section 'Globals used by future expressions'\n", 
 #>                     "in the help for ", list(list("future()")), 
 #>                     ".")), "\n", "\n", list(list("packages"), 
 #>                     list("(optional) a character vector specifying packages\n", 
 #>                       "to be attached in the ", list(), " environment evaluating the future.")), 
-#>                   "\n", "\n", list(list("stdout"), list("If TRUE (default), then the standard output is captured,\n", 
-#>                     "and re-outputted when ", list("value()"), 
-#>                     " is called.\n", "If FALSE, any output is silenced (by sinking it to the null device as\n", 
+#>                   "\n", "\n", list(list("stdout"), list("(evaluation) If TRUE (default), then the standard output is\n", 
+#>                     "captured, and re-outputted when ", list(
+#>                       "value()"), " is called.\n", "If FALSE, any output is silenced (by sinking it to the null device as\n", 
 #>                     "it is outputted).\n", "Using ", list("stdout = structure(TRUE, drop = TRUE)"), 
 #>                     " causes the captured\n", "standard output to be dropped from the future object as soon as it has\n", 
 #>                     "been relayed. This can help decrease the overall memory consumed by\n", 
 #>                     "captured output across futures.\n", "Using ", 
 #>                     list("stdout = NA"), " fully avoids intercepting the standard output;\n", 
 #>                     "behavior of such unhandled standard output depends on the future backend.")), 
-#>                   "\n", "\n", list(list("conditions"), list("A character string of condition classes to be captured\n", 
-#>                     "and relayed.  The default is to relay all conditions, including messages\n", 
-#>                     "and warnings.  To drop all conditions, use ", 
+#>                   "\n", "\n", list(list("conditions"), list("(evaluation) A character string of condition classes to\n", 
+#>                     "be captured and relayed.  The default is to relay all conditions,\n", 
+#>                     "including messages and warnings.  To drop all conditions, use\n", 
 #>                     list("conditions = character(0)"), ".\n", 
 #>                     "Errors are always relayed.\n", "Attribute ", 
 #>                     list("exclude"), " can be used to ignore specific classes, e.g.\n", 
@@ -3019,8 +3033,8 @@ res <- tryCatch({
 #>     options(cli.num_colors = cli_colors, cli.hyperlink = hyperlinks, 
 #>         cli.hyperlink_run = hyperlinks)
 #>     pkgdown::build_site(...)
-#> })(pkg = base::quote(list(package = "future", version = "1.70.0-9013", 
-#>     src_path = "/tmp/hb/RtmpWK2Ybu/future", meta = list(url = "https://future.futureverse.org", 
+#> })(pkg = base::quote(list(package = "future", version = "1.70.0-9015", 
+#>     src_path = "/tmp/hb/Rtmpdloo78/future", meta = list(url = "https://future.futureverse.org", 
 #>         home = list(links = list(list(text = "Roadmap/Milestones", 
 #>             href = "https://github.com/futureverse/future/milestones"), 
 #>             list(text = "The Futureverse Project", href = "https://www.futureverse.org/"), 
@@ -3056,7 +3070,7 @@ res <- tryCatch({
 #>             bootstrap = 5L, `light-switch` = TRUE)), desc = <environment>, 
 #>     bs_version = 5L, development = list(destination = "dev", 
 #>         mode = "default", version_label = "muted", in_dev = FALSE, 
-#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/RtmpWK2Ybu/future/docs", 
+#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/Rtmpdloo78/future/docs", 
 #>     lang = "en-US", install_metadata = FALSE, figures = list(
 #>         dev = "ragg::agg_png", dpi = 96L, dev.args = list(), 
 #>         fig.ext = "png", fig.width = 7.29166666666667, fig.height = NULL, 
@@ -3283,8 +3297,8 @@ res <- tryCatch({
 #>                 "identified.")), "\n", "\n", list(list("substitute"), 
 #>                 list("If TRUE, argument ", list("expr"), " is\n", 
 #>                   list(list("substitute"), "()"), ":d, otherwise not.")), 
-#>                 "\n", "\n", list(list("stdout"), list("If TRUE (default), then the standard output is captured,\n", 
-#>                   "and re-outputted when ", list("value()"), 
+#>                 "\n", "\n", list(list("stdout"), list("(evaluation) If TRUE (default), then the standard output is\n", 
+#>                   "captured, and re-outputted when ", list("value()"), 
 #>                   " is called.\n", "If FALSE, any output is silenced (by sinking it to the null device as\n", 
 #>                   "it is outputted).\n", "Using ", list("stdout = structure(TRUE, drop = TRUE)"), 
 #>                   " causes the captured\n", "standard output to be dropped from the future object as soon as it has\n", 
@@ -3292,9 +3306,9 @@ res <- tryCatch({
 #>                   "captured output across futures.\n", "Using ", 
 #>                   list("stdout = NA"), " fully avoids intercepting the standard output;\n", 
 #>                   "behavior of such unhandled standard output depends on the future backend.")), 
-#>                 "\n", "\n", list(list("conditions"), list("A character string of condition classes to be captured\n", 
-#>                   "and relayed.  The default is to relay all conditions, including messages\n", 
-#>                   "and warnings.  To drop all conditions, use ", 
+#>                 "\n", "\n", list(list("conditions"), list("(evaluation) A character string of condition classes to\n", 
+#>                   "be captured and relayed.  The default is to relay all conditions,\n", 
+#>                   "including messages and warnings.  To drop all conditions, use\n", 
 #>                   list("conditions = character(0)"), ".\n", "Errors are always relayed.\n", 
 #>                   "Attribute ", list("exclude"), " can be used to ignore specific classes, e.g.\n", 
 #>                   list("conditions = structure(\"condition\", exclude = \"message\")"), 
@@ -3308,19 +3322,21 @@ res <- tryCatch({
 #>                   "Using ", list("conditions = NULL"), " (not recommended) avoids intercepting conditions,\n", 
 #>                   "except from errors; behavior of such unhandled conditions depends on the\n", 
 #>                   "future backend and the environment from which R runs.")), 
-#>                 "\n", "\n", list(list("globals"), list("(optional) a logical, a character vector, or a named list\n", 
-#>                   "to control how globals are handled.\n", "For details, see section 'Globals used by future expressions'\n", 
+#>                 "\n", "\n", list(list("globals"), list("(resource; optional) a logical, a character vector, or\n", 
+#>                   "a named list to control how globals are handled.\n", 
+#>                   "For details, see section 'Globals used by future expressions'\n", 
 #>                   "in the help for ", list(list("future()")), 
 #>                   ".")), "\n", "\n", list(list("packages"), list(
-#>                   "(optional) a character vector specifying packages to be\n", 
-#>                   "attached in the ", list(), " environment evaluating the future, ", 
-#>                   list("in addition to\n", "packages required by global variables"), 
-#>                   " specified or identified via argument\n", 
+#>                   "(resource; optional) a character vector specifying\n", 
+#>                   "packages to be attached in the ", list(), 
+#>                   " environment evaluating the future,\n", list(
+#>                     "in addition to packages required by global variables"), 
+#>                   " specified or\n", "identified via argument ", 
 #>                   list("globals"), ".")), "\n", "\n", list(list(
-#>                   "seed"), list("(optional) If TRUE, the random seed, that is, the state of the\n", 
-#>                   "random number generator (RNG) will be set such that statistically sound\n", 
-#>                   "random numbers are produced (also during parallelization).\n", 
-#>                   "If FALSE (default), it is assumed that the future expression neither\n", 
+#>                   "seed"), list("(resource; optional) If TRUE, the random seed, that is, the\n", 
+#>                   "state of the random number generator (RNG) will be set such that\n", 
+#>                   "statistically sound random numbers are produced (also during\n", 
+#>                   "parallelization).\n", "If FALSE (default), it is assumed that the future expression neither\n", 
 #>                   "needs nor uses random number generation.\n", 
 #>                   "To use a fixed random seed, specify a L'Ecuyer-CMRG seed (seven integers)\n", 
 #>                   "or a regular RNG seed (a single integer).  If the latter, then a\n", 
@@ -3331,7 +3347,7 @@ res <- tryCatch({
 #>                   "ignored, an informative warning, or error will be produced.\n", 
 #>                   "If ", list("seed"), " is NULL, then the effect is as with ", 
 #>                   list("seed = FALSE"), "\n", "but without the RNG check being performed.")), 
-#>                 "\n", "\n", list(list("lazy"), list("If FALSE (default), the future is resolved\n", 
+#>                 "\n", "\n", list(list("lazy"), list("(scheduling) If FALSE (default), the future is resolved\n", 
 #>                   "eagerly (starting immediately), otherwise not.")), 
 #>                 "\n", "\n", list(list("label"), list("A character string label attached to the future.")), 
 #>                 "\n", "\n", list(list(list()), list("Additional named elements of the future.")), 
@@ -3815,12 +3831,12 @@ res <- tryCatch({
 #>                     list("If TRUE, argument ", list("expr"), 
 #>                       " is\n", list(list("substitute"), "()"), 
 #>                       ":d, otherwise not.")), "\n", "\n", list(
-#>                     list("lazy"), list("If FALSE (default), the future is resolved\n", 
+#>                     list("lazy"), list("(scheduling) If FALSE (default), the future is resolved\n", 
 #>                       "eagerly (starting immediately), otherwise not.")), 
-#>                   "\n", "\n", list(list("seed"), list("(optional) If TRUE, the random seed, that is, the state of the\n", 
-#>                     "random number generator (RNG) will be set such that statistically sound\n", 
-#>                     "random numbers are produced (also during parallelization).\n", 
-#>                     "If FALSE (default), it is assumed that the future expression neither\n", 
+#>                   "\n", "\n", list(list("seed"), list("(resource; optional) If TRUE, the random seed, that is, the\n", 
+#>                     "state of the random number generator (RNG) will be set such that\n", 
+#>                     "statistically sound random numbers are produced (also during\n", 
+#>                     "parallelization).\n", "If FALSE (default), it is assumed that the future expression neither\n", 
 #>                     "needs nor uses random number generation.\n", 
 #>                     "To use a fixed random seed, specify a L'Ecuyer-CMRG seed (seven integers)\n", 
 #>                     "or a regular RNG seed (a single integer).  If the latter, then a\n", 
@@ -3831,28 +3847,29 @@ res <- tryCatch({
 #>                     "ignored, an informative warning, or error will be produced.\n", 
 #>                     "If ", list("seed"), " is NULL, then the effect is as with ", 
 #>                     list("seed = FALSE"), "\n", "but without the RNG check being performed.")), 
-#>                   "\n", "\n", list(list("globals"), list("(optional) a logical, a character vector, or a named list\n", 
-#>                     "to control how globals are handled.\n", 
+#>                   "\n", "\n", list(list("globals"), list("(resource; optional) a logical, a character vector, or\n", 
+#>                     "a named list to control how globals are handled.\n", 
 #>                     "For details, see section 'Globals used by future expressions'\n", 
 #>                     "in the help for ", list(list("future()")), 
 #>                     ".")), "\n", "\n", list(list("packages"), 
-#>                     list("(optional) a character vector specifying packages to be\n", 
-#>                       "attached in the ", list(), " environment evaluating the future, ", 
-#>                       list("in addition to\n", "packages required by global variables"), 
-#>                       " specified or identified via argument\n", 
+#>                     list("(resource; optional) a character vector specifying\n", 
+#>                       "packages to be attached in the ", list(), 
+#>                       " environment evaluating the future,\n", 
+#>                       list("in addition to packages required by global variables"), 
+#>                       " specified or\n", "identified via argument ", 
 #>                       list("globals"), ".")), "\n", "\n", list(
-#>                     list("stdout"), list("If TRUE (default), then the standard output is captured,\n", 
-#>                       "and re-outputted when ", list("value()"), 
-#>                       " is called.\n", "If FALSE, any output is silenced (by sinking it to the null device as\n", 
+#>                     list("stdout"), list("(evaluation) If TRUE (default), then the standard output is\n", 
+#>                       "captured, and re-outputted when ", list(
+#>                         "value()"), " is called.\n", "If FALSE, any output is silenced (by sinking it to the null device as\n", 
 #>                       "it is outputted).\n", "Using ", list("stdout = structure(TRUE, drop = TRUE)"), 
 #>                       " causes the captured\n", "standard output to be dropped from the future object as soon as it has\n", 
 #>                       "been relayed. This can help decrease the overall memory consumed by\n", 
 #>                       "captured output across futures.\n", "Using ", 
 #>                       list("stdout = NA"), " fully avoids intercepting the standard output;\n", 
 #>                       "behavior of such unhandled standard output depends on the future backend.")), 
-#>                   "\n", "\n", list(list("conditions"), list("A character string of condition classes to be captured\n", 
-#>                     "and relayed.  The default is to relay all conditions, including messages\n", 
-#>                     "and warnings.  To drop all conditions, use ", 
+#>                   "\n", "\n", list(list("conditions"), list("(evaluation) A character string of condition classes to\n", 
+#>                     "be captured and relayed.  The default is to relay all conditions,\n", 
+#>                     "including messages and warnings.  To drop all conditions, use\n", 
 #>                     list("conditions = character(0)"), ".\n", 
 #>                     "Errors are always relayed.\n", "Attribute ", 
 #>                     list("exclude"), " can be used to ignore specific classes, e.g.\n", 
@@ -4061,12 +4078,12 @@ res <- tryCatch({
 #>                     list("If TRUE, argument ", list("expr"), 
 #>                       " is\n", list(list("substitute"), "()"), 
 #>                       ":d, otherwise not.")), "\n", "\n", list(
-#>                     list("lazy"), list("If FALSE (default), the future is resolved\n", 
+#>                     list("lazy"), list("(scheduling) If FALSE (default), the future is resolved\n", 
 #>                       "eagerly (starting immediately), otherwise not.")), 
-#>                   "\n", "\n", list(list("seed"), list("(optional) If TRUE, the random seed, that is, the state of the\n", 
-#>                     "random number generator (RNG) will be set such that statistically sound\n", 
-#>                     "random numbers are produced (also during parallelization).\n", 
-#>                     "If FALSE (default), it is assumed that the future expression neither\n", 
+#>                   "\n", "\n", list(list("seed"), list("(resource; optional) If TRUE, the random seed, that is, the\n", 
+#>                     "state of the random number generator (RNG) will be set such that\n", 
+#>                     "statistically sound random numbers are produced (also during\n", 
+#>                     "parallelization).\n", "If FALSE (default), it is assumed that the future expression neither\n", 
 #>                     "needs nor uses random number generation.\n", 
 #>                     "To use a fixed random seed, specify a L'Ecuyer-CMRG seed (seven integers)\n", 
 #>                     "or a regular RNG seed (a single integer).  If the latter, then a\n", 
@@ -4077,25 +4094,25 @@ res <- tryCatch({
 #>                     "ignored, an informative warning, or error will be produced.\n", 
 #>                     "If ", list("seed"), " is NULL, then the effect is as with ", 
 #>                     list("seed = FALSE"), "\n", "but without the RNG check being performed.")), 
-#>                   "\n", "\n", list(list("globals"), list("(optional) a logical, a character vector, or a named list\n", 
-#>                     "to control how globals are handled.\n", 
+#>                   "\n", "\n", list(list("globals"), list("(resource; optional) a logical, a character vector, or\n", 
+#>                     "a named list to control how globals are handled.\n", 
 #>                     "For details, see section 'Globals used by future expressions'\n", 
 #>                     "in the help for ", list(list("future()")), 
 #>                     ".")), "\n", "\n", list(list("packages"), 
 #>                     list("(optional) a character vector specifying packages\n", 
 #>                       "to be attached in the ", list(), " environment evaluating the future.")), 
-#>                   "\n", "\n", list(list("stdout"), list("If TRUE (default), then the standard output is captured,\n", 
-#>                     "and re-outputted when ", list("value()"), 
-#>                     " is called.\n", "If FALSE, any output is silenced (by sinking it to the null device as\n", 
+#>                   "\n", "\n", list(list("stdout"), list("(evaluation) If TRUE (default), then the standard output is\n", 
+#>                     "captured, and re-outputted when ", list(
+#>                       "value()"), " is called.\n", "If FALSE, any output is silenced (by sinking it to the null device as\n", 
 #>                     "it is outputted).\n", "Using ", list("stdout = structure(TRUE, drop = TRUE)"), 
 #>                     " causes the captured\n", "standard output to be dropped from the future object as soon as it has\n", 
 #>                     "been relayed. This can help decrease the overall memory consumed by\n", 
 #>                     "captured output across futures.\n", "Using ", 
 #>                     list("stdout = NA"), " fully avoids intercepting the standard output;\n", 
 #>                     "behavior of such unhandled standard output depends on the future backend.")), 
-#>                   "\n", "\n", list(list("conditions"), list("A character string of condition classes to be captured\n", 
-#>                     "and relayed.  The default is to relay all conditions, including messages\n", 
-#>                     "and warnings.  To drop all conditions, use ", 
+#>                   "\n", "\n", list(list("conditions"), list("(evaluation) A character string of condition classes to\n", 
+#>                     "be captured and relayed.  The default is to relay all conditions,\n", 
+#>                     "including messages and warnings.  To drop all conditions, use\n", 
 #>                     list("conditions = character(0)"), ".\n", 
 #>                     "Errors are always relayed.\n", "Attribute ", 
 #>                     list("exclude"), " can be used to ignore specific classes, e.g.\n", 

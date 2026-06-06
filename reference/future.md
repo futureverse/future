@@ -73,18 +73,18 @@ minifuture(
 
 - lazy:
 
-  If FALSE (default), the future is resolved eagerly (starting
-  immediately), otherwise not.
+  (scheduling) If FALSE (default), the future is resolved eagerly
+  (starting immediately), otherwise not.
 
 - seed:
 
-  (optional) If TRUE, the random seed, that is, the state of the random
-  number generator (RNG) will be set such that statistically sound
-  random numbers are produced (also during parallelization). If FALSE
-  (default), it is assumed that the future expression neither needs nor
-  uses random number generation. To use a fixed random seed, specify a
-  L'Ecuyer-CMRG seed (seven integers) or a regular RNG seed (a single
-  integer). If the latter, then a L'Ecuyer-CMRG seed will be
+  (resource; optional) If TRUE, the random seed, that is, the state of
+  the random number generator (RNG) will be set such that statistically
+  sound random numbers are produced (also during parallelization). If
+  FALSE (default), it is assumed that the future expression neither
+  needs nor uses random number generation. To use a fixed random seed,
+  specify a L'Ecuyer-CMRG seed (seven integers) or a regular RNG seed (a
+  single integer). If the latter, then a L'Ecuyer-CMRG seed will be
   automatically created based on the given seed. Furthermore, if FALSE,
   then the future will be monitored to make sure it does not use random
   numbers. If it does and depending on the value of option
@@ -95,21 +95,21 @@ minifuture(
 
 - globals:
 
-  (optional) a logical, a character vector, or a named list to control
-  how globals are handled. For details, see section 'Globals used by
-  future expressions' in the help for `future()`.
+  (resource; optional) a logical, a character vector, or a named list to
+  control how globals are handled. For details, see section 'Globals
+  used by future expressions' in the help for `future()`.
 
 - packages:
 
-  (optional) a character vector specifying packages to be attached in
-  the R environment evaluating the future, *in addition to packages
-  required by global variables* specified or identified via argument
-  `globals`.
+  (resource; optional) a character vector specifying packages to be
+  attached in the R environment evaluating the future, *in addition to
+  packages required by global variables* specified or identified via
+  argument `globals`.
 
 - stdout:
 
-  If TRUE (default), then the standard output is captured, and
-  re-outputted when
+  (evaluation) If TRUE (default), then the standard output is captured,
+  and re-outputted when
   [`value()`](https://future.futureverse.org/reference/value.md) is
   called. If FALSE, any output is silenced (by sinking it to the null
   device as it is outputted). Using
@@ -122,11 +122,11 @@ minifuture(
 
 - conditions:
 
-  A character string of condition classes to be captured and relayed.
-  The default is to relay all conditions, including messages and
-  warnings. To drop all conditions, use `conditions = character(0)`.
-  Errors are always relayed. Attribute `exclude` can be used to ignore
-  specific classes, e.g.
+  (evaluation) A character string of condition classes to be captured
+  and relayed. The default is to relay all conditions, including
+  messages and warnings. To drop all conditions, use
+  `conditions = character(0)`. Errors are always relayed. Attribute
+  `exclude` can be used to ignore specific classes, e.g.
   `conditions = structure("condition", exclude = "message")` will
   capture all `condition` classes except those that inherit from the
   `message` class. Using `conditions = structure(..., drop = TRUE)`

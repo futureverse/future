@@ -29,7 +29,7 @@ Nothing.
 plan(multisession, workers = 2)
 futureSessionInfo()
 #> *** Package versions
-#> future 1.70.0.9013, parallelly 1.47.0.9008, parallel 4.6.0, globals 0.19.1, listenv 0.10.1
+#> future 1.70.0.9015, parallelly 1.47.0.9008, parallel 4.6.0, globals 0.19.1, listenv 0.10.1
 #> 
 #> *** Allocations
 #> availableCores():
@@ -69,15 +69,15 @@ futureSessionInfo()
 #> *** Basic tests
 #> Main R session details:
 #>      pid     r sysname           release
-#> 1 122805 4.6.0   Linux 6.17.0-35-generic
+#> 1 903171 4.6.0   Linux 6.17.0-35-generic
 #>                                                            version nodename
 #> 1 #35~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Tue May 26 19:30:42 UTC 2  host001
 #>   machine   login    user effective_user
 #> 1  x86_64 user001 user001        user001
 #> Worker R session details:
 #>   worker    pid     r sysname           release
-#> 1      1 123701 4.6.0   Linux 6.17.0-35-generic
-#> 2      2 123700 4.6.0   Linux 6.17.0-35-generic
+#> 1      1 904145 4.6.0   Linux 6.17.0-35-generic
+#> 2      2 904144 4.6.0   Linux 6.17.0-35-generic
 #>                                                            version nodename
 #> 1 #35~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Tue May 26 19:30:42 UTC 2  host001
 #> 2 #35~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Tue May 26 19:30:42 UTC 2  host001

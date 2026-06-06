@@ -32,7 +32,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.70.0-9013</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.70.0-9015</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -928,16 +928,16 @@ unmarshal non-exportable <strong>terra</strong> objects, e.g.</p>
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://future.futureverse.org">future</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/plan.html">plan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://bnosac.github.io/udpipe/en/index.html" class="external-link">udpipe</a></span><span class="op">)</span></span>
-<span><span class="va">udmodel</span> <span class="op">&lt;-</span> <span class="fu">udpipe_download_model</span><span class="op">(</span>language <span class="op">=</span> <span class="st">"dutch"</span><span class="op">)</span></span>
-<span><span class="va">udmodel</span> <span class="op">&lt;-</span> <span class="fu">udpipe_load_model</span><span class="op">(</span>file <span class="op">=</span> <span class="va">udmodel</span><span class="op">$</span><span class="va">file_model</span><span class="op">)</span></span>
-<span><span class="va">x</span> <span class="op"><a href="../reference/futureAssign.html">%&lt;-%</a></span> <span class="fu">udpipe_annotate</span><span class="op">(</span><span class="va">udmodel</span>, x <span class="op">=</span> <span class="st">"Ik ging op reis en ik nam mee."</span><span class="op">)</span></span>
+<span><span class="va">udmodel</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/udpipe/man/udpipe_download_model.html" class="external-link">udpipe_download_model</a></span><span class="op">(</span>language <span class="op">=</span> <span class="st">"dutch"</span><span class="op">)</span></span>
+<span><span class="va">udmodel</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/udpipe/man/udpipe_load_model.html" class="external-link">udpipe_load_model</a></span><span class="op">(</span>file <span class="op">=</span> <span class="va">udmodel</span><span class="op">$</span><span class="va">file_model</span><span class="op">)</span></span>
+<span><span class="va">x</span> <span class="op"><a href="../reference/futureAssign.html">%&lt;-%</a></span> <span class="fu"><a href="https://rdrr.io/pkg/udpipe/man/udpipe_annotate.html" class="external-link">udpipe_annotate</a></span><span class="op">(</span><span class="va">udmodel</span>, x <span class="op">=</span> <span class="st">"Ik ging op reis en ik nam mee."</span><span class="op">)</span></span>
 <span><span class="va">x</span></span>
 <span><span class="co">## Error in udp_tokenise_tag_parse(object$model, x, doc_id, tokenizer, tagger,  :</span></span>
 <span><span class="co">##   external pointer is not valid</span></span></code></pre></div>
 <p>To catch this as soon as possible,</p>
 <div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>future.globals.onReference <span class="op">=</span> <span class="st">"error"</span><span class="op">)</span></span>
-<span><span class="va">x</span> <span class="op"><a href="../reference/futureAssign.html">%&lt;-%</a></span> <span class="fu">udpipe_annotate</span><span class="op">(</span><span class="va">udmodel</span>, x <span class="op">=</span> <span class="st">"Ik ging op reis en ik nam mee."</span><span class="op">)</span></span>
+<span><span class="va">x</span> <span class="op"><a href="../reference/futureAssign.html">%&lt;-%</a></span> <span class="fu"><a href="https://rdrr.io/pkg/udpipe/man/udpipe_annotate.html" class="external-link">udpipe_annotate</a></span><span class="op">(</span><span class="va">udmodel</span>, x <span class="op">=</span> <span class="st">"Ik ging op reis en ik nam mee."</span><span class="op">)</span></span>
 <span><span class="co">## Error: Detected a non-exportable reference ('externalptr') in one of the</span></span>
 <span><span class="co">## globals ('udmodel' of class 'udpipe_model') used in the future expression</span></span></code></pre></div>
 <p>Now, it is indeed possible to parallelize <strong><a href="https://cran.r-project.org/package=udpipe" class="external-link">udpipe</a></strong>

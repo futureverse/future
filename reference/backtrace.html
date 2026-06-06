@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.70.0-9013</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.70.0-9015</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -124,9 +124,9 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[1]]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> base::tryCatch(base::withCallingHandlers({</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     NULL</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpWK2Ybu/callr-fun-1df0f2380907b"), </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/Rtmpdloo78/callr-fun-dc6cf69646cb8"), </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         quote = TRUE), file = "/tmp/hb/RtmpWK2Ybu/callr-res-1df0f29087680", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         quote = TRUE), file = "/tmp/hb/Rtmpdloo78/callr-res-dc6cf29b8e397", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         compress = FALSE)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     base::flush(base::stdout())</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     base::flush(base::stderr())</span>
@@ -152,7 +152,10 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>         if (!base::is.na(cut)) {</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             e2$trace &lt;- e2$trace[-(1:cut), ]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpWK2Ybu/callr-res-1df0f29087680", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         if (callr_data$has_otel) {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             callr_data$otel_span$record_exception(e2)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/Rtmpdloo78/callr-res-dc6cf29b8e397", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             ".error"))</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }, interrupt = function(e) {</span>
@@ -175,7 +178,10 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>         if (!base::is.na(cut)) {</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             e2$trace &lt;- e2$trace[-(1:cut), ]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpWK2Ybu/callr-res-1df0f29087680", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         if (callr_data$has_otel) {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             callr_data$otel_span$record_exception(e2)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/Rtmpdloo78/callr-res-dc6cf29b8e397", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             ".error"))</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }, callr_message = function(e) {</span>
@@ -185,17 +191,16 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>     if (FALSE) {</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         base::try(base::stop(e))</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     else {</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         base::invisible()</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     if (TRUE) {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         base::q(save = "no", status = 1)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     base::invisible()</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }, interrupt = function(e) {</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     NULL</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     if (FALSE) {</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         e</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     if (TRUE) {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         base::q(save = "no", status = 1)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     else {</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         base::invisible()</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     base::invisible()</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> })</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[2]]</span>
@@ -220,9 +225,9 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[8]]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> base::withCallingHandlers({</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     NULL</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpWK2Ybu/callr-fun-1df0f2380907b"), </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/Rtmpdloo78/callr-fun-dc6cf69646cb8"), </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         quote = TRUE), file = "/tmp/hb/RtmpWK2Ybu/callr-res-1df0f29087680", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         quote = TRUE), file = "/tmp/hb/Rtmpdloo78/callr-res-dc6cf29b8e397", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         compress = FALSE)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     base::flush(base::stdout())</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     base::flush(base::stderr())</span>
@@ -248,7 +253,10 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>         if (!base::is.na(cut)) {</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             e2$trace &lt;- e2$trace[-(1:cut), ]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpWK2Ybu/callr-res-1df0f29087680", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         if (callr_data$has_otel) {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             callr_data$otel_span$record_exception(e2)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/Rtmpdloo78/callr-res-dc6cf29b8e397", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             ".error"))</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }, interrupt = function(e) {</span>
@@ -271,7 +279,10 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>         if (!base::is.na(cut)) {</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             e2$trace &lt;- e2$trace[-(1:cut), ]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpWK2Ybu/callr-res-1df0f29087680", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         if (callr_data$has_otel) {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             callr_data$otel_span$record_exception(e2)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/Rtmpdloo78/callr-res-dc6cf29b8e397", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             ".error"))</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }, callr_message = function(e) {</span>
@@ -279,13 +290,13 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> })</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[9]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpWK2Ybu/callr-fun-1df0f2380907b"), </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/Rtmpdloo78/callr-fun-dc6cf69646cb8"), </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     quote = TRUE), file = "/tmp/hb/RtmpWK2Ybu/callr-res-1df0f29087680", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     quote = TRUE), file = "/tmp/hb/Rtmpdloo78/callr-res-dc6cf29b8e397", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     compress = FALSE)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[10]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpWK2Ybu/callr-fun-1df0f2380907b"), </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/Rtmpdloo78/callr-fun-dc6cf69646cb8"), </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     quote = TRUE)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -302,8 +313,8 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>     options(cli.num_colors = cli_colors, cli.hyperlink = hyperlinks, </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         cli.hyperlink_run = hyperlinks)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     pkgdown::build_site(...)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> }), base::quote(list(pkg = list(package = "future", version = "1.70.0-9013", </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     src_path = "/tmp/hb/RtmpWK2Ybu/future", meta = list(url = "https://future.futureverse.org", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> }), base::quote(list(pkg = list(package = "future", version = "1.70.0-9015", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     src_path = "/tmp/hb/Rtmpdloo78/future", meta = list(url = "https://future.futureverse.org", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         home = list(links = list(list(text = "Roadmap/Milestones", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             href = "https://github.com/futureverse/future/milestones"), </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             list(text = "The Futureverse Project", href = "https://www.futureverse.org/"), </span>
@@ -339,7 +350,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>             bootstrap = 5L, `light-switch` = TRUE)), desc = &lt;environment&gt;, </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     bs_version = 5L, development = list(destination = "dev", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         mode = "default", version_label = "muted", in_dev = FALSE, </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         prefix = ""), prefix = "", dst_path = "/tmp/hb/RtmpWK2Ybu/future/docs", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         prefix = ""), prefix = "", dst_path = "/tmp/hb/Rtmpdloo78/future/docs", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     lang = "en-US", install_metadata = FALSE, figures = list(</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         dev = "ragg::agg_png", dpi = 96L, dev.args = list(), </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         fig.ext = "png", fig.width = 7.29166666666667, fig.height = NULL, </span>
@@ -566,8 +577,8 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 "identified.")), "\n", "\n", list(list("substitute"), </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 list("If TRUE, argument ", list("expr"), " is\n", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                   list(list("substitute"), "()"), ":d, otherwise not.")), </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                 "\n", "\n", list(list("stdout"), list("If TRUE (default), then the standard output is captured,\n", </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   "and re-outputted when ", list("value()"), </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                 "\n", "\n", list(list("stdout"), list("(evaluation) If TRUE (default), then the standard output is\n", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   "captured, and re-outputted when ", list("value()"), </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                   " is called.\n", "If FALSE, any output is silenced (by sinking it to the null device as\n", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                   "it is outputted).\n", "Using ", list("stdout = structure(TRUE, drop = TRUE)"), </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                   " causes the captured\n", "standard output to be dropped from the future object as soon as it has\n", </span>
@@ -575,9 +586,9 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>                   "captured output across futures.\n", "Using ", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                   list("stdout = NA"), " fully avoids intercepting the standard output;\n", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                   "behavior of such unhandled standard output depends on the future backend.")), </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                 "\n", "\n", list(list("conditions"), list("A character string of condition classes to be captured\n", </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   "and relayed.  The default is to relay all conditions, including messages\n", </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   "and warnings.  To drop all conditions, use ", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                 "\n", "\n", list(list("conditions"), list("(evaluation) A character string of condition classes to\n", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   "be captured and relayed.  The default is to relay all conditions,\n", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   "including messages and warnings.  To drop all conditions, use\n", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                   list("conditions = character(0)"), ".\n", "Errors are always relayed.\n", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                   "Attribute ", list("exclude"), " can be used to ignore specific classes, e.g.\n", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                   list("conditions = structure(\"condition\", exclude = \"message\")"), </span>
@@ -591,19 +602,21 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>                   "Using ", list("conditions = NULL"), " (not recommended) avoids intercepting conditions,\n", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                   "except from errors; behavior of such unhandled conditions depends on the\n", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                   "future backend and the environment from which R runs.")), </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                 "\n", "\n", list(list("globals"), list("(optional) a logical, a character vector, or a named list\n", </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   "to control how globals are handled.\n", "For details, see section 'Globals used by future expressions'\n", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                 "\n", "\n", list(list("globals"), list("(resource; optional) a logical, a character vector, or\n", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   "a named list to control how globals are handled.\n", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   "For details, see section 'Globals used by future expressions'\n", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                   "in the help for ", list(list("future()")), </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                   ".")), "\n", "\n", list(list("packages"), list(</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   "(optional) a character vector specifying packages to be\n", </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   "attached in the ", list(), " environment evaluating the future, ", </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   list("in addition to\n", "packages required by global variables"), </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   " specified or identified via argument\n", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   "(resource; optional) a character vector specifying\n", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   "packages to be attached in the ", list(), </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   " environment evaluating the future,\n", list(</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                     "in addition to packages required by global variables"), </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   " specified or\n", "identified via argument ", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                   list("globals"), ".")), "\n", "\n", list(list(</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   "seed"), list("(optional) If TRUE, the random seed, that is, the state of the\n", </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   "random number generator (RNG) will be set such that statistically sound\n", </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   "random numbers are produced (also during parallelization).\n", </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   "If FALSE (default), it is assumed that the future expression neither\n", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   "seed"), list("(resource; optional) If TRUE, the random seed, that is, the\n", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   "state of the random number generator (RNG) will be set such that\n", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   "statistically sound random numbers are produced (also during\n", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   "parallelization).\n", "If FALSE (default), it is assumed that the future expression neither\n", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                   "needs nor uses random number generation.\n", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                   "To use a fixed random seed, specify a L'Ecuyer-CMRG seed (seven integers)\n", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                   "or a regular RNG seed (a single integer).  If the latter, then a\n", </span>
@@ -614,7 +627,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>                   "ignored, an informative warning, or error will be produced.\n", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                   "If ", list("seed"), " is NULL, then the effect is as with ", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                   list("seed = FALSE"), "\n", "but without the RNG check being performed.")), </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                 "\n", "\n", list(list("lazy"), list("If FALSE (default), the future is resolved\n", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                 "\n", "\n", list(list("lazy"), list("(scheduling) If FALSE (default), the future is resolved\n", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                   "eagerly (starting immediately), otherwise not.")), </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 "\n", "\n", list(list("label"), list("A character string label attached to the future.")), </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 "\n", "\n", list(list(list()), list("Additional named elements of the future.")), </span>
@@ -1098,12 +1111,12 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>                     list("If TRUE, argument ", list("expr"), </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                       " is\n", list(list("substitute"), "()"), </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                       ":d, otherwise not.")), "\n", "\n", list(</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                     list("lazy"), list("If FALSE (default), the future is resolved\n", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                     list("lazy"), list("(scheduling) If FALSE (default), the future is resolved\n", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                       "eagerly (starting immediately), otherwise not.")), </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   "\n", "\n", list(list("seed"), list("(optional) If TRUE, the random seed, that is, the state of the\n", </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                     "random number generator (RNG) will be set such that statistically sound\n", </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                     "random numbers are produced (also during parallelization).\n", </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                     "If FALSE (default), it is assumed that the future expression neither\n", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   "\n", "\n", list(list("seed"), list("(resource; optional) If TRUE, the random seed, that is, the\n", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                     "state of the random number generator (RNG) will be set such that\n", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                     "statistically sound random numbers are produced (also during\n", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                     "parallelization).\n", "If FALSE (default), it is assumed that the future expression neither\n", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                     "needs nor uses random number generation.\n", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                     "To use a fixed random seed, specify a L'Ecuyer-CMRG seed (seven integers)\n", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                     "or a regular RNG seed (a single integer).  If the latter, then a\n", </span>
@@ -1114,28 +1127,29 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>                     "ignored, an informative warning, or error will be produced.\n", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                     "If ", list("seed"), " is NULL, then the effect is as with ", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                     list("seed = FALSE"), "\n", "but without the RNG check being performed.")), </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   "\n", "\n", list(list("globals"), list("(optional) a logical, a character vector, or a named list\n", </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                     "to control how globals are handled.\n", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   "\n", "\n", list(list("globals"), list("(resource; optional) a logical, a character vector, or\n", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                     "a named list to control how globals are handled.\n", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                     "For details, see section 'Globals used by future expressions'\n", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                     "in the help for ", list(list("future()")), </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                     ".")), "\n", "\n", list(list("packages"), </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                     list("(optional) a character vector specifying packages to be\n", </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                       "attached in the ", list(), " environment evaluating the future, ", </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                       list("in addition to\n", "packages required by global variables"), </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                       " specified or identified via argument\n", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                     list("(resource; optional) a character vector specifying\n", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                       "packages to be attached in the ", list(), </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                       " environment evaluating the future,\n", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                       list("in addition to packages required by global variables"), </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                       " specified or\n", "identified via argument ", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                       list("globals"), ".")), "\n", "\n", list(</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                     list("stdout"), list("If TRUE (default), then the standard output is captured,\n", </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                       "and re-outputted when ", list("value()"), </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                       " is called.\n", "If FALSE, any output is silenced (by sinking it to the null device as\n", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                     list("stdout"), list("(evaluation) If TRUE (default), then the standard output is\n", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                       "captured, and re-outputted when ", list(</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                         "value()"), " is called.\n", "If FALSE, any output is silenced (by sinking it to the null device as\n", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                       "it is outputted).\n", "Using ", list("stdout = structure(TRUE, drop = TRUE)"), </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                       " causes the captured\n", "standard output to be dropped from the future object as soon as it has\n", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                       "been relayed. This can help decrease the overall memory consumed by\n", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                       "captured output across futures.\n", "Using ", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                       list("stdout = NA"), " fully avoids intercepting the standard output;\n", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                       "behavior of such unhandled standard output depends on the future backend.")), </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   "\n", "\n", list(list("conditions"), list("A character string of condition classes to be captured\n", </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                     "and relayed.  The default is to relay all conditions, including messages\n", </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                     "and warnings.  To drop all conditions, use ", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   "\n", "\n", list(list("conditions"), list("(evaluation) A character string of condition classes to\n", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                     "be captured and relayed.  The default is to relay all conditions,\n", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                     "including messages and warnings.  To drop all conditions, use\n", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                     list("conditions = character(0)"), ".\n", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                     "Errors are always relayed.\n", "Attribute ", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                     list("exclude"), " can be used to ignore specific classes, e.g.\n", </span>
@@ -1344,12 +1358,12 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>                     list("If TRUE, argument ", list("expr"), </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                       " is\n", list(list("substitute"), "()"), </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                       ":d, otherwise not.")), "\n", "\n", list(</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                     list("lazy"), list("If FALSE (default), the future is resolved\n", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                     list("lazy"), list("(scheduling) If FALSE (default), the future is resolved\n", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                       "eagerly (starting immediately), otherwise not.")), </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   "\n", "\n", list(list("seed"), list("(optional) If TRUE, the random seed, that is, the state of the\n", </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                     "random number generator (RNG) will be set such that statistically sound\n", </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                     "random numbers are produced (also during parallelization).\n", </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                     "If FALSE (default), it is assumed that the future expression neither\n", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   "\n", "\n", list(list("seed"), list("(resource; optional) If TRUE, the random seed, that is, the\n", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                     "state of the random number generator (RNG) will be set such that\n", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                     "statistically sound random numbers are produced (also during\n", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                     "parallelization).\n", "If FALSE (default), it is assumed that the future expression neither\n", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                     "needs nor uses random number generation.\n", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                     "To use a fixed random seed, specify a L'Ecuyer-CMRG seed (seven integers)\n", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                     "or a regular RNG seed (a single integer).  If the latter, then a\n", </span>
@@ -1360,25 +1374,25 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>                     "ignored, an informative warning, or error will be produced.\n", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                     "If ", list("seed"), " is NULL, then the effect is as with ", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                     list("seed = FALSE"), "\n", "but without the RNG check being performed.")), </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   "\n", "\n", list(list("globals"), list("(optional) a logical, a character vector, or a named list\n", </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                     "to control how globals are handled.\n", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   "\n", "\n", list(list("globals"), list("(resource; optional) a logical, a character vector, or\n", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                     "a named list to control how globals are handled.\n", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                     "For details, see section 'Globals used by future expressions'\n", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                     "in the help for ", list(list("future()")), </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                     ".")), "\n", "\n", list(list("packages"), </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                     list("(optional) a character vector specifying packages\n", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                       "to be attached in the ", list(), " environment evaluating the future.")), </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   "\n", "\n", list(list("stdout"), list("If TRUE (default), then the standard output is captured,\n", </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                     "and re-outputted when ", list("value()"), </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                     " is called.\n", "If FALSE, any output is silenced (by sinking it to the null device as\n", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   "\n", "\n", list(list("stdout"), list("(evaluation) If TRUE (default), then the standard output is\n", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                     "captured, and re-outputted when ", list(</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                       "value()"), " is called.\n", "If FALSE, any output is silenced (by sinking it to the null device as\n", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                     "it is outputted).\n", "Using ", list("stdout = structure(TRUE, drop = TRUE)"), </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                     " causes the captured\n", "standard output to be dropped from the future object as soon as it has\n", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                     "been relayed. This can help decrease the overall memory consumed by\n", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                     "captured output across futures.\n", "Using ", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                     list("stdout = NA"), " fully avoids intercepting the standard output;\n", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                     "behavior of such unhandled standard output depends on the future backend.")), </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   "\n", "\n", list(list("conditions"), list("A character string of condition classes to be captured\n", </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                     "and relayed.  The default is to relay all conditions, including messages\n", </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                     "and warnings.  To drop all conditions, use ", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   "\n", "\n", list(list("conditions"), list("(evaluation) A character string of condition classes to\n", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                     "be captured and relayed.  The default is to relay all conditions,\n", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                     "including messages and warnings.  To drop all conditions, use\n", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                     list("conditions = character(0)"), ".\n", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                     "Errors are always relayed.\n", "Attribute ", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                     list("exclude"), " can be used to ignore specific classes, e.g.\n", </span>
@@ -3101,8 +3115,8 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>     options(cli.num_colors = cli_colors, cli.hyperlink = hyperlinks, </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         cli.hyperlink_run = hyperlinks)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     pkgdown::build_site(...)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> })(pkg = base::quote(list(package = "future", version = "1.70.0-9013", </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     src_path = "/tmp/hb/RtmpWK2Ybu/future", meta = list(url = "https://future.futureverse.org", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> })(pkg = base::quote(list(package = "future", version = "1.70.0-9015", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     src_path = "/tmp/hb/Rtmpdloo78/future", meta = list(url = "https://future.futureverse.org", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         home = list(links = list(list(text = "Roadmap/Milestones", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             href = "https://github.com/futureverse/future/milestones"), </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             list(text = "The Futureverse Project", href = "https://www.futureverse.org/"), </span>
@@ -3138,7 +3152,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>             bootstrap = 5L, `light-switch` = TRUE)), desc = &lt;environment&gt;, </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     bs_version = 5L, development = list(destination = "dev", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         mode = "default", version_label = "muted", in_dev = FALSE, </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         prefix = ""), prefix = "", dst_path = "/tmp/hb/RtmpWK2Ybu/future/docs", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         prefix = ""), prefix = "", dst_path = "/tmp/hb/Rtmpdloo78/future/docs", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     lang = "en-US", install_metadata = FALSE, figures = list(</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         dev = "ragg::agg_png", dpi = 96L, dev.args = list(), </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         fig.ext = "png", fig.width = 7.29166666666667, fig.height = NULL, </span>
@@ -3365,8 +3379,8 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 "identified.")), "\n", "\n", list(list("substitute"), </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 list("If TRUE, argument ", list("expr"), " is\n", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                   list(list("substitute"), "()"), ":d, otherwise not.")), </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                 "\n", "\n", list(list("stdout"), list("If TRUE (default), then the standard output is captured,\n", </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   "and re-outputted when ", list("value()"), </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                 "\n", "\n", list(list("stdout"), list("(evaluation) If TRUE (default), then the standard output is\n", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   "captured, and re-outputted when ", list("value()"), </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                   " is called.\n", "If FALSE, any output is silenced (by sinking it to the null device as\n", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                   "it is outputted).\n", "Using ", list("stdout = structure(TRUE, drop = TRUE)"), </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                   " causes the captured\n", "standard output to be dropped from the future object as soon as it has\n", </span>
@@ -3374,9 +3388,9 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>                   "captured output across futures.\n", "Using ", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                   list("stdout = NA"), " fully avoids intercepting the standard output;\n", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                   "behavior of such unhandled standard output depends on the future backend.")), </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                 "\n", "\n", list(list("conditions"), list("A character string of condition classes to be captured\n", </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   "and relayed.  The default is to relay all conditions, including messages\n", </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   "and warnings.  To drop all conditions, use ", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                 "\n", "\n", list(list("conditions"), list("(evaluation) A character string of condition classes to\n", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   "be captured and relayed.  The default is to relay all conditions,\n", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   "including messages and warnings.  To drop all conditions, use\n", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                   list("conditions = character(0)"), ".\n", "Errors are always relayed.\n", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                   "Attribute ", list("exclude"), " can be used to ignore specific classes, e.g.\n", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                   list("conditions = structure(\"condition\", exclude = \"message\")"), </span>
@@ -3390,19 +3404,21 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>                   "Using ", list("conditions = NULL"), " (not recommended) avoids intercepting conditions,\n", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                   "except from errors; behavior of such unhandled conditions depends on the\n", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                   "future backend and the environment from which R runs.")), </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                 "\n", "\n", list(list("globals"), list("(optional) a logical, a character vector, or a named list\n", </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   "to control how globals are handled.\n", "For details, see section 'Globals used by future expressions'\n", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                 "\n", "\n", list(list("globals"), list("(resource; optional) a logical, a character vector, or\n", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   "a named list to control how globals are handled.\n", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   "For details, see section 'Globals used by future expressions'\n", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                   "in the help for ", list(list("future()")), </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                   ".")), "\n", "\n", list(list("packages"), list(</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   "(optional) a character vector specifying packages to be\n", </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   "attached in the ", list(), " environment evaluating the future, ", </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   list("in addition to\n", "packages required by global variables"), </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   " specified or identified via argument\n", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   "(resource; optional) a character vector specifying\n", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   "packages to be attached in the ", list(), </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   " environment evaluating the future,\n", list(</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                     "in addition to packages required by global variables"), </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   " specified or\n", "identified via argument ", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                   list("globals"), ".")), "\n", "\n", list(list(</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   "seed"), list("(optional) If TRUE, the random seed, that is, the state of the\n", </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   "random number generator (RNG) will be set such that statistically sound\n", </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   "random numbers are produced (also during parallelization).\n", </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   "If FALSE (default), it is assumed that the future expression neither\n", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   "seed"), list("(resource; optional) If TRUE, the random seed, that is, the\n", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   "state of the random number generator (RNG) will be set such that\n", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   "statistically sound random numbers are produced (also during\n", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   "parallelization).\n", "If FALSE (default), it is assumed that the future expression neither\n", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                   "needs nor uses random number generation.\n", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                   "To use a fixed random seed, specify a L'Ecuyer-CMRG seed (seven integers)\n", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                   "or a regular RNG seed (a single integer).  If the latter, then a\n", </span>
@@ -3413,7 +3429,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>                   "ignored, an informative warning, or error will be produced.\n", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                   "If ", list("seed"), " is NULL, then the effect is as with ", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                   list("seed = FALSE"), "\n", "but without the RNG check being performed.")), </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                 "\n", "\n", list(list("lazy"), list("If FALSE (default), the future is resolved\n", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                 "\n", "\n", list(list("lazy"), list("(scheduling) If FALSE (default), the future is resolved\n", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                   "eagerly (starting immediately), otherwise not.")), </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 "\n", "\n", list(list("label"), list("A character string label attached to the future.")), </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 "\n", "\n", list(list(list()), list("Additional named elements of the future.")), </span>
@@ -3897,12 +3913,12 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>                     list("If TRUE, argument ", list("expr"), </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                       " is\n", list(list("substitute"), "()"), </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                       ":d, otherwise not.")), "\n", "\n", list(</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                     list("lazy"), list("If FALSE (default), the future is resolved\n", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                     list("lazy"), list("(scheduling) If FALSE (default), the future is resolved\n", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                       "eagerly (starting immediately), otherwise not.")), </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   "\n", "\n", list(list("seed"), list("(optional) If TRUE, the random seed, that is, the state of the\n", </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                     "random number generator (RNG) will be set such that statistically sound\n", </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                     "random numbers are produced (also during parallelization).\n", </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                     "If FALSE (default), it is assumed that the future expression neither\n", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   "\n", "\n", list(list("seed"), list("(resource; optional) If TRUE, the random seed, that is, the\n", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                     "state of the random number generator (RNG) will be set such that\n", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                     "statistically sound random numbers are produced (also during\n", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                     "parallelization).\n", "If FALSE (default), it is assumed that the future expression neither\n", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                     "needs nor uses random number generation.\n", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                     "To use a fixed random seed, specify a L'Ecuyer-CMRG seed (seven integers)\n", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                     "or a regular RNG seed (a single integer).  If the latter, then a\n", </span>
@@ -3913,28 +3929,29 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>                     "ignored, an informative warning, or error will be produced.\n", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                     "If ", list("seed"), " is NULL, then the effect is as with ", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                     list("seed = FALSE"), "\n", "but without the RNG check being performed.")), </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   "\n", "\n", list(list("globals"), list("(optional) a logical, a character vector, or a named list\n", </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                     "to control how globals are handled.\n", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   "\n", "\n", list(list("globals"), list("(resource; optional) a logical, a character vector, or\n", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                     "a named list to control how globals are handled.\n", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                     "For details, see section 'Globals used by future expressions'\n", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                     "in the help for ", list(list("future()")), </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                     ".")), "\n", "\n", list(list("packages"), </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                     list("(optional) a character vector specifying packages to be\n", </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                       "attached in the ", list(), " environment evaluating the future, ", </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                       list("in addition to\n", "packages required by global variables"), </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                       " specified or identified via argument\n", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                     list("(resource; optional) a character vector specifying\n", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                       "packages to be attached in the ", list(), </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                       " environment evaluating the future,\n", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                       list("in addition to packages required by global variables"), </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                       " specified or\n", "identified via argument ", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                       list("globals"), ".")), "\n", "\n", list(</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                     list("stdout"), list("If TRUE (default), then the standard output is captured,\n", </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                       "and re-outputted when ", list("value()"), </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                       " is called.\n", "If FALSE, any output is silenced (by sinking it to the null device as\n", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                     list("stdout"), list("(evaluation) If TRUE (default), then the standard output is\n", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                       "captured, and re-outputted when ", list(</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                         "value()"), " is called.\n", "If FALSE, any output is silenced (by sinking it to the null device as\n", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                       "it is outputted).\n", "Using ", list("stdout = structure(TRUE, drop = TRUE)"), </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                       " causes the captured\n", "standard output to be dropped from the future object as soon as it has\n", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                       "been relayed. This can help decrease the overall memory consumed by\n", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                       "captured output across futures.\n", "Using ", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                       list("stdout = NA"), " fully avoids intercepting the standard output;\n", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                       "behavior of such unhandled standard output depends on the future backend.")), </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   "\n", "\n", list(list("conditions"), list("A character string of condition classes to be captured\n", </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                     "and relayed.  The default is to relay all conditions, including messages\n", </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                     "and warnings.  To drop all conditions, use ", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   "\n", "\n", list(list("conditions"), list("(evaluation) A character string of condition classes to\n", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                     "be captured and relayed.  The default is to relay all conditions,\n", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                     "including messages and warnings.  To drop all conditions, use\n", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                     list("conditions = character(0)"), ".\n", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                     "Errors are always relayed.\n", "Attribute ", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                     list("exclude"), " can be used to ignore specific classes, e.g.\n", </span>
@@ -4143,12 +4160,12 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>                     list("If TRUE, argument ", list("expr"), </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                       " is\n", list(list("substitute"), "()"), </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                       ":d, otherwise not.")), "\n", "\n", list(</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                     list("lazy"), list("If FALSE (default), the future is resolved\n", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                     list("lazy"), list("(scheduling) If FALSE (default), the future is resolved\n", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                       "eagerly (starting immediately), otherwise not.")), </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   "\n", "\n", list(list("seed"), list("(optional) If TRUE, the random seed, that is, the state of the\n", </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                     "random number generator (RNG) will be set such that statistically sound\n", </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                     "random numbers are produced (also during parallelization).\n", </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                     "If FALSE (default), it is assumed that the future expression neither\n", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   "\n", "\n", list(list("seed"), list("(resource; optional) If TRUE, the random seed, that is, the\n", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                     "state of the random number generator (RNG) will be set such that\n", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                     "statistically sound random numbers are produced (also during\n", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                     "parallelization).\n", "If FALSE (default), it is assumed that the future expression neither\n", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                     "needs nor uses random number generation.\n", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                     "To use a fixed random seed, specify a L'Ecuyer-CMRG seed (seven integers)\n", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                     "or a regular RNG seed (a single integer).  If the latter, then a\n", </span>
@@ -4159,25 +4176,25 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>                     "ignored, an informative warning, or error will be produced.\n", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                     "If ", list("seed"), " is NULL, then the effect is as with ", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                     list("seed = FALSE"), "\n", "but without the RNG check being performed.")), </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   "\n", "\n", list(list("globals"), list("(optional) a logical, a character vector, or a named list\n", </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                     "to control how globals are handled.\n", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   "\n", "\n", list(list("globals"), list("(resource; optional) a logical, a character vector, or\n", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                     "a named list to control how globals are handled.\n", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                     "For details, see section 'Globals used by future expressions'\n", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                     "in the help for ", list(list("future()")), </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                     ".")), "\n", "\n", list(list("packages"), </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                     list("(optional) a character vector specifying packages\n", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                       "to be attached in the ", list(), " environment evaluating the future.")), </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   "\n", "\n", list(list("stdout"), list("If TRUE (default), then the standard output is captured,\n", </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                     "and re-outputted when ", list("value()"), </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                     " is called.\n", "If FALSE, any output is silenced (by sinking it to the null device as\n", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   "\n", "\n", list(list("stdout"), list("(evaluation) If TRUE (default), then the standard output is\n", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                     "captured, and re-outputted when ", list(</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                       "value()"), " is called.\n", "If FALSE, any output is silenced (by sinking it to the null device as\n", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                     "it is outputted).\n", "Using ", list("stdout = structure(TRUE, drop = TRUE)"), </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                     " causes the captured\n", "standard output to be dropped from the future object as soon as it has\n", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                     "been relayed. This can help decrease the overall memory consumed by\n", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                     "captured output across futures.\n", "Using ", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                     list("stdout = NA"), " fully avoids intercepting the standard output;\n", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                     "behavior of such unhandled standard output depends on the future backend.")), </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   "\n", "\n", list(list("conditions"), list("A character string of condition classes to be captured\n", </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                     "and relayed.  The default is to relay all conditions, including messages\n", </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                     "and warnings.  To drop all conditions, use ", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   "\n", "\n", list(list("conditions"), list("(evaluation) A character string of condition classes to\n", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                     "be captured and relayed.  The default is to relay all conditions,\n", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                     "including messages and warnings.  To drop all conditions, use\n", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                     list("conditions = character(0)"), ".\n", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                     "Errors are always relayed.\n", "Attribute ", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                     list("exclude"), " can be used to ignore specific classes, e.g.\n", </span>

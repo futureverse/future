@@ -31,7 +31,7 @@ switching from, say, sequential to parallel processing."><meta property="og:imag
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.70.0-9013</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.70.0-9015</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -172,14 +172,15 @@ identified.</p></dd>
 
 
 <dt id="arg-lazy">lazy<a class="anchor" aria-label="anchor" href="#arg-lazy"></a></dt>
-<dd><p>If FALSE (default), the future is resolved
+<dd><p>(scheduling) If FALSE (default), the future is resolved
 eagerly (starting immediately), otherwise not.</p></dd>
 
 
 <dt id="arg-seed">seed<a class="anchor" aria-label="anchor" href="#arg-seed"></a></dt>
-<dd><p>(optional) If TRUE, the random seed, that is, the state of the
-random number generator (RNG) will be set such that statistically sound
-random numbers are produced (also during parallelization).
+<dd><p>(resource; optional) If TRUE, the random seed, that is, the
+state of the random number generator (RNG) will be set such that
+statistically sound random numbers are produced (also during
+parallelization).
 If FALSE (default), it is assumed that the future expression neither
 needs nor uses random number generation.
 To use a fixed random seed, specify a L'Ecuyer-CMRG seed (seven integers)
@@ -194,22 +195,22 @@ but without the RNG check being performed.</p></dd>
 
 
 <dt id="arg-globals">globals<a class="anchor" aria-label="anchor" href="#arg-globals"></a></dt>
-<dd><p>(optional) a logical, a character vector, or a named list
-to control how globals are handled.
+<dd><p>(resource; optional) a logical, a character vector, or
+a named list to control how globals are handled.
 For details, see section 'Globals used by future expressions'
 in the help for <code>future()</code>.</p></dd>
 
 
 <dt id="arg-packages">packages<a class="anchor" aria-label="anchor" href="#arg-packages"></a></dt>
-<dd><p>(optional) a character vector specifying packages to be
-attached in the <span style="R">R</span> environment evaluating the future, <em>in addition to
-packages required by global variables</em> specified or identified via argument
-<code>globals</code>.</p></dd>
+<dd><p>(resource; optional) a character vector specifying
+packages to be attached in the <span style="R">R</span> environment evaluating the future,
+<em>in addition to packages required by global variables</em> specified or
+identified via argument <code>globals</code>.</p></dd>
 
 
 <dt id="arg-stdout">stdout<a class="anchor" aria-label="anchor" href="#arg-stdout"></a></dt>
-<dd><p>If TRUE (default), then the standard output is captured,
-and re-outputted when <code><a href="value.html">value()</a></code> is called.
+<dd><p>(evaluation) If TRUE (default), then the standard output is
+captured, and re-outputted when <code><a href="value.html">value()</a></code> is called.
 If FALSE, any output is silenced (by sinking it to the null device as
 it is outputted).
 Using <code>stdout = structure(TRUE, drop = TRUE)</code> causes the captured
@@ -221,9 +222,10 @@ behavior of such unhandled standard output depends on the future backend.</p></d
 
 
 <dt id="arg-conditions">conditions<a class="anchor" aria-label="anchor" href="#arg-conditions"></a></dt>
-<dd><p>A character string of condition classes to be captured
-and relayed.  The default is to relay all conditions, including messages
-and warnings.  To drop all conditions, use <code>conditions = character(0)</code>.
+<dd><p>(evaluation) A character string of condition classes to
+be captured and relayed.  The default is to relay all conditions,
+including messages and warnings.  To drop all conditions, use
+<code>conditions = character(0)</code>.
 Errors are always relayed.
 Attribute <code>exclude</code> can be used to ignore specific classes, e.g.
 <code>conditions = structure("condition", exclude = "message")</code> will capture
