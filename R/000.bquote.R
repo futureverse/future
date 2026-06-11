@@ -90,8 +90,17 @@ bquote_compile <- function(expr, substitute = TRUE) {
 }
 
 
-bquote_apply <- function(tmpl, envir = parent.frame()) {
+#' @noRd
+bquote_apply <- function(tmpl, ..., envir = parent.frame()) {
   expr <- attr(tmpl, "expression")
+
+  args <- list(...)
+  if (length(args) > 0) {
+    envir <- new.env(parent = envir)
+    for (name in names(args)) {
+      assign(name, args[[name]], envir = envir, inherits = FALSE)
+    }
+  }
   
   for (kk in seq_along(tmpl)) {
     entry <- tmpl[[kk]]
@@ -111,11 +120,10 @@ bquote_apply <- function(tmpl, envir = parent.frame()) {
         f[at[nat]] <- list(NULL)
         e <- as.call(f)
       } else if (is.pairlist(e)) {
-        e[1] <- list(NULL)
+        e[at[nat]] <- list(NULL)
         e <- as.pairlist(e)
       } else {
-        stopf("Unknown type of expression (please report to the maintainer): %s",
-             sQuote(paste(deparse(e), collapse = "\\n")))
+        stop(sprintf("Unknown type of expression (please report to the maintainer): %s", sQuote(paste(deparse(e), collapse = "\\n"))))
       }
       if (is.null(head)) {
         expr <- e
