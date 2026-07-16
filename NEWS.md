@@ -17,6 +17,9 @@
    everywhere. It was still 500 MiB is some cases, e.g. `futureCall()`
    had a limit although `future()` did not.
 
+ * Missing arguments can now be forwarded in a future expression without
+   being retrieved as ordinary global objects (#756).
+
 
 # Version 1.70.0 [2026-03-13]
 

@@ -31,6 +31,8 @@
 #'
 #' @keywords internal
 getGlobalsAndPackages <- function(expr, envir = parent.frame(), tweak = tweakExpression, globals = TRUE, locals = getOption("future.globals.globalsOf.locals", TRUE), resolve = getOption("future.globals.resolve"), persistent = FALSE, maxSize = getOption("future.globals.maxSize", +Inf), onReference = getOption("future.globals.onReference", "ignore"), ...) {
+  exprOrg <- expr
+
   if (is.null(resolve)) {
     resolve <- FALSE
   } else {
@@ -121,19 +123,70 @@ getGlobalsAndPackages <- function(expr, envir = parent.frame(), tweak = tweakExp
       }
 
       ## Combine results from different methods
-      globals <- globalsOf(
-        ## Passed to globals::findGlobals()
-        expr, envir = envir, substitute = FALSE, tweak = tweak,
-        ## Include globals part of a local closure environment?
-        locals = locals,
-        ## Passed to globals::findGlobals() via '...'
-        dotdotdot = "return",
-        method = globals.method,
-        unlist = TRUE,
-        ## Passed to globals::globalsByName()
-        mustExist = mustExist,
-        recursive = TRUE
-      )
+      collect_globals <- function(expr) {
+        globalsOf(
+          ## Passed to globals::findGlobals()
+          expr, envir = envir, substitute = FALSE, tweak = tweak,
+          ## Include globals part of a local closure environment?
+          locals = locals,
+          ## Passed to globals::findGlobals() via '...'
+          dotdotdot = "return",
+          method = globals.method,
+          unlist = TRUE,
+          ## Passed to globals::globalsByName()
+          mustExist = mustExist,
+          recursive = TRUE
+        )
+      }
+      globals <- tryCatch(collect_globals(expr), error = identity)
+
+      ## Missing function arguments can be forwarded to another function,
+      ## but they cannot be retrieved as ordinary globals. On this rare error
+      ## path, preserve them as missing formals around the future expression.
+      if (inherits(globals, "error")) {
+        global_names <- findGlobals(
+          expr, envir = envir, substitute = FALSE, tweak = tweak,
+          dotdotdot = "return", method = globals.method, unlist = TRUE
+        )
+        global_names <- setdiff(
+          global_names,
+          c("...", grep("^[.][.][0-9]+$", global_names, value = TRUE))
+        )
+
+        missing_value <- alist(arg = )
+        names(missing_value) <- NULL
+        missing_value <- as.call(c(list(as.name("list")), missing_value))
+
+        is_missing_global <- function(name) {
+          env <- envir
+          repeat {
+            if (exists(name, envir = env, inherits = FALSE)) {
+              template <- call("list", as.name(name))
+              value <- do.call("substitute", list(template, env))
+              return(identical(value, missing_value))
+            }
+            if (identical(env, emptyenv())) return(FALSE)
+            env <- parent.env(env)
+          }
+        }
+
+        missing_globals <- global_names[vapply(
+          global_names, FUN = is_missing_global, FUN.VALUE = FALSE
+        )]
+        if (length(missing_globals) == 0L) stop(globals)
+
+        if (debug) {
+          mdebugf(
+            "missing globals found: [%d] %s",
+            length(missing_globals), commaq(missing_globals)
+          )
+        }
+        formals <- rep(alist(arg = ), times = length(missing_globals))
+        names(formals) <- missing_globals
+        fcn <- as.call(list(as.name("function"), as.pairlist(formals), expr))
+        expr <- as.call(list(fcn))
+        globals <- collect_globals(expr)
+      }
       
       if (debug) mdebugf("globals found: [%d] %s", length(globals), commaq(names(globals)))
       if (debug) mdebug_pop()
@@ -190,8 +243,6 @@ getGlobalsAndPackages <- function(expr, envir = parent.frame(), tweak = tweakExp
     if (debug) mdebugf("Resolving globals: %s", resolve)
   }
   stop_if_not(is.logical(resolve), length(resolve) == 1L, !is.na(resolve))
-
-  exprOrg <- expr
 
   ## Tweak expression to be called with global ... arguments?
   if (length(globals) > 0 && inherits(globals[["..."]], "DotDotDotList")) {
