@@ -154,7 +154,9 @@ tweak.future <- function(strategy, ..., penvir = parent.frame()) {
     }
   }
 
-  body(strategy2) <- bquote_splice(strategy(..., ..(args2)), splice = TRUE)
+  ## Construct the call strategy(..., <named 'args2' arguments>), where
+  ## 'args2' is a named list of argument symbols/values to splice in.
+  body(strategy2) <- as.call(c(list(quote(strategy), quote(...)), args2))
 
   ## Avoid strategy2() depending on the calling frame, which would cause it
   ## to pick up package dependencies from there, which then are attached on
