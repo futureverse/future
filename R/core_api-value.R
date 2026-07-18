@@ -292,7 +292,9 @@ value.Future <- function(future, stdout = TRUE, signal = TRUE, drop = FALSE, ...
     if (any(grepl(".doRNG.stream", deparse(future[["expr"]]), fixed = TRUE))) {
       ## doFuture w/ doRNG, e.g. %dorng%
     } else {
-      onMisuse <- getOption("future.rng.onMisuse")
+      ## Per-future override via seed = structure(FALSE, onMisuse = ...)?
+      onMisuse <- attr(future[["seed"]], "onMisuse", exact = TRUE)
+      if (is.null(onMisuse)) onMisuse <- getOption("future.rng.onMisuse")
       if (is.null(onMisuse)) onMisuse <- "warning"
       if (onMisuse != "ignore") {
         if (onMisuse == "error") {

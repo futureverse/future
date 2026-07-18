@@ -78,6 +78,9 @@ Furthermore, if FALSE, then the future will be monitored to make sure it
 does not use random numbers.  If it does and depending on the value of
 option \link{future.rng.onMisuse}, the check is
 ignored, an informative warning, or error will be produced.
+This can be overridden per future by adding an \code{onMisuse} attribute to
+\code{seed = FALSE}, e.g. \code{seed = structure(FALSE, onMisuse = "error")},
+where \code{onMisuse} is one of \code{"error"}, \code{"warning"}, and \code{"ignore"}.
 If \code{seed} is NULL, then the effect is as with \code{seed = FALSE}
 but without the RNG check being performed.}
 

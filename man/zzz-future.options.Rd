@@ -178,6 +178,9 @@ declaring such use.
 If this is detected, and this options is set \code{"error"}, then an
 informative error is produced. If \code{"warning"}, then a warning is
 produced.  If \code{"ignore"}, no check is performed.
+This option can be overridden per future via an \code{onMisuse}
+attribute on \code{seed = FALSE}, e.g.
+\code{seed = structure(FALSE, onMisuse = "error")}.
 (Default: \code{"warning"})
 }
 }

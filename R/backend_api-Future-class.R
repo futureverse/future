@@ -68,6 +68,9 @@
 #' does not use random numbers.  If it does and depending on the value of
 #' option [future.rng.onMisuse], the check is
 #' ignored, an informative warning, or error will be produced.
+#' This can be overridden per future by adding an `onMisuse` attribute to
+#' `seed = FALSE`, e.g. `seed = structure(FALSE, onMisuse = "error")`,
+#' where `onMisuse` is one of `"error"`, `"warning"`, and `"ignore"`.
 #' If `seed` is NULL, then the effect is as with `seed = FALSE`
 #' but without the RNG check being performed.
 #'
@@ -101,6 +104,15 @@ Future <- function(expr = NULL, envir = parent.frame(), substitute = TRUE, stdou
 
   if (is.null(seed)) {
   } else if (isFALSE(seed)) {
+    onMisuse <- attr(seed, "onMisuse", exact = TRUE)
+    if (!is.null(onMisuse)) {
+      if (!is.character(onMisuse) || length(onMisuse) != 1L || is.na(onMisuse) ||
+          !onMisuse %in% c("error", "warning", "ignore")) {
+        stopf("Attribute 'onMisuse' of argument 'seed' must be one of %s: %s",
+              commaq(c("error", "warning", "ignore")),
+              paste(deparse(onMisuse), collapse = "; "))
+      }
+    }
   } else {
     rng_config <- parallel_rng_kind()
     if (rng_config[["is_seed"]](seed)) {

@@ -11,6 +11,12 @@
    `FutureJournalList` list of them now reports on parallelization
    metrics, including total speedup and total efficiency.
 
+ * `future()` and friends now support `seed = structure(FALSE,
+   onMisuse = "error")` to control, per future, how misuse of random
+   numbers is handled when `seed = FALSE`. Attribute `onMisuse` may be
+   `"error"`, `"warning"`, or `"ignore"`, and, when set, takes
+   precedence over R option `future.rng.onMisuse`.
+
 ## Bug Fixes
 
  * The default for R option `future.globals.maxSize` is now `+Inf`

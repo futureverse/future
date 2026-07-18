@@ -119,6 +119,9 @@
 #'    If this is detected, and this options is set `"error"`, then an
 #'    informative error is produced. If `"warning"`, then a warning is
 #'    produced.  If `"ignore"`, no check is performed.
+#'    This option can be overridden per future via an `onMisuse`
+#'    attribute on `seed = FALSE`, e.g.
+#'    `seed = structure(FALSE, onMisuse = "error")`.
 #'    (Default: `"warning"`)
 #'  }
 #' }
