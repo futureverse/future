@@ -38,6 +38,7 @@
 #' * R_TESTME_PACKAGE
 #' * R_TESTME_NAME
 #' * R_TESTME_PATH
+#' * R_TESTME_EXCLUDE_NAME
 #' * R_TESTME_FILTER_NAME
 #' * R_TESTME_FILTER_TAGS
 #' * R_TESTME_COVERAGE
@@ -202,6 +203,15 @@ main <- function() {
   ## Skip on CRAN? To run these tests, set env var NOT_CRAN=true
   if ("skip_on_cran" %in% tags && on_cran()) {
     testme[["status"]] <- "skipped"
+  }
+
+  ## Skip tests listed in R_TESTME_EXCLUDE_NAME (comma-separated names)
+  exclude <- Sys.getenv("R_TESTME_EXCLUDE_NAME", NA_character_)
+  if (!is.na(exclude)) {
+    exclude <- unlist(strsplit(exclude, split = ",", fixed = TRUE))
+    exclude <- trimws(exclude)
+    exclude <- exclude[nzchar(exclude)]
+    if (testme[["name"]] %in% exclude) testme[["status"]] <- "skipped"
   }
 
   code <- Sys.getenv("R_TESTME_FILTER_NAME", NA_character_)
