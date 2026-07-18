@@ -1,4 +1,4 @@
-# Version (development version)
+# Version 1.71.0
 
 ## New Features
 
