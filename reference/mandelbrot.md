@@ -26,15 +26,17 @@ mandelbrot(
 
 - Z:
 
-  A complex matrix for which convergence counts should be calculated.
+  A complex matrix (\\Z\\) for which convergence counts (\\C\\) should
+  be calculated.
 
 - maxIter:
 
-  Maximum number of iterations per bin.
+  Maximum number of iterations (\\c^{max}\\) per bin.
 
 - tau:
 
-  A threshold; the radius when calling divergence (Mod(z) \> tau).
+  A threshold (\\\tau\\); the radius when calling divergence
+  (\\\|z\_{i}\| \> \tau\\).
 
 - xmid, ymid, side, resolution:
 
@@ -45,14 +47,23 @@ mandelbrot(
 
 ## Value
 
-Returns an integer matrix (of class Mandelbrot) with non-negative
-counts.
+Returns an integer matrix (of class Mandelbrot) with non-negative counts
+(\\C\\).
 
-## Author
+## Escape time algorithm
 
-The internal Mandelbrot algorithm was inspired by and adopted from
-similar GPL code of Martin Maechler available from
-ftp://stat.ethz.ch/U/maechler/R/ on 2005-02-18 (sic!).
+The convergence counts are calculated using the standard escape-time
+algorithm for the Mandelbrot set: for each complex number \\c\\, the
+sequence \\z\_{i+1} \leftarrow z\_{i}^2 + c\\ (starting at \\z\_{0} =
+c\\) is iterated until either its modulus (\\\|z\_{i}\|\\) exceeds the
+escape radius \\\tau\\ (`tau`) or the maximum number of iterations
+(\\c^{max}\\) has been reached. The count (\\c\_{i}\\) recorded is the
+iteration at which the sequence escaped, or \\c^{max}\\ for points that
+never escaped.
+
+## References
+
+Mandelbrot set, <https://en.wikipedia.org/wiki/Mandelbrot_set>, 2026
 
 ## Examples
 

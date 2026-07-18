@@ -42,9 +42,9 @@ res <- tryCatch({
 #> [[1]]
 #> base::tryCatch(base::withCallingHandlers({
 #>     NULL
-#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/Rtmpdloo78/callr-fun-dc6cf69646cb8"), 
+#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpzZWJJV/callr-fun-9445b167319e7"), 
 #>         base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
-#>         quote = TRUE), file = "/tmp/hb/Rtmpdloo78/callr-res-dc6cf29b8e397", 
+#>         quote = TRUE), file = "/tmp/hb/RtmpzZWJJV/callr-res-9445b5576c478", 
 #>         compress = FALSE)
 #>     base::flush(base::stdout())
 #>     base::flush(base::stderr())
@@ -73,7 +73,7 @@ res <- tryCatch({
 #>         if (callr_data$has_otel) {
 #>             callr_data$otel_span$record_exception(e2)
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/Rtmpdloo78/callr-res-dc6cf29b8e397", 
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpzZWJJV/callr-res-9445b5576c478", 
 #>             ".error"))
 #>     }
 #> }, interrupt = function(e) {
@@ -99,7 +99,7 @@ res <- tryCatch({
 #>         if (callr_data$has_otel) {
 #>             callr_data$otel_span$record_exception(e2)
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/Rtmpdloo78/callr-res-dc6cf29b8e397", 
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpzZWJJV/callr-res-9445b5576c478", 
 #>             ".error"))
 #>     }
 #> }, callr_message = function(e) {
@@ -143,9 +143,9 @@ res <- tryCatch({
 #> [[8]]
 #> base::withCallingHandlers({
 #>     NULL
-#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/Rtmpdloo78/callr-fun-dc6cf69646cb8"), 
+#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpzZWJJV/callr-fun-9445b167319e7"), 
 #>         base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
-#>         quote = TRUE), file = "/tmp/hb/Rtmpdloo78/callr-res-dc6cf29b8e397", 
+#>         quote = TRUE), file = "/tmp/hb/RtmpzZWJJV/callr-res-9445b5576c478", 
 #>         compress = FALSE)
 #>     base::flush(base::stdout())
 #>     base::flush(base::stderr())
@@ -174,7 +174,7 @@ res <- tryCatch({
 #>         if (callr_data$has_otel) {
 #>             callr_data$otel_span$record_exception(e2)
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/Rtmpdloo78/callr-res-dc6cf29b8e397", 
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpzZWJJV/callr-res-9445b5576c478", 
 #>             ".error"))
 #>     }
 #> }, interrupt = function(e) {
@@ -200,7 +200,7 @@ res <- tryCatch({
 #>         if (callr_data$has_otel) {
 #>             callr_data$otel_span$record_exception(e2)
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/Rtmpdloo78/callr-res-dc6cf29b8e397", 
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpzZWJJV/callr-res-9445b5576c478", 
 #>             ".error"))
 #>     }
 #> }, callr_message = function(e) {
@@ -208,13 +208,13 @@ res <- tryCatch({
 #> })
 #> 
 #> [[9]]
-#> base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/Rtmpdloo78/callr-fun-dc6cf69646cb8"), 
+#> base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpzZWJJV/callr-fun-9445b167319e7"), 
 #>     base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
-#>     quote = TRUE), file = "/tmp/hb/Rtmpdloo78/callr-res-dc6cf29b8e397", 
+#>     quote = TRUE), file = "/tmp/hb/RtmpzZWJJV/callr-res-9445b5576c478", 
 #>     compress = FALSE)
 #> 
 #> [[10]]
-#> base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/Rtmpdloo78/callr-fun-dc6cf69646cb8"), 
+#> base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpzZWJJV/callr-fun-9445b167319e7"), 
 #>     base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
 #>     quote = TRUE)
 #> 
@@ -231,8 +231,8 @@ res <- tryCatch({
 #>     options(cli.num_colors = cli_colors, cli.hyperlink = hyperlinks, 
 #>         cli.hyperlink_run = hyperlinks)
 #>     pkgdown::build_site(...)
-#> }), base::quote(list(pkg = list(package = "future", version = "1.70.0-9015", 
-#>     src_path = "/tmp/hb/Rtmpdloo78/future", meta = list(url = "https://future.futureverse.org", 
+#> }), base::quote(list(pkg = list(package = "future", version = "1.70.0-9017", 
+#>     src_path = "/tmp/hb/RtmpzZWJJV/future", meta = list(url = "https://future.futureverse.org", 
 #>         home = list(links = list(list(text = "Roadmap/Milestones", 
 #>             href = "https://github.com/futureverse/future/milestones"), 
 #>             list(text = "The Futureverse Project", href = "https://www.futureverse.org/"), 
@@ -268,7 +268,7 @@ res <- tryCatch({
 #>             bootstrap = 5L, `light-switch` = TRUE)), desc = <environment>, 
 #>     bs_version = 5L, development = list(destination = "dev", 
 #>         mode = "default", version_label = "muted", in_dev = FALSE, 
-#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/Rtmpdloo78/future/docs", 
+#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/RtmpzZWJJV/future/docs", 
 #>     lang = "en-US", install_metadata = FALSE, figures = list(
 #>         dev = "ragg::agg_png", dpi = 96L, dev.args = list(), 
 #>         fig.ext = "png", fig.width = 7.29166666666667, fig.height = NULL, 
@@ -1718,12 +1718,14 @@ res <- tryCatch({
 #>                   "  side = 3,\n", "  resolution = 400L,\n", 
 #>                   "  maxIter = 200L,\n", "  tau = 2,\n", "  ...\n", 
 #>                   ")\n"), "\n", list("\n", list(list("Z"), list(
-#>                   "A complex matrix for which convergence\n", 
-#>                   "counts should be calculated.")), "\n", "\n", 
-#>                   list(list("maxIter"), list("Maximum number of iterations per bin.")), 
-#>                   "\n", "\n", list(list("tau"), list("A threshold; the radius when calling\n", 
-#>                     "divergence (Mod(z) > tau).")), "\n", "\n", 
-#>                   list(list("xmid, ymid, side, resolution"), 
+#>                   "A complex matrix (", list(list("Z")), ") for which convergence\n", 
+#>                   "counts (", list(list("C")), ") should be calculated.")), 
+#>                   "\n", "\n", list(list("maxIter"), list("Maximum number of iterations (", 
+#>                     list(list("c^{max}")), ") per bin.")), "\n", 
+#>                   "\n", list(list("tau"), list("A threshold (", 
+#>                     list(list("\\tau")), "); the radius when calling\n", 
+#>                     "divergence (", list(list("|z_{i}| > \\tau")), 
+#>                     ").")), "\n", "\n", list(list("xmid, ymid, side, resolution"), 
 #>                     list("Alternative specification of\n", "the complex plane ", 
 #>                       list("Z"), ", where\n", list("mean(Re(Z)) == xmid"), 
 #>                       ",\n", list("mean(Im(Z)) == ymid"), ",\n", 
@@ -1731,16 +1733,29 @@ res <- tryCatch({
 #>                       list("diff(range(Im(Z))) == side"), ", and\n", 
 #>                       list("dim(Z) == c(resolution, resolution)"), 
 #>                       ".")), "\n"), "\n", list("\n", "Returns an integer matrix (of class Mandelbrot) with\n", 
-#>                   "non-negative counts.\n"), "\n", list("\n", 
-#>                   "Mandelbrot convergence counts\n"), "\n", list(
-#>                   "\n", "counts <- mandelbrot(xmid = -0.75, ymid = 0, side = 3)\n", 
+#>                   "non-negative counts (", list(list("C")), ").\n"), 
+#>                 "\n", list("\n", "Mandelbrot convergence counts\n"), 
+#>                 "\n", list(list("Escape time algorithm"), list(
+#>                   "\n", "\n", "The convergence counts are calculated using the standard escape-time\n", 
+#>                   "algorithm for the Mandelbrot set: for each complex number ", 
+#>                   list(list("c")), ", the\n", "sequence ", list(
+#>                     list("z_{i+1} \\leftarrow z_{i}^2 + c")), 
+#>                   " (starting at ", list(list("z_{0} = c")), 
+#>                   ")\n", "is iterated until either its modulus (", 
+#>                   list(list("|z_{i}|")), ") exceeds the escape\n", 
+#>                   "radius ", list(list("\\tau")), " (", list(
+#>                     "tau"), ") or the maximum number of iterations (", 
+#>                   list(list("c^{max}")), ")\n", "has been reached. The count (", 
+#>                   list(list("c_{i}")), ") recorded is the iteration at which\n", 
+#>                   "the sequence escaped, or ", list(list("c^{max}")), 
+#>                   " for points that never escaped.\n")), "\n", 
+#>                 "\n", list("\n", "counts <- mandelbrot(xmid = -0.75, ymid = 0, side = 3)\n", 
 #>                   "str(counts)\n", list("\n", "plot(counts)\n"), 
 #>                   "\n", "\n", list("\n", "demo(\"mandelbrot\", package = \"future\", ask = FALSE)\n"), 
-#>                   "\n", "\n"), "\n", list("\n", "The internal Mandelbrot algorithm was inspired by and\n", 
-#>                   "adopted from similar GPL code of Martin Maechler available\n", 
-#>                   "from ftp://stat.ethz.ch/U/maechler/R/ on 2005-02-18 (sic!).\n"), 
-#>                 "\n", list("internal"), "\n"), multicore.Rd = list(
-#>                 "% Generated by roxygen2: do not edit by hand", 
+#>                   "\n", "\n"), "\n", list("\n", "Mandelbrot set, ", 
+#>                   list("https://en.wikipedia.org/wiki/Mandelbrot_set"), 
+#>                   ", 2026\n"), "\n", list("internal"), "\n"), 
+#>             multicore.Rd = list("% Generated by roxygen2: do not edit by hand", 
 #>                 "\n", "% Please edit documentation in R/backend_api-11.MulticoreFutureBackend-class.R", 
 #>                 "\n", list("multicore"), "\n", list("multicore"), 
 #>                 "\n", list("MulticoreFuture"), "\n", list("Create a multicore future whose value will be resolved asynchronously in a forked parallel process"), 
@@ -3033,8 +3048,8 @@ res <- tryCatch({
 #>     options(cli.num_colors = cli_colors, cli.hyperlink = hyperlinks, 
 #>         cli.hyperlink_run = hyperlinks)
 #>     pkgdown::build_site(...)
-#> })(pkg = base::quote(list(package = "future", version = "1.70.0-9015", 
-#>     src_path = "/tmp/hb/Rtmpdloo78/future", meta = list(url = "https://future.futureverse.org", 
+#> })(pkg = base::quote(list(package = "future", version = "1.70.0-9017", 
+#>     src_path = "/tmp/hb/RtmpzZWJJV/future", meta = list(url = "https://future.futureverse.org", 
 #>         home = list(links = list(list(text = "Roadmap/Milestones", 
 #>             href = "https://github.com/futureverse/future/milestones"), 
 #>             list(text = "The Futureverse Project", href = "https://www.futureverse.org/"), 
@@ -3070,7 +3085,7 @@ res <- tryCatch({
 #>             bootstrap = 5L, `light-switch` = TRUE)), desc = <environment>, 
 #>     bs_version = 5L, development = list(destination = "dev", 
 #>         mode = "default", version_label = "muted", in_dev = FALSE, 
-#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/Rtmpdloo78/future/docs", 
+#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/RtmpzZWJJV/future/docs", 
 #>     lang = "en-US", install_metadata = FALSE, figures = list(
 #>         dev = "ragg::agg_png", dpi = 96L, dev.args = list(), 
 #>         fig.ext = "png", fig.width = 7.29166666666667, fig.height = NULL, 
@@ -4520,12 +4535,14 @@ res <- tryCatch({
 #>                   "  side = 3,\n", "  resolution = 400L,\n", 
 #>                   "  maxIter = 200L,\n", "  tau = 2,\n", "  ...\n", 
 #>                   ")\n"), "\n", list("\n", list(list("Z"), list(
-#>                   "A complex matrix for which convergence\n", 
-#>                   "counts should be calculated.")), "\n", "\n", 
-#>                   list(list("maxIter"), list("Maximum number of iterations per bin.")), 
-#>                   "\n", "\n", list(list("tau"), list("A threshold; the radius when calling\n", 
-#>                     "divergence (Mod(z) > tau).")), "\n", "\n", 
-#>                   list(list("xmid, ymid, side, resolution"), 
+#>                   "A complex matrix (", list(list("Z")), ") for which convergence\n", 
+#>                   "counts (", list(list("C")), ") should be calculated.")), 
+#>                   "\n", "\n", list(list("maxIter"), list("Maximum number of iterations (", 
+#>                     list(list("c^{max}")), ") per bin.")), "\n", 
+#>                   "\n", list(list("tau"), list("A threshold (", 
+#>                     list(list("\\tau")), "); the radius when calling\n", 
+#>                     "divergence (", list(list("|z_{i}| > \\tau")), 
+#>                     ").")), "\n", "\n", list(list("xmid, ymid, side, resolution"), 
 #>                     list("Alternative specification of\n", "the complex plane ", 
 #>                       list("Z"), ", where\n", list("mean(Re(Z)) == xmid"), 
 #>                       ",\n", list("mean(Im(Z)) == ymid"), ",\n", 
@@ -4533,16 +4550,29 @@ res <- tryCatch({
 #>                       list("diff(range(Im(Z))) == side"), ", and\n", 
 #>                       list("dim(Z) == c(resolution, resolution)"), 
 #>                       ".")), "\n"), "\n", list("\n", "Returns an integer matrix (of class Mandelbrot) with\n", 
-#>                   "non-negative counts.\n"), "\n", list("\n", 
-#>                   "Mandelbrot convergence counts\n"), "\n", list(
-#>                   "\n", "counts <- mandelbrot(xmid = -0.75, ymid = 0, side = 3)\n", 
+#>                   "non-negative counts (", list(list("C")), ").\n"), 
+#>                 "\n", list("\n", "Mandelbrot convergence counts\n"), 
+#>                 "\n", list(list("Escape time algorithm"), list(
+#>                   "\n", "\n", "The convergence counts are calculated using the standard escape-time\n", 
+#>                   "algorithm for the Mandelbrot set: for each complex number ", 
+#>                   list(list("c")), ", the\n", "sequence ", list(
+#>                     list("z_{i+1} \\leftarrow z_{i}^2 + c")), 
+#>                   " (starting at ", list(list("z_{0} = c")), 
+#>                   ")\n", "is iterated until either its modulus (", 
+#>                   list(list("|z_{i}|")), ") exceeds the escape\n", 
+#>                   "radius ", list(list("\\tau")), " (", list(
+#>                     "tau"), ") or the maximum number of iterations (", 
+#>                   list(list("c^{max}")), ")\n", "has been reached. The count (", 
+#>                   list(list("c_{i}")), ") recorded is the iteration at which\n", 
+#>                   "the sequence escaped, or ", list(list("c^{max}")), 
+#>                   " for points that never escaped.\n")), "\n", 
+#>                 "\n", list("\n", "counts <- mandelbrot(xmid = -0.75, ymid = 0, side = 3)\n", 
 #>                   "str(counts)\n", list("\n", "plot(counts)\n"), 
 #>                   "\n", "\n", list("\n", "demo(\"mandelbrot\", package = \"future\", ask = FALSE)\n"), 
-#>                   "\n", "\n"), "\n", list("\n", "The internal Mandelbrot algorithm was inspired by and\n", 
-#>                   "adopted from similar GPL code of Martin Maechler available\n", 
-#>                   "from ftp://stat.ethz.ch/U/maechler/R/ on 2005-02-18 (sic!).\n"), 
-#>                 "\n", list("internal"), "\n"), multicore.Rd = list(
-#>                 "% Generated by roxygen2: do not edit by hand", 
+#>                   "\n", "\n"), "\n", list("\n", "Mandelbrot set, ", 
+#>                   list("https://en.wikipedia.org/wiki/Mandelbrot_set"), 
+#>                   ", 2026\n"), "\n", list("internal"), "\n"), 
+#>             multicore.Rd = list("% Generated by roxygen2: do not edit by hand", 
 #>                 "\n", "% Please edit documentation in R/backend_api-11.MulticoreFutureBackend-class.R", 
 #>                 "\n", list("multicore"), "\n", list("multicore"), 
 #>                 "\n", list("MulticoreFuture"), "\n", list("Create a multicore future whose value will be resolved asynchronously in a forked parallel process"), 

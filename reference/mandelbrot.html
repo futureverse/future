@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.70.0-9015</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.70.0-9017</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -107,17 +107,17 @@
 
 
 <dl><dt id="arg-z">Z<a class="anchor" aria-label="anchor" href="#arg-z"></a></dt>
-<dd><p>A complex matrix for which convergence
-counts should be calculated.</p></dd>
+<dd><p>A complex matrix (\(Z\)) for which convergence
+counts (\(C\)) should be calculated.</p></dd>
 
 
 <dt id="arg-maxiter">maxIter<a class="anchor" aria-label="anchor" href="#arg-maxiter"></a></dt>
-<dd><p>Maximum number of iterations per bin.</p></dd>
+<dd><p>Maximum number of iterations (\(c^{max}\)) per bin.</p></dd>
 
 
 <dt id="arg-tau">tau<a class="anchor" aria-label="anchor" href="#arg-tau"></a></dt>
-<dd><p>A threshold; the radius when calling
-divergence (Mod(z) &gt; tau).</p></dd>
+<dd><p>A threshold (\(\tau\)); the radius when calling
+divergence (\(|z_{i}| &gt; \tau\)).</p></dd>
 
 
 <dt id="arg-xmid-ymid-side-resolution">xmid, ymid, side, resolution<a class="anchor" aria-label="anchor" href="#arg-xmid-ymid-side-resolution"></a></dt>
@@ -133,13 +133,23 @@ the complex plane <code>Z</code>, where
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>Returns an integer matrix (of class Mandelbrot) with
-non-negative counts.</p>
+non-negative counts (\(C\)).</p>
     </div>
     <div class="section level2">
-    <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>
-    <p>The internal Mandelbrot algorithm was inspired by and
-adopted from similar GPL code of Martin Maechler available
-from ftp://stat.ethz.ch/U/maechler/R/ on 2005-02-18 (sic!).</p>
+    <h2 id="escape-time-algorithm">Escape time algorithm<a class="anchor" aria-label="anchor" href="#escape-time-algorithm"></a></h2>
+
+
+<p>The convergence counts are calculated using the standard escape-time
+algorithm for the Mandelbrot set: for each complex number \(c\), the
+sequence \(z_{i+1} \leftarrow z_{i}^2 + c\) (starting at \(z_{0} = c\))
+is iterated until either its modulus (\(|z_{i}|\)) exceeds the escape
+radius \(\tau\) (<code>tau</code>) or the maximum number of iterations (\(c^{max}\))
+has been reached. The count (\(c_{i}\)) recorded is the iteration at which
+the sequence escaped, or \(c^{max}\) for points that never escaped.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
+    <p>Mandelbrot set, <a href="https://en.wikipedia.org/wiki/Mandelbrot_set" class="external-link">https://en.wikipedia.org/wiki/Mandelbrot_set</a>, 2026</p>
     </div>
 
     <div class="section level2">
@@ -170,7 +180,7 @@ from ftp://stat.ethz.ch/U/maechler/R/ on 2005-02-18 (sic!).</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0</p> and <a href="https://github.com/HenrikBengtsson/pkgdown.extras/">pkgdown.extras</a> 0.0.0.9007.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1</p> and <a href="https://github.com/HenrikBengtsson/pkgdown.extras/">pkgdown.extras</a> 0.0.0.9008.</p>
 </div>
 
     </footer></div>

@@ -32,7 +32,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.70.0-9015</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.70.0-9017</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -816,12 +816,12 @@ a parallel worker:</p>
 <span><span class="fu"><a href="../reference/plan.html">plan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Adopted from example("FastqStreamer", package = "ShortRead")</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://bioconductor.org/packages/ShortRead" class="external-link">ShortRead</a></span><span class="op">)</span></span>
-<span><span class="va">sp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ShortRead/man/SolexaPath-class.html" class="external-link">SolexaPath</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, package <span class="op">=</span> <span class="st">"ShortRead"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">fl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/ShortRead/man/accessors.html" class="external-link">analysisPath</a></span><span class="op">(</span><span class="va">sp</span><span class="op">)</span>, <span class="st">"s_1_sequence.txt"</span><span class="op">)</span></span>
-<span><span class="va">fs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ShortRead/man/Sampler-class.html" class="external-link">FastqStreamer</a></span><span class="op">(</span><span class="va">fl</span>, <span class="fl">50</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">ShortRead</span><span class="op">)</span></span>
+<span><span class="va">sp</span> <span class="op">&lt;-</span> <span class="fu">SolexaPath</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, package <span class="op">=</span> <span class="st">"ShortRead"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">fl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu">analysisPath</span><span class="op">(</span><span class="va">sp</span><span class="op">)</span>, <span class="st">"s_1_sequence.txt"</span><span class="op">)</span></span>
+<span><span class="va">fs</span> <span class="op">&lt;-</span> <span class="fu">FastqStreamer</span><span class="op">(</span><span class="va">fl</span>, <span class="fl">50</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">reads</span> <span class="op"><a href="../reference/futureAssign.html">%&lt;-%</a></span> <span class="fu"><a href="https://rdrr.io/pkg/ShortRead/man/Sampler-class.html" class="external-link">yield</a></span><span class="op">(</span><span class="va">fs</span><span class="op">)</span></span>
+<span><span class="va">reads</span> <span class="op"><a href="../reference/futureAssign.html">%&lt;-%</a></span> <span class="fu">yield</span><span class="op">(</span><span class="va">fs</span><span class="op">)</span></span>
 <span><span class="va">reads</span></span>
 <span><span class="co">## Error in status(update = TRUE) : invalid FastqStreamer</span></span></code></pre></div>
 <p>To catch this earlier, and to get a more informative error message,
@@ -829,7 +829,7 @@ we do as before;</p>
 <div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>future.globals.onReference <span class="op">=</span> <span class="st">"error"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">reads</span> <span class="op"><a href="../reference/futureAssign.html">%&lt;-%</a></span> <span class="fu"><a href="https://rdrr.io/pkg/ShortRead/man/Sampler-class.html" class="external-link">yield</a></span><span class="op">(</span><span class="va">fs</span><span class="op">)</span></span>
+<span><span class="va">reads</span> <span class="op"><a href="../reference/futureAssign.html">%&lt;-%</a></span> <span class="fu">yield</span><span class="op">(</span><span class="va">fs</span><span class="op">)</span></span>
 <span><span class="co">## Error: Detected a non-exportable reference ('externalptr') in one of the</span></span>
 <span><span class="co">## globals ('fs' of class 'FastqStreamer') used in the future expression</span></span></code></pre></div>
 </div>
@@ -1287,7 +1287,7 @@ R process, e.g.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0</p> and <a href="https://github.com/HenrikBengtsson/pkgdown.extras/">pkgdown.extras</a> 0.0.0.9007.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1</p> and <a href="https://github.com/HenrikBengtsson/pkgdown.extras/">pkgdown.extras</a> 0.0.0.9008.</p>
 </div>
 
     </footer>
