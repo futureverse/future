@@ -18,6 +18,9 @@
    
 ## Bug Fixes
 
+ * `all.equal()` for `FutureStrategyList` would throw an error if the
+   object checked against was not a list.
+
  * The default for R option `future.globals.maxSize` is now `+Inf`
    everywhere. It was still 500 MiB is some cases, e.g. `futureCall()`
    had a limit although `future()` did not.
