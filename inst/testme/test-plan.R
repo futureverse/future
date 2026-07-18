@@ -4,6 +4,8 @@
 
 library(future)
 
+covr_testing <- ("covr" %in% loadedNamespaces())
+
 options(future.debug=FALSE)
 message("*** plan() ...")
 
@@ -32,17 +34,21 @@ plan(oplan)
 print(plan())
 
 message("*** Set strategy via plan(cluster(workers = cl)")
-oplan <- plan(future::cluster(workers = cl))
-print(plan())
-worker_pid_2 <- value(future(Sys.getpid()))
-message("Worker PID: ", worker_pid_2)
-stopifnot(
-  worker_pid_2 != pid,
-  worker_pid_2 == worker_pid_1  ## assert identical plan as before
-)
+if (!covr_testing) {
+  oplan <- plan(future::cluster(workers = cl))
+  print(plan())
+  worker_pid_2 <- value(future(Sys.getpid()))
+  message("Worker PID: ", worker_pid_2)
+  stopifnot(
+    worker_pid_2 != pid,
+    worker_pid_2 == worker_pid_1  ## assert identical plan as before
+  )
 
-plan(oplan)
-print(plan())
+  plan(oplan)
+  print(plan())
+} else {
+  message("SKIP")
+}
 
 message("*** Set strategy via plan('sequential')")
 oplan <- plan("sequential")
