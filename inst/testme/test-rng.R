@@ -119,7 +119,14 @@ for (cores in 1:availCores) {
   message(sprintf("Testing with %d cores ...", cores))
   options(mc.cores = cores)
 
-  for (strategy in supportedStrategies(cores)) {
+  strategies <- supportedStrategies(cores)
+
+  ## IMPORTANT: Skip 'multicore' when testing with 'covr', because the forked
+  ## workers exit without flushing their 'covr' trace files, which leaves
+  ## truncated files behind that in turn break the coverage merge
+  if (covr_testing) strategies <- setdiff(strategies, "multicore")
+
+  for (strategy in strategies) {
     message(sprintf("%s ...", strategy))
 
     plan(strategy)
