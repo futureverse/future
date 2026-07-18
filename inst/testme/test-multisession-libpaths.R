@@ -4,8 +4,6 @@
 #' @tags multisession
 #' @tags skip_on_cran
 
-covr_testing <- ("covr" %in% loadedNamespaces())
-
 ## These tests requires multisession workers
 if (parallelly::availableCores() >= 2L) {
   library(future)

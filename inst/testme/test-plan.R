@@ -4,8 +4,6 @@
 
 library(future)
 
-covr_testing <- ("covr" %in% loadedNamespaces())
-
 options(future.debug=FALSE)
 message("*** plan() ...")
 

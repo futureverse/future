@@ -5,7 +5,9 @@ library(future)
 
 message("*** multicore() - terminating workers ...")
 
-if (parallelly::supportsMulticore() && availableCores("multicore") >= 2L) {
+## IMPORTANT: Skip when testing with 'covr', because killing a worker may
+## truncate its 'covr' trace file, which in turn breaks the coverage merge
+if (!covr_testing && parallelly::supportsMulticore() && availableCores("multicore") >= 2L) {
   plan(multicore, workers = 2L)
 
   all <- nbrOfWorkers()
