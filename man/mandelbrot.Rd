@@ -24,13 +24,13 @@ mandelbrot(...)
 )
 }
 \arguments{
-\item{Z}{A complex matrix for which convergence
-counts should be calculated.}
+\item{Z}{A complex matrix (\eqn{Z}) for which convergence
+counts (\eqn{C})) should be calculated.}
 
-\item{maxIter}{Maximum number of iterations per bin.}
+\item{maxIter}{Maximum number of iterations (\eqn{c^{max}}) per bin.}
 
-\item{tau}{A threshold; the radius when calling
-divergence (Mod(z) > tau).}
+\item{tau}{A threshold (\eqn{\tau}); the radius when calling
+divergence (\eqn{|z_{i}| > \tau}).}
 
 \item{xmid, ymid, side, resolution}{Alternative specification of
 the complex plane \code{Z}, where
@@ -42,11 +42,22 @@ the complex plane \code{Z}, where
 }
 \value{
 Returns an integer matrix (of class Mandelbrot) with
-non-negative counts.
+non-negative counts (\eqn{C}).
 }
 \description{
 Mandelbrot convergence counts
 }
+\section{Escape time algorithm}{
+
+The convergence counts are calculated using the standard escape-time
+algorithm for the Mandelbrot set: for each complex number \eqn{c}, the
+sequence \eqn{z_{i+1} \leftarrow z_{i}^2 + c} (starting at \eqn{z_{0} = c})
+is iterated until either its modulus (\eqn{|z_{i}|}) exceeds the escape
+radius \eqn{\tau} (\code{tau}) or the maximum number of iterations (\eqn{c^{max}})
+have been reached. The count (\eqn{c_{i}}) recorded is the iteration at which
+the sequence escaped, or \eqn{c^{max}} for points that never escaped.
+}
+
 \examples{
 counts <- mandelbrot(xmid = -0.75, ymid = 0, side = 3)
 str(counts)
@@ -59,9 +70,7 @@ demo("mandelbrot", package = "future", ask = FALSE)
 }
 
 }
-\author{
-The internal Mandelbrot algorithm was inspired by and
-adopted from similar GPL code of Martin Maechler available
-from ftp://stat.ethz.ch/U/maechler/R/ on 2005-02-18 (sic!).
+\references{
+Mandelbrot set, \url{https://en.wikipedia.org/wiki/Mandelbrot_set}, 2026
 }
 \keyword{internal}
