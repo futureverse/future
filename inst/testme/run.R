@@ -296,7 +296,6 @@ testme_run_test <- function(testme) {
   if (testme[["status"]] != "skipped") {
     if (testme[["debug"]]) message("Running test script: ", sQuote(testme[["script"]]))
     testme[["status"]] <- "failed"
-    str(testme[["coverage"]])
     if (testme[["coverage"]] != "none") {
       pkg_env <- pkgload::load_all()
       cov <- covr::environment_coverage(pkg_env[["env"]], test_files = testme[["script"]])
