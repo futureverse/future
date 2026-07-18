@@ -25,7 +25,7 @@ mandelbrot(...)
 }
 \arguments{
 \item{Z}{A complex matrix (\eqn{Z}) for which convergence
-counts (\eqn{C})) should be calculated.}
+counts (\eqn{C}) should be calculated.}
 
 \item{maxIter}{Maximum number of iterations (\eqn{c^{max}}) per bin.}
 
@@ -54,7 +54,7 @@ algorithm for the Mandelbrot set: for each complex number \eqn{c}, the
 sequence \eqn{z_{i+1} \leftarrow z_{i}^2 + c} (starting at \eqn{z_{0} = c})
 is iterated until either its modulus (\eqn{|z_{i}|}) exceeds the escape
 radius \eqn{\tau} (\code{tau}) or the maximum number of iterations (\eqn{c^{max}})
-have been reached. The count (\eqn{c_{i}}) recorded is the iteration at which
+has been reached. The count (\eqn{c_{i}}) recorded is the iteration at which
 the sequence escaped, or \eqn{c^{max}} for points that never escaped.
 }
 
