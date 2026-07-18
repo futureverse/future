@@ -15,6 +15,11 @@
   reports on parallelization metrics, including total speedup and total
   efficiency.
 
+- [`all.equal()`](https://rdrr.io/r/base/all.equal.html) for `future`
+  now returns `"Not both functions"` when comparing against a
+  non-function. Similarly, `"Not both lists"` is returned when comparing
+  a `FutureStrategyList` object against a not list object.
+
 ### Bug Fixes
 
 - The default for R option `future.globals.maxSize` is now `+Inf`

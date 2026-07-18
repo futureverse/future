@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.70.0-9017</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.70.0-9019</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -84,6 +84,7 @@
 <h3 id="new-features-development-version">New Features<a class="anchor" aria-label="anchor" href="#new-features-development-version"></a></h3>
 <ul><li><p><code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> for <code>Future</code> objects now reports on parallelization efficiency when journaling is enabled via <code>options(future.journal = TRUE)</code>. The roundtrip is reported as “active” time (overhead + evaluation), with wallclock and idle time shown separately.</p></li>
 <li><p><code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code> on individual a <code>FutureJournal</code> objects and on a <code>FutureJournalList</code> list of them now reports on parallelization metrics, including total speedup and total efficiency.</p></li>
+<li><p><code><a href="https://rdrr.io/r/base/all.equal.html" class="external-link">all.equal()</a></code> for <code>future</code> now returns <code>"Not both functions"</code> when comparing against a non-function. Similarly, <code>"Not both lists"</code> is returned when comparing a <code>FutureStrategyList</code> object against a not list object.</p></li>
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-development-version">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h3>
