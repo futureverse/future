@@ -18,6 +18,10 @@
    
 ## Bug Fixes
 
+ * Conditions relayed via the file system could produce an error when
+   relayed if a condition file was corrupt. Now such conditions are
+   silently ignored as intended.
+ 
  * `all.equal()` for `FutureStrategyList` would throw an error if the
    object checked against was not a list.
 

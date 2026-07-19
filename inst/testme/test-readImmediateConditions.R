@@ -135,13 +135,17 @@ stopifnot(length(readImmediateConditions(path = path, include = character(0),
 save_rds(list(nope = TRUE), file.path(path, "bogus.rds"))
 stopifnot(length(readImmediateConditions(path = path, remove = FALSE)) == 1L)
 
-## FIXME: Files that cannot be read as RDS should be dropped, but
-## currently they make readImmediateConditions() fail
+## Cleanup files (for remaining tests)
+file.remove(dir(path, pattern = "[.]rds$", full.names = TRUE))
+files <- dir(path, pattern = "[.]rds$", full.names = TRUE)
+stopifnot(length(files) == 0)
+
+## Files that cannot be read as RDS are silently ignored
 cat("not an RDS file", file = file.path(path, "corrupt.rds"))
-res <- tryCatch(readImmediateConditions(path = path, remove = FALSE),
-                error = identity)
+print(dir(path = path))
+res <- readImmediateConditions(path = path, remove = FALSE)
 print(res)
-stopifnot(inherits(res, "error"))
+stopifnot(length(res) == 0L, is.list(res))
 
 file.remove(dir(path, pattern = "[.]rds$", full.names = TRUE))
 
