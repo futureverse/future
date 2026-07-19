@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.70.0-9019</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.70.0-9024</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -88,7 +88,10 @@
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-development-version">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h3>
-<ul><li>The default for R option <code>future.globals.maxSize</code> is now <code>+Inf</code> everywhere. It was still 500 MiB is some cases, e.g. <code><a href="../reference/future.html">futureCall()</a></code> had a limit although <code><a href="../reference/future.html">future()</a></code> did not.</li>
+<ul><li><p>On MS Windows, a future startup script specified by environment variable <code>R_FUTURE_STARTUP_SCRIPT</code> was silently ignored due to a bug in parsing the value.</p></li>
+<li><p>Conditions relayed via the file system could produce an error when relayed if a condition file was corrupt. Now such conditions are silently ignored as intended.</p></li>
+<li><p><code><a href="https://rdrr.io/r/base/all.equal.html" class="external-link">all.equal()</a></code> for <code>FutureStrategyList</code> would throw an error if the object checked against was not a list.</p></li>
+<li><p>The default for R option <code>future.globals.maxSize</code> is now <code>+Inf</code> everywhere. It was still 500 MiB is some cases, e.g. <code><a href="../reference/future.html">futureCall()</a></code> had a limit although <code><a href="../reference/future.html">future()</a></code> did not.</p></li>
 </ul></div>
 </div>
     <div class="section level2">

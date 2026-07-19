@@ -22,6 +22,18 @@
 
 ### Bug Fixes
 
+- On MS Windows, a future startup script specified by environment
+  variable `R_FUTURE_STARTUP_SCRIPT` was silently ignored due to a bug
+  in parsing the value.
+
+- Conditions relayed via the file system could produce an error when
+  relayed if a condition file was corrupt. Now such conditions are
+  silently ignored as intended.
+
+- [`all.equal()`](https://rdrr.io/r/base/all.equal.html) for
+  `FutureStrategyList` would throw an error if the object checked
+  against was not a list.
+
 - The default for R option `future.globals.maxSize` is now `+Inf`
   everywhere. It was still 500 MiB is some cases,
   e.g. [`futureCall()`](https://future.futureverse.org/reference/future.md)
