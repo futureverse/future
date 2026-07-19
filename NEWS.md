@@ -18,6 +18,10 @@
    
 ## Bug Fixes
 
+ * On MS Windows, a future startup script specified by environment
+   variable `R_FUTURE_STARTUP_SCRIPT` was silently ignored due to a
+   bug in parsing the value.
+
  * Conditions relayed via the file system could produce an error when
    relayed if a condition file was corrupt. Now such conditions are
    silently ignored as intended.
