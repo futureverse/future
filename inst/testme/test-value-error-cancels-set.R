@@ -9,6 +9,15 @@ options(future.debug = FALSE)
 strategies <- supportedStrategies()
 strategies <- setdiff(strategies, "sequential")
 
+## IMPORTANT: Skip when testing with 'covr', because value() cancels the
+## still-running futures when one of them produces an error, which terminates
+## their workers. A terminated worker may leave a truncated, or empty, 'covr'
+## trace file behind, which in turn breaks the coverage merge at the end
+if (covr_testing) {
+  message("Skipping, because covr is used for testing")
+  strategies <- character(0L)
+}
+
 for (strategy in strategies) {
   message(sprintf("plan('%s') ...", strategy))
   plan(strategy)

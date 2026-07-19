@@ -149,6 +149,6 @@ assertFutureResult <- function(future, debug = FALSE) {
   result_uuid <- paste(uuid, collapse = "-")
   future_uuid <- paste(future[["uuid"]], collapse = "-")
   msg <- sprintf("Result for future (%s) is from another future. UUIDs do not match: %s != %s", label, result_uuid, future_uuid)
-  stop(UnexpectedFutureResultError(msg))
+  stop(UnexpectedFutureResultError(future, hint = msg))
 }
 

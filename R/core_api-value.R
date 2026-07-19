@@ -510,9 +510,9 @@ value.list <- function(x, idxs = NULL, recursive = 0, reduce = NULL, stdout = TR
   ## Subset?
   if (!is.null(idxs)) {
     if (inherits(x, "listenv")) {
-      idxs <- subset_list(x, idxs = idxs)
-    } else {
       idxs <- subset_listenv(x, idxs = idxs)
+    } else {
+      idxs <- subset_list(x, idxs = idxs)
     }
     x <- x[idxs]
     idxs <- NULL

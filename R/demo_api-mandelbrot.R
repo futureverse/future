@@ -1,7 +1,7 @@
 #' Mandelbrot convergence counts
 #'
 #' @return Returns an integer matrix (of class Mandelbrot) with
-#' non-negative counts.
+#' non-negative counts (\eqn{C}).
 #'
 #' @examples
 #' counts <- mandelbrot(xmid = -0.75, ymid = 0, side = 3)
@@ -14,10 +14,9 @@
 #' demo("mandelbrot", package = "future", ask = FALSE)
 #' }
 #'
-#' @author The internal Mandelbrot algorithm was inspired by and
-#' adopted from similar GPL code of Martin Maechler available
-#' from ftp://stat.ethz.ch/U/maechler/R/ on 2005-02-18 (sic!).
-#'
+#' @references
+#' Mandelbrot set, \url{https://en.wikipedia.org/wiki/Mandelbrot_set}, 2026
+#' 
 #' @aliases as.raster.Mandelbrot plot.Mandelbrot mandelbrot_tiles
 #' @keywords internal
 #'
@@ -25,64 +24,60 @@
 mandelbrot <- function(...) UseMethod("mandelbrot")
 
 
-#' @param Z               A complex matrix for which convergence
-#'                        counts should be calculated.
+#' @param Z               A complex matrix (\eqn{Z}) for which convergence
+#'                        counts (\eqn{C}) should be calculated.
 #'
-#' @param maxIter         Maximum number of iterations per bin.
+#' @param maxIter         Maximum number of iterations (\eqn{c^{max}}) per bin.
 #'
-#' @param tau             A threshold; the radius when calling
-#'                        divergence (Mod(z) > tau).
+#' @param tau             A threshold (\eqn{\tau}); the radius when calling
+#'                        divergence (\eqn{|z_{i}| > \tau}).
 #'
-#' @param xmid,ymid,side,resolution Alternative specification of
-#'                        the complex plane `Z`, where
-#'                        `mean(Re(Z)) == xmid`,
-#'                        `mean(Im(Z)) == ymid`,
-#'                        `diff(range(Re(Z))) == side`,
-#'                        `diff(range(Im(Z))) == side`, and
-#'                        `dim(Z) == c(resolution, resolution)`.
+#' @section Escape time algorithm:
+#' The convergence counts are calculated using the standard escape-time
+#' algorithm for the Mandelbrot set: for each complex number \eqn{c}, the
+#' sequence \eqn{z_{i+1} \leftarrow z_{i}^2 + c} (starting at \eqn{z_{0} = c})
+#' is iterated until either its modulus (\eqn{|z_{i}|}) exceeds the escape
+#' radius \eqn{\tau} (`tau`) or the maximum number of iterations (\eqn{c^{max}})
+#' has been reached. The count (\eqn{c_{i}}) recorded is the iteration at which
+#' the sequence escaped, or \eqn{c^{max}} for points that never escaped.
 #'
 #' @rdname mandelbrot
 #' @export
 mandelbrot.matrix <- function(Z, maxIter = 200L, tau = 2.0, ...) {
-  stop_if_not(is.matrix(Z), mode(Z) == "complex")
+  stop_if_not(
+    is.matrix(Z), mode(Z) == "complex",
+    is.numeric(maxIter), is.finite(maxIter), maxIter >= 1,
+    is.numeric(tau), is.finite(tau), tau > 0
+  )
+  maxIter <- as.integer(maxIter)
 
-  ## By default, assume none of the elements will converge
+  params <- list(Z = Z, maxIter = maxIter, tau = tau)
+  
+  ## Escape-time algorithm. Points that never escape keep the count 'maxIter'
   counts <- matrix(maxIter, nrow = nrow(Z), ncol = ncol(Z))
 
-  ## But as a start, mark all be non-diverged
-  idx_of_non_diverged <- seq_along(Z)
-
-  ## SPEEDUP: The Mandelbrot sequence will only be calculated on the
-  ## "remaining set" of complex numbers that yet hasn't diverged.
-  sZ <- Z ## The Mandelbrot sequence of the "remaining" set
-  Zr <- Z ## The original complex number of the "remaining" set
-
+  ## For efficiency, iterate only over the points that have not yet escaped.
+  ## 'active' holds the linear indices of those points in 'Z'/'counts'.
+  active <- seq_along(Z)
+  C <- Z     # the constant 'c' for each still-active point
   for (ii in seq_len(maxIter - 1L)) {
-    sZ <- sZ * sZ + Zr
+    Z <- Z*Z + C
 
-    ## Did any of the "remaining" points diverge?
-    diverged <- (Mod(sZ) > tau)
-    if (any(diverged)) {
-      ## Record at what iteration divergence occurred
-      counts[idx_of_non_diverged[diverged]] <- ii
-
-      ## Early stopping?
-      keep <- which(!diverged)
-      if (length(keep) == 0) break
-
-      ## Drop from remain calculations
-      idx_of_non_diverged <- idx_of_non_diverged[keep]
-
-      ## Update the "remaining" set of complex numbers
-      sZ <- sZ[keep]
-      Zr <- Zr[keep]
+    ## Points whose modulus now exceeds the escape radius have diverged
+    escaped <- (Mod(Z) > tau)
+    if (any(escaped)) {
+      counts[active[escaped]] <- ii
+      if (all(escaped)) break
+      active <- active[!escaped]
+      Z <- Z[!escaped]
+      C <- C[!escaped]
     }
   }
 
-  attr(counts, "params") <- list(Z = Z, maxIter = maxIter, tau = tau)
+  attr(counts, "params") <- params
 
   class(counts) <- c("Mandelbrot", class(counts))
-  
+
   counts
 }
 
@@ -94,11 +89,6 @@ mandelbrot.matrix <- function(Z, maxIter = 200L, tau = 2.0, ...) {
 #'                        `diff(range(Re(Z))) == side`,
 #'                        `diff(range(Im(Z))) == side`, and
 #'                        `dim(Z) == c(resolution, resolution)`.
-#'
-#' @param maxIter         Maximum number of iterations per bin.
-#'
-#' @param tau             A threshold; the radius when calling
-#'                        divergence (Mod(z) > tau).
 #'
 #' @rdname mandelbrot
 #' @export

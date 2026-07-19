@@ -35,9 +35,9 @@ untweakable <- function(x, ...) {
   names <- setdiff(names, untweakable(x))
   for (kk in seq_along(value)) {
     obj <- value[[kk]]
-    if (is.character(obj)) {
-      names <- setdiff(names, obj)
-    } else {
+    ## Note: A character 'obj' specifies tweakable arguments to be added,
+    ## which is why only function objects contribute untweakable ones here
+    if (!is.character(obj)) {
       names <- setdiff(names, untweakable(obj))
     }
   }
