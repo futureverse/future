@@ -85,10 +85,28 @@ stopifnot(identical(tweakable(fcn2), tweakable({
   tmp
 })))
 
-## FIXME: Assigning a character value currently has no net effect,
-## because such names are first added and then removed again
+## Assigning a character value adds those names as tweakable
 fcn <- function(x, y) NULL
 tweakable(fcn) <- "z"
-stopifnot(identical(tweakable(fcn), c("x", "y")))
+stopifnot(identical(tweakable(fcn), c("x", "y", "z")))
+
+## ... also several of them, and already known names are not duplicated
+fcn <- function(x, y) NULL
+tweakable(fcn) <- c("y", "z", "w")
+stopifnot(identical(tweakable(fcn), c("x", "y", "z", "w")))
+
+## Untweakable names are still dropped
+fcn <- function(x, y) NULL
+untweakable(fcn) <- "y"
+tweakable(fcn) <- "z"
+stopifnot(identical(tweakable(fcn), c("x", "z")))
+
+## A mix of a function and character names, as used for
+## ClusterFutureBackend, adds both
+donor2 <- function(a, b) NULL
+tweakable(donor2) <- character(0L)
+fcn <- function(x, y) NULL
+tweakable(fcn) <- list(donor2, c("z", "w"))
+stopifnot(all(c("x", "y", "z", "w") %in% tweakable(fcn)))
 
 message("*** tweakable() <- ... DONE")

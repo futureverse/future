@@ -41,6 +41,11 @@
    not be the case would result in an unrelated `subscript out of
    bounds` error.
 
+ * `plan(cluster, ...)` and `plan(multisession, ...)` warned about
+   "unknown future arguments" for `makeClusterPSOCK()` arguments, e.g.
+   `rscript`, `homogeneous`, `port`, and `autoStop`, although they are
+   supported.
+
 
 # Version 1.70.0 [2026-03-13]
 
