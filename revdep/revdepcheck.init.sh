@@ -5,9 +5,13 @@ false && R --quiet --no-save <<EOF
     tinytex::install_tinytex(force = TRUE)
     message("TeX root: ", tinytex::tinytex_root())
     tinytex::tlmgr_update()
+    tinytex::tlmgr_install("a4")       # WeightedCluster
     tinytex::tlmgr_install("apacite")  # ctsem
-    tinytex::tlmgr_install("textpos")  # WeightedCluster
+    tinytex::tlmgr_install("grfext")   # PeakSegDisk
     tinytex::tlmgr_install("nowidow")  # QDNAseq
+    tinytex::tlmgr_install("pdfpages") # ARPALData
+    tinytex::tlmgr_install("setspace") # gstat
+    tinytex::tlmgr_install("textpos")  # WeightedCluster
     tinytex::tlmgr_install("wrapfig")  # tramvs
 EOF
 
@@ -25,39 +29,24 @@ fi
 ## Add packages to check
 revdep/run.R --add-children
 
-## Drop packages failing on CRAN (2026-04-16)
-revdep/run.R --rm fmeffects DeclareDesign dispositionEffect
+## Drop packages failing on CRAN (2026-07-19)
+revdep/run.R --rm dispositionEffect
 
-## Drop packages failing on Bioconductor (2026-04-16)
+## Drop packages failing on Bioconductor (2026-07-19)
 revdep/run.R --rm dar MineICA pgxRpi
 
-## Drop packages no longer on CRAN (2026-04-16)
-revdep/run.R --rm mbbe oncomsm sovereign
+## Drop packages no longer on CRAN (2026-07-19)
+#revdep/run.R --rm ...
 
 ## Drop packages failing on Bioconductor (2026-03-07)
 # revdep/run.R --rm ...
-
-## Missing tools
-revdep/run.R --rm proffer  # requires 'RProtoBuf' -> ProtoBuf library
 
 ## Fails to install
 revdep/run.R --rm BayesPET TriDimRegression  # there is no package called ‘rstantools’
 
 ## Fails to check
-revdep/run.R --rm httpgd                # caught segfault
 revdep/run.R --rm mapme.biodiversity    # unstable results
-revdep/run.R --rm greenSD               # GDAL not build with libcurl
-revdep/run.R --rm receptiviti           # vignette "`dt` must be size 1, not 3"
-revdep/run.R --rm shinyOAuth            # HTTP 503 Service Unavailable
-revdep/run.R --rm SpaDES.core           # Error in linesWithDefModule[[1]]:linesWithDefModule[[2]]
-revdep/run.R --rm targets               # 'tarchetypes' not available
-revdep/run.R --rm tsmarch               ## "Segmentation fault"
-
-## Errors for unknown reason
-## 'iscream' fails with "error in evaluating the argument 'obj' in selecting a method
-## for function 'unname': 'file_test("-x", bin)' is not TRUE" despite having 'tabix'
-## on the PATH /2026-03-13 
-revdep/run.R --rm iscream
+revdep/run.R --rm zarrr                 # requires 'blosc', which requires 'blosc-devel'
 
 ## Requires sequential processing due to clashes, e.g. port and cache 
 pkgs_seq=(dipsaus fiery robust2sls)
@@ -69,11 +58,11 @@ pkgs_threads=()
 
 # Too many cores /2026-04-16
 ## FIXME: Some of these package should be moved to 'pkgs_treads'
-pkgs_cores=(scStability)
+pkgs_cores=()
 revdep/run.R --rm "${pkgs_cores[@]}"
 
 ## Too many cores due to detectCores
-pkgs_detectCores=(FracFixR lavDiag)
+pkgs_detectCores=()
 revdep/run.R --rm "${pkgs_detectCores[@]}"
 
 ## Run revdep check
