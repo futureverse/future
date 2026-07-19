@@ -18,7 +18,7 @@ reference_filters <- local({
         FALSE  ## don't drop reference
       }
     } else if (action == "set") {
-      filters <- list(...)
+      filters <<- list(...)
     } else if (action == "reset") {
       filters <<- default
     } else if (action == "append") {
