@@ -17,6 +17,10 @@ strategies <- supportedStrategies()
 ## Comment: This has happend on win-devel, but also R 4.3.0 on Linux.
 strategies <- setdiff(strategies, "sequential")
 
+## IMPORTANT: Skip when testing with 'covr', because a crashed worker may
+## leave behind a truncated 'covr' trace file, which breaks the coverage merge
+if (covr_testing) strategies <- character(0L)
+
 for (strategy in strategies) {
   message(sprintf("- plan('%s') ...", strategy))
   plan(strategy)

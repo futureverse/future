@@ -64,7 +64,9 @@ readImmediateConditions <- function(path = immediateConditionsPath(rootPath = ro
   if (length(files) == 0L) return(list())
 
   ## Read objects from file
-  objs <- lapply(files, FUN = tryCatch(readRDS, error = identity))
+  objs <- lapply(files, FUN = function(file) {
+    tryCatch(readRDS(file), error = identity)
+  })
 
   ## Drop the ones that failed to be read
   keep <- !vapply(objs, FUN = inherits, "error", FUN.VALUE = FALSE)

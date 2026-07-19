@@ -99,7 +99,7 @@ nbrOfFreeWorkers.MultiprocessFutureBackend <- function(evaluator, background = F
 
 
 
-D#' A multiprocess future is a future whose value will be resolved asynchronously in a parallel process
+#' A multiprocess future is a future whose value will be resolved asynchronously in a parallel process
 #'
 #' @inheritParams Future-class
 #' 

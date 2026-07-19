@@ -57,7 +57,9 @@ if (parallelly::availableCores() >= 2L) {
     libs_w <- tryCatch(value(f), error = identity)
   })
   print(libs_w)
-  stopifnot(inherits(libs_w, "FutureLaunchError"))
+  if (!covr_testing) {
+    stopifnot(inherits(libs_w, "FutureLaunchError"))
+  }
   message("OK")
   
   
@@ -84,13 +86,18 @@ if (parallelly::availableCores() >= 2L) {
   
   
   message("Main and multisession worker with broken library path:")
-  .libPaths(libs_tmp)
-  with(plan(multisession), {
-    f <- future(.libPaths())
-    libs_w <- tryCatch(value(f), error = identity)
-  })
-  print(libs_w)
-  stopifnot(inherits(libs_w, "FutureLaunchError"))
-  .libPaths(libs)
-  message("OK")
+  if (!covr_testing) {
+    .libPaths(libs_tmp)
+    print(.libPaths())
+    with(plan(multisession), {
+      f <- future(.libPaths())
+      libs_w <- tryCatch(value(f), error = identity)
+    })
+    print(libs_w)
+    stopifnot(inherits(libs_w, "FutureLaunchError"))
+    .libPaths(libs)
+    message("OK")
+  } else {
+    message("SKIP")
+  }
 } ## if (parallelly::availableCores() >= 2L)

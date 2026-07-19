@@ -6,6 +6,13 @@ all.equal.future <- function(target, current, ..., debug = FALSE) {
     mstr(list(target = target, current = current))
   }
   
+  ## Comparing a future strategy against a non-function, e.g. when 'all.equal()'
+  ## recurses into unrelated objects of two different 'future' namespaces
+  if (!is.function(target) || !is.function(current)) {
+    if (debug) mdebug("Not both functions")
+    return("Not both functions")
+  }
+
   ## Compare formals
   if (!isTRUE(all.equal(formals(target), formals(current)))) {
     if (debug) mdebug("Formals differ")
@@ -51,7 +58,12 @@ all.equal.FutureStrategyList <- function(target, current, ..., debug = FALSE) {
     on.exit(mdebug_pop())
   }
 
-  stop_if_not(is.list(target), is.list(current))
+  ## Comparing a future strategy against a non-list, e.g. when 'all.equal()'
+  ## recurses into unrelated objects of two different 'future' namespaces
+  if (!is.list(target) || !is.list(current)) {
+    if (debug) mdebug("Not both lists")
+    return("Not both lists")
+  }
 
   if (length(target) != length(current)) {
     if (debug) mdebug("Different lengths")

@@ -118,6 +118,11 @@ main <- function() {
     if (!utils::file_test("-f", "DESCRIPTION")) {
       stop("Current folder does not look like a package folder")
     }
+    ## IMPORTANT: Load 'covr' already here, i.e. before the prologue scripts
+    ## are sourced, so that they and the test scripts can detect coverage
+    ## testing via ("covr" %in% loadedNamespaces()), which is how it is
+    ## detected when testing via covr::package_coverage()
+    loadNamespace("covr")
   }
   
   ## Fallback for 'testme_name'?
@@ -296,7 +301,6 @@ testme_run_test <- function(testme) {
   if (testme[["status"]] != "skipped") {
     if (testme[["debug"]]) message("Running test script: ", sQuote(testme[["script"]]))
     testme[["status"]] <- "failed"
-    str(testme[["coverage"]])
     if (testme[["coverage"]] != "none") {
       pkg_env <- pkgload::load_all()
       cov <- covr::environment_coverage(pkg_env[["env"]], test_files = testme[["script"]])
