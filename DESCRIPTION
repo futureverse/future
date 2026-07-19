@@ -1,5 +1,5 @@
 Package: future
-Version: 1.70.0-9027
+Version: 1.70.0-9028
 Title: Unified Parallel and Distributed Processing in R for Everyone
 Depends:
     R (>= 3.2.0)
@@ -37,7 +37,7 @@ Description: The purpose of this package is to provide a lightweight and
     Another strength of this package is that global variables and functions
     are automatically identified and exported as needed, making it
     straightforward to tweak existing code to make use of futures.
-License: LGPL (>= 2.1)
+License: Apache License (>= 2)
 LazyLoad: TRUE
 ByteCompile: TRUE
 URL: https://future.futureverse.org, https://github.com/futureverse/future

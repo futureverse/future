@@ -1,5 +1,9 @@
 # Version (development version)
 
+## Significant Changes
+
+ * Changed the package license to permissive Apache License (>= 2).
+
 ## New Features
 
  * `print()` for `Future` objects now reports on parallelization
