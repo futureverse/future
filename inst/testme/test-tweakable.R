@@ -85,8 +85,8 @@ stopifnot(identical(tweakable(fcn2), tweakable({
   tmp
 })))
 
-## NOTE: Assigning a character value currently has no net effect, because
-## such names are first added and then removed again
+## FIXME: Assigning a character value currently has no net effect,
+## because such names are first added and then removed again
 fcn <- function(x, y) NULL
 tweakable(fcn) <- "z"
 stopifnot(identical(tweakable(fcn), c("x", "y")))
