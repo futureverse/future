@@ -51,16 +51,16 @@ f[["result"]][["uuid"]] <- f[["uuid"]]
 stopifnot(is.null(assertFutureResult(f)))
 stopifnot(is.null(assertFutureResult(f, debug = TRUE)))
 
-## A result from another future is rejected
-## FIXME: assertFutureResult() calls UnexpectedFutureResultError(msg), but the
-## first argument of that constructor is 'future', not a message. The message
-## is therefore treated as a future, which fails with an unrelated
-## 'subscript out of bounds' error instead of the intended one. It should
-## presumably be UnexpectedFutureResultError(future, hint = msg).
+## A result from another future is rejected, and the reported message
+## identifies the mismatching UUIDs
 f[["result"]][["uuid"]] <- c("some-other-uuid", "2")
 res <- tryCatch(assertFutureResult(f), error = identity)
 print(res)
-stopifnot(inherits(res, "error"))
+stopifnot(inherits(res, "UnexpectedFutureResultError"),
+          inherits(res, "FutureError"))
+msg <- conditionMessage(res)
+stopifnot(grepl("is from another future", msg),
+          grepl("some-other-uuid", msg))
 
 message("*** assertFutureResult() ... DONE")
 

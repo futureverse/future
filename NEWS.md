@@ -18,6 +18,10 @@
    
 ## Bug Fixes
 
+ * The default for R option `future.globals.maxSize` is now `+Inf`
+   everywhere. It was still 500 MiB is some cases, e.g. `futureCall()`
+   had a limit although `future()` did not.
+
  * On MS Windows, a future startup script specified by environment
    variable `R_FUTURE_STARTUP_SCRIPT` was silently ignored due to a
    bug in parsing the value.
@@ -29,9 +33,10 @@
  * `all.equal()` for `FutureStrategyList` would throw an error if the
    object checked against was not a list.
 
- * The default for R option `future.globals.maxSize` is now `+Inf`
-   everywhere. It was still 500 MiB is some cases, e.g. `futureCall()`
-   had a limit although `future()` did not.
+ * The framework asserts that future result belong to the correct
+   future. The never-happening, internal assert error when that would
+   not be the case would result in an unrelated `subscript out of
+   bounds` error.
 
 
 # Version 1.70.0 [2026-03-13]
