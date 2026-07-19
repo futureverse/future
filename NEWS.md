@@ -18,6 +18,9 @@
    
 ## Bug Fixes
 
+ * `value(..., idxs)` on a `listenv` of futures produced an "cannot
+   unclass an environment" error.
+
  * The default for R option `future.globals.maxSize` is now `+Inf`
    everywhere. It was still 500 MiB is some cases, e.g. `futureCall()`
    had a limit although `future()` did not.

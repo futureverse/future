@@ -89,22 +89,29 @@ stopifnot(inherits(res, "error"))
 ## An empty set of indices selects nothing
 stopifnot(length(value(mkfutures(), idxs = integer(0))) == 0L)
 
-## FIXME: value(<listenv>, idxs = <indices>) currently fails, because
-## value.list() calls subset_list() for 'listenv' objects and
-## subset_listenv() for plain lists, i.e. the two branches are swapped.
-## subset_list() calls .length(), which cannot handle an environment.
-x <- listenv()
-x$a <- future(10L)
-x$b <- future(20L)
-res <- tryCatch(value(x, idxs = 1L), error = identity)
-print(res)
-stopifnot(inherits(res, "error"))
+## The same subsetting works for 'listenv' objects
+mklistenv <- function() {
+  x <- listenv()
+  x$a <- future(10L)
+  x$b <- future(20L)
+  x$c <- future(30L)
+  x
+}
 
-## Without 'idxs' a listenv works fine
-x <- listenv()
-x$a <- future(10L)
-x$b <- future(20L)
-stopifnot(identical(unname(unlist(value(x))), c(10L, 20L)))
+stopifnot(identical(unname(unlist(value(mklistenv(), idxs = c(1L, 3L)))),
+                    c(10L, 30L)))
+stopifnot(identical(unname(unlist(value(mklistenv(), idxs = c("a", "c")))),
+                    c(10L, 30L)))
+
+## ... including the boundary cases
+stopifnot(length(value(mklistenv(), idxs = integer(0))) == 0L)
+
+res <- tryCatch(value(mklistenv(), idxs = 99L), error = identity)
+print(res)
+stopifnot(inherits(res, "error"), grepl("out of range", conditionMessage(res)))
+
+## Without 'idxs' a listenv works too
+stopifnot(identical(unname(unlist(value(mklistenv()))), c(10L, 20L, 30L)))
 
 message("*** value() - 'idxs' subsetting ... DONE")
 
