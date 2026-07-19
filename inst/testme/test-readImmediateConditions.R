@@ -142,7 +142,6 @@ stopifnot(length(files) == 0)
 
 ## Files that cannot be read as RDS are silently ignored
 cat("not an RDS file", file = file.path(path, "corrupt.rds"))
-print(dir(path = path))
 res <- readImmediateConditions(path = path, remove = FALSE)
 print(res)
 stopifnot(length(res) == 0L, is.list(res))
