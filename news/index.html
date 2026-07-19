@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.70.0-9024</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.70.0-9027</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -88,10 +88,13 @@
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-development-version">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h3>
-<ul><li><p>On MS Windows, a future startup script specified by environment variable <code>R_FUTURE_STARTUP_SCRIPT</code> was silently ignored due to a bug in parsing the value.</p></li>
+<ul><li><p><code>value(..., idxs)</code> on a <code>listenv</code> of futures produced an “cannot unclass an environment” error.</p></li>
+<li><p>The default for R option <code>future.globals.maxSize</code> is now <code>+Inf</code> everywhere. It was still 500 MiB is some cases, e.g. <code><a href="../reference/future.html">futureCall()</a></code> had a limit although <code><a href="../reference/future.html">future()</a></code> did not.</p></li>
+<li><p>On MS Windows, a future startup script specified by environment variable <code>R_FUTURE_STARTUP_SCRIPT</code> was silently ignored due to a bug in parsing the value.</p></li>
 <li><p>Conditions relayed via the file system could produce an error when relayed if a condition file was corrupt. Now such conditions are silently ignored as intended.</p></li>
 <li><p><code><a href="https://rdrr.io/r/base/all.equal.html" class="external-link">all.equal()</a></code> for <code>FutureStrategyList</code> would throw an error if the object checked against was not a list.</p></li>
-<li><p>The default for R option <code>future.globals.maxSize</code> is now <code>+Inf</code> everywhere. It was still 500 MiB is some cases, e.g. <code><a href="../reference/future.html">futureCall()</a></code> had a limit although <code><a href="../reference/future.html">future()</a></code> did not.</p></li>
+<li><p>The framework asserts that future result belong to the correct future. The never-happening, internal assert error when that would not be the case would result in an unrelated <code>subscript out of bounds</code> error.</p></li>
+<li><p><code>plan(cluster, ...)</code> and <code>plan(multisession, ...)</code> warned about “unknown future arguments” for <code><a href="../reference/re-exports.html">makeClusterPSOCK()</a></code> arguments, e.g. <code>rscript</code>, <code>homogeneous</code>, <code>port</code>, and <code>autoStop</code>, although they are supported.</p></li>
 </ul></div>
 </div>
     <div class="section level2">

@@ -22,6 +22,16 @@
 
 ### Bug Fixes
 
+- `value(..., idxs)` on a `listenv` of futures produced an “cannot
+  unclass an environment” error.
+
+- The default for R option `future.globals.maxSize` is now `+Inf`
+  everywhere. It was still 500 MiB is some cases,
+  e.g. [`futureCall()`](https://future.futureverse.org/reference/future.md)
+  had a limit although
+  [`future()`](https://future.futureverse.org/reference/future.md) did
+  not.
+
 - On MS Windows, a future startup script specified by environment
   variable `R_FUTURE_STARTUP_SCRIPT` was silently ignored due to a bug
   in parsing the value.
@@ -34,12 +44,15 @@
   `FutureStrategyList` would throw an error if the object checked
   against was not a list.
 
-- The default for R option `future.globals.maxSize` is now `+Inf`
-  everywhere. It was still 500 MiB is some cases,
-  e.g. [`futureCall()`](https://future.futureverse.org/reference/future.md)
-  had a limit although
-  [`future()`](https://future.futureverse.org/reference/future.md) did
-  not.
+- The framework asserts that future result belong to the correct future.
+  The never-happening, internal assert error when that would not be the
+  case would result in an unrelated `subscript out of bounds` error.
+
+- `plan(cluster, ...)` and `plan(multisession, ...)` warned about
+  “unknown future arguments” for
+  [`makeClusterPSOCK()`](https://future.futureverse.org/reference/re-exports.md)
+  arguments, e.g. `rscript`, `homogeneous`, `port`, and `autoStop`,
+  although they are supported.
 
 ## Version 1.70.0
 
