@@ -2,6 +2,10 @@
 
 ## Version (development version)
 
+### Significant Changes
+
+- Changed the package license to permissive Apache License (\>= 2).
+
 ### New Features
 
 - [`print()`](https://rdrr.io/r/base/print.html) for `Future` objects
