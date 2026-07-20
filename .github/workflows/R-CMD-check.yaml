@@ -16,20 +16,20 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          - {os: windows-latest, r: 'devel', strict: true, label: 'strict' }
+          - {os: windows-latest, r: 'devel'    , strict: true, label: 'strict' }
           - {os: windows-latest, r: 'release'  }
           - {os: windows-latest, r: 'oldrel'   }
-#          - {os: macOS-latest,   r: 'devel'    }
+#          - {os: macOS-latest,   r: 'devel'   }
           - {os: macOS-latest,   r: 'release'  }
-#          - {os: macOS-latest,   r: 'oldrel'   }
-          - {os: ubuntu-latest,  r: 'devel'    }
+#          - {os: macOS-latest,   r: 'oldrel'  }
+          - {os: ubuntu-latest,  r: 'devel'    , testme_exclude: 'mpi' }
           - {os: ubuntu-latest,  r: 'release'  }
           - {os: ubuntu-latest,  r: 'oldrel'   }
           - {os: ubuntu-latest,  r: 'oldrel-1' }
           - {os: ubuntu-latest,  r: 'oldrel-2' }
-          - {os: ubuntu-latest,  r: '4.0'      }
+          - {os: ubuntu-latest,  r: '4.0'      , testme_exclude: 'mpi' }
 
-          - {os: ubuntu-latest,  r: 'release', strict: true, label: 'strict' }
+          - {os: ubuntu-latest,  r: 'release'  , strict: true, label: 'strict' }
 
           - {os: ubuntu-latest,  r: 'release'  , availablecores: 1, label: 'availableCores.system=1' }
           - {os: ubuntu-latest,  r: 'release'  , availablecores: 2, label: 'availableCores.system=2' }
@@ -56,6 +56,7 @@ jobs:
       _R_CHECK_TESTS_NLINES_: 300
       RCMDCHECK_ERROR_ON: error
       NOT_CRAN: true
+      R_TESTME_EXCLUDE_NAME: ${{ matrix.config.testme_exclude }}
       ## Specific to futures
       R_PARALLELLY_AVAILABLECORES_SYSTEM: ${{ matrix.config.availablecores }}
       R_FUTURE_RNG_ONMISUSE: error

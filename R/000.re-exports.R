@@ -8,27 +8,18 @@
 #' _If you are using any of these from the \pkg{future} package, please
 #'  switch to use the ones from the \pkg{parallelly} package. Thank you!_
 #'
-#' * [parallelly::as.cluster()]    (no longer re-exported)
-#    Used by: <none>
-#' * [parallelly::autoStopCluster()]   (no longer re-exported)
-#    Used by: <none>
 #' * [parallelly::availableCores()]
-#    Used by: ale (1), BatchGetSymbols (2), codalm (1),
-#             cft (1), couplr (1), deseats, dipsaus (1), elevatr (1), 
-#             heterogen, PINstimation (1), powRICLPM (1),
+#    Used by: ale (1), BatchGetSymbols (2), codalm (1), cft (1), deseats,
+#             elevatr (1), heterogen, PINstimation (1), powRICLPM (1),
 #             readsdr (1), recforest, sigminer (2), skpr (1), smoots,
-#             sovereign (1), TriDimRegression (1), uci (1), updog (2)
-#             [2025-12-22, 2026-01-31]
+#             TriDimRegression (1), uci (1)
+#             [2025-12-22, 2026-01-31, 2026-04-04]
 #' * [parallelly::availableWorkers()]
 #    Used by: wqspt (1) [2025-03-15]
-#' * [parallelly::makeClusterMPI()]    (no longer re-exported)
-#    Used by: <none>
 #' * [parallelly::makeClusterPSOCK()]
-#    Used by: eatRep (1), interflex (1), ivDiag (1) [2025-12-11]
-#' * [parallelly::makeNodePSOCK()]     (no longer re-exported)
-#    Used by: <none>
+#    Used by: eatRep (1), interflex (2), ivDiag (1) [2026-04-20]
 #' * [parallelly::supportsMulticore()]
-#    Used by: furrr (2)
+#    Used by: LandComp (1), polarisR (1) [2026-04-16]
 #
 #  (1) Issue filed or PR sent
 #  (2) In the next release

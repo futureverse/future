@@ -38,6 +38,7 @@
 #' * R_TESTME_PACKAGE
 #' * R_TESTME_NAME
 #' * R_TESTME_PATH
+#' * R_TESTME_EXCLUDE_NAME
 #' * R_TESTME_FILTER_NAME
 #' * R_TESTME_FILTER_TAGS
 #' * R_TESTME_COVERAGE
@@ -117,6 +118,11 @@ main <- function() {
     if (!utils::file_test("-f", "DESCRIPTION")) {
       stop("Current folder does not look like a package folder")
     }
+    ## IMPORTANT: Load 'covr' already here, i.e. before the prologue scripts
+    ## are sourced, so that they and the test scripts can detect coverage
+    ## testing via ("covr" %in% loadedNamespaces()), which is how it is
+    ## detected when testing via covr::package_coverage()
+    loadNamespace("covr")
   }
   
   ## Fallback for 'testme_name'?
@@ -204,6 +210,15 @@ main <- function() {
     testme[["status"]] <- "skipped"
   }
 
+  ## Skip tests listed in R_TESTME_EXCLUDE_NAME (comma-separated names)
+  exclude <- Sys.getenv("R_TESTME_EXCLUDE_NAME", NA_character_)
+  if (!is.na(exclude)) {
+    exclude <- unlist(strsplit(exclude, split = ",", fixed = TRUE))
+    exclude <- trimws(exclude)
+    exclude <- exclude[nzchar(exclude)]
+    if (testme[["name"]] %in% exclude) testme[["status"]] <- "skipped"
+  }
+
   code <- Sys.getenv("R_TESTME_FILTER_NAME", NA_character_)
   if (!is.na(code)) {
     expr <- tryCatch(parse(text = code), error = identity)
@@ -286,7 +301,6 @@ testme_run_test <- function(testme) {
   if (testme[["status"]] != "skipped") {
     if (testme[["debug"]]) message("Running test script: ", sQuote(testme[["script"]]))
     testme[["status"]] <- "failed"
-    str(testme[["coverage"]])
     if (testme[["coverage"]] != "none") {
       pkg_env <- pkgload::load_all()
       cov <- covr::environment_coverage(pkg_env[["env"]], test_files = testme[["script"]])

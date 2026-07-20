@@ -182,6 +182,8 @@ getFutureBackendConfigs.UniprocessFuture <- function(future, ...) {
 #' 
 #' @param \ldots Not used.
 #'
+#' @return Nothing.
+#'
 #' @example incl/sequential.R
 #'
 #' @aliases uniprocess

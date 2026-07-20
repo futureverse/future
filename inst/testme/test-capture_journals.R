@@ -1,39 +1,59 @@
 #' @tags journals
+#' @tags sequential
 #' @tags multisession
+#' @tags multicore
 
 library(future)
-
 capture_journals <- future:::capture_journals
 
-message("*** capture_journals() ...")
+options(future.debug = FALSE)
 
-slow_fcn <- function(x) {
-  Sys.sleep(0.01 * (1 + 1/x))
+strategies <- c("sequential", "multisession")
+if (future::supportsMulticore()) {
+  strategies <- c(strategies, "multicore")
 }
 
-plan(multisession, workers = 2)
-js <- capture_journals({
-  fs <- lapply(3:1, FUN = function(x) future(slow_fcn(x)))
-  vs <- value(fs)
-})
-print(js)
-stopifnot(
-  is.list(js),
-  all(vapply(js, FUN = is.data.frame, FUN.VALUE = NA))
-)
+message("*** capture_journals() w/ summary() ...")
+
+options(future.journal = TRUE)
+
+set.seed(42)
+xs <- rnorm(1e7)  ## emulate export overhead
+
+for (strategy in strategies) {
+  message(sprintf("- strategy: %s ...", strategy))
+  plan(strategy)
   
-## Shut down parallel workers
-plan(sequential)
+  js <- capture_journals({
+    fs <- lapply(5:1, FUN = function(x) future({
+      Sys.sleep(0.3) ## emulate processing time
+      sum(xs)
+    }))
+    vs <- value(fs)
+  })
+  
+  stopifnot(
+    is.list(js),
+    all(vapply(js, FUN = is.data.frame, FUN.VALUE = NA))
+  )
+  
+  js_combined <- do.call(rbind, js)
+  print(js_combined)
+  
+  stats <- summary(js_combined)
+  print(stats)
+  
+  stopifnot(
+    inherits(stats, "FutureJournalSummary"),
+    attr(stats, "nbr_of_futures") == 5L,
+    attr(stats, "workers") >= 1L,
+    attr(stats, "workers_used") >= 1L
+  )
 
-message("*** capture_journals() ... done")
+  ## Shut down parallel workers
+  plan(sequential)
 
+  message(sprintf("- strategy: %s ... done", strategy))
+}
 
-message("*** summary() of FutureJournal ...")
-
-js <- do.call(rbind, js)
-print(js)
-
-stats <- summary(js)
-print(stats)
-
-message("*** summary() of FutureJournal ... done")
+message("*** capture_journals() w/ summary() ... done")

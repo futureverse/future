@@ -12,7 +12,7 @@ getGlobalsAndPackages(
   locals = getOption("future.globals.globalsOf.locals", TRUE),
   resolve = getOption("future.globals.resolve"),
   persistent = FALSE,
-  maxSize = getOption("future.globals.maxSize", 500 * 1024^2),
+  maxSize = getOption("future.globals.maxSize", +Inf),
   onReference = getOption("future.globals.onReference", "ignore"),
   ...
 )
@@ -37,7 +37,7 @@ a function be included or not?}
 the purpose of preventing too large exports / transfers happening by
 mistake.  If the total size of the global objects are greater than this
 limit, an informative error message is produced. If
-\code{maxSize = +Inf}, then this assertion is skipped. (Default: 500 MiB).}
+\code{maxSize = +Inf}, then this assertion is skipped. (Default: \code{+Inf}).}
 
 \item{\ldots}{Not used.}
 }

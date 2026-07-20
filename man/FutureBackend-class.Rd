@@ -94,7 +94,7 @@ over the network, which sometimes also includes the internet. For instance,
 if you sit at home and have set up a future backend with workers running
 remotely at your university or company, then you might want to use this
 protection to avoid transferring giga- or terabytes of data without noticing.
-(Default: \eqn{500 \cdot 1024^2} bytes = 500 MiB, unless overridden by a
+(Default: +Inf, unless overridden by a
 FutureBackend subclass, or by R option \link{future.globals.maxSize} (sic!))}
 
 \item{interrupts}{If FALSE, attempts to interrupt futures will not take
@@ -155,13 +155,10 @@ The \code{MultisessionFutureBackend} backend is selected by
 \section{The FutureBackend API}{
 
 The \code{FutureBackend} class specifies FutureBackend API,
-that all backends must implement and comply to. Specifically,
+that all backends must implement and comply to.
 }
 
 \seealso{
-For alternative future backends, see the 'A Future for R: Available Future
-Backends' vignette and \url{https://www.futureverse.org/backends.html}.
-
 For alternative future backends, see the 'A Future for R: Available Future
 Backends' vignette and \url{https://www.futureverse.org/backends.html}.
 }

@@ -11,8 +11,13 @@ home:
 
 navbar:
   structure:
+    left: [intro, reference, articles, news]
     right: [search, futureverse, pkgs, cran, github, lightswitch]
   components:
+
+    news:
+      text: News
+      href: news/index.html
     futureverse:
       icon: fas fa-home
       href: https://www.futureverse.org/
@@ -43,6 +48,8 @@ navbar:
         href: https://listenv.futureverse.org
       - text: parallelly 
         href: https://parallelly.futureverse.org
+      - text: progressify 
+        href: https://progressify.futureverse.org
       - text: progressr 
         href: https://progressr.futureverse.org
       - text: future.p2p (experimental)

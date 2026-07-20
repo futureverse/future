@@ -17,8 +17,8 @@
 #' @param substitute If TRUE, argument `expr` is
 #' \code{\link[base]{substitute}()}:d, otherwise not.
 #'
-#' @param stdout If TRUE (default), then the standard output is captured,
-#' and re-outputted when `value()` is called.
+#' @param stdout (evaluation) If TRUE (default), then the standard output is
+#' captured, and re-outputted when `value()` is called.
 #' If FALSE, any output is silenced (by sinking it to the null device as
 #' it is outputted).
 #' Using `stdout = structure(TRUE, drop = TRUE)` causes the captured
@@ -29,9 +29,10 @@
 #' behavior of such unhandled standard output depends on the future backend.
 #  backend and the environment from which R runs.
 #' 
-#' @param conditions A character string of condition classes to be captured
-#' and relayed.  The default is to relay all conditions, including messages
-#' and warnings.  To drop all conditions, use `conditions = character(0)`.
+#' @param conditions (evaluation) A character string of condition classes to
+#' be captured and relayed.  The default is to relay all conditions,
+#' including messages and warnings.  To drop all conditions, use
+#' `conditions = character(0)`.
 #' Errors are always relayed.
 #' Attribute `exclude` can be used to ignore specific classes, e.g.
 #' `conditions = structure("condition", exclude = "message")` will capture
@@ -44,19 +45,20 @@
 #' except from errors; behavior of such unhandled conditions depends on the
 #' future backend and the environment from which R runs.
 #' 
-#' @param globals (optional) a logical, a character vector, or a named list
-#' to control how globals are handled.
+#' @param globals (resource; optional) a logical, a character vector, or
+#' a named list to control how globals are handled.
 #' For details, see section 'Globals used by future expressions'
 #' in the help for [future()].
 #' 
-#' @param packages (optional) a character vector specifying packages to be
-#' attached in the \R environment evaluating the future, _in addition to
-#' packages required by global variables_ specified or identified via argument
-#' `globals`.
+#' @param packages (resource; optional) a character vector specifying
+#' packages to be attached in the \R environment evaluating the future,
+#' _in addition to packages required by global variables_ specified or
+#' identified via argument `globals`.
 #'
-#' @param seed (optional) If TRUE, the random seed, that is, the state of the
-#' random number generator (RNG) will be set such that statistically sound
-#' random numbers are produced (also during parallelization).
+#' @param seed (resource; optional) If TRUE, the random seed, that is, the
+#' state of the random number generator (RNG) will be set such that
+#' statistically sound random numbers are produced (also during
+#' parallelization).
 #' If FALSE (default), it is assumed that the future expression neither
 #' needs nor uses random number generation.
 #' To use a fixed random seed, specify a L'Ecuyer-CMRG seed (seven integers)
@@ -69,7 +71,7 @@
 #' If `seed` is NULL, then the effect is as with `seed = FALSE`
 #' but without the RNG check being performed.
 #'
-#' @param lazy If FALSE (default), the future is resolved
+#' @param lazy (scheduling) If FALSE (default), the future is resolved
 #' eagerly (starting immediately), otherwise not.
 #'
 #' @param label A character string label attached to the future.
@@ -232,13 +234,7 @@ Future <- function(expr = NULL, envir = parent.frame(), substitute = TRUE, stdou
   for (key in args_names) core[[key]] <- args[[key]]
 
   ## Backward compatibility: drop field 'envir' in future (>= 1.69.0)
-  ## 1. civis::CivisFuture() relies on 'envir'
-  ## 2. there might be other unknown dependencies out there => option
   if (getOption("future.Future.envir.keep", FALSE)) {
-    core[["envir"]] <- envir
-  } else if (all(c("required_resources", "docker_image_name",
-    "docker_image_tag") %in% args_names) && "civis" %in% loadedNamespaces()) {
-    ## Looks like Future() was called from CivisFuture
     core[["envir"]] <- envir
   }
   
@@ -468,6 +464,60 @@ print.Future <- function(x, ...) {
     t1 <- result[["finished"]]
     cat(sprintf("Duration: %s (started %s)\n", format(t1-t0), t0))
     cat(sprintf("Worker process: %s\n", result[["session_uuid"]]))
+
+    ## Efficiency breakdown (when journaling is enabled)
+    if (inherits(future[[".journal"]], "FutureJournal")) {
+      j <- tryCatch(journal(future), error = function(e) NULL)
+      if (!is.null(j)) {
+        ## Only top-level events; sub-events (parent != NA) overlap in
+        ## wall-clock with their parent and would double-count.
+        j_top <- j[is.na(j[["parent"]]), , drop = FALSE]
+        j_top[["stop"]] <- j_top[["start"]] + j_top[["duration"]]
+        create_idx <- which(j_top[["event"]] == "create")
+        gather_idx <- which(j_top[["event"]] == "gather")
+        over_idx <- which(j_top[["category"]] == "overhead")
+        eval_idx <- which(j_top[["category"]] == "evaluation")
+        if (length(create_idx) > 0L && length(gather_idx) > 0L &&
+            length(eval_idx) > 0L) {
+          g <- gather_idx[length(gather_idx)]
+          walltime <- (j_top[["start"]][g] + j_top[["duration"]][g]) -
+                        j_top[["start"]][create_idx[1]]
+          eval_dur <- sum(j_top[["duration"]][eval_idx])
+          over_dur_raw <- sum(j_top[["duration"]][over_idx])
+          ## For backends like 'sequential' where 'launch' temporally
+          ## wraps 'evaluate', subtract that overlap so it isn't
+          ## double-counted as both overhead and evaluation.
+          overlap_secs <- 0
+          for (i in over_idx) for (k in eval_idx) {
+            ov <- as.numeric(min(j_top[["stop"]][i], j_top[["stop"]][k]) -
+                             max(j_top[["start"]][i], j_top[["start"]][k]),
+                             units = "secs")
+            if (ov > 0) overlap_secs <- overlap_secs + ov
+          }
+          over_secs <- max(as.numeric(over_dur_raw, units = "secs") -
+                             overlap_secs, 0)
+          eval_secs <- as.numeric(eval_dur, units = "secs")
+          ## "Active" round-trip excludes idle time (e.g. between
+          ## future() and value()) and master-blocked-on-worker time
+          ## that runs in parallel with evaluation.
+          active_secs <- over_secs + eval_secs
+          wall_secs <- as.numeric(walltime, units = "secs")
+          idle_secs <- max(wall_secs - active_secs, 0)
+          overhead <- as.difftime(over_secs, units = "secs")
+          active <- as.difftime(active_secs, units = "secs")
+          idle <- as.difftime(idle_secs, units = "secs")
+          cat("Efficiency:\n")
+          cat(sprintf("  Round-trip: %s (active = overhead + evaluation; wall-clock %s, idle %s)\n",
+                      format(active), format(walltime), format(idle)))
+          if (active_secs > 0) {
+            cat(sprintf("  Evaluation: %s (%.1f%%) [worker]\n",
+                        format(eval_dur), 100 * eval_secs / active_secs))
+            cat(sprintf("  Overhead:   %s (%.1f%%) [orchestration]\n",
+                        format(overhead), 100 * over_secs / active_secs))
+          }
+        }
+      }
+    }
   } else {
     cat("Value: <not collected>\n")
     cat("Conditions captured: <none>\n")
@@ -604,7 +654,6 @@ run.Future <- function(future, ...) {
   args <- list(
     quote(future[["expr"]]),
     substitute = FALSE,
-    envir = future[["envir"]],   ## For backward compatibility with 'civis'
     lazy = TRUE,
     stdout = future[["stdout"]],
     conditions = future[["conditions"]],
@@ -615,6 +664,11 @@ run.Future <- function(future, ...) {
     reset = future[["reset"]],
     calls = future[["calls"]]
   )
+
+  ## For backward compatibility since future (>= 1.69.0)
+  if ("envir" %in% names(future)) {
+    args[["envir"]] <- future[["envir"]]
+  }
 
   ## SPECIAL: 'cluster' takes argument 'persistent' for now /HB 2023-01-17
   has_persistent <- ("persistent" %in% names(future))

@@ -63,7 +63,9 @@ set_random_seed <- function(seed, kind = NULL, set_kind) {
     if (!is.null(kind)) {
       set_kind(kind)
     }
-    rm(list = ".Random.seed", envir = env, inherits = FALSE)
+    if (!is.null(old_seed)) {
+      rm(list = ".Random.seed", envir = env, inherits = FALSE)
+    }
   } else {
     env[[".Random.seed"]] <- seed
   }

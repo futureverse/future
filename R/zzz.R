@@ -109,7 +109,10 @@ sourceFutureStartupScript <- function(default = c(".future.R", "~/.future.R"), d
     pathnames <- TRUE
   } else {
     if (debug) mdebug("R_FUTURE_STARTUP_SCRIPT: ", sQuote(pathnames))
-    pathnames <- strsplit(pathnames, split = "[:;]", fixed = FALSE)[[1]]
+    ## On MS Windows, ':' must not be used as a separator, because it is
+    ## part of the drive letter of an absolute pathname, e.g. 'C:/x/.future.R'
+    split <- if (.Platform$OS.type == "windows") ";" else "[:;]"
+    pathnames <- strsplit(pathnames, split = split, fixed = FALSE)[[1]]
     if (identical(toupper(pathnames), "TRUE")) {
       pathnames <- TRUE
     } else if (identical(toupper(pathnames), "FALSE")) {

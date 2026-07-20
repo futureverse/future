@@ -7,7 +7,7 @@ plan(multicore)
 
 message("*** multicore() and multi-threading ...")
 
-message("supportsMulticore(): ", sQuote(supportsMulticore()))
+message("supportsMulticore(): ", sQuote(parallelly::supportsMulticore()))
 message("availableCores('multicore'): ", sQuote(availableCores("multicore")))
 message("supports_omp_threads(): ", sQuote(supports_omp_threads()))
 
@@ -43,7 +43,7 @@ if (requireNamespace("RhpcBLASctl", quietly = TRUE)) {
   message("Checking RhpcBLASctl capabilities ... done")
 }
 
-if (supportsMulticore() && availableCores("multicore") >= 2L && supports_omp_threads()) {
+if (parallelly::supportsMulticore() && availableCores("multicore") >= 2L && supports_omp_threads()) {
   nthreads_0 <- RhpcBLASctl::omp_get_max_threads()
   
   for (enable in c(TRUE, FALSE)) {

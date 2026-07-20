@@ -18,6 +18,7 @@ for (strategy in strategies) {
   n <- nbrOfWorkers()
   message(sprintf("nbrOfWorkers: %d", n))
   stopifnot(n == 1L)
+  stopifnot(is.null(attr(n, "class")))
 
   n <- nbrOfFreeWorkers()
   message(sprintf("nbrOfFreeWorkers: %d", n))
@@ -55,6 +56,7 @@ for (strategy in strategies) {
   n <- nbrOfWorkers()
   message(sprintf("nbrOfWorkers: %d", n))
   stopifnot(n == nworkers)
+  stopifnot(is.null(attr(n, "class")))
 
   n <- nbrOfFreeWorkers()
   message(sprintf("nbrOfFreeWorkers: %d", n))
@@ -119,5 +121,20 @@ n <- nbrOfWorkers()
 message(sprintf("nbrOfWorkers: %g", n))
 stopifnot(n == length(workers))
 parallel::stopCluster(workers)
+
+message("Type of future: multicore/multisession with workers = I(1L)")
+for (strategy in c("multicore", "multisession")) {
+  if (strategy %in% supportedStrategies()) {
+    plan(strategy, workers = I(1L))
+    n <- nbrOfWorkers()
+    message(sprintf("nbrOfWorkers (%s): %g", strategy, n))
+    stopifnot(n == 1L)
+    if (strategy == "multicore") {
+      stopifnot(inherits(n, "AsIs"))
+    } else {
+      stopifnot(is.null(attr(n, "class")))
+    }
+  }
+}
 
 message("*** nbrOfWorkers() ... DONE")

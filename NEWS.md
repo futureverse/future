@@ -1,3 +1,56 @@
+# Version 1.75.0 [2026-07-20]
+
+## Significant Changes
+
+ * Changed the package license to permissive Apache License (>= 2).
+
+## New Features
+
+ * `print()` for `Future` objects now reports on parallelization
+   efficiency when journaling is enabled via `options(future.journal =
+   TRUE)`. The roundtrip is reported as "active" time (overhead +
+   evaluation), with wallclock and idle time shown separately.
+
+ * `summary()` on individual a `FutureJournal` objects and on a
+   `FutureJournalList` list of them now reports on parallelization
+   metrics, including total speedup and total efficiency.
+
+ * `all.equal()` for `future` now returns `"Not both functions"` when
+   comparing against a non-function. Similarly, `"Not both lists"` is
+   returned when comparing a `FutureStrategyList` object against a not
+   list object.
+   
+## Bug Fixes
+
+ * `value(..., idxs)` on a `listenv` of futures produced an "cannot
+   unclass an environment" error.
+
+ * The default for R option `future.globals.maxSize` is now `+Inf`
+   everywhere. It was still 500 MiB is some cases, e.g. `futureCall()`
+   had a limit although `future()` did not.
+
+ * On MS Windows, a future startup script specified by environment
+   variable `R_FUTURE_STARTUP_SCRIPT` was silently ignored due to a
+   bug in parsing the value.
+
+ * Conditions relayed via the file system could produce an error when
+   relayed if a condition file was corrupt. Now such conditions are
+   silently ignored as intended.
+ 
+ * `all.equal()` for `FutureStrategyList` would throw an error if the
+   object checked against was not a list.
+
+ * The framework asserts that future result belong to the correct
+   future. The never-happening, internal assert error when that would
+   not be the case would result in an unrelated `subscript out of
+   bounds` error.
+
+ * `plan(cluster, ...)` and `plan(multisession, ...)` warned about
+   "unknown future arguments" for `makeClusterPSOCK()` arguments, e.g.
+   `rscript`, `homogeneous`, `port`, and `autoStop`, although they are
+   supported.
+
+
 # Version 1.70.0 [2026-03-13]
 
 ## Significant Changes

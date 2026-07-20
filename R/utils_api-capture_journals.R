@@ -14,7 +14,7 @@
 #' resolved, and its results are collected.
 #'
 #' @return
-#' A list of `FutureJournal`:s.
+#' A list of class `FutureJournalList` with `FutureJournal` elements.
 #'
 #' @example incl/capture_journals.R
 #'
@@ -24,12 +24,14 @@ capture_journals <- function(expr, substitute = TRUE, envir = parent.frame()) {
   oopts <- options(future.journal = TRUE)
   on.exit(options(oopts))
   
-  journals <- NULL
+  journals <- list()
   withCallingHandlers({
     eval(expr, envir = envir)
   }, FutureJournalCondition = function(cond) {
     journals <<- c(journals, list(cond[["journal"]]))
   })
+
+  class(journals) <- c("FutureJournalList", class(journals))
   
   journals
 }

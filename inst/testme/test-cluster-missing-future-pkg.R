@@ -12,7 +12,7 @@ message("Package path: ", sQuote(system.file(package = "future")))
 
 types <- NULL
 if (!covr_testing) types <- c(types, "PSOCK")
-if (supportsMulticore()) types <- c(types, "FORK")
+if (parallelly::supportsMulticore()) types <- c(types, "FORK")
 
 setupClusterWithoutPkgs <- function(type = "PSOCK", withouts = c("future"), debug = FALSE) {
   if (debug) {
