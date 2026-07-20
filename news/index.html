@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.70.0-9028</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.75.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -79,19 +79,19 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="development version" id="version-development-version">Version (development version)<a class="anchor" aria-label="anchor" href="#version-development-version"></a></h2>
+<h2 class="pkg-version" data-toc-text="1.75.0" id="version-1750">Version 1.75.0<a class="anchor" aria-label="anchor" href="#version-1750"></a></h2><p class="text-muted">CRAN release: 2026-07-20</p>
 <div class="section level3">
-<h3 id="significant-changes-development-version">Significant Changes<a class="anchor" aria-label="anchor" href="#significant-changes-development-version"></a></h3>
+<h3 id="significant-changes-1-75-0">Significant Changes<a class="anchor" aria-label="anchor" href="#significant-changes-1-75-0"></a></h3>
 <ul><li>Changed the package license to permissive Apache License (&gt;= 2).</li>
 </ul></div>
 <div class="section level3">
-<h3 id="new-features-development-version">New Features<a class="anchor" aria-label="anchor" href="#new-features-development-version"></a></h3>
+<h3 id="new-features-1-75-0">New Features<a class="anchor" aria-label="anchor" href="#new-features-1-75-0"></a></h3>
 <ul><li><p><code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> for <code>Future</code> objects now reports on parallelization efficiency when journaling is enabled via <code>options(future.journal = TRUE)</code>. The roundtrip is reported as “active” time (overhead + evaluation), with wallclock and idle time shown separately.</p></li>
 <li><p><code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code> on individual a <code>FutureJournal</code> objects and on a <code>FutureJournalList</code> list of them now reports on parallelization metrics, including total speedup and total efficiency.</p></li>
 <li><p><code><a href="https://rdrr.io/r/base/all.equal.html" class="external-link">all.equal()</a></code> for <code>future</code> now returns <code>"Not both functions"</code> when comparing against a non-function. Similarly, <code>"Not both lists"</code> is returned when comparing a <code>FutureStrategyList</code> object against a not list object.</p></li>
 </ul></div>
 <div class="section level3">
-<h3 id="bug-fixes-development-version">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h3>
+<h3 id="bug-fixes-1-75-0">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-1-75-0"></a></h3>
 <ul><li><p><code>value(..., idxs)</code> on a <code>listenv</code> of futures produced an “cannot unclass an environment” error.</p></li>
 <li><p>The default for R option <code>future.globals.maxSize</code> is now <code>+Inf</code> everywhere. It was still 500 MiB is some cases, e.g. <code><a href="../reference/future.html">futureCall()</a></code> had a limit although <code><a href="../reference/future.html">future()</a></code> did not.</p></li>
 <li><p>On MS Windows, a future startup script specified by environment variable <code>R_FUTURE_STARTUP_SCRIPT</code> was silently ignored due to a bug in parsing the value.</p></li>
