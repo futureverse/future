@@ -211,49 +211,63 @@ if (getRversion() >= "4.4") export(makeClusterFuture)
 if (getRversion() >= "4.4") importFrom(parallel,recvData)
 if (getRversion() >= "4.4") importFrom(parallel,sendData)
 importFrom(digest,digest)
-importFrom(globals,Globals)
-importFrom(globals,as.Globals)
-importFrom(globals,cleanup)
-importFrom(globals,findGlobals)
-importFrom(globals,globalsByName)
-importFrom(globals,globalsOf)
-importFrom(globals,packagesOf)
-importFrom(globals,walkAST)
-importFrom(grDevices,as.raster)
-importFrom(grDevices,hsv)
-importFrom(graphics,par)
-importFrom(graphics,plot)
-importFrom(listenv,as.listenv)
-importFrom(listenv,get_variable)
-importFrom(listenv,listenv)
-importFrom(listenv,mapping)
-importFrom(listenv,parse_env_subset)
-importFrom(parallel,clusterCall)
-importFrom(parallel,clusterEvalQ)
-importFrom(parallel,nextRNGStream)
-importFrom(parallel,nextRNGSubStream)
-importFrom(parallel,stopCluster)
-importFrom(parallelly,as.cluster)
-importFrom(parallelly,availableCores)
-importFrom(parallelly,availableWorkers)
-importFrom(parallelly,cloneNode)
-importFrom(parallelly,connectionId)
-importFrom(parallelly,isConnectionValid)
-importFrom(parallelly,isNodeAlive)
-importFrom(parallelly,killNode)
-importFrom(parallelly,makeClusterPSOCK)
-importFrom(parallelly,makeNodePSOCK)
-importFrom(parallelly,serializedSize)
-importFrom(parallelly,supportsMulticore)
+importFrom(globals,
+  Globals,
+  as.Globals,
+  cleanup,
+  findGlobals,
+  globalsByName,
+  globalsOf,
+  packagesOf,
+  walkAST
+)
+importFrom(grDevices,
+  as.raster,
+  hsv
+)
+importFrom(graphics,
+  par,
+  plot
+)
+importFrom(listenv,
+  as.listenv,
+  get_variable,
+  listenv,
+  mapping,
+  parse_env_subset
+)
+importFrom(parallel,
+  clusterCall,
+  clusterEvalQ,
+  nextRNGStream,
+  nextRNGSubStream,
+  stopCluster
+)
+importFrom(parallelly,
+  as.cluster,
+  availableCores,
+  availableWorkers,
+  cloneNode,
+  connectionId,
+  isConnectionValid,
+  isNodeAlive,
+  killNode,
+  makeClusterPSOCK,
+  makeNodePSOCK,
+  serializedSize,
+  supportsMulticore
+)
 importFrom(tools,md5sum)
-importFrom(utils,capture.output)
-importFrom(utils,file_test)
-importFrom(utils,getS3method)
-importFrom(utils,globalVariables)
-importFrom(utils,head)
-importFrom(utils,installed.packages)
-importFrom(utils,object.size)
-importFrom(utils,packageVersion)
-importFrom(utils,sessionInfo)
-importFrom(utils,str)
-importFrom(utils,tail)
+importFrom(utils,
+  capture.output,
+  file_test,
+  getS3method,
+  globalVariables,
+  head,
+  installed.packages,
+  object.size,
+  packageVersion,
+  sessionInfo,
+  str,
+  tail
+)

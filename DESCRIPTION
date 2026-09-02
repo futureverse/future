@@ -1,5 +1,5 @@
 Package: future
-Version: 1.75.0-9000
+Version: 1.75.0-9001
 Title: Unified Parallel and Distributed Processing in R for Everyone
 Depends:
     R (>= 3.2.0)
@@ -119,4 +119,4 @@ Collate:
     'utils_api-sessionDetails.R'
     'utils_api-tweak.R'
     'zzz.R'
-Config/roxygen2/version: 8.0.0
+Config/roxygen2/version: 8.1.0
