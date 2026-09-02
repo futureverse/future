@@ -1,6 +1,11 @@
 # Version (development version)
 
- * ...
+## Bug Fixes
+
+ * A future failed with "cannot change working directory" if the
+   current working directory could not be entered (some file systems
+   might not allow it). This was a regression bug introduced in
+   **future** 1.40.0 (2025-04-10).
 
 
 # Version 1.75.0 [2026-07-20]

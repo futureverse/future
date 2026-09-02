@@ -873,8 +873,14 @@ evalFutureInternal <- function(data) {
       ...future.workdir <- getwd()
   
       on.exit({
-        ## Reset working directory
-        setwd(...future.workdir)
+        ## Reset working directory, but only if it was changed. Note that
+        ## getwd() returns NULL if the working directory cannot be queried.
+        ## Also, setwd() may fail even when the working directory is
+        ## unchanged, e.g. when the folder is no longer accessible [#814]
+        if (is.character(...future.workdir) &&
+            !identical(...future.workdir, getwd())) {
+          setwd(...future.workdir)
+        }
       }, add = TRUE)
     } ## if ("pwd" ...)
   }
