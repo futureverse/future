@@ -15,7 +15,7 @@
 #             TriDimRegression (1), uci (1)
 #             [2025-12-22, 2026-01-31, 2026-04-04]
 #' * [parallelly::availableWorkers()]
-#    Used by: wqspt (1) [2025-03-15]
+#    Used by: wqspt (1) [2025-03-15, 2026-02-01, 2026-08-03]
 #' * [parallelly::makeClusterPSOCK()]
 #    Used by: eatRep (1), interflex (2), ivDiag (1) [2026-04-20]
 #' * [parallelly::supportsMulticore()]
