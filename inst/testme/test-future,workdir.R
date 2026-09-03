@@ -62,6 +62,33 @@ if (usable) {
   stopifnot(identical(v, 42L))
 }
 
+
+message("*** Futures - working directory that no longer exists ...")
+
+## A future must resolve also when the current working directory has been
+## removed. Then getwd() returns NULL, which used to produce a "character
+## argument expected" error from setwd(NULL) [#814]
+plan(sequential)
+
+wd <- tempfile("future-workdir")
+dir.create(wd)
+setwd(wd)
+unlink(wd, recursive = TRUE)
+
+## Only test, iff the folder could indeed be removed while being the current
+## working directory, which is not the case on, say, MS Windows
+gone <- is.null(getwd())
+if (gone) v <- tryCatch(value(future(42L)), error = identity)
+
+setwd(owd)
+unlink(wd, recursive = TRUE)
+
+if (gone) {
+  stopifnot(identical(v, 42L))
+} else {
+  message("- Skipping; the working directory still exists")
+}
+
 setwd(owd)
 
 message("*** Futures - working directory ... DONE")
