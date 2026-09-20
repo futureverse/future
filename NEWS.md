@@ -7,6 +7,11 @@
    might not allow it). This was a regression bug introduced in
    **future** 1.40.0 (2025-04-10).
 
+ * Using the deprecated argument `gc = TRUE` in `future()` would crash
+   `multisession` or `cluster` backends due to an internal error
+   passing unused arguments (`verbose = FALSE`, `reset = FALSE`) to
+   `gc()`.
+
 
 # Version 1.75.0 [2026-07-20]
 

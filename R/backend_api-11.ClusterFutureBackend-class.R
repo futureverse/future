@@ -109,6 +109,7 @@ ClusterFutureBackend <- local({
       earlySignal = earlySignal,
       interrupts = interrupts,
       persistent = persistent,
+      gc = gc,
       ...
     )
     core[["futureClasses"]] <- c("ClusterFuture", core[["futureClasses"]])
@@ -976,7 +977,7 @@ receiveMessageFromWorker <- local({
         cluster_call_blocking(cl[1], function() "future-clearing-cluster-worker", future = future, when = "call dummy() on", expected = "future-clearing-cluster-worker")
         
         ## Blocking cluster-node call
-        cluster_call_blocking(cl[1], function() { gc(); "future-gc" }, verbose = FALSE, reset = FALSE, future = future, when = "call gc() on", expected = "future-gc")
+        cluster_call_blocking(cl[1], function() { gc(); "future-gc" }, future = future, when = "call gc() on", expected = "future-gc")
         if (debug) mdebug_pop()
       }
 
