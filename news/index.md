@@ -9,6 +9,12 @@
   allow it). This was a regression bug introduced in **future** 1.40.0
   (2025-04-10).
 
+- Using the deprecated argument `gc = TRUE` in
+  [`future()`](https://future.futureverse.org/reference/future.md) would
+  crash `multisession` or `cluster` backends due to an internal error
+  passing unused arguments (`verbose = FALSE`, `reset = FALSE`) to
+  [`gc()`](https://rdrr.io/r/base/gc.html).
+
 ## Version 1.75.0
 
 CRAN release: 2026-07-20
