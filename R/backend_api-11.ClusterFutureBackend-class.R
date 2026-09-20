@@ -109,7 +109,6 @@ ClusterFutureBackend <- local({
       earlySignal = earlySignal,
       interrupts = interrupts,
       persistent = persistent,
-      gc = gc,
       ...
     )
     core[["futureClasses"]] <- c("ClusterFuture", core[["futureClasses"]])
