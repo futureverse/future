@@ -109,6 +109,7 @@ ClusterFutureBackend <- local({
       earlySignal = earlySignal,
       interrupts = interrupts,
       persistent = persistent,
+      gc = gc,
       ...
     )
     core[["futureClasses"]] <- c("ClusterFuture", core[["futureClasses"]])
@@ -961,7 +962,11 @@ receiveMessageFromWorker <- local({
       if (future[["gc"]]) {
         if (debug) mdebug_push("Garbage collecting worker ...")
         ## Cleanup global environment while at it
-        if (!isTRUE(future[["persistent"]])) {
+        ##
+        ## SPECIAL CASE: Do not erase if a
+        ## parallelly::makeClusterSequential() is used, because that
+        ## worker *is* the calling R session, cf. launchFuture() above.
+        if (!isTRUE(future[["persistent"]]) && !inherits(node, "sequential_node")) {
           ## Blocking cluster-node call
           cluster_call_blocking(cl[1], fun = grmall, future = future, when = "call grmall() on", expected = "future-grmall")
         }
