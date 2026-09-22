@@ -2,6 +2,8 @@
 #'
 #' _WARNING: Please note that this sets up a stateless set of cluster nodes,
 #' which means that `clusterEvalQ(cl, { a <- 3.14 })` will not work.
+#' The exception is `clusterEvalQ()` calls that only attach packages,
+#' e.g. `clusterEvalQ(cl, library(pkg))`, which are supported.
 #' Consider this a first beta version and use it with great care,
 #' particularly because of the stateless nature of the cluster.
 #' For now, I recommend to manually validate that you can get identical
@@ -29,6 +31,14 @@
 #' y <- parallel::parLapply(cl, 11:13, function(x) {
 #'   message("Process ID: ", Sys.getpid())
 #'   mean(rnorm(n = x))
+#' })
+#' str(y)
+#'
+#' ## Attach the 'tools' package for all future parallel tasks
+#' parallel::clusterEvalQ(cl, library(tools))
+#'
+#' y <- parallel::parLapply(cl, c("a.txt", "b.R"), function(x) {
+#'   file_ext(x)
 #' })
 #' str(y)
 #'
@@ -63,8 +73,9 @@
 #' `clusterEvalQ(cl[1:2], ...)`, and `clusterEvalQ(cl[2:1], ...)` in
 #' the above example will all give an error.
 #'
-#' Exceptions to the latter limitation are `clusterSetRNGStream()`
-#' and `clusterExport()`, which can be safely used with future clusters.
+#' Exceptions to the latter limitation are `clusterSetRNGStream()`,
+#' `clusterExport()`, and `clusterEvalQ()` calls that only attach
+#' packages, which can be safely used with future clusters.
 #' See below for more details.
 #'
 #' @section clusterSetRNGStream:
@@ -86,9 +97,25 @@
 #' for all futures created there on.
 #'
 #' @section clusterEvalQ:
-#' If `clusterEvalQ()` is called, the call is ignored, and an error
-#' is produced. The error can be de-escalated to a warning by setting
-#' R option `future.ClusterFuture.clusterEvalQ` to `"warning"`.
+#' [parallel::clusterEvalQ()] is supported only for expressions that
+#' attach packages and nothing else, e.g.
+#'
+#'  * `clusterEvalQ(cl, library(pkg))`
+#'  * `clusterEvalQ(cl, { library(pkg1); library(pkg2) })`
+#'  * `clusterEvalQ(cl, require("pkg"))`
+#'  * `clusterEvalQ(cl, suppressPackageStartupMessages(library(pkg)))`
+#'  * `clusterEvalQ(cl, library(pkg, character.only = TRUE))`
+#'
+#' The packages are recorded and attached by all following futures,
+#' similarly to how `future(..., packages = pkgs)` works.
+#' For all other expressions, including those that mix `library()`
+#' calls with other code, are ignored and an error is produced.
+#' The error can be de-escalated to a warning by setting R option
+#' `future.ClusterFuture.clusterEvalQ` to `"warning"`.
+#'
+#' Note that the packages are not attached when `clusterEvalQ()` is
+#' called, but when the futures are evaluated. This means that
+#' package-loading errors are deferred to `parLapply()` etc.
 #'
 #' @section Benefits of using makeClusterFuture():
 #' 
@@ -310,9 +337,19 @@ sendData.FutureNode <- function(node, data) {
           mdebug("Expression:")
           mprint(expr)
         }
-  
+
         cluster_env <- node[["cluster_env"]]
-  
+
+        ## Does the expression only attach packages? If so, record
+        ## them so that they are attached by all futures created
+        pkgs <- parse_attach_packages(expr, envir = cluster_env[["exports"]])
+        if (!is.null(pkgs)) {
+          if (debug) mdebugf("Packages recorded: [n=%d] %s", length(pkgs), commaq(pkgs))
+          cluster_env[["packages"]] <- unique(c(cluster_env[["packages"]], pkgs))
+          node[["future"]] <- ConstantFuture(list(value = NULL), substitute = FALSE)
+          return(invisible(node))
+        }
+
         ## Record ignored clusterEvalQ() expressions
         clusterEvalQs <- cluster_env[["clusterEvalQs"]]
         if (is.null(clusterEvalQs)) clusterEvalQs <- list()
@@ -358,6 +395,11 @@ sendData.FutureNode <- function(node, data) {
         globals <- c(exports, globals)
       }
       options[["globals"]] <- globals
+    }
+
+    packages <- cluster_env[["packages"]]
+    if (length(packages) > 0) {
+      options[["packages"]] <- unique(c(packages, options[["packages"]]))
     }
 
     node[["future"]] <- local({
@@ -568,3 +610,89 @@ called_via_clusterEvalQ <- function(calls = sys.calls()) {
   }
   FALSE
 } ## called_via_clusterEvalQ()
+
+
+## Parses a clusterEvalQ() expression and returns the package names
+## attached. This is only done if the expression uses basic library()
+## and require() calls, e.g. `library(pkg)`,
+## `{ library(pkg1); base::library("pkg2") }`, and
+## `library(pkg, character.only = TRUE)`.
+## Such calls wrapped in `invisible()`, `suppressMessages()`, and
+## `suppressPackageStartupMessages()` are also accepted.
+## If the expression cannot be parsed this way, NULL is returned.
+parse_attach_packages <- function(expr, envir = NULL) {
+  pkgs <- character(0L)
+
+  parse_expr <- function(expr) {
+    if (!is.call(expr)) return(FALSE)
+
+    fcn <- expr[[1]]
+    ## Drop 'base::' prefix
+    if (is.call(fcn) && identical(fcn[[1]], as.symbol("::")) &&
+        identical(fcn[[2]], as.symbol("base"))) {
+      fcn <- fcn[[3]]
+    }
+    if (!is.symbol(fcn)) return(FALSE)
+    name <- as.character(fcn)
+
+    if (name == "{") {
+      exprs <- as.list(expr)[-1]
+      for (expr in exprs) {
+        if (!parse_expr(expr)) return(FALSE)
+      }
+      return(TRUE)
+    }
+
+    if (name %in% c("(", "invisible", "suppressMessages", "suppressPackageStartupMessages")) {
+      if (length(expr) != 2L || !is.null(names(expr))) return(FALSE)
+      return(parse_expr(expr[[2]]))
+    }
+
+    if (name == "library") {
+      def <- base::library
+    } else if (name == "require") {
+      def <- base::require
+    } else {
+      return(FALSE)
+    }
+
+    call <- tryCatch(match.call(def, call = expr), error = function(e) NULL)
+    if (is.null(call)) return(FALSE)
+    args <- as.list(call)[-1]
+
+    ## Arguments, e.g. 'lib.loc' and 'help', that affect what is attached
+    ## are not supported
+    known <- c("package", "character.only", "quietly", "warn.conflicts", "verbose", "logical.return")
+    if (!all(names(args) %in% known)) return(FALSE)
+
+    character_only <- args[["character.only"]]
+    if (is.null(character_only)) character_only <- FALSE
+    if (!is.logical(character_only) || length(character_only) != 1L ||
+        is.na(character_only)) return(FALSE)
+
+    pkg <- args[["package"]]
+    if (is.null(pkg)) return(FALSE)
+    if (is.symbol(pkg)) {
+      pkg <- as.character(pkg)
+      if (character_only) {
+        if (!pkg %in% names(envir)) return(FALSE)
+        pkg <- envir[[pkg]]
+      }
+    }
+    if (!is.character(pkg) || length(pkg) != 1L ||
+        is.na(pkg) || !nzchar(pkg)) return(FALSE)
+
+    pkgs <<- c(pkgs, pkg)
+    TRUE
+  } ## parse_expr()
+
+  res <- parse_expr(expr)
+
+  ## Non-supported clusterEvalQ() expression?
+  if (!res) return(NULL)
+
+  ## No packages attached?
+  if (length(pkgs) == 0L) return(NULL)
+
+  unique(pkgs)
+} ## parse_attach_packages()

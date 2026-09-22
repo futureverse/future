@@ -22,6 +22,8 @@ Returns a \pkg{parallel} \code{cluster} object of class \code{FutureCluster}.
 \description{
 \emph{WARNING: Please note that this sets up a stateless set of cluster nodes,
 which means that \code{clusterEvalQ(cl, { a <- 3.14 })} will not work.
+The exception is \code{clusterEvalQ()} calls that only attach packages,
+e.g. \code{clusterEvalQ(cl, library(pkg))}, which are supported.
 Consider this a first beta version and use it with great care,
 particularly because of the stateless nature of the cluster.
 For now, I recommend to manually validate that you can get identical
@@ -58,8 +60,9 @@ cluster nodes, results in an error, e.g. \code{clusterEvalQ(cl[1], ...)},
 \code{clusterEvalQ(cl[1:2], ...)}, and \code{clusterEvalQ(cl[2:1], ...)} in
 the above example will all give an error.
 
-Exceptions to the latter limitation are \code{clusterSetRNGStream()}
-and \code{clusterExport()}, which can be safely used with future clusters.
+Exceptions to the latter limitation are \code{clusterSetRNGStream()},
+\code{clusterExport()}, and \code{clusterEvalQ()} calls that only attach
+packages, which can be safely used with future clusters.
 See below for more details.
 }
 
@@ -84,9 +87,26 @@ for all futures created there on.
 
 \section{clusterEvalQ}{
 
-If \code{clusterEvalQ()} is called, the call is ignored, and an error
-is produced. The error can be de-escalated to a warning by setting
-R option \code{future.ClusterFuture.clusterEvalQ} to \code{"warning"}.
+\code{\link[parallel:clusterEvalQ]{parallel::clusterEvalQ()}} is supported only for expressions that
+attach packages and nothing else, e.g.
+\itemize{
+\item \code{clusterEvalQ(cl, library(pkg))}
+\item \code{clusterEvalQ(cl, { library(pkg1); library(pkg2) })}
+\item \code{clusterEvalQ(cl, require("pkg"))}
+\item \code{clusterEvalQ(cl, suppressPackageStartupMessages(library(pkg)))}
+\item \code{clusterEvalQ(cl, library(pkg, character.only = TRUE))}
+}
+
+The packages are recorded and attached by all following futures,
+similarly to how \code{future(..., packages = pkgs)} works.
+For all other expressions, including those that mix \code{library()}
+calls with other code, are ignored and an error is produced.
+The error can be de-escalated to a warning by setting R option
+\code{future.ClusterFuture.clusterEvalQ} to \code{"warning"}.
+
+Note that the packages are not attached when \code{clusterEvalQ()} is
+called, but when the futures are evaluated. This means that
+package-loading errors are deferred to \code{parLapply()} etc.
 }
 
 \section{Benefits of using makeClusterFuture()}{
@@ -120,6 +140,14 @@ parallel::clusterSetRNGStream(cl)
 y <- parallel::parLapply(cl, 11:13, function(x) {
   message("Process ID: ", Sys.getpid())
   mean(rnorm(n = x))
+})
+str(y)
+
+## Attach the 'tools' package for all future parallel tasks
+parallel::clusterEvalQ(cl, library(tools))
+
+y <- parallel::parLapply(cl, c("a.txt", "b.R"), function(x) {
+  file_ext(x)
 })
 str(y)
 
