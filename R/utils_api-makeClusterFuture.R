@@ -182,6 +182,9 @@ print.FutureCluster <- function(x, ...) {
   info <- sprintf("%s (%s)", names, types)
   cat(sprintf("Exports: [n=%d] %s\n", length(exports), comma(info)))
 
+  packages <- cluster_env[["packages"]]
+  cat(sprintf("Packages: [n=%d] %s\n", length(packages), commaq(packages)))
+
   clusterEvalQs <- cluster_env[["clusterEvalQs"]]
   n <- length(clusterEvalQs)
   if (n > 0) {
