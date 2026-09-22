@@ -84,13 +84,14 @@ instead of
 do.call("file_ext", list("foo.txt"))
 ```
 
-so that `file_ext()` is properly located and exported. Although you may
-not notice a difference when evaluating futures in the same R session,
-it may become a problem if you use a character string instead of a
-function object when futures are evaluated in external R sessions, such
-as on a cluster. It may also become a problem with futures evaluated
-with lazy evaluation if the intended function is redefined after the
-future is resolved. For example,
+so that [`file_ext()`](https://rdrr.io/r/tools/fileutils.html) is
+properly located and exported. Although you may not notice a difference
+when evaluating futures in the same R session, it may become a problem
+if you use a character string instead of a function object when futures
+are evaluated in external R sessions, such as on a cluster. It may also
+become a problem with futures evaluated with lazy evaluation if the
+intended function is redefined after the future is resolved. For
+example,
 
 ``` r
 > library(future)

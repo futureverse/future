@@ -2,10 +2,12 @@
 
 *WARNING: Please note that this sets up a stateless set of cluster
 nodes, which means that `clusterEvalQ(cl, { a <- 3.14 })` will not work.
-Consider this a first beta version and use it with great care,
-particularly because of the stateless nature of the cluster. For now, I
-recommend to manually validate that you can get identical results using
-this cluster type with what you get from using the classical
+The exception is `clusterEvalQ()` calls that only attach packages, e.g.
+`clusterEvalQ(cl, library(pkg))`, which are supported. Consider this a
+first beta version and use it with great care, particularly because of
+the stateless nature of the cluster. For now, I recommend to manually
+validate that you can get identical results using this cluster type with
+what you get from using the classical
 [`parallel::makeCluster()`](https://rdrr.io/r/parallel/makeCluster.html)
 cluster type.*
 
@@ -63,9 +65,10 @@ results in an error, e.g. `clusterEvalQ(cl[1], ...)`,
 `clusterEvalQ(cl[1:2], ...)`, and `clusterEvalQ(cl[2:1], ...)` in the
 above example will all give an error.
 
-Exceptions to the latter limitation are `clusterSetRNGStream()` and
-`clusterExport()`, which can be safely used with future clusters. See
-below for more details.
+Exceptions to the latter limitation are `clusterSetRNGStream()`,
+`clusterExport()`, and `clusterEvalQ()` calls that only attach packages,
+which can be safely used with future clusters. See below for more
+details.
 
 ## clusterSetRNGStream
 
@@ -85,9 +88,31 @@ recorded and are used as globals for all futures created there on.
 
 ## clusterEvalQ
 
-If `clusterEvalQ()` is called, the call is ignored, and an error is
-produced. The error can be de-escalated to a warning by setting R option
+[`parallel::clusterEvalQ()`](https://rdrr.io/r/parallel/clusterApply.html)
+is supported only for expressions that attach packages and nothing else,
+e.g.
+
+- `clusterEvalQ(cl, library(pkg))`
+
+- `clusterEvalQ(cl, { library(pkg1); library(pkg2) })`
+
+- `clusterEvalQ(cl, require("pkg"))`
+
+- `clusterEvalQ(cl, suppressPackageStartupMessages(library(pkg)))`
+
+- `clusterEvalQ(cl, library(pkg, character.only = TRUE))`
+
+The packages are recorded and attached by all following futures,
+similarly to how `future(..., packages = pkgs)` works. For all other
+expressions, including those that mix
+[`library()`](https://rdrr.io/r/base/library.html) calls with other
+code, are ignored and an error is produced. The error can be
+de-escalated to a warning by setting R option
 `future.ClusterFuture.clusterEvalQ` to `"warning"`.
+
+Note that the packages are not attached when `clusterEvalQ()` is called,
+but when the futures are evaluated. This means that package-loading
+errors are deferred to `parLapply()` etc.
 
 ## Benefits of using makeClusterFuture()
 
@@ -123,14 +148,65 @@ y <- parallel::parLapply(cl, 11:13, function(x) {
   message("Process ID: ", Sys.getpid())
   mean(rnorm(n = x))
 })
-#> Process ID: 1907262
-#> Process ID: 1907261
-#> Process ID: 1907260
+#> Process ID: 2767321
+#> Process ID: 2767319
+#> Process ID: 2767318
 str(y)
 #> List of 3
 #>  $ : num 0.315
 #>  $ : num -0.275
 #>  $ : num 0.104
+
+## Attach the 'tools' package for all future parallel tasks
+parallel::clusterEvalQ(cl, library(tools))
+#> [[1]]
+#> [[1]]$value
+#> NULL
+#> 
+#> 
+#> [[2]]
+#> [[2]]$value
+#> NULL
+#> 
+#> 
+#> [[3]]
+#> [[3]]$value
+#> NULL
+#> 
+#> 
+#> [[4]]
+#> [[4]]$value
+#> NULL
+#> 
+#> 
+#> [[5]]
+#> [[5]]$value
+#> NULL
+#> 
+#> 
+#> [[6]]
+#> [[6]]$value
+#> NULL
+#> 
+#> 
+#> [[7]]
+#> [[7]]$value
+#> NULL
+#> 
+#> 
+#> [[8]]
+#> [[8]]$value
+#> NULL
+#> 
+#> 
+
+y <- parallel::parLapply(cl, c("a.txt", "b.R"), function(x) {
+  file_ext(x)
+})
+str(y)
+#> List of 2
+#>  $ : chr "txt"
+#>  $ : chr "R"
 
 plan(sequential)
 ```

@@ -2,6 +2,20 @@
 
 ## Version (development version)
 
+### New Features
+
+- [`parallel::clusterEvalQ()`](https://rdrr.io/r/parallel/clusterApply.html)
+  on a
+  [`makeClusterFuture()`](https://future.futureverse.org/reference/makeClusterFuture.md)
+  used to be produce an error, because one cannot assume that future
+  clusters have persistent workers. That is now relaxed when the
+  expression only attaches packages,
+  e.g. `clusterEvalQ(cl, library(pkg))`,
+  `clusterEvalQ(cl, { library(pkg1); library(pkg2) })`, and
+  `clusterEvalQ(cl, library(pkg, character.only = TRUE))`. Such packages
+  are recorded and attached by all futures when launched. Other types of
+  expressions are still not supported and produce errors.
+
 ### Bug Fixes
 
 - A future failed with “cannot change working directory” if the current

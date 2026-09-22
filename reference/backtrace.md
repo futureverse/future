@@ -42,9 +42,9 @@ res <- tryCatch({
 #> [[1]]
 #> base::tryCatch(base::withCallingHandlers({
 #>     NULL
-#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpONWkvk/callr-fun-1d159b1252d7b2"), 
+#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmppjB0Zh/callr-fun-2a34ea6be2a780"), 
 #>         base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
-#>         quote = TRUE), file = "/tmp/hb/RtmpONWkvk/callr-res-1d159b55736453", 
+#>         quote = TRUE), file = "/tmp/hb/RtmppjB0Zh/callr-res-2a34ea3646438c", 
 #>         compress = FALSE)
 #>     base::flush(base::stdout())
 #>     base::flush(base::stderr())
@@ -73,7 +73,7 @@ res <- tryCatch({
 #>         if (callr_data$has_otel) {
 #>             callr_data$otel_span$record_exception(e2)
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpONWkvk/callr-res-1d159b55736453", 
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmppjB0Zh/callr-res-2a34ea3646438c", 
 #>             ".error"))
 #>     }
 #> }, interrupt = function(e) {
@@ -99,7 +99,7 @@ res <- tryCatch({
 #>         if (callr_data$has_otel) {
 #>             callr_data$otel_span$record_exception(e2)
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpONWkvk/callr-res-1d159b55736453", 
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmppjB0Zh/callr-res-2a34ea3646438c", 
 #>             ".error"))
 #>     }
 #> }, callr_message = function(e) {
@@ -143,9 +143,9 @@ res <- tryCatch({
 #> [[8]]
 #> base::withCallingHandlers({
 #>     NULL
-#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpONWkvk/callr-fun-1d159b1252d7b2"), 
+#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmppjB0Zh/callr-fun-2a34ea6be2a780"), 
 #>         base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
-#>         quote = TRUE), file = "/tmp/hb/RtmpONWkvk/callr-res-1d159b55736453", 
+#>         quote = TRUE), file = "/tmp/hb/RtmppjB0Zh/callr-res-2a34ea3646438c", 
 #>         compress = FALSE)
 #>     base::flush(base::stdout())
 #>     base::flush(base::stderr())
@@ -174,7 +174,7 @@ res <- tryCatch({
 #>         if (callr_data$has_otel) {
 #>             callr_data$otel_span$record_exception(e2)
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpONWkvk/callr-res-1d159b55736453", 
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmppjB0Zh/callr-res-2a34ea3646438c", 
 #>             ".error"))
 #>     }
 #> }, interrupt = function(e) {
@@ -200,7 +200,7 @@ res <- tryCatch({
 #>         if (callr_data$has_otel) {
 #>             callr_data$otel_span$record_exception(e2)
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpONWkvk/callr-res-1d159b55736453", 
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmppjB0Zh/callr-res-2a34ea3646438c", 
 #>             ".error"))
 #>     }
 #> }, callr_message = function(e) {
@@ -208,13 +208,13 @@ res <- tryCatch({
 #> })
 #> 
 #> [[9]]
-#> base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpONWkvk/callr-fun-1d159b1252d7b2"), 
+#> base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmppjB0Zh/callr-fun-2a34ea6be2a780"), 
 #>     base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
-#>     quote = TRUE), file = "/tmp/hb/RtmpONWkvk/callr-res-1d159b55736453", 
+#>     quote = TRUE), file = "/tmp/hb/RtmppjB0Zh/callr-res-2a34ea3646438c", 
 #>     compress = FALSE)
 #> 
 #> [[10]]
-#> base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpONWkvk/callr-fun-1d159b1252d7b2"), 
+#> base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmppjB0Zh/callr-fun-2a34ea6be2a780"), 
 #>     base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
 #>     quote = TRUE)
 #> 
@@ -231,8 +231,8 @@ res <- tryCatch({
 #>     options(cli.num_colors = cli_colors, cli.hyperlink = hyperlinks, 
 #>         cli.hyperlink_run = hyperlinks)
 #>     pkgdown::build_site(...)
-#> }), base::quote(list(pkg = list(package = "future", version = "1.75.0-9003", 
-#>     src_path = "/tmp/hb/RtmpONWkvk/future", meta = list(url = "https://future.futureverse.org", 
+#> }), base::quote(list(pkg = list(package = "future", version = "1.75.0-9008", 
+#>     src_path = "/tmp/hb/RtmppjB0Zh/future", meta = list(url = "https://future.futureverse.org", 
 #>         home = list(links = list(list(text = "Roadmap/Milestones", 
 #>             href = "https://github.com/futureverse/future/milestones"), 
 #>             list(text = "The Futureverse Project", href = "https://www.futureverse.org/"), 
@@ -268,7 +268,7 @@ res <- tryCatch({
 #>             bootstrap = 5L, `light-switch` = TRUE)), desc = <environment>, 
 #>     bs_version = 5L, development = list(destination = "dev", 
 #>         mode = "default", version_label = "muted", in_dev = FALSE, 
-#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/RtmpONWkvk/future/docs", 
+#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/RtmppjB0Zh/future/docs", 
 #>     lang = "en-US", install_metadata = FALSE, figures = list(
 #>         dev = "ragg::agg_png", dpi = 96L, dev.args = list(), 
 #>         fig.ext = "png", fig.width = 7.29166666666667, fig.height = NULL, 
@@ -1620,7 +1620,10 @@ res <- tryCatch({
 #>                   list("FutureCluster"), ".\n"), "\n", list("\n", 
 #>                   list("WARNING: Please note that this sets up a stateless set of cluster nodes,\n", 
 #>                     "which means that ", list("clusterEvalQ(cl, { a <- 3.14 })"), 
-#>                     " will not work.\n", "Consider this a first beta version and use it with great care,\n", 
+#>                     " will not work.\n", "The exception is ", 
+#>                     list("clusterEvalQ()"), " calls that only attach packages,\n", 
+#>                     "e.g. ", list("clusterEvalQ(cl, library(pkg))"), 
+#>                     ", which are supported.\n", "Consider this a first beta version and use it with great care,\n", 
 #>                     "particularly because of the stateless nature of the cluster.\n", 
 #>                     "For now, I recommend to manually validate that you can get identical\n", 
 #>                     "results using this cluster type with what you get from using the\n", 
@@ -1654,8 +1657,9 @@ res <- tryCatch({
 #>                   list("clusterEvalQ(cl[2:1], ...)"), " in\n", 
 #>                   "the above example will all give an error.\n", 
 #>                   "\n", "Exceptions to the latter limitation are ", 
-#>                   list("clusterSetRNGStream()"), "\n", "and ", 
-#>                   list("clusterExport()"), ", which can be safely used with future clusters.\n", 
+#>                   list("clusterSetRNGStream()"), ",\n", list(
+#>                     "clusterExport()"), ", and ", list("clusterEvalQ()"), 
+#>                   " calls that only attach\n", "packages, which can be safely used with future clusters.\n", 
 #>                   "See below for more details.\n")), "\n", "\n", 
 #>                 list(list("clusterSetRNGStream"), list("\n", 
 #>                   "\n", list(list("parallel::clusterSetRNGStream()")), 
@@ -1671,11 +1675,24 @@ res <- tryCatch({
 #>                   " assign values to the cluster nodes.\n", "Specifically, these values are recorded and are used as globals\n", 
 #>                   "for all futures created there on.\n")), "\n", 
 #>                 "\n", list(list("clusterEvalQ"), list("\n", "\n", 
-#>                   "If ", list("clusterEvalQ()"), " is called, the call is ignored, and an error\n", 
-#>                   "is produced. The error can be de-escalated to a warning by setting\n", 
-#>                   "R option ", list("future.ClusterFuture.clusterEvalQ"), 
-#>                   " to ", list("\"warning\""), ".\n")), "\n", 
-#>                 "\n", list(list("Benefits of using makeClusterFuture()"), 
+#>                   list(list("parallel::clusterEvalQ()")), " is supported only for expressions that\n", 
+#>                   "attach packages and nothing else, e.g.\n", 
+#>                   list("\n", list(), " ", list("clusterEvalQ(cl, library(pkg))"), 
+#>                     "\n", list(), " ", list("clusterEvalQ(cl, { library(pkg1); library(pkg2) })"), 
+#>                     "\n", list(), " ", list("clusterEvalQ(cl, require(\"pkg\"))"), 
+#>                     "\n", list(), " ", list("clusterEvalQ(cl, suppressPackageStartupMessages(library(pkg)))"), 
+#>                     "\n", list(), " ", list("clusterEvalQ(cl, library(pkg, character.only = TRUE))"), 
+#>                     "\n"), "\n", "\n", "The packages are recorded and attached by all following futures,\n", 
+#>                   "similarly to how ", list("future(..., packages = pkgs)"), 
+#>                   " works.\n", "For all other expressions, including those that mix ", 
+#>                   list("library()"), "\n", "calls with other code, are ignored and an error is produced.\n", 
+#>                   "The error can be de-escalated to a warning by setting R option\n", 
+#>                   list("future.ClusterFuture.clusterEvalQ"), 
+#>                   " to ", list("\"warning\""), ".\n", "\n", "Note that the packages are not attached when ", 
+#>                   list("clusterEvalQ()"), " is\n", "called, but when the futures are evaluated. This means that\n", 
+#>                   "package-loading errors are deferred to ", 
+#>                   list("parLapply()"), " etc.\n")), "\n", "\n", 
+#>                 list(list("Benefits of using makeClusterFuture()"), 
 #>                   list("\n", "\n", "\n", "Many packages rely on traditional ", 
 #>                     list("parallel"), " functions such as\n", 
 #>                     list("parallel::parLapply()"), " and ", list(
@@ -1702,7 +1719,11 @@ res <- tryCatch({
 #>                   "\n", "y <- parallel::parLapply(cl, 11:13, function(x) {\n", 
 #>                   "  message(\"Process ID: \", Sys.getpid())\n", 
 #>                   "  mean(rnorm(n = x))\n", "})\n", "str(y)\n", 
-#>                   "\n", "plan(sequential)\n", list("}) # examplesIf"), 
+#>                   "\n", "## Attach the 'tools' package for all future parallel tasks\n", 
+#>                   "parallel::clusterEvalQ(cl, library(tools))\n", 
+#>                   "\n", "y <- parallel::parLapply(cl, c(\"a.txt\", \"b.R\"), function(x) {\n", 
+#>                   "  file_ext(x)\n", "})\n", "str(y)\n", "\n", 
+#>                   "plan(sequential)\n", list("}) # examplesIf"), 
 #>                   "\n"), "\n", list("internal"), "\n"), mandelbrot.Rd = list(
 #>                 "% Generated by roxygen2: do not edit by hand", 
 #>                 "\n", "% Please edit documentation in R/demo_api-mandelbrot.R", 
@@ -3048,8 +3069,8 @@ res <- tryCatch({
 #>     options(cli.num_colors = cli_colors, cli.hyperlink = hyperlinks, 
 #>         cli.hyperlink_run = hyperlinks)
 #>     pkgdown::build_site(...)
-#> })(pkg = base::quote(list(package = "future", version = "1.75.0-9003", 
-#>     src_path = "/tmp/hb/RtmpONWkvk/future", meta = list(url = "https://future.futureverse.org", 
+#> })(pkg = base::quote(list(package = "future", version = "1.75.0-9008", 
+#>     src_path = "/tmp/hb/RtmppjB0Zh/future", meta = list(url = "https://future.futureverse.org", 
 #>         home = list(links = list(list(text = "Roadmap/Milestones", 
 #>             href = "https://github.com/futureverse/future/milestones"), 
 #>             list(text = "The Futureverse Project", href = "https://www.futureverse.org/"), 
@@ -3085,7 +3106,7 @@ res <- tryCatch({
 #>             bootstrap = 5L, `light-switch` = TRUE)), desc = <environment>, 
 #>     bs_version = 5L, development = list(destination = "dev", 
 #>         mode = "default", version_label = "muted", in_dev = FALSE, 
-#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/RtmpONWkvk/future/docs", 
+#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/RtmppjB0Zh/future/docs", 
 #>     lang = "en-US", install_metadata = FALSE, figures = list(
 #>         dev = "ragg::agg_png", dpi = 96L, dev.args = list(), 
 #>         fig.ext = "png", fig.width = 7.29166666666667, fig.height = NULL, 
@@ -4437,7 +4458,10 @@ res <- tryCatch({
 #>                   list("FutureCluster"), ".\n"), "\n", list("\n", 
 #>                   list("WARNING: Please note that this sets up a stateless set of cluster nodes,\n", 
 #>                     "which means that ", list("clusterEvalQ(cl, { a <- 3.14 })"), 
-#>                     " will not work.\n", "Consider this a first beta version and use it with great care,\n", 
+#>                     " will not work.\n", "The exception is ", 
+#>                     list("clusterEvalQ()"), " calls that only attach packages,\n", 
+#>                     "e.g. ", list("clusterEvalQ(cl, library(pkg))"), 
+#>                     ", which are supported.\n", "Consider this a first beta version and use it with great care,\n", 
 #>                     "particularly because of the stateless nature of the cluster.\n", 
 #>                     "For now, I recommend to manually validate that you can get identical\n", 
 #>                     "results using this cluster type with what you get from using the\n", 
@@ -4471,8 +4495,9 @@ res <- tryCatch({
 #>                   list("clusterEvalQ(cl[2:1], ...)"), " in\n", 
 #>                   "the above example will all give an error.\n", 
 #>                   "\n", "Exceptions to the latter limitation are ", 
-#>                   list("clusterSetRNGStream()"), "\n", "and ", 
-#>                   list("clusterExport()"), ", which can be safely used with future clusters.\n", 
+#>                   list("clusterSetRNGStream()"), ",\n", list(
+#>                     "clusterExport()"), ", and ", list("clusterEvalQ()"), 
+#>                   " calls that only attach\n", "packages, which can be safely used with future clusters.\n", 
 #>                   "See below for more details.\n")), "\n", "\n", 
 #>                 list(list("clusterSetRNGStream"), list("\n", 
 #>                   "\n", list(list("parallel::clusterSetRNGStream()")), 
@@ -4488,11 +4513,24 @@ res <- tryCatch({
 #>                   " assign values to the cluster nodes.\n", "Specifically, these values are recorded and are used as globals\n", 
 #>                   "for all futures created there on.\n")), "\n", 
 #>                 "\n", list(list("clusterEvalQ"), list("\n", "\n", 
-#>                   "If ", list("clusterEvalQ()"), " is called, the call is ignored, and an error\n", 
-#>                   "is produced. The error can be de-escalated to a warning by setting\n", 
-#>                   "R option ", list("future.ClusterFuture.clusterEvalQ"), 
-#>                   " to ", list("\"warning\""), ".\n")), "\n", 
-#>                 "\n", list(list("Benefits of using makeClusterFuture()"), 
+#>                   list(list("parallel::clusterEvalQ()")), " is supported only for expressions that\n", 
+#>                   "attach packages and nothing else, e.g.\n", 
+#>                   list("\n", list(), " ", list("clusterEvalQ(cl, library(pkg))"), 
+#>                     "\n", list(), " ", list("clusterEvalQ(cl, { library(pkg1); library(pkg2) })"), 
+#>                     "\n", list(), " ", list("clusterEvalQ(cl, require(\"pkg\"))"), 
+#>                     "\n", list(), " ", list("clusterEvalQ(cl, suppressPackageStartupMessages(library(pkg)))"), 
+#>                     "\n", list(), " ", list("clusterEvalQ(cl, library(pkg, character.only = TRUE))"), 
+#>                     "\n"), "\n", "\n", "The packages are recorded and attached by all following futures,\n", 
+#>                   "similarly to how ", list("future(..., packages = pkgs)"), 
+#>                   " works.\n", "For all other expressions, including those that mix ", 
+#>                   list("library()"), "\n", "calls with other code, are ignored and an error is produced.\n", 
+#>                   "The error can be de-escalated to a warning by setting R option\n", 
+#>                   list("future.ClusterFuture.clusterEvalQ"), 
+#>                   " to ", list("\"warning\""), ".\n", "\n", "Note that the packages are not attached when ", 
+#>                   list("clusterEvalQ()"), " is\n", "called, but when the futures are evaluated. This means that\n", 
+#>                   "package-loading errors are deferred to ", 
+#>                   list("parLapply()"), " etc.\n")), "\n", "\n", 
+#>                 list(list("Benefits of using makeClusterFuture()"), 
 #>                   list("\n", "\n", "\n", "Many packages rely on traditional ", 
 #>                     list("parallel"), " functions such as\n", 
 #>                     list("parallel::parLapply()"), " and ", list(
@@ -4519,7 +4557,11 @@ res <- tryCatch({
 #>                   "\n", "y <- parallel::parLapply(cl, 11:13, function(x) {\n", 
 #>                   "  message(\"Process ID: \", Sys.getpid())\n", 
 #>                   "  mean(rnorm(n = x))\n", "})\n", "str(y)\n", 
-#>                   "\n", "plan(sequential)\n", list("}) # examplesIf"), 
+#>                   "\n", "## Attach the 'tools' package for all future parallel tasks\n", 
+#>                   "parallel::clusterEvalQ(cl, library(tools))\n", 
+#>                   "\n", "y <- parallel::parLapply(cl, c(\"a.txt\", \"b.R\"), function(x) {\n", 
+#>                   "  file_ext(x)\n", "})\n", "str(y)\n", "\n", 
+#>                   "plan(sequential)\n", list("}) # examplesIf"), 
 #>                   "\n"), "\n", list("internal"), "\n"), mandelbrot.Rd = list(
 #>                 "% Generated by roxygen2: do not edit by hand", 
 #>                 "\n", "% Please edit documentation in R/demo_api-mandelbrot.R", 

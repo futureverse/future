@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.75.0-9003</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.75.0-9008</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -80,6 +80,11 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="version-development-version">Version (development version)<a class="anchor" aria-label="anchor" href="#version-development-version"></a></h2>
+<div class="section level3">
+<h3 id="new-features-development-version">New Features<a class="anchor" aria-label="anchor" href="#new-features-development-version"></a></h3>
+<ul><li>
+<code><a href="https://rdrr.io/r/parallel/clusterApply.html" class="external-link">parallel::clusterEvalQ()</a></code> on a <code><a href="../reference/makeClusterFuture.html">makeClusterFuture()</a></code> used to be produce an error, because one cannot assume that future clusters have persistent workers. That is now relaxed when the expression only attaches packages, e.g. <code>clusterEvalQ(cl, library(pkg))</code>, <code>clusterEvalQ(cl, { library(pkg1); library(pkg2) })</code>, and <code>clusterEvalQ(cl, library(pkg, character.only = TRUE))</code>. Such packages are recorded and attached by all futures when launched. Other types of expressions are still not supported and produce errors.</li>
+</ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-development-version">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h3>
 <ul><li><p>A future failed with “cannot change working directory” if the current working directory could not be entered (some file systems might not allow it). This was a regression bug introduced in <strong>future</strong> 1.40.0 (2025-04-10).</p></li>

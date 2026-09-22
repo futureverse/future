@@ -68,7 +68,7 @@ message("Result: ", v)
 
 ## The value of the canceled future is an error
 try(v <- value(fs[!r]))
-#> Error : Future (<unnamed-3>) of class MultisessionFuture was canceled (pid 1906464) [future <unnamed-3> (e9a7d0f9749e57e4e6ad4d203728ac40-3); on e9a7d0f9749e57e4e6ad4d203728ac40@hb-x1-2023<1906244> at 2026-09-20 10:44:13.336789]
+#> Error : Future (<unnamed-3>) of class MultisessionFuture was canceled (pid 2766515) [future <unnamed-3> (0da73a37bb4cb5e2c007eb6ad539f8b2-3); on 0da73a37bb4cb5e2c007eb6ad539f8b2@hb-x1-2023<2766225> at 2026-09-22 11:25:37.108114]
 
 ## Shut down parallel workers
 plan(sequential)
