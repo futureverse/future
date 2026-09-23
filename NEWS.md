@@ -2,6 +2,37 @@
 
 ## New Features
 
+ * `parallel::clusterEvalQ()` on a `makeClusterFuture()` used to be
+   produce an error, because one cannot assume that future clusters
+   have persistent workers. That is now relaxed when the expression
+   only attaches packages, e.g.  `clusterEvalQ(cl, library(pkg))`,
+   `clusterEvalQ(cl, { library(pkg1); library(pkg2) })`, and
+   `clusterEvalQ(cl, library(pkg, character.only = TRUE))`. Such
+   packages are recorded and attached by all futures when launched.
+   Other types of expressions are still not supported and produce
+   errors.
+
+## Bug Fixes
+
+ * A future failed with "cannot change working directory" if the
+   current working directory could not be entered (some file systems
+   might not allow it). This was a regression bug introduced in
+   **future** 1.40.0 (2025-04-10).
+
+ * Using the deprecated argument `gc = TRUE` in `future()` would crash
+   `multisession` or `cluster` backends due to an internal error
+   passing unused arguments (`verbose = FALSE`, `reset = FALSE`) to
+   `gc()`.
+
+
+# Version 1.75.0 [2026-07-20]
+
+## Significant Changes
+
+ * Changed the package license to permissive Apache License (>= 2).
+
+## New Features
+
  * `print()` for `Future` objects now reports on parallelization
    efficiency when journaling is enabled via `options(future.journal =
    TRUE)`. The roundtrip is reported as "active" time (overhead +
