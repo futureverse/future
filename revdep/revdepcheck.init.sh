@@ -17,8 +17,9 @@ EOF
 
 ## Non-default system dependencies
 if command -v module &> /dev/null; then
-    module try-load CBI libblosc  ## pizzarr
-    module try-load CBI htslib    ## iscream
+    module try-load CBI libblosc         ## pizzarr
+    module try-load CBI htslib           ## iscream
+    module try-load CBI gdal netcdf proj ## terra
 fi    
 
 
@@ -29,11 +30,11 @@ fi
 ## Add packages to check
 revdep/run.R --add-children
 
-## Drop packages failing on CRAN (2026-07-19)
-revdep/run.R --rm dispositionEffect
+## Drop packages failing on CRAN (2026-09-23)
+revdep/run.R --rm dispositionEffect fmeffects
 
-## Drop packages failing on Bioconductor (2026-07-19)
-revdep/run.R --rm dar MineICA pgxRpi
+## Drop packages failing on Bioconductor (2026-09-23)
+revdep/run.R --rm MineICA pgxRpi
 
 ## Drop packages no longer on CRAN (2026-07-19)
 #revdep/run.R --rm ...
@@ -59,11 +60,11 @@ pkgs_threads=()
 # Too many cores /2026-04-16
 ## FIXME: Some of these package should be moved to 'pkgs_treads'
 pkgs_cores=()
-revdep/run.R --rm "${pkgs_cores[@]}"
+#revdep/run.R --rm "${pkgs_cores[@]}"
 
 ## Too many cores due to detectCores
 pkgs_detectCores=()
-revdep/run.R --rm "${pkgs_detectCores[@]}"
+#revdep/run.R --rm "${pkgs_detectCores[@]}"
 
 ## Run revdep check
 revdep/run.R
