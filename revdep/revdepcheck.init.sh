@@ -17,8 +17,9 @@ EOF
 
 ## Non-default system dependencies
 if command -v module &> /dev/null; then
-    module try-load CBI libblosc  ## pizzarr
-    module try-load CBI htslib    ## iscream
+    module try-load CBI libblosc         ## pizzarr
+    module try-load CBI htslib           ## iscream
+    module try-load CBI gdal netcdf proj ## terra
 fi    
 
 
@@ -33,7 +34,7 @@ revdep/run.R --add-children
 revdep/run.R --rm dispositionEffect
 
 ## Drop packages failing on Bioconductor (2026-07-19)
-revdep/run.R --rm dar MineICA pgxRpi
+revdep/run.R --rm MineICA pgxRpi
 
 ## Drop packages no longer on CRAN (2026-07-19)
 #revdep/run.R --rm ...
