@@ -9,20 +9,21 @@
 #'  switch to use the ones from the \pkg{parallelly} package. Thank you!_
 #'
 #' * [parallelly::availableCores()]
-#    Used by: ale (1), BatchGetSymbols (2), codalm (1), cft (1), deseats,
+#    Used by: ale (1), BatchGetSymbols (2), codalm (1), cft (1), deseats (3),
 #             elevatr (1), heterogen, PINstimation (1), powRICLPM (1),
-#             readsdr (1), recforest, sigminer (2), skpr (1), smoots,
+#             readsdr (1), recforest (3), sigminer (2), skpr (1), smoots (3),
 #             TriDimRegression (1), uci (1)
 #             [2025-12-22, 2026-01-31, 2026-04-04]
 #' * [parallelly::availableWorkers()]
 #    Used by: wqspt (1) [2025-03-15, 2026-02-01, 2026-08-03]
 #' * [parallelly::makeClusterPSOCK()]
-#    Used by: eatRep (1), interflex (2), ivDiag (1) [2026-04-20]
+#    Used by: eatRep (1), ivDiag (1) [2026-04-20]
 #' * [parallelly::supportsMulticore()]
 #    Used by: LandComp (1), polarisR (1) [2026-04-16]
 #
 #  (1) Issue filed or PR sent
 #  (2) In the next release
+#  (3) Has no online issue tracker
 #' 
 #' For backward-compatible reasons, _some_ of these functions remain
 #' available as exact copies also from this package (as re-exports), e.g.
