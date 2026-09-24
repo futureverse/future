@@ -5,14 +5,47 @@ false && R --quiet --no-save <<EOF
     tinytex::install_tinytex(force = TRUE)
     message("TeX root: ", tinytex::tinytex_root())
     tinytex::tlmgr_update()
-    tinytex::tlmgr_install("a4")       # WeightedCluster
-    tinytex::tlmgr_install("apacite")  # ctsem
-    tinytex::tlmgr_install("grfext")   # PeakSegDisk
-    tinytex::tlmgr_install("nowidow")  # QDNAseq
-    tinytex::tlmgr_install("pdfpages") # ARPALData
-    tinytex::tlmgr_install("setspace") # gstat
-    tinytex::tlmgr_install("textpos")  # WeightedCluster
-    tinytex::tlmgr_install("wrapfig")  # tramvs
+
+    # R package 'tramvs'
+    tinytex::tlmgr_install(c(
+      "doublestroke", # provides dsfont.sty
+      "natbib", 
+      "hyperref", 
+      "geometry", 
+      "amsfonts", 
+      "amsmath", 
+      "amscls",     # provides amsthm.sty
+      "booktabs", 
+      "multirow", 
+      "wrapfig", 
+      "float", 
+      "colortbl", 
+      "pdflscape", 
+      "ulem", 
+      "makecell", 
+      "mathtools", 
+      "xcolor", 
+      "psnfss"      # provides pifont.sty
+    ))
+
+    # R package WeightedCluster
+    tinytex::tlmgr_install(c(
+      "ae",
+      "babel-french",
+      "ntgclass",
+      "pgf",
+      "textpos"
+    ))
+
+    # Other R packages
+    tinytex::tlmgr_install(c(
+      "apacite",         # ctsem
+      "grfext",          # PeakSegDisk
+      "nowidow",         # QDNAseq
+      "pdfpages",        # ARPALData
+      "setspace",        # gstat
+      "wrapfig"          
+    ))
 EOF
 
 ## Non-default system dependencies
@@ -20,6 +53,7 @@ if command -v module &> /dev/null; then
     module try-load CBI libblosc         ## pizzarr
     module try-load CBI htslib           ## iscream
     module try-load CBI gdal netcdf proj ## terra
+    module try-load CBI symphony         ## SYMPHONY
 fi    
 
 
@@ -57,14 +91,13 @@ revdep/run.R --rm "${pkgs_seq[@]}"
 pkgs_threads=()
 #revdep/run.R --rm "${pkgs_threads[@]}"
 
-# Too many cores /2026-04-16
-## FIXME: Some of these package should be moved to 'pkgs_treads'
+# Too many cores /2026-09-23
 pkgs_cores=()
 #revdep/run.R --rm "${pkgs_cores[@]}"
 
-## Too many cores due to detectCores
-pkgs_detectCores=()
-#revdep/run.R --rm "${pkgs_detectCores[@]}"
+## Too many cores due to detectCores /2026-09-23
+pkgs_detectCores=(STARRS)
+revdep/run.R --rm "${pkgs_detectCores[@]}"
 
 ## Run revdep check
 revdep/run.R
