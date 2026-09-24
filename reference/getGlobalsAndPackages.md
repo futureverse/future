@@ -37,8 +37,7 @@ getGlobalsAndPackages(
 
 - globals:
 
-  (optional) a logical, a character vector, a named list, or a
-  [Globals](https://globals.futureverse.org/reference/Globals.html)
+  (optional) a logical, a character vector, a named list, or a Globals
   object. If TRUE, globals are identified by code inspection based on
   `expr` and `tweak` searching from environment `envir`. If FALSE, no
   globals are used. If a character vector, then globals are identified
@@ -86,6 +85,5 @@ and `packages` (a character string).
 
 ## See also
 
-Internally,
-[`globalsOf()`](https://globals.futureverse.org/reference/globalsOf.html)
-is used to identify globals and associated packages from the expression.
+Internally, `globalsOf()` is used to identify globals and associated
+packages from the expression.

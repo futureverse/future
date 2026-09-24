@@ -20,14 +20,12 @@ cluster(
   A [`cluster`](https://rdrr.io/r/parallel/makeCluster.html) object, a
   character vector of host names, a positive numeric scalar, or a
   function. If a character vector or a numeric scalar, a `cluster`
-  object is created using
-  [`makeClusterPSOCK`](https://parallelly.futureverse.org/reference/makeClusterPSOCK.html)`(workers)`.
-  If a function, it is called without arguments *when the future is
-  created* and its value is used to configure the workers. The function
-  should return any of the above types. If `workers == 1`, then all
-  processing using done in the current/main R session and we therefore
-  fall back to using a sequential future. To override this fallback, use
-  `workers = I(1)`.
+  object is created using `makeClusterPSOCK(workers)`. If a function, it
+  is called without arguments *when the future is created* and its value
+  is used to configure the workers. The function should return any of
+  the above types. If `workers == 1`, then all processing using done in
+  the current/main R session and we therefore fall back to using a
+  sequential future. To override this fallback, use `workers = I(1)`.
 
 - persistent:
 

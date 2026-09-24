@@ -20,6 +20,5 @@ should pass `R CMD check --as-cran`, which will also be checked by
 Actions](https://github.com/futureverse/future/actions?query=workflow%3AR-CMD-check)
 and when the PR is submitted.
 
-We abide to the [Code of
-Conduct](https://www.contributor-covenant.org/version/2/0/code_of_conduct/)
-of Contributor Covenant.
+We abide by the [Futureverse Code of
+Conduct](https://www.futureverse.org/code-of-conduct.html).

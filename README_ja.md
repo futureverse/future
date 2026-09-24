@@ -364,8 +364,7 @@ Slurm）を使用する場合、与えられたジョブに割り当てられた
 このデフォルトの値は
 [`parallel::detectCores()`](https://rdrr.io/r/parallel/detectCores.html)
 で確認できる。 詳細については
-[`help("availableCores", package = "parallelly")`](https://parallelly.futureverse.org/reference/availableCores.html)
-を参照してほしい。
+`help("availableCores", package = "parallelly")` を参照してほしい。
 
 #### マルチコアフューチャ (Multicore Future)
 

@@ -49,11 +49,10 @@ Not all operating systems support process forking and thereby not
 multicore futures. For instance, forking is not supported on Microsoft
 Windows. Moreover, process forking may break some R environments such as
 RStudio. Because of this, the future package disables process forking
-also in such cases. See
-[`parallelly::supportsMulticore()`](https://parallelly.futureverse.org/reference/supportsMulticore.html)
-for details. Trying to create multicore futures on non-supported systems
-or when forking is disabled will result in multicore futures falling
-back to becoming
+also in such cases. See `parallelly::supportsMulticore()` for details.
+Trying to create multicore futures on non-supported systems or when
+forking is disabled will result in multicore futures falling back to
+becoming
 [sequential](https://future.futureverse.org/reference/sequential.md)
 futures. If used in RStudio, there will be an informative warning:
 
@@ -92,13 +91,10 @@ For alternative future backends, see the 'A Future for R: Available
 Future Backends' vignette and
 <https://www.futureverse.org/backends.html>.
 
-Use
-[`parallelly::availableCores()`](https://parallelly.futureverse.org/reference/availableCores.html)
-to see the total number of cores that are available for the current R
-session. Use
-[`availableCores`](https://parallelly.futureverse.org/reference/availableCores.html)`("multicore") > 1L`
-to check whether multicore futures are supported or not on the current
-system.
+Use `parallelly::availableCores()` to see the total number of cores that
+are available for the current R session. Use
+`availableCores("multicore") > 1L` to check whether multicore futures
+are supported or not on the current system.
 
 ## Examples
 

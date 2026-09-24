@@ -576,8 +576,7 @@ reverse-dependency checks, **future.tests** checks, and more.
 
 - All parallel backends now prevent nested parallelization, unless
   explicitly allowed, e.g. settings recognized by
-  [`parallelly::availableCores()`](https://parallelly.futureverse.org/reference/availableCores.html)
-  or set by the future
+  `parallelly::availableCores()` or set by the future
   [`plan()`](https://future.futureverse.org/reference/plan.md).
   Previously, this had to be implemented by each backend, but now it’s
   handled automatically by the future framework.
@@ -640,12 +639,10 @@ reverse-dependency checks, **future.tests** checks, and more.
   to the **parallelly** package. For backward-compatibility reasons,
   those functions were kept in **future** as re-exports,
   e.g. [`future::makeClusterPSOCK()`](https://future.futureverse.org/reference/re-exports.md)
-  still works, whereas
-  [`parallelly::makeClusterPSOCK()`](https://parallelly.futureverse.org/reference/makeClusterPSOCK.html)
-  is the preferred use. The long-term goal is to clean out these
-  re-exports. Starting with this release, the **future** package no
-  longer re-exports `autoStopCluster()`, `makeClusterMPI()`,
-  `makeNodePSOCK()`.
+  still works, whereas `parallelly::makeClusterPSOCK()` is the preferred
+  use. The long-term goal is to clean out these re-exports. Starting
+  with this release, the **future** package no longer re-exports
+  `autoStopCluster()`, `makeClusterMPI()`, `makeNodePSOCK()`.
 
 ## Version 1.34.0
 
@@ -661,7 +658,7 @@ CRAN release: 2024-07-29
 ### Performance
 
 - Size calculation of globals is now done using the much faster
-  [`parallelly::serializedSize()`](https://parallelly.futureverse.org/reference/serializedSize.html).
+  `parallelly::serializedSize()`.
 
 ### Bug Fixes
 

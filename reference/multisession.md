@@ -35,8 +35,7 @@ multisession(
   when `plan(multisession)` is called. Any changes to
   [`.libPaths()`](https://rdrr.io/r/base/libPaths.html) in the main R
   session after the workers have been created will have no effect.* This
-  is passed down as-is to
-  [`parallelly::makeClusterPSOCK()`](https://parallelly.futureverse.org/reference/makeClusterPSOCK.html).
+  is passed down as-is to `parallelly::makeClusterPSOCK()`.
 
 - ...:
 
@@ -70,8 +69,7 @@ The background R sessions (the "workers") are created using
 [`makeClusterPSOCK()`](https://future.futureverse.org/reference/re-exports.md).
 
 For the total number of R sessions available including the current/main
-R process, see
-[`parallelly::availableCores()`](https://parallelly.futureverse.org/reference/availableCores.html).
+R process, see `parallelly::availableCores()`.
 
 A multisession future is a special type of cluster future.
 
@@ -81,10 +79,8 @@ For processing in multiple forked R sessions, see
 [multicore](https://future.futureverse.org/reference/multicore.md)
 futures.
 
-Use
-[`parallelly::availableCores()`](https://parallelly.futureverse.org/reference/availableCores.html)
-to see the total number of cores that are available for the current R
-session.
+Use `parallelly::availableCores()` to see the total number of cores that
+are available for the current R session.
 
 ## Examples
 

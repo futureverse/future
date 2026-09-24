@@ -117,7 +117,7 @@ To avoid this, use <code>plan(multisession, ..., rscript_libs = NULL)</code>.
 created, i.e. when <code>plan(multisession)</code> is called.  Any changes to
 <code><a href="https://rdrr.io/r/base/libPaths.html" class="external-link">.libPaths()</a></code> in the main R session after the workers have been created
 will have no effect.</em>
-This is passed down as-is to <code><a href="https://parallelly.futureverse.org/reference/makeClusterPSOCK.html" class="external-link">parallelly::makeClusterPSOCK()</a></code>.</p></dd>
+This is passed down as-is to <code>parallelly::makeClusterPSOCK()</code>.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
@@ -149,14 +149,14 @@ typical usages are:</p>
 <code><a href="re-exports.html">makeClusterPSOCK()</a></code>.</p>
 <p>For the total number of
 <span style="R">R</span> sessions available including the current/main <span style="R">R</span> process, see
-<code><a href="https://parallelly.futureverse.org/reference/availableCores.html" class="external-link">parallelly::availableCores()</a></code>.</p>
+<code>parallelly::availableCores()</code>.</p>
 <p>A multisession future is a special type of cluster future.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p>For processing in multiple forked <span style="R">R</span> sessions, see
 <a href="multicore.html">multicore</a> futures.</p>
-<p>Use <code><a href="https://parallelly.futureverse.org/reference/availableCores.html" class="external-link">parallelly::availableCores()</a></code> to see the total number of
+<p>Use <code>parallelly::availableCores()</code> to see the total number of
 cores that are available for the current <span style="R">R</span> session.</p></div>
     </div>
 

@@ -256,8 +256,7 @@ if set.
 - future.globals.method::
 
   (character string) Method used to identify globals. For details, see
-  [`globalsOf()`](https://globals.futureverse.org/reference/globalsOf.html).
-  (Default: `"ordered"`)
+  `globalsOf()`. (Default: `"ordered"`)
 
 - future.globals.resolve::
 
@@ -287,17 +286,17 @@ future.globals.maxSize is set to `50000000` (numeric).
 
 Several functions have been moved to the parallelly package:
 
-- [`parallelly::availableCores()`](https://parallelly.futureverse.org/reference/availableCores.html)
+- `parallelly::availableCores()`
 
-- [`parallelly::availableWorkers()`](https://parallelly.futureverse.org/reference/availableWorkers.html)
+- `parallelly::availableWorkers()`
 
-- [`parallelly::makeClusterMPI()`](https://parallelly.futureverse.org/reference/makeClusterMPI.html)
+- `parallelly::makeClusterMPI()`
 
-- [`parallelly::makeClusterPSOCK()`](https://parallelly.futureverse.org/reference/makeClusterPSOCK.html)
+- `parallelly::makeClusterPSOCK()`
 
-- [`parallelly::makeNodePSOCK()`](https://parallelly.futureverse.org/reference/makeClusterPSOCK.html)
+- `parallelly::makeNodePSOCK()`
 
-- [`parallelly::supportsMulticore()`](https://parallelly.futureverse.org/reference/supportsMulticore.html)
+- `parallelly::supportsMulticore()`
 
 The options and environment variables controlling those have been
 adjusted accordingly to have different prefixes. For example, option
@@ -305,9 +304,8 @@ future.fork.enable has been renamed to parallelly.fork.enable and the
 corresponding environment variable `R_FUTURE_FORK_ENABLE` has been
 renamed to `R_PARALLELLY_FORK_ENABLE`. For backward compatibility
 reasons, the parallelly package will support both versions for a long
-foreseeable time. See the
-[parallelly::parallelly.options](https://parallelly.futureverse.org/reference/zzz-parallelly.options.html)
-page for the settings.
+foreseeable time. See the parallelly::parallelly.options page for the
+settings.
 
 ## See also
 

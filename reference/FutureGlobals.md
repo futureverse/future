@@ -33,6 +33,5 @@ An object of class `FutureGlobals`.
 
 ## Details
 
-This class extends the
-[Globals](https://globals.futureverse.org/reference/Globals.html) class
-by adding attributes `resolved` and `total_size`.
+This class extends the Globals class by adding attributes `resolved` and
+`total_size`.

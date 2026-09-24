@@ -104,7 +104,7 @@ It may only be used with <code><a href="plan.html">plan()</a></code></em></p>
 a character vector of host names, a positive numeric scalar,
 or a function.
 If a character vector or a numeric scalar, a <code>cluster</code> object
-is created using <code><a href="https://parallelly.futureverse.org/reference/makeClusterPSOCK.html" class="external-link">makeClusterPSOCK</a>(workers)</code>.
+is created using <code>makeClusterPSOCK(workers)</code>.
 If a function, it is called without arguments <em>when the future
 is created</em> and its value is used to configure the workers.
 The function should return any of the above types.

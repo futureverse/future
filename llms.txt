@@ -398,7 +398,7 @@ acknowledges these as well. If nothing else is specified, all available
 cores on the machine will be utilized,
 cf. [`parallel::detectCores()`](https://rdrr.io/r/parallel/detectCores.html).
 For more details, please see
-[`help("availableCores", package = "parallelly")`](https://parallelly.futureverse.org/reference/availableCores.html).
+`help("availableCores", package = "parallelly")`.
 
 #### Multicore Futures
 

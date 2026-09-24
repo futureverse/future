@@ -297,7 +297,7 @@ if set.</p>
 
 
 <dt><span class="option">future.globals.method</span>:</dt>
-<dd><p>(character string) Method used to identify globals. For details, see <code><a href="https://globals.futureverse.org/reference/globalsOf.html" class="external-link">globalsOf()</a></code>. (Default: <code>"ordered"</code>)</p></dd>
+<dd><p>(character string) Method used to identify globals. For details, see <code>globalsOf()</code>. (Default: <code>"ordered"</code>)</p></dd>
 
 
 <dt><span class="option">future.globals.resolve</span>:</dt>
@@ -322,12 +322,12 @@ Similarly, if <code>R_FUTURE_GLOBALS_MAXSIZE="50000000"</code>, then option
     <h2 id="options-moved-to-the-parallelly-package">Options moved to the 'parallelly' package<a class="anchor" aria-label="anchor" href="#options-moved-to-the-parallelly-package"></a></h2>
 
 
-<p>Several functions have been moved to the <span class="pkg">parallelly</span> package:</p><ul><li><p><code><a href="https://parallelly.futureverse.org/reference/availableCores.html" class="external-link">parallelly::availableCores()</a></code></p></li>
-<li><p><code><a href="https://parallelly.futureverse.org/reference/availableWorkers.html" class="external-link">parallelly::availableWorkers()</a></code></p></li>
-<li><p><code><a href="https://parallelly.futureverse.org/reference/makeClusterMPI.html" class="external-link">parallelly::makeClusterMPI()</a></code></p></li>
-<li><p><code><a href="https://parallelly.futureverse.org/reference/makeClusterPSOCK.html" class="external-link">parallelly::makeClusterPSOCK()</a></code></p></li>
-<li><p><code><a href="https://parallelly.futureverse.org/reference/makeClusterPSOCK.html" class="external-link">parallelly::makeNodePSOCK()</a></code></p></li>
-<li><p><code><a href="https://parallelly.futureverse.org/reference/supportsMulticore.html" class="external-link">parallelly::supportsMulticore()</a></code></p></li>
+<p>Several functions have been moved to the <span class="pkg">parallelly</span> package:</p><ul><li><p><code>parallelly::availableCores()</code></p></li>
+<li><p><code>parallelly::availableWorkers()</code></p></li>
+<li><p><code>parallelly::makeClusterMPI()</code></p></li>
+<li><p><code>parallelly::makeClusterPSOCK()</code></p></li>
+<li><p><code>parallelly::makeNodePSOCK()</code></p></li>
+<li><p><code>parallelly::supportsMulticore()</code></p></li>
 </ul><p>The options and environment variables controlling those have been adjusted
 accordingly to have different prefixes.
 For example, option <span class="option">future.fork.enable</span> has been renamed to
@@ -336,7 +336,7 @@ For example, option <span class="option">future.fork.enable</span> has been rena
 <code class="env">R_PARALLELLY_FORK_ENABLE</code>.
 For backward compatibility reasons, the <span class="pkg">parallelly</span> package will
 support both versions for a long foreseeable time.
-See the <a href="https://parallelly.futureverse.org/reference/zzz-parallelly.options.html" class="external-link">parallelly::parallelly.options</a> page for the settings.</p>
+See the parallelly::parallelly.options page for the settings.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>

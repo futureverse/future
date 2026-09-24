@@ -10,13 +10,13 @@ the future framework.
 *If you are using any of these from the future package, please switch to
 use the ones from the parallelly package. Thank you!*
 
-- [`parallelly::availableCores()`](https://parallelly.futureverse.org/reference/availableCores.html)
+- `parallelly::availableCores()`
 
-- [`parallelly::availableWorkers()`](https://parallelly.futureverse.org/reference/availableWorkers.html)
+- `parallelly::availableWorkers()`
 
-- [`parallelly::makeClusterPSOCK()`](https://parallelly.futureverse.org/reference/makeClusterPSOCK.html)
+- `parallelly::makeClusterPSOCK()`
 
-- [`parallelly::supportsMulticore()`](https://parallelly.futureverse.org/reference/supportsMulticore.html)
+- `parallelly::supportsMulticore()`
 
 For backward-compatible reasons, *some* of these functions remain
 available as exact copies also from this package (as re-exports), e.g.
