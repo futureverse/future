@@ -288,6 +288,11 @@ check_Rex:
 covr:
 	$(R_SCRIPT) -e "c <- covr::package_coverage(quiet = FALSE); saveRDS(c, '.covr.rds'); print(c); covr::report(c)"
 
+# Generate CITATION.cff from DESCRIPTION and inst/CITATION
+# without 'version' and 'date-released', so it does not go stale
+citation:
+	$(R_SCRIPT) -e "cffr::cff_write(dependencies = FALSE, gh_keywords = FALSE, keys = list(doi = '10.32614/CRAN.package.$(PKG_NAME)', identifiers = NULL, version = NULL, 'date-released' = NULL))"
+
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Install and build binaries

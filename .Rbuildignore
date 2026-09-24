@@ -10,3 +10,4 @@
 ^Makefile$
 ^.*[.]tar[.]gz$
 ^[.]pre-commit-config.yaml$
+^CITATION\.cff$
