@@ -6,9 +6,8 @@
 ^LICENSE[.]md$
 ^INSTALL[.]md$
 ^OVERVIEW[.]md$
-^CONDUCT[.]md$
-^CONTRIBUTING[.]md$
 ^README.*[.]md$
 ^Makefile$
 ^.*[.]tar[.]gz$
 ^[.]pre-commit-config.yaml$
+^CITATION\.cff$
