@@ -45,11 +45,6 @@ getGlobalsAndPackages(
   `envir`. If a named list or a Globals object, the globals are used as
   is.
 
-- locals:
-
-  Should globals part of any "local" environment of a function be
-  included or not?
-
 - resolve:
 
   If TRUE, any future that is a global variables (or part of one) is

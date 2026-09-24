@@ -2,6 +2,12 @@
 
 ## Version (development version)
 
+- …
+
+## Version 1.76.0
+
+CRAN release: 2026-09-24
+
 ### New Features
 
 - [`parallel::clusterEvalQ()`](https://rdrr.io/r/parallel/clusterApply.html)
@@ -3294,8 +3300,7 @@ CRAN release: 2016-01-20
 - Add
   [`futureCall()`](https://future.futureverse.org/reference/future.md),
   which is for futures what
-  [`do.call()`](https://rdrr.io/pkg/BiocGenerics/man/do.call.html) is
-  otherwise.
+  [`do.call()`](https://rdrr.io/r/base/do.call.html) is otherwise.
 
 - Standardized how options are named, i.e. `future.<option>`. If you
   used any future options previously, make sure to check they follow the

@@ -42,9 +42,9 @@ res <- tryCatch({
 #> [[1]]
 #> base::tryCatch(base::withCallingHandlers({
 #>     NULL
-#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpJjAqkY/callr-fun-38904827428a11"), 
+#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/Rtmp5c4qz7/callr-fun-3bcc8a3a7c773e"), 
 #>         base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
-#>         quote = TRUE), file = "/tmp/hb/RtmpJjAqkY/callr-res-38904847d7ea0c", 
+#>         quote = TRUE), file = "/tmp/hb/Rtmp5c4qz7/callr-res-3bcc8a79e3c04c", 
 #>         compress = FALSE)
 #>     base::flush(base::stdout())
 #>     base::flush(base::stderr())
@@ -73,7 +73,7 @@ res <- tryCatch({
 #>         if (callr_data$has_otel) {
 #>             callr_data$otel_span$record_exception(e2)
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpJjAqkY/callr-res-38904847d7ea0c", 
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/Rtmp5c4qz7/callr-res-3bcc8a79e3c04c", 
 #>             ".error"))
 #>     }
 #> }, interrupt = function(e) {
@@ -99,7 +99,7 @@ res <- tryCatch({
 #>         if (callr_data$has_otel) {
 #>             callr_data$otel_span$record_exception(e2)
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpJjAqkY/callr-res-38904847d7ea0c", 
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/Rtmp5c4qz7/callr-res-3bcc8a79e3c04c", 
 #>             ".error"))
 #>     }
 #> }, callr_message = function(e) {
@@ -143,9 +143,9 @@ res <- tryCatch({
 #> [[8]]
 #> base::withCallingHandlers({
 #>     NULL
-#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpJjAqkY/callr-fun-38904827428a11"), 
+#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/Rtmp5c4qz7/callr-fun-3bcc8a3a7c773e"), 
 #>         base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
-#>         quote = TRUE), file = "/tmp/hb/RtmpJjAqkY/callr-res-38904847d7ea0c", 
+#>         quote = TRUE), file = "/tmp/hb/Rtmp5c4qz7/callr-res-3bcc8a79e3c04c", 
 #>         compress = FALSE)
 #>     base::flush(base::stdout())
 #>     base::flush(base::stderr())
@@ -174,7 +174,7 @@ res <- tryCatch({
 #>         if (callr_data$has_otel) {
 #>             callr_data$otel_span$record_exception(e2)
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpJjAqkY/callr-res-38904847d7ea0c", 
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/Rtmp5c4qz7/callr-res-3bcc8a79e3c04c", 
 #>             ".error"))
 #>     }
 #> }, interrupt = function(e) {
@@ -200,7 +200,7 @@ res <- tryCatch({
 #>         if (callr_data$has_otel) {
 #>             callr_data$otel_span$record_exception(e2)
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpJjAqkY/callr-res-38904847d7ea0c", 
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/Rtmp5c4qz7/callr-res-3bcc8a79e3c04c", 
 #>             ".error"))
 #>     }
 #> }, callr_message = function(e) {
@@ -208,13 +208,13 @@ res <- tryCatch({
 #> })
 #> 
 #> [[9]]
-#> base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpJjAqkY/callr-fun-38904827428a11"), 
+#> base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/Rtmp5c4qz7/callr-fun-3bcc8a3a7c773e"), 
 #>     base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
-#>     quote = TRUE), file = "/tmp/hb/RtmpJjAqkY/callr-res-38904847d7ea0c", 
+#>     quote = TRUE), file = "/tmp/hb/Rtmp5c4qz7/callr-res-3bcc8a79e3c04c", 
 #>     compress = FALSE)
 #> 
 #> [[10]]
-#> base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpJjAqkY/callr-fun-38904827428a11"), 
+#> base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/Rtmp5c4qz7/callr-fun-3bcc8a3a7c773e"), 
 #>     base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
 #>     quote = TRUE)
 #> 
@@ -231,8 +231,8 @@ res <- tryCatch({
 #>     options(cli.num_colors = cli_colors, cli.hyperlink = hyperlinks, 
 #>         cli.hyperlink_run = hyperlinks)
 #>     pkgdown::build_site(...)
-#> }), base::quote(list(pkg = list(package = "future", version = "1.75.0-9008", 
-#>     src_path = "/tmp/hb/RtmpJjAqkY/future", meta = list(url = "https://future.futureverse.org", 
+#> }), base::quote(list(pkg = list(package = "future", version = "1.76.0-9000", 
+#>     src_path = "/tmp/hb/Rtmp5c4qz7/future", meta = list(url = "https://future.futureverse.org", 
 #>         home = list(links = list(list(text = "Roadmap/Milestones", 
 #>             href = "https://github.com/futureverse/future/milestones"), 
 #>             list(text = "The Futureverse Project", href = "https://www.futureverse.org/"), 
@@ -273,7 +273,7 @@ res <- tryCatch({
 #>             bootstrap = 5L, `light-switch` = TRUE)), desc = <environment>, 
 #>     bs_version = 5L, development = list(destination = "dev", 
 #>         mode = "default", version_label = "muted", in_dev = FALSE, 
-#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/RtmpJjAqkY/future/docs", 
+#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/Rtmp5c4qz7/future/docs", 
 #>     lang = "en-US", install_metadata = FALSE, figures = list(
 #>         dev = "ragg::agg_png", dpi = 96L, dev.args = list(), 
 #>         fig.ext = "png", fig.width = 7.29166666666667, fig.height = NULL, 
@@ -1586,9 +1586,7 @@ res <- tryCatch({
 #>                     list("envir"), ".  If FALSE, no globals are used.  If a character vector, then globals are identified by lookup based their names ", 
 #>                     list("globals"), " searching from environment ", 
 #>                     list("envir"), ".  If a named list or a Globals object, the globals are used as is.")), 
-#>                   "\n", "\n", list(list("locals"), list("Should globals part of any \"local\" environment of\n", 
-#>                     "a function be included or not?")), "\n", 
-#>                   "\n", list(list("resolve"), list("If TRUE, any future that is a global variables (or part of one) is resolved and replaced by a \"constant\" future.")), 
+#>                   "\n", "\n", list(list("resolve"), list("If TRUE, any future that is a global variables (or part of one) is resolved and replaced by a \"constant\" future.")), 
 #>                   "\n", "\n", list(list("persistent"), list("If TRUE, non-existing globals (= identified in expression but not found in memory) are always silently ignored and assumed to be existing in the evaluation environment.  If FALSE, non-existing globals are by default ignored, but may also trigger an informative error if option ", 
 #>                     list("future.globals.onMissing"), " in ", 
 #>                     list("\"error\""), " (should only be used for troubleshooting).")), 
@@ -3074,8 +3072,8 @@ res <- tryCatch({
 #>     options(cli.num_colors = cli_colors, cli.hyperlink = hyperlinks, 
 #>         cli.hyperlink_run = hyperlinks)
 #>     pkgdown::build_site(...)
-#> })(pkg = base::quote(list(package = "future", version = "1.75.0-9008", 
-#>     src_path = "/tmp/hb/RtmpJjAqkY/future", meta = list(url = "https://future.futureverse.org", 
+#> })(pkg = base::quote(list(package = "future", version = "1.76.0-9000", 
+#>     src_path = "/tmp/hb/Rtmp5c4qz7/future", meta = list(url = "https://future.futureverse.org", 
 #>         home = list(links = list(list(text = "Roadmap/Milestones", 
 #>             href = "https://github.com/futureverse/future/milestones"), 
 #>             list(text = "The Futureverse Project", href = "https://www.futureverse.org/"), 
@@ -3116,7 +3114,7 @@ res <- tryCatch({
 #>             bootstrap = 5L, `light-switch` = TRUE)), desc = <environment>, 
 #>     bs_version = 5L, development = list(destination = "dev", 
 #>         mode = "default", version_label = "muted", in_dev = FALSE, 
-#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/RtmpJjAqkY/future/docs", 
+#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/Rtmp5c4qz7/future/docs", 
 #>     lang = "en-US", install_metadata = FALSE, figures = list(
 #>         dev = "ragg::agg_png", dpi = 96L, dev.args = list(), 
 #>         fig.ext = "png", fig.width = 7.29166666666667, fig.height = NULL, 
@@ -4429,9 +4427,7 @@ res <- tryCatch({
 #>                     list("envir"), ".  If FALSE, no globals are used.  If a character vector, then globals are identified by lookup based their names ", 
 #>                     list("globals"), " searching from environment ", 
 #>                     list("envir"), ".  If a named list or a Globals object, the globals are used as is.")), 
-#>                   "\n", "\n", list(list("locals"), list("Should globals part of any \"local\" environment of\n", 
-#>                     "a function be included or not?")), "\n", 
-#>                   "\n", list(list("resolve"), list("If TRUE, any future that is a global variables (or part of one) is resolved and replaced by a \"constant\" future.")), 
+#>                   "\n", "\n", list(list("resolve"), list("If TRUE, any future that is a global variables (or part of one) is resolved and replaced by a \"constant\" future.")), 
 #>                   "\n", "\n", list(list("persistent"), list("If TRUE, non-existing globals (= identified in expression but not found in memory) are always silently ignored and assumed to be existing in the evaluation environment.  If FALSE, non-existing globals are by default ignored, but may also trigger an informative error if option ", 
 #>                     list("future.globals.onMissing"), " in ", 
 #>                     list("\"error\""), " (should only be used for troubleshooting).")), 
