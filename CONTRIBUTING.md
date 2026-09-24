@@ -5,4 +5,4 @@ This Git repository uses the [Git Flow](https://nvie.com/posts/a-successful-git-
 
 Contributing to this package is easy.  Just send a [pull request](https://help.github.com/articles/using-pull-requests/).  When you send your PR, make sure `develop` is the destination branch on the [future repository](https://github.com/futureverse/future).  Your PR should pass `R CMD check --as-cran`, which will also be checked by  <a href="https://github.com/futureverse/future/actions?query=workflow%3AR-CMD-check">GitHub Actions</a> and  when the PR is submitted.
 
-We abide to the [Code of Conduct](https://www.contributor-covenant.org/version/2/0/code_of_conduct/) of Contributor Covenant.
+We abide by the [Futureverse Code of Conduct](https://www.futureverse.org/code-of-conduct.html).
