@@ -73,15 +73,15 @@ futureSessionInfo()
 #> *** Basic tests
 #> Main R session details:
 #>       pid     r sysname          release
-#> 1 3654839 4.6.1   Linux 7.0.0-30-generic
+#> 1 3707154 4.6.1   Linux 7.0.0-30-generic
 #>                                                            version nodename
 #> 1 #30~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Fri Aug  7 13:27:52 UTC 2  host001
 #>   machine   login    user effective_user
 #> 1  x86_64 user001 user001        user001
 #> Worker R session details:
 #>   worker     pid     r sysname          release
-#> 1      1 3655940 4.6.1   Linux 7.0.0-30-generic
-#> 2      2 3655941 4.6.1   Linux 7.0.0-30-generic
+#> 1      1 3708086 4.6.1   Linux 7.0.0-30-generic
+#> 2      2 3708087 4.6.1   Linux 7.0.0-30-generic
 #>                                                            version nodename
 #> 1 #30~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Fri Aug  7 13:27:52 UTC 2  host001
 #> 2 #30~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Fri Aug  7 13:27:52 UTC 2  host001

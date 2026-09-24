@@ -852,8 +852,3 @@ remotes::install_github("futureverse/future", ref="develop")
 ```
 
 これはソースからのインストールとなる。
-
-## 貢献
-
-このパッケージに貢献するには、[CONTRIBUTING.md](https://future.futureverse.org/CONTRIBUTING.md)
-を参照してほしい。

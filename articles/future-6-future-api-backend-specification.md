@@ -43,12 +43,12 @@ For example, the above three functions serve as building blocks in
 several higher-level map-reduce APIs. One example is the
 **[future.apply](https://future.apply.futureverse.org)** package on CRAN
 that provides `future_lapply()`, which is a futurized version of
-[`lapply()`](https://rdrr.io/r/base/lapply.html) available in the
-**base** package. This function can be used to perform the lapply-like
-processing in parallel using a parallel backend. The implementation of
-the **future.apply** package is 100% invariant to the parallel backend
-used. This is possible because all future backends conform to a set of
-rules. Rules that are documented below.
+[`lapply()`](https://rdrr.io/pkg/BiocGenerics/man/lapply.html) available
+in the **base** package. This function can be used to perform the
+lapply-like processing in parallel using a parallel backend. The
+implementation of the **future.apply** package is 100% invariant to the
+parallel backend used. This is possible because all future backends
+conform to a set of rules. Rules that are documented below.
 
 A supplement to the specification herein is the ‘Test Suite for Future
 API Backends’, which consists of a set of tests that can be used to

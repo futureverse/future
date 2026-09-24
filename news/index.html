@@ -58,6 +58,7 @@
     <li><a class="external-link dropdown-item" href="https://future.p2p.futureverse.org">future.p2p (experimental)</a></li>
     <li><a class="external-link dropdown-item" href="https://future.tools.futureverse.org">future.tools (experimental)</a></li>
     <li><a class="external-link dropdown-item" href="https://marshal.futureverse.org">marshal (experimental)</a></li>
+    <li><a class="external-link dropdown-item" href="https://rw.futureverse.org">rw (experimental)</a></li>
   </ul></li>
 <li class="nav-item"><a class="external-link nav-link" href="https://cloud.r-project.org/package=future"><span class="fa fab fa-r-project"></span></a></li>
 <li class="nav-item"><a class="external-link nav-link" href="https://github.com/futureverse/future/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
@@ -1414,7 +1415,7 @@
 <h3 id="new-features-0-11-0">New Features<a class="anchor" aria-label="anchor" href="#new-features-0-11-0"></a></h3>
 <ul><li><p>Add multisession futures, which analogously to multicore ones, use multiple cores on the local machine with the difference that they are evaluated in separate R session running in the background rather than separate forked R processes. A multisession future is a special type of cluster futures that do not require explicit setup of cluster nodes.</p></li>
 <li><p>Add support for cluster futures, which can make use of a cluster of nodes created by <code><a href="https://rdrr.io/r/parallel/makeCluster.html" class="external-link">parallel::makeCluster()</a></code>.</p></li>
-<li><p>Add <code><a href="../reference/future.html">futureCall()</a></code>, which is for futures what <code><a href="https://rdrr.io/r/base/do.call.html" class="external-link">do.call()</a></code> is otherwise.</p></li>
+<li><p>Add <code><a href="../reference/future.html">futureCall()</a></code>, which is for futures what <code><a href="https://rdrr.io/pkg/BiocGenerics/man/do.call.html" class="external-link">do.call()</a></code> is otherwise.</p></li>
 <li><p>Standardized how options are named, i.e. <code>future.&lt;option&gt;</code>. If you used any future options previously, make sure to check they follow the above format.</p></li>
 </ul></div>
 <div class="section level3">
