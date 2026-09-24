@@ -1,4 +1,4 @@
-# Version (development version)
+# Version 1.76.0
 
 ## New Features
 
