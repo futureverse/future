@@ -2,7 +2,7 @@
 pkgs_mapreduce <- c("futurize", "future.apply", "doFuture", "furrr")
 pkgs_backend <- c("future.batchtools", "future.callr", "future.mirai")
 pkgs <- c("globals", "listenv", "parallelly", "future", "future.tests", "progressify", "progressr", pkgs_mapreduce, pkgs_backend)
-pkgs_extra <- c("future.p2p", "future.tools", "marshal")
+pkgs_extra <- c("future.p2p", "future.tools", "marshal", "rw")
 pkgs <- c(sort(pkgs), pkgs_extra)
 urls <- sprintf("https://%s.futureverse.org", pkgs)
 names(urls) <- pkgs
@@ -28,6 +28,13 @@ home:
     href: https://www.futureverse.org/
   - text: Futureverse User Forum
     href: https://github.com/futureverse/future/discussions
+  sidebar:
+    structure: [links, license, futureverse_community, citation, authors, dev]
+    components:
+      futureverse_community:
+        title: Community
+        text: |
+          [Contributing guide](https://www.futureverse.org/contributing.html)
 
 navbar:
   structure:

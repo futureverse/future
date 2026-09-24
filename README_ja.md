@@ -1151,11 +1151,3 @@ remotes::install_github("futureverse/future", ref="develop")
 これはソースからのインストールとなる。
 
 <!-- pkgdown-drop-below -->
-
-## 貢献
-
-<!--
-To contribute to this package, please see [CONTRIBUTING.md](CONTRIBUTING.md).
--->
-
-このパッケージに貢献するには、[CONTRIBUTING.md](CONTRIBUTING.md) を参照してほしい。

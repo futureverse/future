@@ -8,6 +8,13 @@ home:
     href: https://www.futureverse.org/
   - text: Futureverse User Forum
     href: https://github.com/futureverse/future/discussions
+  sidebar:
+    structure: [links, license, futureverse_community, citation, authors, dev]
+    components:
+      futureverse_community:
+        title: Community
+        text: |
+          [Contributing guide](https://www.futureverse.org/contributing.html)
 
 navbar:
   structure:
@@ -58,6 +65,8 @@ navbar:
         href: https://future.tools.futureverse.org
       - text: marshal (experimental)
         href: https://marshal.futureverse.org
+      - text: rw (experimental)
+        href: https://rw.futureverse.org
     cran:
       icon: fab fa-r-project
       href: https://cloud.r-project.org/package=future
