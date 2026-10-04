@@ -9,9 +9,9 @@
 #'  switch to use the ones from the \pkg{parallelly} package. Thank you!_
 #'
 #' * [parallelly::availableCores()]
-#    Used by: ale (1), BatchGetSymbols (2), codalm (1), cft (1), deseats (3),
+#    Used by: ale (2), BatchGetSymbols (2), codalm (1), cft (1), deseats (3),
 #             elevatr (1), heterogen, PINstimation (1), powRICLPM (1),
-#             readsdr (1), recforest (3), sigminer (2), skpr (1), smoots (3),
+#             readsdr (1), recforest (3), skpr (1), smoots (3),
 #             TriDimRegression (1), uci (1)
 #             [2025-12-22, 2026-01-31, 2026-04-04]
 #' * [parallelly::availableWorkers()]
