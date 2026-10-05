@@ -274,19 +274,19 @@ getGlobalsAndPackages <- function(expr, envir = parent.frame(), tweak = tweakExp
             "# function environment of FUN() to the calling environment.    "
             "# We assume FUN() an anonymous function if it lives in the     "
             "# global environment, which is where globals are written.      "
-            penv <- env <- environment(...future.FUN)
+            ...future.penv <- ...future.env <- environment(...future.FUN)
             repeat {
-              if (identical(env, globalenv()) || identical(env, emptyenv()))
+              if (identical(...future.env, globalenv()) || identical(...future.env, emptyenv()))
                 break
-              penv <- env
-              env <- parent.env(env)
+              ...future.penv <- ...future.env
+              ...future.env <- parent.env(...future.env)
             }
-            if (identical(penv, globalenv())) {
+            if (identical(...future.penv, globalenv())) {
               environment(...future.FUN) <- environment()
-            } else if (identical(env, globalenv()) && !is.null(penv) && !isNamespace(penv)) {
-              parent.env(penv) <- environment()
+            } else if (identical(...future.env, globalenv()) && !is.null(...future.penv) && !isNamespace(...future.penv)) {
+              parent.env(...future.penv) <- environment()
             }
-            rm(list = c("env", "penv"), inherits = FALSE)
+            rm(list = c("...future.env", "...future.penv"), inherits = FALSE)
             a
           }, list(a = expr))
         }
