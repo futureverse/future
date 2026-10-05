@@ -283,7 +283,7 @@ getGlobalsAndPackages <- function(expr, envir = parent.frame(), tweak = tweakExp
             }
             if (identical(penv, globalenv())) {
               environment(...future.FUN) <- environment()
-            } else if (!identical(penv, emptyenv()) && !is.null(penv) && !isNamespace(penv)) {
+            } else if (identical(env, globalenv()) && !is.null(penv) && !isNamespace(penv)) {
               parent.env(penv) <- environment()
             }
             rm(list = c("env", "penv"), inherits = FALSE)
