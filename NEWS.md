@@ -8,6 +8,12 @@
    4.5.0), it ended up in an infinite loop. This bug was introduced in
    **future** 1.40.0 (2025-04-10).
 
+ * A sequential future that uses a global `...` together with a global
+   `...future.FUN()` function, which is what **future.apply** uses,
+   could permanently change the parent of the function's environment,
+   if that environment inherits from the global environment. This bug
+   was introduced in **future** 1.40.0 (2025-04-10).
+
 
 # Version 1.76.0 [2026-09-24]
 

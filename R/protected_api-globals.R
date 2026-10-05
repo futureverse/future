@@ -261,9 +261,10 @@ getGlobalsAndPackages <- function(expr, envir = parent.frame(), tweak = tweakExp
       ## If ...future.FUN() in globals, then ...
       if ("...future.FUN" %in% names(globals)) {
         envFUN <- environment(globals[["...future.FUN"]])
-        ## Update environment of FUN(), unless it's a primitive function
-        ## or a function in a namespace
-        if (!is.null(envFUN) && !isNamespace(envFUN)) {
+        ## Update environment of FUN(), unless it's a primitive function,
+        ## a function in a namespace, or it does not use '...' as a global
+        if (!is.null(envFUN) && !isNamespace(envFUN) &&
+            "..." %in% findGlobals(globals[["...future.FUN"]], dotdotdot = "return")) {
           expr <- substitute({
             "# future::getGlobalsAndPackages(): FUN() uses '...' internally "
             "# without having an '...' argument. This means '...' is treated"
@@ -284,9 +285,13 @@ getGlobalsAndPackages <- function(expr, envir = parent.frame(), tweak = tweakExp
             if (identical(...future.penv, globalenv())) {
               environment(...future.FUN) <- environment()
             } else if (identical(...future.env, globalenv()) && !is.null(...future.penv) && !isNamespace(...future.penv)) {
+              ## Undo afterward, because '...future.penv' might be the
+              ## environment of the caller, e.g. for sequential futures
+              ...future.penv.parent <- parent.env(...future.penv)
               parent.env(...future.penv) <- environment()
+              on.exit(parent.env(...future.penv) <- ...future.penv.parent, add = TRUE)
             }
-            rm(list = c("...future.env", "...future.penv"), inherits = FALSE)
+            rm(list = "...future.env", inherits = FALSE)
             a
           }, list(a = expr))
         }

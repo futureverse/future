@@ -41,6 +41,34 @@ for (cores in 1:availCores) {
     y <- fcn(FUN, "not-used")
     stopifnot(identical(y, 45L))
 
+    ## Case 3: ...future.FUN() uses '...' as a global variable, and lives
+    ## in the global environment, or in an environment that inherits from
+    ## the global environment. In the latter case, that environment must
+    ## be restored afterward, which did not happen for sequential futures
+    FUN <- function(x) x + sum(...)
+    environment(FUN) <- globalenv()
+    y <- fcn(FUN, 1L, 2L)
+    stopifnot(identical(y, 45L))
+
+    env <- new.env(parent = globalenv())
+    FUN <- local(function(x) x + sum(...), envir = env)
+    y <- fcn(FUN, 1L, 2L)
+    stopifnot(identical(y, 45L))
+    stopifnot(identical(parent.env(env), globalenv()))
+
+    ## Case 4: ...future.FUN() does not use '...' as a global variable, and
+    ## lives in an environment that inherits from the global environment.
+    ## That environment must not be modified, which happened for
+    ## sequential futures
+    fcn <- function(...) {
+      ...future.FUN <- local(function(x) x, envir = env)
+      f <- future(...future.FUN(42L, ...))
+      value(f)
+    }
+    y <- fcn()
+    stopifnot(identical(y, 42L))
+    stopifnot(identical(parent.env(env), globalenv()))
+
     message(sprintf("- plan('%s') ... DONE", strategy))
   } ## for (strategy ...)
 
