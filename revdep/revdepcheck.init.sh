@@ -64,27 +64,26 @@ fi
 ## Add packages to check
 revdep/run.R --add-children
 
-## Drop packages failing on CRAN (2026-09-23)
-revdep/run.R --rm dispositionEffect fmeffects
+## Drop packages failing on CRAN (2026-10-05)
+revdep/run.R --rm datacaged dispositionEffect fmeffects
 
-## Drop packages failing on Bioconductor (2026-09-23)
-revdep/run.R --rm MineICA pgxRpi
+## Drop packages failing on Bioconductor (2026-10-05)
+revdep/run.R --rm pgxRpi SCArray.sat synergyfinder
 
 ## Drop packages no longer on CRAN (2026-07-19)
 #revdep/run.R --rm ...
 
-## Drop packages failing on Bioconductor (2026-03-07)
-# revdep/run.R --rm ...
+## Drop packages no longer on Bioconductor (2026-10-05)
+#revdep/run.R --rm ...
 
 ## Fails to install
 revdep/run.R --rm BayesPET TriDimRegression  # there is no package called ‘rstantools’
 
 ## Fails to check
 revdep/run.R --rm mapme.biodiversity    # unstable results
-revdep/run.R --rm zarrr                 # requires 'blosc', which requires 'blosc-devel'
 
 ## Requires sequential processing due to clashes, e.g. port and cache 
-pkgs_seq=(dipsaus fiery robust2sls)
+pkgs_seq=(datacaged dipsaus fiery robust2sls)
 revdep/run.R --rm "${pkgs_seq[@]}"
 
 ## Too many threads /2026-04-16
