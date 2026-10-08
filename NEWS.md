@@ -18,6 +18,9 @@
    if that environment inherits from the global environment. This bug
    was introduced in **future** 1.40.0 (2025-04-10).
 
+ * `makeClusterFuture(globals = ...)` would result in an future
+   evaluation error.
+   
 
 # Version 1.76.0 [2026-09-24]
 
