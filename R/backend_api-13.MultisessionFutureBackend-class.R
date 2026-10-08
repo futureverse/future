@@ -12,7 +12,6 @@
 #'
 #' @keywords internal
 #' @rdname FutureBackend-class
-#" @importFrom parallelly supportsMulticore
 #' @export
 MultisessionFutureBackend <- function(workers = availableCores(constraints = "connections-16"), rscript_libs = .libPaths(), interrupts = TRUE, gc = FALSE, earlySignal = FALSE, ...) {
   debug <- isTRUE(getOption("future.debug"))
@@ -23,7 +22,6 @@ MultisessionFutureBackend <- function(workers = availableCores(constraints = "co
     on.exit(mdebugf_pop())
   }
   
-  default_workers <- missing(workers)
   if (is.function(workers)) workers <- workers()
   stop_if_not(is.numeric(workers))
   workers <- structure(as.integer(workers), class = setdiff(class(workers), c("integer", "numeric")))
@@ -31,10 +29,7 @@ MultisessionFutureBackend <- function(workers = availableCores(constraints = "co
   
   ## Fall back to sequential futures if only a single additional R process
   ## can be spawned off, i.e. then use the current main R process.
-  ## Sequential futures best reflect how multicore futures handle globals.
   if (workers == 1L && !inherits(workers, "AsIs")) {
-    ## AD HOC: Make sure plan(multicore) also produces a warning, if needed
-    if (default_workers) supportsMulticore(warn = TRUE)
     ## covr: skip=1
     return(SequentialFutureBackend(...))
   }
