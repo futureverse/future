@@ -2,6 +2,10 @@
 
 ## Bug Fixes
 
+ * Explicitly specifying globals as a character vector via attributes
+   `add` or `ignore` would be ignored silently, e.g. `globals =
+   structure(c("a", "b"), add = "c")`.
+
  * A future that uses a global `...` together with a global
    `...future.FUN()` function, which is what **future.apply** uses,
    could fail with "cycles in parent chains are not allowed". In R (<
