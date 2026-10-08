@@ -32,7 +32,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.76.0-9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.76.0-9006</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -269,7 +269,7 @@ will shut down the underlying PSOCK clusters.</p>
 <code>R CMD check --as-cran</code>, or <code>R CMD check</code> with
 environment variable <code>_R_CHECK_CONNECTIONS_LEFT_OPEN_=true</code>
 set, will produce an error on</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="sc">$</span> R CMD check <span class="sc">--</span>as<span class="sc">-</span>cran mypkg_1.<span class="fl">0.</span>tar.gz</span>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="sc">$</span> R CMD check <span class="sc">--</span>as<span class="sc">-</span>cran mypkg_1.0.tar.gz</span>
 <span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a>...</span>
 <span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a><span class="sc">*</span> checking examples ... ERROR</span>
 <span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a>Running examples <span class="cf">in</span> <span class="st">'analyze-Ex.R'</span> failed</span>
@@ -355,7 +355,7 @@ worker processes, which almost always are parallel
 <p>at the end of your examples(*), vignettes, and package tests.</p>
 <p>If you create the <code>cluster</code> manually using</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">cl</span> <span class="op">&lt;-</span> <span class="fu">parallelly</span><span class="fu">::</span><span class="fu">makeClusterPSOCK</span><span class="op">(</span><span class="fl">2</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">cl</span> <span class="op">&lt;-</span> <span class="fu">parallelly</span><span class="fu">::</span><span class="fu"><a href="https://parallelly.futureverse.org/reference/makeClusterPSOCK.html" class="external-link">makeClusterPSOCK</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/plan.html">plan</a></span><span class="op">(</span><span class="va">cluster</span>, workers <span class="op">=</span> <span class="va">cl</span><span class="op">)</span></span></code></pre></div>
 <p>make sure to stop such clusters at the end using</p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">

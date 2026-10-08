@@ -2,7 +2,26 @@
 
 ## Version (development version)
 
-- …
+### Bug Fixes
+
+- Explicitly specifying globals as a character vector via attributes
+  `add` or `ignore` would be ignored silently,
+  e.g. `globals = structure(c("a", "b"), add = "c")`.
+
+- A future that uses a global `...` together with a global
+  `...future.FUN()` function, which is what **future.apply** uses, could
+  fail with “cycles in parent chains are not allowed”. In R (\< 4.5.0),
+  it ended up in an infinite loop. This bug was introduced in **future**
+  1.40.0 (2025-04-10).
+
+- A sequential future that uses a global `...` together with a global
+  `...future.FUN()` function, which is what **future.apply** uses, could
+  permanently change the parent of the function’s environment, if that
+  environment inherits from the global environment. This bug was
+  introduced in **future** 1.40.0 (2025-04-10).
+
+- `makeClusterFuture(globals = ...)` would result in an future
+  evaluation error.
 
 ## Version 1.76.0
 
@@ -582,7 +601,8 @@ reverse-dependency checks, **future.tests** checks, and more.
 
 - All parallel backends now prevent nested parallelization, unless
   explicitly allowed, e.g. settings recognized by
-  `parallelly::availableCores()` or set by the future
+  [`parallelly::availableCores()`](https://parallelly.futureverse.org/reference/availableCores.html)
+  or set by the future
   [`plan()`](https://future.futureverse.org/reference/plan.md).
   Previously, this had to be implemented by each backend, but now it’s
   handled automatically by the future framework.
@@ -645,10 +665,12 @@ reverse-dependency checks, **future.tests** checks, and more.
   to the **parallelly** package. For backward-compatibility reasons,
   those functions were kept in **future** as re-exports,
   e.g. [`future::makeClusterPSOCK()`](https://future.futureverse.org/reference/re-exports.md)
-  still works, whereas `parallelly::makeClusterPSOCK()` is the preferred
-  use. The long-term goal is to clean out these re-exports. Starting
-  with this release, the **future** package no longer re-exports
-  `autoStopCluster()`, `makeClusterMPI()`, `makeNodePSOCK()`.
+  still works, whereas
+  [`parallelly::makeClusterPSOCK()`](https://parallelly.futureverse.org/reference/makeClusterPSOCK.html)
+  is the preferred use. The long-term goal is to clean out these
+  re-exports. Starting with this release, the **future** package no
+  longer re-exports `autoStopCluster()`, `makeClusterMPI()`,
+  `makeNodePSOCK()`.
 
 ## Version 1.34.0
 
@@ -664,7 +686,7 @@ CRAN release: 2024-07-29
 ### Performance
 
 - Size calculation of globals is now done using the much faster
-  `parallelly::serializedSize()`.
+  [`parallelly::serializedSize()`](https://parallelly.futureverse.org/reference/serializedSize.html).
 
 ### Bug Fixes
 

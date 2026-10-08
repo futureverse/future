@@ -364,7 +364,8 @@ Slurm）を使用する場合、与えられたジョブに割り当てられた
 このデフォルトの値は
 [`parallel::detectCores()`](https://rdrr.io/r/parallel/detectCores.html)
 で確認できる。 詳細については
-`help("availableCores", package = "parallelly")` を参照してほしい。
+[`help("availableCores", package = "parallelly")`](https://parallelly.futureverse.org/reference/availableCores.html)
+を参照してほしい。
 
 #### マルチコアフューチャ (Multicore Future)
 
@@ -374,10 +375,8 @@ Windows 以外）では、バックグラウンドで R
 プロセスをフォークすることができる。
 フォークがサポートされている場合、次のようにしてマルチコアフューチャを使用することができる。
 
-``` r
-
-plan(multicore)
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.md)`(``multicore``)`
 
 マルチセッションフューチャと同じように、並列に実行できるプロセスの最大値は
 [`availableCores()`](https://future.futureverse.org/reference/re-exports.md)
@@ -443,11 +442,9 @@ Future 'c' ...
 で作られたクラスタなら何でもクラスタフューチャで利用できる。
 例えば、上記のクラスタを明示的にセットアップするには次のように書く。
 
-``` r
-
-cl <- parallel::makeCluster(c("n1", "n2", "n3"))
-plan(cluster, workers = cl)
-```
+\
+`cl`` ``<-`` ``parallel``::`[`makeCluster`](https://rdrr.io/r/parallel/makeCluster.html)`(`[`c`](https://rdrr.io/r/base/c.html)`(``"n1"``, ``"n2"``, ``"n3"``)``)`\
+[`plan`](https://future.futureverse.org/reference/plan.md)`(``cluster``, workers ``=`` ``cl``)`
 
 クラスタ `cl` がもう使われなくなったとき、`parallel::stopCluster(cl)`
 を実行してクラスタをシャットダウンするのが良い作法である。
@@ -526,10 +523,8 @@ Future 'b2' ...
 に戦略のリストを渡すことで、**評価トポロジー**を指定することができる。
 例えば、上記と同じ評価トポロジーを明示的に指定するには次のようにする。
 
-``` r
-
-plan(list(multisession, sequential))
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.md)`(`[`list`](https://rdrr.io/r/base/list.html)`(``multisession``, ``sequential``)``)`
 
 しかし、次に示すように、複数レベルのマルチセッション評価を試しても、上記と同じ動作になる。
 
@@ -796,31 +791,25 @@ List of 3
 様々な戦略においてフューチャがどのように評価されるかの実例を見るには、このパッケージに含まれるマンデルブロ
 (Mandelbrot) デモを実行するとよい。 まず、逐次評価で実行してみよう。
 
-``` r
-
-library(future)
-plan(sequential)
-demo("mandelbrot", package = "future", ask = FALSE)
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`future`](https://future.futureverse.org)`)`\
+[`plan`](https://future.futureverse.org/reference/plan.md)`(``sequential``)`\
+[`demo`](https://rdrr.io/r/utils/demo.html)`(``"mandelbrot"``, package ``=`` ``"future"``, ask ``=`` ``FALSE``)`
 
 これはフューチャを使用しない場合の動作とほとんど同じである。
 次に、マルチセッション評価を試してみよう。
 これは異なるマンデルブロ平面をバックグラウンドで実行される R
 プロセスで並列に計算する。
 
-``` r
-
-plan(multisession)
-demo("mandelbrot", package = "future", ask = FALSE)
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.md)`(``multisession``)`\
+[`demo`](https://rdrr.io/r/utils/demo.html)`(``"mandelbrot"``, package ``=`` ``"future"``, ask ``=`` ``FALSE``)`
 
 最後に、複数の計算機にアクセスできる場合、クラスタのワーカを指定して実行できる。
 
-``` r
-
-plan(cluster, workers = c("n2", "n5", "n6", "n6", "n9"))
-demo("mandelbrot", package = "future", ask = FALSE)
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.md)`(``cluster``, workers ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"n2"``, ``"n5"``, ``"n6"``, ``"n6"``, ``"n9"``)``)`\
+[`demo`](https://rdrr.io/r/utils/demo.html)`(``"mandelbrot"``, package ``=`` ``"future"``, ask ``=`` ``FALSE``)`
 
 ## 貢献するには
 
@@ -836,19 +825,15 @@ demo("mandelbrot", package = "future", ask = FALSE)
 future パッケージは CRAN
 で利用可能であり、次のコードを実行してインストールできる。
 
-``` r
-
-install.packages("future")
-```
+\
+[`install.packages`](https://rdrr.io/r/utils/install.packages.html)`(``"future"``)`
 
 ### プレリリースバージョンのインストール
 
 プレリリースバージョンは GitHub の `develop`
 ブランチにあり、インストールするには次のようにする。
 
-``` r
-
-remotes::install_github("futureverse/future", ref="develop")
-```
+\
+`remotes``::`[`install_github`](https://remotes.r-lib.org/reference/install_github.html)`(``"futureverse/future"``, ref``=``"develop"``)`
 
 これはソースからのインストールとなる。

@@ -4,23 +4,21 @@ Futures can be nested in R such that one future creates another set of
 futures and so on. This may, for instance, occur within nested for
 loops, e.g.
 
-``` r
-
-library(future)
-library(listenv)
-x <- listenv()
-for (ii in 1:3) {
-  x[[ii]] %<-% {
-    y <- listenv()
-    for (jj in 1:3) {
-      y[[jj]] %<-% { ii + jj / 10 }
-    }
-    y
-  }
-}
-unlist(x)
-## [1] 1.1 1.2 1.3 2.1 2.2 2.3 3.1 3.2 3.3
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`future`](https://future.futureverse.org)`)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`listenv`](https://listenv.futureverse.org)`)`\
+`x`` ``<-`` `[`listenv`](https://listenv.futureverse.org/reference/listenv.html)`(``)`\
+`for`` ``(``ii`` ``in`` ``1``:``3``)`` ``{`\
+`  ``x``[[``ii``]``]`` `[`%<-%`](https://future.futureverse.org/reference/futureAssign.md)` ``{`\
+`    ``y`` ``<-`` `[`listenv`](https://listenv.futureverse.org/reference/listenv.html)`(``)`\
+`    ``for`` ``(``jj`` ``in`` ``1``:``3``)`` ``{`\
+`      ``y``[[``jj``]``]`` `[`%<-%`](https://future.futureverse.org/reference/futureAssign.md)` ``{`` ``ii`` ``+`` ``jj`` ``/`` ``10`` ``}`\
+`    ``}`\
+`    ``y`\
+`  ``}`\
+`}`\
+[`unlist`](https://rdrr.io/r/base/unlist.html)`(``x``)`\
+`## [1] 1.1 1.2 1.3 2.1 2.2 2.3 3.1 3.2 3.3`
 
 The default is to use synchronous futures unless otherwise specified,
 which is also true for nested futures. If we, for instance, specify,
@@ -42,27 +40,25 @@ generate 24 individual BAM files per sample - one per chromosome.
 Here is the layout of what such an analysis could look like in R using
 futures.
 
-``` r
-
-library(future)
-library(listenv)
-htseq_align <- function(fq, chr) { chr }
-
-fqs <- dir(pattern = "[.]fastq$")
-
-bams <- listenv()
-for (ss in seq_along(fqs)) {
-  fq <- fqs[ss]
-  bams[[ss]] %<-% {
-    bams_ss <- listenv()
-    for (cc in 1:24) {
-      bams_ss[[cc]] %<-% htseq_align(fq, chr = cc)
-    }
-    as.list(bams_ss)
-  }
-}
-bams <- as.list(bams)
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`future`](https://future.futureverse.org)`)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`listenv`](https://listenv.futureverse.org)`)`\
+`htseq_align`` ``<-`` ``function``(``fq``, ``chr``)`` ``{`` ``chr`` ``}`\
+\
+`fqs`` ``<-`` `[`dir`](https://rdrr.io/r/base/list.files.html)`(``pattern ``=`` ``"[.]fastq$"``)`\
+\
+`bams`` ``<-`` `[`listenv`](https://listenv.futureverse.org/reference/listenv.html)`(``)`\
+`for`` ``(``ss`` ``in`` `[`seq_along`](https://rdrr.io/r/base/seq.html)`(``fqs``)``)`` ``{`\
+`  ``fq`` ``<-`` ``fqs``[``ss``]`\
+`  ``bams``[[``ss``]``]`` `[`%<-%`](https://future.futureverse.org/reference/futureAssign.md)` ``{`\
+`    ``bams_ss`` ``<-`` `[`listenv`](https://listenv.futureverse.org/reference/listenv.html)`(``)`\
+`    ``for`` ``(``cc`` ``in`` ``1``:``24``)`` ``{`\
+`      ``bams_ss``[[``cc``]``]`` `[`%<-%`](https://future.futureverse.org/reference/futureAssign.md)` ``htseq_align``(``fq``, chr ``=`` ``cc``)`\
+`    ``}`\
+`    `[`as.list`](https://rdrr.io/r/base/list.html)`(``bams_ss``)`\
+`  ``}`\
+`}`\
+`bams`` ``<-`` `[`as.list`](https://rdrr.io/r/base/list.html)`(``bams``)`
 
 The default is to use synchronous futures, so without further
 specifications, the above will process each sample and each chromosome
@@ -80,10 +76,8 @@ other words, we would like to evaluate the outer layer of futures using
 multisession futures and the inner ones as sequential futures. This can
 be specified as:
 
-``` r
-
-plan(list(multisession, sequential))
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.md)`(`[`list`](https://rdrr.io/r/base/list.html)`(``multisession``, ``sequential``)``)`
 
 The internals for processing multisession future queries
 [`availableCores()`](https://future.futureverse.org/reference/re-exports.md)
@@ -98,10 +92,8 @@ it does not hurt to be explicit.
 If we instead would like to process the samples sequentially and the
 chromosomes in parallel, we can use:
 
-``` r
-
-plan(list(sequential, multisession))
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.md)`(`[`list`](https://rdrr.io/r/base/list.html)`(``sequential``, ``multisession``)``)`
 
 #### Built-in protection against recursive parallelism
 
@@ -109,10 +101,8 @@ Above we have processed either the outer or the inner set of futures in
 parallel. What if we want to process both layers in parallel? It’s
 tempting to use:
 
-``` r
-
-plan(list(multisession, multisession))
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.md)`(`[`list`](https://rdrr.io/r/base/list.html)`(``multisession``, ``multisession``)``)`
 
 Although this does not give an error, we will find that the inner layer
 of futures will be processed sequentially just as if we were to use
@@ -129,10 +119,8 @@ parallel futures, and then the inner layer with four parallel futures.
 In that case, we would end up running on at most eight cores (= 2 \* 4).
 This can be achieved by forcing a fixed number of workers at each layer:
 
-``` r
-
-plan(list(tweak(multisession, workers = 2), tweak(multisession, workers = I(4))))
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.md)`(`[`list`](https://rdrr.io/r/base/list.html)`(`[`tweak`](https://future.futureverse.org/reference/plan.md)`(``multisession``, workers ``=`` ``2``)``, `[`tweak`](https://future.futureverse.org/reference/plan.md)`(``multisession``, workers ``=`` `[`I`](https://rdrr.io/r/base/AsIs.html)`(``4``)``)``)``)`
 
 Note that As-Is `I(.)` specification for the inner layer,
 i.e. `workers = I(4)`. If we would just specify `workers = 4`, the
@@ -172,13 +160,11 @@ gives.
 To make sure we stay within the limits of the current machine, it’s best
 to use something like:
 
-``` r
-
-plan(list(
-  tweak(multisession, workers = availableCores() %/% 4),
-  tweak(multisession, workers = I(4))
-))
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.md)`(`[`list`](https://rdrr.io/r/base/list.html)`(`\
+`  `[`tweak`](https://future.futureverse.org/reference/plan.md)`(``multisession``, workers ``=`` `[`availableCores`](https://future.futureverse.org/reference/re-exports.md)`(``)`` `[`%/%`](https://rdrr.io/r/base/Arithmetic.html)` ``4``)``,`\
+`  `[`tweak`](https://future.futureverse.org/reference/plan.md)`(``multisession``, workers ``=`` `[`I`](https://rdrr.io/r/base/AsIs.html)`(``4``)``)`\
+`)``)`
 
 However, before using nested parallelization on a single machine, make
 sure it is actually more efficient than using parallelization in only
@@ -190,11 +176,9 @@ With a compute cluster of 3 machines each with 16 cores, we can run up
 to 48 alignment processes in parallel. A natural setup is to have one
 machine process one sample in parallel. We could specify this as:
 
-``` r
-
-nodes <- c("n1", "n2", "n3")
-plan(list(tweak(cluster, workers = nodes), multisession))
-```
+\
+`nodes`` ``<-`` `[`c`](https://rdrr.io/r/base/c.html)`(``"n1"``, ``"n2"``, ``"n3"``)`\
+[`plan`](https://future.futureverse.org/reference/plan.md)`(`[`list`](https://rdrr.io/r/base/list.html)`(`[`tweak`](https://future.futureverse.org/reference/plan.md)`(``cluster``, workers ``=`` ``nodes``)``, ``multisession``)``)`
 
 *Comment:* Multisession futures are agile to their environment, that is,
 they will query the machine they are running on to find out how many
@@ -207,14 +191,12 @@ that we might at the end of each sample have only a few alignment
 processes running on each machine leaving the remaining cores
 idle/unused. An alternative set up is then to use the following setup:
 
-``` r
-
-nodes <- rep(c("n1", "n2", "n3"), each = 8)
-plan(list(
-  tweak(cluster, workers = nodes),
-  tweak(multisession, workers = I(2))
-))
-```
+\
+`nodes`` ``<-`` `[`rep`](https://rdrr.io/r/base/rep.html)`(`[`c`](https://rdrr.io/r/base/c.html)`(``"n1"``, ``"n2"``, ``"n3"``)``, each ``=`` ``8``)`\
+[`plan`](https://future.futureverse.org/reference/plan.md)`(`[`list`](https://rdrr.io/r/base/list.html)`(`\
+`  `[`tweak`](https://future.futureverse.org/reference/plan.md)`(``cluster``, workers ``=`` ``nodes``)``,`\
+`  `[`tweak`](https://future.futureverse.org/reference/plan.md)`(``multisession``, workers ``=`` `[`I`](https://rdrr.io/r/base/AsIs.html)`(``2``)``)`\
+`)``)`
 
 This will cause up to 24 (= 3\*8) samples to be processed in parallel
 each processing two chromosomes at the same time.
@@ -232,65 +214,63 @@ to evaluate R expression on the remote compute cluster and its three
 nodes. Here is a proof of concept illustrating how the different nested
 futures are evaluated on different machines.
 
-``` r
-
-library(future)
-library(listenv)
-
-## Set up access to remote login node (must have Rscript)
-login <- tweak(cluster, workers = "remote.server.org", persistent = TRUE)
-plan(login)
-
-## Set up cluster nodes on login node
-nodes %<-% { .keepme <- parallelly::makeClusterPSOCK(c("n1", "n2", "n3")) }
-print(nodes)
-## socket cluster with 3 nodes on hosts 'n1', 'n2', 'n3'
-
-## Specify future topology
-## login node -> { cluster nodes } -> { multiple cores }
-plan(list(
-  login,
-  tweak(cluster, workers = nodes),
-  multisession
-))
-
-
-## (a) This will be evaluated on the cluster login computer
-x %<-% {
-  thost <- Sys.info()[["nodename"]]
-  tpid <- Sys.getpid()
-  y <- listenv()
-  for (task in 1:4) {
-    ## (b) This will be evaluated on a compute node on the cluster
-    y[[task]] %<-% {
-      mhost <- Sys.info()[["nodename"]]
-      mpid <- Sys.getpid()
-      z <- listenv()
-      for (jj in 1:2) {
-        ## (c) These will be evaluated in separate processes on the same compute node
-        z[[jj]] %<-% data.frame(task = task,
-                                top.host = thost, top.pid = tpid,
-                                mid.host = mhost, mid.pid = mpid,
-                                host = Sys.info()[["nodename"]],
-                                pid = Sys.getpid())
-      }
-      Reduce(rbind, z)
-    }
-  }
-  Reduce(rbind, y)
-}
-
-print(x)
-##   task top.host top.pid mid.host mid.pid host    pid
-## 1    1    login  391547       n1  391878   n1 393943
-## 2    1    login  391547       n1  391878   n1 393951
-## 3    2    login  391547       n2  392204   n2 393971
-## 4    2    login  391547       n2  392204   n2 393978
-## 5    3    login  391547       n3  392527   n3 394040
-## 6    3    login  391547       n3  392527   n3 394048
-## 7    4    login  391547       n1  391878   n1 393959
-## 8    4    login  391547       n1  391878   n1 393966
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`future`](https://future.futureverse.org)`)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`listenv`](https://listenv.futureverse.org)`)`\
+\
+`## Set up access to remote login node (must have Rscript)`\
+`login`` ``<-`` `[`tweak`](https://future.futureverse.org/reference/plan.md)`(``cluster``, workers ``=`` ``"remote.server.org"``, persistent ``=`` ``TRUE``)`\
+[`plan`](https://future.futureverse.org/reference/plan.md)`(``login``)`\
+\
+`## Set up cluster nodes on login node`\
+`nodes`` `[`%<-%`](https://future.futureverse.org/reference/futureAssign.md)` ``{`` ``.keepme`` ``<-`` ``parallelly``::`[`makeClusterPSOCK`](https://parallelly.futureverse.org/reference/makeClusterPSOCK.html)`(`[`c`](https://rdrr.io/r/base/c.html)`(``"n1"``, ``"n2"``, ``"n3"``)``)`` ``}`\
+[`print`](https://rdrr.io/r/base/print.html)`(``nodes``)`\
+`## socket cluster with 3 nodes on hosts 'n1', 'n2', 'n3'`\
+\
+`## Specify future topology`\
+`## login node -> { cluster nodes } -> { multiple cores }`\
+[`plan`](https://future.futureverse.org/reference/plan.md)`(`[`list`](https://rdrr.io/r/base/list.html)`(`\
+`  ``login``,`\
+`  `[`tweak`](https://future.futureverse.org/reference/plan.md)`(``cluster``, workers ``=`` ``nodes``)``,`\
+`  ``multisession`\
+`)``)`\
+\
+\
+`## (a) This will be evaluated on the cluster login computer`\
+`x`` `[`%<-%`](https://future.futureverse.org/reference/futureAssign.md)` ``{`\
+`  ``thost`` ``<-`` `[`Sys.info`](https://rdrr.io/r/base/Sys.info.html)`(``)``[[``"nodename"``]``]`\
+`  ``tpid`` ``<-`` `[`Sys.getpid`](https://rdrr.io/r/base/Sys.getpid.html)`(``)`\
+`  ``y`` ``<-`` `[`listenv`](https://listenv.futureverse.org/reference/listenv.html)`(``)`\
+`  ``for`` ``(``task`` ``in`` ``1``:``4``)`` ``{`\
+`    ``## (b) This will be evaluated on a compute node on the cluster`\
+`    ``y``[[``task``]``]`` `[`%<-%`](https://future.futureverse.org/reference/futureAssign.md)` ``{`\
+`      ``mhost`` ``<-`` `[`Sys.info`](https://rdrr.io/r/base/Sys.info.html)`(``)``[[``"nodename"``]``]`\
+`      ``mpid`` ``<-`` `[`Sys.getpid`](https://rdrr.io/r/base/Sys.getpid.html)`(``)`\
+`      ``z`` ``<-`` `[`listenv`](https://listenv.futureverse.org/reference/listenv.html)`(``)`\
+`      ``for`` ``(``jj`` ``in`` ``1``:``2``)`` ``{`\
+`        ``## (c) These will be evaluated in separate processes on the same compute node`\
+`        ``z``[[``jj``]``]`` `[`%<-%`](https://future.futureverse.org/reference/futureAssign.md)` `[`data.frame`](https://rdrr.io/r/base/data.frame.html)`(``task ``=`` ``task``,`\
+`                                top.host ``=`` ``thost``, top.pid ``=`` ``tpid``,`\
+`                                mid.host ``=`` ``mhost``, mid.pid ``=`` ``mpid``,`\
+`                                host ``=`` `[`Sys.info`](https://rdrr.io/r/base/Sys.info.html)`(``)``[[``"nodename"``]``]``,`\
+`                                pid ``=`` `[`Sys.getpid`](https://rdrr.io/r/base/Sys.getpid.html)`(``)``)`\
+`      ``}`\
+`      `[`Reduce`](https://rdrr.io/r/base/funprog.html)`(``rbind``, ``z``)`\
+`    ``}`\
+`  ``}`\
+`  `[`Reduce`](https://rdrr.io/r/base/funprog.html)`(``rbind``, ``y``)`\
+`}`\
+\
+[`print`](https://rdrr.io/r/base/print.html)`(``x``)`\
+`##   task top.host top.pid mid.host mid.pid host    pid`\
+`## 1    1    login  391547       n1  391878   n1 393943`\
+`## 2    1    login  391547       n1  391878   n1 393951`\
+`## 3    2    login  391547       n2  392204   n2 393971`\
+`## 4    2    login  391547       n2  392204   n2 393978`\
+`## 5    3    login  391547       n3  392527   n3 394040`\
+`## 6    3    login  391547       n3  392527   n3 394048`\
+`## 7    4    login  391547       n1  391878   n1 393959`\
+`## 8    4    login  391547       n1  391878   n1 393966`
 
 Try the above `x %<-% { ... }` future with, say,
 `plan(list(sequential, multisession))` and see what the output will be.
@@ -299,11 +279,9 @@ Try the above `x %<-% { ... }` future with, say,
 
 When using
 
-``` r
-
-nodes <- c("n1", "n2", "n3")
-plan(list(tweak(cluster, workers = nodes), multisession))
-```
+\
+`nodes`` ``<-`` `[`c`](https://rdrr.io/r/base/c.html)`(``"n1"``, ``"n2"``, ``"n3"``)`\
+[`plan`](https://future.futureverse.org/reference/plan.md)`(`[`list`](https://rdrr.io/r/base/list.html)`(`[`tweak`](https://future.futureverse.org/reference/plan.md)`(``cluster``, workers ``=`` ``nodes``)``, ``multisession``)``)`
 
 the number of workers used on each of the nodes (`n1`, `n2`, and `n3`)
 is given by the value of
@@ -328,21 +306,19 @@ the nodes will use four, four, and 16 cores, respectively.
 
 Another example is:
 
-``` r
-
-customWorkers <- function() {
-  switch(Sys.info()[["nodename"]],
-    "n1" = 2L,
-    "n2" = 3L,
-    ## default:
-    availableCores()
-  )
-}
-plan(list(
-  tweak(cluster, workers = nodes),
-  tweak(multisession, workers = I(customWorkers))
-))
-```
+\
+`customWorkers`` ``<-`` ``function``(``)`` ``{`\
+`  `[`switch`](https://rdrr.io/r/base/switch.html)`(`[`Sys.info`](https://rdrr.io/r/base/Sys.info.html)`(``)``[[``"nodename"``]``]``,`\
+`    ``"n1"`` ``=`` ``2L``,`\
+`    ``"n2"`` ``=`` ``3L``,`\
+`    ``## default:`\
+`    `[`availableCores`](https://future.futureverse.org/reference/re-exports.md)`(``)`\
+`  ``)`\
+`}`\
+[`plan`](https://future.futureverse.org/reference/plan.md)`(`[`list`](https://rdrr.io/r/base/list.html)`(`\
+`  `[`tweak`](https://future.futureverse.org/reference/plan.md)`(``cluster``, workers ``=`` ``nodes``)``,`\
+`  `[`tweak`](https://future.futureverse.org/reference/plan.md)`(``multisession``, workers ``=`` `[`I`](https://rdrr.io/r/base/AsIs.html)`(``customWorkers``)``)`\
+`)``)`
 
 In this case, node `n1` will always use two cores, `n2` three cores, and
 `n3` will respect what

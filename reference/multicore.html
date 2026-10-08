@@ -15,7 +15,7 @@ It may only be used with plan()"><meta property="og:image" content="https://futu
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.76.0-9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.76.0-9006</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -135,7 +135,7 @@ typical usages are:</p>
 futures.  For instance, forking is not supported on Microsoft Windows.
 Moreover, process forking may break some R environments such as RStudio.
 Because of this, the future package disables process forking also in
-such cases.  See <code>parallelly::supportsMulticore()</code> for details.
+such cases.  See <code><a href="https://parallelly.futureverse.org/reference/supportsMulticore.html" class="external-link">parallelly::supportsMulticore()</a></code> for details.
 Trying to create multicore futures on non-supported systems or when
 forking is disabled will result in multicore futures falling back to
 becoming <a href="sequential.html">sequential</a> futures.  If used in RStudio, there will be an
@@ -171,9 +171,9 @@ safe to use."</em></p>
 <a href="multisession.html">multisession</a> futures.</p>
 <p>For alternative future backends, see the 'A Future for R: Available Future
 Backends' vignette and <a href="https://www.futureverse.org/backends.html" class="external-link">https://www.futureverse.org/backends.html</a>.</p>
-<p>Use <code>parallelly::availableCores()</code> to see the total number of
+<p>Use <code><a href="https://parallelly.futureverse.org/reference/availableCores.html" class="external-link">parallelly::availableCores()</a></code> to see the total number of
 cores that are available for the current <span style="R">R</span> session.
-Use <code>availableCores("multicore") &gt; 1L</code> to check
+Use <code><a href="https://parallelly.futureverse.org/reference/availableCores.html" class="external-link">availableCores</a>("multicore") &gt; 1L</code> to check
 whether multicore futures are supported or not on the current
 system.</p></div>
     </div>

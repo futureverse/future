@@ -25,24 +25,20 @@ embraced the core philosophy of the future framework. If you answer
 For instance, if your future code made an assumption that it will have
 access to the local file system, as in:
 
-``` r
-
-f <- future({
-  data <- read_tsv(file)
-  analyze(data)
-})
-```
+\
+`f`` ``<-`` `[`future`](https://future.futureverse.org/reference/future.md)`(``{`\
+`  ``data`` ``<-`` ``read_tsv``(``file``)`\
+`  ``analyze``(``data``)`\
+`}``)`
 
 you can rewrite the code to load the content of the file before you set
 up the future, as in:
 
-``` r
-
-data <- read_tsv(file)
-f <- future({
-  analyze(data)
-})
-```
+\
+`data`` ``<-`` ``read_tsv``(``file``)`\
+`f`` ``<-`` `[`future`](https://future.futureverse.org/reference/future.md)`(``{`\
+`  ``analyze``(``data``)`\
+`}``)`
 
 Similarly, we should avoid having the future code write to the local
 file system because the parent R session might not have access to that
@@ -53,12 +49,10 @@ increase the chances that the code can be parallelized in more ways than
 on just the local computer. Properly written future code will work
 regardless of what future backend the end-user picks, e.g.
 
-``` r
-
-plan(sequential)
-plan(multisession)
-plan(cluster, workers = rep(c("n1.remote.org", "n2.remote.org", "n3.remote.org"), each = 32))
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.md)`(``sequential``)`\
+[`plan`](https://future.futureverse.org/reference/plan.md)`(``multisession``)`\
+[`plan`](https://future.futureverse.org/reference/plan.md)`(``cluster``, workers ``=`` `[`rep`](https://rdrr.io/r/base/rep.html)`(`[`c`](https://rdrr.io/r/base/c.html)`(``"n1.remote.org"``, ``"n2.remote.org"``, ``"n3.remote.org"``)``, each ``=`` ``32``)``)`
 
 Remember, as developers we never know what compute resources the
 end-user has access to right now or they will have access to in six
@@ -83,71 +77,59 @@ If you still think it is necessary to set
 to undo it when the function exits, also on errors. This can be done by
 using `with(plan(...), local = TRUE)`, e.g.
 
-``` r
-
-my_fcn <- function(x) {
-  with(plan(multisession), local = TRUE)
-  y <- analyze(x)
-  summarize(y)
-}
-```
+\
+`my_fcn`` ``<-`` ``function``(``x``)`` ``{`\
+`  `[`with`](https://rdrr.io/r/base/with.html)`(`[`plan`](https://future.futureverse.org/reference/plan.md)`(``multisession``)``, local ``=`` ``TRUE``)`\
+`  ``y`` ``<-`` ``analyze``(``x``)`\
+`  ``summarize``(``y``)`\
+`}`
 
 The need for setting the future backend within a function often comes
 from developers wanting to add an argument to their function that allows
 the end-user to specify whether they want to run the function in
 parallel or sequentially. This often results in code like:
 
-``` r
-
-my_fcn <- function(x, parallel = FALSE) {
-  if (parallel) {
-    with(plan(multisession), local = TRUE)
-    y <- future_lapply(x, FUN = analyze) ## from future.apply package
-  } else {
-    y <- lapply(x, FUN = analyze)
-  }
-  summarize(y)
-}
-```
+\
+`my_fcn`` ``<-`` ``function``(``x``, ``parallel`` ``=`` ``FALSE``)`` ``{`\
+`  ``if`` ``(``parallel``)`` ``{`\
+`    `[`with`](https://rdrr.io/r/base/with.html)`(`[`plan`](https://future.futureverse.org/reference/plan.md)`(``multisession``)``, local ``=`` ``TRUE``)`\
+`    ``y`` ``<-`` ``future_lapply``(``x``, FUN ``=`` ``analyze``)`` ``## from future.apply package`\
+`  ``}`` ``else`` ``{`\
+`    ``y`` ``<-`` `[`lapply`](https://rdrr.io/r/base/lapply.html)`(``x``, FUN ``=`` ``analyze``)`\
+`  ``}`\
+`  ``summarize``(``y``)`\
+`}`
 
 This way the user can use:
 
-``` r
-
-y <- my_fcn(x, parallel = FALSE)
-```
+\
+`y`` ``<-`` ``my_fcn``(``x``, parallel ``=`` ``FALSE``)`
 
 or
 
-``` r
-
-y <- my_fcn(x, parallel = TRUE)
-```
+\
+`y`` ``<-`` ``my_fcn``(``x``, parallel ``=`` ``TRUE``)`
 
 depending on their needs. However, if another package developer decides
 to call your function in their function, they now have to expose that
 `parallel` argument to the users of their function, e.g.
 
-``` r
-
-their_fcn <- function(x, parallel = FALSE) {
-  x2 <- preprocess(x)
-  y <- my_fcn(x2, parallel = parallel)
-  z <- another_fcn(y)
-  z
-}
-```
+\
+`their_fcn`` ``<-`` ``function``(``x``, ``parallel`` ``=`` ``FALSE``)`` ``{`\
+`  ``x2`` ``<-`` ``preprocess``(``x``)`\
+`  ``y`` ``<-`` ``my_fcn``(``x2``, parallel ``=`` ``parallel``)`\
+`  ``z`` ``<-`` ``another_fcn``(``y``)`\
+`  ``z`\
+`}`
 
 Exposing and passing a “parallel” argument along can become quite
 cumbersome. Instead, it is neater to use:
 
-``` r
-
-my_fcn <- function(x) {
-  y <- future_lapply(x, FUN = analyze) ## from future.apply package
-  summarize(y)
-}
-```
+\
+`my_fcn`` ``<-`` ``function``(``x``)`` ``{`\
+`  ``y`` ``<-`` ``future_lapply``(``x``, FUN ``=`` ``analyze``)`` ``## from future.apply package`\
+`  ``summarize``(``y``)`\
+`}`
 
 and let the user control whether or not they want to parallelize via
 [`plan()`](https://future.futureverse.org/reference/plan.md),
@@ -163,12 +145,10 @@ undo your changes immediately afterward. For example, if you want to
 bump up the `future.globals.maxSize` limit when creating a future, use
 something like the following inside your function:
 
-``` r
-
-oopts <- options(future.globals.maxSize = 1.0 * 1e9)  ## 1.0 GB
-on.exit(options(oopts))
-f <- future({ expr })  ## Launch a future with large objects
-```
+\
+`oopts`` ``<-`` `[`options`](https://rdrr.io/r/base/options.html)`(``future.globals.maxSize ``=`` ``1.0`` ``*`` ``1e9``)``  ``## 1.0 GB`\
+[`on.exit`](https://rdrr.io/r/base/on.exit.html)`(`[`options`](https://rdrr.io/r/base/options.html)`(``oopts``)``)`\
+`f`` ``<-`` `[`future`](https://future.futureverse.org/reference/future.md)`(``{`` ``expr`` ``}``)``  ``## Launch a future with large objects`
 
 ## Writing examples
 
@@ -181,16 +161,14 @@ underlying PSOCK clusters.
 
 For instance, here is an example:
 
-``` r
-
-## Run the analysis in parallel on the local computer
-future::plan("multisession")
-
-y <- analyze("path/to/file.csv")
-
-## Shut down parallel workers
-future::plan("sequential")
-```
+\
+`## Run the analysis in parallel on the local computer`\
+`future``::`[`plan`](https://future.futureverse.org/reference/plan.md)`(``"multisession"``)`\
+\
+`y`` ``<-`` ``analyze``(``"path/to/file.csv"``)`\
+\
+`## Shut down parallel workers`\
+`future``::`[`plan`](https://future.futureverse.org/reference/plan.md)`(``"sequential"``)`
 
 If you forget to shut down the PSOCK cluster, then
 `R CMD check --as-cran`, or `R CMD check` with environment variable
@@ -218,10 +196,8 @@ statement in an Rd `\dontshow{}` statement.
 Importantly, if you use the `multisession` backend in a vignette, you
 must manually specify the number of workers, i.e.
 
-``` r
-
-plan(multisession, workers = 2)
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.md)`(``multisession``, workers ``=`` ``2``)`
 
 The reason for having to manually limit the number workers in vignettes,
 while it is automatically limited for us in package examples and package
@@ -232,10 +208,8 @@ cores that the operating system has given our R process.
 
 Don’t forget to stop the parallel workers by calling
 
-``` r
-
-plan(sequential)
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.md)`(``sequential``)`
 
 at the end of your vignette.
 
@@ -245,10 +219,8 @@ If you want to make sure your code works when running sequentially as
 well as when running in parallel, it is often good enough to have
 package tests that run the code with:
 
-``` r
-
-plan(multisession)
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.md)`(``multisession``)`
 
 If the code works with this setup, you can be sure that all global
 variables are properly identified and exported to the workers and that
@@ -257,10 +229,8 @@ the required packages are loaded on the workers.
 Always make sure to shut down your parallel ‘multisession’ workers at
 the end of each package test by calling:
 
-``` r
-
-plan(sequential)
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.md)`(``sequential``)`
 
 If not all of your tests are written this way, you can set environment
 variable `R_FUTURE_PLAN=multisession` before you call `R CMD check`.
@@ -298,28 +268,22 @@ Those `Rscript<hexcode>` files are from background R worker processes,
 which almost always are parallel `cluster`:s that we forgot to stop at
 the end. To stop ‘multisession’ workers, call:
 
-``` r
-
-plan(sequential)
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.md)`(``sequential``)`
 
 at the end of your examples(\*), vignettes, and package tests.
 
 If you create the `cluster` manually using
 
-``` r
-
-cl <- parallelly::makeClusterPSOCK(2)
-plan(cluster, workers = cl)
-```
+\
+`cl`` ``<-`` ``parallelly``::`[`makeClusterPSOCK`](https://parallelly.futureverse.org/reference/makeClusterPSOCK.html)`(``2``)`\
+[`plan`](https://future.futureverse.org/reference/plan.md)`(``cluster``, workers ``=`` ``cl``)`
 
 make sure to stop such clusters at the end using
 
-``` r
-
-plan(sequential)
-parallel::stopCluster(cl)
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.md)`(``sequential``)`\
+`parallel``::`[`stopCluster`](https://rdrr.io/r/parallel/makeCluster.html)`(``cl``)`
 
 (\*) Currently, examples are excluded from the detritus checks. This was
 validated with R-devel revision 82991 (2022-10-02).

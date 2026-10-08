@@ -24,41 +24,35 @@ overrides this global variable with a local one, the future framework
 fails to identify the global variable and therefore fails to export it,
 resulting in a run-time error. For example, although this works:
 
-``` r
-
-plan(multisession)
-
-reset <- TRUE
-x <- 1
-y %<-% { if (reset) x <- 0; x + 1 }
-y
-## [1] 1
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.md)`(``multisession``)`\
+\
+`reset`` ``<-`` ``TRUE`\
+`x`` ``<-`` ``1`\
+`y`` `[`%<-%`](https://future.futureverse.org/reference/futureAssign.md)` ``{`` ``if`` ``(``reset``)`` ``x`` ``<-`` ``0``; ``x`` ``+`` ``1`` ``}`\
+`y`\
+`## [1] 1`
 
 the following does *not* work:
 
-``` r
-
-reset <- FALSE
-x <- 1
-y %<-% { if (reset) x <- 0; x + 1 }
-y
-## Error: object 'x' not found
-```
+\
+`reset`` ``<-`` ``FALSE`\
+`x`` ``<-`` ``1`\
+`y`` `[`%<-%`](https://future.futureverse.org/reference/futureAssign.md)` ``{`` ``if`` ``(``reset``)`` ``x`` ``<-`` ``0``; ``x`` ``+`` ``1`` ``}`\
+`y`\
+`## Error: object 'x' not found`
 
 It is recommended to avoid above constructs where it is ambiguous
 whether a variable is global or local. To force variable `x` to always
 be global, insert it at the very beginning of the future expression,
 e.g.
 
-``` r
-
-reset <- FALSE
-x <- 1
-y %<-% { x; if (reset) x <- 0; x + 1 }
-y
-## [1] 2
-```
+\
+`reset`` ``<-`` ``FALSE`\
+`x`` ``<-`` ``1`\
+`y`` `[`%<-%`](https://future.futureverse.org/reference/futureAssign.md)` ``{`` ``x``; ``if`` ``(``reset``)`` ``x`` ``<-`` ``0``; ``x`` ``+`` ``1`` ``}`\
+`y`\
+`## [1] 2`
 
 *Comment:* The goal is, in a future version of the package, to detect
 globals also in expressions where the local-global state of a variable
@@ -72,17 +66,13 @@ the function as the object itself and not by name. This will help
 identify the function as a global object in the future expression. For
 instance, use
 
-``` r
-
-do.call(file_ext, list("foo.txt"))
-```
+\
+[`do.call`](https://rdrr.io/r/base/do.call.html)`(``file_ext``, `[`list`](https://rdrr.io/r/base/list.html)`(``"foo.txt"``)``)`
 
 instead of
 
-``` r
-
-do.call("file_ext", list("foo.txt"))
-```
+\
+[`do.call`](https://rdrr.io/r/base/do.call.html)`(``"file_ext"``, `[`list`](https://rdrr.io/r/base/list.html)`(``"foo.txt"``)``)`
 
 so that [`file_ext()`](https://rdrr.io/r/tools/fileutils.html) is
 properly located and exported. Although you may not notice a difference
@@ -326,12 +316,10 @@ approach.
 In R, the `...` construct is used to refer to zero or more arguments.
 For example, we can use it as in:
 
-``` r
-
-my_mean <- function(x, ...) mean(x, ...)
-
-y <- my_mean(1:10, trim = 0.1, na.rm = FALSE)
-```
+\
+`my_mean`` ``<-`` ``function``(``x``, ``...``)`` `[`mean`](https://rdrr.io/r/base/mean.html)`(``x``, ``...``)`\
+\
+`y`` ``<-`` ``my_mean``(``1``:``10``, trim ``=`` ``0.1``, na.rm ``=`` ``FALSE``)`
 
 This makes sure that the `trim` and the `na.rm` arguments are passed
 down to the [`mean()`](https://rdrr.io/r/base/mean.html) function.
@@ -339,13 +327,11 @@ down to the [`mean()`](https://rdrr.io/r/base/mean.html) function.
 We can also use it to pass arguments in map-reduce calls to anonymous
 functions as in:
 
-``` r
-
-X <- rnorm(10)
-y <- lapply(X, FUN = function(x, ...) {
-  round(x, ...)
-}, digits = 3)
-```
+\
+`X`` ``<-`` `[`rnorm`](https://rdrr.io/r/stats/Normal.html)`(``10``)`\
+`y`` ``<-`` `[`lapply`](https://rdrr.io/r/base/lapply.html)`(``X``, FUN ``=`` ``function``(``x``, ``...``)`` ``{`\
+`  `[`round`](https://rdrr.io/r/base/Round.html)`(``x``, ``...``)`\
+`}``, digits ``=`` ``3``)`
 
 Note how `digits = 3` is passed to the anonymous function via its `...`
 argument, which is then passed on to
@@ -354,18 +340,16 @@ argument, which is then passed on to
 
 If we take this one step further, we might see things like:
 
-``` r
-
-my_fcn <- function(X, ...) {  ## outer '...'
-  y <- lapply(X, FUN = function(x, ...) { ## inner '...'
-    round(x, ...) ## inner '...'
-  }, ...) ## outer '...'
-  y
-}
-
-X <- rnorm(10)
-y <- my_fcn(X, digits = 3)
-```
+\
+`my_fcn`` ``<-`` ``function``(``X``, ``...``)`` ``{``  ``## outer '...'`\
+`  ``y`` ``<-`` `[`lapply`](https://rdrr.io/r/base/lapply.html)`(``X``, FUN ``=`` ``function``(``x``, ``...``)`` ``{`` ``## inner '...'`\
+`    `[`round`](https://rdrr.io/r/base/Round.html)`(``x``, ``...``)`` ``## inner '...'`\
+`  ``}``, ``...``)`` ``## outer '...'`\
+`  ``y`\
+`}`\
+\
+`X`` ``<-`` `[`rnorm`](https://rdrr.io/r/stats/Normal.html)`(``10``)`\
+`y`` ``<-`` ``my_fcn``(``X``, digits ``=`` ``3``)`
 
 In this case, we have two levels of `...` arguments; one for `my_fcn()`
 and one for the anonymous function. Note how the `...` arguments for
@@ -376,15 +360,13 @@ The above is the ideal and proper way to pass down `...`. However, it is
 not uncommon to see that the `...` is used as a global variable in
 anonymous functions. For example, you might find:
 
-``` r
-
-my_fcn <- function(X, ...) {  ## outer '...'
-  y <- lapply(X, FUN = function(x) {
-    round(x, ...) ## outer '...' as global variables
-  })
-  y
-}
-```
+\
+`my_fcn`` ``<-`` ``function``(``X``, ``...``)`` ``{``  ``## outer '...'`\
+`  ``y`` ``<-`` `[`lapply`](https://rdrr.io/r/base/lapply.html)`(``X``, FUN ``=`` ``function``(``x``)`` ``{`\
+`    `[`round`](https://rdrr.io/r/base/Round.html)`(``x``, ``...``)`` ``## outer '...' as global variables`\
+`  ``}``)`\
+`  ``y`\
+`}`
 
 This will also work, because `...` becomes a global variable in the
 environment of the anonymous function. Although we know that relying on
@@ -393,15 +375,13 @@ global variables is a bad idea, this one often slips through.
 If we attempt to do the same with the future framework, or other
 parallel frameworks, it might not work. For example, using:
 
-``` r
-
-my_fcn <- function(X, ...) {
-  y <- future_lapply(X, FUN = function(x) {
-    round(x, ...)
-  })
-  y
-}
-```
+\
+`my_fcn`` ``<-`` ``function``(``X``, ``...``)`` ``{`\
+`  ``y`` ``<-`` ``future_lapply``(``X``, FUN ``=`` ``function``(``x``)`` ``{`\
+`    `[`round`](https://rdrr.io/r/base/Round.html)`(``x``, ``...``)`\
+`  ``}``)`\
+`  ``y`\
+`}`
 
 might result in an error on:
 
@@ -411,15 +391,13 @@ Even if you do not get this error, it is always a good idea to make sure
 `...` is passed as an argument all the way down to where it is used,
 e.g.
 
-``` r
-
-my_fcn <- function(X, ...) {
-  y <- future.apply::future_lapply(X, FUN = function(x, ...) {
-    round(x, ...)
-  }, ...)
-  y
-}
-```
+\
+`my_fcn`` ``<-`` ``function``(``X``, ``...``)`` ``{`\
+`  ``y`` ``<-`` ``future.apply``::`[`future_lapply`](https://future.apply.futureverse.org/reference/future_lapply.html)`(``X``, FUN ``=`` ``function``(``x``, ``...``)`` ``{`\
+`    `[`round`](https://rdrr.io/r/base/Round.html)`(``x``, ``...``)`\
+`  ``}``, ``...``)`\
+`  ``y`\
+`}`
 
 ## Non-exportable objects
 
@@ -559,14 +537,12 @@ Sometimes a function call produces an error for a particular input. In
 such cases, we might want to return a default value, say, a missing
 value, instead of signaling an error. This can be done using:
 
-``` r
-
-res <- tryCatch({
-  unstable_calc(x)
-}, error = function(e) {
-  NA_real_
-})
-```
+\
+`res`` ``<-`` `[`tryCatch`](https://rdrr.io/r/base/conditions.html)`(``{`\
+`  ``unstable_calc``(``x``)`\
+`}``, error ``=`` ``function``(``e``)`` ``{`\
+`  ``NA_real_`\
+`}``)`
 
 Here, `res` takes the value of `unstable_calc(x)`, unless it produces an
 error, in case it takes value `NA_real_`.
@@ -574,15 +550,13 @@ error, in case it takes value `NA_real_`.
 In addition to the above, we could produce a warning whenever we get an
 error and replace it with a missing value. We can do this as:
 
-``` r
-
-res <- tryCatch({
-  unstable_calc(x)
-}, error = function(e) {
-  warning(conditionMessage(e))
-  NA_real_
-})
-```
+\
+`res`` ``<-`` `[`tryCatch`](https://rdrr.io/r/base/conditions.html)`(``{`\
+`  ``unstable_calc``(``x``)`\
+`}``, error ``=`` ``function``(``e``)`` ``{`\
+`  `[`warning`](https://rdrr.io/r/base/warning.html)`(`[`conditionMessage`](https://rdrr.io/r/base/conditions.html)`(``e``)``)`\
+`  ``NA_real_`\
+`}``)`
 
 This will turn the error into a warning with the same message. If we
 want to just output the message without producing a warning, we can use
@@ -602,26 +576,22 @@ Avoid using [`source()`](https://rdrr.io/r/base/source.html) inside
 futures. It is always better to source external R scripts at the top of
 your main R script, e.g.
 
-``` r
-
-library(future)
-source("./my-script.R")
-
-f <- future({
-  ...
-})
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`future`](https://future.futureverse.org)`)`\
+[`source`](https://rdrr.io/r/base/source.html)`(``"./my-script.R"``)`\
+\
+`f`` ``<-`` `[`future`](https://future.futureverse.org/reference/future.md)`(``{`\
+`  ``...`\
+`}``)`
 
 However, if you find yourself having to source a script inside a future,
 or inside a function, make sure to specify argument `local = TRUE`, e.g.
 
-``` r
-
-f <- future({
-  source("./my-script.R", local = TRUE)
-  ...
-})
-```
+\
+`f`` ``<-`` `[`future`](https://future.futureverse.org/reference/future.md)`(``{`\
+`  `[`source`](https://rdrr.io/r/base/source.html)`(``"./my-script.R"``, local ``=`` ``TRUE``)`\
+`  ``...`\
+`}``)`
 
 This is because [`source()`](https://rdrr.io/r/base/source.html)
 defaults to `local = FALSE`, which has side effects. When using
@@ -776,14 +746,12 @@ assignment operator `%<-%` as an assignment operator, which is not
 surprising because `%<-%` is technically an infix operator. This means
 that if you for instance use the following code in your package:
 
-``` r
-
-foo <- function() {
-  b <- 3.14
-  a %<-% { b + 1 }
-  a
-}
-```
+\
+`foo`` ``<-`` ``function``(``)`` ``{`\
+`  ``b`` ``<-`` ``3.14`\
+`  ``a`` `[`%<-%`](https://future.futureverse.org/reference/futureAssign.md)` ``{`` ``b`` ``+`` ``1`` ``}`\
+`  ``a`\
+`}`
 
 then `R CMD check` will produce a NOTE saying:
 
@@ -797,12 +765,10 @@ Undefined global functions or variables:
 In order to avoid this, we can add a dummy assignment of the missing
 global at the top of the function, i.e.
 
-``` r
-
-foo <- function() {
-  a <- NULL ## To please R CMD check
-  b <- 3.14
-  a %<-% { b + 1 }
-  a
-}
-```
+\
+`foo`` ``<-`` ``function``(``)`` ``{`\
+`  ``a`` ``<-`` ``NULL`` ``## To please R CMD check`\
+`  ``b`` ``<-`` ``3.14`\
+`  ``a`` `[`%<-%`](https://future.futureverse.org/reference/futureAssign.md)` ``{`` ``b`` ``+`` ``1`` ``}`\
+`  ``a`\
+`}`

@@ -32,7 +32,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.76.0-9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.76.0-9006</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -488,9 +488,9 @@ gives an error:</p>
 <span id="cb30-6"><a href="#cb30-6" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">7464</span></span>
 <span id="cb30-7"><a href="#cb30-7" tabindex="-1"></a><span class="sc">&gt;</span> v2 <span class="ot">&lt;-</span> <span class="fu">value</span>(f2)</span>
 <span id="cb30-8"><a href="#cb30-8" tabindex="-1"></a>Error<span class="sc">:</span> Invalid usage of futures<span class="sc">:</span> A future whose value has not yet been collected</span>
-<span id="cb30-9"><a href="#cb30-9" tabindex="-1"></a> can only be queried by the R <span class="fu">process</span> (cdd013cb<span class="sc">-</span>e045<span class="sc">-</span>f4a5<span class="dv">-3977-9</span>f064c31f188; pid</span>
+<span id="cb30-9"><a href="#cb30-9" tabindex="-1"></a> can only be queried by the R <span class="fu">process</span> (cdd013cb<span class="sc">-</span>e045<span class="sc">-</span>f4a5<span class="sc">-</span><span class="dv">3977</span><span class="sc">-</span><span class="dv">9</span>f064c31f188; pid</span>
 <span id="cb30-10"><a href="#cb30-10" tabindex="-1"></a> <span class="dv">1276</span> on MyMachine) that created it, not by any other R <span class="fu">processes</span> (<span class="dv">5579</span>f789<span class="sc">-</span>e7b6</span>
-<span id="cb30-11"><a href="#cb30-11" tabindex="-1"></a> <span class="sc">-</span>bace<span class="sc">-</span>c50d<span class="dv">-6</span>c7a23ddb5a3; pid <span class="dv">2352</span> on MyMachine)<span class="sc">:</span> {; <span class="fu">Sys.getpid</span>(); }</span></code></pre></div>
+<span id="cb30-11"><a href="#cb30-11" tabindex="-1"></a> <span class="sc">-</span>bace<span class="sc">-</span>c50d<span class="sc">-</span><span class="dv">6</span>c7a23ddb5a3; pid <span class="dv">2352</span> on MyMachine)<span class="sc">:</span> {; <span class="fu">Sys.getpid</span>(); }</span></code></pre></div>
 <p>This is because the main R process creates two futures, but then the
 second future tries to retrieve the value of the first one. This is an
 invalid request because the second future has no channel to communicate
@@ -540,9 +540,9 @@ environments). For instance,</p>
 <span id="cb33-6"><a href="#cb33-6" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">2352</span></span>
 <span id="cb33-7"><a href="#cb33-7" tabindex="-1"></a><span class="sc">&gt;</span> x<span class="sc">$</span>b</span>
 <span id="cb33-8"><a href="#cb33-8" tabindex="-1"></a>Error<span class="sc">:</span> Invalid usage of futures<span class="sc">:</span> A future whose value has not yet been collected</span>
-<span id="cb33-9"><a href="#cb33-9" tabindex="-1"></a> can only be queried by the R <span class="fu">process</span> (cdd013cb<span class="sc">-</span>e045<span class="sc">-</span>f4a5<span class="dv">-3977-9</span>f064c31f188; pid</span>
-<span id="cb33-10"><a href="#cb33-10" tabindex="-1"></a> <span class="dv">1276</span> on localhost) that created it, not by any other R <span class="fu">processes</span> (<span class="dv">2</span>ce86ccd<span class="dv">-5854</span></span>
-<span id="cb33-11"><a href="#cb33-11" tabindex="-1"></a> <span class="sc">-</span><span class="dv">7</span>a05<span class="dv">-1373</span><span class="sc">-</span>e1b20022e4d8; pid <span class="dv">7464</span> on localhost)<span class="sc">:</span> {; <span class="fu">Sys.getpid</span>(); }</span></code></pre></div>
+<span id="cb33-9"><a href="#cb33-9" tabindex="-1"></a> can only be queried by the R <span class="fu">process</span> (cdd013cb<span class="sc">-</span>e045<span class="sc">-</span>f4a5<span class="sc">-</span><span class="dv">3977</span><span class="sc">-</span><span class="dv">9</span>f064c31f188; pid</span>
+<span id="cb33-10"><a href="#cb33-10" tabindex="-1"></a> <span class="dv">1276</span> on localhost) that created it, not by any other R <span class="fu">processes</span> (<span class="dv">2</span>ce86ccd<span class="sc">-</span><span class="dv">5854</span></span>
+<span id="cb33-11"><a href="#cb33-11" tabindex="-1"></a> <span class="sc">-</span><span class="dv">7</span>a05<span class="sc">-</span><span class="dv">1373</span><span class="sc">-</span>e1b20022e4d8; pid <span class="dv">7464</span> on localhost)<span class="sc">:</span> {; <span class="fu">Sys.getpid</span>(); }</span></code></pre></div>
 <p>As previously, this can be avoided by making sure <code>x$a</code> is
 resolved first, which can be done in various ways,
 e.g. <code>dummy &lt;- x$a</code>, <code>resolve(x$a)</code> and

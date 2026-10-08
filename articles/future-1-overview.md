@@ -354,7 +354,7 @@ acknowledges these as well. If nothing else is specified, all available
 cores on the machine will be utilized,
 cf. [`parallel::detectCores()`](https://rdrr.io/r/parallel/detectCores.html).
 For more details, please see
-`help("availableCores", package = "parallelly")`.
+[`help("availableCores", package = "parallelly")`](https://parallelly.futureverse.org/reference/availableCores.html).
 
 #### Multicore Futures
 
@@ -363,10 +363,8 @@ basically all operating systems except Windows, an alternative to
 spawning R sessions in the background is to fork the existing R process.
 To use multicore futures, when supported, specify:
 
-``` r
-
-plan(multicore)
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.md)`(``multicore``)`
 
 Just like for multisession futures, the maximum number of parallel
 processes running will be decided by
@@ -435,11 +433,9 @@ Any types of clusters that
 creates can be used for cluster futures. For instance, the above cluster
 can be explicitly set up as:
 
-``` r
-
-cl <- parallel::makeCluster(c("n1", "n2", "n3"))
-plan(cluster, workers = cl)
-```
+\
+`cl`` ``<-`` ``parallel``::`[`makeCluster`](https://rdrr.io/r/parallel/makeCluster.html)`(`[`c`](https://rdrr.io/r/base/c.html)`(``"n1"``, ``"n2"``, ``"n3"``)``)`\
+[`plan`](https://future.futureverse.org/reference/plan.md)`(``cluster``, workers ``=`` ``cl``)`
 
 Also, it is considered good style to shut down cluster `cl` when it is
 no longer needed, that is, calling `parallel::stopCluster(cl)`. However,
@@ -526,10 +522,8 @@ nested backends by specifying a list to
 clarify, first, the same sequence of backends as used above can be
 explicitly specified as:
 
-``` r
-
-plan(list(multisession, sequential))
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.md)`(`[`list`](https://rdrr.io/r/base/list.html)`(``multisession``, ``sequential``)``)`
 
 We would actually get the same behavior if we try with multiple levels
 of multisession evaluations;
@@ -828,28 +822,22 @@ To see a live illustration of how different types of futures are
 evaluated, run the Mandelbrot demo of this package. First, try with the
 sequential evaluation,
 
-``` r
-
-library(future)
-plan(sequential)
-demo("mandelbrot", package = "future", ask = FALSE)
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`future`](https://future.futureverse.org)`)`\
+[`plan`](https://future.futureverse.org/reference/plan.md)`(``sequential``)`\
+[`demo`](https://rdrr.io/r/utils/demo.html)`(``"mandelbrot"``, package ``=`` ``"future"``, ask ``=`` ``FALSE``)`
 
 which resembles how the script would run if futures were not used. Then,
 try multisession evaluation, which calculates the different Mandelbrot
 planes using parallel R processes running in the background. Try,
 
-``` r
-
-plan(multisession)
-demo("mandelbrot", package = "future", ask = FALSE)
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.md)`(``multisession``)`\
+[`demo`](https://rdrr.io/r/utils/demo.html)`(``"mandelbrot"``, package ``=`` ``"future"``, ask ``=`` ``FALSE``)`
 
 Finally, if you have access to multiple machines you can try to set up a
 cluster of workers and use them, e.g.
 
-``` r
-
-plan(cluster, workers = c("n2", "n5", "n6", "n6", "n9"))
-demo("mandelbrot", package = "future", ask = FALSE)
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.md)`(``cluster``, workers ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"n2"``, ``"n5"``, ``"n6"``, ``"n6"``, ``"n9"``)``)`\
+[`demo`](https://rdrr.io/r/utils/demo.html)`(``"mandelbrot"``, package ``=`` ``"future"``, ask ``=`` ``FALSE``)`
