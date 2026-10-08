@@ -2,8 +2,6 @@
 #'
 #' @usage fassignment \%lazy\% lazy
 #'
-#' @param fassignment The future assignment, e.g.
-#'        `x %<-% { expr }`.
 #' @inheritParams future
 #'
 #' @aliases %lazy%

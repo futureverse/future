@@ -2,8 +2,6 @@
 #'
 #' @usage fassignment \%seed\% seed
 #'
-#' @param fassignment The future assignment, e.g.
-#'        `x %<-% { expr }`.
 #' @inheritParams future
 #'
 #' @aliases %seed%

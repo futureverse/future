@@ -2,8 +2,6 @@
 #'
 #' @usage fassignment \%plan\% strategy
 #'
-#' @param fassignment The future assignment, e.g.
-#'        `x %<-% { expr }`.
 #' @param strategy The backend controlling how the future is
 #'        resolved. See [plan()] for further details.
 #'
