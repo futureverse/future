@@ -20,6 +20,9 @@
 
  * `makeClusterFuture(globals = ...)` would result in an future
    evaluation error.
+
+ * Futures failed on R (< 4.0.0). This bug was introduced in **future**
+   1.68.0 (2025-11-17).
    
 
 # Version 1.76.0 [2026-09-24]
