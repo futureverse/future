@@ -28,6 +28,7 @@ jobs:
           - {os: ubuntu-latest,  r: 'oldrel-1' }
           - {os: ubuntu-latest,  r: 'oldrel-2' }
           - {os: ubuntu-latest,  r: '4.0'      , testme_exclude: 'mpi' }
+          - {os: ubuntu-latest,  r: '3.6'      , testme_exclude: 'mpi' }
 
           - {os: ubuntu-latest,  r: 'release'  , strict: true, label: 'strict' }
 
