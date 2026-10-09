@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.76.0-9006</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.76.0-9007</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -87,6 +87,7 @@
 <li><p>A future that uses a global <code>...</code> together with a global <code>...future.FUN()</code> function, which is what <strong>future.apply</strong> uses, could fail with “cycles in parent chains are not allowed”. In R (&lt; 4.5.0), it ended up in an infinite loop. This bug was introduced in <strong>future</strong> 1.40.0 (2025-04-10).</p></li>
 <li><p>A sequential future that uses a global <code>...</code> together with a global <code>...future.FUN()</code> function, which is what <strong>future.apply</strong> uses, could permanently change the parent of the function’s environment, if that environment inherits from the global environment. This bug was introduced in <strong>future</strong> 1.40.0 (2025-04-10).</p></li>
 <li><p><code>makeClusterFuture(globals = ...)</code> would result in an future evaluation error.</p></li>
+<li><p>Futures failed on R (&lt; 4.0.0). This bug was introduced in <strong>future</strong> 1.68.0 (2025-11-17).</p></li>
 </ul></div>
 </div>
     <div class="section level2">
