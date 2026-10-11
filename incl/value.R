@@ -31,3 +31,13 @@ message("The ten averages are: ", paste(vs, collapse = ", "))
 ## Calculate the sum of the averages (by reducing)
 total <- value(fs, reduce = `+`)
 message("The sum of the ten averages is: ", total)
+
+## Calculate the sum of the averages (by reducing) shifted by 42
+total <- value(fs, reduce = structure("+", init = 42L))
+message("The sum of the ten averages + 42 is: ", total)
+
+## Example of an "identity" reduce function
+identity_reduce <- function(acc, value) c(acc, list(value))
+vs <- value(fs, reduce = identity_reduce)
+message("The ten averages are: ", paste(unlist(vs), collapse = ", "))
+

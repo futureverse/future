@@ -419,9 +419,14 @@ name_of_function <- function(fcn, add_backticks = FALSE) {
 #' @inheritParams value
 #'
 #' @param reduce An optional function for reducing all the values.
-#' Optional attribute `init` can be used to set initial value for the
-#' reduction. If not specified, the first value will be used as the
-#' initial value.
+#' Analogously to [base::Reduce()], itt should take (at least) two
+#' arguments (names do not matter), where the first argument is the
+#' accumulated reduction so far and the second is the value to be
+#' included. It should return the updated accumulated value.
+#' Optional attribute `init` can be used as the initial, first argument
+#' in the first call to `reduce()`. If not specified, the value of
+#' the first future is used as-is as the initial value, i.e. `reduce()`
+#' is not called until the second value is available.
 #' Reduction of values is done as soon as possible, but always in the
 #' same order as `x`, unless `inorder` is FALSE.
 #'
