@@ -89,11 +89,20 @@ value(x, ...)
 
 - reduce:
 
-  An optional function for reducing all the values. Optional attribute
-  `init` can be used to set initial value for the reduction. If not
-  specified, the first value will be used as the initial value.
-  Reduction of values is done as soon as possible, but always in the
-  same order as `x`, unless `inorder` is FALSE.
+  An optional function for reducing all the values. Analogously to
+  [`base::Reduce()`](https://rdrr.io/r/base/funprog.html), itt should
+  take (at least) two arguments (names do not matter), where the first
+  argument is the accumulated reduction so far and the second is the
+  value to be included. It should return the updated accumulated value.
+  Optional attribute `init` can be used as the initial, first argument
+  in the first call to
+  [`reduce()`](https://purrr.tidyverse.org/reference/reduce.html). If
+  not specified, the value of the first future is used as-is as the
+  initial value, i.e.
+  [`reduce()`](https://purrr.tidyverse.org/reference/reduce.html) is not
+  called until the second value is available. Reduction of values is
+  done as soon as possible, but always in the same order as `x`, unless
+  `inorder` is FALSE.
 
 - cancel, interrupt:
 
@@ -199,4 +208,15 @@ message("The ten averages are: ", paste(vs, collapse = ", "))
 total <- value(fs, reduce = `+`)
 message("The sum of the ten averages is: ", total)
 #> The sum of the ten averages is: 493.54
+
+## Calculate the sum of the averages (by reducing) shifted by 42
+total <- value(fs, reduce = structure("+", init = 42L))
+message("The sum of the ten averages + 42 is: ", total)
+#> The sum of the ten averages + 42 is: 535.54
+
+## Example of an "identity" reduce function
+identity_reduce <- function(acc, value) c(acc, list(value))
+vs <- value(fs, reduce = identity_reduce)
+message("The ten averages are: ", paste(unlist(vs), collapse = ", "))
+#> The ten averages are: 48.84, 50.68, 48.56, 54.3, 49.1, 46.52, 48.42, 49.76, 47.12, 50.24
 ```

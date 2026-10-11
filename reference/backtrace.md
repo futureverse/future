@@ -42,9 +42,9 @@ res <- tryCatch({
 #> [[1]]
 #> base::tryCatch(base::withCallingHandlers({
 #>     NULL
-#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpkbH7F4/callr-fun-79f464a901e40"), 
+#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpPFRNmx/callr-fun-1506bc6b326b28"), 
 #>         base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
-#>         quote = TRUE), file = "/tmp/hb/RtmpkbH7F4/callr-res-79f46754547bd", 
+#>         quote = TRUE), file = "/tmp/hb/RtmpPFRNmx/callr-res-1506bc44fb96d4", 
 #>         compress = FALSE)
 #>     base::flush(base::stdout())
 #>     base::flush(base::stderr())
@@ -73,7 +73,7 @@ res <- tryCatch({
 #>         if (callr_data$has_otel) {
 #>             callr_data$otel_span$record_exception(e2)
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpkbH7F4/callr-res-79f46754547bd", 
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpPFRNmx/callr-res-1506bc44fb96d4", 
 #>             ".error"))
 #>     }
 #> }, interrupt = function(e) {
@@ -99,7 +99,7 @@ res <- tryCatch({
 #>         if (callr_data$has_otel) {
 #>             callr_data$otel_span$record_exception(e2)
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpkbH7F4/callr-res-79f46754547bd", 
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpPFRNmx/callr-res-1506bc44fb96d4", 
 #>             ".error"))
 #>     }
 #> }, callr_message = function(e) {
@@ -143,9 +143,9 @@ res <- tryCatch({
 #> [[8]]
 #> base::withCallingHandlers({
 #>     NULL
-#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpkbH7F4/callr-fun-79f464a901e40"), 
+#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpPFRNmx/callr-fun-1506bc6b326b28"), 
 #>         base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
-#>         quote = TRUE), file = "/tmp/hb/RtmpkbH7F4/callr-res-79f46754547bd", 
+#>         quote = TRUE), file = "/tmp/hb/RtmpPFRNmx/callr-res-1506bc44fb96d4", 
 #>         compress = FALSE)
 #>     base::flush(base::stdout())
 #>     base::flush(base::stderr())
@@ -174,7 +174,7 @@ res <- tryCatch({
 #>         if (callr_data$has_otel) {
 #>             callr_data$otel_span$record_exception(e2)
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpkbH7F4/callr-res-79f46754547bd", 
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpPFRNmx/callr-res-1506bc44fb96d4", 
 #>             ".error"))
 #>     }
 #> }, interrupt = function(e) {
@@ -200,7 +200,7 @@ res <- tryCatch({
 #>         if (callr_data$has_otel) {
 #>             callr_data$otel_span$record_exception(e2)
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpkbH7F4/callr-res-79f46754547bd", 
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpPFRNmx/callr-res-1506bc44fb96d4", 
 #>             ".error"))
 #>     }
 #> }, callr_message = function(e) {
@@ -208,13 +208,13 @@ res <- tryCatch({
 #> })
 #> 
 #> [[9]]
-#> base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpkbH7F4/callr-fun-79f464a901e40"), 
+#> base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpPFRNmx/callr-fun-1506bc6b326b28"), 
 #>     base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
-#>     quote = TRUE), file = "/tmp/hb/RtmpkbH7F4/callr-res-79f46754547bd", 
+#>     quote = TRUE), file = "/tmp/hb/RtmpPFRNmx/callr-res-1506bc44fb96d4", 
 #>     compress = FALSE)
 #> 
 #> [[10]]
-#> base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpkbH7F4/callr-fun-79f464a901e40"), 
+#> base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpPFRNmx/callr-fun-1506bc6b326b28"), 
 #>     base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
 #>     quote = TRUE)
 #> 
@@ -231,8 +231,8 @@ res <- tryCatch({
 #>     options(cli.num_colors = cli_colors, cli.hyperlink = hyperlinks, 
 #>         cli.hyperlink_run = hyperlinks)
 #>     pkgdown::build_site(...)
-#> }), base::quote(list(pkg = list(package = "future", version = "1.76.0-9007", 
-#>     src_path = "/tmp/hb/RtmpkbH7F4/future", meta = list(url = "https://future.futureverse.org", 
+#> }), base::quote(list(pkg = list(package = "future", version = "1.76.0-9008", 
+#>     src_path = "/tmp/hb/RtmpPFRNmx/future", meta = list(url = "https://future.futureverse.org", 
 #>         home = list(links = list(list(text = "Roadmap/Milestones", 
 #>             href = "https://github.com/futureverse/future/milestones"), 
 #>             list(text = "The Futureverse Project", href = "https://www.futureverse.org/"), 
@@ -273,7 +273,7 @@ res <- tryCatch({
 #>             bootstrap = 5L, `light-switch` = TRUE)), desc = <environment>, 
 #>     bs_version = 5L, development = list(destination = "dev", 
 #>         mode = "default", version_label = "muted", in_dev = FALSE, 
-#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/RtmpkbH7F4/future/docs", 
+#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/RtmpPFRNmx/future/docs", 
 #>     lang = "en-US", install_metadata = FALSE, figures = list(
 #>         dev = "ragg::agg_png", dpi = 96L, dev.args = list(), 
 #>         fig.ext = "png", fig.width = 7.29166666666667, fig.height = NULL, 
@@ -2596,9 +2596,15 @@ res <- tryCatch({
 #>                       "should be done.  If TRUE, an infinite recursion is used.  If FALSE or zero,\n", 
 #>                       "no recursion is performed.")), "\n", "\n", 
 #>                   list(list("reduce"), list("An optional function for reducing all the values.\n", 
-#>                     "Optional attribute ", list("init"), " can be used to set initial value for the\n", 
-#>                     "reduction. If not specified, the first value will be used as the\n", 
-#>                     "initial value.\n", "Reduction of values is done as soon as possible, but always in the\n", 
+#>                     "Analogously to ", list(list("base::Reduce()")), 
+#>                     ", itt should take (at least) two\n", "arguments (names do not matter), where the first argument is the\n", 
+#>                     "accumulated reduction so far and the second is the value to be\n", 
+#>                     "included. It should return the updated accumulated value.\n", 
+#>                     "Optional attribute ", list("init"), " can be used as the initial, first argument\n", 
+#>                     "in the first call to ", list("reduce()"), 
+#>                     ". If not specified, the value of\n", "the first future is used as-is as the initial value, i.e. ", 
+#>                     list("reduce()"), "\n", "is not called until the second value is available.\n", 
+#>                     "Reduction of values is done as soon as possible, but always in the\n", 
 #>                     "same order as ", list("x"), ", unless ", 
 #>                     list("inorder"), " is FALSE.")), "\n", "\n", 
 #>                   list(list("cancel, interrupt"), list("If TRUE and ", 
@@ -2652,8 +2658,16 @@ res <- tryCatch({
 #>                   "\n", "## The values as a vector (by reducing)\n", 
 #>                   "vs <- value(fs, reduce = c)\n", "message(\"The ten averages are: \", paste(vs, collapse = \", \"))\n", 
 #>                   "\n", "## Calculate the sum of the averages (by reducing)\n", 
-#>                   "total <- value(fs, reduce = `+`)\n", "message(\"The sum of the ten averages is: \", total)\n"), 
-#>                 "\n"), `zzz-future.options.Rd` = list("% Generated by roxygen2: do not edit by hand", 
+#>                   "total <- value(fs, reduce = `+`)\n", "message(\"The sum of the ten averages is: \", total)\n", 
+#>                   "\n", "## Calculate the sum of the averages (by reducing) shifted by 42\n", 
+#>                   "total <- value(fs, reduce = structure(\"+\", init = 42L))\n", 
+#>                   "message(\"The sum of the ten averages + 42 is: \", total)\n", 
+#>                   "\n", "## Example of an \"identity\" reduce function\n", 
+#>                   "identity_reduce <- function(acc, value) c(acc, list(value))\n", 
+#>                   "vs <- value(fs, reduce = identity_reduce)\n", 
+#>                   "message(\"The ten averages are: \", paste(unlist(vs), collapse = \", \"))\n", 
+#>                   "\n"), "\n"), `zzz-future.options.Rd` = list(
+#>                 "% Generated by roxygen2: do not edit by hand", 
 #>                 "\n", "% Please edit documentation in R/utils-options.R", 
 #>                 "\n", list("zzz-future.options"), "\n", list(
 #>                   "zzz-future.options"), "\n", list("future.options"), 
@@ -3074,8 +3088,8 @@ res <- tryCatch({
 #>     options(cli.num_colors = cli_colors, cli.hyperlink = hyperlinks, 
 #>         cli.hyperlink_run = hyperlinks)
 #>     pkgdown::build_site(...)
-#> })(pkg = base::quote(list(package = "future", version = "1.76.0-9007", 
-#>     src_path = "/tmp/hb/RtmpkbH7F4/future", meta = list(url = "https://future.futureverse.org", 
+#> })(pkg = base::quote(list(package = "future", version = "1.76.0-9008", 
+#>     src_path = "/tmp/hb/RtmpPFRNmx/future", meta = list(url = "https://future.futureverse.org", 
 #>         home = list(links = list(list(text = "Roadmap/Milestones", 
 #>             href = "https://github.com/futureverse/future/milestones"), 
 #>             list(text = "The Futureverse Project", href = "https://www.futureverse.org/"), 
@@ -3116,7 +3130,7 @@ res <- tryCatch({
 #>             bootstrap = 5L, `light-switch` = TRUE)), desc = <environment>, 
 #>     bs_version = 5L, development = list(destination = "dev", 
 #>         mode = "default", version_label = "muted", in_dev = FALSE, 
-#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/RtmpkbH7F4/future/docs", 
+#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/RtmpPFRNmx/future/docs", 
 #>     lang = "en-US", install_metadata = FALSE, figures = list(
 #>         dev = "ragg::agg_png", dpi = 96L, dev.args = list(), 
 #>         fig.ext = "png", fig.width = 7.29166666666667, fig.height = NULL, 
@@ -5439,9 +5453,15 @@ res <- tryCatch({
 #>                       "should be done.  If TRUE, an infinite recursion is used.  If FALSE or zero,\n", 
 #>                       "no recursion is performed.")), "\n", "\n", 
 #>                   list(list("reduce"), list("An optional function for reducing all the values.\n", 
-#>                     "Optional attribute ", list("init"), " can be used to set initial value for the\n", 
-#>                     "reduction. If not specified, the first value will be used as the\n", 
-#>                     "initial value.\n", "Reduction of values is done as soon as possible, but always in the\n", 
+#>                     "Analogously to ", list(list("base::Reduce()")), 
+#>                     ", itt should take (at least) two\n", "arguments (names do not matter), where the first argument is the\n", 
+#>                     "accumulated reduction so far and the second is the value to be\n", 
+#>                     "included. It should return the updated accumulated value.\n", 
+#>                     "Optional attribute ", list("init"), " can be used as the initial, first argument\n", 
+#>                     "in the first call to ", list("reduce()"), 
+#>                     ". If not specified, the value of\n", "the first future is used as-is as the initial value, i.e. ", 
+#>                     list("reduce()"), "\n", "is not called until the second value is available.\n", 
+#>                     "Reduction of values is done as soon as possible, but always in the\n", 
 #>                     "same order as ", list("x"), ", unless ", 
 #>                     list("inorder"), " is FALSE.")), "\n", "\n", 
 #>                   list(list("cancel, interrupt"), list("If TRUE and ", 
@@ -5495,8 +5515,16 @@ res <- tryCatch({
 #>                   "\n", "## The values as a vector (by reducing)\n", 
 #>                   "vs <- value(fs, reduce = c)\n", "message(\"The ten averages are: \", paste(vs, collapse = \", \"))\n", 
 #>                   "\n", "## Calculate the sum of the averages (by reducing)\n", 
-#>                   "total <- value(fs, reduce = `+`)\n", "message(\"The sum of the ten averages is: \", total)\n"), 
-#>                 "\n"), `zzz-future.options.Rd` = list("% Generated by roxygen2: do not edit by hand", 
+#>                   "total <- value(fs, reduce = `+`)\n", "message(\"The sum of the ten averages is: \", total)\n", 
+#>                   "\n", "## Calculate the sum of the averages (by reducing) shifted by 42\n", 
+#>                   "total <- value(fs, reduce = structure(\"+\", init = 42L))\n", 
+#>                   "message(\"The sum of the ten averages + 42 is: \", total)\n", 
+#>                   "\n", "## Example of an \"identity\" reduce function\n", 
+#>                   "identity_reduce <- function(acc, value) c(acc, list(value))\n", 
+#>                   "vs <- value(fs, reduce = identity_reduce)\n", 
+#>                   "message(\"The ten averages are: \", paste(unlist(vs), collapse = \", \"))\n", 
+#>                   "\n"), "\n"), `zzz-future.options.Rd` = list(
+#>                 "% Generated by roxygen2: do not edit by hand", 
 #>                 "\n", "% Please edit documentation in R/utils-options.R", 
 #>                 "\n", list("zzz-future.options"), "\n", list(
 #>                   "zzz-future.options"), "\n", list("future.options"), 

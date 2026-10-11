@@ -19,7 +19,7 @@ queried futures are resolved."><meta property="og:image" content="https://future
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.76.0-9007</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.76.0-9008</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -178,9 +178,14 @@ no recursion is performed.</p></dd>
 
 <dt id="arg-reduce">reduce<a class="anchor" aria-label="anchor" href="#arg-reduce"></a></dt>
 <dd><p>An optional function for reducing all the values.
-Optional attribute <code>init</code> can be used to set initial value for the
-reduction. If not specified, the first value will be used as the
-initial value.
+Analogously to <code><a href="https://rdrr.io/r/base/funprog.html" class="external-link">base::Reduce()</a></code>, itt should take (at least) two
+arguments (names do not matter), where the first argument is the
+accumulated reduction so far and the second is the value to be
+included. It should return the updated accumulated value.
+Optional attribute <code>init</code> can be used as the initial, first argument
+in the first call to <code><a href="https://purrr.tidyverse.org/reference/reduce.html" class="external-link">reduce()</a></code>. If not specified, the value of
+the first future is used as-is as the initial value, i.e. <code><a href="https://purrr.tidyverse.org/reference/reduce.html" class="external-link">reduce()</a></code>
+is not called until the second value is available.
 Reduction of values is done as soon as possible, but always in the
 same order as <code>x</code>, unless <code>inorder</code> is FALSE.</p></dd>
 
@@ -283,6 +288,18 @@ abruptly ("crashed"), then a <a href="FutureCondition.html">FutureInterruptError
 <span class="r-in"><span><span class="va">total</span> <span class="op">&lt;-</span> <span class="fu">value</span><span class="op">(</span><span class="va">fs</span>, reduce <span class="op">=</span> <span class="va">`+`</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">message</a></span><span class="op">(</span><span class="st">"The sum of the ten averages is: "</span>, <span class="va">total</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> The sum of the ten averages is: 493.54</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Calculate the sum of the averages (by reducing) shifted by 42</span></span></span>
+<span class="r-in"><span><span class="va">total</span> <span class="op">&lt;-</span> <span class="fu">value</span><span class="op">(</span><span class="va">fs</span>, reduce <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/structure.html" class="external-link">structure</a></span><span class="op">(</span><span class="st">"+"</span>, init <span class="op">=</span> <span class="fl">42L</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">message</a></span><span class="op">(</span><span class="st">"The sum of the ten averages + 42 is: "</span>, <span class="va">total</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> The sum of the ten averages + 42 is: 535.54</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Example of an "identity" reduce function</span></span></span>
+<span class="r-in"><span><span class="va">identity_reduce</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">acc</span>, <span class="va">value</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">acc</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">value</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">vs</span> <span class="op">&lt;-</span> <span class="fu">value</span><span class="op">(</span><span class="va">fs</span>, reduce <span class="op">=</span> <span class="va">identity_reduce</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">message</a></span><span class="op">(</span><span class="st">"The ten averages are: "</span>, <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="va">vs</span><span class="op">)</span>, collapse <span class="op">=</span> <span class="st">", "</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> The ten averages are: 48.84, 50.68, 48.56, 54.3, 49.1, 46.52, 48.42, 49.76, 47.12, 50.24</span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
