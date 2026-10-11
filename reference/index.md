@@ -6,7 +6,7 @@
   : Back trace the expressions evaluated when an error was caught
 
 - [`cancel()`](https://future.futureverse.org/reference/cancel.md) :
-  Cancel a future
+  Cancel one or more futures
 
 - [`cluster()`](https://future.futureverse.org/reference/cluster.md) :
   Create a cluster future whose value will be resolved asynchronously in

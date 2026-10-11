@@ -1,6 +1,7 @@
-# Cancel a future
+# Cancel one or more futures
 
-Cancels futures, with the option to interrupt running ones.
+Cancels futures, with the option to interrupt running ones. `cancel()`
+is vectorized, i.e. accepts a collection of futures to be canceled.
 
 ## Usage
 
@@ -12,7 +13,12 @@ cancel(x, interrupt = TRUE, ...)
 
 - x:
 
-  A Future.
+  A [Future](https://future.futureverse.org/reference/Future-class.md),
+  a list, an environment, or a list environment
+  ([listenv](https://listenv.futureverse.org/reference/listenv.html)).
+  Lists and environments may hold a mix of futures and non-future
+  elements, and may be nested, e.g. a list of lists of futures; every
+  future found, at any depth, is canceled.
 
 - interrupt:
 
@@ -25,12 +31,13 @@ cancel(x, interrupt = TRUE, ...)
 
 ## Value
 
-`cancel()` returns (invisibly) the canceled
-[Future](https://future.futureverse.org/reference/Future-class.md)s
-after flagging them as "canceled" and possibly interrupting them as
-well.
+`cancel()` returns (invisibly) `x` after canceling every
+[Future](https://future.futureverse.org/reference/Future-class.md)
+therein, that is, after flagging each one as "canceled" and possibly
+interrupting it as well.
 
-Canceling a lazy or a finished future has no effect.
+Canceling a lazy or a finished future has no effect. Elements of `x`
+that are neither futures nor collections of futures are left untouched.
 
 ## See also
 
@@ -56,7 +63,7 @@ fs <- lapply(c(1, 2), function(duration) {
 ## Wait until at least one of the futures is resolved
 while (!any(resolved(fs))) Sys.sleep(0.1)
 
-## Cancel the future that is not yet resolved
+## Cancel futures that are not yet resolved
 r <- resolved(fs)
 cancel(fs[!r])
 
@@ -68,7 +75,7 @@ message("Result: ", v)
 
 ## The value of the canceled future is an error
 try(v <- value(fs[!r]))
-#> Error : Future (<unnamed-3>) of class MultisessionFuture was canceled (pid 1378535) [future <unnamed-3> (0d890bd2687355ca6c747dc95872fe22-3); on 0d890bd2687355ca6c747dc95872fe22@hb-x1-2023<1378199> at 2026-10-10 20:22:49.719279]
+#> Error : Future (<unnamed-3>) of class MultisessionFuture was canceled (pid 1397500) [future <unnamed-3> (041d58d5be0a3326dad1166a4936b094-3); on 041d58d5be0a3326dad1166a4936b094@hb-x1-2023<1397162> at 2026-10-10 20:44:35.087751]
 
 ## Shut down parallel workers
 plan(sequential)
