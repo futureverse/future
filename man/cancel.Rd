@@ -2,12 +2,16 @@
 % Please edit documentation in R/core_api-cancel.R
 \name{cancel}
 \alias{cancel}
-\title{Cancel a future}
+\title{Cancel one or more futures}
 \usage{
 cancel(x, interrupt = TRUE, ...)
 }
 \arguments{
-\item{x}{A Future.}
+\item{x}{A \link{Future}, a list, an environment, or a list environment
+(\link[listenv:listenv]{listenv}). Lists and environments may hold
+a mix of futures and non-future elements, and may be nested, e.g.
+a list of lists of futures; every future found, at any depth, is
+canceled.}
 
 \item{interrupt}{If TRUE, running futures are interrupted, if the
 future backend supports it.}
@@ -15,13 +19,18 @@ future backend supports it.}
 \item{\ldots}{All arguments used by the S3 methods.}
 }
 \value{
-\code{cancel()} returns (invisibly) the canceled \link{Future}s after
-flagging them as "canceled" and possibly interrupting them as well.
+\code{cancel()} returns (invisibly) \code{x} after canceling every \link{Future}
+therein, that is, after flagging each one as "canceled" and
+possibly interrupting it as well.
 
-Canceling a lazy or a finished future has no effect.
+Canceling a lazy or a finished future has no effect. Elements of
+\code{x} that are neither futures nor collections of futures are left
+untouched.
 }
 \description{
 Cancels futures, with the option to interrupt running ones.
+\code{cancel()} is vectorized, i.e. accepts a collection of futures
+to be canceled.
 }
 \examples{
 \dontshow{if ((interactive() || .Platform[["OS.type"]] != "windows")) withAutoprint(\{ # examplesIf}
@@ -39,7 +48,7 @@ fs <- lapply(c(1, 2), function(duration) {
 ## Wait until at least one of the futures is resolved
 while (!any(resolved(fs))) Sys.sleep(0.1)
 
-## Cancel the future that is not yet resolved
+## Cancel futures that are not yet resolved
 r <- resolved(fs)
 cancel(fs[!r])
 
