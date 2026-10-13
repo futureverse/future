@@ -1245,6 +1245,7 @@ requestNode <- local({
 
         workers[[node_idx]] <- node2
         backend[["workers"]] <- workers
+        clusterRegistry$replaceNode(workers, node_idx, node2)
         node <- node2
 
         if (debug) {
@@ -1623,6 +1624,7 @@ handleInterruptedFuture <- local({
 
         ## Update backend
         backend[["workers"]] <- workers
+        clusterRegistry$replaceNode(workers, node_idx, node2)
 
         node <- NULL
         
@@ -1757,6 +1759,18 @@ clusterRegistry <- local({
     cluster
   } ## startCluster()
 
+  ## When a worker is relaunched, the registry must track the new node,
+  ## otherwise stopCluster() closes the old, already closed, node and leaves
+  ## the relaunched worker and its connection behind
+  replaceNode <- function(workers, idx, node) {
+    if (is.null(cluster)) return(invisible(FALSE))
+    if (!identical(attr(workers, "name", exact = TRUE), attr(cluster, "name", exact = TRUE))) {
+      return(invisible(FALSE))
+    }
+    cluster[[idx]] <<- node
+    invisible(TRUE)
+  } ## replaceNode()
+
   stopCluster <- function(debug = FALSE) {
     if (debug) {
       mdebug_push("Stopping existing cluster ...")
@@ -1814,6 +1828,7 @@ clusterRegistry <- local({
   list(
       getCluster = getCluster,
     startCluster = startCluster,
+     replaceNode = replaceNode,
      stopCluster = stopCluster
   )
 }) ## clusterRegistry()

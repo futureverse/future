@@ -23,6 +23,12 @@
 
  * Futures failed on R (< 4.0.0). This bug was introduced in **future**
    1.68.0 (2025-11-17).
+
+ * When a cluster worker that `plan()` had started was relaunched after
+   it was canceled, interrupted or had died, `plan()` never shut the
+   relaunched worker down, because the cluster registry kept the old
+   node. The worker process and its connection were left running until
+   garbage collection.
    
 
 # Version 1.76.0 [2026-09-24]
