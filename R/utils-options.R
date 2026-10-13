@@ -387,7 +387,7 @@ update_package_options <- function(debug = FALSE) {
   update_package_option("future.globals.resolve", mode = "logical", debug = debug)
 
   ## Introduced in future 1.22.0:
-  update_package_option("future.lazy.assertOwner", mode = "logical", debug = debug)
+  update_package_option("future.lazy.assertOwner", mode = "logical", default = TRUE, debug = debug)
 
   update_package_option("future.plan", debug = debug)
 
