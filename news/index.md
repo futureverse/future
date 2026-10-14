@@ -6,7 +6,10 @@
 
 - Memory use on parallel workers has gone down significant in some
   cases. A side effect is also significantly faster processing in those
-  cases.
+  cases. This improvement has an immediate effect on several
+  **future.apply** functions: `future_lapply()`, `future_sapply()`,
+  `future_apply()`, `future_tapply()`, `future_by()`, `future_Filter()`,
+  `future_eapply()`, `future_mapply()`, and `future_Map()`.
 
 ### Bug Fixes
 
