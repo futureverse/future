@@ -1,5 +1,11 @@
 # Version (development version)
 
+## Significant Changes
+
+ * Memory use on parallel workers has gone down significant in some
+   cases. A side effect is also significantly faster processing in
+   those cases.
+
 ## Bug Fixes
 
  * Explicitly specifying globals as a character vector via attributes
@@ -23,7 +29,12 @@
 
  * Futures failed on R (< 4.0.0). This bug was introduced in **future**
    1.68.0 (2025-11-17).
-   
+
+ * Globals identified automatically (the default) could carry extra,
+   unneeded load that was exported to the parallel workers. This could
+   result in significant overhead in both total memory use and total
+   processing time.
+
 
 # Version 1.76.0 [2026-09-24]
 

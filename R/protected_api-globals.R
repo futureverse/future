@@ -471,10 +471,29 @@ getGlobalsAndPackages <- function(expr, envir = parent.frame(), tweak = tweakExp
     mdebugf("Packages after dropping non-attached packages: [%d] %s", length(pkgs), commaq(pkgs))
   }
 
+  ## NOTE: Serialization of emptyenv(), baseenv(), globalenv(), and package
+  ## namespace environments carries no payload. Instead, they are serialized
+  ## carrying only a lightweight flag so that they can be reconstructed
+  ## on the receiving R process that unserializes them.
+  ## All other types of environments are serialized, meaning their payload
+  ## corresponds to their content.
   keepWhere <- getOption("future.globals.keepWhere", TRUE)
   if (!keepWhere) {
     where <- attr(globals, "where")
     for (kk in seq_along(where)) where[[kk]] <- emptyenv()
+    attr(globals, "where") <- where
+  } else {
+    where <- attr(globals, "where")
+    voidenv <- new.env(parent = emptyenv())
+    for (kk in seq_along(where)) {
+      w <- where[[kk]]
+      if (!identical(w, globalenv()) && !identical(w, emptyenv())) {
+        ## Avoid transferring environments with a large payload. For this
+        ## to work, it's important that globals part of them has already
+        ## been identified.
+        where[[kk]] <- voidenv
+      }
+    }
     attr(globals, "where") <- where
   }
   
