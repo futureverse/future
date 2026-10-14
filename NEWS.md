@@ -8,6 +8,11 @@
 
 ## Bug Fixes
 
+ * `cluster` and `multisession` futures could leave a stray, unclosed
+   worker connection behind if a worker was relaunched. This would
+   eventually result in warnings on "closing unused connection" when
+   the garbage collector ran.
+
  * Explicitly specifying globals as a character vector via attributes
    `add` or `ignore` would be ignored silently, e.g. `globals =
    structure(c("a", "b"), add = "c")`.

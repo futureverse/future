@@ -1245,6 +1245,7 @@ requestNode <- local({
 
         workers[[node_idx]] <- node2
         backend[["workers"]] <- workers
+        clusterRegistry$setCluster(workers)
         node <- node2
 
         if (debug) {
@@ -1623,6 +1624,7 @@ handleInterruptedFuture <- local({
 
         ## Update backend
         backend[["workers"]] <- workers
+        clusterRegistry$setCluster(workers)
 
         node <- NULL
         
@@ -1757,6 +1759,10 @@ clusterRegistry <- local({
     cluster
   } ## startCluster()
 
+  setCluster <- function(cl) {
+    cluster <<- cl
+  }
+
   stopCluster <- function(debug = FALSE) {
     if (debug) {
       mdebug_push("Stopping existing cluster ...")
@@ -1814,6 +1820,7 @@ clusterRegistry <- local({
   list(
       getCluster = getCluster,
     startCluster = startCluster,
+      setCluster = setCluster,
      stopCluster = stopCluster
   )
 }) ## clusterRegistry()
