@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.76.0-9009</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.76.0-9013</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -82,12 +82,18 @@
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="version-development-version">Version (development version)<a class="anchor" aria-label="anchor" href="#version-development-version"></a></h2>
 <div class="section level3">
+<h3 id="significant-changes-development-version">Significant Changes<a class="anchor" aria-label="anchor" href="#significant-changes-development-version"></a></h3>
+<ul><li>Memory use on parallel workers has gone down significant in some cases. A side effect is also significantly faster processing in those cases.</li>
+</ul></div>
+<div class="section level3">
 <h3 id="bug-fixes-development-version">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h3>
-<ul><li><p>Explicitly specifying globals as a character vector via attributes <code>add</code> or <code>ignore</code> would be ignored silently, e.g. <code>globals = structure(c("a", "b"), add = "c")</code>.</p></li>
+<ul><li><p><code>cluster</code> and <code>multisession</code> futures could leave a stray, unclosed worker connection behind if a worker was relaunched. This would eventually result in warnings on “closing unused connection” when the garbage collector ran.</p></li>
+<li><p>Explicitly specifying globals as a character vector via attributes <code>add</code> or <code>ignore</code> would be ignored silently, e.g. <code>globals = structure(c("a", "b"), add = "c")</code>.</p></li>
 <li><p>A future that uses a global <code>...</code> together with a global <code>...future.FUN()</code> function, which is what <strong>future.apply</strong> uses, could fail with “cycles in parent chains are not allowed”. In R (&lt; 4.5.0), it ended up in an infinite loop. This bug was introduced in <strong>future</strong> 1.40.0 (2025-04-10).</p></li>
 <li><p>A sequential future that uses a global <code>...</code> together with a global <code>...future.FUN()</code> function, which is what <strong>future.apply</strong> uses, could permanently change the parent of the function’s environment, if that environment inherits from the global environment. This bug was introduced in <strong>future</strong> 1.40.0 (2025-04-10).</p></li>
 <li><p><code>makeClusterFuture(globals = ...)</code> would result in an future evaluation error.</p></li>
 <li><p>Futures failed on R (&lt; 4.0.0). This bug was introduced in <strong>future</strong> 1.68.0 (2025-11-17).</p></li>
+<li><p>Globals identified automatically (the default) could carry extra, unneeded load that was exported to the parallel workers. This could result in significant overhead in both total memory use and total processing time.</p></li>
 </ul></div>
 </div>
     <div class="section level2">
