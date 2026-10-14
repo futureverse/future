@@ -92,7 +92,7 @@ _If you identify other cases, please consider [reporting](https://github.com/fut
   **rJava**       | jclassName (`externalptr`)
   **ShortRead**   | FastqFile, FastqStreamer, FastqStreamerList (`connection`)
   **sparklyr**    | tbl_spark (`externalptr`)
-  **terra**       | SpatRaster, SpatVector (`externalptr`)
+  **terra**       | SpatRaster, SpatVector, SpatRasterDataset, SpatRasterCollection (`externalptr`)
   **udpipe**      | udpipe_model (`externalptr`)
   **xgboost**     | xgb.DMatrix (`externalptr`)
   **XML**         | XMLInternalDocument, XMLInternalElementNode (`externalptr`)
@@ -696,6 +696,8 @@ d %<-% dim(data)
 
 #### Package: terra
 
+The **[terra]** package provides classes for spatial data analysis (`SpatRaster`, `SpatVector`, `SpatRasterDataset`, etc.) that internally hold external C++ pointers to objects in memory.  Consequently, they cannot be exported directly to parallel workers.  For example:
+
 ```r
 library(future)
 plan(multisession)
@@ -705,7 +707,7 @@ file <- system.file("ex/lux.shp", package = "terra")
 v <- vect(file)
 dv %<-% dim(v)
 dv
-Error in x@ptr$nrow() : external pointer is not valid
+## Error in x@ptr$nrow() : external pointer is not valid
 
 file <- system.file("ex/elev.tif", package = "terra")
 r <- rast(file)
@@ -725,13 +727,13 @@ dv %<-% dim(v)
 ## 'RegisteredNativeSymbol') in one of the globals ('v' of class
 ## 'SpatVector') used in the future expression
 
-dr %<-% dim(data)
+dr %<-% dim(r)
 ## Error: Detected a non-exportable reference ('externalptr' of class
 ## 'RegisteredNativeSymbol') in one of the globals ('r' of class
 ## 'SpatRaster') used in the future expression
 ```
 
-Functions `wrap()` and `unwrap()` of the **terra** package can be used as workaround to marshal and unmarshal non-exportable **terra** objects, e.g.
+Functions `wrap()` and `unwrap()` of the **terra** package can be used as a workaround to marshal and unmarshal non-exportable **terra** objects, e.g.
 
 ```r
 library(future)
@@ -747,7 +749,7 @@ dv %<-% {
 }
 rm(.v) ## not needed anymore
 dv
-[1] 12  6
+## [1] 12  6
 ```
 
 and
@@ -762,10 +764,19 @@ dr %<-% {
 }
 rm(.r) ## not needed anymore
 dr
-[1] 90 95  1
+## [1] 90 95  1
 ```
 
-For more details, see `help("wrap", package = "terra")`.
+They can also be used when returning **terra** objects from a future back to the calling process.
+
+Other suggested approaches to parallel processing with **terra** include:
+
+* Passing file paths instead of spatial objects and opening datasets directly on the workers with `rast()` or `vect()`.
+* Partitioning large rasters into spatial tiles (e.g. using `tile_apply()` or `window()`).
+* Extracting and exchanging raw cell values (e.g. via `values()`) as plain R vectors or matrices.
+* Relying on **terra**'s built-in parallelization (the `cores` argument in functions such as `app()`, `predict()`, and `focal()`) or internal multithreading via Intel TBB (`terraOptions(parallel = TRUE)`).
+
+For detailed documentation and examples of these strategies, see Section _The terra package -> Parallelization_ at <https://rspatial.org/pkg/10-parallel.html> and `help("wrap", package = "terra")`.
 
 
 #### Package: udpipe
@@ -1156,6 +1167,7 @@ str(e)
 [reticulate]: https://cran.r-project.org/package=reticulate
 [rJava]: https://cran.r-project.org/package=rJava
 [rstan]: https://cran.r-project.org/package=rstan
+[terra]: https://cran.r-project.org/package=terra
 [udpipe]: https://cran.r-project.org/package=udpipe
 [xgboost]: https://cran.r-project.org/package=xgboost
 [XML]: https://cran.r-project.org/package=XML
