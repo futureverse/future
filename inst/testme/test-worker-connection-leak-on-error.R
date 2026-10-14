@@ -1,5 +1,6 @@
 #' @tags multisession
 #' @tags connections worker-termination
+#' @tags detritus-files
 
 library(future)
 options(future.debug = FALSE)
