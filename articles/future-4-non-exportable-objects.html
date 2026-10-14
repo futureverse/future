@@ -32,7 +32,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.76.0-9014</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.76.0-9015</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -282,7 +282,8 @@ python.builtin.module (<code>externalptr</code>)</td>
 </tr>
 <tr class="even">
 <td align="left"><strong>terra</strong></td>
-<td align="left">SpatRaster, SpatVector (<code>externalptr</code>)</td>
+<td align="left">SpatRaster, SpatVector, SpatRasterDataset,
+SpatRasterCollection (<code>externalptr</code>)</td>
 </tr>
 <tr class="odd">
 <td align="left"><strong>udpipe</strong></td>
@@ -862,22 +863,29 @@ we do as before;</p>
 <div class="section level4">
 <h4 id="package-terra">Package: terra<a class="anchor" aria-label="anchor" href="#package-terra"></a>
 </h4>
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" tabindex="-1"></a><span class="fu">library</span>(future)</span>
-<span id="cb43-2"><a href="#cb43-2" tabindex="-1"></a><span class="fu">plan</span>(multisession)</span>
-<span id="cb43-3"><a href="#cb43-3" tabindex="-1"></a><span class="fu">library</span>(terra)</span>
-<span id="cb43-4"><a href="#cb43-4" tabindex="-1"></a></span>
-<span id="cb43-5"><a href="#cb43-5" tabindex="-1"></a>file <span class="ot">&lt;-</span> <span class="fu">system.file</span>(<span class="st">"ex/lux.shp"</span>, <span class="at">package =</span> <span class="st">"terra"</span>)</span>
-<span id="cb43-6"><a href="#cb43-6" tabindex="-1"></a>v <span class="ot">&lt;-</span> <span class="fu">vect</span>(file)</span>
-<span id="cb43-7"><a href="#cb43-7" tabindex="-1"></a>dv <span class="sc">%&lt;-%</span> <span class="fu">dim</span>(v)</span>
-<span id="cb43-8"><a href="#cb43-8" tabindex="-1"></a>dv</span>
-<span id="cb43-9"><a href="#cb43-9" tabindex="-1"></a>Error <span class="cf">in</span> x<span class="sc">@</span>ptr<span class="sc">$</span><span class="fu">nrow</span>() <span class="sc">:</span> external pointer is not valid</span>
-<span id="cb43-10"><a href="#cb43-10" tabindex="-1"></a></span>
-<span id="cb43-11"><a href="#cb43-11" tabindex="-1"></a>file <span class="ot">&lt;-</span> <span class="fu">system.file</span>(<span class="st">"ex/elev.tif"</span>, <span class="at">package =</span> <span class="st">"terra"</span>)</span>
-<span id="cb43-12"><a href="#cb43-12" tabindex="-1"></a>r <span class="ot">&lt;-</span> <span class="fu">rast</span>(file)</span>
-<span id="cb43-13"><a href="#cb43-13" tabindex="-1"></a>dr <span class="sc">%&lt;-%</span> <span class="fu">dim</span>(r)</span>
-<span id="cb43-14"><a href="#cb43-14" tabindex="-1"></a>dr</span>
-<span id="cb43-15"><a href="#cb43-15" tabindex="-1"></a><span class="do">## Error in .External(list(name = "CppMethod__invoke_notvoid", address = &lt;pointer: (nil)&gt;,  :</span></span>
-<span id="cb43-16"><a href="#cb43-16" tabindex="-1"></a><span class="do">##  NULL value passed as symbol address</span></span></code></pre></div>
+<p>The <strong><a href="https://cran.r-project.org/package=terra" class="external-link">terra</a></strong>
+package provides classes for spatial data analysis
+(<code>SpatRaster</code>, <code>SpatVector</code>,
+<code>SpatRasterDataset</code>, etc.) that internally hold external C++
+pointers to objects in memory. Consequently, they cannot be exported
+directly to parallel workers. For example:</p>
+<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://future.futureverse.org">future</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/plan.html">plan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rspatial.org/" class="external-link">terra</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"ex/lux.shp"</span>, package <span class="op">=</span> <span class="st">"terra"</span><span class="op">)</span></span>
+<span><span class="va">v</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rspatial.github.io/terra/reference/vect.html" class="external-link">vect</a></span><span class="op">(</span><span class="va">file</span><span class="op">)</span></span>
+<span><span class="va">dv</span> <span class="op"><a href="../reference/futureAssign.html">%&lt;-%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">v</span><span class="op">)</span></span>
+<span><span class="va">dv</span></span>
+<span><span class="co">## Error in x@ptr$nrow() : external pointer is not valid</span></span>
+<span></span>
+<span><span class="va">file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"ex/elev.tif"</span>, package <span class="op">=</span> <span class="st">"terra"</span><span class="op">)</span></span>
+<span><span class="va">r</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rspatial.github.io/terra/reference/rast.html" class="external-link">rast</a></span><span class="op">(</span><span class="va">file</span><span class="op">)</span></span>
+<span><span class="va">dr</span> <span class="op"><a href="../reference/futureAssign.html">%&lt;-%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span></span>
+<span><span class="va">dr</span></span>
+<span><span class="co">## Error in .External(list(name = "CppMethod__invoke_notvoid", address = &lt;pointer: (nil)&gt;,  :</span></span>
+<span><span class="co">##  NULL value passed as symbol address</span></span></code></pre></div>
 <p>To catch this as soon as possible,</p>
 <div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>future.globals.onReference <span class="op">=</span> <span class="st">"error"</span><span class="op">)</span></span>
@@ -887,39 +895,60 @@ we do as before;</p>
 <span><span class="co">## 'RegisteredNativeSymbol') in one of the globals ('v' of class</span></span>
 <span><span class="co">## 'SpatVector') used in the future expression</span></span>
 <span></span>
-<span><span class="va">dr</span> <span class="op"><a href="../reference/futureAssign.html">%&lt;-%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span>
+<span><span class="va">dr</span> <span class="op"><a href="../reference/futureAssign.html">%&lt;-%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span></span>
 <span><span class="co">## Error: Detected a non-exportable reference ('externalptr' of class</span></span>
 <span><span class="co">## 'RegisteredNativeSymbol') in one of the globals ('r' of class</span></span>
 <span><span class="co">## 'SpatRaster') used in the future expression</span></span></code></pre></div>
-<p>Functions <code>wrap()</code> and <code>unwrap()</code> of the
-<strong>terra</strong> package can be used as workaround to marshal and
-unmarshal non-exportable <strong>terra</strong> objects, e.g.</p>
-<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" tabindex="-1"></a><span class="fu">library</span>(future)</span>
-<span id="cb45-2"><a href="#cb45-2" tabindex="-1"></a><span class="fu">plan</span>(multisession)</span>
-<span id="cb45-3"><a href="#cb45-3" tabindex="-1"></a><span class="fu">library</span>(terra)</span>
-<span id="cb45-4"><a href="#cb45-4" tabindex="-1"></a></span>
-<span id="cb45-5"><a href="#cb45-5" tabindex="-1"></a>file <span class="ot">&lt;-</span> <span class="fu">system.file</span>(<span class="st">"ex/lux.shp"</span>, <span class="at">package =</span> <span class="st">"terra"</span>)</span>
-<span id="cb45-6"><a href="#cb45-6" tabindex="-1"></a>v <span class="ot">&lt;-</span> <span class="fu">vect</span>(file)</span>
-<span id="cb45-7"><a href="#cb45-7" tabindex="-1"></a>.v <span class="ot">&lt;-</span> <span class="fu">wrap</span>(v)      <span class="do">## marshal</span></span>
-<span id="cb45-8"><a href="#cb45-8" tabindex="-1"></a>dv <span class="sc">%&lt;-%</span> {</span>
-<span id="cb45-9"><a href="#cb45-9" tabindex="-1"></a>  v <span class="ot">&lt;-</span> <span class="fu">unwrap</span>(.v)  <span class="do">## unmarshal</span></span>
-<span id="cb45-10"><a href="#cb45-10" tabindex="-1"></a>  <span class="fu">dim</span>(v)</span>
-<span id="cb45-11"><a href="#cb45-11" tabindex="-1"></a>}</span>
-<span id="cb45-12"><a href="#cb45-12" tabindex="-1"></a><span class="fu">rm</span>(.v) <span class="do">## not needed anymore</span></span>
-<span id="cb45-13"><a href="#cb45-13" tabindex="-1"></a>dv</span>
-<span id="cb45-14"><a href="#cb45-14" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">12</span>  <span class="dv">6</span></span></code></pre></div>
+<p>Functions <code><a href="https://rspatial.github.io/terra/reference/wrap.html" class="external-link">wrap()</a></code> and <code><a href="https://rspatial.github.io/terra/reference/wrap.html" class="external-link">unwrap()</a></code> of the
+<strong>terra</strong> package can be used as a workaround to marshal
+and unmarshal non-exportable <strong>terra</strong> objects, e.g.</p>
+<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://future.futureverse.org">future</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/plan.html">plan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rspatial.org/" class="external-link">terra</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"ex/lux.shp"</span>, package <span class="op">=</span> <span class="st">"terra"</span><span class="op">)</span></span>
+<span><span class="va">v</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rspatial.github.io/terra/reference/vect.html" class="external-link">vect</a></span><span class="op">(</span><span class="va">file</span><span class="op">)</span></span>
+<span><span class="va">.v</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rspatial.github.io/terra/reference/wrap.html" class="external-link">wrap</a></span><span class="op">(</span><span class="va">v</span><span class="op">)</span>      <span class="co">## marshal</span></span>
+<span><span class="va">dv</span> <span class="op"><a href="../reference/futureAssign.html">%&lt;-%</a></span> <span class="op">{</span></span>
+<span>  <span class="va">v</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rspatial.github.io/terra/reference/wrap.html" class="external-link">unwrap</a></span><span class="op">(</span><span class="va">.v</span><span class="op">)</span>  <span class="co">## unmarshal</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">v</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/rm.html" class="external-link">rm</a></span><span class="op">(</span><span class="va">.v</span><span class="op">)</span> <span class="co">## not needed anymore</span></span>
+<span><span class="va">dv</span></span>
+<span><span class="co">## [1] 12  6</span></span></code></pre></div>
 <p>and</p>
-<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" tabindex="-1"></a>file <span class="ot">&lt;-</span> <span class="fu">system.file</span>(<span class="st">"ex/elev.tif"</span>, <span class="at">package =</span> <span class="st">"terra"</span>)</span>
-<span id="cb46-2"><a href="#cb46-2" tabindex="-1"></a>r <span class="ot">&lt;-</span> <span class="fu">rast</span>(file)</span>
-<span id="cb46-3"><a href="#cb46-3" tabindex="-1"></a>.r <span class="ot">&lt;-</span> <span class="fu">wrap</span>(r)      <span class="do">## marshal</span></span>
-<span id="cb46-4"><a href="#cb46-4" tabindex="-1"></a>dr <span class="sc">%&lt;-%</span> {</span>
-<span id="cb46-5"><a href="#cb46-5" tabindex="-1"></a>  r <span class="ot">&lt;-</span> <span class="fu">unwrap</span>(.r)  <span class="do">## unmarshal</span></span>
-<span id="cb46-6"><a href="#cb46-6" tabindex="-1"></a>  <span class="fu">dim</span>(r)</span>
-<span id="cb46-7"><a href="#cb46-7" tabindex="-1"></a>}</span>
-<span id="cb46-8"><a href="#cb46-8" tabindex="-1"></a><span class="fu">rm</span>(.r) <span class="do">## not needed anymore</span></span>
-<span id="cb46-9"><a href="#cb46-9" tabindex="-1"></a>dr</span>
-<span id="cb46-10"><a href="#cb46-10" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">90</span> <span class="dv">95</span>  <span class="dv">1</span></span></code></pre></div>
-<p>For more details, see
+<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"ex/elev.tif"</span>, package <span class="op">=</span> <span class="st">"terra"</span><span class="op">)</span></span>
+<span><span class="va">r</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rspatial.github.io/terra/reference/rast.html" class="external-link">rast</a></span><span class="op">(</span><span class="va">file</span><span class="op">)</span></span>
+<span><span class="va">.r</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rspatial.github.io/terra/reference/wrap.html" class="external-link">wrap</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span>      <span class="co">## marshal</span></span>
+<span><span class="va">dr</span> <span class="op"><a href="../reference/futureAssign.html">%&lt;-%</a></span> <span class="op">{</span></span>
+<span>  <span class="va">r</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rspatial.github.io/terra/reference/wrap.html" class="external-link">unwrap</a></span><span class="op">(</span><span class="va">.r</span><span class="op">)</span>  <span class="co">## unmarshal</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/rm.html" class="external-link">rm</a></span><span class="op">(</span><span class="va">.r</span><span class="op">)</span> <span class="co">## not needed anymore</span></span>
+<span><span class="va">dr</span></span>
+<span><span class="co">## [1] 90 95  1</span></span></code></pre></div>
+<p>They can also be used when returning <strong>terra</strong> objects
+from a future back to the calling process.</p>
+<p>Other suggested approaches to parallel processing with
+<strong>terra</strong> include:</p>
+<ul>
+<li>Passing file paths instead of spatial objects and opening datasets
+directly on the workers with <code><a href="https://rspatial.github.io/terra/reference/rast.html" class="external-link">rast()</a></code> or
+<code><a href="https://rspatial.github.io/terra/reference/vect.html" class="external-link">vect()</a></code>.</li>
+<li>Partitioning large rasters into spatial tiles (e.g. using
+<code><a href="https://rspatial.github.io/terra/reference/tile_apply.html" class="external-link">tile_apply()</a></code> or <code><a href="https://rspatial.github.io/terra/reference/window.html" class="external-link">window()</a></code>).</li>
+<li>Extracting and exchanging raw cell values (e.g. via
+<code><a href="https://rspatial.github.io/terra/reference/values.html" class="external-link">values()</a></code>) as plain R vectors or matrices.</li>
+<li>Relying on <strong>terra</strong>’s built-in parallelization (the
+<code>cores</code> argument in functions such as <code><a href="https://rspatial.github.io/terra/reference/app.html" class="external-link">app()</a></code>,
+<code><a href="https://rspatial.github.io/terra/reference/predict.html" class="external-link">predict()</a></code>, and <code><a href="https://rspatial.github.io/terra/reference/focal.html" class="external-link">focal()</a></code>) or internal
+multithreading via Intel TBB
+(<code>terraOptions(parallel = TRUE)</code>).</li>
+</ul>
+<p>For detailed documentation and examples of these strategies, see
+Section <em>The terra package -&gt; Parallelization</em> at <a href="https://rspatial.org/pkg/10-parallel.html" class="external-link uri">https://rspatial.org/pkg/10-parallel.html</a> and
 <code><a href="https://rspatial.github.io/terra/reference/wrap.html" class="external-link">help("wrap", package = "terra")</a></code>.</p>
 </div>
 <div class="section level4">

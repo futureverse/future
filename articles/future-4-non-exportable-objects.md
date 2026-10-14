@@ -100,7 +100,7 @@ can be documented here and possibly even be fixed.*
 | **rJava** | jclassName (`externalptr`) |
 | **ShortRead** | FastqFile, FastqStreamer, FastqStreamerList (`connection`) |
 | **sparklyr** | tbl_spark (`externalptr`) |
-| **terra** | SpatRaster, SpatVector (`externalptr`) |
+| **terra** | SpatRaster, SpatVector, SpatRasterDataset, SpatRasterCollection (`externalptr`) |
 | **udpipe** | udpipe_model (`externalptr`) |
 | **xgboost** | xgb.DMatrix (`externalptr`) |
 | **XML** | XMLInternalDocument, XMLInternalElementNode (`externalptr`) |
@@ -708,24 +708,29 @@ To catch this as soon as possible,
 
 #### Package: terra
 
-``` r
-library(future)
-plan(multisession)
-library(terra)
+The **[terra](https://cran.r-project.org/package=terra)** package
+provides classes for spatial data analysis (`SpatRaster`, `SpatVector`,
+`SpatRasterDataset`, etc.) that internally hold external C++ pointers to
+objects in memory. Consequently, they cannot be exported directly to
+parallel workers. For example:
 
-file <- system.file("ex/lux.shp", package = "terra")
-v <- vect(file)
-dv %<-% dim(v)
-dv
-Error in x@ptr$nrow() : external pointer is not valid
-
-file <- system.file("ex/elev.tif", package = "terra")
-r <- rast(file)
-dr %<-% dim(r)
-dr
-## Error in .External(list(name = "CppMethod__invoke_notvoid", address = <pointer: (nil)>,  :
-##  NULL value passed as symbol address
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`future`](https://future.futureverse.org)`)`\
+[`plan`](https://future.futureverse.org/reference/plan.md)`(``multisession``)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`terra`](https://rspatial.org/)`)`\
+\
+`file`` ``<-`` `[`system.file`](https://rdrr.io/r/base/system.file.html)`(``"ex/lux.shp"``, package ``=`` ``"terra"``)`\
+`v`` ``<-`` `[`vect`](https://rspatial.github.io/terra/reference/vect.html)`(``file``)`\
+`dv`` `[`%<-%`](https://future.futureverse.org/reference/futureAssign.md)` `[`dim`](https://rdrr.io/r/base/dim.html)`(``v``)`\
+`dv`\
+`## Error in x@ptr$nrow() : external pointer is not valid`\
+\
+`file`` ``<-`` `[`system.file`](https://rdrr.io/r/base/system.file.html)`(``"ex/elev.tif"``, package ``=`` ``"terra"``)`\
+`r`` ``<-`` `[`rast`](https://rspatial.github.io/terra/reference/rast.html)`(``file``)`\
+`dr`` `[`%<-%`](https://future.futureverse.org/reference/futureAssign.md)` `[`dim`](https://rdrr.io/r/base/dim.html)`(``r``)`\
+`dr`\
+`## Error in .External(list(name = "CppMethod__invoke_notvoid", address = <pointer: (nil)>,  :`\
+`##  NULL value passed as symbol address`
 
 To catch this as soon as possible,
 
@@ -737,48 +742,76 @@ To catch this as soon as possible,
 `## 'RegisteredNativeSymbol') in one of the globals ('v' of class`\
 `## 'SpatVector') used in the future expression`\
 \
-`dr`` `[`%<-%`](https://future.futureverse.org/reference/futureAssign.md)` `[`dim`](https://rdrr.io/r/base/dim.html)`(``data``)`\
+`dr`` `[`%<-%`](https://future.futureverse.org/reference/futureAssign.md)` `[`dim`](https://rdrr.io/r/base/dim.html)`(``r``)`\
 `## Error: Detected a non-exportable reference ('externalptr' of class`\
 `## 'RegisteredNativeSymbol') in one of the globals ('r' of class`\
 `## 'SpatRaster') used in the future expression`
 
-Functions `wrap()` and `unwrap()` of the **terra** package can be used
-as workaround to marshal and unmarshal non-exportable **terra** objects,
-e.g.
+Functions
+[`wrap()`](https://rspatial.github.io/terra/reference/wrap.html) and
+[`unwrap()`](https://rspatial.github.io/terra/reference/wrap.html) of
+the **terra** package can be used as a workaround to marshal and
+unmarshal non-exportable **terra** objects, e.g.
 
-``` r
-library(future)
-plan(multisession)
-library(terra)
-
-file <- system.file("ex/lux.shp", package = "terra")
-v <- vect(file)
-.v <- wrap(v)      ## marshal
-dv %<-% {
-  v <- unwrap(.v)  ## unmarshal
-  dim(v)
-}
-rm(.v) ## not needed anymore
-dv
-[1] 12  6
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`future`](https://future.futureverse.org)`)`\
+[`plan`](https://future.futureverse.org/reference/plan.md)`(``multisession``)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`terra`](https://rspatial.org/)`)`\
+\
+`file`` ``<-`` `[`system.file`](https://rdrr.io/r/base/system.file.html)`(``"ex/lux.shp"``, package ``=`` ``"terra"``)`\
+`v`` ``<-`` `[`vect`](https://rspatial.github.io/terra/reference/vect.html)`(``file``)`\
+`.v`` ``<-`` `[`wrap`](https://rspatial.github.io/terra/reference/wrap.html)`(``v``)``      ``## marshal`\
+`dv`` `[`%<-%`](https://future.futureverse.org/reference/futureAssign.md)` ``{`\
+`  ``v`` ``<-`` `[`unwrap`](https://rspatial.github.io/terra/reference/wrap.html)`(``.v``)``  ``## unmarshal`\
+`  `[`dim`](https://rdrr.io/r/base/dim.html)`(``v``)`\
+`}`\
+[`rm`](https://rdrr.io/r/base/rm.html)`(``.v``)`` ``## not needed anymore`\
+`dv`\
+`## [1] 12  6`
 
 and
 
-``` r
-file <- system.file("ex/elev.tif", package = "terra")
-r <- rast(file)
-.r <- wrap(r)      ## marshal
-dr %<-% {
-  r <- unwrap(.r)  ## unmarshal
-  dim(r)
-}
-rm(.r) ## not needed anymore
-dr
-[1] 90 95  1
-```
+\
+`file`` ``<-`` `[`system.file`](https://rdrr.io/r/base/system.file.html)`(``"ex/elev.tif"``, package ``=`` ``"terra"``)`\
+`r`` ``<-`` `[`rast`](https://rspatial.github.io/terra/reference/rast.html)`(``file``)`\
+`.r`` ``<-`` `[`wrap`](https://rspatial.github.io/terra/reference/wrap.html)`(``r``)``      ``## marshal`\
+`dr`` `[`%<-%`](https://future.futureverse.org/reference/futureAssign.md)` ``{`\
+`  ``r`` ``<-`` `[`unwrap`](https://rspatial.github.io/terra/reference/wrap.html)`(``.r``)``  ``## unmarshal`\
+`  `[`dim`](https://rdrr.io/r/base/dim.html)`(``r``)`\
+`}`\
+[`rm`](https://rdrr.io/r/base/rm.html)`(``.r``)`` ``## not needed anymore`\
+`dr`\
+`## [1] 90 95  1`
 
-For more details, see
+They can also be used when returning **terra** objects from a future
+back to the calling process.
+
+Other suggested approaches to parallel processing with **terra**
+include:
+
+- Passing file paths instead of spatial objects and opening datasets
+  directly on the workers with
+  [`rast()`](https://rspatial.github.io/terra/reference/rast.html) or
+  [`vect()`](https://rspatial.github.io/terra/reference/vect.html).
+- Partitioning large rasters into spatial tiles (e.g. using
+  [`tile_apply()`](https://rspatial.github.io/terra/reference/tile_apply.html)
+  or
+  [`window()`](https://rspatial.github.io/terra/reference/window.html)).
+- Extracting and exchanging raw cell values (e.g. via
+  [`values()`](https://rspatial.github.io/terra/reference/values.html))
+  as plain R vectors or matrices.
+- Relying on **terra**’s built-in parallelization (the `cores` argument
+  in functions such as
+  [`app()`](https://rspatial.github.io/terra/reference/app.html),
+  [`predict()`](https://rspatial.github.io/terra/reference/predict.html),
+  and
+  [`focal()`](https://rspatial.github.io/terra/reference/focal.html)) or
+  internal multithreading via Intel TBB
+  (`terraOptions(parallel = TRUE)`).
+
+For detailed documentation and examples of these strategies, see Section
+*The terra package -\> Parallelization* at
+<https://rspatial.org/pkg/10-parallel.html> and
 [`help("wrap", package = "terra")`](https://rspatial.github.io/terra/reference/wrap.html).
 
 #### Package: udpipe

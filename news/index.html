@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.76.0-9014</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.76.0-9015</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -83,7 +83,7 @@
 <h2 class="pkg-version" data-toc-text="development version" id="version-development-version">Version (development version)<a class="anchor" aria-label="anchor" href="#version-development-version"></a></h2>
 <div class="section level3">
 <h3 id="significant-changes-development-version">Significant Changes<a class="anchor" aria-label="anchor" href="#significant-changes-development-version"></a></h3>
-<ul><li>Memory use on parallel workers has gone down significant in some cases. A side effect is also significantly faster processing in those cases. This improvement has an immediate effect on several <strong>future.apply</strong> functions: <code>future_lapply()</code>, <code>future_sapply()</code>, <code>future_apply()</code>, <code>future_tapply()</code>, <code>future_by()</code>, <code>future_Filter()</code>, <code>future_eapply()</code>, <code>future_mapply()</code>, and <code>future_Map()</code>.</li>
+<ul><li>Memory use on parallel workers has gone down significantly in some cases. A side effect is also significantly faster processing in those cases. This improvement has an immediate effect on several <strong>future.apply</strong> functions: <code>future_lapply()</code>, <code>future_sapply()</code>, <code>future_apply()</code>, <code>future_tapply()</code>, <code>future_by()</code>, <code>future_Filter()</code>, <code>future_eapply()</code>, <code>future_mapply()</code>, and <code>future_Map()</code>.</li>
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-development-version">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h3>
@@ -118,8 +118,8 @@
 <div class="section level3">
 <h3 id="new-features-1-75-0">New Features<a class="anchor" aria-label="anchor" href="#new-features-1-75-0"></a></h3>
 <ul><li><p><code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> for <code>Future</code> objects now reports on parallelization efficiency when journaling is enabled via <code>options(future.journal = TRUE)</code>. The roundtrip is reported as “active” time (overhead + evaluation), with wallclock and idle time shown separately.</p></li>
-<li><p><code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code> on individual a <code>FutureJournal</code> objects and on a <code>FutureJournalList</code> list of them now reports on parallelization metrics, including total speedup and total efficiency.</p></li>
-<li><p><code><a href="https://rdrr.io/r/base/all.equal.html" class="external-link">all.equal()</a></code> for <code>future</code> now returns <code>"Not both functions"</code> when comparing against a non-function. Similarly, <code>"Not both lists"</code> is returned when comparing a <code>FutureStrategyList</code> object against a not list object.</p></li>
+<li><p><code><a href="https://rspatial.github.io/terra/reference/summary.html" class="external-link">summary()</a></code> on individual a <code>FutureJournal</code> objects and on a <code>FutureJournalList</code> list of them now reports on parallelization metrics, including total speedup and total efficiency.</p></li>
+<li><p><code><a href="https://rspatial.github.io/terra/reference/all.equal.html" class="external-link">all.equal()</a></code> for <code>future</code> now returns <code>"Not both functions"</code> when comparing against a non-function. Similarly, <code>"Not both lists"</code> is returned when comparing a <code>FutureStrategyList</code> object against a not list object.</p></li>
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-1-75-0">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-1-75-0"></a></h3>
@@ -127,7 +127,7 @@
 <li><p>The default for R option <code>future.globals.maxSize</code> is now <code>+Inf</code> everywhere. It was still 500 MiB is some cases, e.g. <code><a href="../reference/future.html">futureCall()</a></code> had a limit although <code><a href="../reference/future.html">future()</a></code> did not.</p></li>
 <li><p>On MS Windows, a future startup script specified by environment variable <code>R_FUTURE_STARTUP_SCRIPT</code> was silently ignored due to a bug in parsing the value.</p></li>
 <li><p>Conditions relayed via the file system could produce an error when relayed if a condition file was corrupt. Now such conditions are silently ignored as intended.</p></li>
-<li><p><code><a href="https://rdrr.io/r/base/all.equal.html" class="external-link">all.equal()</a></code> for <code>FutureStrategyList</code> would throw an error if the object checked against was not a list.</p></li>
+<li><p><code><a href="https://rspatial.github.io/terra/reference/all.equal.html" class="external-link">all.equal()</a></code> for <code>FutureStrategyList</code> would throw an error if the object checked against was not a list.</p></li>
 <li><p>The framework asserts that future result belong to the correct future. The never-happening, internal assert error when that would not be the case would result in an unrelated <code>subscript out of bounds</code> error.</p></li>
 <li><p><code>plan(cluster, ...)</code> and <code>plan(multisession, ...)</code> warned about “unknown future arguments” for <code><a href="../reference/re-exports.html">makeClusterPSOCK()</a></code> arguments, e.g. <code>rscript</code>, <code>homogeneous</code>, <code>port</code>, and <code>autoStop</code>, although they are supported.</p></li>
 </ul></div>
@@ -215,7 +215,7 @@
 <p>This is the third rollout of several towards a near-future major release that I am really excited about. This has been made possible due to a multi-year effort of internal re-designs, work with package maintainers, release, and repeat. This release fixes a few regressions introduced in <strong>future</strong> 1.40.0 (2025-04-10), despite passing <a href="https://www.futureverse.org/quality.html" class="external-link">all unit, regression, and system tests</a>.</p>
 <div class="section level3">
 <h3 id="new-features-1-58-0">New Features<a class="anchor" aria-label="anchor" href="#new-features-1-58-0"></a></h3>
-<ul><li>Now futures produce a warning when they detect that the <em>default</em> graphics device, as defined by R option <code>"device"</code>, is opened by, for instance, a <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code> call without explicitly opening a graphics device. The reason for this check is that we rarely want to plot to the <em>default</em> graphics device in parallel processing, which typically ends up plotting to a <code>Rplots.pdf</code> file that is local to the parallel worker. If that is truly wanted, please open a graphics device explicitly (e.g. <code><a href="https://rdrr.io/r/grDevices/pdf.html" class="external-link">pdf()</a></code> or <code><a href="https://rdrr.io/r/grDevices/png.html" class="external-link">png()</a></code>) before plotting. Alternatively, explicitly set R option <code>device</code> inside the future expression.</li>
+<ul><li>Now futures produce a warning when they detect that the <em>default</em> graphics device, as defined by R option <code>"device"</code>, is opened by, for instance, a <code><a href="https://rspatial.github.io/terra/reference/plot.html" class="external-link">plot()</a></code> call without explicitly opening a graphics device. The reason for this check is that we rarely want to plot to the <em>default</em> graphics device in parallel processing, which typically ends up plotting to a <code>Rplots.pdf</code> file that is local to the parallel worker. If that is truly wanted, please open a graphics device explicitly (e.g. <code><a href="https://rdrr.io/r/grDevices/pdf.html" class="external-link">pdf()</a></code> or <code><a href="https://rdrr.io/r/grDevices/png.html" class="external-link">png()</a></code>) before plotting. Alternatively, explicitly set R option <code>device</code> inside the future expression.</li>
 </ul></div>
 <div class="section level3">
 <h3 id="beta-features-1-58-0">Beta Features<a class="anchor" aria-label="anchor" href="#beta-features-1-58-0"></a></h3>
@@ -225,7 +225,7 @@
 <h3 id="bug-fixes-1-58-0">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-1-58-0"></a></h3>
 <ul><li><p>Setting <code>options(warn = 2)</code> on a parallel worker was ignored - warnings were not escalated to errors on the worker, and were instead relayed as-is in the parent R session, unless <code>options(warn = 2)</code> was also set in the parent. Now <code>options(warn = 2)</code> on a worker causes warnings to be escalated immediately to errors on the worker, which therefore also terminates the future.</p></li>
 <li><p><code><a href="../reference/future.html">future()</a></code> arguments <code>stdout</code> and <code>conditions</code> were not applied when packages that were specified via argument <code>packages</code> were loaded and attached. This prevented us from excluding, for instance, <code>packageStartupMessage</code>:s, causing them to be displayed in sequential and multicore processing.</p></li>
-<li><p>When using cluster and multisession backends, one could, in some cases, end up with warnings on “package may not be available when loading” that are produced by <code><a href="https://rdrr.io/r/base/serialize.html" class="external-link">serialize()</a></code>. These types of warnings are now suppressed.</p></li>
+<li><p>When using cluster and multisession backends, one could, in some cases, end up with warnings on “package may not be available when loading” that are produced by <code><a href="https://rspatial.github.io/terra/reference/serialize.html" class="external-link">serialize()</a></code>. These types of warnings are now suppressed.</p></li>
 <li><p>Now the cluster future backend tries even harder to shut down parallel cluster workers when shutting down the backend. If it fails to communicate with one or more of the parallel workers, it will now close any socket connections that remain open towards such cluster nodes.</p></li>
 <li><p>The built-in checks for added, removed, or modified graphical devices introduced in <strong>future</strong> 1.40.0 (2025-04-10), could produce false positives, complaining about “A future expression must close any opened devices and must not close devices it did not open. Details: 1 devices differ: index=2, before=‘NA’, after=’‘“. The problem was that it did not prune the empty ’after’ before the check.</p></li>
 <li><p>The <code>multicore</code> backend did not relay <code>immediateCondition</code>:s in a near-live fashion, but only when the results of the futures were collected.</p></li>
@@ -417,7 +417,7 @@
 <div class="section level3">
 <h3 id="deprecated-and-defunct-1-29-0">Deprecated and Defunct<a class="anchor" aria-label="anchor" href="#deprecated-and-defunct-1-29-0"></a></h3>
 <ul><li><p>Using the deprecated <code>plan(multiprocess)</code> will now trigger a deprecation warning <em>each</em> time a <code>multiprocess</code> future is created. This means that a lot of warnings could be produced. Note that <code>multiprocess</code> has been deprecated since <strong>future</strong> 1.20.0 [2020-10-30]. Please use <code>multisession</code> (recommended) or <code>multicore</code> instead.</p></li>
-<li><p>Removing <code>values()</code>, which has been defunct since <strong>future</strong> 1.23.0. Use <code><a href="../reference/value.html">value()</a></code> instead.</p></li>
+<li><p>Removing <code><a href="https://rspatial.github.io/terra/reference/values.html" class="external-link">values()</a></code>, which has been defunct since <strong>future</strong> 1.23.0. Use <code><a href="../reference/value.html">value()</a></code> instead.</p></li>
 </ul></div>
 </div>
     <div class="section level2">
@@ -553,7 +553,7 @@
 </ul></div>
 <div class="section level3">
 <h3 id="deprecated-and-defunct-1-23-0">Deprecated and Defunct<a class="anchor" aria-label="anchor" href="#deprecated-and-defunct-1-23-0"></a></h3>
-<ul><li><p><code>values()</code>, which has been deprecated since <strong>future</strong> 1.20.0, is now defunct. Use <code><a href="../reference/value.html">value()</a></code> instead.</p></li>
+<ul><li><p><code><a href="https://rspatial.github.io/terra/reference/values.html" class="external-link">values()</a></code>, which has been deprecated since <strong>future</strong> 1.20.0, is now defunct. Use <code><a href="../reference/value.html">value()</a></code> instead.</p></li>
 <li><p>Support for <code>persistent = TRUE</code> with multisession futures is defunct. If still needed, a temporary workaround is to use cluster futures. However, it is likely that support for <code>persistent</code> will eventually be deprecated for all future backends.</p></li>
 <li><p>Argument <code>value</code> of <code><a href="../reference/resolve.html">resolve()</a></code>, deprecated since <strong>future</strong> 1.15.0, is defunct in favor of argument <code>result</code>.</p></li>
 </ul></div>
@@ -667,7 +667,7 @@
 <div class="section level3">
 <h3 id="deprecated-and-defunct-1-20-0">Deprecated and Defunct<a class="anchor" aria-label="anchor" href="#deprecated-and-defunct-1-20-0"></a></h3>
 <ul><li><p>Strategy ‘multiprocess’ is deprecated in favor of either ‘multisession’ or ‘multicore’, depending on operating system and R setup.</p></li>
-<li><p><code>values()</code> is deprecated. Use <code><a href="../reference/value.html">value()</a></code> instead.</p></li>
+<li><p><code><a href="https://rspatial.github.io/terra/reference/values.html" class="external-link">values()</a></code> is deprecated. Use <code><a href="../reference/value.html">value()</a></code> instead.</p></li>
 <li><p>All backward compatible code for the legacy, defunct, internal <code>Future</code> element <code>value</code> is now removed. Using or relying on it is an error.</p></li>
 </ul></div>
 </div>
@@ -741,7 +741,7 @@
 <h2 class="pkg-version" data-toc-text="1.17.0" id="version-1170">Version 1.17.0<a class="anchor" aria-label="anchor" href="#version-1170"></a></h2><p class="text-muted">CRAN release: 2020-04-18</p>
 <div class="section level3">
 <h3 id="significant-changes-1-17-0">Significant Changes<a class="anchor" aria-label="anchor" href="#significant-changes-1-17-0"></a></h3>
-<ul><li>Renamed <code>values()</code> to <code><a href="../reference/value.html">value()</a></code> to clean up and simplify the API.</li>
+<ul><li>Renamed <code><a href="https://rspatial.github.io/terra/reference/values.html" class="external-link">values()</a></code> to <code><a href="../reference/value.html">value()</a></code> to clean up and simplify the API.</li>
 </ul></div>
 <div class="section level3">
 <h3 id="new-features-1-17-0">New Features<a class="anchor" aria-label="anchor" href="#new-features-1-17-0"></a></h3>
@@ -759,7 +759,7 @@
 </ul></div>
 <div class="section level3">
 <h3 id="deprecated-and-defunct-1-17-0">Deprecated and Defunct<a class="anchor" aria-label="anchor" href="#deprecated-and-defunct-1-17-0"></a></h3>
-<ul><li>All <code>values()</code> S3 methods have been renamed to <code><a href="../reference/value.html">value()</a></code> since they are closely related to the original purpose <code><a href="../reference/value.html">value()</a></code>. The <code>values()</code> methods will continue to work but will soon be formally deprecated and later be made defunct and finally be removed. Please replace all <code>values()</code> with <code><a href="../reference/value.html">value()</a></code> calls.</li>
+<ul><li>All <code><a href="https://rspatial.github.io/terra/reference/values.html" class="external-link">values()</a></code> S3 methods have been renamed to <code><a href="../reference/value.html">value()</a></code> since they are closely related to the original purpose <code><a href="../reference/value.html">value()</a></code>. The <code><a href="https://rspatial.github.io/terra/reference/values.html" class="external-link">values()</a></code> methods will continue to work but will soon be formally deprecated and later be made defunct and finally be removed. Please replace all <code><a href="https://rspatial.github.io/terra/reference/values.html" class="external-link">values()</a></code> with <code><a href="../reference/value.html">value()</a></code> calls.</li>
 </ul></div>
 </div>
     <div class="section level2">
@@ -818,7 +818,7 @@
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-1-15-0">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-1-15-0"></a></h3>
-<ul><li><p><code>values()</code> would resignal <code>immediateCondition</code>:s despite those should only be signaled at most once per future.</p></li>
+<ul><li><p><code><a href="https://rspatial.github.io/terra/reference/values.html" class="external-link">values()</a></code> would resignal <code>immediateCondition</code>:s despite those should only be signaled at most once per future.</p></li>
 <li><p><code><a href="../reference/re-exports.html">makeClusterPSOCK()</a></code> could produce warnings like “cannot open file ‘/tmp/alice/Rtmpi69yYF/future.parent=2622.a3e32bc6af7.pid’: No such file”, e.g. when launching R workers running in Docker containers.</p></li>
 <li><p>Package would set or update the RNG state of R (<code>.Random.seed</code>) when loaded, which could affect RNG reproducibility.</p></li>
 <li><p>Package could set <code>.Random.seed</code> to NULL, instead of removing it, which in turn would produce a warning on “‘.Random.seed’ is not an integer vector but of type ‘NULL’, so ignored” when the next random number is generated.</p></li>
@@ -836,11 +836,11 @@
 <div class="section level3">
 <h3 id="significant-changes-1-14-0">Significant Changes<a class="anchor" aria-label="anchor" href="#significant-changes-1-14-0"></a></h3>
 <ul><li><p>All types of conditions are now captured and relayed. Previously, only conditions of class <code>message</code> and <code>warning</code> were relayed.</p></li>
-<li><p>If one of the futures in a collection produces an error, then <code>values()</code> will signal that error as soon as it is detected. This means that while calling <code>values()</code> guarantees to resolve all futures, it does not guarantee that the result from all futures are gathered back to the master R session before the error is relayed.</p></li>
+<li><p>If one of the futures in a collection produces an error, then <code><a href="https://rspatial.github.io/terra/reference/values.html" class="external-link">values()</a></code> will signal that error as soon as it is detected. This means that while calling <code><a href="https://rspatial.github.io/terra/reference/values.html" class="external-link">values()</a></code> guarantees to resolve all futures, it does not guarantee that the result from all futures are gathered back to the master R session before the error is relayed.</p></li>
 </ul></div>
 <div class="section level3">
 <h3 id="new-features-1-14-0">New Features<a class="anchor" aria-label="anchor" href="#new-features-1-14-0"></a></h3>
-<ul><li><p><code>values()</code> now relays <code>stdout</code> and signals as soon as possible as long as the standard output and the conditions are relayed in their original order.</p></li>
+<ul><li><p><code><a href="https://rspatial.github.io/terra/reference/values.html" class="external-link">values()</a></code> now relays <code>stdout</code> and signals as soon as possible as long as the standard output and the conditions are relayed in their original order.</p></li>
 <li><p>If a captured condition can be “muffled”, then it will be muffled. This helps to prevent conditions from being handled twice by condition handlers when futures are evaluated in the main R session, e.g. <code>plan(sequential)</code>. Messages and warnings were already muffled in the past.</p></li>
 <li><p>Forked processing is considered unstable when running R from certain environments, such as the RStudio environment. Because of this, ‘multicore’ futures have been disabled in those cases since <strong>future</strong> 1.13.0. This change caught several RStudio users by surprise. Starting with <strong>future</strong> 1.14.0, an informative one-time-per-session warning will be produced when attempts to use ‘multicore’ are made in non-supported environments such as RStudio. This warning will also be produced when using ‘multiprocess’, which will fall back to using ‘multisession’ futures. The warning can be disabled by setting R option <code>future.supportsMulticore.unstable</code>, or environment variable <code>FUTURE_SUPPORTSMULTICORE_UNSTABLE</code> to <code>"quiet"</code>.</p></li>
 <li><p>Now option <code>future.startup.script</code> falls back to environment variable <code>R_FUTURE_STARTUP_SCRIPT</code>.</p></li>
@@ -1264,7 +1264,7 @@
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-1-2-0">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-1-2-0"></a></h3>
-<ul><li><p><code>values()</code> for lists and list environments of futures where one or more of the futures resolved to NULL would give an error.</p></li>
+<ul><li><p><code><a href="https://rspatial.github.io/terra/reference/values.html" class="external-link">values()</a></code> for lists and list environments of futures where one or more of the futures resolved to NULL would give an error.</p></li>
 <li><p><code><a href="../reference/value.html">value()</a></code> for <code>ClusterFuture</code> would give cryptic error message “Error in stop(ex) : bad error message” if the cluster worker had crashed / terminated. Now it will instead give an error message like “Failed to retrieve the value of <code>ClusterFuture</code> from cluster node <a href="https://github.com/futureverse/future/issues/1" class="external-link">#1</a> on ‘localhost’. The reason reported was”error reading from connection”.</p></li>
 <li><p>Argument <code>user</code> to <code>remote()</code> was ignored (since 1.1.0).</p></li>
 </ul></div>
@@ -1370,7 +1370,7 @@
 <h3 id="new-features-0-14-0">New Features<a class="anchor" aria-label="anchor" href="#new-features-0-14-0"></a></h3>
 <ul><li><p>Added <code><a href="../reference/nbrOfWorkers.html">nbrOfWorkers()</a></code>.</p></li>
 <li><p>Added informative <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> method for the <code>Future</code> class.</p></li>
-<li><p><code>values()</code> passes arguments <code>...</code> to <code><a href="../reference/value.html">value()</a></code> of each future.</p></li>
+<li><p><code><a href="https://rspatial.github.io/terra/reference/values.html" class="external-link">values()</a></code> passes arguments <code>...</code> to <code><a href="../reference/value.html">value()</a></code> of each future.</p></li>
 <li><p>Added <code>FutureError</code> class.</p></li>
 </ul></div>
 <div class="section level3">
@@ -1445,7 +1445,7 @@
 <div class="section level3">
 <h3 id="new-features-0-10-0">New Features<a class="anchor" aria-label="anchor" href="#new-features-0-10-0"></a></h3>
 <ul><li><p>Now <code>%&lt;=%</code> can also assign to multi-dimensional list environments.</p></li>
-<li><p>Add <code><a href="../reference/futures.html">futures()</a></code>, <code>values()</code> and <code><a href="../reference/resolved.html">resolved()</a></code>.</p></li>
+<li><p>Add <code><a href="../reference/futures.html">futures()</a></code>, <code><a href="https://rspatial.github.io/terra/reference/values.html" class="external-link">values()</a></code> and <code><a href="../reference/resolved.html">resolved()</a></code>.</p></li>
 <li><p>Add <code><a href="../reference/resolve.html">resolve()</a></code> to resolve futures in lists and environments.</p></li>
 <li><p>Now <code><a href="../reference/re-exports.html">availableCores()</a></code> also acknowledges the number of CPUs allotted by Slurm.</p></li>
 <li><p>CLEANUP: Now the internal future variable created by <code>%&lt;=%</code> is removed when the future variable is resolved.</p></li>

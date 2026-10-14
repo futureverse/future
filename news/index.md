@@ -4,7 +4,7 @@
 
 ### Significant Changes
 
-- Memory use on parallel workers has gone down significant in some
+- Memory use on parallel workers has gone down significantly in some
   cases. A side effect is also significantly faster processing in those
   cases. This improvement has an immediate effect on several
   **future.apply** functions: `future_lapply()`, `future_sapply()`,
@@ -92,15 +92,15 @@ CRAN release: 2026-07-20
   “active” time (overhead + evaluation), with wallclock and idle time
   shown separately.
 
-- [`summary()`](https://rdrr.io/r/base/summary.html) on individual a
-  `FutureJournal` objects and on a `FutureJournalList` list of them now
-  reports on parallelization metrics, including total speedup and total
-  efficiency.
+- [`summary()`](https://rspatial.github.io/terra/reference/summary.html)
+  on individual a `FutureJournal` objects and on a `FutureJournalList`
+  list of them now reports on parallelization metrics, including total
+  speedup and total efficiency.
 
-- [`all.equal()`](https://rdrr.io/r/base/all.equal.html) for `future`
-  now returns `"Not both functions"` when comparing against a
-  non-function. Similarly, `"Not both lists"` is returned when comparing
-  a `FutureStrategyList` object against a not list object.
+- [`all.equal()`](https://rspatial.github.io/terra/reference/all.equal.html)
+  for `future` now returns `"Not both functions"` when comparing against
+  a non-function. Similarly, `"Not both lists"` is returned when
+  comparing a `FutureStrategyList` object against a not list object.
 
 ### Bug Fixes
 
@@ -122,8 +122,8 @@ CRAN release: 2026-07-20
   relayed if a condition file was corrupt. Now such conditions are
   silently ignored as intended.
 
-- [`all.equal()`](https://rdrr.io/r/base/all.equal.html) for
-  `FutureStrategyList` would throw an error if the object checked
+- [`all.equal()`](https://rspatial.github.io/terra/reference/all.equal.html)
+  for `FutureStrategyList` would throw an error if the object checked
   against was not a list.
 
 - The framework asserts that future result belong to the correct future.
@@ -349,8 +349,9 @@ and system tests](https://www.futureverse.org/quality.html).
 
 - Now futures produce a warning when they detect that the *default*
   graphics device, as defined by R option `"device"`, is opened by, for
-  instance, a [`plot()`](https://rdrr.io/r/graphics/plot.default.html)
-  call without explicitly opening a graphics device. The reason for this
+  instance, a
+  [`plot()`](https://rspatial.github.io/terra/reference/plot.html) call
+  without explicitly opening a graphics device. The reason for this
   check is that we rarely want to plot to the *default* graphics device
   in parallel processing, which typically ends up plotting to a
   `Rplots.pdf` file that is local to the parallel worker. If that is
@@ -391,8 +392,8 @@ and system tests](https://www.futureverse.org/quality.html).
 - When using cluster and multisession backends, one could, in some
   cases, end up with warnings on “package may not be available when
   loading” that are produced by
-  [`serialize()`](https://rdrr.io/r/base/serialize.html). These types of
-  warnings are now suppressed.
+  [`serialize()`](https://rspatial.github.io/terra/reference/serialize.html).
+  These types of warnings are now suppressed.
 
 - Now the cluster future backend tries even harder to shut down parallel
   cluster workers when shutting down the backend. If it fails to
@@ -901,8 +902,10 @@ CRAN release: 2022-11-06
   \[2020-10-30\]. Please use `multisession` (recommended) or `multicore`
   instead.
 
-- Removing `values()`, which has been defunct since **future** 1.23.0.
-  Use [`value()`](https://future.futureverse.org/reference/value.md)
+- Removing
+  [`values()`](https://rspatial.github.io/terra/reference/values.html),
+  which has been defunct since **future** 1.23.0. Use
+  [`value()`](https://future.futureverse.org/reference/value.md)
   instead.
 
 ## Version 1.28.0
@@ -1168,8 +1171,8 @@ CRAN release: 2021-10-31
 
 ### Deprecated and Defunct
 
-- `values()`, which has been deprecated since **future** 1.20.0, is now
-  defunct. Use
+- [`values()`](https://rspatial.github.io/terra/reference/values.html),
+  which has been deprecated since **future** 1.20.0, is now defunct. Use
   [`value()`](https://future.futureverse.org/reference/value.md)
   instead.
 
@@ -1511,7 +1514,8 @@ CRAN release: 2020-11-03
   ‘multisession’ or ‘multicore’, depending on operating system and R
   setup.
 
-- `values()` is deprecated. Use
+- [`values()`](https://rspatial.github.io/terra/reference/values.html)
+  is deprecated. Use
   [`value()`](https://future.futureverse.org/reference/value.md)
   instead.
 
@@ -1717,8 +1721,9 @@ CRAN release: 2020-04-18
 
 ### Significant Changes
 
-- Renamed `values()` to
-  [`value()`](https://future.futureverse.org/reference/value.md) to
+- Renamed
+  [`values()`](https://rspatial.github.io/terra/reference/values.html)
+  to [`value()`](https://future.futureverse.org/reference/value.md) to
   clean up and simplify the API.
 
 ### New Features
@@ -1750,14 +1755,18 @@ CRAN release: 2020-04-18
 
 ### Deprecated and Defunct
 
-- All `values()` S3 methods have been renamed to
+- All
+  [`values()`](https://rspatial.github.io/terra/reference/values.html)
+  S3 methods have been renamed to
   [`value()`](https://future.futureverse.org/reference/value.md) since
   they are closely related to the original purpose
   [`value()`](https://future.futureverse.org/reference/value.md). The
-  `values()` methods will continue to work but will soon be formally
-  deprecated and later be made defunct and finally be removed. Please
-  replace all `values()` with
-  [`value()`](https://future.futureverse.org/reference/value.md) calls.
+  [`values()`](https://rspatial.github.io/terra/reference/values.html)
+  methods will continue to work but will soon be formally deprecated and
+  later be made defunct and finally be removed. Please replace all
+  [`values()`](https://rspatial.github.io/terra/reference/values.html)
+  with [`value()`](https://future.futureverse.org/reference/value.md)
+  calls.
 
 ## Version 1.16.0
 
@@ -1875,8 +1884,9 @@ CRAN release: 2019-11-08
 
 ### Bug Fixes
 
-- `values()` would resignal `immediateCondition`:s despite those should
-  only be signaled at most once per future.
+- [`values()`](https://rspatial.github.io/terra/reference/values.html)
+  would resignal `immediateCondition`:s despite those should only be
+  signaled at most once per future.
 
 - [`makeClusterPSOCK()`](https://future.futureverse.org/reference/re-exports.md)
   could produce warnings like “cannot open file
@@ -1917,16 +1927,20 @@ CRAN release: 2019-07-02
   conditions of class `message` and `warning` were relayed.
 
 - If one of the futures in a collection produces an error, then
-  `values()` will signal that error as soon as it is detected. This
-  means that while calling `values()` guarantees to resolve all futures,
-  it does not guarantee that the result from all futures are gathered
-  back to the master R session before the error is relayed.
+  [`values()`](https://rspatial.github.io/terra/reference/values.html)
+  will signal that error as soon as it is detected. This means that
+  while calling
+  [`values()`](https://rspatial.github.io/terra/reference/values.html)
+  guarantees to resolve all futures, it does not guarantee that the
+  result from all futures are gathered back to the master R session
+  before the error is relayed.
 
 ### New Features
 
-- `values()` now relays `stdout` and signals as soon as possible as long
-  as the standard output and the conditions are relayed in their
-  original order.
+- [`values()`](https://rspatial.github.io/terra/reference/values.html)
+  now relays `stdout` and signals as soon as possible as long as the
+  standard output and the conditions are relayed in their original
+  order.
 
 - If a captured condition can be “muffled”, then it will be muffled.
   This helps to prevent conditions from being handled twice by condition
@@ -2951,8 +2965,9 @@ CRAN release: 2016-11-12
 
 ### Bug Fixes
 
-- `values()` for lists and list environments of futures where one or
-  more of the futures resolved to NULL would give an error.
+- [`values()`](https://rspatial.github.io/terra/reference/values.html)
+  for lists and list environments of futures where one or more of the
+  futures resolved to NULL would give an error.
 
 - [`value()`](https://future.futureverse.org/reference/value.md) for
   `ClusterFuture` would give cryptic error message “Error in stop(ex) :
@@ -3197,7 +3212,8 @@ CRAN release: 2016-05-17
 - Added informative [`print()`](https://rdrr.io/r/base/print.html)
   method for the `Future` class.
 
-- `values()` passes arguments `...` to
+- [`values()`](https://rspatial.github.io/terra/reference/values.html)
+  passes arguments `...` to
   [`value()`](https://future.futureverse.org/reference/value.md) of each
   future.
 
@@ -3364,7 +3380,8 @@ CRAN release: 2015-12-31
 
 - Add
   [`futures()`](https://future.futureverse.org/reference/futures.md),
-  `values()` and
+  [`values()`](https://rspatial.github.io/terra/reference/values.html)
+  and
   [`resolved()`](https://future.futureverse.org/reference/resolved.md).
 
 - Add [`resolve()`](https://future.futureverse.org/reference/resolve.md)
