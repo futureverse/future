@@ -2,7 +2,7 @@
 
 ## Significant Changes
 
- * Memory use on parallel workers has gone down significant in some
+ * Memory use on parallel workers has gone down significantly in some
    cases. A side effect is also significantly faster processing in
    those cases. This improvement has an immediate effect on several
    **future.apply** functions: `future_lapply()`, `future_sapply()`,
