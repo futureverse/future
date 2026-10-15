@@ -139,11 +139,22 @@ jobs:
             Sys.setenv(R_FUTURE_RESOLVED_RUN = "defunct")
           }
           if (nzchar(Sys.getenv("R_FUTURE_PLAN")) || getRversion() < "3.5.0") Sys.setenv(RCMDCHECK_ERROR_ON = "error")
-          rcmdcheck::rcmdcheck(
+          res <- rcmdcheck::rcmdcheck(
             build_args = if (getRversion() < "3.5.0") "--no-build-vignettes",
             args = c("--no-manual", "--as-cran", if (getRversion() < "3.5.0") c("--no-vignettes", "--no-build-vignettes", "--ignore-vignettes")),
             check_dir = "check"
           )
+          ## rcmdcheck() only tracks ERROR/WARNING/NOTE; it has no concept of
+          ## the 'INFO' status that '--as-cran' can produce (e.g. "checking
+          ## for code/documentation mismatches" downgrades to INFO under
+          ## --as-cran). Catch those explicitly, since they are otherwise
+          ## silently missed.
+          infos <- grep("[.][.][.] INFO$", strsplit(res$stdout, "\n")[[1]], value = TRUE)
+          if (length(infos) > 0) {
+            cat("::error::R CMD check reported INFO-level message(s)\n")
+            print(infos)
+            stop("R CMD check found INFO message(s); see log above")
+          }
         shell: Rscript {0}
  
       - name: Check (Windows)
@@ -160,11 +171,18 @@ jobs:
             Sys.setenv(R_FUTURE_PLAN_EARLYSIGNAL = "defunct")
             Sys.setenv(R_FUTURE_RESOLVED_RUN = "defunct")
           }
-          rcmdcheck::rcmdcheck(
+          res <- rcmdcheck::rcmdcheck(
             args = c("--no-manual", "--as-cran",
                      if (getRversion() >= "4.2.0") "--no-multiarch"),
             check_dir = "check"
           )
+          ## See comment in the non-Windows 'Check' step for why this is needed.
+          infos <- grep("[.][.][.] INFO$", strsplit(res$stdout, "\n")[[1]], value = TRUE)
+          if (length(infos) > 0) {
+            cat("::error::R CMD check reported INFO-level message(s)\n")
+            print(infos)
+            stop("R CMD check found INFO message(s); see log above")
+          }
         shell: Rscript {0}
 
       - name: Check MPI clusters (not macOS)
