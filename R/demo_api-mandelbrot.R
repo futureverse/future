@@ -17,7 +17,7 @@
 #' @references
 #' Mandelbrot set, \url{https://en.wikipedia.org/wiki/Mandelbrot_set}, 2026
 #' 
-#' @aliases as.raster.Mandelbrot plot.Mandelbrot mandelbrot_tiles
+#' @aliases as.raster.Mandelbrot plot.Mandelbrot
 #' @keywords internal
 #'
 #' @export
@@ -146,6 +146,14 @@ plot.Mandelbrot <- function(x, y, ..., mar = c(0, 0, 0, 0)) {
 }
 
 
+#' @param nrow,ncol Number of rows and columns of tiles to partition
+#'                        the complex plane `Z` into.
+#'
+#' @param truncate        If TRUE, all tiles are truncated to have
+#'                        identical dimensions, otherwise the last
+#'                        row and column of tiles may be smaller.
+#'
+#' @rdname mandelbrot
 #' @export
 mandelbrot_tiles <- function(xmid = -0.75, ymid = 0.0, side = 3.0,
                              nrow = 2L, ncol = nrow,
