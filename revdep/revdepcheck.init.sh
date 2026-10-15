@@ -64,8 +64,8 @@ fi
 ## Add packages to check
 revdep/run.R --add-children
 
-## Drop packages failing on CRAN (2026-10-05)
-revdep/run.R --rm datacaged dispositionEffect fmeffects
+## Drop packages failing on CRAN (2026-10-15)
+revdep/run.R --rm dispositionEffect fmeffects
 
 ## Drop packages failing on Bioconductor (2026-10-05)
 revdep/run.R --rm pgxRpi SCArray.sat synergyfinder
@@ -83,7 +83,7 @@ revdep/run.R --rm BayesPET TriDimRegression  # there is no package called ‘rst
 revdep/run.R --rm mapme.biodiversity    # unstable results
 
 ## Requires sequential processing due to clashes, e.g. port and cache 
-pkgs_seq=(couplr datacaged dipsaus fiery ggchangepoint robust2sls)
+pkgs_seq=(couplr datacaged dipsaus fiery ggchangepoint robust2sls SimDesign)
 revdep/run.R --rm "${pkgs_seq[@]}"
 
 ## Too many threads /2026-04-16
