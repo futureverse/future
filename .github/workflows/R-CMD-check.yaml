@@ -56,7 +56,7 @@ jobs:
       _R_CHECK_SUGGESTS_ONLY_: true
       _R_CHECK_THINGS_IN_TEMP_DIR_: true
       _R_CHECK_TESTS_NLINES_: 300
-      RCMDCHECK_ERROR_ON: error
+      RCMDCHECK_ERROR_ON: note
       NOT_CRAN: true
       R_TESTME_EXCLUDE_NAME: ${{ matrix.config.testme_exclude }}
       ## Specific to futures
