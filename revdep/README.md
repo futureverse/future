@@ -10,30 +10,33 @@
 |collate  |en_US.UTF-8                                                              |
 |ctype    |en_US.UTF-8                                                              |
 |tz       |America/Los_Angeles                                                      |
-|date     |2026-10-05                                                               |
-|pandoc   |3.11                                                                     |
-|quarto   |1.10.18                                                                  |
+|date     |2026-10-15                                                               |
+|pandoc   |3.11 @ /path/to/pandoc-3.11/bin/pandoc       |
+|quarto   |1.10.18 @ /path/to/quarto-1.10.18/bin/quarto |
 
 # Dependencies
 
 |package    |old    |new         |Δ  |
 |:----------|:------|:-----------|:--|
-|future     |1.76.0 |1.76.0-9002 |*  |
+|future     |1.76.0 |1.76.0-9015 |*  |
 |codetools  |0.2-20 |0.2-20      |   |
 |digest     |0.6.39 |0.6.39      |   |
-|globals    |0.19.1 |0.19.1      |   |
-|listenv    |1.0.0  |1.1.0       |*  |
+|globals    |0.20.0 |0.20.0      |   |
+|listenv    |1.1.0  |1.1.0       |   |
 |parallelly |1.48.0 |1.48.0      |   |
 
 # Revdeps
 
-## Failed to check (1)
+## Failed to check (4)
 
 |package  |version |error |warning |note |
 |:--------|:-------|:-----|:-------|:----|
-|[marcxmlr](failures.md#marcxmlr)|0.3.1   |1     |        |     |
+|carts    |?       |      |        |     |
+|InPAS    |?       |      |        |     |
+|[marcxmlr](failures.md#marcxmlr)|0.4.0   |1     |        |     |
+|VIM      |?       |      |        |     |
 
-## All (572)
+## All (580)
 
 |package                      |version      |error |warning |note |
 |:----------------------------|:------------|:-----|:-------|:----|
@@ -42,7 +45,7 @@
 |actuary                      |0.1.2        |      |        |     |
 |AgePopDenom                  |1.2.3        |      |        |     |
 |aifeducation                 |1.1.6        |      |        |     |
-|AIscreenR                    |0.4.0        |      |        |     |
+|AIscreenR                    |0.5.0        |      |        |     |
 |ale                          |0.5.3        |      |        |     |
 |alookr                       |0.5.1        |      |        |     |
 |[altdoc](problems.md#altdoc) |0.7.3        |      |        |1    |
@@ -74,13 +77,14 @@
 |bhmbasket                    |1.1.0        |      |        |     |
 |bidser                       |0.5.2        |      |        |     |
 |bifrost                      |0.2.0        |      |        |     |
-|bigDM                        |0.5.8        |      |        |     |
+|bigDM                        |0.5.9        |      |        |     |
 |bigPLSR                      |0.8.0        |      |        |     |
 |binaryRL                     |0.9.9        |      |        |     |
 |bioLeak                      |0.3.8        |      |        |     |
 |bivarhr                      |0.1.6        |      |        |     |
 |bkmrhat                      |1.1.7        |      |        |     |
 |blavaan                      |0.6-1        |      |        |     |
+|brapiR2                      |0.2.0        |      |        |     |
 |brms                         |2.23.0       |      |        |     |
 |BSET                         |1.0          |      |        |     |
 |bsitar                       |0.4.0        |      |        |     |
@@ -88,10 +92,11 @@
 |bspcov                       |1.0.3        |      |        |     |
 |CAESAR.Suite                 |0.3.0        |      |        |     |
 |calmr                        |0.8.1        |      |        |     |
+|cam2model                    |0.3.0        |      |        |     |
 |campsis                      |1.9.2        |      |        |     |
 |canaper                      |1.0.1        |      |        |     |
 |caretSDM                     |1.9.7        |      |        |     |
-|carts                        |0.2.0        |      |        |     |
+|carts                        |?            |      |        |     |
 |casimir                      |0.3.3        |      |        |     |
 |CausalMixGPD                 |0.8.0        |      |        |     |
 |cccrm                        |3.0.6        |      |        |     |
@@ -134,7 +139,7 @@
 |DAISIE                       |5.0.2        |      |        |     |
 |dar                          |1.8.0        |      |        |     |
 |dartR.popgen                 |1.2.2        |      |        |     |
-|[datacaged](problems.md#datacaged)|0.2.1        |1     |        |     |
+|datacaged                    |0.2.3        |      |        |     |
 |datamuseum                   |0.1.0        |      |        |     |
 |dataquieR                    |2.8.15       |      |        |     |
 |datefixR                     |2.0.1        |      |        |     |
@@ -142,10 +147,10 @@
 |dci                          |1.0.3        |      |        |     |
 |DeclareDesign                |1.1.1        |      |        |     |
 |delayed                      |0.5.0        |      |        |     |
-|delimtools                   |0.2.2        |      |        |     |
-|deseats                      |1.1.2        |      |        |     |
+|delimtools                   |0.2.2        |      |        |-1   |
+|deseats                      |1.1.3        |      |        |     |
 |detectXOR                    |0.1.0        |      |        |     |
-|dipsaus                      |0.3.5        |-1    |        |     |
+|dipsaus                      |0.3.5        |      |        |     |
 |doFuture                     |1.4.0        |      |        |     |
 |dosr                         |0.3.6        |      |        |     |
 |drake                        |7.13.11      |      |        |     |
@@ -173,6 +178,7 @@
 |ExtremeCI                    |0.2.1        |      |        |     |
 |eyeprocess                   |0.11.1       |      |        |     |
 |ezcox                        |1.0.4        |      |        |     |
+|fable.prophet                |1.0.0        |      |        |     |
 |fabletools                   |0.8.0        |      |        |     |
 |FAMoS                        |0.3.1        |      |        |     |
 |FastJM                       |1.7.1        |      |        |     |
@@ -195,22 +201,22 @@
 |flexFitR                     |1.2.4        |      |        |     |
 |[flowGraph](problems.md#flowgraph)|1.20.0       |      |        |3    |
 |fluxCore                     |2.1.0        |      |        |     |
-|forestsearch                 |0.1.0        |      |        |     |
+|forestsearch                 |0.4.0        |      |        |     |
 |FracFixR                     |1.1.0        |      |        |     |
 |fRagmentomics                |1.0.0        |      |        |     |
 |fst4pg                       |1.0.0        |      |        |     |
 |fundiversity                 |1.1.1        |      |        |     |
 |funGp                        |1.0.0        |      |        |     |
-|funresMech                   |1.0.4        |      |        |     |
+|funresMech                   |1.1.0        |      |        |     |
 |furrr                        |0.4.0        |      |        |     |
 |future.apply                 |1.20.2       |      |        |     |
 |[future.batchtools](problems.md#futurebatchtools)|0.22.0       |      |        |1    |
-|future.callr                 |1.0.0        |      |        |     |
+|future.callr                 |1.0.1        |      |        |     |
 |future.mirai                 |1.0.0        |      |        |     |
 |future.tests                 |1.0.0        |      |        |     |
 |futureverse                  |0.3.0        |      |        |     |
 |futurize                     |1.0.0        |      |        |     |
-|fwb                          |0.6.0        |      |        |     |
+|fwb                          |1.0.0        |      |        |     |
 |fxTWAPLS                     |0.1.3        |      |        |     |
 |gaQSAR                       |1.2.3        |      |        |     |
 |GeDS                         |0.3.5        |      |        |     |
@@ -220,8 +226,8 @@
 |geohabnet                    |2.3          |      |        |     |
 |GeometricMorphometricsMix    |0.6.1.1      |      |        |     |
 |GeoModels                    |2.2.9        |      |        |     |
-|geomorphR                    |0.1.0        |      |        |     |
-|GetBCBData                   |0.9.1        |      |        |     |
+|geomorphR                    |0.2.0        |      |        |     |
+|GetBCBData                   |0.9.5        |      |        |     |
 |ggchangepoint                |0.5.0        |      |        |     |
 |gloBFPr                      |2.0.0        |      |        |     |
 |goodpractice                 |1.2.0        |      |        |     |
@@ -237,7 +243,7 @@
 |gsDesignNB                   |0.3.2        |      |        |     |
 |gsDesignTune                 |0.1.0        |      |        |     |
 |gstat                        |2.1-6        |      |        |     |
-|GSVA                         |2.6.6        |      |        |     |
+|GSVA                         |2.6.12       |      |        |     |
 |gtfs2emis                    |0.1.2        |      |        |     |
 |gtfs2gps                     |2.1-4        |      |        |     |
 |GWPR.light                   |1.0.0        |      |        |     |
@@ -249,6 +255,7 @@
 |healthbR                     |0.4.0        |      |        |     |
 |heterogen                    |1.2.33       |      |        |     |
 |highMLR                      |1.0.1        |      |        |     |
+|hilldiv3                     |3.0.0        |      |        |     |
 |hoopR                        |3.1.0        |      |        |     |
 |httpgd                       |2.1.4        |      |        |     |
 |HVT                          |26.1.3       |      |        |     |
@@ -265,13 +272,13 @@
 |incubate                     |1.4.1        |      |        |     |
 |[infercnv](problems.md#infercnv)|1.28.0       |      |        |2    |
 |inlinedocs                   |2023.9.4     |      |        |     |
-|[InPAS](problems.md#inpas)   |2.20.0       |      |        |3    |
+|InPAS                        |?            |      |        |     |
 |interflex                    |1.4.1        |      |        |     |
 |InterpolateR                 |1.4-3        |      |        |     |
 |ipc                          |0.1.4        |      |        |     |
 |irtsim                       |0.2.0        |      |        |     |
 |ISAnalytics                  |1.22.0       |      |        |     |
-|isopam                       |3.6          |      |        |     |
+|isopam                       |3.7          |      |        |     |
 |ivd                          |1.0.0        |      |        |     |
 |ivDiag                       |1.0.6        |      |        |     |
 |[ivmte](problems.md#ivmte)   |1.4.0        |      |        |1    |
@@ -304,11 +311,11 @@
 |LTFGRS                       |1.0.1        |      |        |     |
 |LTFHPlus                     |2.2.0        |      |        |     |
 |LWFBrook90R                  |0.6.3        |      |        |     |
-|maestro                      |1.3.1        |      |        |     |
+|maestro                      |1.4.0        |      |        |     |
 |[MAI](problems.md#mai)       |1.18.0       |      |        |1    |
 |MAIHDA                       |0.2.1        |      |        |     |
 |MAMS                         |3.0.3        |      |        |     |
-|[marcxmlr](failures.md#marcxmlr)|0.3.1        |1     |        |     |
+|[marcxmlr](failures.md#marcxmlr)|0.4.0        |1     |        |     |
 |marginaleffects              |1.0.0        |      |        |     |
 |matchednull                  |0.2.1        |      |        |     |
 |McMiso                       |0.2.0        |      |        |     |
@@ -364,7 +371,7 @@
 |netOP                        |0.1.2        |      |        |     |
 |netseer                      |0.1.3        |      |        |     |
 |NetSimR                      |0.3.2        |      |        |     |
-|neuroim2                     |0.13.0       |      |        |     |
+|neuroim2                     |0.19.1       |      |        |     |
 |[nfl4th](problems.md#nfl4th) |1.0.7        |      |        |1    |
 |nflfastR                     |6.0.0        |      |        |     |
 |nflseedR                     |2.0.2        |      |        |     |
@@ -377,6 +384,7 @@
 |nQuack                       |1.0.4        |      |        |     |
 |oeli                         |0.7.8        |      |        |     |
 |onemapsgapi                  |2.0.0        |      |        |     |
+|OpenSpecy                    |2.0.3        |      |        |     |
 |opImputation                 |0.6          |      |        |     |
 |origami                      |1.0.8        |      |        |     |
 |outliers.ts.oga              |1.1.2        |      |        |     |
@@ -401,6 +409,7 @@
 |plssem                       |0.1.5        |      |        |     |
 |plumber                      |1.3.3        |      |        |     |
 |polarisR                     |0.1.4        |      |        |     |
+|polle                        |1.6.7        |      |        |     |
 |polykde                      |1.2.1        |      |        |     |
 |POMADE                       |0.2.1        |      |        |     |
 |portvine                     |1.0.3        |      |        |     |
@@ -467,7 +476,7 @@
 |[SCArray.sat](problems.md#scarraysat)|1.12.0       |1     |        |2    |
 |scDiffCom                    |1.2.0        |      |        |     |
 |SCGLR                        |3.1.0        |      |        |     |
-|scLANE                       |1.2.0        |      |        |     |
+|[scLANE](problems.md#sclane) |1.2.0        |1     |        |     |
 |SCORPION                     |1.3.4        |      |        |     |
 |scov                         |2.0.2        |      |        |     |
 |scR                          |0.7.0        |      |        |     |
@@ -484,11 +493,11 @@
 |segtest                      |2.0.0        |      |        |     |
 |SelectBoost.beta             |0.4.5        |      |        |     |
 |SelectBoost.gamlss           |0.2.2        |      |        |     |
-|SemNeT                       |2.0.0        |      |        |     |
-|semPower                     |2.1.3        |      |        |     |
+|SemNeT                       |2.1.0        |      |        |     |
+|semPower                     |2.2.0        |      |        |     |
 |semtree                      |0.9.23       |      |        |     |
 |sentopics                    |1.0.1        |      |        |     |
-|SEQTaRget                    |1.4.4        |      |        |     |
+|SEQTaRget                    |1.4.5        |      |        |     |
 |[Seqtometry](problems.md#seqtometry)|1.0.1        |      |1       |2    |
 |SerolyzeR                    |1.5.0        |      |        |     |
 |Seurat                       |5.6.0        |      |        |     |
@@ -503,7 +512,7 @@
 |sigminer                     |2.3.3        |      |        |     |
 |Signac                       |1.17.1       |      |        |     |
 |[signeR](problems.md#signer) |2.14.0       |      |        |5    |
-|SimDesign                    |2.27         |      |        |     |
+|SimDesign                    |2.28         |      |        |     |
 |simglm                       |1.0.0        |      |        |     |
 |[simhelpers](problems.md#simhelpers)|0.3.1        |      |        |1    |
 |simIDM                       |0.1.1        |      |        |     |
@@ -515,16 +524,16 @@
 |SmCCNet                      |2.0.7        |      |        |     |
 |smimodel                     |0.1.3        |      |        |     |
 |SmoothPLS                    |0.1.5        |      |        |     |
-|smoots                       |1.1.4        |      |        |     |
+|smoots                       |1.1.5        |      |        |     |
 |sNPLS                        |1.0.27       |      |        |     |
 |socialSim                    |0.1.9        |      |        |     |
 |[SpaDES.core](problems.md#spadescore)|3.2.1        |1     |        |     |
-|spaMM                        |4.7.0        |      |        |     |
+|spaMM                        |4.7.17       |      |        |     |
 |spanishoddata                |0.2.6        |      |        |     |
 |[sparrpowR](problems.md#sparrpowr)|0.2.9        |      |1       |     |
 |spatialTIME                  |1.3.4-5      |      |        |     |
 |spatialwarnings              |3.1.2        |      |        |     |
-|spdesign                     |0.0.6        |      |        |     |
+|spdesign                     |0.0.7        |      |        |     |
 |specr                        |1.0.0        |      |        |     |
 |[sperrorest](problems.md#sperrorest)|3.0.5        |      |        |1    |
 |spFSR                        |2.0.4        |      |        |     |
@@ -559,6 +568,7 @@
 |tidier                       |0.3.0        |      |        |     |
 |tidyclust                    |0.3.2        |      |        |     |
 |tidyMC                       |1.0.1        |      |        |     |
+|tidymedia                    |0.2.2        |      |        |     |
 |tidySEM                      |0.2.12       |      |        |     |
 |tinyshinyserver              |0.2.1        |      |        |     |
 |tipmap                       |1.0.1        |      |        |     |
@@ -571,7 +581,7 @@
 |TreeSearch                   |1.7.0        |      |        |     |
 |tsdistributions              |1.0.4        |      |        |     |
 |tsfeatures                   |1.1.1        |      |        |     |
-|tsgarch                      |1.0.4        |      |        |     |
+|tsgarch                      |1.0.5        |      |        |     |
 |tsissm                       |1.0.3        |      |        |     |
 |tsmarch                      |1.0.0        |      |        |     |
 |tuber                        |2.0.0        |      |        |     |
@@ -583,7 +593,7 @@
 |UniLindleyApprox             |0.1.0        |      |        |     |
 |updog                        |2.1.7        |      |        |     |
 |vecmatch                     |1.4.0        |      |        |     |
-|VIM                          |7.3.1        |      |        |     |
+|VIM                          |?            |      |        |     |
 |vital                        |2.1.0        |      |        |     |
 |[vmeasur](problems.md#vmeasur)|0.1.4        |      |1       |     |
 |WARDEN                       |2.0.6        |      |        |     |
@@ -597,7 +607,8 @@
 |wingen                       |2.2.0        |      |        |     |
 |winputall                    |1.0.1        |      |        |     |
 |wizaRdry                     |0.6.16       |      |        |     |
-|WMAP                         |1.3.1        |      |        |     |
+|WMAP                         |1.3.2        |      |        |     |
+|[WpProj](problems.md#wpproj) |0.3          |1     |        |     |
 |wqspt                        |1.0.2        |      |        |     |
 |wru                          |3.1.0        |      |        |     |
 |xegaPopulation               |1.0.0.16     |      |        |     |

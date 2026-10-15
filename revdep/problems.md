@@ -11,7 +11,7 @@ Run `revdepcheck::revdep_details(, "altdoc")` for more info
 *   checking for non-standard things in the check directory ... NOTE
      ```
      Found the following files/directories:
-       ‘testpkg2c13d0380f6d7c’
+       ‘testpkg870b31c7959e9’
      ```
 
 # batchtools (0.9.18)
@@ -27,10 +27,10 @@ Run `revdepcheck::revdep_details(, "batchtools")` for more info
 *   checking dependencies in R code ... NOTE
      ```
      ...
-     dev3.wynton.ucsf.edu:pid2995621.R: Unable to initialize verbs NIC /sys/class/infiniband/mlx5_0 (unit 0:0)
-     dev3.wynton.ucsf.edu:pid2995621: PSM3 can't open nic unit: 0 (err=23)
-     dev3.wynton.ucsf.edu:pid2995621.R: Unable to create send CQ of size 5080 on mlx5_0: Cannot allocate memory
-     dev3.wynton.ucsf.edu:pid2995621.R: Unable to initialize verbs NIC /sys/class/infiniband/mlx5_0 (unit 0:0)
+     localhost::pid668482.R: Unable to initialize verbs NIC /sys/class/infiniband/mlx5_0 (unit 0:0)
+     localhost::pid668482: PSM3 can't open nic unit: 0 (err=23)
+     localhost::pid668482.R: Unable to create send CQ of size 5080 on mlx5_0: Cannot allocate memory
+     localhost::pid668482.R: Unable to initialize verbs NIC /sys/class/infiniband/mlx5_0 (unit 0:0)
      --------------------------------------------------------------------------
      No OpenFabrics connection schemes reported that they were able to be
      used on a specific port.  As such, the openib BTL (OpenFabrics
@@ -41,9 +41,9 @@ Run `revdepcheck::revdep_details(, "batchtools")` for more info
        Local port:           1
        CPCs attempted:       rdmacm, udcm
      --------------------------------------------------------------------------
-     dev3.wynton.ucsf.edu:pid2995621: PSM3 can't open nic unit: 0 (err=23)
-     dev3.wynton.ucsf.edu:pid2995621.R: Unable to create send CQ of size 5080 on mlx5_0: Cannot allocate memory
-     dev3.wynton.ucsf.edu:pid2995621.R: Unable to initialize verbs NIC /sys/class/infiniband/mlx5_0 (unit 0:0)
+     localhost::pid668482: PSM3 can't open nic unit: 0 (err=23)
+     localhost::pid668482.R: Unable to create send CQ of size 5080 on mlx5_0: Cannot allocate memory
+     localhost::pid668482.R: Unable to initialize verbs NIC /sys/class/infiniband/mlx5_0 (unit 0:0)
      --------------------------------------------------------------------------
      Open MPI failed an OFI Libfabric library call (fi_endpoint).  This is highly
      unusual; your job may behave unpredictably (and/or abort) after this.
@@ -237,46 +237,6 @@ Run `revdepcheck::revdep_details(, "cSEM")` for more info
        All declared Imports should be used.
      ```
 
-# datacaged (0.2.1)
-
-* GitHub: <https://github.com/gecomt/datacaged>
-* Email: <mailto:alexsandro.prado@ufersa.edu.br>
-* GitHub mirror: <https://github.com/cran/datacaged>
-
-Run `revdepcheck::revdep_details(, "datacaged")` for more info
-
-## In both
-
-*   checking tests ...
-     ```
-     ...
-        3. └─datacaged::caged_load(...)
-        4.   └─datacaged::caged_info(db_path) at datacaged/R/database.R:418:3
-        5.     └─datacaged::caged_connect(db_path, read_only = TRUE, quiet = TRUE) at datacaged/R/database.R:205:3
-        6.       └─duckdb::duckdb(dbdir = db_path, read_only = read_only) at datacaged/R/database.R:34:3
-        7.         └─duckdb:::warn_instance_settings_ignored(...)
-        8.           └─rlang::abort(...)
-       ── Error ('test-pipelines.R:216:3'): caged_adjustments_load() cria banco com tabela caged_ajustes ──
-       Error in `duckdb::duckdb(dbdir = db_path, read_only = read_only)`: `read_only` can't be applied to the database instance for `/scratch/hb/RtmpHty6yC/working_dir/RtmpRam9zo/caged_adj_mock_3699ef66ac5ddb.duckdb`, which already exists.
-       * These settings take effect only when the instance is created.
-       * Release it with `duckdb_shutdown()` first, or pass them to the `duckdb()` call that creates it.
-       Backtrace:
-           ▆
-        1. ├─base::suppressMessages(...) at test-pipelines.R:216:3
-        2. │ └─base::withCallingHandlers(...)
-        3. └─datacaged::caged_adjustments_load(...)
-        4.   └─datacaged::caged_info(db_path) at datacaged/R/adjustments.R:176:3
-        5.     └─datacaged::caged_connect(db_path, read_only = TRUE, quiet = TRUE) at datacaged/R/database.R:205:3
-        6.       └─duckdb::duckdb(dbdir = db_path, read_only = read_only) at datacaged/R/database.R:34:3
-        7.         └─duckdb:::warn_instance_settings_ignored(...)
-        8.           └─rlang::abort(...)
-       
-       [ FAIL 2 | WARN 0 | SKIP 5 | PASS 187 ]
-       Error:
-       ! Test failures.
-       Execution halted
-     ```
-
 # envi (1.0.1)
 
 * GitHub: <https://github.com/lance-waller-lab/envi>
@@ -385,42 +345,6 @@ Run `revdepcheck::revdep_details(, "infercnv")` for more info
             |                                                                                                                                                                                                                     ^
      ```
 
-# InPAS (2.20.0)
-
-* Email: <mailto:jou@morgridge.org>
-
-Run `revdepcheck::revdep_details(, "InPAS")` for more info
-
-## In both
-
-*   checking dependencies in R code ... NOTE
-     ```
-     There are ::: calls to the package's namespace in its code. A package
-       almost never needs to use ::: for its own objects:
-       ‘adjust_distalCPs’ ‘adjust_proximalCPs’ ‘adjust_proximalCPsByNBC’
-       ‘adjust_proximalCPsByPWM’ ‘calculate_mse’ ‘find_valleyBySpline’
-       ‘get_PAscore’ ‘get_PAscore2’ ‘remove_convergentUTR3s’
-       ‘search_distalCPs’ ‘search_proximalCPs’
-     ```
-
-*   checking Rd metadata ... NOTE
-     ```
-     Invalid package aliases in Rd file 'InPAS.Rd':
-       ‘-package’
-     ```
-
-*   checking Rd \usage sections ... NOTE
-     ```
-     Documented arguments not in \usage in Rd file 'get_UTR3TotalCov.Rd':
-       ‘gcCompensationensation’
-     
-     Functions with \usage entries need to have the appropriate \alias
-     entries, and all their arguments documented.
-     The \usage entries must correspond to syntactically valid R code.
-     See chapter ‘Writing R documentation files’ in the ‘Writing R
-     Extensions’ manual.
-     ```
-
 # ivmte (1.4.0)
 
 * Email: <mailto:jkcshea@uchicago.edu>
@@ -456,7 +380,7 @@ Run `revdepcheck::revdep_details(, "MAI")` for more info
      is not mentioned in the DESCRIPTION file.
      ```
 
-# marcxmlr (0.3.1)
+# marcxmlr (0.4.0)
 
 * GitHub: <https://github.com/larry77/marcxmlr>
 * Email: <mailto:lorenzo.isella@gmail.com>
@@ -478,14 +402,14 @@ Run `revdepcheck::revdep_details(, "marcxmlr")` for more info
 
 ```
 * installing *source* package ‘marcxmlr’ ...
-** this is package ‘marcxmlr’ version ‘0.3.1’
+** this is package ‘marcxmlr’ version ‘0.4.0’
 ** package ‘marcxmlr’ successfully unpacked and MD5 sums checked
 ** using staged installation
 Using PKG_CFLAGS=-I/usr/include/libxml2
 Using PKG_LIBS=-lxml2 -lz -llzma -lm -ldl
 ** libs
 using C compiler: ‘gcc (GCC) 13.3.1 20240611 (Red Hat 13.3.1-2)’
-gcc -std=gnu2x -I"/wynton/home/cbi/shared/software/CBI/_rocky8/R-4.6.1-gcc13/lib64/R/include" -DNDEBUG -I/usr/include/libxml2  -I/usr/local/include    -fpic  -g -O2  -c marcxml-native.c -o marcxml-native.o
+gcc -std=gnu2x -I"/path/to/_rocky8/R-4.6.1-gcc13/lib64/R/include" -DNDEBUG -I/usr/include/libxml2  -I/usr/local/include    -fpic  -g -O2  -c marcxml-native.c -o marcxml-native.o
 marcxml-native.c:72:23: error: conflicting types for ‘attribute’; have ‘const xmlChar *(xmlNode *, const char *)’ {aka ‘const unsigned char *(struct _xmlNode *, const char *)’}
 ...
 In file included from /usr/include/libxml2/libxml/globals.h:20,
@@ -495,7 +419,7 @@ In file included from /usr/include/libxml2/libxml/globals.h:20,
 /usr/include/libxml2/libxml/SAX.h:104:17: note: previous declaration of ‘attribute’ with type ‘void(void *, const xmlChar *, const xmlChar *)’ {aka ‘void(void *, const unsigned char *, const unsigned char *)’}
   104 |                 attribute                       (void *ctx,
       |                 ^~~~~~~~~
-make: *** [/wynton/home/cbi/shared/software/CBI/_rocky8/R-4.6.1-gcc13/lib64/R/etc/Makeconf:190: marcxml-native.o] Error 1
+make: *** [/path/to/_rocky8/R-4.6.1-gcc13/lib64/R/etc/Makeconf:190: marcxml-native.o] Error 1
 ERROR: compilation failed for package ‘marcxmlr’
 * removing ‘/scratch/henrik/revdep/future/checks/marcxmlr/new/marcxmlr.Rcheck/marcxmlr’
 
@@ -505,14 +429,14 @@ ERROR: compilation failed for package ‘marcxmlr’
 
 ```
 * installing *source* package ‘marcxmlr’ ...
-** this is package ‘marcxmlr’ version ‘0.3.1’
+** this is package ‘marcxmlr’ version ‘0.4.0’
 ** package ‘marcxmlr’ successfully unpacked and MD5 sums checked
 ** using staged installation
 Using PKG_CFLAGS=-I/usr/include/libxml2
 Using PKG_LIBS=-lxml2 -lz -llzma -lm -ldl
 ** libs
 using C compiler: ‘gcc (GCC) 13.3.1 20240611 (Red Hat 13.3.1-2)’
-gcc -std=gnu2x -I"/wynton/home/cbi/shared/software/CBI/_rocky8/R-4.6.1-gcc13/lib64/R/include" -DNDEBUG -I/usr/include/libxml2  -I/usr/local/include    -fpic  -g -O2  -c marcxml-native.c -o marcxml-native.o
+gcc -std=gnu2x -I"/path/to/_rocky8/R-4.6.1-gcc13/lib64/R/include" -DNDEBUG -I/usr/include/libxml2  -I/usr/local/include    -fpic  -g -O2  -c marcxml-native.c -o marcxml-native.o
 marcxml-native.c:72:23: error: conflicting types for ‘attribute’; have ‘const xmlChar *(xmlNode *, const char *)’ {aka ‘const unsigned char *(struct _xmlNode *, const char *)’}
 ...
 In file included from /usr/include/libxml2/libxml/globals.h:20,
@@ -522,7 +446,7 @@ In file included from /usr/include/libxml2/libxml/globals.h:20,
 /usr/include/libxml2/libxml/SAX.h:104:17: note: previous declaration of ‘attribute’ with type ‘void(void *, const xmlChar *, const xmlChar *)’ {aka ‘void(void *, const unsigned char *, const unsigned char *)’}
   104 |                 attribute                       (void *ctx,
       |                 ^~~~~~~~~
-make: *** [/wynton/home/cbi/shared/software/CBI/_rocky8/R-4.6.1-gcc13/lib64/R/etc/Makeconf:190: marcxml-native.o] Error 1
+make: *** [/path/to/_rocky8/R-4.6.1-gcc13/lib64/R/etc/Makeconf:190: marcxml-native.o] Error 1
 ERROR: compilation failed for package ‘marcxmlr’
 * removing ‘/scratch/henrik/revdep/future/checks/marcxmlr/old/marcxmlr.Rcheck/marcxmlr’
 
@@ -593,10 +517,10 @@ Run `revdepcheck::revdep_details(, "mlr3resampling")` for more info
 *   checking dependencies in R code ... NOTE
      ```
      ...
-     dev3.wynton.ucsf.edu:pid707576.R: Unable to initialize verbs NIC /sys/class/infiniband/mlx5_0 (unit 0:0)
-     dev3.wynton.ucsf.edu:pid707576: PSM3 can't open nic unit: 0 (err=23)
-     dev3.wynton.ucsf.edu:pid707576.R: Unable to create send CQ of size 5080 on mlx5_0: Cannot allocate memory
-     dev3.wynton.ucsf.edu:pid707576.R: Unable to initialize verbs NIC /sys/class/infiniband/mlx5_0 (unit 0:0)
+     localhost::pid3274536.R: Unable to initialize verbs NIC /sys/class/infiniband/mlx5_0 (unit 0:0)
+     localhost::pid3274536: PSM3 can't open nic unit: 0 (err=23)
+     localhost::pid3274536.R: Unable to create send CQ of size 5080 on mlx5_0: Cannot allocate memory
+     localhost::pid3274536.R: Unable to initialize verbs NIC /sys/class/infiniband/mlx5_0 (unit 0:0)
      --------------------------------------------------------------------------
      No OpenFabrics connection schemes reported that they were able to be
      used on a specific port.  As such, the openib BTL (OpenFabrics
@@ -607,9 +531,9 @@ Run `revdepcheck::revdep_details(, "mlr3resampling")` for more info
        Local port:           1
        CPCs attempted:       rdmacm, udcm
      --------------------------------------------------------------------------
-     dev3.wynton.ucsf.edu:pid707576: PSM3 can't open nic unit: 0 (err=23)
-     dev3.wynton.ucsf.edu:pid707576.R: Unable to create send CQ of size 5080 on mlx5_0: Cannot allocate memory
-     dev3.wynton.ucsf.edu:pid707576.R: Unable to initialize verbs NIC /sys/class/infiniband/mlx5_0 (unit 0:0)
+     localhost::pid3274536: PSM3 can't open nic unit: 0 (err=23)
+     localhost::pid3274536.R: Unable to create send CQ of size 5080 on mlx5_0: Cannot allocate memory
+     localhost::pid3274536.R: Unable to initialize verbs NIC /sys/class/infiniband/mlx5_0 (unit 0:0)
      --------------------------------------------------------------------------
      Open MPI failed an OFI Libfabric library call (fi_endpoint).  This is highly
      unusual; your job may behave unpredictably (and/or abort) after this.
@@ -829,7 +753,7 @@ Run `revdepcheck::revdep_details(, "rtemis")` for more info
      ```
      ...
        
-       2026-10-05 06:43:26 [0m[1;38;2;15;106;102m✓[0m Done in 0.36 seconds.[0m [train]
+       2026-10-14 20:39:25 [0m[1;38;2;15;106;102m✓[0m Done in 0.62 seconds.[0m [train]
        [ FAIL 1 | WARN 4 | SKIP 4 | PASS 356 ]
        
        ══ Skipped tests (4) ═══════════════════════════════════════════════════════════
@@ -910,6 +834,45 @@ Run `revdepcheck::revdep_details(, "SCArray.sat")` for more info
        (/scratch/henrik/revdep/future/checks/SCArray.sat/new/SCArray.sat.Rcheck/00_pkg_src/SCArray.sat/R/Methods.R:182)
      Undefined global functions or variables:
        CreateAssay5Object
+     ```
+
+# scLANE (1.2.0)
+
+* GitHub: <https://github.com/jr-leary7/scLANE>
+* Email: <mailto:j.leary@ufl.edu>
+
+Run `revdepcheck::revdep_details(, "scLANE")` for more info
+
+## In both
+
+*   checking re-building of vignette outputs ... ERROR
+     ```
+     ...
+     --- re-building ‘scLANE.Rmd’ using rmarkdown
+     
+     Quitting from scLANE.Rmd:264-279 [unnamed-chunk-14]
+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     <error/rlang_error>
+     Error:
+     ! object 'dv' not found
+     ---
+     Backtrace:
+         ▆
+      1. └─scLANE::embedGenes(expm1(smoothed_counts$Lineage_A))
+      2.   └─irlba::prcomp_irlba(...) at scLANE/R/embedGenes.R:78:5
+      3.     ├─base::do.call(irlba, args = args)
+      4.     └─irlba (local) `<fn>`(A = `<dbl[,1198]>`, nv = 4, center = `<dbl>`, scale = `<dbl>`)
+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     
+     Error: processing vignette 'scLANE.Rmd' failed with diagnostics:
+     object 'dv' not found
+     --- failed re-building ‘scLANE.Rmd’
+     
+     SUMMARY: processing the following file failed:
+       ‘scLANE.Rmd’
+     
+     Error: Vignette re-building failed.
+     Execution halted
      ```
 
 # Seqtometry (1.0.1)
@@ -1107,7 +1070,7 @@ Run `revdepcheck::revdep_details(, "SpaDES.core")` for more info
      +   convertToPackage("test", path = tmpdir)
      + }
      Loading required namespace: pkgload
-     New module test created at /scratch/hb/RtmpDwcZjo/working_dir/RtmpISmSXO/reproducible/U3C0xYmG
+     New module test created at /scratch/hb/RtmpEp8tE1/working_dir/RtmpehNfLw/reproducible/U3C0xYmG
      ```
 
 # sparrpowR (0.2.9)
@@ -1371,5 +1334,45 @@ Run `revdepcheck::revdep_details(, "vmeasur")` for more info
      Found the following significant warnings:
        Warning: no DISPLAY variable so Tk is not available
      See ‘/scratch/henrik/revdep/future/checks/vmeasur/new/vmeasur.Rcheck/00install.out’ for details.
+     ```
+
+# WpProj (0.3)
+
+* GitHub: <https://github.com/ericdunipace/WpProj>
+* Email: <mailto:edunipace@mail.harvard.edu>
+* GitHub mirror: <https://github.com/cran/WpProj>
+
+Run `revdepcheck::revdep_details(, "WpProj")` for more info
+
+## In both
+
+*   checking tests ...
+     ```
+     ...
+         'test-W2IP.R:55:3', 'test-WInftyL1.R:59:3', 'test-WInftyL1.R:148:5',
+         'test-WInftyL1.R:267:5'
+       
+       ══ Failed tests ════════════════════════════════════════════════════════════════
+       ── Failure ('test-xtyUpdate.R:742:3'): test sinkhorn xtyupdate ─────────────────
+       Expected `norm(out.same$XtY - out, "F")` < 7e-08.
+       Actual comparison: 0.00000062 >= 0.00000007
+       Difference: 0.00000055 >= 0
+       ── Failure ('test-xtyUpdate.R:743:3'): test sinkhorn xtyupdate ─────────────────
+       Expected `norm(out.same$XtY - dat$xty, "F")` < 7e-08.
+       Actual comparison: 0.00000062 >= 0.00000007
+       Difference: 0.00000055 >= 0
+       ── Failure ('test-xtyUpdate.R:874:3'): test greenkhorn xtyupdate ───────────────
+       Expected `norm(out.same$XtY - out, "F")` < 7e-08.
+       Actual comparison: 0.00000062 >= 0.00000007
+       Difference: 0.00000055 >= 0
+       ── Failure ('test-xtyUpdate.R:875:3'): test greenkhorn xtyupdate ───────────────
+       Expected `norm(out.same$XtY - dat$xty, "F")` < 7e-08.
+       Actual comparison: 0.00000062 >= 0.00000007
+       Difference: 0.00000055 >= 0
+       
+       [ FAIL 4 | WARN 54 | SKIP 25 | PASS 806 ]
+       Error:
+       ! Test failures.
+       Execution halted
      ```
 
