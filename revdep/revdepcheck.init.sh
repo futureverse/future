@@ -83,7 +83,7 @@ revdep/run.R --rm BayesPET TriDimRegression  # there is no package called ‘rst
 revdep/run.R --rm mapme.biodiversity    # unstable results
 
 ## Requires sequential processing due to clashes, e.g. port and cache 
-pkgs_seq=(datacaged dipsaus fiery robust2sls)
+pkgs_seq=(couplr datacaged dipsaus fiery robust2sls)
 revdep/run.R --rm "${pkgs_seq[@]}"
 
 ## Too many threads /2026-04-16
