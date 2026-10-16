@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.76.0-9015</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.80.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -100,6 +100,16 @@
 <span>  maxIter <span class="op">=</span> <span class="fl">200L</span>,</span>
 <span>  tau <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">mandelbrot_tiles</span><span class="op">(</span></span>
+<span>  xmid <span class="op">=</span> <span class="op">-</span><span class="fl">0.75</span>,</span>
+<span>  ymid <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  side <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>  nrow <span class="op">=</span> <span class="fl">2L</span>,</span>
+<span>  ncol <span class="op">=</span> <span class="va">nrow</span>,</span>
+<span>  resolution <span class="op">=</span> <span class="fl">400L</span>,</span>
+<span>  truncate <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -129,6 +139,17 @@ the complex plane <code>Z</code>, where
 <code>diff(range(Re(Z))) == side</code>,
 <code>diff(range(Im(Z))) == side</code>, and
 <code>dim(Z) == c(resolution, resolution)</code>.</p></dd>
+
+
+<dt id="arg-nrow-ncol">nrow, ncol<a class="anchor" aria-label="anchor" href="#arg-nrow-ncol"></a></dt>
+<dd><p>Number of rows and columns of tiles to partition
+the complex plane <code>Z</code> into.</p></dd>
+
+
+<dt id="arg-truncate">truncate<a class="anchor" aria-label="anchor" href="#arg-truncate"></a></dt>
+<dd><p>If TRUE, all tiles are truncated to have
+identical dimensions, otherwise the last
+row and column of tiles may be smaller.</p></dd>
 
 </dl></div>
     <div class="section level2">

@@ -6,6 +6,7 @@ A representation of a set of globals used with futures
 
 ``` r
 FutureGlobals(object = list(), resolved = FALSE, total_size = NA_real_, ...)
+as.FutureGlobals(x, ...)
 ```
 
 ## Arguments
@@ -22,6 +23,10 @@ FutureGlobals(object = list(), resolved = FALSE, total_size = NA_real_, ...)
 - total_size:
 
   The total size of all globals, if known.
+
+- x:
+
+  An object to be coerced to a `FutureGlobals` object.
 
 - ...:
 

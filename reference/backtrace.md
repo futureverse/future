@@ -42,9 +42,9 @@ res <- tryCatch({
 #> [[1]]
 #> base::tryCatch(base::withCallingHandlers({
 #>     NULL
-#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmptCc69n/callr-fun-32cba279d796f0"), 
+#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpPh7gLF/callr-fun-2f173683b21d8"), 
 #>         base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
-#>         quote = TRUE), file = "/tmp/hb/RtmptCc69n/callr-res-32cba27559c6ef", 
+#>         quote = TRUE), file = "/tmp/hb/RtmpPh7gLF/callr-res-2f173201a50af", 
 #>         compress = FALSE)
 #>     base::flush(base::stdout())
 #>     base::flush(base::stderr())
@@ -73,7 +73,7 @@ res <- tryCatch({
 #>         if (callr_data$has_otel) {
 #>             callr_data$otel_span$record_exception(e2)
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmptCc69n/callr-res-32cba27559c6ef", 
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpPh7gLF/callr-res-2f173201a50af", 
 #>             ".error"))
 #>     }
 #> }, interrupt = function(e) {
@@ -99,7 +99,7 @@ res <- tryCatch({
 #>         if (callr_data$has_otel) {
 #>             callr_data$otel_span$record_exception(e2)
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmptCc69n/callr-res-32cba27559c6ef", 
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpPh7gLF/callr-res-2f173201a50af", 
 #>             ".error"))
 #>     }
 #> }, callr_message = function(e) {
@@ -143,9 +143,9 @@ res <- tryCatch({
 #> [[8]]
 #> base::withCallingHandlers({
 #>     NULL
-#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmptCc69n/callr-fun-32cba279d796f0"), 
+#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpPh7gLF/callr-fun-2f173683b21d8"), 
 #>         base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
-#>         quote = TRUE), file = "/tmp/hb/RtmptCc69n/callr-res-32cba27559c6ef", 
+#>         quote = TRUE), file = "/tmp/hb/RtmpPh7gLF/callr-res-2f173201a50af", 
 #>         compress = FALSE)
 #>     base::flush(base::stdout())
 #>     base::flush(base::stderr())
@@ -174,7 +174,7 @@ res <- tryCatch({
 #>         if (callr_data$has_otel) {
 #>             callr_data$otel_span$record_exception(e2)
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmptCc69n/callr-res-32cba27559c6ef", 
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpPh7gLF/callr-res-2f173201a50af", 
 #>             ".error"))
 #>     }
 #> }, interrupt = function(e) {
@@ -200,7 +200,7 @@ res <- tryCatch({
 #>         if (callr_data$has_otel) {
 #>             callr_data$otel_span$record_exception(e2)
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmptCc69n/callr-res-32cba27559c6ef", 
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpPh7gLF/callr-res-2f173201a50af", 
 #>             ".error"))
 #>     }
 #> }, callr_message = function(e) {
@@ -208,13 +208,13 @@ res <- tryCatch({
 #> })
 #> 
 #> [[9]]
-#> base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmptCc69n/callr-fun-32cba279d796f0"), 
+#> base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpPh7gLF/callr-fun-2f173683b21d8"), 
 #>     base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
-#>     quote = TRUE), file = "/tmp/hb/RtmptCc69n/callr-res-32cba27559c6ef", 
+#>     quote = TRUE), file = "/tmp/hb/RtmpPh7gLF/callr-res-2f173201a50af", 
 #>     compress = FALSE)
 #> 
 #> [[10]]
-#> base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmptCc69n/callr-fun-32cba279d796f0"), 
+#> base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpPh7gLF/callr-fun-2f173683b21d8"), 
 #>     base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
 #>     quote = TRUE)
 #> 
@@ -231,8 +231,8 @@ res <- tryCatch({
 #>     options(cli.num_colors = cli_colors, cli.hyperlink = hyperlinks, 
 #>         cli.hyperlink_run = hyperlinks)
 #>     pkgdown::build_site(...)
-#> }), base::quote(list(pkg = list(package = "future", version = "1.76.0-9015", 
-#>     src_path = "/tmp/hb/RtmptCc69n/future", meta = list(url = "https://future.futureverse.org", 
+#> }), base::quote(list(pkg = list(package = "future", version = "1.80.0", 
+#>     src_path = "/tmp/hb/RtmpPh7gLF/future", meta = list(url = "https://future.futureverse.org", 
 #>         home = list(links = list(list(text = "Roadmap/Milestones", 
 #>             href = "https://github.com/futureverse/future/milestones"), 
 #>             list(text = "The Futureverse Project", href = "https://www.futureverse.org/"), 
@@ -273,7 +273,7 @@ res <- tryCatch({
 #>             bootstrap = 5L, `light-switch` = TRUE)), desc = <environment>, 
 #>     bs_version = 5L, development = list(destination = "dev", 
 #>         mode = "default", version_label = "muted", in_dev = FALSE, 
-#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/RtmptCc69n/future/docs", 
+#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/RtmpPh7gLF/future/docs", 
 #>     lang = "en-US", install_metadata = FALSE, figures = list(
 #>         dev = "ragg::agg_png", dpi = 96L, dev.args = list(), 
 #>         fig.ext = "png", fig.width = 7.29166666666667, fig.height = NULL, 
@@ -360,14 +360,14 @@ res <- tryCatch({
 #>         ), getGlobalsAndPackages.Rd = "getGlobalsAndPackages", 
 #>         makeClusterFuture.Rd = c("makeClusterFuture", "FUTURE"
 #>         ), mandelbrot.Rd = c("mandelbrot", "as.raster.Mandelbrot", 
-#>         "plot.Mandelbrot", "mandelbrot_tiles", "mandelbrot.matrix", 
-#>         "mandelbrot.numeric"), multicore.Rd = c("multicore", 
-#>         "MulticoreFuture"), multisession.Rd = c("multisession", 
-#>         "MultisessionFuture"), nbrOfWorkers.Rd = c("nbrOfWorkers", 
-#>         "nbrOfFreeWorkers"), nullcon.Rd = "nullcon", plan.Rd = c("plan", 
-#>         "with.FutureStrategyList", "tweak"), private_length.Rd = ".length", 
-#>         `re-exports.Rd` = c("re-exports", "availableCores", "availableWorkers", 
-#>         "makeClusterPSOCK", "supportsMulticore"), readImmediateConditions.Rd = c("readImmediateConditions", 
+#>         "plot.Mandelbrot", "mandelbrot.matrix", "mandelbrot.numeric", 
+#>         "mandelbrot_tiles"), multicore.Rd = c("multicore", "MulticoreFuture"
+#>         ), multisession.Rd = c("multisession", "MultisessionFuture"
+#>         ), nbrOfWorkers.Rd = c("nbrOfWorkers", "nbrOfFreeWorkers"
+#>         ), nullcon.Rd = "nullcon", plan.Rd = c("plan", "with.FutureStrategyList", 
+#>         "tweak"), private_length.Rd = ".length", `re-exports.Rd` = c("re-exports", 
+#>         "availableCores", "availableWorkers", "makeClusterPSOCK", 
+#>         "supportsMulticore"), readImmediateConditions.Rd = c("readImmediateConditions", 
 #>         "saveImmediateCondition"), requestCore.Rd = "requestCore", 
 #>         reset.Rd = "reset", resetWorkers.Rd = "resetWorkers", 
 #>         resolve.Rd = "resolve", resolved.Rd = c("resolved.ClusterFuture", 
@@ -419,33 +419,34 @@ res <- tryCatch({
 #>         "DefaultDeviceMisuseFutureCondition()", "DefaultDeviceMisuseFutureWarning()", 
 #>         "DefaultDeviceMisuseFutureError()", "FutureLaunchError()", 
 #>         "FutureInterruptError()", "FutureCanceledError()", "FutureDroppedError()", 
-#>         "FutureJournalCondition()"), FutureGlobals.Rd = "FutureGlobals()", 
-#>         FutureResult.Rd = c("FutureResult()", "as.character(<i>&lt;FutureResult&gt;</i>)", 
-#>         "print(<i>&lt;FutureResult&gt;</i>)"), `MultiprocessFuture-class.Rd` = "MultiprocessFuture()", 
+#>         "FutureJournalCondition()"), FutureGlobals.Rd = c("FutureGlobals()", 
+#>         "as.FutureGlobals()"), FutureResult.Rd = c("FutureResult()", 
+#>         "as.character(<i>&lt;FutureResult&gt;</i>)", "print(<i>&lt;FutureResult&gt;</i>)"
+#>         ), `MultiprocessFuture-class.Rd` = "MultiprocessFuture()", 
 #>         `UniprocessFuture-class.Rd` = "UniprocessFuture()", backtrace.Rd = "backtrace()", 
 #>         cancel.Rd = "cancel()", cluster.Rd = "cluster()", clusterExportSticky.Rd = "clusterExportSticky()", 
 #>         find_references.Rd = c("find_references()", "assert_no_references()"
 #>         ), future.Rd = c("future()", "futureCall()", "minifuture()"
 #>         ), futureAssign.Rd = c("futureAssign()", "`%&lt;-%`", 
-#>         "`%globals%`", "`%packages%`", "`%seed%`", "`%stdout%`", 
-#>         "`%conditions%`", "`%lazy%`", "`%label%`", "`%plan%`", 
-#>         "`%tweak%`"), futureOf.Rd = "futureOf()", futureSessionInfo.Rd = "futureSessionInfo()", 
-#>         futures.Rd = "futures()", getExpression.Rd = "getExpression()", 
-#>         getGlobalsAndPackages.Rd = "getGlobalsAndPackages()", 
-#>         makeClusterFuture.Rd = "makeClusterFuture()", mandelbrot.Rd = "mandelbrot()", 
-#>         multicore.Rd = "multicore()", multisession.Rd = "multisession()", 
-#>         nbrOfWorkers.Rd = c("nbrOfWorkers()", "nbrOfFreeWorkers()"
-#>         ), nullcon.Rd = "nullcon()", plan.Rd = c("plan()", "with(<i>&lt;FutureStrategyList&gt;</i>)", 
-#>         "tweak()"), private_length.Rd = ".length()", `re-exports.Rd` = character(0), 
+#>         "`%-&gt;%`", "`%globals%`", "`%packages%`", "`%seed%`", 
+#>         "`%stdout%`", "`%conditions%`", "`%lazy%`", "`%label%`", 
+#>         "`%plan%`", "`%tweak%`"), futureOf.Rd = "futureOf()", 
+#>         futureSessionInfo.Rd = "futureSessionInfo()", futures.Rd = "futures()", 
+#>         getExpression.Rd = "getExpression()", getGlobalsAndPackages.Rd = "getGlobalsAndPackages()", 
+#>         makeClusterFuture.Rd = "makeClusterFuture()", mandelbrot.Rd = c("mandelbrot()", 
+#>         "mandelbrot_tiles()"), multicore.Rd = "multicore()", 
+#>         multisession.Rd = "multisession()", nbrOfWorkers.Rd = c("nbrOfWorkers()", 
+#>         "nbrOfFreeWorkers()"), nullcon.Rd = "nullcon()", plan.Rd = c("plan()", 
+#>         "with(<i>&lt;FutureStrategyList&gt;</i>)", "tweak()"), 
+#>         private_length.Rd = ".length()", `re-exports.Rd` = character(0), 
 #>         readImmediateConditions.Rd = c("readImmediateConditions()", 
 #>         "saveImmediateCondition()"), requestCore.Rd = "requestCore()", 
 #>         reset.Rd = "reset()", resetWorkers.Rd = "resetWorkers()", 
 #>         resolve.Rd = "resolve()", resolved.Rd = "resolved()", 
-#>         result.Rd = "result(<i>&lt;Future&gt;</i>)", run.Rd = "run(<i>&lt;Future&gt;</i>)", 
-#>         save_rds.Rd = "save_rds()", sequential.Rd = "sequential()", 
-#>         sessionDetails.Rd = "sessionDetails()", signalConditions.Rd = "signalConditions()", 
-#>         sticky_globals.Rd = "sticky_globals()", usedCores.Rd = "usedCores()", 
-#>         value.Rd = "value()", `zzz-future.options.Rd` = character(0)), 
+#>         result.Rd = "result()", run.Rd = "run()", save_rds.Rd = "save_rds()", 
+#>         sequential.Rd = "sequential()", sessionDetails.Rd = "sessionDetails()", 
+#>         signalConditions.Rd = "signalConditions()", sticky_globals.Rd = "sticky_globals()", 
+#>         usedCores.Rd = "usedCores()", value.Rd = "value()", `zzz-future.options.Rd` = character(0)), 
 #>         title = c(`Future-class.Rd` = "A future represents a value that will be available at some point in the future", 
 #>         `FutureBackend-class.Rd` = "Configure a backend that controls how and where futures are evaluated", 
 #>         FutureCondition.Rd = "A condition (message, warning, or error) that occurred while orchestrating a future", 
@@ -776,12 +777,15 @@ res <- tryCatch({
 #>                 "as.FutureGlobals.list"), "\n", list("[.FutureGlobals"), 
 #>             "\n", list("c.FutureGlobals"), "\n", list("unique.FutureGlobals"), 
 #>             "\n", list("A representation of a set of globals used with futures"), 
-#>             "\n", list("\n", "FutureGlobals(object = list(), resolved = FALSE, total_size = NA_real_, ...)\n"), 
-#>             "\n", list("\n", list(list("object"), list("A named list.")), 
+#>             "\n", list("\n", "FutureGlobals(object = list(), resolved = FALSE, total_size = NA_real_, ...)\n", 
+#>                 "as.FutureGlobals(x, ...)\n"), "\n", list("\n", 
+#>                 list(list("object"), list("A named list.")), 
 #>                 "\n", "\n", list(list("resolved"), list("A logical indicating whether these globals\n", 
 #>                   "have been scanned for and resolved futures or not.")), 
 #>                 "\n", "\n", list(list("total_size"), list("The total size of all globals, if known.")), 
-#>                 "\n", "\n", list(list(list()), list("Not used.")), 
+#>                 "\n", "\n", list(list("x"), list("An object to be coerced to a ", 
+#>                   list("FutureGlobals"), " object.")), "\n", 
+#>                 "\n", list(list(list()), list("Not used.")), 
 #>                 "\n"), "\n", list("\n", "An object of class ", 
 #>                 list("FutureGlobals"), ".\n"), "\n", list("\n", 
 #>                 "A representation of a set of globals used with futures\n"), 
@@ -1275,9 +1279,9 @@ res <- tryCatch({
 #>                   "  packages = NULL,\n", "  stdout = TRUE,\n", 
 #>                   "  conditions = \"condition\",\n", "  label = NULL,\n", 
 #>                   "  ...,\n", "  assign.env = envir\n", ")\n", 
-#>                   "\n", "x %<-% value\n", "\n", "fassignment %globals% globals\n", 
-#>                   "fassignment %packages% packages\n", "\n", 
-#>                   "fassignment %seed% seed\n", "\n", "fassignment %stdout% capture\n", 
+#>                   "\n", "x %<-% value\n", "value %->% x\n", "\n", 
+#>                   "fassignment %globals% globals\n", "fassignment %packages% packages\n", 
+#>                   "\n", "fassignment %seed% seed\n", "\n", "fassignment %stdout% capture\n", 
 #>                   "\n", "fassignment %conditions% capture\n", 
 #>                   "\n", "fassignment %lazy% lazy\n", "\n", "fassignment %label% label\n", 
 #>                   "\n", "fassignment %plan% strategy\n", "\n", 
@@ -1745,18 +1749,22 @@ res <- tryCatch({
 #>                 "\n", "% Please edit documentation in R/demo_api-mandelbrot.R", 
 #>                 "\n", list("mandelbrot"), "\n", list("mandelbrot"), 
 #>                 "\n", list("as.raster.Mandelbrot"), "\n", list(
-#>                   "plot.Mandelbrot"), "\n", list("mandelbrot_tiles"), 
-#>                 "\n", list("mandelbrot.matrix"), "\n", list("mandelbrot.numeric"), 
-#>                 "\n", list("Mandelbrot convergence counts"), 
+#>                   "plot.Mandelbrot"), "\n", list("mandelbrot.matrix"), 
+#>                 "\n", list("mandelbrot.numeric"), "\n", list(
+#>                   "mandelbrot_tiles"), "\n", list("Mandelbrot convergence counts"), 
 #>                 "\n", list("\n", "mandelbrot(...)\n", "\n", list(
 #>                   list("mandelbrot"), list("matrix")), "(Z, maxIter = 200L, tau = 2, ...)\n", 
 #>                   "\n", list(list("mandelbrot"), list("numeric")), 
 #>                   "(\n", "  xmid = -0.75,\n", "  ymid = 0,\n", 
 #>                   "  side = 3,\n", "  resolution = 400L,\n", 
 #>                   "  maxIter = 200L,\n", "  tau = 2,\n", "  ...\n", 
-#>                   ")\n"), "\n", list("\n", list(list("Z"), list(
-#>                   "A complex matrix (", list(list("Z")), ") for which convergence\n", 
-#>                   "counts (", list(list("C")), ") should be calculated.")), 
+#>                   ")\n", "\n", "mandelbrot_tiles(\n", "  xmid = -0.75,\n", 
+#>                   "  ymid = 0,\n", "  side = 3,\n", "  nrow = 2L,\n", 
+#>                   "  ncol = nrow,\n", "  resolution = 400L,\n", 
+#>                   "  truncate = TRUE\n", ")\n"), "\n", list("\n", 
+#>                   list(list("Z"), list("A complex matrix (", 
+#>                     list(list("Z")), ") for which convergence\n", 
+#>                     "counts (", list(list("C")), ") should be calculated.")), 
 #>                   "\n", "\n", list(list("maxIter"), list("Maximum number of iterations (", 
 #>                     list(list("c^{max}")), ") per bin.")), "\n", 
 #>                   "\n", list(list("tau"), list("A threshold (", 
@@ -1769,7 +1777,13 @@ res <- tryCatch({
 #>                       list("diff(range(Re(Z))) == side"), ",\n", 
 #>                       list("diff(range(Im(Z))) == side"), ", and\n", 
 #>                       list("dim(Z) == c(resolution, resolution)"), 
-#>                       ".")), "\n"), "\n", list("\n", "Returns an integer matrix (of class Mandelbrot) with\n", 
+#>                       ".")), "\n", "\n", list(list("nrow, ncol"), 
+#>                     list("Number of rows and columns of tiles to partition\n", 
+#>                       "the complex plane ", list("Z"), " into.")), 
+#>                   "\n", "\n", list(list("truncate"), list("If TRUE, all tiles are truncated to have\n", 
+#>                     "identical dimensions, otherwise the last\n", 
+#>                     "row and column of tiles may be smaller.")), 
+#>                   "\n"), "\n", list("\n", "Returns an integer matrix (of class Mandelbrot) with\n", 
 #>                   "non-negative counts (", list(list("C")), ").\n"), 
 #>                 "\n", list("\n", "Mandelbrot convergence counts\n"), 
 #>                 "\n", list(list("Escape time algorithm"), list(
@@ -2427,13 +2441,13 @@ res <- tryCatch({
 #>                 "\n", "% Please edit documentation in R/protected_api-result.R", 
 #>                 "\n", list("result.Future"), "\n", list("result.Future"), 
 #>                 "\n", list("result"), "\n", list("Get the results of a resolved future"), 
-#>                 "\n", list("\n", list(list("result"), list("Future")), 
-#>                   "(future, ...)\n"), "\n", list("\n", list(list(
-#>                   "future"), list("A ", list("Future"), ".")), 
-#>                   "\n", "\n", list(list(list()), list("Not used.")), 
-#>                   "\n"), "\n", list("\n", "The ", list("FutureResult"), 
-#>                   " object.\n", "It may signal a ", list("FutureError"), 
-#>                   ", if there is a significant orchestration\n", 
+#>                 "\n", list("\n", "result(future, ...)\n", list(
+#>                   list("result"), list("Future")), "(future, ...)\n"), 
+#>                 "\n", list("\n", list(list("future"), list("A ", 
+#>                   list("Future"), ".")), "\n", "\n", list(list(
+#>                   list()), list("Not used.")), "\n"), "\n", list(
+#>                   "\n", "The ", list("FutureResult"), " object.\n", 
+#>                   "It may signal a ", list("FutureError"), ", if there is a significant orchestration\n", 
 #>                   "error. For example, if the parallel worker process terminated abruptly\n", 
 #>                   "(\"crashed\"), then a ", list("FutureInterruptError"), 
 #>                   " is signaled.\n"), "\n", list("\n", "Get the results of a resolved future\n"), 
@@ -2445,13 +2459,14 @@ res <- tryCatch({
 #>                 "\n", "% Please edit documentation in R/backend_api-Future-class.R", 
 #>                 "\n", list("run.Future"), "\n", list("run.Future"), 
 #>                 "\n", list("run"), "\n", list("Run a future"), 
-#>                 "\n", list("\n", list(list("run"), list("Future")), 
-#>                   "(future, ...)\n"), "\n", list("\n", list(list(
-#>                   "future"), list("A ", list("Future"), ".")), 
-#>                   "\n", "\n", list(list(list()), list("Not used.")), 
-#>                   "\n"), "\n", list("\n", "The ", list("Future"), 
-#>                   " object.\n"), "\n", list("\n", "Run a future\n"), 
-#>                 "\n", list("\n", "This function can only be called once per future.\n", 
+#>                 "\n", list("\n", "run(future, ...)\n", list(list(
+#>                   "run"), list("Future")), "(future, ...)\n"), 
+#>                 "\n", list("\n", list(list("future"), list("A ", 
+#>                   list("Future"), ".")), "\n", "\n", list(list(
+#>                   list()), list("Not used.")), "\n"), "\n", list(
+#>                   "\n", "The ", list("Future"), " object.\n"), 
+#>                 "\n", list("\n", "Run a future\n"), "\n", list(
+#>                   "\n", "This function can only be called once per future.\n", 
 #>                   "Further calls will result in an informative error.\n", 
 #>                   "If a future is not run when its value is queried,\n", 
 #>                   "then it is run at that point.\n"), "\n", list(
@@ -3099,8 +3114,8 @@ res <- tryCatch({
 #>     options(cli.num_colors = cli_colors, cli.hyperlink = hyperlinks, 
 #>         cli.hyperlink_run = hyperlinks)
 #>     pkgdown::build_site(...)
-#> })(pkg = base::quote(list(package = "future", version = "1.76.0-9015", 
-#>     src_path = "/tmp/hb/RtmptCc69n/future", meta = list(url = "https://future.futureverse.org", 
+#> })(pkg = base::quote(list(package = "future", version = "1.80.0", 
+#>     src_path = "/tmp/hb/RtmpPh7gLF/future", meta = list(url = "https://future.futureverse.org", 
 #>         home = list(links = list(list(text = "Roadmap/Milestones", 
 #>             href = "https://github.com/futureverse/future/milestones"), 
 #>             list(text = "The Futureverse Project", href = "https://www.futureverse.org/"), 
@@ -3141,7 +3156,7 @@ res <- tryCatch({
 #>             bootstrap = 5L, `light-switch` = TRUE)), desc = <environment>, 
 #>     bs_version = 5L, development = list(destination = "dev", 
 #>         mode = "default", version_label = "muted", in_dev = FALSE, 
-#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/RtmptCc69n/future/docs", 
+#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/RtmpPh7gLF/future/docs", 
 #>     lang = "en-US", install_metadata = FALSE, figures = list(
 #>         dev = "ragg::agg_png", dpi = 96L, dev.args = list(), 
 #>         fig.ext = "png", fig.width = 7.29166666666667, fig.height = NULL, 
@@ -3228,14 +3243,14 @@ res <- tryCatch({
 #>         ), getGlobalsAndPackages.Rd = "getGlobalsAndPackages", 
 #>         makeClusterFuture.Rd = c("makeClusterFuture", "FUTURE"
 #>         ), mandelbrot.Rd = c("mandelbrot", "as.raster.Mandelbrot", 
-#>         "plot.Mandelbrot", "mandelbrot_tiles", "mandelbrot.matrix", 
-#>         "mandelbrot.numeric"), multicore.Rd = c("multicore", 
-#>         "MulticoreFuture"), multisession.Rd = c("multisession", 
-#>         "MultisessionFuture"), nbrOfWorkers.Rd = c("nbrOfWorkers", 
-#>         "nbrOfFreeWorkers"), nullcon.Rd = "nullcon", plan.Rd = c("plan", 
-#>         "with.FutureStrategyList", "tweak"), private_length.Rd = ".length", 
-#>         `re-exports.Rd` = c("re-exports", "availableCores", "availableWorkers", 
-#>         "makeClusterPSOCK", "supportsMulticore"), readImmediateConditions.Rd = c("readImmediateConditions", 
+#>         "plot.Mandelbrot", "mandelbrot.matrix", "mandelbrot.numeric", 
+#>         "mandelbrot_tiles"), multicore.Rd = c("multicore", "MulticoreFuture"
+#>         ), multisession.Rd = c("multisession", "MultisessionFuture"
+#>         ), nbrOfWorkers.Rd = c("nbrOfWorkers", "nbrOfFreeWorkers"
+#>         ), nullcon.Rd = "nullcon", plan.Rd = c("plan", "with.FutureStrategyList", 
+#>         "tweak"), private_length.Rd = ".length", `re-exports.Rd` = c("re-exports", 
+#>         "availableCores", "availableWorkers", "makeClusterPSOCK", 
+#>         "supportsMulticore"), readImmediateConditions.Rd = c("readImmediateConditions", 
 #>         "saveImmediateCondition"), requestCore.Rd = "requestCore", 
 #>         reset.Rd = "reset", resetWorkers.Rd = "resetWorkers", 
 #>         resolve.Rd = "resolve", resolved.Rd = c("resolved.ClusterFuture", 
@@ -3287,33 +3302,34 @@ res <- tryCatch({
 #>         "DefaultDeviceMisuseFutureCondition()", "DefaultDeviceMisuseFutureWarning()", 
 #>         "DefaultDeviceMisuseFutureError()", "FutureLaunchError()", 
 #>         "FutureInterruptError()", "FutureCanceledError()", "FutureDroppedError()", 
-#>         "FutureJournalCondition()"), FutureGlobals.Rd = "FutureGlobals()", 
-#>         FutureResult.Rd = c("FutureResult()", "as.character(<i>&lt;FutureResult&gt;</i>)", 
-#>         "print(<i>&lt;FutureResult&gt;</i>)"), `MultiprocessFuture-class.Rd` = "MultiprocessFuture()", 
+#>         "FutureJournalCondition()"), FutureGlobals.Rd = c("FutureGlobals()", 
+#>         "as.FutureGlobals()"), FutureResult.Rd = c("FutureResult()", 
+#>         "as.character(<i>&lt;FutureResult&gt;</i>)", "print(<i>&lt;FutureResult&gt;</i>)"
+#>         ), `MultiprocessFuture-class.Rd` = "MultiprocessFuture()", 
 #>         `UniprocessFuture-class.Rd` = "UniprocessFuture()", backtrace.Rd = "backtrace()", 
 #>         cancel.Rd = "cancel()", cluster.Rd = "cluster()", clusterExportSticky.Rd = "clusterExportSticky()", 
 #>         find_references.Rd = c("find_references()", "assert_no_references()"
 #>         ), future.Rd = c("future()", "futureCall()", "minifuture()"
 #>         ), futureAssign.Rd = c("futureAssign()", "`%&lt;-%`", 
-#>         "`%globals%`", "`%packages%`", "`%seed%`", "`%stdout%`", 
-#>         "`%conditions%`", "`%lazy%`", "`%label%`", "`%plan%`", 
-#>         "`%tweak%`"), futureOf.Rd = "futureOf()", futureSessionInfo.Rd = "futureSessionInfo()", 
-#>         futures.Rd = "futures()", getExpression.Rd = "getExpression()", 
-#>         getGlobalsAndPackages.Rd = "getGlobalsAndPackages()", 
-#>         makeClusterFuture.Rd = "makeClusterFuture()", mandelbrot.Rd = "mandelbrot()", 
-#>         multicore.Rd = "multicore()", multisession.Rd = "multisession()", 
-#>         nbrOfWorkers.Rd = c("nbrOfWorkers()", "nbrOfFreeWorkers()"
-#>         ), nullcon.Rd = "nullcon()", plan.Rd = c("plan()", "with(<i>&lt;FutureStrategyList&gt;</i>)", 
-#>         "tweak()"), private_length.Rd = ".length()", `re-exports.Rd` = character(0), 
+#>         "`%-&gt;%`", "`%globals%`", "`%packages%`", "`%seed%`", 
+#>         "`%stdout%`", "`%conditions%`", "`%lazy%`", "`%label%`", 
+#>         "`%plan%`", "`%tweak%`"), futureOf.Rd = "futureOf()", 
+#>         futureSessionInfo.Rd = "futureSessionInfo()", futures.Rd = "futures()", 
+#>         getExpression.Rd = "getExpression()", getGlobalsAndPackages.Rd = "getGlobalsAndPackages()", 
+#>         makeClusterFuture.Rd = "makeClusterFuture()", mandelbrot.Rd = c("mandelbrot()", 
+#>         "mandelbrot_tiles()"), multicore.Rd = "multicore()", 
+#>         multisession.Rd = "multisession()", nbrOfWorkers.Rd = c("nbrOfWorkers()", 
+#>         "nbrOfFreeWorkers()"), nullcon.Rd = "nullcon()", plan.Rd = c("plan()", 
+#>         "with(<i>&lt;FutureStrategyList&gt;</i>)", "tweak()"), 
+#>         private_length.Rd = ".length()", `re-exports.Rd` = character(0), 
 #>         readImmediateConditions.Rd = c("readImmediateConditions()", 
 #>         "saveImmediateCondition()"), requestCore.Rd = "requestCore()", 
 #>         reset.Rd = "reset()", resetWorkers.Rd = "resetWorkers()", 
 #>         resolve.Rd = "resolve()", resolved.Rd = "resolved()", 
-#>         result.Rd = "result(<i>&lt;Future&gt;</i>)", run.Rd = "run(<i>&lt;Future&gt;</i>)", 
-#>         save_rds.Rd = "save_rds()", sequential.Rd = "sequential()", 
-#>         sessionDetails.Rd = "sessionDetails()", signalConditions.Rd = "signalConditions()", 
-#>         sticky_globals.Rd = "sticky_globals()", usedCores.Rd = "usedCores()", 
-#>         value.Rd = "value()", `zzz-future.options.Rd` = character(0)), 
+#>         result.Rd = "result()", run.Rd = "run()", save_rds.Rd = "save_rds()", 
+#>         sequential.Rd = "sequential()", sessionDetails.Rd = "sessionDetails()", 
+#>         signalConditions.Rd = "signalConditions()", sticky_globals.Rd = "sticky_globals()", 
+#>         usedCores.Rd = "usedCores()", value.Rd = "value()", `zzz-future.options.Rd` = character(0)), 
 #>         title = c(`Future-class.Rd` = "A future represents a value that will be available at some point in the future", 
 #>         `FutureBackend-class.Rd` = "Configure a backend that controls how and where futures are evaluated", 
 #>         FutureCondition.Rd = "A condition (message, warning, or error) that occurred while orchestrating a future", 
@@ -3644,12 +3660,15 @@ res <- tryCatch({
 #>                 "as.FutureGlobals.list"), "\n", list("[.FutureGlobals"), 
 #>             "\n", list("c.FutureGlobals"), "\n", list("unique.FutureGlobals"), 
 #>             "\n", list("A representation of a set of globals used with futures"), 
-#>             "\n", list("\n", "FutureGlobals(object = list(), resolved = FALSE, total_size = NA_real_, ...)\n"), 
-#>             "\n", list("\n", list(list("object"), list("A named list.")), 
+#>             "\n", list("\n", "FutureGlobals(object = list(), resolved = FALSE, total_size = NA_real_, ...)\n", 
+#>                 "as.FutureGlobals(x, ...)\n"), "\n", list("\n", 
+#>                 list(list("object"), list("A named list.")), 
 #>                 "\n", "\n", list(list("resolved"), list("A logical indicating whether these globals\n", 
 #>                   "have been scanned for and resolved futures or not.")), 
 #>                 "\n", "\n", list(list("total_size"), list("The total size of all globals, if known.")), 
-#>                 "\n", "\n", list(list(list()), list("Not used.")), 
+#>                 "\n", "\n", list(list("x"), list("An object to be coerced to a ", 
+#>                   list("FutureGlobals"), " object.")), "\n", 
+#>                 "\n", list(list(list()), list("Not used.")), 
 #>                 "\n"), "\n", list("\n", "An object of class ", 
 #>                 list("FutureGlobals"), ".\n"), "\n", list("\n", 
 #>                 "A representation of a set of globals used with futures\n"), 
@@ -4143,9 +4162,9 @@ res <- tryCatch({
 #>                   "  packages = NULL,\n", "  stdout = TRUE,\n", 
 #>                   "  conditions = \"condition\",\n", "  label = NULL,\n", 
 #>                   "  ...,\n", "  assign.env = envir\n", ")\n", 
-#>                   "\n", "x %<-% value\n", "\n", "fassignment %globals% globals\n", 
-#>                   "fassignment %packages% packages\n", "\n", 
-#>                   "fassignment %seed% seed\n", "\n", "fassignment %stdout% capture\n", 
+#>                   "\n", "x %<-% value\n", "value %->% x\n", "\n", 
+#>                   "fassignment %globals% globals\n", "fassignment %packages% packages\n", 
+#>                   "\n", "fassignment %seed% seed\n", "\n", "fassignment %stdout% capture\n", 
 #>                   "\n", "fassignment %conditions% capture\n", 
 #>                   "\n", "fassignment %lazy% lazy\n", "\n", "fassignment %label% label\n", 
 #>                   "\n", "fassignment %plan% strategy\n", "\n", 
@@ -4613,18 +4632,22 @@ res <- tryCatch({
 #>                 "\n", "% Please edit documentation in R/demo_api-mandelbrot.R", 
 #>                 "\n", list("mandelbrot"), "\n", list("mandelbrot"), 
 #>                 "\n", list("as.raster.Mandelbrot"), "\n", list(
-#>                   "plot.Mandelbrot"), "\n", list("mandelbrot_tiles"), 
-#>                 "\n", list("mandelbrot.matrix"), "\n", list("mandelbrot.numeric"), 
-#>                 "\n", list("Mandelbrot convergence counts"), 
+#>                   "plot.Mandelbrot"), "\n", list("mandelbrot.matrix"), 
+#>                 "\n", list("mandelbrot.numeric"), "\n", list(
+#>                   "mandelbrot_tiles"), "\n", list("Mandelbrot convergence counts"), 
 #>                 "\n", list("\n", "mandelbrot(...)\n", "\n", list(
 #>                   list("mandelbrot"), list("matrix")), "(Z, maxIter = 200L, tau = 2, ...)\n", 
 #>                   "\n", list(list("mandelbrot"), list("numeric")), 
 #>                   "(\n", "  xmid = -0.75,\n", "  ymid = 0,\n", 
 #>                   "  side = 3,\n", "  resolution = 400L,\n", 
 #>                   "  maxIter = 200L,\n", "  tau = 2,\n", "  ...\n", 
-#>                   ")\n"), "\n", list("\n", list(list("Z"), list(
-#>                   "A complex matrix (", list(list("Z")), ") for which convergence\n", 
-#>                   "counts (", list(list("C")), ") should be calculated.")), 
+#>                   ")\n", "\n", "mandelbrot_tiles(\n", "  xmid = -0.75,\n", 
+#>                   "  ymid = 0,\n", "  side = 3,\n", "  nrow = 2L,\n", 
+#>                   "  ncol = nrow,\n", "  resolution = 400L,\n", 
+#>                   "  truncate = TRUE\n", ")\n"), "\n", list("\n", 
+#>                   list(list("Z"), list("A complex matrix (", 
+#>                     list(list("Z")), ") for which convergence\n", 
+#>                     "counts (", list(list("C")), ") should be calculated.")), 
 #>                   "\n", "\n", list(list("maxIter"), list("Maximum number of iterations (", 
 #>                     list(list("c^{max}")), ") per bin.")), "\n", 
 #>                   "\n", list(list("tau"), list("A threshold (", 
@@ -4637,7 +4660,13 @@ res <- tryCatch({
 #>                       list("diff(range(Re(Z))) == side"), ",\n", 
 #>                       list("diff(range(Im(Z))) == side"), ", and\n", 
 #>                       list("dim(Z) == c(resolution, resolution)"), 
-#>                       ".")), "\n"), "\n", list("\n", "Returns an integer matrix (of class Mandelbrot) with\n", 
+#>                       ".")), "\n", "\n", list(list("nrow, ncol"), 
+#>                     list("Number of rows and columns of tiles to partition\n", 
+#>                       "the complex plane ", list("Z"), " into.")), 
+#>                   "\n", "\n", list(list("truncate"), list("If TRUE, all tiles are truncated to have\n", 
+#>                     "identical dimensions, otherwise the last\n", 
+#>                     "row and column of tiles may be smaller.")), 
+#>                   "\n"), "\n", list("\n", "Returns an integer matrix (of class Mandelbrot) with\n", 
 #>                   "non-negative counts (", list(list("C")), ").\n"), 
 #>                 "\n", list("\n", "Mandelbrot convergence counts\n"), 
 #>                 "\n", list(list("Escape time algorithm"), list(
@@ -5295,13 +5324,13 @@ res <- tryCatch({
 #>                 "\n", "% Please edit documentation in R/protected_api-result.R", 
 #>                 "\n", list("result.Future"), "\n", list("result.Future"), 
 #>                 "\n", list("result"), "\n", list("Get the results of a resolved future"), 
-#>                 "\n", list("\n", list(list("result"), list("Future")), 
-#>                   "(future, ...)\n"), "\n", list("\n", list(list(
-#>                   "future"), list("A ", list("Future"), ".")), 
-#>                   "\n", "\n", list(list(list()), list("Not used.")), 
-#>                   "\n"), "\n", list("\n", "The ", list("FutureResult"), 
-#>                   " object.\n", "It may signal a ", list("FutureError"), 
-#>                   ", if there is a significant orchestration\n", 
+#>                 "\n", list("\n", "result(future, ...)\n", list(
+#>                   list("result"), list("Future")), "(future, ...)\n"), 
+#>                 "\n", list("\n", list(list("future"), list("A ", 
+#>                   list("Future"), ".")), "\n", "\n", list(list(
+#>                   list()), list("Not used.")), "\n"), "\n", list(
+#>                   "\n", "The ", list("FutureResult"), " object.\n", 
+#>                   "It may signal a ", list("FutureError"), ", if there is a significant orchestration\n", 
 #>                   "error. For example, if the parallel worker process terminated abruptly\n", 
 #>                   "(\"crashed\"), then a ", list("FutureInterruptError"), 
 #>                   " is signaled.\n"), "\n", list("\n", "Get the results of a resolved future\n"), 
@@ -5313,13 +5342,14 @@ res <- tryCatch({
 #>                 "\n", "% Please edit documentation in R/backend_api-Future-class.R", 
 #>                 "\n", list("run.Future"), "\n", list("run.Future"), 
 #>                 "\n", list("run"), "\n", list("Run a future"), 
-#>                 "\n", list("\n", list(list("run"), list("Future")), 
-#>                   "(future, ...)\n"), "\n", list("\n", list(list(
-#>                   "future"), list("A ", list("Future"), ".")), 
-#>                   "\n", "\n", list(list(list()), list("Not used.")), 
-#>                   "\n"), "\n", list("\n", "The ", list("Future"), 
-#>                   " object.\n"), "\n", list("\n", "Run a future\n"), 
-#>                 "\n", list("\n", "This function can only be called once per future.\n", 
+#>                 "\n", list("\n", "run(future, ...)\n", list(list(
+#>                   "run"), list("Future")), "(future, ...)\n"), 
+#>                 "\n", list("\n", list(list("future"), list("A ", 
+#>                   list("Future"), ".")), "\n", "\n", list(list(
+#>                   list()), list("Not used.")), "\n"), "\n", list(
+#>                   "\n", "The ", list("Future"), " object.\n"), 
+#>                 "\n", list("\n", "Run a future\n"), "\n", list(
+#>                   "\n", "This function can only be called once per future.\n", 
 #>                   "Further calls will result in an informative error.\n", 
 #>                   "If a future is not run when its value is queried,\n", 
 #>                   "then it is run at that point.\n"), "\n", list(

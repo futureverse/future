@@ -19,6 +19,7 @@
 
 - [`futureAssign()`](https://future.futureverse.org/reference/futureAssign.md)
   [`` `%<-%` ``](https://future.futureverse.org/reference/futureAssign.md)
+  [`` `%->%` ``](https://future.futureverse.org/reference/futureAssign.md)
   [`` `%globals%` ``](https://future.futureverse.org/reference/futureAssign.md)
   [`` `%packages%` ``](https://future.futureverse.org/reference/futureAssign.md)
   [`` `%seed%` ``](https://future.futureverse.org/reference/futureAssign.md)

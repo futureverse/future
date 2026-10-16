@@ -5,6 +5,7 @@ Get the results of a resolved future
 ## Usage
 
 ``` r
+result(future, ...)
 # S3 method for class 'Future'
 result(future, ...)
 ```

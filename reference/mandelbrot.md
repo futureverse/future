@@ -20,6 +20,16 @@ mandelbrot(
   tau = 2,
   ...
 )
+
+mandelbrot_tiles(
+  xmid = -0.75,
+  ymid = 0,
+  side = 3,
+  nrow = 2L,
+  ncol = nrow,
+  resolution = 400L,
+  truncate = TRUE
+)
 ```
 
 ## Arguments
@@ -44,6 +54,16 @@ mandelbrot(
   `mean(Re(Z)) == xmid`, `mean(Im(Z)) == ymid`,
   `diff(range(Re(Z))) == side`, `diff(range(Im(Z))) == side`, and
   `dim(Z) == c(resolution, resolution)`.
+
+- nrow, ncol:
+
+  Number of rows and columns of tiles to partition the complex plane `Z`
+  into.
+
+- truncate:
+
+  If TRUE, all tiles are truncated to have identical dimensions,
+  otherwise the last row and column of tiles may be smaller.
 
 ## Value
 

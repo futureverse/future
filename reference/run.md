@@ -5,6 +5,7 @@ Run a future
 ## Usage
 
 ``` r
+run(future, ...)
 # S3 method for class 'Future'
 run(future, ...)
 ```
