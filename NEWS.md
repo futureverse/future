@@ -44,7 +44,9 @@
  * Globals identified automatically (the default) could carry extra,
    unneeded load that was exported to the parallel workers. This could
    result in significant overhead in both total memory use and total
-   processing time.
+   processing time. This affected **future** (< 1.22.0) [before
+   2021-08-11] and **future** (>= 1.49.0 & <= 1.76.0) [2025-05-08 --
+   2026-09-24].
 
 
 # Version 1.76.0 [2026-09-24]
