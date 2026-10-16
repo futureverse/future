@@ -70,9 +70,14 @@ should be done.  If TRUE, an infinite recursion is used.  If FALSE or zero,
 no recursion is performed.}
 
 \item{reduce}{An optional function for reducing all the values.
-Optional attribute \code{init} can be used to set initial value for the
-reduction. If not specified, the first value will be used as the
-initial value.
+Analogously to \code{\link[base:Reduce]{base::Reduce()}}, itt should take (at least) two
+arguments (names do not matter), where the first argument is the
+accumulated reduction so far and the second is the value to be
+included. It should return the updated accumulated value.
+Optional attribute \code{init} can be used as the initial, first argument
+in the first call to \code{reduce()}. If not specified, the value of
+the first future is used as-is as the initial value, i.e. \code{reduce()}
+is not called until the second value is available.
 Reduction of values is done as soon as possible, but always in the
 same order as \code{x}, unless \code{inorder} is FALSE.}
 
@@ -153,4 +158,14 @@ message("The ten averages are: ", paste(vs, collapse = ", "))
 ## Calculate the sum of the averages (by reducing)
 total <- value(fs, reduce = `+`)
 message("The sum of the ten averages is: ", total)
+
+## Calculate the sum of the averages (by reducing) shifted by 42
+total <- value(fs, reduce = structure("+", init = 42L))
+message("The sum of the ten averages + 42 is: ", total)
+
+## Example of an "identity" reduce function
+identity_reduce <- function(acc, value) c(acc, list(value))
+vs <- value(fs, reduce = identity_reduce)
+message("The ten averages are: ", paste(unlist(vs), collapse = ", "))
+
 }

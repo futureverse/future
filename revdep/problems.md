@@ -11,7 +11,7 @@ Run `revdepcheck::revdep_details(, "altdoc")` for more info
 *   checking for non-standard things in the check directory ... NOTE
      ```
      Found the following files/directories:
-       ‘testpkg3936671736cfe3’
+       ‘testpkg870b31c7959e9’
      ```
 
 # batchtools (0.9.18)
@@ -27,10 +27,10 @@ Run `revdepcheck::revdep_details(, "batchtools")` for more info
 *   checking dependencies in R code ... NOTE
      ```
      ...
-     localhost:pid3932007.R: Unable to initialize verbs NIC /sys/class/infiniband/mlx5_0 (unit 0:0)
-     localhost:pid3932007: PSM3 can't open nic unit: 0 (err=23)
-     localhost:pid3932007.R: Unable to create send CQ of size 5080 on mlx5_0: Cannot allocate memory
-     localhost:pid3932007.R: Unable to initialize verbs NIC /sys/class/infiniband/mlx5_0 (unit 0:0)
+     localhost::pid668482.R: Unable to initialize verbs NIC /sys/class/infiniband/mlx5_0 (unit 0:0)
+     localhost::pid668482: PSM3 can't open nic unit: 0 (err=23)
+     localhost::pid668482.R: Unable to create send CQ of size 5080 on mlx5_0: Cannot allocate memory
+     localhost::pid668482.R: Unable to initialize verbs NIC /sys/class/infiniband/mlx5_0 (unit 0:0)
      --------------------------------------------------------------------------
      No OpenFabrics connection schemes reported that they were able to be
      used on a specific port.  As such, the openib BTL (OpenFabrics
@@ -41,9 +41,9 @@ Run `revdepcheck::revdep_details(, "batchtools")` for more info
        Local port:           1
        CPCs attempted:       rdmacm, udcm
      --------------------------------------------------------------------------
-     localhost:pid3932007: PSM3 can't open nic unit: 0 (err=23)
-     localhost:pid3932007.R: Unable to create send CQ of size 5080 on mlx5_0: Cannot allocate memory
-     localhost:pid3932007.R: Unable to initialize verbs NIC /sys/class/infiniband/mlx5_0 (unit 0:0)
+     localhost::pid668482: PSM3 can't open nic unit: 0 (err=23)
+     localhost::pid668482.R: Unable to create send CQ of size 5080 on mlx5_0: Cannot allocate memory
+     localhost::pid668482.R: Unable to initialize verbs NIC /sys/class/infiniband/mlx5_0 (unit 0:0)
      --------------------------------------------------------------------------
      Open MPI failed an OFI Libfabric library call (fi_endpoint).  This is highly
      unusual; your job may behave unpredictably (and/or abort) after this.
@@ -237,22 +237,6 @@ Run `revdepcheck::revdep_details(, "cSEM")` for more info
        All declared Imports should be used.
      ```
 
-# delimtools (0.2.2)
-
-* GitHub: <https://github.com/legalLab/delimtools>
-* Email: <mailto:pedro.sennabittencourt@gmail.com>
-* GitHub mirror: <https://github.com/cran/delimtools>
-
-Run `revdepcheck::revdep_details(, "delimtools")` for more info
-
-## In both
-
-*   checking Rd cross-references ... NOTE
-     ```
-     Package unavailable to check Rd xrefs: ‘bGMYC’
-     Unknown package ‘splits’ in Rd xrefs
-     ```
-
 # envi (1.0.1)
 
 * GitHub: <https://github.com/lance-waller-lab/envi>
@@ -305,46 +289,6 @@ Run `revdepcheck::revdep_details(, "flowGraph")` for more info
      ```
      Found the following files/directories:
        ‘temp’ ‘tmp’
-     ```
-
-# fmeffects (0.1.4)
-
-* GitHub: <https://github.com/holgstr/fmeffects>
-* Email: <mailto:hbj.loewe@gmail.com>
-* GitHub mirror: <https://github.com/cran/fmeffects>
-
-Run `revdepcheck::revdep_details(, "fmeffects")` for more info
-
-## In both
-
-*   checking re-building of vignette outputs ... ERROR
-     ```
-     ...
-          ▆
-       1. └─fmeffects::fme(...)
-       2.   └─ForwardMarginalEffect$new(makePredictor(model, data), features = features, ... at fmeffects/R/FME.R:326:3
-       3.     └─private$fme(...) at fmeffects/R/FME.R:106:7
-       4.       └─furrr::future_map_dbl(...) at fmeffects/R/FME.R:255:9
-       5.         └─furrr:::furrr_map_template(...)
-       6.           └─furrr:::furrr_template(...)
-       7.             └─furrr:::furrr_try_catch(...)
-       8.               └─base::tryCatch(expr = expr, purrr_error_indexed = rethrow_purrr_error_indexed)
-       9.                 └─base (local) tryCatchList(expr, classes, parentenv, handlers)
-      10.                   └─base (local) tryCatchOne(expr, names, parentenv, handlers[[1L]])
-      11.                     └─value[[3L]](cond)
-      12.                       └─rlang::cnd_signal(cnd)
-      13.                         └─rlang:::signal_abort(cnd)
-     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-     
-     Error: processing vignette 'fmeffects.Rmd' failed with diagnostics:
-     Assertion on 'names(rhs)' failed: Names must be a permutation of set {'feature','target','name','order','stratum','group','offset','weights_learner','weights_measure'}, but has extra elements {'always_included'}.
-     --- failed re-building ‘fmeffects.Rmd’
-     
-     SUMMARY: processing the following file failed:
-       ‘fmeffects.Rmd’
-     
-     Error: Vignette re-building failed.
-     Execution halted
      ```
 
 # future.batchtools (0.22.0)
@@ -436,7 +380,7 @@ Run `revdepcheck::revdep_details(, "MAI")` for more info
      is not mentioned in the DESCRIPTION file.
      ```
 
-# marcxmlr (0.2.1)
+# marcxmlr (0.4.0)
 
 * GitHub: <https://github.com/larry77/marcxmlr>
 * Email: <mailto:lorenzo.isella@gmail.com>
@@ -458,15 +402,15 @@ Run `revdepcheck::revdep_details(, "marcxmlr")` for more info
 
 ```
 * installing *source* package ‘marcxmlr’ ...
-** this is package ‘marcxmlr’ version ‘0.2.1’
+** this is package ‘marcxmlr’ version ‘0.4.0’
 ** package ‘marcxmlr’ successfully unpacked and MD5 sums checked
 ** using staged installation
 Using PKG_CFLAGS=-I/usr/include/libxml2
 Using PKG_LIBS=-lxml2 -lz -llzma -lm -ldl
 ** libs
 using C compiler: ‘gcc (GCC) 13.3.1 20240611 (Red Hat 13.3.1-2)’
-gcc -std=gnu2x -I"/home/cbi/shared/software/CBI/_rocky8/R-4.6.1-gcc13/lib64/R/include" -DNDEBUG -I/usr/include/libxml2  -I/usr/local/include    -fpic  -g -O2  -c marcxml-native.c -o marcxml-native.o
-marcxml-native.c:69:23: error: conflicting types for ‘attribute’; have ‘const xmlChar *(xmlNode *, const char *)’ {aka ‘const unsigned char *(struct _xmlNode *, const char *)’}
+gcc -std=gnu2x -I"/path/to/_rocky8/R-4.6.1-gcc13/lib64/R/include" -DNDEBUG -I/usr/include/libxml2  -I/usr/local/include    -fpic  -g -O2  -c marcxml-native.c -o marcxml-native.o
+marcxml-native.c:72:23: error: conflicting types for ‘attribute’; have ‘const xmlChar *(xmlNode *, const char *)’ {aka ‘const unsigned char *(struct _xmlNode *, const char *)’}
 ...
 In file included from /usr/include/libxml2/libxml/globals.h:20,
                  from /usr/include/libxml2/libxml/xmlIO.h:117,
@@ -475,7 +419,7 @@ In file included from /usr/include/libxml2/libxml/globals.h:20,
 /usr/include/libxml2/libxml/SAX.h:104:17: note: previous declaration of ‘attribute’ with type ‘void(void *, const xmlChar *, const xmlChar *)’ {aka ‘void(void *, const unsigned char *, const unsigned char *)’}
   104 |                 attribute                       (void *ctx,
       |                 ^~~~~~~~~
-make: *** [/home/cbi/shared/software/CBI/_rocky8/R-4.6.1-gcc13/lib64/R/etc/Makeconf:190: marcxml-native.o] Error 1
+make: *** [/path/to/_rocky8/R-4.6.1-gcc13/lib64/R/etc/Makeconf:190: marcxml-native.o] Error 1
 ERROR: compilation failed for package ‘marcxmlr’
 * removing ‘/scratch/henrik/revdep/future/checks/marcxmlr/new/marcxmlr.Rcheck/marcxmlr’
 
@@ -485,15 +429,15 @@ ERROR: compilation failed for package ‘marcxmlr’
 
 ```
 * installing *source* package ‘marcxmlr’ ...
-** this is package ‘marcxmlr’ version ‘0.2.1’
+** this is package ‘marcxmlr’ version ‘0.4.0’
 ** package ‘marcxmlr’ successfully unpacked and MD5 sums checked
 ** using staged installation
 Using PKG_CFLAGS=-I/usr/include/libxml2
 Using PKG_LIBS=-lxml2 -lz -llzma -lm -ldl
 ** libs
 using C compiler: ‘gcc (GCC) 13.3.1 20240611 (Red Hat 13.3.1-2)’
-gcc -std=gnu2x -I"/home/cbi/shared/software/CBI/_rocky8/R-4.6.1-gcc13/lib64/R/include" -DNDEBUG -I/usr/include/libxml2  -I/usr/local/include    -fpic  -g -O2  -c marcxml-native.c -o marcxml-native.o
-marcxml-native.c:69:23: error: conflicting types for ‘attribute’; have ‘const xmlChar *(xmlNode *, const char *)’ {aka ‘const unsigned char *(struct _xmlNode *, const char *)’}
+gcc -std=gnu2x -I"/path/to/_rocky8/R-4.6.1-gcc13/lib64/R/include" -DNDEBUG -I/usr/include/libxml2  -I/usr/local/include    -fpic  -g -O2  -c marcxml-native.c -o marcxml-native.o
+marcxml-native.c:72:23: error: conflicting types for ‘attribute’; have ‘const xmlChar *(xmlNode *, const char *)’ {aka ‘const unsigned char *(struct _xmlNode *, const char *)’}
 ...
 In file included from /usr/include/libxml2/libxml/globals.h:20,
                  from /usr/include/libxml2/libxml/xmlIO.h:117,
@@ -502,7 +446,7 @@ In file included from /usr/include/libxml2/libxml/globals.h:20,
 /usr/include/libxml2/libxml/SAX.h:104:17: note: previous declaration of ‘attribute’ with type ‘void(void *, const xmlChar *, const xmlChar *)’ {aka ‘void(void *, const unsigned char *, const unsigned char *)’}
   104 |                 attribute                       (void *ctx,
       |                 ^~~~~~~~~
-make: *** [/home/cbi/shared/software/CBI/_rocky8/R-4.6.1-gcc13/lib64/R/etc/Makeconf:190: marcxml-native.o] Error 1
+make: *** [/path/to/_rocky8/R-4.6.1-gcc13/lib64/R/etc/Makeconf:190: marcxml-native.o] Error 1
 ERROR: compilation failed for package ‘marcxmlr’
 * removing ‘/scratch/henrik/revdep/future/checks/marcxmlr/old/marcxmlr.Rcheck/marcxmlr’
 
@@ -560,7 +504,7 @@ Run `revdepcheck::revdep_details(, "mistyR")` for more info
        ‘results’
      ```
 
-# mlr3resampling (2026.5.19)
+# mlr3resampling (2026.9.24)
 
 * GitHub: <https://github.com/tdhock/mlr3resampling>
 * Email: <mailto:toby.hocking@r-project.org>
@@ -573,10 +517,10 @@ Run `revdepcheck::revdep_details(, "mlr3resampling")` for more info
 *   checking dependencies in R code ... NOTE
      ```
      ...
-     localhost:pid2076597.R: Unable to initialize verbs NIC /sys/class/infiniband/mlx5_0 (unit 0:0)
-     localhost:pid2076597: PSM3 can't open nic unit: 0 (err=23)
-     localhost:pid2076597.R: Unable to create send CQ of size 5080 on mlx5_0: Cannot allocate memory
-     localhost:pid2076597.R: Unable to initialize verbs NIC /sys/class/infiniband/mlx5_0 (unit 0:0)
+     localhost::pid3274536.R: Unable to initialize verbs NIC /sys/class/infiniband/mlx5_0 (unit 0:0)
+     localhost::pid3274536: PSM3 can't open nic unit: 0 (err=23)
+     localhost::pid3274536.R: Unable to create send CQ of size 5080 on mlx5_0: Cannot allocate memory
+     localhost::pid3274536.R: Unable to initialize verbs NIC /sys/class/infiniband/mlx5_0 (unit 0:0)
      --------------------------------------------------------------------------
      No OpenFabrics connection schemes reported that they were able to be
      used on a specific port.  As such, the openib BTL (OpenFabrics
@@ -587,9 +531,9 @@ Run `revdepcheck::revdep_details(, "mlr3resampling")` for more info
        Local port:           1
        CPCs attempted:       rdmacm, udcm
      --------------------------------------------------------------------------
-     localhost:pid2076597: PSM3 can't open nic unit: 0 (err=23)
-     localhost:pid2076597.R: Unable to create send CQ of size 5080 on mlx5_0: Cannot allocate memory
-     localhost:pid2076597.R: Unable to initialize verbs NIC /sys/class/infiniband/mlx5_0 (unit 0:0)
+     localhost::pid3274536: PSM3 can't open nic unit: 0 (err=23)
+     localhost::pid3274536.R: Unable to create send CQ of size 5080 on mlx5_0: Cannot allocate memory
+     localhost::pid3274536.R: Unable to initialize verbs NIC /sys/class/infiniband/mlx5_0 (unit 0:0)
      --------------------------------------------------------------------------
      Open MPI failed an OFI Libfabric library call (fi_endpoint).  This is highly
      unusual; your job may behave unpredictably (and/or abort) after this.
@@ -795,6 +739,46 @@ Run `revdepcheck::revdep_details(, "remiod")` for more info
      manual.
      ```
 
+# rtemis (1.2.7)
+
+* GitHub: <https://github.com/rtemis-org/rtemis>
+* Email: <mailto:gennatas@gmail.com>
+* GitHub mirror: <https://github.com/cran/rtemis>
+
+Run `revdepcheck::revdep_details(, "rtemis")` for more info
+
+## In both
+
+*   checking tests ...
+     ```
+     ...
+       
+       2026-10-14 20:39:25 [0m[1;38;2;15;106;102m✓[0m Done in 0.62 seconds.[0m [train]
+       [ FAIL 1 | WARN 4 | SKIP 4 | PASS 356 ]
+       
+       ══ Skipped tests (4) ═══════════════════════════════════════════════════════════
+       • For local testing only; requires CSV file (3): 'test_ClusterConfig.R:19:3',
+         'test_DecomposeConfig.R:19:3', 'test_SuperConfig.R:48:3'
+       • empty test (1):
+       
+       ══ Failed tests ════════════════════════════════════════════════════════════════
+       ── Error ('test_Clustering.R:96:3'): cluster_DBSCAN() succeeds ─────────────────
+       Error: approx must be a single, finite, nonnegative number.
+       Backtrace:
+           ▆
+        1. └─rtemis::cluster(...) at test_Clustering.R:96:3
+        2.   └─rtemis:::cluster_(config = config, x = x, verbosity = verbosity) at rtemis/R/cluster.R:86:3
+        3.     ├─S7::S7_dispatch() at rtemis/R/00_init.R:268:5
+        4.     └─rtemis (local) `method(cluster_, rtemis::DBSCANConfig)`(...)
+        5.       └─dbscan::dbscan(...) at rtemis/R/cluster_DBSCAN.R:22:3
+        6.         └─dbscan:::.validate_nonnegative_scalar(extra$approx %||% 0, "approx")
+       
+       [ FAIL 1 | WARN 4 | SKIP 4 | PASS 356 ]
+       Error:
+       ! Test failures.
+       Execution halted
+     ```
+
 # SCArray.sat (1.12.0)
 
 * GitHub: <https://github.com/AbbVie-ComputationalGenomics/SCArray>
@@ -803,6 +787,36 @@ Run `revdepcheck::revdep_details(, "remiod")` for more info
 Run `revdepcheck::revdep_details(, "SCArray.sat")` for more info
 
 ## In both
+
+*   checking examples ... ERROR
+     ```
+     ...
+       |================================================================| 100%
+     
+       |                                                                      
+       |                                                                |   0%
+       |                                                                      
+       |================================================================| 100%
+     > 
+     > d <- NormalizeData(d)
+     Normalizing layer: counts
+     Performing log-normalization
+     > d <- FindVariableFeatures(d, nfeatures=250)
+     Finding variable features for layer counts
+     Calculating gene variances
+     Calculating feature variances of standardized and clipped values
+     
+       |                                                                      
+       |                                                                |   0%
+       |                                                                      
+       |================================================================| 100%
+     > d <- ScaleData(d)
+     Centering and scaling data matrix (SC_GDSMatrix [250x850])
+     > 
+     > d <- RunPCA(d, ndims.print=1:2)
+     Error: Not compatible with requested type: [type=S4; target=double].
+     Execution halted
+     ```
 
 *   checking dependencies in R code ... NOTE
      ```
@@ -820,6 +834,45 @@ Run `revdepcheck::revdep_details(, "SCArray.sat")` for more info
        (/scratch/henrik/revdep/future/checks/SCArray.sat/new/SCArray.sat.Rcheck/00_pkg_src/SCArray.sat/R/Methods.R:182)
      Undefined global functions or variables:
        CreateAssay5Object
+     ```
+
+# scLANE (1.2.0)
+
+* GitHub: <https://github.com/jr-leary7/scLANE>
+* Email: <mailto:j.leary@ufl.edu>
+
+Run `revdepcheck::revdep_details(, "scLANE")` for more info
+
+## In both
+
+*   checking re-building of vignette outputs ... ERROR
+     ```
+     ...
+     --- re-building ‘scLANE.Rmd’ using rmarkdown
+     
+     Quitting from scLANE.Rmd:264-279 [unnamed-chunk-14]
+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     <error/rlang_error>
+     Error:
+     ! object 'dv' not found
+     ---
+     Backtrace:
+         ▆
+      1. └─scLANE::embedGenes(expm1(smoothed_counts$Lineage_A))
+      2.   └─irlba::prcomp_irlba(...) at scLANE/R/embedGenes.R:78:5
+      3.     ├─base::do.call(irlba, args = args)
+      4.     └─irlba (local) `<fn>`(A = `<dbl[,1198]>`, nv = 4, center = `<dbl>`, scale = `<dbl>`)
+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     
+     Error: processing vignette 'scLANE.Rmd' failed with diagnostics:
+     object 'dv' not found
+     --- failed re-building ‘scLANE.Rmd’
+     
+     SUMMARY: processing the following file failed:
+       ‘scLANE.Rmd’
+     
+     Error: Vignette re-building failed.
+     Execution halted
      ```
 
 # Seqtometry (1.0.1)
@@ -896,24 +949,6 @@ Run `revdepcheck::revdep_details(, "shiny")` for more info
        Error:
        ! Test failures.
        Execution halted
-     ```
-
-# sigminer (2.3.1)
-
-* GitHub: <https://github.com/ShixiangWang/sigminer>
-* Email: <mailto:w_shixiang@163.com>
-* GitHub mirror: <https://github.com/cran/sigminer>
-
-Run `revdepcheck::revdep_details(, "sigminer")` for more info
-
-## In both
-
-*   checking DESCRIPTION meta-information ... NOTE
-     ```
-       Missing dependency on R >= 4.1.0 because package code uses the pipe
-       |> or function shorthand \(...) syntax added in R 4.1.0.
-       File(s) using such syntax:
-         ‘show_group_enrichment.R’
      ```
 
 # signeR (2.14.0)
@@ -1035,7 +1070,7 @@ Run `revdepcheck::revdep_details(, "SpaDES.core")` for more info
      +   convertToPackage("test", path = tmpdir)
      + }
      Loading required namespace: pkgload
-     New module test created at /scratch/hb/RtmpXvpHiy/working_dir/Rtmp9nIPZ6/reproducible/U3C0xYmG
+     New module test created at /scratch/hb/RtmpEp8tE1/working_dir/RtmpehNfLw/reproducible/U3C0xYmG
      ```
 
 # sparrpowR (0.2.9)
@@ -1136,45 +1171,6 @@ Run `revdepcheck::revdep_details(, "sRACIPE")` for more info
             |          ^
      ```
 
-# STARRS (1.0)
-
-* Email: <mailto:daphne.giorgi@sorbonne-universite.fr>
-* GitHub mirror: <https://github.com/cran/STARRS>
-
-Run `revdepcheck::revdep_details(, "STARRS")` for more info
-
-## In both
-
-*   checking re-building of vignette outputs ... ERROR
-     ```
-     ...
-     Error: processing vignette 'STARRS-clustering.Rmd' failed with diagnostics:
-     Attempting to set up 48 localhost parallel workers with only 5 CPU cores available for this R process (per 'N/A'), which could result in a 960% load. The hard limit is set to 300%. Overusing the CPUs has negative impact on the current R process, but also on all other processes of yours and others running on the same machine. See help("parallelly.maxWorkers.localhost", package = "parallelly") for further explanations and how to override the hard limit that triggered this error. By the way, was parallel::detectCores() used, because the number of workers (48) equals detectCores()? If so, please use parallelly::availableCores() instead
-     --- failed re-building ‘STARRS-clustering.Rmd’
-     
-     --- re-building ‘STARRS-intro.Rmd’ using rmarkdown
-     [WARNING] Deprecated: --mathjax. Use --math-method=mathjax[:URL] instead.
-     --- finished re-building ‘STARRS-intro.Rmd’
-     
-     --- re-building ‘STARRS-median-mcm.Rmd’ using rmarkdown
-     [WARNING] Deprecated: --mathjax. Use --math-method=mathjax[:URL] instead.
-     --- finished re-building ‘STARRS-median-mcm.Rmd’
-     
-     --- re-building ‘STARRS-regression.Rmd’ using rmarkdown
-     [WARNING] Deprecated: --mathjax. Use --math-method=mathjax[:URL] instead.
-     --- finished re-building ‘STARRS-regression.Rmd’
-     
-     --- re-building ‘STARRS-robust-variance.Rmd’ using rmarkdown
-     [WARNING] Deprecated: --mathjax. Use --math-method=mathjax[:URL] instead.
-     --- finished re-building ‘STARRS-robust-variance.Rmd’
-     
-     SUMMARY: processing the following file failed:
-       ‘STARRS-clustering.Rmd’
-     
-     Error: Vignette re-building failed.
-     Execution halted
-     ```
-
 # survstan (0.0.7.1)
 
 * GitHub: <https://github.com/fndemarqui/survstan>
@@ -1199,6 +1195,33 @@ Run `revdepcheck::revdep_details(, "survstan")` for more info
 Run `revdepcheck::revdep_details(, "synergyfinder")` for more info
 
 ## In both
+
+*   checking examples ... ERROR
+     ```
+     Running examples in ‘synergyfinder-Ex.R’ failed
+     The error most likely occurred in:
+     
+     > ### Name: PlotMultiDrugSurface
+     > ### Title: 3D Plot for Multi-drug Combination Dose-Response/Synergy Scores
+     > ### Aliases: PlotMultiDrugSurface
+     > 
+     > ### ** Examples
+     > 
+     > data("NCATS_screening_data")
+     > data <- ReshapeData(NCATS_screening_data)
+     > p <- PlotMultiDrugSurface(
+     +   data,
+     +   plot_block = 1,
+     +   plot_value = "response",
+     +   show_data_points = TRUE,
+     +   distance_method = "mahalanobis",
+     +   summary_statistic = "mean"
+     + )
+     Error in `stats::na.omit`(list(`W[, 3]` = c(1184.26006356869, 1369.42709773729 : 
+       could not find function "stats::na.omit"
+     Calls: PlotMultiDrugSurface ... lm -> eval -> eval -> <Anonymous> -> model.frame.default
+     Execution halted
+     ```
 
 *   checking dependencies in R code ... WARNING
      ```
@@ -1258,22 +1281,6 @@ Run `revdepcheck::revdep_details(, "synergyfinder")` for more info
             |          ^
      ```
 
-# telegramR (0.0.1)
-
-* GitHub: <https://github.com/RomanKyrychenko/telegramR>
-* Email: <mailto:roman.kyrychenko@helsinki.fi>
-* GitHub mirror: <https://github.com/cran/telegramR>
-
-Run `revdepcheck::revdep_details(, "telegramR")` for more info
-
-## In both
-
-*   checking dependencies in R code ... NOTE
-     ```
-     Namespace in Imports field not imported from: ‘Rcpp’
-       All declared Imports should be used.
-     ```
-
 # txshift (0.3.8)
 
 * GitHub: <https://github.com/nhejazi/txshift>
@@ -1327,5 +1334,45 @@ Run `revdepcheck::revdep_details(, "vmeasur")` for more info
      Found the following significant warnings:
        Warning: no DISPLAY variable so Tk is not available
      See ‘/scratch/henrik/revdep/future/checks/vmeasur/new/vmeasur.Rcheck/00install.out’ for details.
+     ```
+
+# WpProj (0.3)
+
+* GitHub: <https://github.com/ericdunipace/WpProj>
+* Email: <mailto:edunipace@mail.harvard.edu>
+* GitHub mirror: <https://github.com/cran/WpProj>
+
+Run `revdepcheck::revdep_details(, "WpProj")` for more info
+
+## In both
+
+*   checking tests ...
+     ```
+     ...
+         'test-W2IP.R:55:3', 'test-WInftyL1.R:59:3', 'test-WInftyL1.R:148:5',
+         'test-WInftyL1.R:267:5'
+       
+       ══ Failed tests ════════════════════════════════════════════════════════════════
+       ── Failure ('test-xtyUpdate.R:742:3'): test sinkhorn xtyupdate ─────────────────
+       Expected `norm(out.same$XtY - out, "F")` < 7e-08.
+       Actual comparison: 0.00000062 >= 0.00000007
+       Difference: 0.00000055 >= 0
+       ── Failure ('test-xtyUpdate.R:743:3'): test sinkhorn xtyupdate ─────────────────
+       Expected `norm(out.same$XtY - dat$xty, "F")` < 7e-08.
+       Actual comparison: 0.00000062 >= 0.00000007
+       Difference: 0.00000055 >= 0
+       ── Failure ('test-xtyUpdate.R:874:3'): test greenkhorn xtyupdate ───────────────
+       Expected `norm(out.same$XtY - out, "F")` < 7e-08.
+       Actual comparison: 0.00000062 >= 0.00000007
+       Difference: 0.00000055 >= 0
+       ── Failure ('test-xtyUpdate.R:875:3'): test greenkhorn xtyupdate ───────────────
+       Expected `norm(out.same$XtY - dat$xty, "F")` < 7e-08.
+       Actual comparison: 0.00000062 >= 0.00000007
+       Difference: 0.00000055 >= 0
+       
+       [ FAIL 4 | WARN 54 | SKIP 25 | PASS 806 ]
+       Error:
+       ! Test failures.
+       Execution halted
      ```
 

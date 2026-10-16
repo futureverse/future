@@ -86,7 +86,7 @@ objectSize <- function(x, depth = 3L, enclosure = FALSE) {
     ## under investigation.
     skip <- grep("^.future_", elements, value = TRUE)
     if (length(skip) > 0) {
-      skip <- gsub("^.future_", "", elements)
+      skip <- c(skip, gsub("^.future_", "", skip))
       elements <- setdiff(elements, skip)
       if (length(elements) == 0) return(0)
     }

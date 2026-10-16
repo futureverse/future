@@ -65,35 +65,35 @@ getGlobalsAndPackages <- function(expr, envir = parent.frame(), tweak = tweakExp
     }
   }
 
+  ## Any manually added globals?
+  add <- attr(globals, "add", exact = TRUE)
+  if (!is.null(add)) {
+    if (is.character(add)) {
+      if (debug) mdebug_push("Retrieving 'add' globals ...")
+      add <- globalsByName(add, envir = envir, mustExist = mustExist)
+      if (debug) mdebugf("'add' globals retrieved: [%d] %s", length(add), commaq(names(add)))
+      if (debug) mdebug("Retrieving 'add' globals ... DONE")
+    } else if (inherits(add, "Globals")) {
+      if (debug) mdebugf("'add' globals passed as-is: [%d] %s", length(add), commaq(names(add)))
+    } else if (is.list(add)) {
+      if (debug) mdebugf("'add' globals passed as-list: [%d] %s", length(add), commaq(names(add)))
+    } else {
+      stopf("Attribute 'add' of argument 'globals' must be either a character vector or a named list: %s", mode(add))
+    }
+    add <- as.FutureGlobals(add)
+    stop_if_not(inherits(add, "FutureGlobals"))
+    if (debug) mdebug_pop()
+  }
+  
+  ## Any manually dropped/ignored globals?
+  ignore <- attr(globals, "ignore", exact = TRUE)
+  if (!is.null(ignore)) {
+    stop_if_not(is.character(ignore))
+  }
+
   if (is.logical(globals)) {
     stop_if_not(length(globals) == 1, !is.na(globals))
 
-    ## Any manually added globals?
-    add <- attr(globals, "add", exact = TRUE)
-    if (!is.null(add)) {
-      if (is.character(add)) {
-        if (debug) mdebug_push("Retrieving 'add' globals ...")
-        add <- globalsByName(add, envir = envir, mustExist = mustExist)
-        if (debug) mdebugf("'add' globals retrieved: [%d] %s", length(add), commaq(names(add)))
-        if (debug) mdebug("Retrieving 'add' globals ... DONE")
-      } else if (inherits(add, "Globals")) {
-        if (debug) mdebugf("'add' globals passed as-is: [%d] %s", length(add), commaq(names(add)))
-      } else if (is.list(add)) {
-        if (debug) mdebugf("'add' globals passed as-list: [%d] %s", length(add), commaq(names(add)))
-      } else {
-        stopf("Attribute 'add' of argument 'globals' must be either a character vector or a named list: %s", mode(add))
-      }
-      add <- as.FutureGlobals(add)
-      stop_if_not(inherits(add, "FutureGlobals"))
-      if (debug) mdebug_pop()
-    }
-    
-    ## Any manually dropped/ignored globals?
-    ignore <- attr(globals, "ignore", exact = TRUE)
-    if (!is.null(ignore)) {
-      stop_if_not(is.character(ignore))
-    }
-  
     if (globals) {
       if (debug) mdebug_push("Searching for globals ...")
       ## Algorithm for identifying globals
@@ -141,19 +141,6 @@ getGlobalsAndPackages <- function(expr, envir = parent.frame(), tweak = tweakExp
       if (debug) mdebug("Not searching for globals")
       globals <- FutureGlobals()
     }
-
-    ## Drop 'ignore' globals?
-    ## FIXME: This should really be implemented in globals::globalsOf()
-    if (!is.null(ignore)) {
-      if (any(ignore %in% names(globals))) {
-        globals <- globals[setdiff(names(globals), ignore)]
-      }
-    }
-  
-    ## Append 'add' globals?
-    if (inherits(add, "FutureGlobals")) {
-      globals <- unique(c(globals, add))
-    }
   } else if (is.character(globals)) {
     if (debug) mdebug_push("Retrieving globals ...")
     globals <- globalsByName(globals, envir = envir, mustExist = mustExist)
@@ -166,9 +153,23 @@ getGlobalsAndPackages <- function(expr, envir = parent.frame(), tweak = tweakExp
   } else {
     stopf("Argument 'globals' must be either a logical scalar or a character vector: %s", mode(globals))
   }
+
   ## Make sure to preserve 'resolved' attribute
   globals <- as.FutureGlobals(globals)
   stop_if_not(inherits(globals, "FutureGlobals"))
+
+  ## Drop 'ignore' globals?
+  ## FIXME: This should really be implemented in globals::globalsOf()
+  if (!is.null(ignore)) {
+    if (any(ignore %in% names(globals))) {
+      globals <- globals[setdiff(names(globals), ignore)]
+    }
+  }
+
+  ## Append 'add' globals?
+  if (inherits(add, "FutureGlobals")) {
+    globals <- unique(c(globals, add))
+  }
 
   ## Nothing more to do?
   if (length(globals) == 0) {
@@ -261,9 +262,10 @@ getGlobalsAndPackages <- function(expr, envir = parent.frame(), tweak = tweakExp
       ## If ...future.FUN() in globals, then ...
       if ("...future.FUN" %in% names(globals)) {
         envFUN <- environment(globals[["...future.FUN"]])
-        ## Update environment of FUN(), unless it's a primitive function
-        ## or a function in a namespace
-        if (!is.null(envFUN) && !isNamespace(envFUN)) {
+        ## Update environment of FUN(), unless it's a primitive function,
+        ## a function in a namespace, or it does not use '...' as a global
+        if (!is.null(envFUN) && !isNamespace(envFUN) &&
+            "..." %in% findGlobals(globals[["...future.FUN"]], dotdotdot = "return")) {
           expr <- substitute({
             "# future::getGlobalsAndPackages(): FUN() uses '...' internally "
             "# without having an '...' argument. This means '...' is treated"
@@ -274,19 +276,23 @@ getGlobalsAndPackages <- function(expr, envir = parent.frame(), tweak = tweakExp
             "# function environment of FUN() to the calling environment.    "
             "# We assume FUN() an anonymous function if it lives in the     "
             "# global environment, which is where globals are written.      "
-            penv <- env <- environment(...future.FUN)
+            ...future.penv <- ...future.env <- environment(...future.FUN)
             repeat {
-              if (identical(env, globalenv()) || identical(env, emptyenv()))
+              if (identical(...future.env, globalenv()) || identical(...future.env, emptyenv()))
                 break
-              penv <- env
-              env <- parent.env(env)
+              ...future.penv <- ...future.env
+              ...future.env <- parent.env(...future.env)
             }
-            if (identical(penv, globalenv())) {
+            if (identical(...future.penv, globalenv())) {
               environment(...future.FUN) <- environment()
-            } else if (!identical(penv, emptyenv()) && !is.null(penv) && !isNamespace(penv)) {
-              parent.env(penv) <- environment()
+            } else if (identical(...future.env, globalenv()) && !is.null(...future.penv) && !isNamespace(...future.penv)) {
+              ## Undo afterward, because '...future.penv' might be the
+              ## environment of the caller, e.g. for sequential futures
+              ...future.penv.parent <- parent.env(...future.penv)
+              parent.env(...future.penv) <- environment()
+              on.exit(parent.env(...future.penv) <- ...future.penv.parent, add = TRUE)
             }
-            rm(list = c("env", "penv"), inherits = FALSE)
+            rm(list = "...future.env", inherits = FALSE)
             a
           }, list(a = expr))
         }
@@ -465,10 +471,29 @@ getGlobalsAndPackages <- function(expr, envir = parent.frame(), tweak = tweakExp
     mdebugf("Packages after dropping non-attached packages: [%d] %s", length(pkgs), commaq(pkgs))
   }
 
+  ## NOTE: Serialization of emptyenv(), baseenv(), globalenv(), and package
+  ## namespace environments carries no payload. Instead, they are serialized
+  ## carrying only a lightweight flag so that they can be reconstructed
+  ## on the receiving R process that unserializes them.
+  ## All other types of environments are serialized, meaning their payload
+  ## corresponds to their content.
   keepWhere <- getOption("future.globals.keepWhere", TRUE)
   if (!keepWhere) {
     where <- attr(globals, "where")
     for (kk in seq_along(where)) where[[kk]] <- emptyenv()
+    attr(globals, "where") <- where
+  } else {
+    where <- attr(globals, "where")
+    voidenv <- new.env(parent = emptyenv())
+    for (kk in seq_along(where)) {
+      w <- where[[kk]]
+      if (!identical(w, globalenv()) && !identical(w, emptyenv())) {
+        ## Avoid transferring environments with a large payload. For this
+        ## to work, it's important that globals part of them has already
+        ## been identified.
+        where[[kk]] <- voidenv
+      }
+    }
     attr(globals, "where") <- where
   }
   

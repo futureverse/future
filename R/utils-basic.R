@@ -271,6 +271,20 @@ if (getRversion() < "4.0.0") {
 }
 
 
+## base::tryInvokeRestart() was added in R 4.0.0. This is a backport
+## using findRestart() and invokeRestart(), which exist in all R
+## versions that this package supports.
+if (getRversion() < "4.0.0") {
+  tryInvokeRestart <- function(r, ...) {
+    if (is.character(r)) {
+      r <- findRestart(r)
+      if (is.null(r)) return(invisible(NULL))
+    }
+    invokeRestart(r, ...)
+  }
+}
+
+
 parseCmdArgs <- function() {
   cmdargs <- getOption("future.cmdargs", commandArgs())
   args <- list()

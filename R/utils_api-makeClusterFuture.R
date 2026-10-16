@@ -412,6 +412,18 @@ sendData.FutureNode <- function(node, data) {
       fun <- data[["fun"]]
       args <- data[["args"]]
 
+      ## Ensure 'fun' and 'args' are always available on the worker
+      globals <- options[["globals"]]
+      required_globals <- list(fun = fun, args = args)
+      if (is.null(globals)) {
+        globals <- required_globals
+      } else if (is.logical(globals) || is.character(globals)) {
+        attr(globals, "add") <- c(required_globals, attr(globals, "add"))
+      } else if (is.list(globals)) {
+        globals <- c(required_globals, globals)
+      }
+      options[["globals"]] <- globals
+
       expr <- quote(do.call(fun, args = args))
       future_args <- list(expr = quote(expr), substitute = FALSE)
       future_args <- c(future_args, options)

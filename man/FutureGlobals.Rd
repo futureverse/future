@@ -12,6 +12,7 @@
 \title{A representation of a set of globals used with futures}
 \usage{
 FutureGlobals(object = list(), resolved = FALSE, total_size = NA_real_, ...)
+as.FutureGlobals(x, ...)
 }
 \arguments{
 \item{object}{A named list.}
@@ -20,6 +21,8 @@ FutureGlobals(object = list(), resolved = FALSE, total_size = NA_real_, ...)
 have been scanned for and resolved futures or not.}
 
 \item{total_size}{The total size of all globals, if known.}
+
+\item{x}{An object to be coerced to a \code{FutureGlobals} object.}
 
 \item{\ldots}{Not used.}
 }

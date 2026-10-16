@@ -37,6 +37,7 @@ futureAssign(
 )
 
 x \%<-\% value
+value \%->\% x
 
 fassignment \%globals\% globals
 fassignment \%packages\% packages

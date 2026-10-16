@@ -548,6 +548,10 @@ assertOwner <- local({
 
 #' Run a future
 #'
+#' @usage
+#' run(future, ...)
+#' \method{run}{Future}(future, ...)
+#'
 #' @param future A \link{Future}.
 #' @param \ldots Not used.
 #'
@@ -581,7 +585,7 @@ run.Future <- function(future, ...) {
   ## Be conservative for now; don't allow lazy futures created in another R
   ## session to be launched. This will hopefully change later, but we won't
   ## open this door until we understand the ramifications. /HB 2020-12-21
-  if (isTRUE(getOption("future.lazy.assertOwner"))) {
+  if (isTRUE(getOption("future.lazy.assertOwner", TRUE))) {
     assertOwner(future)
   }
 

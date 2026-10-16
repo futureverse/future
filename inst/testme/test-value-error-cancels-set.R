@@ -1,6 +1,5 @@
 #' @tags interrupt
 #' @tags detritus-files
-#' @tags detritus-connections
 #' @tags multisession multicore
 
 library(future)

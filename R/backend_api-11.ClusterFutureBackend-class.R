@@ -407,6 +407,20 @@ stopWorkers.ClusterFutureBackend <- function(backend, interrupt = TRUE, ...) {
   
   ## Stop workers
   mdebugf_push("Stop cluster workers ...")
+
+  ## SANITY CHECK: Assert that the backend's worker list is in sync with
+  ## the memoized cluster that clusterRegistry holds.
+  ## See also https://github.com/futureverse/future/issues/820 and
+  ## https://github.com/futureverse/future/issues/830.
+  workers <- backend[["workers"]]
+  registered <- clusterRegistry$getCluster(debug = debug)
+  if (!is.null(registered) && !identical(workers, registered)) {
+    warning(FutureWarning(sprintf(
+      "Detected the workers of %s to be out of sync with the memoized cluster. This leaves stray, unclosed connections behind that will triggers a 'closing unused connection' warnings when the garbage collect runs",
+      class(backend)[1]
+    )))
+  }
+
   clusterRegistry$stopCluster(debug = debug)
   env <- environment(ClusterFutureBackend)
   env[["last"]] <- NULL
@@ -1231,6 +1245,7 @@ requestNode <- local({
 
         workers[[node_idx]] <- node2
         backend[["workers"]] <- workers
+        clusterRegistry$setCluster(workers)
         node <- node2
 
         if (debug) {
@@ -1609,6 +1624,7 @@ handleInterruptedFuture <- local({
 
         ## Update backend
         backend[["workers"]] <- workers
+        clusterRegistry$setCluster(workers)
 
         node <- NULL
         
@@ -1743,6 +1759,10 @@ clusterRegistry <- local({
     cluster
   } ## startCluster()
 
+  setCluster <- function(cl) {
+    cluster <<- cl
+  }
+
   stopCluster <- function(debug = FALSE) {
     if (debug) {
       mdebug_push("Stopping existing cluster ...")
@@ -1800,6 +1820,7 @@ clusterRegistry <- local({
   list(
       getCluster = getCluster,
     startCluster = startCluster,
+      setCluster = setCluster,
      stopCluster = stopCluster
   )
 }) ## clusterRegistry()

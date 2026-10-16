@@ -64,40 +64,47 @@ fi
 ## Add packages to check
 revdep/run.R --add-children
 
-## Drop packages failing on CRAN (2026-09-23)
-revdep/run.R --rm dispositionEffect fmeffects
+## Drop packages failing on CRAN (2026-10-15)
+revdep/run.R --rm dispositionEffect fmeffects WpProj
 
-## Drop packages failing on Bioconductor (2026-09-23)
-revdep/run.R --rm MineICA pgxRpi
+## Drop packages failing on Bioconductor (2026-10-05)
+revdep/run.R --rm pgxRpi SCArray.sat scLANE synergyfinder
 
 ## Drop packages no longer on CRAN (2026-07-19)
 #revdep/run.R --rm ...
 
-## Drop packages failing on Bioconductor (2026-03-07)
-# revdep/run.R --rm ...
+## Drop packages no longer on Bioconductor (2026-10-05)
+#revdep/run.R --rm ...
 
 ## Fails to install
 revdep/run.R --rm BayesPET TriDimRegression  # there is no package called ‘rstantools’
 
 ## Fails to check
 revdep/run.R --rm mapme.biodiversity    # unstable results
-revdep/run.R --rm zarrr                 # requires 'blosc', which requires 'blosc-devel'
-
-## Requires sequential processing due to clashes, e.g. port and cache 
-pkgs_seq=(dipsaus fiery robust2sls)
-revdep/run.R --rm "${pkgs_seq[@]}"
-
-## Too many threads /2026-04-16
-pkgs_threads=()
-#revdep/run.R --rm "${pkgs_threads[@]}"
-
-# Too many cores /2026-09-23
-pkgs_cores=()
-#revdep/run.R --rm "${pkgs_cores[@]}"
 
 ## Too many cores due to detectCores /2026-09-23
 pkgs_detectCores=(STARRS)
-revdep/run.R --rm "${pkgs_detectCores[@]}"
+if [[ ${#pkgs_detectCores[@]} -gt 0 ]]; then
+    revdep/run.R --rm "${pkgs_detectCores[@]}"
+fi
+
+# Too many cores /2026-09-23
+pkgs_cores=()
+if [[ ${#pkgs_cores[@]} -gt 0 ]]; then
+    revdep/run.R --rm "${pkgs_cores[@]}"
+fi
+
+## Too many threads /2026-04-16
+pkgs_threads=()
+if [[ ${#pkgs_threads[@]} -gt 0 ]]; then
+    revdep/run.R --rm "${pkgs_threads[@]}"
+fi    
+
+## Requires sequential processing due to clashes, e.g. port and cache 
+pkgs_seq=(couplr datacaged dipsaus fiery ggchangepoint robust2sls SimDesign)
+if [[ ${#pkgs_seq[@]} -gt 0 ]]; then
+    revdep/run.R --rm "${pkgs_seq[@]}"
+fi
 
 ## Run revdep check
 revdep/run.R
@@ -106,14 +113,20 @@ revdep/run.R
 ## ---------------------------------------------------------------------
 ## Phase 2
 ## ---------------------------------------------------------------------
-## Set: Too many threads
-revdep/run.R --add "${pkgs_threads[@]}"
-OMP_NUM_THREADS=4 revdep/run.R
-
 ## Set: Too many cores
-revdep/run.R --add "${pkgs_cores[@]}"
-OMP_NUM_THREADS=4 NSLOTS=4 revdep/run.R
+if [[ ${#pkgs_cores[@]} -gt 0 ]]; then
+    revdep/run.R --add "${pkgs_cores[@]}"
+    OMP_NUM_THREADS=4 NSLOTS=4 revdep/run.R
+fi    
+
+## Set: Too many threads
+if [[ ${#pkgs_threads[@]} -gt 0 ]]; then
+    revdep/run.R --add "${pkgs_threads[@]}"
+    OMP_NUM_THREADS=4 revdep/run.R
+fi
 
 ## Sequential
 revdep/run.R --add "${pkgs_seq[@]}"
-NSLOTS=1 revdep/run.R
+if [[ ${#pkgs_seq[@]} -gt 0 ]]; then
+    NSLOTS=1 revdep/run.R
+fi

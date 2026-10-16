@@ -2,8 +2,6 @@
 #'
 #' @usage fassignment \%label\% label
 #'
-#' @param fassignment The future assignment, e.g.
-#'        `x %<-% { expr }`.
 #' @inheritParams future
 #'
 #' @aliases %label%

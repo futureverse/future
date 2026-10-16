@@ -5,6 +5,7 @@
 \alias{run}
 \title{Run a future}
 \usage{
+run(future, ...)
 \method{run}{Future}(future, ...)
 }
 \arguments{

@@ -53,28 +53,6 @@ FutureRegistry <- local({
       on.exit(mdebugf_pop())
     }
 
-    futuresDB <- db[[where]]
-    drop <- integer(0L)
-
-    on.exit({
-      ## Clean out collected futures
-      if (length(drop) > 0) {
-        if (debug) {
-          mdebug_push("Remove collected futures ...")
-          mdebugf("Indices of futures to drop: [n=%d] %s", length(drop), commaq(drop))
-        }
-        futuresDB <- futuresDB[-drop]
-        db[[where]] <<- futuresDB
-        if (debug) mdebug_pop()
-      } else {
-        if (debug) mdebug("Indices of futures to drop: [n=0] <none>")
-      }
-    }, add = TRUE)
-
-    if (debug) {
-      on.exit(mdebugf_pop(), add = TRUE)
-    }
-
     for (ii in seq_along(futures)) {
       future <- futures[[ii]]
 
@@ -118,31 +96,10 @@ FutureRegistry <- local({
 
         ## (b) Make sure future is removed from registry, unless
         ##     already done via above value() call.
-        idx <- indexOf(futuresDB, future = future)
+        idx <- indexOf(db[[where]], future = future)
         if (!is.na(idx)) {
-          drop <- c(drop, idx)
-
-          ## Update backend
-          backend <- future[["backend"]]
-          if (!is.null(backend)) {
-            ## Update counters
-            counters <- backend[["counters"]]
-            counters["finished"] <- counters["finished"] + 1L
-            backend[["counters"]] <- counters
-            
-            ## Update total runtime 
-            result <- future[["result"]]
-            if (inherits(result, "FutureResult")) {
-              times <- result[c("finished", "started")]
-              if (length(times) == 2L) {
-                dt <- times[["finished"]] - times[["started"]]
-                runtime <- backend[["runtime"]]
-                runtime <- runtime + dt
-                backend[["runtime"]] <- runtime
-              }
-            }
-          }
-        } ## if (!is.na(idx))
+          FutureRegistry(where, action = "remove", future = future, earlySignal = FALSE, debug = debug)
+        }
 
         ## (c) Collect only the first resolved future?
         if (firstOnly) {
@@ -235,11 +192,14 @@ FutureRegistry <- local({
       }
     } else if (action == "collect-first") {
       collectValues(where, futures = futures, firstOnly = TRUE, debug = debug)
+      futures <- db[[where]]
     } else if (action == "collect-all") {
       collectValues(where, futures = futures, firstOnly = FALSE, debug = debug)
+      futures <- db[[where]]
       earlySignal <- FALSE ## Avoid second round of result collection
     } else if (action == "reset") {
-      db[[where]] <<- list()
+      futures <- list()
+      db[[where]] <<- futures
       if (debug) mdebug("Erased registry")
     } else if (action == "list") {
       if (debug) mdebug("Listing all futures")
@@ -263,6 +223,7 @@ FutureRegistry <- local({
         ## Collect values, which will trigger signaling during
         ## calls to resolved().
         collectValues(where, futures = futures[idxs], firstOnly = FALSE)
+        futures <- db[[where]]
       }
       if (debug) mdebugf("Early signaling of %d future candidates ... done", length(futures))
     }

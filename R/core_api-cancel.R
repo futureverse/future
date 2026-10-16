@@ -1,8 +1,14 @@
-#' Cancel a future
+#' Cancel one or more futures
 #'
 #' Cancels futures, with the option to interrupt running ones.
+#' `cancel()` is vectorized, i.e. accepts a collection of futures
+#' to be canceled.
 #'
-#' @param x A Future.
+#' @param x A [Future], a list, an environment, or a list environment
+#' (\link[listenv:listenv]{listenv}). Lists and environments may hold
+#' a mix of futures and non-future elements, and may be nested, e.g.
+#' a list of lists of futures; every future found, at any depth, is
+#' canceled.
 #'
 #' @param interrupt If TRUE, running futures are interrupted, if the
 #' future backend supports it.
@@ -10,10 +16,13 @@
 #' @param \ldots All arguments used by the S3 methods.
 #'
 #' @return
-#' `cancel()` returns (invisibly) the canceled [Future]s after
-#' flagging them as "canceled" and possibly interrupting them as well.
+#' `cancel()` returns (invisibly) `x` after canceling every [Future]
+#' therein, that is, after flagging each one as "canceled" and
+#' possibly interrupting it as well.
 #'
-#' Canceling a lazy or a finished future has no effect.
+#' Canceling a lazy or a finished future has no effect. Elements of
+#' `x` that are neither futures nor collections of futures are left
+#' untouched.
 #'
 #' @examplesIf (interactive() || .Platform[["OS.type"]] != "windows")
 #' ## Set up two parallel workers
@@ -30,7 +39,7 @@
 #' ## Wait until at least one of the futures is resolved
 #' while (!any(resolved(fs))) Sys.sleep(0.1)
 #' 
-#' ## Cancel the future that is not yet resolved
+#' ## Cancel futures that are not yet resolved
 #' r <- resolved(fs)
 #' cancel(fs[!r])
 #' 

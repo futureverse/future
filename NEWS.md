@@ -1,3 +1,50 @@
+# Version 1.80.0 [2026-10-15]
+
+## Significant Changes
+
+ * Memory use on parallel workers has gone down significantly in some
+   cases. A side effect is also significantly faster processing in
+   those cases. This improvement has an immediate effect on several
+   **future.apply** functions: `future_lapply()`, `future_sapply()`,
+   `future_apply()`, `future_tapply()`, `future_by()`,
+   `future_Filter()`, `future_eapply()`, `future_mapply()`, and
+   `future_Map()`.
+
+## Bug Fixes
+
+ * `cluster` and `multisession` futures could leave a stray, unclosed
+   worker connection behind if a worker was relaunched. This would
+   eventually result in warnings on "closing unused connection" when
+   the garbage collector ran.
+
+ * Explicitly specifying globals as a character vector via attributes
+   `add` or `ignore` would be ignored silently, e.g. `globals =
+   structure(c("a", "b"), add = "c")`.
+
+ * A future that uses a global `...` together with a global
+   `...future.FUN()` function, which is what **future.apply** uses,
+   could fail with "cycles in parent chains are not allowed". In R (<
+   4.5.0), it ended up in an infinite loop. This bug was introduced in
+   **future** 1.40.0 (2025-04-10).
+
+ * A sequential future that uses a global `...` together with a global
+   `...future.FUN()` function, which is what **future.apply** uses,
+   could permanently change the parent of the function's environment,
+   if that environment inherits from the global environment. This bug
+   was introduced in **future** 1.40.0 (2025-04-10).
+
+ * `makeClusterFuture(globals = ...)` would result in an future
+   evaluation error.
+
+ * Futures failed on R (< 4.0.0). This bug was introduced in **future**
+   1.68.0 (2025-11-17).
+
+ * Globals identified automatically (the default) could carry extra,
+   unneeded load that was exported to the parallel workers. This could
+   result in significant overhead in both total memory use and total
+   processing time.
+
+
 # Version 1.76.0 [2026-09-24]
 
 ## New Features

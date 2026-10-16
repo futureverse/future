@@ -14,7 +14,7 @@ debug_indent <- local({
 })
 
 if (!exists(".debug", inherits = FALSE)) .debug <- new.env(parent = emptyenv())
-if (!"stack" %in% names(".debug")) .debug$stack <- list()
+if (!"stack" %in% names(.debug)) .debug$stack <- list()
 
 mdebug_push <- function(..., debug = isTRUE(getOption("future.debug"))) {
   if (!debug) return()
