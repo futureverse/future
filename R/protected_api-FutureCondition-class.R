@@ -24,7 +24,7 @@
 #' 
 #' @param drop If TRUE, the `future` argument is only used to populate
 #' future metadata, but is not stored in the condition object created.
-#' 
+#'
 #' @return An object of class FutureCondition which inherits from class
 #' \link[base:conditions]{condition} and FutureMessage, FutureWarning,
 #' and FutureError all inherits from FutureCondition.
@@ -123,10 +123,19 @@ print.FutureCondition <- function(x, ...) {
 conditionMessage.FutureCondition <- function(c) {
   msg <- NextMethod()
 
-  meta <- character()
-  
   uuid <- attr(c, "uuid", exact = TRUE)
   label <- attr(c, "label", exact = TRUE)
+  by <- attr(c, "by", exact = TRUE)
+  when <- attr(c, "when", exact = TRUE)
+  future <- attr(c, "future", exact = TRUE)
+
+  ## No future-related metadata to report? Skip the '[future ...]' suffix
+  if (is.null(uuid) && is.null(label) && is.null(by) && is.null(when) && is.null(future)) {
+    return(msg)
+  }
+
+  meta <- character()
+
   label <- if (is.null(label)) {
     sprintf("<%s>", paste(c("unnamed", tail(uuid, 1L)), collapse = "-"))
   } else {
@@ -139,8 +148,6 @@ conditionMessage.FutureCondition <- function(c) {
     meta <- c(meta, sprintf("future %s", label))
   }
 
-  when <- attr(c, "when", exact = TRUE)
-  by <- attr(c, "by", exact = TRUE)
   if (!is.null(by)) {
     source <- attr(by, "source", exact = TRUE)
     host <- source[["host"]]
