@@ -2,11 +2,13 @@
 #'
 #' @param object A named list.
 #'
+#' @param x An object to be coerced to a `FutureGlobals` object.
+#'
 #' @param resolved A logical indicating whether these globals
 #'        have been scanned for and resolved futures or not.
-#' 
+#'
 #' @param total_size The total size of all globals, if known.
-#' 
+#'
 #' @param \ldots Not used.
 #'
 #' @return An object of class `FutureGlobals`.
@@ -14,6 +16,10 @@
 #' @details
 #' This class extends the \link[globals]{Globals} class by adding
 #' attributes `resolved` and `total_size`.
+#'
+#' @usage
+#' FutureGlobals(object = list(), resolved = FALSE, total_size = NA_real_, ...)
+#' as.FutureGlobals(x, ...)
 #'
 #' @aliases as.FutureGlobals
 #' @aliases as.FutureGlobals.FutureGlobals

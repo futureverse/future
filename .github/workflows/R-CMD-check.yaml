@@ -51,11 +51,12 @@ jobs:
       _R_COMPARE_LANG_OBJECTS: eqonly
       ## R CMD check
       _R_CHECK_CRAN_INCOMING_: false
+      _R_CHECK_CODOC_FUNCTIONS_MISSING_FROM_USAGES_: true
       _R_CHECK_MATRIX_DATA_: true
       _R_CHECK_SUGGESTS_ONLY_: true
       _R_CHECK_THINGS_IN_TEMP_DIR_: true
       _R_CHECK_TESTS_NLINES_: 300
-      RCMDCHECK_ERROR_ON: error
+      RCMDCHECK_ERROR_ON: note
       NOT_CRAN: true
       R_TESTME_EXCLUDE_NAME: ${{ matrix.config.testme_exclude }}
       ## Specific to futures

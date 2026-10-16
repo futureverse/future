@@ -29,6 +29,10 @@ result <- function(future, ...) {
 
 #' Get the results of a resolved future
 #'
+#' @usage
+#' result(future, ...)
+#' \method{result}{Future}(future, ...)
+#'
 #' @param future A \link{Future}.
 #' @param \ldots Not used.
 #'

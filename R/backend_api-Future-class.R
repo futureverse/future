@@ -548,6 +548,10 @@ assertOwner <- local({
 
 #' Run a future
 #'
+#' @usage
+#' run(future, ...)
+#' \method{run}{Future}(future, ...)
+#'
 #' @param future A \link{Future}.
 #' @param \ldots Not used.
 #'

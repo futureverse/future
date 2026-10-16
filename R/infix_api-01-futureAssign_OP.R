@@ -1,4 +1,6 @@
-#' @usage x \%<-\% value
+#' @usage
+#' x \%<-\% value
+#' value \%->\% x
 #'
 #' @aliases %<-% %->%
 #' @rdname futureAssign

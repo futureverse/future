@@ -4,9 +4,9 @@
 \alias{mandelbrot}
 \alias{as.raster.Mandelbrot}
 \alias{plot.Mandelbrot}
-\alias{mandelbrot_tiles}
 \alias{mandelbrot.matrix}
 \alias{mandelbrot.numeric}
+\alias{mandelbrot_tiles}
 \title{Mandelbrot convergence counts}
 \usage{
 mandelbrot(...)
@@ -21,6 +21,16 @@ mandelbrot(...)
   maxIter = 200L,
   tau = 2,
   ...
+)
+
+mandelbrot_tiles(
+  xmid = -0.75,
+  ymid = 0,
+  side = 3,
+  nrow = 2L,
+  ncol = nrow,
+  resolution = 400L,
+  truncate = TRUE
 )
 }
 \arguments{
@@ -39,6 +49,13 @@ the complex plane \code{Z}, where
 \code{diff(range(Re(Z))) == side},
 \code{diff(range(Im(Z))) == side}, and
 \code{dim(Z) == c(resolution, resolution)}.}
+
+\item{nrow, ncol}{Number of rows and columns of tiles to partition
+the complex plane \code{Z} into.}
+
+\item{truncate}{If TRUE, all tiles are truncated to have
+identical dimensions, otherwise the last
+row and column of tiles may be smaller.}
 }
 \value{
 Returns an integer matrix (of class Mandelbrot) with
