@@ -210,7 +210,6 @@ if (getRversion() >= "4.4") export(FUTURE)
 if (getRversion() >= "4.4") export(makeClusterFuture)
 if (getRversion() >= "4.4") importFrom(parallel,recvData)
 if (getRversion() >= "4.4") importFrom(parallel,sendData)
-importFrom(digest,digest)
 importFrom(globals,
   Globals,
   as.Globals,

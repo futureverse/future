@@ -1,5 +1,15 @@
 # Version (development version)
 
+## Significant Changes
+
+ * `digest` is no longer a hard dependency. The package now uses
+   `tools::md5sum(bytes = ...)`, which is available in R (>= 4.5.0), to
+   generate unique IDs for R objects. For older versions of R, it uses
+   `tools::md5sum(files = ...)` via a temporary file, which does not add
+   much overhead because these internal IDs are not generated
+   frequently. For the time being, `digest::digest()` is still used for
+   older versions of R, if **digest** is installed.
+
 # Version 1.80.0 [2026-10-15]
 
 ## Significant Changes

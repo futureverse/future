@@ -1,10 +1,9 @@
 Package: future
-Version: 1.80.0-9001
+Version: 1.80.0-9002
 Title: Unified Parallel and Distributed Processing in R for Everyone
 Depends:
     R (>= 3.2.0)
 Imports:
-    digest,
     globals (>= 0.18.0),
     listenv (>= 0.8.0),
     parallel,
@@ -12,6 +11,7 @@ Imports:
     tools,
     utils
 Suggests:
+    digest,
     methods,
     RhpcBLASctl,
     R.rsp,
@@ -119,4 +119,4 @@ Collate:
     'utils_api-sessionDetails.R'
     'utils_api-tweak.R'
     'zzz.R'
-Config/roxygen2/version: 8.1.0
+Config/roxygen2/version: 8.1.1
