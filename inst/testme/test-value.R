@@ -195,6 +195,20 @@ for (strategy in strategies) {
         inherits(res, "FutureDroppedError")
       )
 
+      message(sprintf("      Containers: reducing a named %s mixed with values and futures out of order with 'init' attribute", container))
+      truth <- list(a = 1, b = 2, c = 3, d = 3, e = 42)
+      x <- list(
+        a = future({ sleep(2); 3 }, lazy = lazy),
+        b = future({ sleep(1); 2 }, lazy = lazy),
+        c = future({           1 }, lazy = lazy),
+        d = 3,
+        e = 42
+      )
+      x <- coerce(x)
+      truth <- do.call(sum, args = c(list(pi), truth))
+      y <- value(x, reduce = structure(function(...) `+`(...), init = pi), inorder = FALSE)
+      stopifnot(equals(y, truth))
+
       message(sprintf("    lazy = %s ... DONE", lazy))
     } ## for (lazy ...)
     message(sprintf("  Container %s ... DONE", container))

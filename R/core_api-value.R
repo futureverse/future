@@ -594,7 +594,7 @@ value.list <- function(x, idxs = NULL, recursive = 0, reduce = NULL, stdout = TR
       }
     } else {
       reduce_forward <- local({
-        first <- TRUE
+        first <- !reduced_init
         function(from) {
           if (debug) {
             mdebug_push("reduce_forward() - inorder = FALSE ...")

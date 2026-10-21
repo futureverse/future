@@ -1,11 +1,5 @@
 # Version (development version)
 
-## Bug Fixes
-
- * The pre-created cluster `cl` set via `plan(cluster, workers = cl)`,
-   would mistakenly be shut down by `plan(sequential)`, if one of the
-   workers crashed and was relaunched.
-
 ## Significant Changes
 
  * `digest` is no longer a hard dependency. The package now uses
@@ -15,6 +9,15 @@
    much overhead because these internal IDs are not generated
    frequently. For the time being, `digest::digest()` is still used for
    older versions of R, if **digest** is installed.
+
+## Bug Fixes
+
+ * The pre-created cluster `cl` set via `plan(cluster, workers = cl)`,
+   would mistakenly be shut down by `plan(sequential)`, if one of the
+   workers crashed and was relaunched.
+
+ * `value(<list>, reduce = ..., inorder = FALSE)` ignored attribute
+   `init` of `reduce`.
 
 # Version 1.80.0 [2026-10-15]
 
