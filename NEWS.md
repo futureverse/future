@@ -23,6 +23,9 @@
    `value(<list>, signal = FALSE, inorder = FALSE)` ignored arguments
    `stdout` and `signal` when `inorder` was false FALSE.
 
+ * Environment variable `R_FUTURE_RELAY_IMMEDIATE` was parsed as a
+   logical flag instead of as a comma-separated string.
+
 
 # Version 1.80.0 [2026-10-15]
 
