@@ -416,7 +416,7 @@ stopWorkers.ClusterFutureBackend <- function(backend, interrupt = TRUE, ...) {
   registered <- clusterRegistry$getCluster(debug = debug)
   if (!is.null(registered) && !identical(workers, registered)) {
     warning(FutureWarning(sprintf(
-      "Detected the workers of %s to be out of sync with the memoized cluster. This leaves stray, unclosed connections behind that will triggers a 'closing unused connection' warnings when the garbage collect runs",
+      "Detected the workers of %s to be out of sync with the memoized cluster. This leaves stray, unclosed connections behind that will trigger a 'closing unused connection' warning when the garbage collector runs",
       class(backend)[1]
     )))
   }
