@@ -661,12 +661,12 @@ a parallel worker:
 [`plan`](https://future.futureverse.org/reference/plan.md)`(``multisession``)`\
 \
 `# Adopted from example("FastqStreamer", package = "ShortRead")`\
-[`library`](https://rdrr.io/r/base/library.html)`(``ShortRead``)`\
-`sp`` ``<-`` ``SolexaPath``(`[`system.file`](https://rdrr.io/r/base/system.file.html)`(``"extdata"``, package ``=`` ``"ShortRead"``)``)`\
-`fl`` ``<-`` `[`file.path`](https://rdrr.io/r/base/file.path.html)`(``analysisPath``(``sp``)``, ``"s_1_sequence.txt"``)`\
-`fs`` ``<-`` ``FastqStreamer``(``fl``, ``50``)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`ShortRead`](https://bioconductor.org/packages/ShortRead)`)`\
+`sp`` ``<-`` `[`SolexaPath`](https://rdrr.io/pkg/ShortRead/man/SolexaPath-class.html)`(`[`system.file`](https://rdrr.io/r/base/system.file.html)`(``"extdata"``, package ``=`` ``"ShortRead"``)``)`\
+`fl`` ``<-`` `[`file.path`](https://rdrr.io/r/base/file.path.html)`(`[`analysisPath`](https://rdrr.io/pkg/ShortRead/man/accessors.html)`(``sp``)``, ``"s_1_sequence.txt"``)`\
+`fs`` ``<-`` `[`FastqStreamer`](https://rdrr.io/pkg/ShortRead/man/Sampler-class.html)`(``fl``, ``50``)`\
 \
-`reads`` `[`%<-%`](https://future.futureverse.org/reference/futureAssign.md)` ``yield``(``fs``)`\
+`reads`` `[`%<-%`](https://future.futureverse.org/reference/futureAssign.md)` `[`yield`](https://rdrr.io/pkg/ShortRead/man/Sampler-class.html)`(``fs``)`\
 `reads`\
 `## Error in status(update = TRUE) : invalid FastqStreamer`
 
@@ -676,7 +676,7 @@ do as before;
 \
 [`options`](https://rdrr.io/r/base/options.html)`(``future.globals.onReference ``=`` ``"error"``)`\
 \
-`reads`` `[`%<-%`](https://future.futureverse.org/reference/futureAssign.md)` ``yield``(``fs``)`\
+`reads`` `[`%<-%`](https://future.futureverse.org/reference/futureAssign.md)` `[`yield`](https://rdrr.io/pkg/ShortRead/man/Sampler-class.html)`(``fs``)`\
 `## Error: Detected a non-exportable reference ('externalptr') in one of the`\
 `## globals ('fs' of class 'FastqStreamer') used in the future expression`
 

@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.80.0-9002</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.80.0-9005</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -85,6 +85,12 @@
 <h3 id="significant-changes-development-version">Significant Changes<a class="anchor" aria-label="anchor" href="#significant-changes-development-version"></a></h3>
 <ul><li>
 <code>digest</code> is no longer a hard dependency. The package now uses <code>tools::md5sum(bytes = ...)</code>, which is available in R (&gt;= 4.5.0), to generate unique IDs for R objects. For older versions of R, it uses <code>tools::md5sum(files = ...)</code> via a temporary file, which does not add much overhead because these internal IDs are not generated frequently. For the time being, <code><a href="https://eddelbuettel.github.io/digest/man/digest.html" class="external-link">digest::digest()</a></code> is still used for older versions of R, if <strong>digest</strong> is installed.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="bug-fixes-development-version">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h3>
+<ul><li><p>The pre-created cluster <code>cl</code> set via <code>plan(cluster, workers = cl)</code>, would mistakenly be shut down by <code>plan(sequential)</code>, if one of the workers crashed and was relaunched.</p></li>
+<li><p><code>value(&lt;list&gt;, reduce = ..., inorder = FALSE)</code> ignored attribute <code>init</code> of <code>reduce</code>.</p></li>
+<li><p><code>value(&lt;list&gt;, stdout = FALSE, inorder = FALSE)</code> and <code>value(&lt;list&gt;, signal = FALSE, inorder = FALSE)</code> ignored arguments <code>stdout</code> and <code>signal</code> when <code>inorder</code> was false FALSE.</p></li>
 </ul></div>
 </div>
     <div class="section level2">
@@ -1440,7 +1446,7 @@
 <h3 id="new-features-0-11-0">New Features<a class="anchor" aria-label="anchor" href="#new-features-0-11-0"></a></h3>
 <ul><li><p>Add multisession futures, which analogously to multicore ones, use multiple cores on the local machine with the difference that they are evaluated in separate R session running in the background rather than separate forked R processes. A multisession future is a special type of cluster futures that do not require explicit setup of cluster nodes.</p></li>
 <li><p>Add support for cluster futures, which can make use of a cluster of nodes created by <code><a href="https://rdrr.io/r/parallel/makeCluster.html" class="external-link">parallel::makeCluster()</a></code>.</p></li>
-<li><p>Add <code><a href="../reference/future.html">futureCall()</a></code>, which is for futures what <code><a href="https://rdrr.io/r/base/do.call.html" class="external-link">do.call()</a></code> is otherwise.</p></li>
+<li><p>Add <code><a href="../reference/future.html">futureCall()</a></code>, which is for futures what <code><a href="https://rdrr.io/pkg/BiocGenerics/man/do.call.html" class="external-link">do.call()</a></code> is otherwise.</p></li>
 <li><p>Standardized how options are named, i.e. <code>future.&lt;option&gt;</code>. If you used any future options previously, make sure to check they follow the above format.</p></li>
 </ul></div>
 <div class="section level3">

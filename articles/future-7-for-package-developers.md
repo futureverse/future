@@ -95,7 +95,7 @@ parallel or sequentially. This often results in code like:
 `    `[`with`](https://rdrr.io/r/base/with.html)`(`[`plan`](https://future.futureverse.org/reference/plan.md)`(``multisession``)``, local ``=`` ``TRUE``)`\
 `    ``y`` ``<-`` ``future_lapply``(``x``, FUN ``=`` ``analyze``)`` ``## from future.apply package`\
 `  ``}`` ``else`` ``{`\
-`    ``y`` ``<-`` `[`lapply`](https://rdrr.io/r/base/lapply.html)`(``x``, FUN ``=`` ``analyze``)`\
+`    ``y`` ``<-`` `[`lapply`](https://rdrr.io/pkg/BiocGenerics/man/lapply.html)`(``x``, FUN ``=`` ``analyze``)`\
 `  ``}`\
 `  ``summarize``(``y``)`\
 `}`

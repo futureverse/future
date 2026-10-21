@@ -13,6 +13,19 @@
   [`digest::digest()`](https://eddelbuettel.github.io/digest/man/digest.html)
   is still used for older versions of R, if **digest** is installed.
 
+### Bug Fixes
+
+- The pre-created cluster `cl` set via `plan(cluster, workers = cl)`,
+  would mistakenly be shut down by `plan(sequential)`, if one of the
+  workers crashed and was relaunched.
+
+- `value(<list>, reduce = ..., inorder = FALSE)` ignored attribute
+  `init` of `reduce`.
+
+- `value(<list>, stdout = FALSE, inorder = FALSE)` and
+  `value(<list>, signal = FALSE, inorder = FALSE)` ignored arguments
+  `stdout` and `signal` when `inorder` was false FALSE.
+
 ## Version 1.80.0
 
 CRAN release: 2026-10-16
@@ -3377,7 +3390,8 @@ CRAN release: 2016-01-20
 - Add
   [`futureCall()`](https://future.futureverse.org/reference/future.md),
   which is for futures what
-  [`do.call()`](https://rdrr.io/r/base/do.call.html) is otherwise.
+  [`do.call()`](https://rdrr.io/pkg/BiocGenerics/man/do.call.html) is
+  otherwise.
 
 - Standardized how options are named, i.e. `future.<option>`. If you
   used any future options previously, make sure to check they follow the
