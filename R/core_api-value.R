@@ -680,7 +680,7 @@ value.list <- function(x, idxs = NULL, recursive = 0, reduce = NULL, stdout = TR
               mdebugf_push("value(<%s>, ...) ...", class(obj)[1])
               on.exit(mdebugf_pop())
             }
-            value <- value(obj, stdout = !inorder, signal = !inorder, drop = drop)
+            value <- value(obj, stdout = (!inorder && stdout), signal = (!inorder && signal), drop = drop)
             if (debug) mdebugf("value: <%s>", class(value)[1])
             value
           })

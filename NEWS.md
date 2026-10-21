@@ -19,6 +19,11 @@
  * `value(<list>, reduce = ..., inorder = FALSE)` ignored attribute
    `init` of `reduce`.
 
+ * `value(<list>, stdout = FALSE, inorder = FALSE)` and
+   `value(<list>, signal = FALSE, inorder = FALSE)` ignored arguments
+   `stdout` and `signal` when `inorder` was false FALSE.
+
+
 # Version 1.80.0 [2026-10-15]
 
 ## Significant Changes
