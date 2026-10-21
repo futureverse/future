@@ -14,6 +14,12 @@ running map-reduce calls concurrently.  Here are some examples of
 both:
 
 ```r
+X <- 3:1
+slow_fcn <- function(x) {
+  Sys.sleep(x / 10)
+  sqrt(x)
+}
+
 library(future)
 plan(multisession)
 
