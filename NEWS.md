@@ -1,5 +1,11 @@
 # Version (development version)
 
+## Bug Fixes
+
+ * The pre-created cluster `cl` set via `plan(cluster, workers = cl)`,
+   would mistakenly be shut down by `plan(sequential)`, if one of the
+   workers crashed and was relaunched.
+
 ## Significant Changes
 
  * `digest` is no longer a hard dependency. The package now uses

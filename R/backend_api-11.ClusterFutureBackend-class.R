@@ -1722,6 +1722,10 @@ clusterRegistry <- local({
   ## We only allow one parallel 'cluster' per session
   cluster <- NULL
 
+  ## Does clusterRegistry() own 'cluster'?
+  ## It owns it if it create it via startCluster(), otherwise not
+  owned <- FALSE
+
   getCluster <- function(..., debug = FALSE) {
     if (debug) {
       mdebug_push("getCluster() ...")
@@ -1755,22 +1759,24 @@ clusterRegistry <- local({
 
     ## Memoize
     cluster <<- cl
+    owned <<- TRUE
 
     cluster
   } ## startCluster()
 
   setCluster <- function(cl) {
-    cluster <<- cl
+    ## Update the memoized cluster if we own it, otherise not
+    if (owned) cluster <<- cl
   }
 
   stopCluster <- function(debug = FALSE) {
     if (debug) {
-      mdebug_push("Stopping existing cluster ...")
+      mdebug_push("Stopping self-owned cluster ...")
       on.exit(mdebug_pop())
     }
     ## Nothing to do?
-    if (is.null(cluster)) {
-      if (debug) mdebug("No pre-existing cluster. Skipping")
+    if (!owned) {
+      if (debug) mdebug("No self-owned cluster. Skipping")
       return(NULL)
     }
 
@@ -1778,6 +1784,7 @@ clusterRegistry <- local({
     ## Clear memoization of cluster, regardless of success or failure
     on.exit({
       cluster <<- NULL
+      owned <<- FALSE
     }, add = TRUE)
 
     if (debug) {
