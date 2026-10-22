@@ -15,6 +15,14 @@
 
 ### Bug Fixes
 
+- When launching a ‘cluster’ or ‘multisession’ future timed out while
+  waiting for an available worker, it would produce an obscure
+  errorinstead of an informative timeout error.
+
+- Waiting for an available ‘multicore’, ‘multisession’, and ‘cluster’
+  worker with a timeout greater than 60 seconds could take much longer
+  than that.
+
 - The pre-created cluster `cl` set via `plan(cluster, workers = cl)`,
   would mistakenly be shut down by `plan(sequential)`, if one of the
   workers crashed and was relaunched.
@@ -25,6 +33,9 @@
 - `value(<list>, stdout = FALSE, inorder = FALSE)` and
   `value(<list>, signal = FALSE, inorder = FALSE)` ignored arguments
   `stdout` and `signal` when `inorder` was false FALSE.
+
+- Environment variable `R_FUTURE_RELAY_IMMEDIATE` was parsed as a
+  logical flag instead of as a comma-separated string.
 
 ## Version 1.80.0
 
