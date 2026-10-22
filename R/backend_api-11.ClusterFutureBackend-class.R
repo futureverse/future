@@ -214,7 +214,7 @@ launchFuture.ClusterFutureBackend <- function(backend, future, ...) {
   ## rather than worker index? /HB 2025-07-04
   node_idx <- requestNode(await = function() {
     FutureRegistry(reg, action = "collect-first", earlySignal = TRUE, debug = debug)
-  }, backend = backend, timeout = timeout, delta = delta, alpha = alpha)
+  }, backend = backend, timeout = timeout, delta = delta, alpha = alpha, future = future)
   workers <- backend[["workers"]] ## Backend might have been updated
   future[["node"]] <- node_idx
   
@@ -1065,7 +1065,7 @@ requestNode <- local({
     if (inherits(con, "connection")) close(con)
   })
 
-  function(await, backend, timeout, delta, alpha, validateWorker = TRUE) {
+  function(await, backend, timeout, delta, alpha, validateWorker = TRUE, future = NULL) {
     debug <- isTRUE(getOption("future.debug"))
     if (debug) {
       mdebug_push("requestNode() ...")

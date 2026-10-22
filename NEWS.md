@@ -12,6 +12,10 @@
 
 ## Bug Fixes
 
+ * When launching a 'cluster' or 'multisession' future timed out while
+   waiting for an available worker, it would produce an obscure
+   errorinstead of an informative timeout error.
+
  * Waiting for an available 'multicore', 'multisession', and 'cluster'
    worker with a timeout greater than 60 seconds could take much
    longer than that.
