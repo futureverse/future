@@ -12,6 +12,10 @@
 
 ## Bug Fixes
 
+ * Waiting for an available 'multicore', 'multisession', and 'cluster'
+   worker with a timeout greater than 60 seconds could take much
+   longer than that.
+
  * The pre-created cluster `cl` set via `plan(cluster, workers = cl)`,
    would mistakenly be shut down by `plan(sequential)`, if one of the
    workers crashed and was relaunched.
