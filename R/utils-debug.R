@@ -17,33 +17,47 @@ if (!exists(".debug", inherits = FALSE)) .debug <- new.env(parent = emptyenv())
 if (!"stack" %in% names(.debug)) .debug$stack <- list()
 
 mdebug_push <- function(..., debug = isTRUE(getOption("future.debug"))) {
-  if (!debug) return()
+  if (!debug) return(invisible(0L))
   msg <- mdebug(..., debug = debug)
   .debug$stack <- c(.debug$stack, msg)
-  invisible(msg)
+  invisible(length(.debug$stack) - 1L)
 }
 
 mdebugf_push <- function(..., debug = isTRUE(getOption("future.debug"))) {
-  if (!debug) return()
+  if (!debug) return(invisible(0L))
   msg <- mdebugf(..., debug = debug)
   .debug$stack <- c(.debug$stack, msg)
-  invisible(msg)
+  invisible(length(.debug$stack) - 1L)
 }
 
-mdebug_pop <- function(..., debug = isTRUE(getOption("future.debug"))) {
-  if (!debug) return()
+mdebug_pop <- function(..., depth = NULL, debug = isTRUE(getOption("future.debug"))) {
+  if (!debug) return(invisible(0L))
+  if (!is.null(depth)) {
+    while (length(.debug$stack) > depth) {
+      mdebug_pop(debug = debug)
+    }
+    return(invisible(length(.debug$stack)))
+  }
   n <- length(.debug$stack)
   msg <- .debug$stack[n]
   .debug$stack <- .debug$stack[-n]
   mdebug(sprintf("%s done", msg), debug = debug)
+  invisible(length(.debug$stack))
 }
 
-mdebugf_pop <- function(..., debug = isTRUE(getOption("future.debug"))) {
-  if (!debug) return()
+mdebugf_pop <- function(..., depth = NULL, debug = isTRUE(getOption("future.debug"))) {
+  if (!debug) return(invisible(0L))
+  if (!is.null(depth)) {
+    while (length(.debug$stack) > depth) {
+      mdebugf_pop(debug = debug)
+    }
+    return(invisible(length(.debug$stack)))
+  }
   n <- length(.debug$stack)
   msg <- .debug$stack[n]
   .debug$stack <- .debug$stack[-n]
   mdebug(sprintf("%s done", msg), debug = debug)
+  invisible(length(.debug$stack))
 }
 
 mdebug <- function(..., prefix = now(), debug = isTRUE(getOption("future.debug"))) {
