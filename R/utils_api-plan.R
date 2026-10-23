@@ -171,8 +171,8 @@ all.equal.FutureStrategyList <- function(target, current, ..., debug = FALSE) {
       } else {
         first <- sprintf("<%s>", commaq(class(evaluator)))
       }
-      mdebugf_push("plan(): plan_cleanup(%s, cleanup = %s) ...", first, cleanup)
-      on.exit(mdebug_pop())
+      depth <- mdebugf_push("plan(): plan_cleanup(%s, cleanup = %s) ...", first, cleanup)
+      on.exit(mdebug_pop(depth = depth))
     }
 
     ## Skip clean up for other reasons?
@@ -208,8 +208,8 @@ all.equal.FutureStrategyList <- function(target, current, ..., debug = FALSE) {
 
   plan_init <- function(evaluator, debug = FALSE) {
     if (debug) {
-      mdebugf_push("plan(): plan_init() of %s ...", commaq(class(evaluator)))
-      on.exit(mdebug_pop())
+      depth <- mdebugf_push("plan(): plan_init() of %s ...", commaq(class(evaluator)))
+      on.exit(mdebug_pop(depth = depth))
     }
 
     if (debug) mstr(evaluator)
@@ -462,8 +462,8 @@ plan <- local({
     stop_if_not(!is.null(newStack), is.list(newStack), length(newStack) >= 1L)
 
     if (debug) {
-      mdebugf_push("plan(): plan_set(<%d strategies>, skip = %s, cleanup = %s, init = %s) ...", length(newStack), skip, cleanup, init)
-      on.exit(mdebug_pop())
+      depth <- mdebugf_push("plan(): plan_set(<%d strategies>, skip = %s, cleanup = %s, init = %s) ...", length(newStack), skip, cleanup, init)
+      on.exit(mdebug_pop(depth = depth))
     }
 
     oldStack <- stack
@@ -557,8 +557,8 @@ plan <- local({
       } else {
         first <- sprintf("<%s>", commaq(class(strategy)[1]))
       }
-      mdebugf_push("plan(%s, .skip = %s, .cleanup = %s, .init = %s) ...", first, .skip, .cleanup, .init)
-      on.exit(mdebug_pop())
+      depth <- mdebugf_push("plan(%s, .skip = %s, .cleanup = %s, .init = %s) ...", first, .skip, .cleanup, .init)
+      on.exit(mdebug_pop(depth = depth))
     }
     
     ## Once per session
