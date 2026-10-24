@@ -47,6 +47,10 @@
  * Environment variable `R_FUTURE_RELAY_IMMEDIATE` was parsed as a
    logical flag instead of as a comma-separated string.
 
+ * `value(<list>)` would throw an error for a future whose value
+   legitimately is an error object (e.g. `future(simpleError(...))`),
+   whereas `value(<Future>)` correctly returned it as-is.
+
 
 # Version 1.80.0 [2026-10-15]
 

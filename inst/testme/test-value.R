@@ -215,4 +215,20 @@ for (strategy in strategies) {
   } ## for (container ...)
 } ## for (strategy ...)
 
+message("- value(<list>): a future that legitimately returns an error object ...")
+## Bug: a future whose *value* happens to inherit 'error' (as opposed to one
+## whose resolution actually failed) must not be mistaken for a failure.
+## value(<Future>) already got this right; value(<list>) did not.
+plan(sequential)
+
+f <- future(simpleError("boom"))
+v1 <- value(f)
+stopifnot(identical(class(v1), c("simpleError", "error", "condition")))
+
+f2 <- future(simpleError("boom"))
+v2 <- value(list(f2))
+stopifnot(identical(v2[[1]], v1))
+
+message("- value(<list>): a future that legitimately returns an error object ... DONE")
+
 message("*** value() ... DONE")
