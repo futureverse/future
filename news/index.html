@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.80.0-9013</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.80.0-9014</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -92,12 +92,12 @@
 <li><p>Waiting for an available ‘multicore’, ‘multisession’, and ‘cluster’ worker with a timeout greater than 60 seconds could take much longer than that.</p></li>
 <li><p>The pre-created cluster <code>cl</code> set via <code>plan(cluster, workers = cl)</code>, would mistakenly be shut down by <code>plan(sequential)</code>, if one of the workers crashed and was relaunched.</p></li>
 <li><p><code>value(&lt;list&gt;, reduce = ..., inorder = FALSE)</code> ignored attribute <code>init</code> of <code>reduce</code>.</p></li>
-<li><p><code>value(&lt;list&gt;, inorder = FALSE)</code> would neither cancel nor resolve remaining futures, if one produced an error. The same would happen with <code>inorder = TRUE</code>, if there was an interrupt.</p></li>
+<li><p><code>value(&lt;list&gt;)</code> would neither cancel nor resolve the remaining futures when one produced an error (<code>inorder = FALSE</code>) or was interrupted (<code>inorder = TRUE</code>). With <code>inorder = FALSE</code>, an interrupt was not even signaled.</p></li>
 <li><p><code>value(&lt;list&gt;, stdout = FALSE, inorder = FALSE)</code> and <code>value(&lt;list&gt;, signal = FALSE, inorder = FALSE)</code> ignored arguments <code>stdout</code> and <code>signal</code> when <code>inorder</code> was false FALSE.</p></li>
-<li><p>A cluster created by <code><a href="../reference/makeClusterFuture.html">makeClusterFuture()</a></code> would evaluate language objects (e.g. call, symbol, formula, …) pass to via <code>parLapply()</code>, <code>clusterCall()</code>, and friends, instead of passing them as-is.</p></li>
+<li><p>Contrary to <code>value(&lt;Future&gt;)</code>, <code>value(&lt;list&gt;)</code> would throw an error for a future whose value is an error condition.</p></li>
 <li><p><code><a href="../reference/future.html">futureCall()</a></code> would evaluate language objects (e.g. call, symbol, formula, …) part of argument <code>args</code>, instead of passing them as-is to <code>FUN</code>.</p></li>
+<li><p>A cluster created by <code><a href="../reference/makeClusterFuture.html">makeClusterFuture()</a></code> would evaluate language objects (e.g. call, symbol, formula, …) pass to via <code>parLapply()</code>, <code>clusterCall()</code>, and friends, instead of passing them as-is.</p></li>
 <li><p>Environment variable <code>R_FUTURE_RELAY_IMMEDIATE</code> was parsed as a logical flag instead of as a comma-separated string.</p></li>
-<li><p><code>value(&lt;list&gt;)</code> would throw an error for a future whose value legitimately is an error object (e.g. <code>future(simpleError(...))</code>), whereas <code>value(&lt;Future&gt;)</code> correctly returned it as-is.</p></li>
 </ul></div>
 </div>
     <div class="section level2">

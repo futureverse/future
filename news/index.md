@@ -30,13 +30,21 @@
 - `value(<list>, reduce = ..., inorder = FALSE)` ignored attribute
   `init` of `reduce`.
 
-- `value(<list>, inorder = FALSE)` would neither cancel nor resolve
-  remaining futures, if one produced an error. The same would happen
-  with `inorder = TRUE`, if there was an interrupt.
+- `value(<list>)` would neither cancel nor resolve the remaining futures
+  when one produced an error (`inorder = FALSE`) or was interrupted
+  (`inorder = TRUE`). With `inorder = FALSE`, an interrupt was not even
+  signaled.
 
 - `value(<list>, stdout = FALSE, inorder = FALSE)` and
   `value(<list>, signal = FALSE, inorder = FALSE)` ignored arguments
   `stdout` and `signal` when `inorder` was false FALSE.
+
+- Contrary to `value(<Future>)`, `value(<list>)` would throw an error
+  for a future whose value is an error condition.
+
+- [`futureCall()`](https://future.futureverse.org/reference/future.md)
+  would evaluate language objects (e.g. call, symbol, formula, …) part
+  of argument `args`, instead of passing them as-is to `FUN`.
 
 - A cluster created by
   [`makeClusterFuture()`](https://future.futureverse.org/reference/makeClusterFuture.md)
@@ -44,16 +52,8 @@
   to via `parLapply()`, `clusterCall()`, and friends, instead of passing
   them as-is.
 
-- [`futureCall()`](https://future.futureverse.org/reference/future.md)
-  would evaluate language objects (e.g. call, symbol, formula, …) part
-  of argument `args`, instead of passing them as-is to `FUN`.
-
 - Environment variable `R_FUTURE_RELAY_IMMEDIATE` was parsed as a
   logical flag instead of as a comma-separated string.
-
-- `value(<list>)` would throw an error for a future whose value
-  legitimately is an error object (e.g. `future(simpleError(...))`),
-  whereas `value(<Future>)` correctly returned it as-is.
 
 ## Version 1.80.0
 
