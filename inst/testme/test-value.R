@@ -216,9 +216,6 @@ for (strategy in strategies) {
 } ## for (strategy ...)
 
 message("- value(<list>): a future that legitimately returns an error object ...")
-## Bug: a future whose *value* happens to inherit 'error' (as opposed to one
-## whose resolution actually failed) must not be mistaken for a failure.
-## value(<Future>) already got this right; value(<list>) did not.
 plan(sequential)
 
 f <- future(simpleError("boom"))
@@ -236,5 +233,34 @@ for (inorder in c(TRUE, FALSE)) {
 }
 
 message("- value(<list>): a future that legitimately returns an error object ... DONE")
+
+message("- value(<list>, drop = TRUE): output and conditions are relayed in order ...")
+plan(multisession, workers = 2L)
+for (drop in c(FALSE, TRUE)) {
+  message(sprintf("  drop = %s ...", drop))
+  fs <- list(
+    future({ Sys.sleep(1.0); cat("out-a\n"); message("msg-a"); 1 }),
+    future({                 cat("out-b\n"); message("msg-b"); 2 })
+  )
+  msgs <- character(0L)
+  out <- utils::capture.output({
+    v <- withCallingHandlers({
+      value(fs, drop = drop)
+    }, message = function(m) {
+      msgs <<- c(msgs, conditionMessage(m))
+      invokeRestart("muffleMessage")
+    })
+  })
+  print(out)
+  print(msgs)
+  stopifnot(
+    identical(v, list(1, 2)),
+    identical(out, c("out-a", "out-b")),
+    identical(msgs, c("msg-a\n", "msg-b\n"))
+  )
+  message(sprintf("  drop = %s ... DONE", drop))
+}
+plan(sequential)
+message("- value(<list>, drop = TRUE): output and conditions are relayed in order ... DONE")
 
 message("*** value() ... DONE")

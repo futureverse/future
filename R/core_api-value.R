@@ -556,9 +556,14 @@ value.list <- function(x, idxs = NULL, recursive = 0, reduce = NULL, stdout = TR
   remaining <- seq_len(nx)
   resolved <- logical(length = nx)
 
+  ## When relaying in order, a resolved future may have to wait for
+  ## earlier ones to be relayed first. Dropping it before then would lose
+  ## its captured output and conditions, so defer dropping to the relay
+  defer_drop <- drop && inorder && relay
+
   ## Relay, and in order or out of order?
   if (inorder) {
-    signalConditionsASAP <- make_signalConditionsASAP(nx, stdout = stdout, signal = signal, force = force && !drop, debug = debug)
+    signalConditionsASAP <- make_signalConditionsASAP(nx, stdout = stdout, signal = signal, force = force && !drop, drop = defer_drop, debug = debug)
   } else {
     signalConditionsASAP <- function(...) TRUE
   }
@@ -673,6 +678,32 @@ value.list <- function(x, idxs = NULL, recursive = 0, reduce = NULL, stdout = TR
           }
           
           if (debug) mdebugf("%s #%d", class(obj)[1], ii)
+
+          ## Infer whether the future failed (with a runtime or orchestration error)
+          res <- tryCatch(result(obj), error = identity)
+          if (inherits(res, "error")) {
+            failed <- TRUE
+          } else {
+            conditions <- res[["conditions"]]
+            n <- length(conditions)
+            failed <- (n > 0L && inherits(conditions[[n]][["condition"]], c("error", "interrupt")))
+          }
+
+          ## Collect the value before relaying, because the relaying may
+          ## drop the future (when 'defer_drop' is TRUE)
+          value <- local({
+            if (debug) {
+              mdebugf_push("value(<%s>, ...) ...", class(obj)[1])
+              on.exit(mdebugf_pop())
+            }
+            ## Allow value() to signal conditions, but ignore errors
+            value <- tryCatch({
+              value(obj, stdout = (!inorder && stdout), signal = (!inorder && signal), drop = drop && !defer_drop)
+            }, error = identity)
+            if (debug) mdebugf("value: <%s>", class(value)[1])
+            value
+          })
+
           ## Prevent errors from being signaled at this point to give
           ## remaining futures a chance to be resolved and canceled first.
           asap_error <- NULL
@@ -683,35 +714,12 @@ value.list <- function(x, idxs = NULL, recursive = 0, reduce = NULL, stdout = TR
             FALSE
           })
 
-          ## Infer whether the future failed (with a runtime or orchestration error)
-          failed <- !is.null(asap_error)
-          if (!failed) {
-            res <- tryCatch(result(obj), error = identity)
-            if (inherits(res, "error")) {
-              failed <- TRUE
-            } else {
-              conditions <- res[["conditions"]]
-              n <- length(conditions)
-              failed <- (n > 0L && inherits(conditions[[n]][["condition"]], c("error", "interrupt")))
-            }
+          ## If signalConditionsASAP() above threw (e.g. because of a
+          ## captured 'interrupt' condition), that error takes precedence.
+          if (!is.null(asap_error)) {
+            failed <- TRUE
+            value <- asap_error
           }
-
-          value <- local({
-            if (debug) {
-              mdebugf_push("value(<%s>, ...) ...", class(obj)[1])
-              on.exit(mdebugf_pop())
-            }
-            ## Allow value() to signal conditions, but ignore errors
-            value <- tryCatch({
-              value(obj, stdout = (!inorder && stdout), signal = (!inorder && signal), drop = drop)
-            }, error = identity)
-            if (debug) mdebugf("value: <%s>", class(value)[1])
-            value
-          })
-
-          ## If signalConditionsASAP() above already threw (e.g. because of
-          ## a captured 'interrupt' condition), that error takes precedence.
-          if (!is.null(asap_error)) value <- asap_error
 
           if (signal) {
             if (failed) {
@@ -832,7 +840,7 @@ value.list <- function(x, idxs = NULL, recursive = 0, reduce = NULL, stdout = TR
     if (length(remaining) > 0) Sys.sleep(sleep)
   } # while (...)
 
-  if (inorder && !drop && (relay || force)) {
+  if (inorder && (relay || (force && !drop))) {
     if (debug) mdebugf_push("Relaying remaining futures ...")
     signalConditionsASAP(resignal = FALSE, exclude = "error", pos = 0L)
     if (debug) mdebug_pop()

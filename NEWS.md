@@ -28,6 +28,9 @@
    launch any lazy futures, wait for them to finish, before signaling
    the error.
 
+ * `value(<list>, drop = TRUE, inorder = TRUE)` lost stdout and
+   conditions of futures resolved out of order.
+
  * `value(<list>, reduce = ..., inorder = FALSE)` ignored attribute
    `init` of `reduce`.
 
