@@ -735,7 +735,10 @@ value.list <- function(x, idxs = NULL, recursive = 0, reduce = NULL, stdout = TR
               ## Resolve remaining futures, while relaying output and
               ## conditions, but without signaling any errors
               for (kk in seq_along(y)) {
-                tryCatch(resolve(y[[kk]], result = TRUE, stdout = stdout, signal = signal, force = !drop), error = identity)
+                f <- y[[kk]]
+                ## Don't launch lazy futures on errors
+                if (inherits(f, "Future") && f[["state"]] == "created") next
+                tryCatch(resolve(f, result = TRUE, stdout = stdout, signal = signal, force = !drop), error = identity)
               }
               if (debug) mdebug_pop()
 

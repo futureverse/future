@@ -59,6 +59,20 @@ for (strategy in strategies) {
     message(sprintf("inorder = %s ... done", inorder))
   }
 
+  message("Assert that lazy futures are not launched when another errors")
+  f1 <- future(stop("boom"))
+  invisible(resolve(f1))
+  f2 <- future(42, lazy = TRUE)
+  fs <- list(f1, f2)
+
+  vs <- tryCatch(value(fs), error = identity)
+  print(vs)
+  stopifnot(inherits(vs, "error"), conditionMessage(vs) == "boom")
+
+  ## Assert that value(fs) did not launch the lazy future
+  print(f2[["state"]])
+  stopifnot(f2[["state"]] == "created")
+
   message(sprintf("plan('%s') .. done", strategy))
 }
 

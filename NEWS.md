@@ -24,6 +24,10 @@
    would mistakenly be shut down by `plan(sequential)`, if one of the
    workers crashed and was relaunched.
 
+ * When one of the futures produced an error, `value(<list>)` would
+   launch any lazy futures, wait for them to finish, before signaling
+   the error.
+
  * `value(<list>, reduce = ..., inorder = FALSE)` ignored attribute
    `init` of `reduce`.
 
