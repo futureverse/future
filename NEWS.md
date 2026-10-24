@@ -27,6 +27,9 @@
  * `value(<list>, reduce = ..., inorder = FALSE)` ignored attribute
    `init` of `reduce`.
 
+ * `value(<list>, inorder = FALSE)` would neither cancel nor resolve
+   remaining futures, if one produced an error.
+
  * `value(<list>, stdout = FALSE, inorder = FALSE)` and
    `value(<list>, signal = FALSE, inorder = FALSE)` ignored arguments
    `stdout` and `signal` when `inorder` was false FALSE.

@@ -680,7 +680,10 @@ value.list <- function(x, idxs = NULL, recursive = 0, reduce = NULL, stdout = TR
               mdebugf_push("value(<%s>, ...) ...", class(obj)[1])
               on.exit(mdebugf_pop())
             }
-            value <- value(obj, stdout = (!inorder && stdout), signal = (!inorder && signal), drop = drop)
+            ## Allow value() to signal conditions, but ignore errors
+            value <- tryCatch({
+              value(obj, stdout = (!inorder && stdout), signal = (!inorder && signal), drop = drop)
+            }, error = identity)
             if (debug) mdebugf("value: <%s>", class(value)[1])
             value
           })
