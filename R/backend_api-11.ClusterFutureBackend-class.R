@@ -937,7 +937,20 @@ receiveMessageFromWorker <- local({
     if (inherits(msg, "FutureResult")) {
       result <- msg
       if (debug) mdebug("Received FutureResult")
-  
+
+      ## A future that was canceled without being interrupted keeps running
+      ## on the worker. Collect its result, to keep the worker in sync, but
+      ## discard it and signal that the future was canceled instead.
+      if ("cancel" %in% future[["actions"]] && !"interrupt" %in% future[["actions"]]) {
+        if (debug) mdebug("Discarding result of canceled future")
+        future[["state"]] <- "canceled"
+        msg <- sprintf("Future (%s) of class %s was canceled", sQuoteLabel(future), class(future)[1])
+        result <- FutureCanceledError(msg, future = future)
+        future[["result"]] <- result
+        FutureRegistry(reg, action = "remove", future = future, earlySignal = FALSE, debug = debug)
+        return(result)
+      }
+
       if (inherits(future[[".journal"]], "FutureJournal")) {
         appendToFutureJournal(future,
              event = "receiveResult",

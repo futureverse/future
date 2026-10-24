@@ -24,6 +24,10 @@
    would mistakenly be shut down by `plan(sequential)`, if one of the
    workers crashed and was relaunched.
 
+ * `value()` on a canceled cluster future with interrupts disabled
+   (default), returned the value instead of signaling a
+   `FutureCanceledError`.
+
  * When one of the futures produced an error, `value(<list>)` would
    launch any lazy futures, wait for them to finish, before signaling
    the error.
