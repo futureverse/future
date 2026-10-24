@@ -1,3 +1,7 @@
+#' @tags interrupt
+#' @tags detritus-files
+#' @tags multisession
+
 library(future)
 options(future.debug = FALSE)
 
