@@ -3,7 +3,12 @@ if (getRversion() >= "4.4.0") {
   library(parallel)
 
   plan(sequential)
-  cl <- makeCluster(1L, type = future::FUTURE)
+  
+  if (getRversion() >= "4.5.0") {
+    cl <- makeCluster(1L, type = future::FUTURE)
+  } else {
+    cl <- makeClusterFuture(1L)
+  }
 
   message("clusterCall(cl, identity, quote(y)) ...")
   arg <- quote(y)
