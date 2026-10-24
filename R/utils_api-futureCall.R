@@ -32,7 +32,9 @@ futureCall <- function(FUN, args = list(), envir = parent.frame(), lazy = FALSE,
   globalEnv <- environment()
 #  envir <- new.env(parent = envir)
 
-  expr <- quote(do.call(what = FUN, args = args))
+  ## quote(..., quote = TRUE) is needed here to avoid language arguments
+  ## from being re-evaluated
+  expr <- quote(do.call(what = FUN, args = args, quote = TRUE))
 
 
   ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

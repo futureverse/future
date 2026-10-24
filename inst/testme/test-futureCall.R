@@ -207,5 +207,14 @@ stopifnot(!is.null(v))
 print(v)
 stopifnot(inherits(v, "error"))
 
+plan(sequential)
+
+## Assert that futureCall() does not evaluate language-object elements
+## (call, symbol, formula, ...) in the 'args' argument
+arg <- quote(y)
+f <- futureCall(identity, list(arg))
+v <- value(f)
+stopifnot(identical(v, arg))
+
 message("*** futureCall() ... DONE")
 

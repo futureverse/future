@@ -40,6 +40,10 @@
    `parLapply()`, `clusterCall()`, and friends, instead of passing
    them as-is.
 
+ * `futureCall()` would evaluate language objects (e.g. call, symbol,
+   formula, ...) part of argument `args`, instead of passing them
+   as-is to `FUN`.
+
  * Environment variable `R_FUTURE_RELAY_IMMEDIATE` was parsed as a
    logical flag instead of as a comma-separated string.
 
