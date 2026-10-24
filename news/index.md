@@ -16,8 +16,8 @@
 ### Bug Fixes
 
 - When launching a ‘cluster’ or ‘multisession’ future timed out while
-  waiting for an available worker, it would produce an obscure
-  errorinstead of an informative timeout error.
+  waiting for an available worker, it would produce an obscure error
+  instead of an informative timeout error.
 
 - Waiting for an available ‘multicore’, ‘multisession’, and ‘cluster’
   worker with a timeout greater than 60 seconds could take much longer
@@ -26,6 +26,13 @@
 - The pre-created cluster `cl` set via `plan(cluster, workers = cl)`,
   would mistakenly be shut down by `plan(sequential)`, if one of the
   workers crashed and was relaunched.
+
+- When one of the futures produced an error, `value(<list>)` would
+  launch any lazy futures, wait for them to finish, before signaling the
+  error.
+
+- `value(<list>, drop = TRUE, inorder = TRUE)` lost stdout and
+  conditions of futures resolved out of order.
 
 - `value(<list>, reduce = ..., inorder = FALSE)` ignored attribute
   `init` of `reduce`.
@@ -37,7 +44,7 @@
 
 - `value(<list>, stdout = FALSE, inorder = FALSE)` and
   `value(<list>, signal = FALSE, inorder = FALSE)` ignored arguments
-  `stdout` and `signal` when `inorder` was false FALSE.
+  `stdout` and `signal` when `inorder` was FALSE.
 
 - Contrary to `value(<Future>)`, `value(<list>)` would throw an error
   for a future whose value is an error condition.
@@ -48,8 +55,8 @@
 
 - A cluster created by
   [`makeClusterFuture()`](https://future.futureverse.org/reference/makeClusterFuture.md)
-  would evaluate language objects (e.g. call, symbol, formula, …) pass
-  to via `parLapply()`, `clusterCall()`, and friends, instead of passing
+  would evaluate language objects (e.g. call, symbol, formula, …) passed
+  via `parLapply()`, `clusterCall()`, and friends, instead of passing
   them as-is.
 
 - Environment variable `R_FUTURE_RELAY_IMMEDIATE` was parsed as a
