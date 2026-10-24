@@ -30,9 +30,18 @@
 - `value(<list>, reduce = ..., inorder = FALSE)` ignored attribute
   `init` of `reduce`.
 
+- `value(<list>, inorder = FALSE)` would neither cancel nor resolve
+  remaining futures, if one produced an error.
+
 - `value(<list>, stdout = FALSE, inorder = FALSE)` and
   `value(<list>, signal = FALSE, inorder = FALSE)` ignored arguments
   `stdout` and `signal` when `inorder` was false FALSE.
+
+- A cluster created by
+  [`makeClusterFuture()`](https://future.futureverse.org/reference/makeClusterFuture.md)
+  would evaluate language objects (e.g. call, symbol, formula, …) pass
+  to via `parLapply()`, `clusterCall()`, and friends, instead of passing
+  them as-is.
 
 - Environment variable `R_FUTURE_RELAY_IMMEDIATE` was parsed as a
   logical flag instead of as a comma-separated string.

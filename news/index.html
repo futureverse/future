@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.80.0-9007</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.80.0-9010</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -92,7 +92,9 @@
 <li><p>Waiting for an available ‘multicore’, ‘multisession’, and ‘cluster’ worker with a timeout greater than 60 seconds could take much longer than that.</p></li>
 <li><p>The pre-created cluster <code>cl</code> set via <code>plan(cluster, workers = cl)</code>, would mistakenly be shut down by <code>plan(sequential)</code>, if one of the workers crashed and was relaunched.</p></li>
 <li><p><code>value(&lt;list&gt;, reduce = ..., inorder = FALSE)</code> ignored attribute <code>init</code> of <code>reduce</code>.</p></li>
+<li><p><code>value(&lt;list&gt;, inorder = FALSE)</code> would neither cancel nor resolve remaining futures, if one produced an error.</p></li>
 <li><p><code>value(&lt;list&gt;, stdout = FALSE, inorder = FALSE)</code> and <code>value(&lt;list&gt;, signal = FALSE, inorder = FALSE)</code> ignored arguments <code>stdout</code> and <code>signal</code> when <code>inorder</code> was false FALSE.</p></li>
+<li><p>A cluster created by <code><a href="../reference/makeClusterFuture.html">makeClusterFuture()</a></code> would evaluate language objects (e.g. call, symbol, formula, …) pass to via <code>parLapply()</code>, <code>clusterCall()</code>, and friends, instead of passing them as-is.</p></li>
 <li><p>Environment variable <code>R_FUTURE_RELAY_IMMEDIATE</code> was parsed as a logical flag instead of as a comma-separated string.</p></li>
 </ul></div>
 </div>
