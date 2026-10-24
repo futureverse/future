@@ -225,9 +225,15 @@ f <- future(simpleError("boom"))
 v1 <- value(f)
 stopifnot(identical(class(v1), c("simpleError", "error", "condition")))
 
-f2 <- future(simpleError("boom"))
-v2 <- value(list(f2))
-stopifnot(identical(v2[[1]], v1))
+for (inorder in c(TRUE, FALSE)) {
+  for (drop in c(FALSE, TRUE)) {
+    message(sprintf("  inorder = %s, drop = %s ...", inorder, drop))
+    f2 <- future(simpleError("boom"))
+    v2 <- value(list(f2), inorder = inorder, drop = drop)
+    stopifnot(identical(v2[[1]], v1))
+    message(sprintf("  inorder = %s, drop = %s ... DONE", inorder, drop))
+  }
+}
 
 message("- value(<list>): a future that legitimately returns an error object ... DONE")
 
