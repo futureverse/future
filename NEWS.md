@@ -14,7 +14,7 @@
 
  * When launching a 'cluster' or 'multisession' future timed out while
    waiting for an available worker, it would produce an obscure
-   errorinstead of an informative timeout error.
+   error instead of an informative timeout error.
 
  * Waiting for an available 'multicore', 'multisession', and 'cluster'
    worker with a timeout greater than 60 seconds could take much
@@ -34,7 +34,7 @@
 
  * `value(<list>, stdout = FALSE, inorder = FALSE)` and
    `value(<list>, signal = FALSE, inorder = FALSE)` ignored arguments
-   `stdout` and `signal` when `inorder` was false FALSE.
+   `stdout` and `signal` when `inorder` was FALSE.
 
  * Contrary to `value(<Future>)`, `value(<list>)` would throw an error
    for a future whose value is an error condition.
@@ -44,7 +44,7 @@
    as-is to `FUN`.
 
  * A cluster created by `makeClusterFuture()` would evaluate language
-   objects (e.g. call, symbol, formula, ...) pass to via
+   objects (e.g. call, symbol, formula, ...) passed via
    `parLapply()`, `clusterCall()`, and friends, instead of passing
    them as-is.
 
