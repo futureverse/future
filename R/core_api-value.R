@@ -673,8 +673,16 @@ value.list <- function(x, idxs = NULL, recursive = 0, reduce = NULL, stdout = TR
           }
           
           if (debug) mdebugf("%s #%d", class(obj)[1], ii)
-          relay_ok <- relay && signalConditionsASAP(obj, resignal = FALSE, exclude = "error", pos = ii)
-          
+          ## Prevent errors from being signaled at this point to give
+          ## remaining futures a chance to be resolved and canceled first.
+          asap_error <- NULL
+          relay_ok <- tryCatch({
+            relay && signalConditionsASAP(obj, resignal = FALSE, exclude = "error", pos = ii)
+          }, error = function(ex) {
+            asap_error <<- ex
+            FALSE
+          })
+
           value <- local({
             if (debug) {
               mdebugf_push("value(<%s>, ...) ...", class(obj)[1])
@@ -687,6 +695,10 @@ value.list <- function(x, idxs = NULL, recursive = 0, reduce = NULL, stdout = TR
             if (debug) mdebugf("value: <%s>", class(value)[1])
             value
           })
+
+          ## If signalConditionsASAP() above already threw (e.g. because of
+          ## a captured 'interrupt' condition), that error takes precedence.
+          if (!is.null(asap_error)) value <- asap_error
           
           if (signal && inherits(value, "error")) {
             if (debug) mdebugf_push("signal %s ...", class(value)[1])

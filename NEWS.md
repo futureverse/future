@@ -28,8 +28,9 @@
    `init` of `reduce`.
 
  * `value(<list>, inorder = FALSE)` would neither cancel nor resolve
-   remaining futures, if one produced an error.
-
+   remaining futures, if one produced an error. The same would happen
+   with `inorder = TRUE`, if there was an interrupt.
+   
  * `value(<list>, stdout = FALSE, inorder = FALSE)` and
    `value(<list>, signal = FALSE, inorder = FALSE)` ignored arguments
    `stdout` and `signal` when `inorder` was false FALSE.
