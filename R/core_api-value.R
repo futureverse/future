@@ -683,6 +683,19 @@ value.list <- function(x, idxs = NULL, recursive = 0, reduce = NULL, stdout = TR
             FALSE
           })
 
+          ## Infer whether the future failed (with a runtime or orchestration error)
+          failed <- !is.null(asap_error)
+          if (!failed) {
+            res <- tryCatch(result(obj), error = identity)
+            if (inherits(res, "error")) {
+              failed <- TRUE
+            } else {
+              conditions <- res[["conditions"]]
+              n <- length(conditions)
+              failed <- (n > 0L && inherits(conditions[[n]][["condition"]], c("error", "interrupt")))
+            }
+          }
+
           value <- local({
             if (debug) {
               mdebugf_push("value(<%s>, ...) ...", class(obj)[1])
@@ -698,22 +711,9 @@ value.list <- function(x, idxs = NULL, recursive = 0, reduce = NULL, stdout = TR
 
           ## If signalConditionsASAP() above already threw (e.g. because of
           ## a captured 'interrupt' condition), that error takes precedence.
-          failed <- !is.null(asap_error)
-          if (failed) value <- asap_error
+          if (!is.null(asap_error)) value <- asap_error
 
-          if (signal && (failed || inherits(value, "error"))) {
-            ## Handle when the future returned an error vs produced an error
-            if (!failed) {
-              res <- tryCatch(result(obj), error = identity)
-              if (inherits(res, "error")) {
-                failed <- TRUE
-              } else {
-                conditions <- res[["conditions"]]
-                n <- length(conditions)
-                failed <- (n > 0L && inherits(conditions[[n]][["condition"]], "error"))
-              }
-            }
-
+          if (signal) {
             if (failed) {
               if (debug) mdebugf_push("signal %s ...", class(value)[1])
 
@@ -745,7 +745,7 @@ value.list <- function(x, idxs = NULL, recursive = 0, reduce = NULL, stdout = TR
               }
               stop(value)
             } ## if (failed)
-          } ## if (signal && (...))
+          } ## if (signal)
           
           resolved[ii] <- TRUE
           x[ii] <- list(NULL)
