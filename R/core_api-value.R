@@ -704,6 +704,18 @@ value.list <- function(x, idxs = NULL, recursive = 0, reduce = NULL, stdout = TR
             value
           })
 
+          ## value() may add conditions to the result, e.g. an RngFutureError
+          ## when RNGs were used without declaring it, so check again,
+          ## unless value() dropped the future, and with it its result
+          if (!failed && !(drop && !defer_drop)) {
+            res <- tryCatch(result(obj), error = identity)
+            if (inherits(res, "FutureResult")) {
+              conditions <- res[["conditions"]]
+              n <- length(conditions)
+              failed <- (n > 0L && inherits(conditions[[n]][["condition"]], c("error", "interrupt")))
+            }
+          }
+
           ## Prevent errors from being signaled at this point to give
           ## remaining futures a chance to be resolved and canceled first.
           asap_error <- NULL

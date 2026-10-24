@@ -234,6 +234,31 @@ for (inorder in c(TRUE, FALSE)) {
 
 message("- value(<list>): a future that legitimately returns an error object ... DONE")
 
+message("- value(<list>): an error signaled by value(<Future>) itself is thrown ...")
+plan(sequential)
+
+## The RNG misuse error is signaled by value(), not captured in the result
+oopts <- options(future.rng.onMisuse = "error")
+
+f <- future(sample(0:3, size = 1L), seed = FALSE)
+e1 <- tryCatch(value(f), error = identity)
+stopifnot(inherits(e1, "RngFutureError"))
+
+for (inorder in c(TRUE, FALSE)) {
+  for (drop in c(FALSE, TRUE)) {
+    ## Not yet supported: the error is returned, not thrown
+    if (!inorder && drop) next
+    message(sprintf("  inorder = %s, drop = %s ...", inorder, drop))
+    f2 <- future(sample(0:3, size = 1L), seed = FALSE)
+    e2 <- tryCatch(value(list(f2), inorder = inorder, drop = drop), error = identity)
+    stopifnot(inherits(e2, "RngFutureError"))
+    message(sprintf("  inorder = %s, drop = %s ... DONE", inorder, drop))
+  }
+}
+
+options(oopts)
+message("- value(<list>): an error signaled by value(<Future>) itself is thrown ... DONE")
+
 message("- value(<list>, drop = TRUE): output and conditions are relayed in order ...")
 plan(multisession, workers = 2L)
 for (drop in c(FALSE, TRUE)) {
