@@ -18,6 +18,9 @@
 
 ### Bug Fixes
 
+- `value(<list>)` would leave the remaining futures running, instead of
+  canceling them, if a lazy future failed to launch.
+
 - Contrary to `value(<Future>)`, `value(<list>)` would throw an error
   for a future whose value is an error condition.
 
