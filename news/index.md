@@ -15,6 +15,17 @@
 
 ### Bug Fixes
 
+- [`value()`](https://future.futureverse.org/reference/value.md) on a
+  future that was canceled with
+  [`cancel()`](https://future.futureverse.org/reference/cancel.md) and
+  interrupted could signal a `FutureInterruptError` instead of a
+  `FutureCanceledError`, e.g. for ‘multicore’ futures.
+
+- [`value()`](https://future.futureverse.org/reference/value.md) on a
+  canceled sequential future returned the value, instead of signaling a
+  `FutureCanceledError`. Canceling a sequential future now makes it
+  invalid.
+
 - When launching a ‘cluster’ or ‘multisession’ future timed out while
   waiting for an available worker, it would produce an obscure error
   instead of an informative timeout error.
@@ -26,6 +37,10 @@
 - The pre-created cluster `cl` set via `plan(cluster, workers = cl)`,
   would mistakenly be shut down by `plan(sequential)`, if one of the
   workers crashed and was relaunched.
+
+- [`value()`](https://future.futureverse.org/reference/value.md) on a
+  canceled cluster future with interrupts disabled (default), returned
+  the value instead of signaling a `FutureCanceledError`.
 
 - When one of the futures produced an error, `value(<list>)` would
   launch any lazy futures, wait for them to finish, before signaling the

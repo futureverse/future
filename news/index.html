@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.80.0-9016</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.80.0-9023</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -88,9 +88,12 @@
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-development-version">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h3>
-<ul><li><p>When launching a ‘cluster’ or ‘multisession’ future timed out while waiting for an available worker, it would produce an obscure error instead of an informative timeout error.</p></li>
+<ul><li><p><code><a href="../reference/value.html">value()</a></code> on a future that was canceled with <code><a href="../reference/cancel.html">cancel()</a></code> and interrupted could signal a <code>FutureInterruptError</code> instead of a <code>FutureCanceledError</code>, e.g. for ‘multicore’ futures.</p></li>
+<li><p><code><a href="../reference/value.html">value()</a></code> on a canceled sequential future returned the value, instead of signaling a <code>FutureCanceledError</code>. Canceling a sequential future now makes it invalid.</p></li>
+<li><p>When launching a ‘cluster’ or ‘multisession’ future timed out while waiting for an available worker, it would produce an obscure error instead of an informative timeout error.</p></li>
 <li><p>Waiting for an available ‘multicore’, ‘multisession’, and ‘cluster’ worker with a timeout greater than 60 seconds could take much longer than that.</p></li>
 <li><p>The pre-created cluster <code>cl</code> set via <code>plan(cluster, workers = cl)</code>, would mistakenly be shut down by <code>plan(sequential)</code>, if one of the workers crashed and was relaunched.</p></li>
+<li><p><code><a href="../reference/value.html">value()</a></code> on a canceled cluster future with interrupts disabled (default), returned the value instead of signaling a <code>FutureCanceledError</code>.</p></li>
 <li><p>When one of the futures produced an error, <code>value(&lt;list&gt;)</code> would launch any lazy futures, wait for them to finish, before signaling the error.</p></li>
 <li><p><code>value(&lt;list&gt;, drop = TRUE, inorder = TRUE)</code> lost stdout and conditions of futures resolved out of order.</p></li>
 <li><p><code>value(&lt;list&gt;, reduce = ..., inorder = FALSE)</code> ignored attribute <code>init</code> of <code>reduce</code>.</p></li>
