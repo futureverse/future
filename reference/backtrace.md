@@ -42,9 +42,9 @@ res <- tryCatch({
 #> [[1]]
 #> base::tryCatch(base::withCallingHandlers({
 #>     NULL
-#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpYXz1rp/callr-fun-1e993446c72721"), 
+#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpolI32v/callr-fun-1f07a568bb5e4a"), 
 #>         base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
-#>         quote = TRUE), file = "/tmp/hb/RtmpYXz1rp/callr-res-1e993422d0d7aa", 
+#>         quote = TRUE), file = "/tmp/hb/RtmpolI32v/callr-res-1f07a5362d92e1", 
 #>         compress = FALSE)
 #>     base::flush(base::stdout())
 #>     base::flush(base::stderr())
@@ -73,7 +73,7 @@ res <- tryCatch({
 #>         if (callr_data$has_otel) {
 #>             callr_data$otel_span$record_exception(e2)
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpYXz1rp/callr-res-1e993422d0d7aa", 
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpolI32v/callr-res-1f07a5362d92e1", 
 #>             ".error"))
 #>     }
 #> }, interrupt = function(e) {
@@ -99,7 +99,7 @@ res <- tryCatch({
 #>         if (callr_data$has_otel) {
 #>             callr_data$otel_span$record_exception(e2)
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpYXz1rp/callr-res-1e993422d0d7aa", 
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpolI32v/callr-res-1f07a5362d92e1", 
 #>             ".error"))
 #>     }
 #> }, callr_message = function(e) {
@@ -143,9 +143,9 @@ res <- tryCatch({
 #> [[8]]
 #> base::withCallingHandlers({
 #>     NULL
-#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpYXz1rp/callr-fun-1e993446c72721"), 
+#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpolI32v/callr-fun-1f07a568bb5e4a"), 
 #>         base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
-#>         quote = TRUE), file = "/tmp/hb/RtmpYXz1rp/callr-res-1e993422d0d7aa", 
+#>         quote = TRUE), file = "/tmp/hb/RtmpolI32v/callr-res-1f07a5362d92e1", 
 #>         compress = FALSE)
 #>     base::flush(base::stdout())
 #>     base::flush(base::stderr())
@@ -174,7 +174,7 @@ res <- tryCatch({
 #>         if (callr_data$has_otel) {
 #>             callr_data$otel_span$record_exception(e2)
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpYXz1rp/callr-res-1e993422d0d7aa", 
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpolI32v/callr-res-1f07a5362d92e1", 
 #>             ".error"))
 #>     }
 #> }, interrupt = function(e) {
@@ -200,7 +200,7 @@ res <- tryCatch({
 #>         if (callr_data$has_otel) {
 #>             callr_data$otel_span$record_exception(e2)
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpYXz1rp/callr-res-1e993422d0d7aa", 
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpolI32v/callr-res-1f07a5362d92e1", 
 #>             ".error"))
 #>     }
 #> }, callr_message = function(e) {
@@ -208,13 +208,13 @@ res <- tryCatch({
 #> })
 #> 
 #> [[9]]
-#> base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpYXz1rp/callr-fun-1e993446c72721"), 
+#> base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpolI32v/callr-fun-1f07a568bb5e4a"), 
 #>     base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
-#>     quote = TRUE), file = "/tmp/hb/RtmpYXz1rp/callr-res-1e993422d0d7aa", 
+#>     quote = TRUE), file = "/tmp/hb/RtmpolI32v/callr-res-1f07a5362d92e1", 
 #>     compress = FALSE)
 #> 
 #> [[10]]
-#> base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpYXz1rp/callr-fun-1e993446c72721"), 
+#> base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpolI32v/callr-fun-1f07a568bb5e4a"), 
 #>     base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
 #>     quote = TRUE)
 #> 
@@ -231,8 +231,8 @@ res <- tryCatch({
 #>     options(cli.num_colors = cli_colors, cli.hyperlink = hyperlinks, 
 #>         cli.hyperlink_run = hyperlinks)
 #>     pkgdown::build_site(...)
-#> }), base::quote(list(pkg = list(package = "future", version = "1.80.0-9024", 
-#>     src_path = "/tmp/hb/RtmpYXz1rp/future", meta = list(url = "https://future.futureverse.org", 
+#> }), base::quote(list(pkg = list(package = "future", version = "1.80.0-9025", 
+#>     src_path = "/tmp/hb/RtmpolI32v/future", meta = list(url = "https://future.futureverse.org", 
 #>         home = list(links = list(list(text = "Roadmap/Milestones", 
 #>             href = "https://github.com/futureverse/future/milestones"), 
 #>             list(text = "The Futureverse Project", href = "https://www.futureverse.org/"), 
@@ -273,7 +273,7 @@ res <- tryCatch({
 #>             bootstrap = 5L, `light-switch` = TRUE)), desc = <environment>, 
 #>     bs_version = 5L, development = list(destination = "dev", 
 #>         mode = "default", version_label = "muted", in_dev = FALSE, 
-#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/RtmpYXz1rp/future/docs", 
+#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/RtmpolI32v/future/docs", 
 #>     lang = "en-US", install_metadata = FALSE, figures = list(
 #>         dev = "ragg::agg_png", dpi = 96L, dev.args = list(), 
 #>         fig.ext = "png", fig.width = 7.29166666666667, fig.height = NULL, 
@@ -903,13 +903,32 @@ res <- tryCatch({
 #>                   "\n"), "\n", list("\n", list("cancel()"), " returns (invisibly) ", 
 #>                   list("x"), " after canceling every ", list(
 #>                     "Future"), "\n", "therein, that is, after flagging each one as \"canceled\" and\n", 
-#>                   "possibly interrupting it as well.\n", "\n", 
-#>                   "Canceling a lazy or a finished future has no effect. Elements of\n", 
-#>                   list("x"), " that are neither futures nor collections of futures are left\n", 
-#>                   "untouched.\n"), "\n", list("\n", "Cancels futures, with the option to interrupt running ones.\n", 
-#>                   list("cancel()"), " is vectorized, i.e. accepts a collection of futures\n", 
-#>                   "to be canceled.\n"), "\n", list("\n", list(
-#>                   "if ((interactive() || .Platform[[\"OS.type\"]] != \"windows\")) withAutoprint({ # examplesIf"), 
+#>                   "possibly interrupting it as well. If ", list(
+#>                     "x"), " is not a future, or holds\n", "non-futures, such elements are unaffected.\n"), 
+#>                 "\n", list("\n", "Cancels futures, with the option to interrupt running ones.\n", 
+#>                   "A canceled future is invalid, e.g. calling ", 
+#>                   list(list("value()")), " on it produces\n", 
+#>                   "an error. ", list("cancel()"), " is vectorized, i.e. accepts a set of futures to\n", 
+#>                   "be canceled.\n"), "\n", list("\n", "A canceled future is invalid. Calling ", 
+#>                   list(list("value()")), " on it produces a\n", 
+#>                   list("FutureCanceledError"), ", which inherits from ", 
+#>                   list("FutureInterruptError"), ".\n", "A ", 
+#>                   list("FutureInterruptError"), " can happen also for external reasons. The\n", 
+#>                   "cancelation error is signaled regardless of:\n", 
+#>                   list("\n", list(), " ", list("interrupt"), 
+#>                     ", that is, also when ", list("interrupt = FALSE"), 
+#>                     ", or when the\n", "future backend does not support interrupts;\n", 
+#>                     list(), " the state of the future, that is, if it is non-launched, running,\n", 
+#>                     "finished;\n", list(), " the future would have produced a value or an error or not.\n"), 
+#>                   "\n", "\n", "If the future is not interrupted, its parallel worker keeps processing\n", 
+#>                   "it until it is done, when the result is collected and immediately\n", 
+#>                   "discarded.\n", "\n", "To keep the value of a future that is already resolved, which still\n", 
+#>                   "canceling others, use something like ", list(
+#>                     "cancel(fs[!resolved(fs)])"), ".\n", "\n", 
+#>                   "Canceling an already canceled future, or an interrupted one has no\n", 
+#>                   "effect. Neither has canceling a future that was dropped using\n", 
+#>                   list("value(..., drop = TRUE)"), ".\n"), "\n", 
+#>                 list("\n", list("if ((interactive() || .Platform[[\"OS.type\"]] != \"windows\")) withAutoprint({ # examplesIf"), 
 #>                   "\n", "## Set up two parallel workers\n", "plan(multisession, workers = 2)\n", 
 #>                   "\n", "## Launch two long running futures\n", 
 #>                   "fs <- lapply(c(1, 2), function(duration) {\n", 
@@ -3114,8 +3133,8 @@ res <- tryCatch({
 #>     options(cli.num_colors = cli_colors, cli.hyperlink = hyperlinks, 
 #>         cli.hyperlink_run = hyperlinks)
 #>     pkgdown::build_site(...)
-#> })(pkg = base::quote(list(package = "future", version = "1.80.0-9024", 
-#>     src_path = "/tmp/hb/RtmpYXz1rp/future", meta = list(url = "https://future.futureverse.org", 
+#> })(pkg = base::quote(list(package = "future", version = "1.80.0-9025", 
+#>     src_path = "/tmp/hb/RtmpolI32v/future", meta = list(url = "https://future.futureverse.org", 
 #>         home = list(links = list(list(text = "Roadmap/Milestones", 
 #>             href = "https://github.com/futureverse/future/milestones"), 
 #>             list(text = "The Futureverse Project", href = "https://www.futureverse.org/"), 
@@ -3156,7 +3175,7 @@ res <- tryCatch({
 #>             bootstrap = 5L, `light-switch` = TRUE)), desc = <environment>, 
 #>     bs_version = 5L, development = list(destination = "dev", 
 #>         mode = "default", version_label = "muted", in_dev = FALSE, 
-#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/RtmpYXz1rp/future/docs", 
+#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/RtmpolI32v/future/docs", 
 #>     lang = "en-US", install_metadata = FALSE, figures = list(
 #>         dev = "ragg::agg_png", dpi = 96L, dev.args = list(), 
 #>         fig.ext = "png", fig.width = 7.29166666666667, fig.height = NULL, 
@@ -3786,13 +3805,32 @@ res <- tryCatch({
 #>                   "\n"), "\n", list("\n", list("cancel()"), " returns (invisibly) ", 
 #>                   list("x"), " after canceling every ", list(
 #>                     "Future"), "\n", "therein, that is, after flagging each one as \"canceled\" and\n", 
-#>                   "possibly interrupting it as well.\n", "\n", 
-#>                   "Canceling a lazy or a finished future has no effect. Elements of\n", 
-#>                   list("x"), " that are neither futures nor collections of futures are left\n", 
-#>                   "untouched.\n"), "\n", list("\n", "Cancels futures, with the option to interrupt running ones.\n", 
-#>                   list("cancel()"), " is vectorized, i.e. accepts a collection of futures\n", 
-#>                   "to be canceled.\n"), "\n", list("\n", list(
-#>                   "if ((interactive() || .Platform[[\"OS.type\"]] != \"windows\")) withAutoprint({ # examplesIf"), 
+#>                   "possibly interrupting it as well. If ", list(
+#>                     "x"), " is not a future, or holds\n", "non-futures, such elements are unaffected.\n"), 
+#>                 "\n", list("\n", "Cancels futures, with the option to interrupt running ones.\n", 
+#>                   "A canceled future is invalid, e.g. calling ", 
+#>                   list(list("value()")), " on it produces\n", 
+#>                   "an error. ", list("cancel()"), " is vectorized, i.e. accepts a set of futures to\n", 
+#>                   "be canceled.\n"), "\n", list("\n", "A canceled future is invalid. Calling ", 
+#>                   list(list("value()")), " on it produces a\n", 
+#>                   list("FutureCanceledError"), ", which inherits from ", 
+#>                   list("FutureInterruptError"), ".\n", "A ", 
+#>                   list("FutureInterruptError"), " can happen also for external reasons. The\n", 
+#>                   "cancelation error is signaled regardless of:\n", 
+#>                   list("\n", list(), " ", list("interrupt"), 
+#>                     ", that is, also when ", list("interrupt = FALSE"), 
+#>                     ", or when the\n", "future backend does not support interrupts;\n", 
+#>                     list(), " the state of the future, that is, if it is non-launched, running,\n", 
+#>                     "finished;\n", list(), " the future would have produced a value or an error or not.\n"), 
+#>                   "\n", "\n", "If the future is not interrupted, its parallel worker keeps processing\n", 
+#>                   "it until it is done, when the result is collected and immediately\n", 
+#>                   "discarded.\n", "\n", "To keep the value of a future that is already resolved, which still\n", 
+#>                   "canceling others, use something like ", list(
+#>                     "cancel(fs[!resolved(fs)])"), ".\n", "\n", 
+#>                   "Canceling an already canceled future, or an interrupted one has no\n", 
+#>                   "effect. Neither has canceling a future that was dropped using\n", 
+#>                   list("value(..., drop = TRUE)"), ".\n"), "\n", 
+#>                 list("\n", list("if ((interactive() || .Platform[[\"OS.type\"]] != \"windows\")) withAutoprint({ # examplesIf"), 
 #>                   "\n", "## Set up two parallel workers\n", "plan(multisession, workers = 2)\n", 
 #>                   "\n", "## Launch two long running futures\n", 
 #>                   "fs <- lapply(c(1, 2), function(duration) {\n", 

@@ -70,12 +70,12 @@ print(f)
 #> Actions: [n=1] ‘run’
 #> State: ‘finished’ ("Future was resolved successfully")
 #> Resolved: TRUE
-#> Unique identifier: 68e41b69e65c6366a54175ee40f40121-12
-#> Owner process: 68e41b69e65c6366a54175ee40f40121
+#> Unique identifier: 8b7a205e1ec068a8f85d6556df675d25-12
+#> Owner process: 8b7a205e1ec068a8f85d6556df675d25
 #> Class: ‘SequentialFuture’, ‘UniprocessFuture’, ‘Future’
 #> Value: 39 bytes of class ‘numeric’
-#> Duration: 0.003022194 secs (started 2026-10-25 08:16:12.095094)
-#> Worker process: 68e41b69e65c6366a54175ee40f40121
+#> Duration: 0.00317812 secs (started 2026-10-25 08:36:58.371694)
+#> Worker process: 8b7a205e1ec068a8f85d6556df675d25
 
 b %<-% { 2 }
 
@@ -99,12 +99,12 @@ print(f)
 #> Actions: [n=1] ‘run’
 #> State: ‘finished’ ("Future was resolved successfully")
 #> Resolved: TRUE
-#> Unique identifier: 68e41b69e65c6366a54175ee40f40121-13
-#> Owner process: 68e41b69e65c6366a54175ee40f40121
+#> Unique identifier: 8b7a205e1ec068a8f85d6556df675d25-13
+#> Owner process: 8b7a205e1ec068a8f85d6556df675d25
 #> Class: ‘SequentialFuture’, ‘UniprocessFuture’, ‘Future’
 #> Value: 39 bytes of class ‘numeric’
-#> Duration: 0.002961397 secs (started 2026-10-25 08:16:12.106073)
-#> Worker process: 68e41b69e65c6366a54175ee40f40121
+#> Duration: 0.002925634 secs (started 2026-10-25 08:36:58.383646)
+#> Worker process: 8b7a205e1ec068a8f85d6556df675d25
 
 ## All futures
 fs <- futureOf()
@@ -128,12 +128,12 @@ print(fs)
 #> Actions: [n=1] ‘run’
 #> State: ‘finished’ ("Future was resolved successfully")
 #> Resolved: TRUE
-#> Unique identifier: 68e41b69e65c6366a54175ee40f40121-12
-#> Owner process: 68e41b69e65c6366a54175ee40f40121
+#> Unique identifier: 8b7a205e1ec068a8f85d6556df675d25-12
+#> Owner process: 8b7a205e1ec068a8f85d6556df675d25
 #> Class: ‘SequentialFuture’, ‘UniprocessFuture’, ‘Future’
 #> Value: 39 bytes of class ‘numeric’
-#> Duration: 0.003022194 secs (started 2026-10-25 08:16:12.095094)
-#> Worker process: 68e41b69e65c6366a54175ee40f40121
+#> Duration: 0.00317812 secs (started 2026-10-25 08:36:58.371694)
+#> Worker process: 8b7a205e1ec068a8f85d6556df675d25
 #> 
 #> $b
 #> SequentialFuture:
@@ -154,12 +154,12 @@ print(fs)
 #> Actions: [n=1] ‘run’
 #> State: ‘finished’ ("Future was resolved successfully")
 #> Resolved: TRUE
-#> Unique identifier: 68e41b69e65c6366a54175ee40f40121-13
-#> Owner process: 68e41b69e65c6366a54175ee40f40121
+#> Unique identifier: 8b7a205e1ec068a8f85d6556df675d25-13
+#> Owner process: 8b7a205e1ec068a8f85d6556df675d25
 #> Class: ‘SequentialFuture’, ‘UniprocessFuture’, ‘Future’
 #> Value: 39 bytes of class ‘numeric’
-#> Duration: 0.002961397 secs (started 2026-10-25 08:16:12.106073)
-#> Worker process: 68e41b69e65c6366a54175ee40f40121
+#> Duration: 0.002925634 secs (started 2026-10-25 08:36:58.383646)
+#> Worker process: 8b7a205e1ec068a8f85d6556df675d25
 #> 
 #> $f
 #> SequentialFuture:
@@ -180,12 +180,12 @@ print(fs)
 #> Actions: [n=1] ‘run’
 #> State: ‘finished’ ("Future was resolved successfully")
 #> Resolved: TRUE
-#> Unique identifier: 68e41b69e65c6366a54175ee40f40121-13
-#> Owner process: 68e41b69e65c6366a54175ee40f40121
+#> Unique identifier: 8b7a205e1ec068a8f85d6556df675d25-13
+#> Owner process: 8b7a205e1ec068a8f85d6556df675d25
 #> Class: ‘SequentialFuture’, ‘UniprocessFuture’, ‘Future’
 #> Value: 39 bytes of class ‘numeric’
-#> Duration: 0.002961397 secs (started 2026-10-25 08:16:12.106073)
-#> Worker process: 68e41b69e65c6366a54175ee40f40121
+#> Duration: 0.002925634 secs (started 2026-10-25 08:36:58.383646)
+#> Worker process: 8b7a205e1ec068a8f85d6556df675d25
 #> 
 
 
@@ -213,12 +213,12 @@ print(f)
 #> Actions: [n=1] ‘run’
 #> State: ‘finished’ ("Future was resolved successfully")
 #> Resolved: TRUE
-#> Unique identifier: 68e41b69e65c6366a54175ee40f40121-14
-#> Owner process: 68e41b69e65c6366a54175ee40f40121
+#> Unique identifier: 8b7a205e1ec068a8f85d6556df675d25-14
+#> Owner process: 8b7a205e1ec068a8f85d6556df675d25
 #> Class: ‘SequentialFuture’, ‘UniprocessFuture’, ‘Future’
 #> Value: 39 bytes of class ‘numeric’
-#> Duration: 0.003036499 secs (started 2026-10-25 08:16:12.119492)
-#> Worker process: 68e41b69e65c6366a54175ee40f40121
+#> Duration: 0.002587557 secs (started 2026-10-25 08:36:58.395828)
+#> Worker process: 8b7a205e1ec068a8f85d6556df675d25
 
 f2 <- futureOf(c, envir = env)
 print(f2)
@@ -240,12 +240,12 @@ print(f2)
 #> Actions: [n=1] ‘run’
 #> State: ‘finished’ ("Future was resolved successfully")
 #> Resolved: TRUE
-#> Unique identifier: 68e41b69e65c6366a54175ee40f40121-14
-#> Owner process: 68e41b69e65c6366a54175ee40f40121
+#> Unique identifier: 8b7a205e1ec068a8f85d6556df675d25-14
+#> Owner process: 8b7a205e1ec068a8f85d6556df675d25
 #> Class: ‘SequentialFuture’, ‘UniprocessFuture’, ‘Future’
 #> Value: 39 bytes of class ‘numeric’
-#> Duration: 0.003036499 secs (started 2026-10-25 08:16:12.119492)
-#> Worker process: 68e41b69e65c6366a54175ee40f40121
+#> Duration: 0.002587557 secs (started 2026-10-25 08:36:58.395828)
+#> Worker process: 8b7a205e1ec068a8f85d6556df675d25
 
 f3 <- futureOf("c", envir = env)
 print(f3)
@@ -267,12 +267,12 @@ print(f3)
 #> Actions: [n=1] ‘run’
 #> State: ‘finished’ ("Future was resolved successfully")
 #> Resolved: TRUE
-#> Unique identifier: 68e41b69e65c6366a54175ee40f40121-14
-#> Owner process: 68e41b69e65c6366a54175ee40f40121
+#> Unique identifier: 8b7a205e1ec068a8f85d6556df675d25-14
+#> Owner process: 8b7a205e1ec068a8f85d6556df675d25
 #> Class: ‘SequentialFuture’, ‘UniprocessFuture’, ‘Future’
 #> Value: 39 bytes of class ‘numeric’
-#> Duration: 0.003036499 secs (started 2026-10-25 08:16:12.119492)
-#> Worker process: 68e41b69e65c6366a54175ee40f40121
+#> Duration: 0.002587557 secs (started 2026-10-25 08:36:58.395828)
+#> Worker process: 8b7a205e1ec068a8f85d6556df675d25
 
 fs <- futureOf(envir = env)
 print(fs)
@@ -295,11 +295,11 @@ print(fs)
 #> Actions: [n=1] ‘run’
 #> State: ‘finished’ ("Future was resolved successfully")
 #> Resolved: TRUE
-#> Unique identifier: 68e41b69e65c6366a54175ee40f40121-14
-#> Owner process: 68e41b69e65c6366a54175ee40f40121
+#> Unique identifier: 8b7a205e1ec068a8f85d6556df675d25-14
+#> Owner process: 8b7a205e1ec068a8f85d6556df675d25
 #> Class: ‘SequentialFuture’, ‘UniprocessFuture’, ‘Future’
 #> Value: 39 bytes of class ‘numeric’
-#> Duration: 0.003036499 secs (started 2026-10-25 08:16:12.119492)
-#> Worker process: 68e41b69e65c6366a54175ee40f40121
+#> Duration: 0.002587557 secs (started 2026-10-25 08:36:58.395828)
+#> Worker process: 8b7a205e1ec068a8f85d6556df675d25
 #> 
 ```
