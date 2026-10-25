@@ -18,6 +18,13 @@ for (strategy in strategies) {
 
   ## Cancel a running future
   f <- future({ Sys.sleep(1.0); 42 })
+
+  ## The future might be 'sequential', which is already resolved
+  if (inherits(f, "UniprocessFuture")) {
+    message("  - Skipping, because the future is resolved when created")
+    next
+  }
+
   stopifnot(!resolved(f))
   f <- cancel(f)
 
