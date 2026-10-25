@@ -92,6 +92,10 @@ value.Future <- function(future, stdout = TRUE, signal = TRUE, drop = FALSE, ...
       stop(canceledFutureError(future))
     }
   })
+
+  ## Same, but for backends with their own result() method
+  result <- discardResultOfCanceledFuture(future, result)
+  if (inherits(result, "FutureError")) stop(result)
   stop_if_not(inherits(result, "FutureResult"))
 
   value <- result[["value"]]

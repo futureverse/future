@@ -94,13 +94,12 @@ cancel.Future <- function(x, interrupt = TRUE, ...) {
     on.exit(mdebug_pop())
   }
   
-  ## For now, only submitted or running futures can be canceled.
-  ## Uniprocess futures are resolved when created, so they are canceled
-  ## when finished, unless they have been dropped.
+  ## Only launched futures can be canceled. Leave finished, but dropped
+  ## futures as is (already invalidated).
   state <- future[["state"]]
-  if (!state %in% c("submitted", "running") &&
-      !(state %in% "finished" && inherits(future, "UniprocessFuture") && !inherits(future, "DroppedFuture"))) {
-    if (debug) mdebug("Skipping, because not a submitted or a running future")
+  if (!state %in% c("submitted", "running", "finished", "failed") ||
+      inherits(future, "DroppedFuture")) {
+    if (debug) mdebug("Skipping, because not a launched, canceled, interrupted, or dropped future")
     return(invisible(future))
   }
 

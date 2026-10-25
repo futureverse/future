@@ -2,10 +2,6 @@
 
 ## Significant Changes
 
- * A future that is interrupted after being canceled is now always
-   reported as canceled, whereas an interruption that is not caused by
-   `cancel()` is still a `FutureInterruptError`.
-
  * `digest` is no longer a hard dependency. The package now uses
    `tools::md5sum(bytes = ...)`, which is available in R (>= 4.5.0), to
    generate unique IDs for R objects. For older versions of R, it uses

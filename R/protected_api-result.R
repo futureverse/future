@@ -60,6 +60,11 @@ result.Future <- function(future, ...) {
   ## Has the result already been collected?
   result <- future[["result"]]
   if (!is.null(result)) {
+    result <- discardResultOfCanceledFuture(future, result)
+
+    ## A canceled future has no conditions to signal
+    if (inherits(result, "FutureCanceledError")) stop(result)
+
     ## Assert result is for the expected future
     assertFutureResult(future)
     
@@ -90,8 +95,11 @@ result.Future <- function(future, ...) {
 
   result <- future[["result"]]
   if (inherits(result, "FutureResult")) {
+    result <- discardResultOfCanceledFuture(future, result)
+
     ## Assert result is for the expected future
     assertFutureResult(future)
+    if (inherits(result, "FutureError")) stop(result)
     return(result)
   }
 
@@ -131,4 +139,12 @@ canceledFutureError <- function(future) {
   future[["result"]] <- result
   future[["state"]] <- "canceled"
   result
+}
+
+
+## A canceled future is invalid, even if it ended up being resolved.
+discardResultOfCanceledFuture <- function(future, result) {
+  if (!inherits(result, "FutureResult")) return(result)
+  if (!"cancel" %in% future[["actions"]]) return(result)
+  canceledFutureError(future)
 }
