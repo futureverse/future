@@ -679,57 +679,70 @@ value.list <- function(x, idxs = NULL, recursive = 0, reduce = NULL, stdout = TR
         ## If an unresolved future, move on to the next object
         ## so that future can be resolved in the asynchronously
         if (inherits(obj, "Future")) {
-          ## Lazy future that is not yet launched?
-          if (obj[["state"]] == "created") obj <- run(obj)
+          ## Lazy future that is not yet launched? If it fails to launch,
+          ## treat it as a failed future, so that the remaining futures
+          ## are canceled and resolved before the error is signaled
+          launch_error <- NULL
+          if (obj[["state"]] == "created") {
+            obj <- tryCatch(run(obj), error = function(ex) {
+              launch_error <<- ex
+              obj
+            })
+          }
           
-          if (!resolved(obj)) {
+          if (is.null(launch_error) && !resolved(obj)) {
             next
           }
           
           if (debug) mdebugf("%s #%d", class(obj)[1], ii)
 
-          ## Infer whether the future failed (with a runtime or orchestration error)
-          res <- tryCatch(result(obj), error = identity)
-          if (inherits(res, "error")) {
-            failed <- TRUE
-          } else {
-            conditions <- res[["conditions"]]
-            n <- length(conditions)
-            failed <- (n > 0L && inherits(conditions[[n]][["condition"]], c("error", "interrupt")))
-          }
-
-          ## Collect the value before relaying, because the relaying may
-          ## drop the future (when 'defer_drop' is TRUE)
-          value <- local({
-            if (debug) {
-              mdebugf_push("value(<%s>, ...) ...", class(obj)[1])
-              on.exit(mdebugf_pop())
-            }
-            ## Allow value() to signal conditions, but ignore errors
-            value <- tryCatch({
-              value(obj, stdout = (!inorder && stdout), signal = (!inorder && signal), drop = drop && !defer_drop)
-            }, error = identity)
-            if (debug) mdebugf("value: <%s>", class(value)[1])
-            value
-          })
-
-          ## value() may add conditions to the result, e.g. an RngFutureError
-          ## when RNGs were used without declaring it, so check again,
-          ## unless value() dropped the future, and with it its result
-          if (!failed && !(drop && !defer_drop)) {
+          if (is.null(launch_error)) {
+            ## Infer whether the future failed (with a runtime or orchestration error)
             res <- tryCatch(result(obj), error = identity)
-            if (inherits(res, "FutureResult")) {
+            if (inherits(res, "error")) {
+              failed <- TRUE
+            } else {
               conditions <- res[["conditions"]]
               n <- length(conditions)
               failed <- (n > 0L && inherits(conditions[[n]][["condition"]], c("error", "interrupt")))
             }
+
+            ## Collect the value before relaying, because the relaying may
+            ## drop the future (when 'defer_drop' is TRUE)
+            value <- local({
+              if (debug) {
+                mdebugf_push("value(<%s>, ...) ...", class(obj)[1])
+                on.exit(mdebugf_pop())
+              }
+              ## Allow value() to signal conditions, but ignore errors
+              value <- tryCatch({
+                value(obj, stdout = (!inorder && stdout), signal = (!inorder && signal), drop = drop && !defer_drop)
+              }, error = identity)
+              if (debug) mdebugf("value: <%s>", class(value)[1])
+              value
+            })
+
+            ## value() may add conditions to the result, e.g. an RngFutureError
+            ## when RNGs were used without declaring it, so check again,
+            ## unless value() dropped the future, and with it its result
+            if (!failed && !(drop && !defer_drop)) {
+              res <- tryCatch(result(obj), error = identity)
+              if (inherits(res, "FutureResult")) {
+                conditions <- res[["conditions"]]
+                n <- length(conditions)
+                failed <- (n > 0L && inherits(conditions[[n]][["condition"]], c("error", "interrupt")))
+              }
+            }
+          } else {
+            failed <- TRUE
+            value <- launch_error
           }
 
           ## Prevent errors from being signaled at this point to give
           ## remaining futures a chance to be resolved and canceled first.
           asap_error <- NULL
           relay_ok <- tryCatch({
-            relay && signalConditionsASAP(obj, resignal = FALSE, exclude = "error", pos = ii)
+            relay && is.null(launch_error) && signalConditionsASAP(obj, resignal = FALSE, exclude = "error", pos = ii)
           }, error = function(ex) {
             asap_error <<- ex
             FALSE
