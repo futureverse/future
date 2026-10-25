@@ -121,3 +121,14 @@ result.Future <- function(future, ...) {
 
   .Defunct(msg = "Future objects with an internal version of 1.7 or earlier are defunct. This error is likely coming from a third-party package or other R code. Please report this to the maintainer of the 'future' package so this can be resolved.", package = .packageName)
 }
+
+
+## Creates a FutureCanceledError for a future that was canceled, and records
+## it as the result of the future
+canceledFutureError <- function(future) {
+  msg <- sprintf("Future (%s) of class %s was canceled", sQuoteLabel(future), class(future)[1])
+  result <- FutureCanceledError(msg, future = future)
+  future[["result"]] <- result
+  future[["state"]] <- "canceled"
+  result
+}

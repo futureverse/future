@@ -86,7 +86,12 @@ value.Future <- function(future, stdout = TRUE, signal = TRUE, drop = FALSE, ...
     future <- run(future)
   }
 
-  result <- result(future)
+  ## An interruption of a future that was canceled is a cancellation
+  result <- withCallingHandlers(result(future), FutureInterruptError = function(ex) {
+    if (!inherits(ex, "FutureCanceledError") && "cancel" %in% future[["actions"]]) {
+      stop(canceledFutureError(future))
+    }
+  })
   stop_if_not(inherits(result, "FutureResult"))
 
   value <- result[["value"]]

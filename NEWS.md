@@ -2,6 +2,10 @@
 
 ## Significant Changes
 
+ * A future that is interrupted after being canceled is now always
+   reported as canceled, whereas an interruption that is not caused by
+   `cancel()` is still a `FutureInterruptError`.
+
  * `digest` is no longer a hard dependency. The package now uses
    `tools::md5sum(bytes = ...)`, which is available in R (>= 4.5.0), to
    generate unique IDs for R objects. For older versions of R, it uses
@@ -11,6 +15,10 @@
    older versions of R, if **digest** is installed.
 
 ## Bug Fixes
+
+ * `value()` on a future that was canceled with `cancel()` and
+   interrupted could signal a `FutureInterruptError` instead of a
+   `FutureCanceledError`, e.g. for 'multicore' futures.
 
  * When launching a 'cluster' or 'multisession' future timed out while
    waiting for an available worker, it would produce an obscure
