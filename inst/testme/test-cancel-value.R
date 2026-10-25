@@ -69,10 +69,18 @@ for (name in names(plans)) {
   v <- tryCatch(value(f), error = identity)
   stopifnot(inherits(v, "FutureDroppedError"))
 
-  message("  Canceling a lazy future has no effect")
-  f <- future(42, lazy = TRUE)
+  message("  Cancel a lazy future, which is then never launched")
+  f <- future(stop("Launched"), lazy = TRUE)
   f <- cancel(f)
-  stopifnot(value(f) == 42)
+  stopifnot(resolved(f))
+  v <- tryCatch(value(f), error = identity)
+  stopifnot(inherits(v, "FutureCanceledError"))
+  stopifnot(nbrOfFreeWorkers() == n0)
+
+  message("  A canceled lazy future can be reset and launched")
+  f <- reset(f)
+  v <- tryCatch(value(f), error = identity)
+  stopifnot(inherits(v, "simpleError"), conditionMessage(v) == "Launched")
 
   message("  Next future runs fine")
   f <- future(42)

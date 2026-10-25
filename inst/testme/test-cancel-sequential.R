@@ -25,7 +25,7 @@ for (interrupt in c(TRUE, FALSE)) {
   v <- tryCatch(value(f), error = identity)
   stopifnot(inherits(v, "FutureCanceledError"))
 
-  message("  Canceling a canceled future is harmless")
+  message("  Canceling a canceled future")
   f <- cancel(f, interrupt = interrupt)
   v <- tryCatch(value(f), error = identity)
   stopifnot(inherits(v, "FutureCanceledError"))
@@ -46,10 +46,23 @@ for (interrupt in c(TRUE, FALSE)) {
   message(sprintf("interrupt = %s ... done", interrupt))
 }
 
-message("Canceling a lazy future has no effect")
-f <- future(42, lazy = TRUE)
+message("Cancel a lazy future, which is then never launched")
+f <- future(stop("Launched"), lazy = TRUE)
+stopifnot(f[["state"]] == "created")
 f <- cancel(f)
-stopifnot(value(f) == 42)
+stopifnot(f[["state"]] == "canceled", resolved(f))
+v <- tryCatch(value(f), error = identity)
+stopifnot(inherits(v, "FutureCanceledError"))
+
+message("Canceling a lazy future that is already canceled is harmless")
+f <- cancel(f, interrupt = FALSE)
+v <- tryCatch(value(f), error = identity)
+stopifnot(inherits(v, "FutureCanceledError"))
+
+message("A canceled lazy future can be reset and launched")
+f <- reset(f)
+v <- tryCatch(value(f), error = identity)
+stopifnot(inherits(v, "simpleError"), conditionMessage(v) == "Launched")
 
 message("Canceling a dropped future leaves it as dropped")
 f <- future(42)

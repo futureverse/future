@@ -69,9 +69,10 @@ for (strategy in strategies) {
   print(vs)
   stopifnot(inherits(vs, "error"), conditionMessage(vs) == "boom")
 
-  ## Assert that value(fs) did not launch the lazy future
+  ## Assert that value(fs) did not launch the lazy future, which is canceled,
+  ## if value() cancels the remaining futures
   print(f2[["state"]])
-  stopifnot(f2[["state"]] == "created")
+  stopifnot(f2[["state"]] %in% c("created", "canceled"))
 
   message(sprintf("plan('%s') .. done", strategy))
 }

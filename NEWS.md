@@ -2,6 +2,8 @@
 
 ## Significant Changes
 
+ * `cancel()` now also cancels lazy futures, which invalidates them.
+
  * `digest` is no longer a hard dependency. The package now uses
    `tools::md5sum(bytes = ...)`, which is available in R (>= 4.5.0), to
    generate unique IDs for R objects. For older versions of R, it uses
@@ -14,6 +16,10 @@
 
  * Contrary to `value(<Future>)`, `value(<list>)` would throw an error
    for a future whose value is an error condition.
+
+ * `cancel()` ignored lazy futures, so `value()` on a canceled lazy
+   future would launch the future and return its value. Canceling a
+   lazy future now invalidates it.
 
  * `value()` on a canceled sequential future or a canceled cluster
    future with interrupts disabled (default), returned the value,

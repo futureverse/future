@@ -94,16 +94,21 @@ cancel.Future <- function(x, interrupt = TRUE, ...) {
     on.exit(mdebug_pop())
   }
   
-  ## Only launched futures can be canceled. Leave finished, but dropped
-  ## futures as is (already invalidated).
+  ## Ignore canceled, interrupted, or dropped futures
   state <- future[["state"]]
-  if (!state %in% c("submitted", "running", "finished", "failed") ||
+  if (!state %in% c("created", "submitted", "running", "finished", "failed") ||
       inherits(future, "DroppedFuture")) {
-    if (debug) mdebug("Skipping, because not a launched, canceled, interrupted, or dropped future")
+    if (debug) mdebug("Skipping, because a canceled, interrupted, or dropped future")
     return(invisible(future))
   }
 
   future[["actions"]] <- c(future[["actions"]], "cancel")
+
+  ## Cancel also lazy futures
+  if (state == "created") {
+    canceledFutureError(future)
+    return(invisible(future))
+  }
 
   ## Only futures that are still active can be interrupted
   active <- state %in% c("submitted", "running")
