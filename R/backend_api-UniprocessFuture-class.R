@@ -56,6 +56,10 @@ result.UniprocessFuture <- function(future, ...) {
   ## Has the result already been collected?
   result <- future[["result"]]
   if (!is.null(result)) {
+    ## A canceled future is invalid, even though it was resolved when created
+    if (inherits(result, "FutureResult") && "cancel" %in% future[["actions"]]) {
+      result <- canceledFutureError(future)
+    }
     if (inherits(result, "FutureError")) stop(result)
     return(result)
   }

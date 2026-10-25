@@ -37,7 +37,8 @@ for (name in names(plans)) {
     stopifnot(inherits(v, "FutureInterruptError"))
   } else {
     f <- cancel(f)
-    stopifnot(value(f) == 42)
+    v <- tryCatch(value(f), error = identity)
+    stopifnot(inherits(v, "FutureCanceledError"))
   }
 
   message("  Canceled future released its worker")

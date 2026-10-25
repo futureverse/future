@@ -16,9 +16,13 @@
 
 ## Bug Fixes
 
- * `value()` on a future that was canceled with `cancel()` and
+  * `value()` on a future that was canceled with `cancel()` and
    interrupted could signal a `FutureInterruptError` instead of a
    `FutureCanceledError`, e.g. for 'multicore' futures.
+   
+ * `value()` on a canceled sequential future returned the value,
+   instead of signaling a `FutureCanceledError`. Canceling a
+   sequential future now makes it invalid.
 
  * When launching a 'cluster' or 'multisession' future timed out while
    waiting for an available worker, it would produce an obscure

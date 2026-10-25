@@ -94,15 +94,21 @@ cancel.Future <- function(x, interrupt = TRUE, ...) {
     on.exit(mdebug_pop())
   }
   
-  ## Only submitted or running futures can be canceled, ignore everything else
-  if (!future[["state"]] %in% c("submitted", "running")) {
+  ## For now, only submitted or running futures can be canceled.
+  ## Uniprocess futures are resolved when created, so they are canceled
+  ## when finished, unless they have been dropped.
+  state <- future[["state"]]
+  if (!state %in% c("submitted", "running") &&
+      !(state %in% "finished" && inherits(future, "UniprocessFuture") && !inherits(future, "DroppedFuture"))) {
     if (debug) mdebug("Skipping, because not a submitted or a running future")
     return(invisible(future))
   }
 
   future[["actions"]] <- c(future[["actions"]], "cancel")
 
-  if (interrupt) {
+  ## Only futures that are still active can be interrupted
+  active <- state %in% c("submitted", "running")
+  if (interrupt && active) {
     backend <- future[["backend"]]
     if (is.null(backend)) {
       stop(FutureError(sprintf("Interruption of futures require a backend implementing the FutureBackend API: %s", sQuote(class(future)[1]))))
