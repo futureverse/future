@@ -2,6 +2,8 @@
 
 ## Significant Changes
 
+ * `cancel()` now also cancels lazy futures, which invalidates them.
+
  * `digest` is no longer a hard dependency. The package now uses
    `tools::md5sum(bytes = ...)`, which is available in R (>= 4.5.0), to
    generate unique IDs for R objects. For older versions of R, it uses
@@ -12,13 +14,39 @@
 
 ## Bug Fixes
 
-  * `value()` on a future that was canceled with `cancel()` and
+ * `value(<list>)` would leave the remaining futures running, instead of
+   canceling them, if a lazy future failed to launch.
+
+ * Contrary to `value(<Future>)`, `value(<list>)` would throw an error
+   for a future whose value is an error condition.
+
+ * `cancel()` ignored lazy futures, so `value()` on a canceled lazy
+   future would launch the future and return its value. Canceling a
+   lazy future now invalidates it.
+
+ * `value()` on a canceled sequential future or a canceled cluster
+   future with interrupts disabled (default), returned the value,
+   instead of signaling a `FutureCanceledError`.
+   
+ * `value()` on a future that was canceled with `cancel()` and
    interrupted could signal a `FutureInterruptError` instead of a
    `FutureCanceledError`, e.g. for 'multicore' futures.
    
- * `value()` on a canceled sequential future returned the value,
-   instead of signaling a `FutureCanceledError`. Canceling a
-   sequential future now makes it invalid.
+ * `futureCall()` would evaluate language objects (e.g. call, symbol,
+   formula, ...) part of argument `args`, instead of passing them
+   as-is to `FUN`.
+
+ * A cluster created by `makeClusterFuture()` would evaluate language
+   objects (e.g. call, symbol, formula, ...) passed via
+   `parLapply()`, `clusterCall()`, and friends, instead of passing
+   them as-is.
+
+ * `value(<list>, reduce = ..., inorder = FALSE)` ignored attribute
+   `init` of `reduce`.
+
+ * `value(<list>, stdout = FALSE, inorder = FALSE)` and
+   `value(<list>, signal = FALSE, inorder = FALSE)` ignored arguments
+   `stdout` and `signal` when `inorder` was FALSE.
 
  * When launching a 'cluster' or 'multisession' future timed out while
    waiting for an available worker, it would produce an obscure
@@ -32,10 +60,6 @@
    would mistakenly be shut down by `plan(sequential)`, if one of the
    workers crashed and was relaunched.
 
- * `value()` on a canceled cluster future with interrupts disabled
-   (default), returned the value instead of signaling a
-   `FutureCanceledError`.
-
  * When one of the futures produced an error, `value(<list>)` would
    launch any lazy futures, wait for them to finish, before signaling
    the error.
@@ -43,29 +67,10 @@
  * `value(<list>, drop = TRUE, inorder = TRUE)` lost stdout and
    conditions of futures resolved out of order.
 
- * `value(<list>, reduce = ..., inorder = FALSE)` ignored attribute
-   `init` of `reduce`.
-
  * `value(<list>)` would neither cancel nor resolve the remaining
    futures when one produced an error (`inorder = FALSE`) or was
    interrupted (`inorder = TRUE`). With `inorder = FALSE`, an
    interrupt was not even signaled.
-
- * `value(<list>, stdout = FALSE, inorder = FALSE)` and
-   `value(<list>, signal = FALSE, inorder = FALSE)` ignored arguments
-   `stdout` and `signal` when `inorder` was FALSE.
-
- * Contrary to `value(<Future>)`, `value(<list>)` would throw an error
-   for a future whose value is an error condition.
-
- * `futureCall()` would evaluate language objects (e.g. call, symbol,
-   formula, ...) part of argument `args`, instead of passing them
-   as-is to `FUN`.
-
- * A cluster created by `makeClusterFuture()` would evaluate language
-   objects (e.g. call, symbol, formula, ...) passed via
-   `parLapply()`, `clusterCall()`, and friends, instead of passing
-   them as-is.
 
  * Environment variable `R_FUTURE_RELAY_IMMEDIATE` was parsed as a
    logical flag instead of as a comma-separated string.

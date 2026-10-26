@@ -21,16 +21,38 @@ future backend supports it.}
 \value{
 \code{cancel()} returns (invisibly) \code{x} after canceling every \link{Future}
 therein, that is, after flagging each one as "canceled" and
-possibly interrupting it as well.
-
-Canceling a lazy or a finished future has no effect. Elements of
-\code{x} that are neither futures nor collections of futures are left
-untouched.
+possibly interrupting it as well. If \code{x} is not a future, or holds
+non-futures, such elements are unaffected.
 }
 \description{
 Cancels futures, with the option to interrupt running ones.
-\code{cancel()} is vectorized, i.e. accepts a collection of futures
-to be canceled.
+A canceled future is invalid, e.g. calling \code{\link[=value]{value()}} on it produces
+an error. \code{cancel()} is vectorized, i.e. accepts a set of futures to
+be canceled.
+}
+\details{
+A canceled future is invalid. Calling \code{\link[=value]{value()}} on it produces a
+\link{FutureCanceledError}, which inherits from \link{FutureInterruptError}.
+A \link{FutureInterruptError} can happen also for external reasons. The
+cancelation error is signaled regardless of:
+\itemize{
+\item \code{interrupt}, that is, also when \code{interrupt = FALSE}, or when the
+future backend does not support interrupts;
+\item the state of the future, that is, if it is non-launched, running,
+finished;
+\item the future would have produced a value or an error or not.
+}
+
+If the future is not interrupted, its parallel worker keeps processing
+it until it is done, when the result is collected and immediately
+discarded.
+
+To keep the value of a future that is already resolved, which still
+canceling others, use something like \code{cancel(fs[!resolved(fs)])}.
+
+Canceling an already canceled future, or an interrupted one has no
+effect. Neither has canceling a future that was dropped using
+\code{value(..., drop = TRUE)}.
 }
 \examples{
 \dontshow{if ((interactive() || .Platform[["OS.type"]] != "windows")) withAutoprint(\{ # examplesIf}
