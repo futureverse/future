@@ -39,6 +39,7 @@ false && R --quiet --no-save <<EOF
 
     # Other R packages
     tinytex::tlmgr_install(c(
+      "microtype",       # BayesFBHborrow
       "apacite",         # ctsem
       "grfext",          # PeakSegDisk
       "nowidow",         # QDNAseq
@@ -57,6 +58,16 @@ if command -v module &> /dev/null; then
 fi    
 
 
+## Special case: 'lpsymphony' does not install with symphony loaded
+if command -v module &> /dev/null; then
+    if ! Rscript -e 'requireNamespace("lpsymphony")'; then
+	module unload symphony
+	Rscript -e 'crancache::install_packages("lpsymphony")'
+	module load symphony
+    fi
+fi
+
+
 ## ---------------------------------------------------------------------
 ## Phase 1
 ## ---------------------------------------------------------------------
@@ -64,8 +75,8 @@ fi
 ## Add packages to check
 revdep/run.R --add-children
 
-## Drop packages failing on CRAN (2026-10-15)
-revdep/run.R --rm dispositionEffect fmeffects WpProj
+## Drop packages failing on CRAN (2026-10-25)
+revdep/run.R --rm delimtools dispositionEffect nadir partR2 fmeffects WpProj
 
 ## Drop packages failing on Bioconductor (2026-10-05)
 revdep/run.R --rm pgxRpi SCArray.sat scLANE synergyfinder
@@ -101,7 +112,7 @@ if [[ ${#pkgs_threads[@]} -gt 0 ]]; then
 fi    
 
 ## Requires sequential processing due to clashes, e.g. port and cache 
-pkgs_seq=(couplr datacaged dipsaus fiery ggchangepoint robust2sls SimDesign)
+pkgs_seq=(couplr datacaged dipsaus fiery ggchangepoint robust2sls SimDesign spanishoddata)
 if [[ ${#pkgs_seq[@]} -gt 0 ]]; then
     revdep/run.R --rm "${pkgs_seq[@]}"
 fi
