@@ -12,35 +12,34 @@ At the core of Futureverse is this package, the **future** package. Most
 users interact with the future ecosystem using higher-level packages
 such as **[futurize](https://futurize.futureverse.org/)** for its
 convenience of running map-reduce calls concurrently. Here are some
-examples of both:
+examples for **futurize**:
 
 \
-[`library`](https://rdrr.io/r/base/library.html)`(`[`future`](https://future.futureverse.org)`)`\
-[`plan`](https://future.futureverse.org/reference/plan.md)`(``multisession``)`\
-\
-`## Sequential evaluation of an R expression`\
-`y`` ``<-`` ``slow_fcn``(``X``[``1``]``)`\
-\
-`## Parallel evaluation of an R expression`\
-`f`` ``<-`` `[`future`](https://future.futureverse.org/reference/future.md)`(``slow_fcn``(``X``[``1``]``)``)`\
-`y`` ``<-`` `[`value`](https://future.futureverse.org/reference/value.md)`(``f``)`\
-\
-\
 [`library`](https://rdrr.io/r/base/library.html)`(`[`futurize`](https://futurize.futureverse.org)`)`\
+[`plan`](https://future.futureverse.org/reference/plan.md)`(``multisession``)``  ``# parallelize on the current machine`\
 \
-`## Sequential and parallel base R apply`\
-`y`` ``<-`` `[`lapply`](https://rdrr.io/r/base/lapply.html)`(``X``, ``slow_fcn``)`\
-`y`` ``<-`` `[`lapply`](https://rdrr.io/r/base/lapply.html)`(``X``, ``slow_fcn``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.html)`(``)`\
+`# A slow function`\
+`slow_fcn`` ``<-`` ``function``(``x``)`` ``{`\
+`  `[`Sys.sleep`](https://rdrr.io/r/base/Sys.sleep.html)`(``1.0``)`\
+`  ``x``^``2`\
+`}`\
 \
-`## Sequential and parallel purrr map`\
+`# Example data`\
+`xs`` ``<-`` ``1``:``10`\
+\
+`# Sequential and parallel base R apply`\
+`ys`` ``<-`` `[`lapply`](https://rdrr.io/r/base/lapply.html)`(``xs``, ``slow_fcn``)`\
+`ys`` ``<-`` `[`lapply`](https://rdrr.io/r/base/lapply.html)`(``xs``, ``slow_fcn``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.html)`(``)`\
+\
+`# Sequential and parallel purrr map`\
 [`library`](https://rdrr.io/r/base/library.html)`(`[`purrr`](https://purrr.tidyverse.org/)`)`\
-`y`` ``<-`` ``X`` ``|>``  `[`map`](https://purrr.tidyverse.org/reference/map.html)`(``slow_fcn``)`\
-`y`` ``<-`` ``X`` ``|>``  `[`map`](https://purrr.tidyverse.org/reference/map.html)`(``slow_fcn``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.html)`(``)`\
+`ys`` ``<-`` ``xs`` ``|>``  `[`map`](https://purrr.tidyverse.org/reference/map.html)`(``slow_fcn``)`\
+`ys`` ``<-`` ``xs`` ``|>``  `[`map`](https://purrr.tidyverse.org/reference/map.html)`(``slow_fcn``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.html)`(``)`\
 \
-`## Sequential and parallel foreach calls`\
+`# Sequential and parallel foreach calls`\
 [`library`](https://rdrr.io/r/base/library.html)`(`[`foreach`](https://github.com/RevolutionAnalytics/foreach)`)`\
-`y`` ``<-`` `[`foreach`](https://rdrr.io/pkg/foreach/man/foreach.html)`(``x ``=`` ``X``)`` `[`%do%`](https://rdrr.io/pkg/foreach/man/foreach.html)` ``slow_fcn``(``x``)`\
-`y`` ``<-`` `[`foreach`](https://rdrr.io/pkg/foreach/man/foreach.html)`(``x ``=`` ``X``)`` `[`%do%`](https://rdrr.io/pkg/foreach/man/foreach.html)` ``slow_fcn``(``x``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.html)`(``)`
+`ys`` ``<-`` `[`foreach`](https://rdrr.io/pkg/foreach/man/foreach.html)`(``x ``=`` ``xs``)`` `[`%do%`](https://rdrr.io/pkg/foreach/man/foreach.html)` ``slow_fcn``(``x``)`\
+`ys`` ``<-`` `[`foreach`](https://rdrr.io/pkg/foreach/man/foreach.html)`(``x ``=`` ``xs``)`` `[`%do%`](https://rdrr.io/pkg/foreach/man/foreach.html)` ``slow_fcn``(``x``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.html)`(``)`
 
 ## Introduction
 

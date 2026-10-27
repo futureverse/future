@@ -41,6 +41,12 @@
   interrupted could signal a `FutureInterruptError` instead of a
   `FutureCanceledError`, e.g. for ‘multicore’ futures.
 
+- `futureCall(FUN, globals = <character>)` did not look the globals in
+  the calling environment (`envir`), as
+  [`future()`](https://future.futureverse.org/reference/future.md) does,
+  plus non-found globals were silently dropped. Non-existing globals now
+  produce an error.
+
 - [`futureCall()`](https://future.futureverse.org/reference/future.md)
   would evaluate language objects (e.g. call, symbol, formula, …) part
   of argument `args`, instead of passing them as-is to `FUN`.
