@@ -207,6 +207,33 @@ stopifnot(!is.null(v))
 print(v)
 stopifnot(inherits(v, "error"))
 
+## Bug: futureCall(..., globals = <character>) used to look up the globals
+## in its own frame, instead of in 'envir', and silently drop them
+fn <- local({ function() a })
+bar <- function() {
+  a <- 42
+  f <- futureCall(fn, globals = "a")
+  value(f)
+}
+v <- tryCatch(bar(), error = identity)
+print(v)
+stopifnot(identical(v, 42))
+
+## A requested global that does not exist is an error, as in future()
+v <- tryCatch(futureCall(function() 1, globals = "non_existing_global"), error = identity)
+print(v)
+stopifnot(inherits(v, "error"))
+
+## A primitive function cannot hold globals in its environment
+bar <- function() {
+  a <- 42
+  f <- futureCall(sum, args = list(1, 2), globals = "a")
+  value(f)
+}
+v <- tryCatch(bar(), error = identity)
+print(v)
+stopifnot(identical(v, 3))
+
 plan(sequential)
 
 ## Assert that futureCall() does not evaluate language-object elements

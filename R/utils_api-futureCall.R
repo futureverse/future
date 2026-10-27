@@ -63,8 +63,12 @@ futureCall <- function(FUN, args = list(), envir = parent.frame(), lazy = FALSE,
       globals <- globalsByName(globals, envir = globalEnv, mustExist = FALSE)
     }
   } else if (is.character(globals)) {
-    globals <- unique(c(globals, "FUN", "args"))
-    globals <- globalsByName(globals, envir = globalEnv, mustExist = FALSE)
+    ## Find user-specified globals in 'envir'
+    names <- setdiff(globals, c("FUN", "args"))
+    globals <- c(
+      globalsByName(names, envir = envir, mustExist = TRUE),
+      globalsByName(c("FUN", "args"), envir = globalEnv, mustExist = FALSE)
+    )
   } else if (is.list(globals)) {
     names <- names(globals)
     if (length(globals) > 0 && is.null(names)) {
@@ -84,7 +88,8 @@ futureCall <- function(FUN, args = list(), envir = parent.frame(), lazy = FALSE,
   if (!is.element("args", names)) globals[["args"]] <- args
 
   names <- setdiff(names(globals), c("FUN", "args"))
-  if (length(names) > 0) {
+  ## Primitive functions have no environment and cannot use globals
+  if (length(names) > 0 && !is.primitive(globals[["FUN"]])) {
     env <- environment(globals[["FUN"]])
     env <- new.env(parent = env)
     environment(globals[["FUN"]]) <- env
