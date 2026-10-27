@@ -88,7 +88,7 @@ revdep/run.R --rm pgxRpi SCArray.sat scLANE synergyfinder
 #revdep/run.R --rm ...
 
 ## Fails to install
-revdep/run.R --rm BayesPET TriDimRegression  # there is no package called ‘rstantools’
+revdep/run.R --rm BayesPET marcxmlr TriDimRegression  # there is no package called ‘rstantools’
 
 ## Fails to check
 revdep/run.R --rm mapme.biodiversity    # unstable results
