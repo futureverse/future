@@ -10,15 +10,15 @@
 |collate  |en_US.UTF-8                                                              |
 |ctype    |en_US.UTF-8                                                              |
 |tz       |America/Los_Angeles                                                      |
-|date     |2026-10-26                                                               |
-|pandoc   |3.11 @ /wynton/home/cbi/shared/software/CBI/pandoc-3.11/bin/pandoc       |
-|quarto   |1.10.18 @ /wynton/home/cbi/shared/software/CBI/quarto-1.10.18/bin/quarto |
+|date     |2026-10-27                                                               |
+|pandoc   |3.11 @ /path/to/pandoc-3.11/bin/pandoc       |
+|quarto   |1.10.18 @ /path/to/quarto-1.10.18/bin/quarto |
 
 # Dependencies
 
 |package    |old    |new         |Δ  |
 |:----------|:------|:-----------|:--|
-|future     |1.80.0 |1.80.0-9023 |*  |
+|future     |1.80.0 |1.80.0-9027 |*  |
 |codetools  |0.2-20 |0.2-20      |   |
 |digest     |0.6.39 |0.6.39      |   |
 |globals    |0.20.0 |0.20.0      |   |
@@ -27,13 +27,7 @@
 
 # Revdeps
 
-## Failed to check (1)
-
-|package  |version |error |warning |note |
-|:--------|:-------|:-----|:-------|:----|
-|[marcxmlr](failures.md#marcxmlr)|0.5.0   |1     |        |     |
-
-## All (580)
+## All (576)
 
 |package                      |version      |error |warning |note |
 |:----------------------------|:------------|:-----|:-------|:----|
@@ -62,7 +56,7 @@
 |baseballr                    |2.0.0        |      |        |     |
 |BatchGetSymbols              |2.6.4        |      |        |     |
 |[batchtools](problems.md#batchtools)|0.9.18       |      |        |2    |
-|BayesFBHborrow               |2.0.20       |      |        |     |
+|BayesFBHborrow               |2.0.21       |      |        |     |
 |[bayesian](problems.md#bayesian)|1.0.1        |      |        |1    |
 |bayesics                     |3.1.0        |      |        |     |
 |bayesmove                    |0.2.4        |      |        |     |
@@ -146,7 +140,6 @@
 |dci                          |1.0.3        |      |        |     |
 |DeclareDesign                |2.0.0        |      |        |     |
 |delayed                      |0.5.0        |      |        |     |
-|[delimtools](problems.md#delimtools)|0.2.2        |1     |        |1    |
 |deseats                      |1.1.3        |      |        |     |
 |detectXOR                    |0.1.0        |      |        |     |
 |dipsaus                      |0.3.5        |      |        |     |
@@ -192,7 +185,7 @@
 |featR                        |0.1.0        |      |        |     |
 |fect                         |2.4.5        |      |        |     |
 |fEGarch                      |1.0.6        |      |        |     |
-|fiery                        |1.5.0        |-1    |        |     |
+|fiery                        |1.5.0        |      |        |     |
 |finbif                       |0.10.1       |      |        |     |
 |fitlandr                     |0.1.1        |      |        |     |
 |flassomsm                    |0.1.0        |      |        |     |
@@ -241,7 +234,7 @@
 |gsDesignNB                   |0.4.0        |      |        |     |
 |gsDesignTune                 |0.1.0        |      |        |     |
 |gstat                        |2.1-6        |      |        |     |
-|GSVA                         |2.6.14       |      |        |     |
+|GSVA                         |2.6.15       |      |        |     |
 |gtfs2emis                    |0.1.2        |      |        |     |
 |gtfs2gps                     |2.1-4        |      |        |     |
 |GWPR.light                   |1.0.0        |      |        |     |
@@ -314,11 +307,10 @@
 |[MAI](problems.md#mai)       |1.18.0       |      |        |1    |
 |MAIHDA                       |0.2.1        |      |        |     |
 |MAMS                         |3.0.3        |      |        |     |
-|[marcxmlr](failures.md#marcxmlr)|0.5.0        |1     |        |     |
 |marginaleffects              |1.0.0        |      |        |     |
 |matchednull                  |0.2.1        |      |        |     |
 |McMiso                       |0.2.0        |      |        |     |
-|mcp                          |0.3.4        |      |        |     |
+|mcp                          |0.4.0        |      |        |     |
 |MDaRes                       |0.0.2        |      |        |     |
 |MDCcure                      |0.1.0        |      |        |     |
 |memtoc                       |0.1.1        |      |        |     |
@@ -364,7 +356,6 @@
 |[multiverse](problems.md#multiverse)|0.6.2        |      |        |1    |
 |mutator                      |0.3.0        |      |        |     |
 |MVN                          |6.3          |      |        |     |
-|[nadir](problems.md#nadir)   |0.0.1        |2     |        |     |
 |nebula                       |1.5.8        |      |        |     |
 |netDFI                       |1.2.0        |      |        |     |
 |netOP                        |0.1.2        |      |        |     |
@@ -392,7 +383,6 @@
 |pairwiseLLM                  |1.3.1        |      |        |     |
 |paramsim                     |0.1.0        |      |        |     |
 |parseRPDR                    |1.1.2        |      |        |     |
-|[partR2](problems.md#partr2) |0.9.2        |1     |        |1    |
 |PathwayVote                  |0.1.3        |      |        |     |
 |pbapply                      |1.7-5        |      |        |     |
 |pcpr                         |1.0.0        |      |        |     |
@@ -554,7 +544,7 @@
 |tall                         |1.0.1        |      |        |     |
 |targets                      |1.12.0       |      |        |     |
 |TaxaNorm                     |2.4          |      |        |     |
-|[tbl.now](problems.md#tblnow)|1.2.0        |      |        |1    |
+|tbl.now                      |1.2.0        |      |        |     |
 |telegramR                    |0.0.2        |      |        |     |
 |templr                       |0.2-4        |      |        |     |
 |tenm                         |0.5.1        |      |        |     |

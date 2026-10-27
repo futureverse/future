@@ -1,5 +1,10 @@
 #! /usr/bin/env bash
 
+if [[ -f revdep/data.sqlite ]]; then
+    >&2 echo "ERROR: To wipe existing results, remove 'revdep/data.sqlite' first"
+    exit 1
+fi    
+
 ## Missing or outdated LaTeX packages
 false && R --quiet --no-save <<EOF
     tinytex::install_tinytex(force = TRUE)
@@ -88,7 +93,7 @@ revdep/run.R --rm pgxRpi SCArray.sat scLANE synergyfinder
 #revdep/run.R --rm ...
 
 ## Fails to install
-revdep/run.R --rm BayesPET TriDimRegression  # there is no package called ‘rstantools’
+revdep/run.R --rm BayesPET marcxmlr TriDimRegression  # there is no package called ‘rstantools’
 
 ## Fails to check
 revdep/run.R --rm mapme.biodiversity    # unstable results
