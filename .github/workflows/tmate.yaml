@@ -65,7 +65,7 @@ jobs:
       R_PARALLELLY_BRANCH: ${{ matrix.config.parallelly }}
       
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Setup and launch tmate session
         uses: mxschmitt/action-tmate@v3
