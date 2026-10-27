@@ -1,5 +1,10 @@
 #! /usr/bin/env bash
 
+if [[ -f revdep/data.sqlite ]]; then
+    >&2 echo "ERROR: To wipe existing results, remove 'revdep/data.sqlite' first"
+    exit 1
+fi    
+
 ## Missing or outdated LaTeX packages
 false && R --quiet --no-save <<EOF
     tinytex::install_tinytex(force = TRUE)
