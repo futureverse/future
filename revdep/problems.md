@@ -11,7 +11,7 @@ Run `revdepcheck::revdep_details(, "altdoc")` for more info
 *   checking for non-standard things in the check directory ... NOTE
      ```
      Found the following files/directories:
-       ‘testpkg778cd321746ec’
+       ‘testpkgf195225d347bc’
      ```
 
 # batchtools (0.9.18)
@@ -27,10 +27,10 @@ Run `revdepcheck::revdep_details(, "batchtools")` for more info
 *   checking dependencies in R code ... NOTE
      ```
      ...
-     dev3.wynton.ucsf.edu:pid675976.R: Unable to initialize verbs NIC /sys/class/infiniband/mlx5_0 (unit 0:0)
-     dev3.wynton.ucsf.edu:pid675976: PSM3 can't open nic unit: 0 (err=23)
-     dev3.wynton.ucsf.edu:pid675976.R: Unable to create send CQ of size 5080 on mlx5_0: Cannot allocate memory
-     dev3.wynton.ucsf.edu:pid675976.R: Unable to initialize verbs NIC /sys/class/infiniband/mlx5_0 (unit 0:0)
+     localhost::pid1058478.R: Unable to initialize verbs NIC /sys/class/infiniband/mlx5_0 (unit 0:0)
+     localhost::pid1058478: PSM3 can't open nic unit: 0 (err=23)
+     localhost::pid1058478.R: Unable to create send CQ of size 5080 on mlx5_0: Cannot allocate memory
+     localhost::pid1058478.R: Unable to initialize verbs NIC /sys/class/infiniband/mlx5_0 (unit 0:0)
      --------------------------------------------------------------------------
      No OpenFabrics connection schemes reported that they were able to be
      used on a specific port.  As such, the openib BTL (OpenFabrics
@@ -41,9 +41,9 @@ Run `revdepcheck::revdep_details(, "batchtools")` for more info
        Local port:           1
        CPCs attempted:       rdmacm, udcm
      --------------------------------------------------------------------------
-     dev3.wynton.ucsf.edu:pid675976: PSM3 can't open nic unit: 0 (err=23)
-     dev3.wynton.ucsf.edu:pid675976.R: Unable to create send CQ of size 5080 on mlx5_0: Cannot allocate memory
-     dev3.wynton.ucsf.edu:pid675976.R: Unable to initialize verbs NIC /sys/class/infiniband/mlx5_0 (unit 0:0)
+     localhost::pid1058478: PSM3 can't open nic unit: 0 (err=23)
+     localhost::pid1058478.R: Unable to create send CQ of size 5080 on mlx5_0: Cannot allocate memory
+     localhost::pid1058478.R: Unable to initialize verbs NIC /sys/class/infiniband/mlx5_0 (unit 0:0)
      --------------------------------------------------------------------------
      Open MPI failed an OFI Libfabric library call (fi_endpoint).  This is highly
      unusual; your job may behave unpredictably (and/or abort) after this.
@@ -237,52 +237,6 @@ Run `revdepcheck::revdep_details(, "cSEM")` for more info
        All declared Imports should be used.
      ```
 
-# delimtools (0.2.2)
-
-* GitHub: <https://github.com/legalLab/delimtools>
-* Email: <mailto:pedro.sennabittencourt@gmail.com>
-* GitHub mirror: <https://github.com/cran/delimtools>
-
-Run `revdepcheck::revdep_details(, "delimtools")` for more info
-
-## In both
-
-*   checking examples ... ERROR
-     ```
-     ...
-       6. │     └─dplyr:::filter_rows(...)
-       7. │       └─dplyr:::filter_eval(...)
-       8. │         ├─base::withCallingHandlers(...)
-       9. │         └─mask$eval_all_filter(dots_expanded, invert, env_filter)
-      10. │           └─dplyr (local) eval()
-      11. ├─.data$term_localName %in% dplyr::pull(dwc, type)
-      12. ├─dplyr::pull(dwc, type)
-      13. ├─dplyr:::pull.data.frame(dwc, type)
-      14. │ └─tidyselect::vars_pull(names(.data), !!enquo(var))
-      15. │   └─tidyselect:::pull_as_location2(...)
-      16. │     ├─tidyselect:::with_subscript_errors(...)
-      17. │     │ └─base::withCallingHandlers(...)
-      18. │     └─vctrs::vec_as_location2(...)
-      19. │       ├─vctrs:::result_get(...) at vctrs/R/subscript-loc.R:160:3
-      20. │       └─vctrs:::vec_as_location2_result(...) at vctrs/R/subscript-loc.R:160:3
-      21. │         ├─base::tryCatch(...) at vctrs/R/subscript-loc.R:277:3
-      22. │         │ └─base (local) tryCatchList(expr, classes, parentenv, handlers)
-      23. │         │   └─base (local) tryCatchOne(expr, names, parentenv, handlers[[1L]])
-      24. │         │     └─base (local) doTryCatch(return(expr), name, parentenv, handler)
-      25. │         └─vctrs::vec_as_location(i, n, names = names, arg = arg, call = call) at vctrs/R/subscript-loc.R:277:3
-      26. └─vctrs (local) `<fn>`() at vctrs/R/subscript-loc.R:84:3
-      27.   └─vctrs:::stop_subscript_oob(...)
-      28.     └─vctrs:::stop_subscript(...) at vctrs/R/subscript-loc.R:503:3
-      29.       └─rlang::abort(...) at vctrs/R/subscript.R:150:3
-     Execution halted
-     ```
-
-*   checking Rd cross-references ... NOTE
-     ```
-     Package unavailable to check Rd xrefs: ‘bGMYC’
-     Unknown package ‘splits’ in Rd xrefs
-     ```
-
 # envi (1.0.1)
 
 * GitHub: <https://github.com/lance-waller-lab/envi>
@@ -462,78 +416,6 @@ Run `revdepcheck::revdep_details(, "MAI")` for more info
      is not mentioned in the DESCRIPTION file.
      ```
 
-# marcxmlr (0.5.0)
-
-* GitHub: <https://github.com/larry77/marcxmlr>
-* Email: <mailto:lorenzo.isella@gmail.com>
-* GitHub mirror: <https://github.com/cran/marcxmlr>
-
-Run `revdepcheck::revdep_details(, "marcxmlr")` for more info
-
-## In both
-
-*   checking whether package ‘marcxmlr’ can be installed ... ERROR
-     ```
-     Installation failed.
-     See ‘/scratch/henrik/revdep/future/checks/marcxmlr/new/marcxmlr.Rcheck/00install.out’ for details.
-     ```
-
-## Installation
-
-### Devel
-
-```
-* installing *source* package ‘marcxmlr’ ...
-** this is package ‘marcxmlr’ version ‘0.5.0’
-** package ‘marcxmlr’ successfully unpacked and MD5 sums checked
-** using staged installation
-Using PKG_CFLAGS=-I/usr/include/libxml2
-Using PKG_LIBS=-lxml2 -lz -llzma -lm -ldl
-Expat found: offset filtering enabled.
-** libs
-using C compiler: ‘gcc (GCC) 13.3.1 20240611 (Red Hat 13.3.1-2)’
-gcc -std=gnu2x -I"/wynton/home/cbi/shared/software/CBI/_rocky8/R-4.6.1-gcc13/lib64/R/include" -DNDEBUG -I/usr/include/libxml2  -DMARCXMLR_HAS_EXPAT  -I/usr/local/include    -fpic  -g -O2  -c marcxml-native.c -o marcxml-native.o
-...
-In file included from /usr/include/libxml2/libxml/globals.h:20,
-                 from /usr/include/libxml2/libxml/xmlIO.h:117,
-                 from /usr/include/libxml2/libxml/parser.h:808,
-                 from marcxml-native.c:11:
-/usr/include/libxml2/libxml/SAX.h:104:17: note: previous declaration of ‘attribute’ with type ‘void(void *, const xmlChar *, const xmlChar *)’ {aka ‘void(void *, const unsigned char *, const unsigned char *)’}
-  104 |                 attribute                       (void *ctx,
-      |                 ^~~~~~~~~
-make: *** [/wynton/home/cbi/shared/software/CBI/_rocky8/R-4.6.1-gcc13/lib64/R/etc/Makeconf:190: marcxml-native.o] Error 1
-ERROR: compilation failed for package ‘marcxmlr’
-* removing ‘/scratch/henrik/revdep/future/checks/marcxmlr/new/marcxmlr.Rcheck/marcxmlr’
-
-
-```
-### CRAN
-
-```
-* installing *source* package ‘marcxmlr’ ...
-** this is package ‘marcxmlr’ version ‘0.5.0’
-** package ‘marcxmlr’ successfully unpacked and MD5 sums checked
-** using staged installation
-Using PKG_CFLAGS=-I/usr/include/libxml2
-Using PKG_LIBS=-lxml2 -lz -llzma -lm -ldl
-Expat found: offset filtering enabled.
-** libs
-using C compiler: ‘gcc (GCC) 13.3.1 20240611 (Red Hat 13.3.1-2)’
-gcc -std=gnu2x -I"/wynton/home/cbi/shared/software/CBI/_rocky8/R-4.6.1-gcc13/lib64/R/include" -DNDEBUG -I/usr/include/libxml2  -DMARCXMLR_HAS_EXPAT  -I/usr/local/include    -fpic  -g -O2  -c marcxml-native.c -o marcxml-native.o
-...
-In file included from /usr/include/libxml2/libxml/globals.h:20,
-                 from /usr/include/libxml2/libxml/xmlIO.h:117,
-                 from /usr/include/libxml2/libxml/parser.h:808,
-                 from marcxml-native.c:11:
-/usr/include/libxml2/libxml/SAX.h:104:17: note: previous declaration of ‘attribute’ with type ‘void(void *, const xmlChar *, const xmlChar *)’ {aka ‘void(void *, const unsigned char *, const unsigned char *)’}
-  104 |                 attribute                       (void *ctx,
-      |                 ^~~~~~~~~
-make: *** [/wynton/home/cbi/shared/software/CBI/_rocky8/R-4.6.1-gcc13/lib64/R/etc/Makeconf:190: marcxml-native.o] Error 1
-ERROR: compilation failed for package ‘marcxmlr’
-* removing ‘/scratch/henrik/revdep/future/checks/marcxmlr/old/marcxmlr.Rcheck/marcxmlr’
-
-
-```
 # mistyR (1.20.0)
 
 * GitHub: <https://github.com/saezlab/mistyR>
@@ -599,10 +481,10 @@ Run `revdepcheck::revdep_details(, "mlr3resampling")` for more info
 *   checking dependencies in R code ... NOTE
      ```
      ...
-     dev3.wynton.ucsf.edu:pid364680.R: Unable to initialize verbs NIC /sys/class/infiniband/mlx5_0 (unit 0:0)
-     dev3.wynton.ucsf.edu:pid364680: PSM3 can't open nic unit: 0 (err=23)
-     dev3.wynton.ucsf.edu:pid364680.R: Unable to create send CQ of size 5080 on mlx5_0: Cannot allocate memory
-     dev3.wynton.ucsf.edu:pid364680.R: Unable to initialize verbs NIC /sys/class/infiniband/mlx5_0 (unit 0:0)
+     localhost::pid2968431.R: Unable to initialize verbs NIC /sys/class/infiniband/mlx5_0 (unit 0:0)
+     localhost::pid2968431: PSM3 can't open nic unit: 0 (err=23)
+     localhost::pid2968431.R: Unable to create send CQ of size 5080 on mlx5_0: Cannot allocate memory
+     localhost::pid2968431.R: Unable to initialize verbs NIC /sys/class/infiniband/mlx5_0 (unit 0:0)
      --------------------------------------------------------------------------
      No OpenFabrics connection schemes reported that they were able to be
      used on a specific port.  As such, the openib BTL (OpenFabrics
@@ -613,9 +495,9 @@ Run `revdepcheck::revdep_details(, "mlr3resampling")` for more info
        Local port:           1
        CPCs attempted:       rdmacm, udcm
      --------------------------------------------------------------------------
-     dev3.wynton.ucsf.edu:pid364680: PSM3 can't open nic unit: 0 (err=23)
-     dev3.wynton.ucsf.edu:pid364680.R: Unable to create send CQ of size 5080 on mlx5_0: Cannot allocate memory
-     dev3.wynton.ucsf.edu:pid364680.R: Unable to initialize verbs NIC /sys/class/infiniband/mlx5_0 (unit 0:0)
+     localhost::pid2968431: PSM3 can't open nic unit: 0 (err=23)
+     localhost::pid2968431.R: Unable to create send CQ of size 5080 on mlx5_0: Cannot allocate memory
+     localhost::pid2968431.R: Unable to initialize verbs NIC /sys/class/infiniband/mlx5_0 (unit 0:0)
      --------------------------------------------------------------------------
      Open MPI failed an OFI Libfabric library call (fi_endpoint).  This is highly
      unusual; your job may behave unpredictably (and/or abort) after this.
@@ -659,68 +541,6 @@ Run `revdepcheck::revdep_details(, "multiverse")` for more info
          ‘accessors.R’ ‘export_json.R’ ‘extract.R’
      ```
 
-# nadir (0.0.1)
-
-* GitHub: <https://github.com/ctesta01/nadir>
-* Email: <mailto:ctesta@hsph.harvard.edu>
-* GitHub mirror: <https://github.com/cran/nadir>
-
-Run `revdepcheck::revdep_details(, "nadir")` for more info
-
-## In both
-
-*   checking examples ... ERROR
-     ```
-     Running examples in ‘nadir-Ex.R’ failed
-     The error most likely occurred in:
-     
-     > ### Name: lnr_glmer
-     > ### Title: Generalized Linear Mixed-Effects ('lme4::glmer') Learner
-     > ### Aliases: lnr_glmer
-     > 
-     > ### ** Examples
-     > 
-     > # random intercepts for each level of cyl column:
-     > suppressMessages({
-     + # singular fit, but that's ok if all you need is prediction:
-     + lnr_glmer(mtcars, mpg ~ (1|cyl) + disp + wt, family = Gamma)(mtcars)
-     + })
-     Error in model.frame.default(data = data, weights = weights, drop.unused.levels = TRUE,  : 
-       invalid type (closure) for variable '(weights)'
-     Calls: suppressMessages ... mkFormula -> eval -> eval -> <Anonymous> -> model.frame.default
-     Execution halted
-     ```
-
-*   checking tests ...
-     ```
-     ...
-         5.   ├─lme4::lFormula(...)
-         6.   │ └─lme4:::mkFormula(...)
-         7.   │   └─base::eval(mf, parent_env)
-         8.   │     └─base::eval(mf, parent_env)
-         9.   ├─stats::model.frame(...)
-        10.   └─stats::model.frame.default(...)
-       ── Error ('test-continuous-learners.R:67:3'): all binary learners can be trained and predict on mtcars ──
-       Error in `model.frame.default(data = data, weights = weights, drop.unused.levels = TRUE, formula = am ~ (1 + cyl) + hp)`: invalid type (closure) for variable '(weights)'
-       Backtrace:
-            ▆
-         1. └─nadir::lnr_glmer(...) at test-continuous-learners.R:67:3
-         2.   ├─lme4::glmer(...) at nadir/R/learners.R:336:3
-         3.   │ └─base::eval(mc, parent.frame(1L))
-         4.   │   └─base::eval(mc, parent.frame(1L))
-         5.   ├─lme4::glFormula(...)
-         6.   │ └─lme4:::mkFormula(...)
-         7.   │   └─base::eval(mf, parent_env)
-         8.   │     └─base::eval(mf, parent_env)
-         9.   ├─stats::model.frame(...)
-        10.   └─stats::model.frame.default(...)
-       
-       [ FAIL 2 | WARN 0 | SKIP 0 | PASS 32 ]
-       Error:
-       ! Test failures.
-       Execution halted
-     ```
-
 # nfl4th (1.0.7)
 
 * GitHub: <https://github.com/nflverse/nfl4th>
@@ -752,52 +572,6 @@ Run `revdepcheck::revdep_details(, "OutSeekR")` for more info
      ```
      Namespaces in Imports field not imported from:
        ‘future’ ‘truncnorm’
-       All declared Imports should be used.
-     ```
-
-# partR2 (0.9.2)
-
-* GitHub: <https://github.com/mastoffel/partR2>
-* Email: <mailto:martin.adam.stoffel@gmail.com>
-* GitHub mirror: <https://github.com/cran/partR2>
-
-Run `revdepcheck::revdep_details(, "partR2")` for more info
-
-## In both
-
-*   checking tests ...
-     ```
-     ...
-       ── Failure ('test_varcomps.R:177:3'): Binomial/proportion variance components are correct ──
-       Expected `var_comps3$var_res` to equal 4.572481.
-       Differences:
-       1/1 mismatches
-       [1] 4.57 - 4.57 == 0.000111
-       ── Failure ('test_varcomps.R:185:3'): Binomial/proportion variance components are correct ──
-       Expected `var_comps4$var_fix` to equal 0.0903644.
-       Differences:
-       1/1 mismatches
-       [1] 0.0904 - 0.0904 == 7.19e-05
-       ── Failure ('test_varcomps.R:186:3'): Binomial/proportion variance components are correct ──
-       Expected `var_comps4$var_ran` to equal 0.3827342.
-       Differences:
-       1/1 mismatches
-       [1] 0.383 - 0.383 == 0.000595
-       ── Failure ('test_varcomps.R:199:3'): Binomial/proportion variance components are correct ──
-       Expected `var_comps6$var_res` to equal 1.688004.
-       Differences:
-       1/1 mismatches
-       [1] 1.69 - 1.69 == 9.45e-05
-       
-       [ FAIL 17 | WARN 7 | SKIP 0 | PASS 75 ]
-       Error:
-       ! Test failures.
-       Execution halted
-     ```
-
-*   checking dependencies in R code ... NOTE
-     ```
-     Namespace in Imports field not imported from: ‘methods’
        All declared Imports should be used.
      ```
 
@@ -926,8 +700,8 @@ Run `revdepcheck::revdep_details(, "sdmTMB")` for more info
 *   checking tests ...
      ```
      ...
-         'test-waywiser.R:95:3', 'test-without-spatial.R:2:3',
-         'test-rtmb-fields.R:283:3', 'test-rtmb-fields.R:323:3',
+         'test-tmb-simulation.R:524:3', 'test-waywiser.R:2:3', 'test-waywiser.R:41:3',
+         'test-waywiser.R:71:3', 'test-waywiser.R:95:3', 'test-without-spatial.R:2:3',
          'test-zero-one-map.R:203:3'
        • {sdmTMBextra} is not installed (1): 'test-rtmb-fields.R:240:3'
        
@@ -1148,7 +922,7 @@ Run `revdepcheck::revdep_details(, "SpaDES.core")` for more info
      +   convertToPackage("test", path = tmpdir)
      + }
      Loading required namespace: pkgload
-     New module test created at /scratch/hb/RtmpG11LKf/working_dir/RtmpQCrihq/reproducible/U3C0xYmG
+     New module test created at /scratch/hb/RtmpbnmG8T/working_dir/RtmpxreMvc/reproducible/U3C0xYmG
      ```
 
 # sparrpowR (0.2.9)
@@ -1264,22 +1038,6 @@ Run `revdepcheck::revdep_details(, "survstan")` for more info
      Namespaces in Imports field not imported from:
        ‘RcppParallel’ ‘rstantools’
        All declared Imports should be used.
-     ```
-
-# tbl.now (1.2.0)
-
-* GitHub: <https://github.com/RodrigoZepeda/tbl.now>
-* Email: <mailto:rzepeda17@gmail.com>
-* GitHub mirror: <https://github.com/cran/tbl.now>
-
-Run `revdepcheck::revdep_details(, "tbl.now")` for more info
-
-## In both
-
-*   checking Rd cross-references ... NOTE
-     ```
-     Packages unavailable to check Rd xrefs: ‘diseasenowcasting’, ‘epinowcast’
-     Unknown package ‘almanac’ in Rd xrefs
      ```
 
 # UniCensorEM (0.1.0)
