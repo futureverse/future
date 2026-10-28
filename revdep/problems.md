@@ -11,7 +11,7 @@ Run `revdepcheck::revdep_details(, "altdoc")` for more info
 *   checking for non-standard things in the check directory ... NOTE
      ```
      Found the following files/directories:
-       ‘testpkgf195225d347bc’
+       ‘testpkgb968b7f81d1c0’
      ```
 
 # batchtools (0.9.18)
@@ -27,10 +27,10 @@ Run `revdepcheck::revdep_details(, "batchtools")` for more info
 *   checking dependencies in R code ... NOTE
      ```
      ...
-     localhost::pid1058478.R: Unable to initialize verbs NIC /sys/class/infiniband/mlx5_0 (unit 0:0)
-     localhost::pid1058478: PSM3 can't open nic unit: 0 (err=23)
-     localhost::pid1058478.R: Unable to create send CQ of size 5080 on mlx5_0: Cannot allocate memory
-     localhost::pid1058478.R: Unable to initialize verbs NIC /sys/class/infiniband/mlx5_0 (unit 0:0)
+     localhost::pid834153.R: Unable to initialize verbs NIC /sys/class/infiniband/mlx5_0 (unit 0:0)
+     localhost::pid834153: PSM3 can't open nic unit: 0 (err=23)
+     localhost::pid834153.R: Unable to create send CQ of size 5080 on mlx5_0: Cannot allocate memory
+     localhost::pid834153.R: Unable to initialize verbs NIC /sys/class/infiniband/mlx5_0 (unit 0:0)
      --------------------------------------------------------------------------
      No OpenFabrics connection schemes reported that they were able to be
      used on a specific port.  As such, the openib BTL (OpenFabrics
@@ -41,9 +41,9 @@ Run `revdepcheck::revdep_details(, "batchtools")` for more info
        Local port:           1
        CPCs attempted:       rdmacm, udcm
      --------------------------------------------------------------------------
-     localhost::pid1058478: PSM3 can't open nic unit: 0 (err=23)
-     localhost::pid1058478.R: Unable to create send CQ of size 5080 on mlx5_0: Cannot allocate memory
-     localhost::pid1058478.R: Unable to initialize verbs NIC /sys/class/infiniband/mlx5_0 (unit 0:0)
+     localhost::pid834153: PSM3 can't open nic unit: 0 (err=23)
+     localhost::pid834153.R: Unable to create send CQ of size 5080 on mlx5_0: Cannot allocate memory
+     localhost::pid834153.R: Unable to initialize verbs NIC /sys/class/infiniband/mlx5_0 (unit 0:0)
      --------------------------------------------------------------------------
      Open MPI failed an OFI Libfabric library call (fi_endpoint).  This is highly
      unusual; your job may behave unpredictably (and/or abort) after this.
@@ -481,10 +481,10 @@ Run `revdepcheck::revdep_details(, "mlr3resampling")` for more info
 *   checking dependencies in R code ... NOTE
      ```
      ...
-     localhost::pid2968431.R: Unable to initialize verbs NIC /sys/class/infiniband/mlx5_0 (unit 0:0)
-     localhost::pid2968431: PSM3 can't open nic unit: 0 (err=23)
-     localhost::pid2968431.R: Unable to create send CQ of size 5080 on mlx5_0: Cannot allocate memory
-     localhost::pid2968431.R: Unable to initialize verbs NIC /sys/class/infiniband/mlx5_0 (unit 0:0)
+     localhost::pid3031170.R: Unable to initialize verbs NIC /sys/class/infiniband/mlx5_0 (unit 0:0)
+     localhost::pid3031170: PSM3 can't open nic unit: 0 (err=23)
+     localhost::pid3031170.R: Unable to create send CQ of size 5080 on mlx5_0: Cannot allocate memory
+     localhost::pid3031170.R: Unable to initialize verbs NIC /sys/class/infiniband/mlx5_0 (unit 0:0)
      --------------------------------------------------------------------------
      No OpenFabrics connection schemes reported that they were able to be
      used on a specific port.  As such, the openib BTL (OpenFabrics
@@ -495,9 +495,9 @@ Run `revdepcheck::revdep_details(, "mlr3resampling")` for more info
        Local port:           1
        CPCs attempted:       rdmacm, udcm
      --------------------------------------------------------------------------
-     localhost::pid2968431: PSM3 can't open nic unit: 0 (err=23)
-     localhost::pid2968431.R: Unable to create send CQ of size 5080 on mlx5_0: Cannot allocate memory
-     localhost::pid2968431.R: Unable to initialize verbs NIC /sys/class/infiniband/mlx5_0 (unit 0:0)
+     localhost::pid3031170: PSM3 can't open nic unit: 0 (err=23)
+     localhost::pid3031170.R: Unable to create send CQ of size 5080 on mlx5_0: Cannot allocate memory
+     localhost::pid3031170.R: Unable to initialize verbs NIC /sys/class/infiniband/mlx5_0 (unit 0:0)
      --------------------------------------------------------------------------
      Open MPI failed an OFI Libfabric library call (fi_endpoint).  This is highly
      unusual; your job may behave unpredictably (and/or abort) after this.
@@ -700,9 +700,9 @@ Run `revdepcheck::revdep_details(, "sdmTMB")` for more info
 *   checking tests ...
      ```
      ...
-         'test-tmb-simulation.R:524:3', 'test-waywiser.R:2:3', 'test-waywiser.R:41:3',
-         'test-waywiser.R:71:3', 'test-waywiser.R:95:3', 'test-without-spatial.R:2:3',
-         'test-zero-one-map.R:203:3'
+         'test-truncated-dists.R:2:3', 'test-truncated-dists.R:41:3',
+         'test-truncated-dists.R:80:3', 'test-truncated-dists.R:105:3',
+         'test-truncated-dists.R:130:3', 'test-zero-one-map.R:203:3'
        • {sdmTMBextra} is not installed (1): 'test-rtmb-fields.R:240:3'
        
        ══ Failed tests ════════════════════════════════════════════════════════════════
@@ -922,7 +922,7 @@ Run `revdepcheck::revdep_details(, "SpaDES.core")` for more info
      +   convertToPackage("test", path = tmpdir)
      + }
      Loading required namespace: pkgload
-     New module test created at /scratch/hb/RtmpbnmG8T/working_dir/RtmpxreMvc/reproducible/U3C0xYmG
+     New module test created at /scratch/hb/Rtmpy1nUmL/working_dir/RtmpAs7bXB/reproducible/U3C0xYmG
      ```
 
 # sparrpowR (0.2.9)

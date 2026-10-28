@@ -10,7 +10,7 @@
 |collate  |en_US.UTF-8                                                              |
 |ctype    |en_US.UTF-8                                                              |
 |tz       |America/Los_Angeles                                                      |
-|date     |2026-10-27                                                               |
+|date     |2026-10-28                                                               |
 |pandoc   |3.11 @ /path/to/pandoc-3.11/bin/pandoc       |
 |quarto   |1.10.18 @ /path/to/quarto-1.10.18/bin/quarto |
 
@@ -18,7 +18,7 @@
 
 |package    |old    |new         |Δ  |
 |:----------|:------|:-----------|:--|
-|future     |1.80.0 |1.80.0-9027 |*  |
+|future     |1.80.0 |1.80.0-9028 |*  |
 |codetools  |0.2-20 |0.2-20      |   |
 |digest     |0.6.39 |0.6.39      |   |
 |globals    |0.20.0 |0.20.0      |   |
