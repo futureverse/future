@@ -33,6 +33,10 @@ for (strategy in strategies) {
     ## A running future
     f2 <- future({ Sys.sleep(5); 99 })
 
+    ## With a single worker, the future may have been resolved already
+    ## when launched (e.g. a sequential fallback)
+    resolved_before <- resolved(f2)
+
     res <- tryCatch(value(list(f1, f2), inorder = inorder), error = identity)
 
     message("Assert the launch error is signaled")
@@ -41,7 +45,12 @@ for (strategy in strategies) {
     message("Assert the running future was canceled and resolved")
     stopifnot(resolved(f2))
     res2 <- tryCatch(value(f2), error = identity)
-    stopifnot(inherits(res2, "FutureCanceledError"))
+    if (resolved_before) {
+      ## Already resolved futures are left as is
+      stopifnot(identical(res2, 99))
+    } else {
+      stopifnot(inherits(res2, "FutureCanceledError"))
+    }
 
     message("Assert all workers are released")
     stopifnot(nbrOfFreeWorkers() == n0)

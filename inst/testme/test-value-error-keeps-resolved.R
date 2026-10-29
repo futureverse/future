@@ -27,6 +27,9 @@ for (strategy in strategies) {
     f3 <- future(3, lazy = TRUE)
     fs <- list(f1, f2, f3)
 
+    ## Make sure 'f2' is resolved before value() sees the error from 'f1'
+    resolve(f2)
+
     res <- tryCatch(value(fs, inorder = inorder), error = identity)
     stopifnot(inherits(res, "error"), conditionMessage(res) == "boom")
 
