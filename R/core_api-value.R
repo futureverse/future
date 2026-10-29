@@ -769,7 +769,12 @@ value.list <- function(x, idxs = NULL, recursive = 0, reduce = NULL, stdout = TR
                     mdebugf_push("cancel(y, interrupt = %s) ...", interrupt)
                     on.exit(mdebug_pop())
                   }
-                  cancel(y, interrupt = interrupt)
+                  ## Cancel only the futures that are still running
+                  for (kk in seq_along(y)) {
+                    f <- y[[kk]]
+                    if (inherits(f, "Future") && f[["state"]] != "created" && resolved(f)) next
+                    cancel(f, interrupt = interrupt)
+                  }
                 })
               }
 
