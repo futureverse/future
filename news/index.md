@@ -18,6 +18,12 @@
 
 ### Bug Fixes
 
+- If `value(<list>)` detected one of the futures produced an error, the
+  default is to cancel the remaining future and the resignal the
+  captured error. When that happened, it would incorrectly cancel also
+  the failed future and any already resolved futures, resulting in them
+  also being invalidated.
+
 - `value(<list>)` would leave the remaining futures running, instead of
   canceling them, if a lazy future failed to launch.
 

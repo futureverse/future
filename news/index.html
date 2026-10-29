@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.80.0-9028</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.80.0-9029</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -88,7 +88,8 @@
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-development-version">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h3>
-<ul><li><p><code>value(&lt;list&gt;)</code> would leave the remaining futures running, instead of canceling them, if a lazy future failed to launch.</p></li>
+<ul><li><p>If <code>value(&lt;list&gt;)</code> detected one of the futures produced an error, the default is to cancel the remaining future and the resignal the captured error. When that happened, it would incorrectly cancel also the failed future and any already resolved futures, resulting in them also being invalidated.</p></li>
+<li><p><code>value(&lt;list&gt;)</code> would leave the remaining futures running, instead of canceling them, if a lazy future failed to launch.</p></li>
 <li><p>Contrary to <code>value(&lt;Future&gt;)</code>, <code>value(&lt;list&gt;)</code> would throw an error for a future whose value is an error condition.</p></li>
 <li><p><code><a href="../reference/cancel.html">cancel()</a></code> ignored lazy futures, so <code><a href="../reference/value.html">value()</a></code> on a canceled lazy future would launch the future and return its value. Canceling a lazy future now invalidates it.</p></li>
 <li><p><code><a href="../reference/value.html">value()</a></code> on a canceled sequential future or a canceled cluster future with interrupts disabled (default), returned the value, instead of signaling a <code>FutureCanceledError</code>.</p></li>
