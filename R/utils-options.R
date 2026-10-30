@@ -376,7 +376,7 @@ update_package_options <- function(debug = FALSE) {
 
   update_package_option("future.fork.multithreading.enable", mode = "logical", debug = debug)
 
-  update_package_option("future.globals.maxSize", mode = "numeric", debug = debug)
+  update_package_option("future.globals.maxSize", mode = "numeric", default = +Inf, debug = debug)
 
   update_package_option("future.globals.onMissing", debug = debug)
   
