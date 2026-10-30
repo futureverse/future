@@ -73,9 +73,11 @@ objs <- list(
   b = as.list(1:3),
   c = structure(as.list(1:3), class = c("foo", "list")),
   d = data.frame(a = 1:3),
-  e = as.environment(list(a = 1:3))
+  e = as.environment(list(a = 1:3)),
+  g = future::as.FutureGlobals(list(a = 1, b = 2)),
+  h = structure(as.list(1:3), class = c("FutureGlobals", "Globals", "list", "foo"))
 )
-truth <- c(a = 3L, b = 3L, c = 3L, d = 1L, e = 1L)
+truth <- c(a = 3L, b = 3L, c = 3L, d = 1L, e = 1L, g = 2L, h = 3L)
 
 ## Special case: length(x) == 5, but .length(x) == 2
 ## BUG FIX: https://github.com/futureverse/future/issues/164

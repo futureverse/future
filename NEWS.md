@@ -12,6 +12,11 @@
    frequently. For the time being, `digest::digest()` is still used for
    older versions of R, if **digest** is installed.
 
+## Performance
+
+ * `resolve()` on lists of globals now uses less memory, which reduces
+   the overhead of nested **future.apply** and **furrr** calls.
+
 ## Bug Fixes
 
  * If `value(<list>)` detected one of the futures produced an error,
