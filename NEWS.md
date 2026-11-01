@@ -1,4 +1,4 @@
-# Version (development version)
+# Version 1.82.0 [2026-10-31]
 
 This is another rollout of several towards a near-future major
 release. This has been made possible due to a multi-year effort of
