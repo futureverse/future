@@ -46,7 +46,7 @@ jobs:
           local({
             ns <- asNamespace("covr")
             merge_list <- get("merge_coverage.list", envir = ns)
-            registerS3method("merge_coverage", "character", function(x) {
+            new <- function(x) {
               ## Wait for stray processes to finish writing their trace files
               size <- function() file.size(x)
               t_end <- Sys.time() + 120
@@ -74,7 +74,8 @@ jobs:
                         call. = FALSE, immediate. = TRUE)
               }
               merge_list(objs[!bad])
-            }, envir = ns)
+            }
+            utils::assignInNamespace("merge_coverage.character", new, ns = "covr")
           })
 
           cov <- covr::package_coverage(
