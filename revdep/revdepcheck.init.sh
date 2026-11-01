@@ -80,11 +80,11 @@ fi
 ## Add packages to check
 revdep/run.R --add-children
 
-## Drop packages failing on CRAN (2026-10-25)
-revdep/run.R --rm delimtools dispositionEffect nadir partR2 fmeffects WpProj
+## Drop packages failing on CRAN (2026-11-01)
+revdep/run.R --rm ale delimtools dispositionEffect nadir partR2 fmeffects
 
 ## Drop packages failing on Bioconductor (2026-10-05)
-revdep/run.R --rm pgxRpi SCArray.sat scLANE synergyfinder
+revdep/run.R --rm pgxRpi scLANE synergyfinder
 
 ## Drop packages no longer on CRAN (2026-07-19)
 #revdep/run.R --rm ...
