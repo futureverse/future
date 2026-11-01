@@ -37,6 +37,26 @@ jobs:
 
       - name: Test coverage
         run: |
+          ## Workaround: A background process that is terminated while writing
+          ## its covr trace file leaves a truncated file behind, which makes
+          ## covr::package_coverage() fail with "Error in readRDS(f) : error
+          ## reading from connection" when merging. Skip such files.
+          local({
+            ns <- asNamespace("covr")
+            orig <- get("merge_coverage.character", envir = ns)
+            registerS3method("merge_coverage", "character", function(x) {
+              ok <- vapply(x, FUN.VALUE = NA, FUN = function(f) {
+                !inherits(try(suppressWarnings(readRDS(f)), silent = TRUE), "try-error")
+              })
+              if (!all(ok)) {
+                warning(sprintf("Ignoring %d unreadable covr trace file(s): %s",
+                                sum(!ok), paste(basename(x[!ok]), collapse = ", ")),
+                        call. = FALSE, immediate. = TRUE)
+              }
+              orig(x[ok])
+            }, envir = ns)
+          })
+
           cov <- covr::package_coverage(
             quiet = FALSE,
             clean = FALSE,
