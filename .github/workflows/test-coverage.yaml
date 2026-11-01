@@ -37,23 +37,43 @@ jobs:
 
       - name: Test coverage
         run: |
-          ## Workaround: A background process that is terminated while writing
-          ## its covr trace file leaves a truncated file behind, which makes
-          ## covr::package_coverage() fail with "Error in readRDS(f) : error
-          ## reading from connection" when merging. Skip such files.
+          ## Workaround: Background processes terminated while writing their
+          ## covr trace files (e.g. canceled workers) can leave truncated files
+          ## behind, or still be writing when covr merges the files. Either
+          ## makes covr::package_coverage() fail with "Error in readRDS(f) :
+          ## error reading from connection". Wait for the files to settle, and
+          ## skip any that remain unreadable.
           local({
             ns <- asNamespace("covr")
-            orig <- get("merge_coverage.character", envir = ns)
+            merge_list <- get("merge_coverage.list", envir = ns)
             registerS3method("merge_coverage", "character", function(x) {
-              ok <- vapply(x, FUN.VALUE = NA, FUN = function(f) {
-                !inherits(try(suppressWarnings(readRDS(f)), silent = TRUE), "try-error")
-              })
-              if (!all(ok)) {
+              ## Wait for stray processes to finish writing their trace files
+              size <- function() file.size(x)
+              t_end <- Sys.time() + 120
+              prev <- size()
+              while (Sys.time() < t_end) {
+                Sys.sleep(2)
+                cur <- size()
+                if (identical(cur, prev)) break
+                prev <- cur
+              }
+              ## Read each file once; retry, then give up on unreadable files
+              read <- function(f) {
+                for (kk in 1:3) {
+                  res <- try(as.list(suppressWarnings(readRDS(f))), silent = TRUE)
+                  if (!inherits(res, "try-error")) return(res)
+                  Sys.sleep(5)
+                }
+                NULL
+              }
+              objs <- lapply(x, read)
+              bad <- vapply(objs, is.null, NA)
+              if (any(bad)) {
                 warning(sprintf("Ignoring %d unreadable covr trace file(s): %s",
-                                sum(!ok), paste(basename(x[!ok]), collapse = ", ")),
+                                sum(bad), paste(basename(x[bad]), collapse = ", ")),
                         call. = FALSE, immediate. = TRUE)
               }
-              orig(x[ok])
+              merge_list(objs[!bad])
             }, envir = ns)
           })
 
