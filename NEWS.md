@@ -1,5 +1,10 @@
 # Version (development version)
 
+This is another rollout of several towards a near-future major
+release. This has been made possible due to a multi-year effort of
+internal re-designs, work with package maintainers, release, and
+repeat. This release focuses on cancellation of futures.
+
 ## Significant Changes
 
  * `cancel()` now also cancels lazy futures, which invalidates them.
