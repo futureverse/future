@@ -153,7 +153,7 @@ signalImmediateConditions <- function(future, include = NULL, resignal = FALSE, 
 }
 
 
-make_signalConditionsASAP <- function(nx, stdout = TRUE, signal = TRUE, force = FALSE, debug = FALSE) {
+make_signalConditionsASAP <- function(nx, stdout = TRUE, signal = TRUE, force = FALSE, drop = FALSE, debug = FALSE) {
   relay <- (stdout || signal)
   if (!relay && !force) return(function(...) TRUE)
 
@@ -189,8 +189,8 @@ make_signalConditionsASAP <- function(nx, stdout = TRUE, signal = TRUE, force = 
         if (relayed[ii]) next
         if (debug) mdebugf("relaying element #%d", ii)
         obj <- queue[[ii]]
-        if (is.null(obj) || is.atomic(obj)) {
-          relayed[ii] <- TRUE
+        if (is.null(obj) || is.atomic(obj) || inherits(obj, "DroppedFuture")) {
+          relayed[ii] <<- TRUE
           next
         }
 
@@ -215,6 +215,10 @@ make_signalConditionsASAP <- function(nx, stdout = TRUE, signal = TRUE, force = 
           signalConditions(obj, exclude = c(exclude, immediateConditionClasses), resignal = resignal, ...)
         }
         relayed[ii] <<- TRUE
+        if (drop) {
+          drop_future(obj)
+          queue[ii] <<- list(NULL)
+        }
       }
       ## Assert that everything has been relayed
       stop_if_not(all(relayed))
@@ -264,6 +268,11 @@ make_signalConditionsASAP <- function(nx, stdout = TRUE, signal = TRUE, force = 
           signalConditions(obj, exclude = c(exclude, immediateConditionClasses), resignal = resignal, ...)
         }
         relayed[ii] <<- TRUE
+        ## Drop only after relaying, so that nothing captured is lost
+        if (drop) {
+          drop_future(obj)
+          queue[ii] <<- list(NULL)
+        }
       }
     }
 

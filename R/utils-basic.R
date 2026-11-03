@@ -343,6 +343,9 @@ parseCmdArgs <- function() {
   classes <- class(x)
   if (length(classes) == 1L && classes == "list") return(nx)
 
+  ## Early return if a 'FutureGlobals' object
+  if (all(classes %in% c("FutureGlobals", "Globals", "list"))) return(nx)
+
   ## Identify all length() methods for this object
   for (class in classes) {
     fun <- getS3method("length", class, optional = TRUE)

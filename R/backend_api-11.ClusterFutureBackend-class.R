@@ -214,7 +214,7 @@ launchFuture.ClusterFutureBackend <- function(backend, future, ...) {
   ## rather than worker index? /HB 2025-07-04
   node_idx <- requestNode(await = function() {
     FutureRegistry(reg, action = "collect-first", earlySignal = TRUE, debug = debug)
-  }, backend = backend, timeout = timeout, delta = delta, alpha = alpha)
+  }, backend = backend, timeout = timeout, delta = delta, alpha = alpha, future = future)
   workers <- backend[["workers"]] ## Backend might have been updated
   future[["node"]] <- node_idx
   
@@ -416,7 +416,7 @@ stopWorkers.ClusterFutureBackend <- function(backend, interrupt = TRUE, ...) {
   registered <- clusterRegistry$getCluster(debug = debug)
   if (!is.null(registered) && !identical(workers, registered)) {
     warning(FutureWarning(sprintf(
-      "Detected the workers of %s to be out of sync with the memoized cluster. This leaves stray, unclosed connections behind that will triggers a 'closing unused connection' warnings when the garbage collect runs",
+      "Detected the workers of %s to be out of sync with the memoized cluster. This leaves stray, unclosed connections behind that will trigger a 'closing unused connection' warning when the garbage collector runs",
       class(backend)[1]
     )))
   }
@@ -937,7 +937,7 @@ receiveMessageFromWorker <- local({
     if (inherits(msg, "FutureResult")) {
       result <- msg
       if (debug) mdebug("Received FutureResult")
-  
+
       if (inherits(future[[".journal"]], "FutureJournal")) {
         appendToFutureJournal(future,
              event = "receiveResult",
@@ -1065,7 +1065,7 @@ requestNode <- local({
     if (inherits(con, "connection")) close(con)
   })
 
-  function(await, backend, timeout, delta, alpha, validateWorker = TRUE) {
+  function(await, backend, timeout, delta, alpha, validateWorker = TRUE, future = NULL) {
     debug <- isTRUE(getOption("future.debug"))
     if (debug) {
       mdebug_push("requestNode() ...")
@@ -1115,7 +1115,7 @@ requestNode <- local({
       await()
   
       iter <- iter + 1L
-      dt <- difftime(Sys.time(), t0)
+      dt <- difftime(Sys.time(), t0, units = "secs")
     }
     if (debug) {
       mdebugf("Total time: %s", dt)
@@ -1722,6 +1722,10 @@ clusterRegistry <- local({
   ## We only allow one parallel 'cluster' per session
   cluster <- NULL
 
+  ## Does clusterRegistry() own 'cluster'?
+  ## It owns it if it create it via startCluster(), otherwise not
+  owned <- FALSE
+
   getCluster <- function(..., debug = FALSE) {
     if (debug) {
       mdebug_push("getCluster() ...")
@@ -1755,22 +1759,24 @@ clusterRegistry <- local({
 
     ## Memoize
     cluster <<- cl
+    owned <<- TRUE
 
     cluster
   } ## startCluster()
 
   setCluster <- function(cl) {
-    cluster <<- cl
+    ## Update the memoized cluster if we own it, otherise not
+    if (owned) cluster <<- cl
   }
 
   stopCluster <- function(debug = FALSE) {
     if (debug) {
-      mdebug_push("Stopping existing cluster ...")
+      mdebug_push("Stopping self-owned cluster ...")
       on.exit(mdebug_pop())
     }
     ## Nothing to do?
-    if (is.null(cluster)) {
-      if (debug) mdebug("No pre-existing cluster. Skipping")
+    if (!owned) {
+      if (debug) mdebug("No self-owned cluster. Skipping")
       return(NULL)
     }
 
@@ -1778,6 +1784,7 @@ clusterRegistry <- local({
     ## Clear memoization of cluster, regardless of success or failure
     on.exit({
       cluster <<- NULL
+      owned <<- FALSE
     }, add = TRUE)
 
     if (debug) {

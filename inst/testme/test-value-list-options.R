@@ -64,6 +64,28 @@ stopifnot(length(value(list())) == 0L)
 message("*** value() - 'reduce' with 'inorder' ... DONE")
 
 
+message("*** value() - 'signal' and 'stdout' with 'inorder = FALSE' ...")
+
+## 'signal = FALSE' should be honored also when 'inorder = FALSE',
+## i.e. errors should be returned as-is rather than being signaled
+fs <- list(future(stop("boom")))
+res <- value(fs, signal = FALSE, inorder = FALSE)
+stopifnot(inherits(res[[1]], "error"))
+
+## ... and 'signal = TRUE' (the default) should still signal the error
+fs <- list(future(stop("boom")))
+res <- tryCatch(value(fs, signal = TRUE, inorder = FALSE), error = identity)
+stopifnot(inherits(res, "error"))
+
+## 'stdout = FALSE' should be honored also when 'inorder = FALSE',
+## i.e. standard output should not be relayed
+fs <- list(future(cat("this should not be relayed\n")))
+stdout <- utils::capture.output(res <- value(fs, stdout = FALSE, inorder = FALSE))
+stopifnot(!any(grepl("this should not be relayed", stdout, fixed = TRUE)))
+
+message("*** value() - 'signal' and 'stdout' with 'inorder = FALSE' ... DONE")
+
+
 message("*** value() - 'idxs' subsetting ...")
 
 ## Numeric indices

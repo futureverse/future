@@ -571,9 +571,9 @@ assertOwner <- local({
 run.Future <- function(future, ...) {
   debug <- isTRUE(getOption("future.debug"))
   if (debug) {
-    mdebugf_push("run() for %s (%s) ...", sQuote(class(future)[1]), sQuoteLabel(future))
+    depth <- mdebugf_push("run() for %s (%s) ...", sQuote(class(future)[1]), sQuoteLabel(future))
     mdebug("state: ", sQuote(future[["state"]]))
-    on.exit(mdebugf_pop())
+    on.exit(mdebugf_pop(depth = depth))
   }
 
   if (future[["state"]] != "created") {

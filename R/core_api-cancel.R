@@ -1,8 +1,9 @@
 #' Cancel one or more futures
 #'
 #' Cancels futures, with the option to interrupt running ones.
-#' `cancel()` is vectorized, i.e. accepts a collection of futures
-#' to be canceled.
+#' A canceled future is invalid, e.g. calling [value()] on it produces
+#' an error. `cancel()` is vectorized, i.e. accepts a set of futures to
+#' be canceled.
 #'
 #' @param x A [Future], a list, an environment, or a list environment
 #' (\link[listenv:listenv]{listenv}). Lists and environments may hold
@@ -18,11 +19,33 @@
 #' @return
 #' `cancel()` returns (invisibly) `x` after canceling every [Future]
 #' therein, that is, after flagging each one as "canceled" and
-#' possibly interrupting it as well.
+#' possibly interrupting it as well. If `x` is not a future, or holds
+#' non-futures, such elements are unaffected.
 #'
-#' Canceling a lazy or a finished future has no effect. Elements of
-#' `x` that are neither futures nor collections of futures are left
-#' untouched.
+#' @details
+#' A canceled future is invalid. Calling [value()] on it produces a
+#' [FutureCanceledError], which inherits from [FutureInterruptError].
+#' A [FutureInterruptError] can happen also for external reasons. The
+#' cancelation error is signaled regardless of:
+#'
+#'  * `interrupt`, that is, also when `interrupt = FALSE`, or when the
+#'    future backend does not support interrupts;
+#'
+#'  * the state of the future, that is, if it is non-launched, running,
+#'    finished;
+#'
+#'  * the future would have produced a value or an error or not.
+#'
+#' If the future is not interrupted, its parallel worker keeps processing
+#' it until it is done, when the result is collected and immediately
+#' discarded.
+#'
+#' To keep the value of a future that is already resolved, which still
+#' canceling others, use something like `cancel(fs[!resolved(fs)])`.
+#'
+#' Canceling an already canceled future, or an interrupted one has no
+#' effect. Neither has canceling a future that was dropped using
+#' `value(..., drop = TRUE)`.
 #'
 #' @examplesIf (interactive() || .Platform[["OS.type"]] != "windows")
 #' ## Set up two parallel workers
@@ -94,15 +117,25 @@ cancel.Future <- function(x, interrupt = TRUE, ...) {
     on.exit(mdebug_pop())
   }
   
-  ## Only submitted or running futures can be canceled, ignore everything else
-  if (!future[["state"]] %in% c("submitted", "running")) {
-    if (debug) mdebug("Skipping, because not a submitted or a running future")
+  ## Ignore canceled, interrupted, or dropped futures
+  state <- future[["state"]]
+  if (!state %in% c("created", "submitted", "running", "finished", "failed") ||
+      inherits(future, "DroppedFuture")) {
+    if (debug) mdebug("Skipping, because a canceled, interrupted, or dropped future")
     return(invisible(future))
   }
 
   future[["actions"]] <- c(future[["actions"]], "cancel")
 
-  if (interrupt) {
+  ## Cancel also lazy futures
+  if (state == "created") {
+    canceledFutureError(future)
+    return(invisible(future))
+  }
+
+  ## Only futures that are still active can be interrupted
+  active <- state %in% c("submitted", "running")
+  if (interrupt && active) {
     backend <- future[["backend"]]
     if (is.null(backend)) {
       stop(FutureError(sprintf("Interruption of futures require a backend implementing the FutureBackend API: %s", sQuote(class(future)[1]))))

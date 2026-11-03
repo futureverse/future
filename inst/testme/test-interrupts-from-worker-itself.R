@@ -47,6 +47,9 @@ for (strategy in strategies) {
   }, FutureError = identity)
   print(v)
 
+  ## An interruption that was not caused by cancel() is never a cancellation
+  stopifnot(!inherits(v, "FutureCanceledError"))
+
   ## A future interrupting itself is not supported on all backends
   stopifnot(
     #   (i) Ideally the SIGINT interrupt condition is caught, but ...

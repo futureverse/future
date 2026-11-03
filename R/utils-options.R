@@ -376,7 +376,7 @@ update_package_options <- function(debug = FALSE) {
 
   update_package_option("future.fork.multithreading.enable", mode = "logical", debug = debug)
 
-  update_package_option("future.globals.maxSize", mode = "numeric", debug = debug)
+  update_package_option("future.globals.maxSize", mode = "numeric", default = +Inf, debug = debug)
 
   update_package_option("future.globals.onMissing", debug = debug)
   
@@ -396,7 +396,7 @@ update_package_options <- function(debug = FALSE) {
   ## future.plan.relay.immediate or future.psock.relay.immediate?!? /HB 2021-03-07
   update_package_option("future.psock.relay.immediate", mode = "logical", debug = debug)
   
-  update_package_option("future.relay.immediate", mode = "logical", debug = debug)
+  update_package_option("future.relay.immediate", split = ",", debug = debug)
 
   update_package_option("future.resolve.recursive", mode = "integer", debug = debug)
 

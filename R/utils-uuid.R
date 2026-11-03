@@ -1,14 +1,36 @@
 ## Create a universally unique identifier (UUID) for an R object
 #' @importFrom tools md5sum
-#' @importFrom digest digest
 uuid <- local({
-  ## Use tools::md5sum(), if R (>= 4.5.0). Fall back to digest::digest().
-  if ("bytes" %in% names(formals(md5sum))) {
-    md5 <- function(x) md5sum(bytes = serialize(x, connection = NULL))
-  } else {
-    md5 <- function(x) digest(x, algo = "md5", serialize = TRUE, skip = 0L)
+  ## We need to trick 'R CMD check' that 'md5' is a function already,
+  ## because with md5 <- NULL, 'codetools' triggers a check NOTE.
+  md5 <- function(x) {
+    ## 1. Use the native tools::md5sum(bytes = ...), if R (>= 4.5.0).
+    if ("bytes" %in% names(formals(md5sum))) {
+      impl <- function(x) md5sum(bytes = serialize(x, connection = NULL))
+    } else if (requireNamespace("digest", quietly = TRUE)) {
+      ## 2. On R (< 4.5.0), use digest::digest(), if the 'digest' package
+      ##    is available.
+      impl <- function(x) {
+        digest::digest(x, algo = "md5", serialize = TRUE, skip = 0L)
+      }
+    } else {
+      ## 3. On R (< 4.5.0), fall back to tools::md5sum(files = ...)
+      impl <- function(x) {
+        bytes <- serialize(x, connection = NULL)
+        tmp <- tempfile()
+        on.exit(unlink(tmp))
+        writeBin(bytes, tmp)
+        unname(md5sum(tmp))
+      }
+    }
+
+    ## Memoize md5() function, which will replace it for future calls
+    md5 <<- impl
+
+    ## But for this first call, we need to call it
+    impl(x)
   }
-  
+
   function(source, keep_source = FALSE) {
     uuid <- md5(source)
     if (keep_source) attr(uuid, "source") <- source

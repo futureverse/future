@@ -1,3 +1,43 @@
+# ale (0.5.3)
+
+* GitHub: <https://github.com/tripartio/ale>
+* Email: <mailto:Chitu.Okoli@skema.edu>
+* GitHub mirror: <https://github.com/cran/ale>
+
+Run `revdepcheck::revdep_details(, "ale")` for more info
+
+## In both
+
+*   checking tests ...
+     ```
+     ...
+         9.             └─base (local) tryCatchList(expr, classes, parentenv, handlers)
+        10.               └─base (local) tryCatchOne(expr, names, parentenv, handlers[[1L]])
+        11.                 └─value[[3L]](cond)
+        12.                   └─rlang::cnd_signal(cnd)
+       ── Error ('test-ModelBoot.R:99:5'): bootstrapped categorical outcome with full 1D and all variables set ──
+       Error in `value[[3L]](cond)`: 
+       Backtrace:
+            ▆
+         1. └─ale::ModelBoot(...) at test-ModelBoot.R:99:5
+         2.   ├─purrr::list_transpose(...) at ale/R/ModelBoot.R:471:5
+         3.   │ └─vctrs::obj_check_list(x)
+         4.   └─furrr::future_map2(...) at ale/R/ModelBoot.R:471:5
+         5.     └─furrr:::furrr_map2_template(...)
+         6.       └─furrr:::furrr_template(...)
+         7.         └─furrr:::furrr_try_catch(...)
+         8.           └─base::tryCatch(expr = expr, purrr_error_indexed = rethrow_purrr_error_indexed)
+         9.             └─base (local) tryCatchList(expr, classes, parentenv, handlers)
+        10.               └─base (local) tryCatchOne(expr, names, parentenv, handlers[[1L]])
+        11.                 └─value[[3L]](cond)
+        12.                   └─rlang::cnd_signal(cnd)
+       
+       [ FAIL 4 | WARN 610 | SKIP 12 | PASS 83 ]
+       Error:
+       ! Test failures.
+       Execution halted
+     ```
+
 # altdoc (0.7.3)
 
 * GitHub: <https://github.com/etiennebacher/altdoc>
@@ -11,7 +51,7 @@ Run `revdepcheck::revdep_details(, "altdoc")` for more info
 *   checking for non-standard things in the check directory ... NOTE
      ```
      Found the following files/directories:
-       ‘testpkg870b31c7959e9’
+       ‘testpkg3235f7af12eea’
      ```
 
 # batchtools (0.9.18)
@@ -27,10 +67,10 @@ Run `revdepcheck::revdep_details(, "batchtools")` for more info
 *   checking dependencies in R code ... NOTE
      ```
      ...
-     localhost::pid668482.R: Unable to initialize verbs NIC /sys/class/infiniband/mlx5_0 (unit 0:0)
-     localhost::pid668482: PSM3 can't open nic unit: 0 (err=23)
-     localhost::pid668482.R: Unable to create send CQ of size 5080 on mlx5_0: Cannot allocate memory
-     localhost::pid668482.R: Unable to initialize verbs NIC /sys/class/infiniband/mlx5_0 (unit 0:0)
+     localhost::pid288394.R: Unable to initialize verbs NIC /sys/class/infiniband/mlx5_0 (unit 0:0)
+     localhost::pid288394: PSM3 can't open nic unit: 0 (err=23)
+     localhost::pid288394.R: Unable to create send CQ of size 5080 on mlx5_0: Cannot allocate memory
+     localhost::pid288394.R: Unable to initialize verbs NIC /sys/class/infiniband/mlx5_0 (unit 0:0)
      --------------------------------------------------------------------------
      No OpenFabrics connection schemes reported that they were able to be
      used on a specific port.  As such, the openib BTL (OpenFabrics
@@ -41,9 +81,9 @@ Run `revdepcheck::revdep_details(, "batchtools")` for more info
        Local port:           1
        CPCs attempted:       rdmacm, udcm
      --------------------------------------------------------------------------
-     localhost::pid668482: PSM3 can't open nic unit: 0 (err=23)
-     localhost::pid668482.R: Unable to create send CQ of size 5080 on mlx5_0: Cannot allocate memory
-     localhost::pid668482.R: Unable to initialize verbs NIC /sys/class/infiniband/mlx5_0 (unit 0:0)
+     localhost::pid288394: PSM3 can't open nic unit: 0 (err=23)
+     localhost::pid288394.R: Unable to create send CQ of size 5080 on mlx5_0: Cannot allocate memory
+     localhost::pid288394.R: Unable to initialize verbs NIC /sys/class/infiniband/mlx5_0 (unit 0:0)
      --------------------------------------------------------------------------
      Open MPI failed an OFI Libfabric library call (fi_endpoint).  This is highly
      unusual; your job may behave unpredictably (and/or abort) after this.
@@ -79,6 +119,46 @@ Run `revdepcheck::revdep_details(, "bayesian")` for more info
        function(object)
      See section ‘Registering S3 methods’ in the ‘Writing R Extensions’
      manual.
+     ```
+
+# bifrost (0.2.2)
+
+* GitHub: <https://github.com/jakeberv/bifrost>
+* Email: <mailto:jacob.berv@gmail.com>
+* GitHub mirror: <https://github.com/cran/bifrost>
+
+Run `revdepcheck::revdep_details(, "bifrost")` for more info
+
+## In both
+
+*   checking tests ...
+     ```
+     ...
+       • repository empirical artifact directory unavailable for simulation vignette
+         cache (1): 'test-simulation-vignette-cache.R:3:3'
+       
+       ══ Failed tests ════════════════════════════════════════════════════════════════
+       ── Failure ('test-search-background-history.R:97:9'): background history preserves accepted, rejected and failed proposals and RNG ──
+       Expected `actual$warnings` to be identical to `expected$warnings`.
+       Differences:
+       actual vs expected
+       - "future::supportsMulticore() is deprecated. Please use the identical parallelly::supportsMulticore() instead [testthat::test_check() -> testthat::test_dir() -> testthat::test_files() -> testthat::test_files_serial() -> testthat::with_reporter() -> base::tryCatch() -> tryCatchList() -> tryCatchOne() -> doTryCatch() -> base::lapply() -> testthat::FUN() -> testthat::source_file() -> testthat::test_code() -> base::withRestarts() -> withOneRestart() -> doWithOneRestart() -> base::tryCatch() -> tryCatchList() -> tryCatchOne() -> doTryCatch() -> base::withCallingHandlers() -> base::eval() -> eval() -> testthat::test_that() -> testthat::test_code() -> base::withRestarts() -> withOneRestart() -> doWithOneRestart() -> base::tryCatch() -> tryCatchList() -> tryCatchOne() -> doTryCatch() -> base::withCallingHandlers() -> base::eval() -> eval() -> run() -> base::withCallingHandlers() -> base::do.call() -> bifrost::(function (sorted_candidates, current_best_tree, current_best_ic,      shift_id, IC, formula, trait_data, shift_acceptance_threshold,      store_model_fit_history, sub_dir, plot, verbose_log, tick = function(...) invisible(NULL),      heartbeat = NULL, is_rstudio = FALSE, fit = .bifrost_search_fit_ic,      .future_plan_active = FALSE, ...)  {     if (length(sorted_candidates) > 0L && !is.null(heartbeat) &&          !isTRUE(.future_plan_active)) {         dots <- list(...)         forward_args <- c(list(sorted_candidates = sorted_candidates,              current_best_tree = current_best_tree, current_best_ic = current_best_ic,              shift_id = shift_id, IC = IC, formula = formula,              trait_data = trait_data, shift_acceptance_threshold = shift_acceptance_threshold,              store_model_fit_history = store_model_fit_history,              sub_dir = sub_dir, plot = plot, verbose_log = verbose_log,              tick = tick, heartbeat = heartbeat, is_rstudio = is_rstudio,              fit = fit, .future_plan_active = TRUE), dots)         return(.bifrost_search_with_future_plan(workers = 1L,              is_rstudio_flag = is_rstudio, ensure_async = TRUE,              work = function() do.call(.bifrost_search_forward,                  forward_args)))     }     shift_vec <- list()     model_with_shift_no_uncertainty <- NULL     best_tree_no_uncertainty <- NULL     warnings_list <- list()     model_fit_history <- list()     for (i in seq_along(sorted_candidates)) {         shift_node_name <- names(sorted_candidates)[i]         shift_node_number <- as.integer(sub(\"Node \", \"\", shift_node_name))         percent_complete <- round((i/length(sorted_candidates)) *              100, 2)         verbose_log(\"Evaluating shift at node %d (%.2f%% complete)\",              shift_node_number, percent_complete)         outcome <- \"error\"         proposal <- NULL         add_shift_result <- addShiftToModel(current_best_tree,              shift_node_number, shift_id)         shifted_tree <- add_shift_result$tree         shift_id <- add_shift_result$shift_id         if (plot == TRUE) {             nodelabels(text = shift_id, node = shift_node_number)         }         tryCatch({             fit_args <- c(list(IC, formula, shifted_tree, trait_data),                  list(...))             fit_proposal <- .bifrost_search_fit_proposal             fit_work <- function() fit_proposal(fit, fit_args,                  IC, current_best_ic, shift_acceptance_threshold,                  history = if (store_model_fit_history)                    list(step = i, candidate_node = shift_node_number,                      regime_id = as.character(shift_id)), sub_dir = if (!is.null(heartbeat))                    sub_dir)             proposal <- withCallingHandlers(if (is.null(heartbeat)) {                 fit_work()             }             else {                 .bifrost_search_await_work(fit_work, heartbeat = heartbeat)             }, warning = function(w) {                 warning_message <- paste(\"Warning in evaluating shift at node\",                    shift_node_number, \":\", w$message)                 warning(warning_message)                 warnings_list[[length(warnings_list) + 1]] <<- warning_message                 invokeRestart(\"muffleWarning\")             })             model_with_shift <- proposal$value$model             new_ic <- proposal$value$ic             delta_ic <- proposal$value$delta_ic             if (store_model_fit_history) {                 model_fit_history <- proposal$value             }             if (delta_ic >= shift_acceptance_threshold) {                 current_best_tree <- shifted_tree                 current_best_ic <- new_ic                 outcome <- \"accepted\"                 verbose_log(\"Shift at node %d accepted. Updated %s: %.2f; Delta %s: %.2f\",                    shift_node_number, IC, current_best_ic, IC,                    delta_ic)                 shift_vec[[length(shift_vec) + 1]] <- shift_node_number                 best_tree_no_uncertainty <- current_best_tree                 model_with_shift_no_uncertainty <- model_with_shift             }             else {                 outcome <- \"rejected\"                 verbose_log(\"Shift at node %d rejected. Delta %s: %.2f < threshold: %.2f\",                    shift_node_number, IC, delta_ic, shift_acceptance_threshold)             }         }, error = function(e) {             warning_message <- paste(\"Error in evaluating shift at node\",                  shift_node_number, \":\", e$message)             warning(warning_message)             warnings_list[[length(warnings_list) + 1]] <<- warning_message             if (store_model_fit_history) {                 model_fit_history <<- list(step = i, candidate_node = shift_node_number,                    regime_id = as.character(shift_id), model = NULL,                    ic = NA_real_, accepted = FALSE, delta_ic = NA,                    status = \"error\", error = e$message)             }         })         tick(message = sprintf(\"[2/3] Node %d %s\", shift_node_number,              if (outcome == \"error\")                  \"failed\"             else outcome))         for (condition in proposal$conditions) {             if (inherits(condition, \"error\"))                  stop(condition)             warning(condition)         }         if (isTRUE(store_model_fit_history) && !is.null(sub_dir) &&              (is.null(heartbeat) || outcome == \"error\")) {             iteration_num <- i + 1L             .bifrost_search_save_history(model_fit_history, sub_dir,                  iteration_num)         }         if (plot == TRUE) {             colorvec <- setNames(object = c(\"black\", rainbow(length(unique(getStates(shifted_tree,                  type = \"both\"))) - 1)), nm = sort(as.numeric(unique(getStates(shifted_tree,                  type = \"both\")))))             plotSimmap(current_best_tree, colors = colorvec,                  ftype = \"off\")         }     }     list(current_best_tree = current_best_tree, current_best_ic = current_best_ic,          shift_id = shift_id, shift_vec = shift_vec, shifts_no_uncertainty = unlist(shift_vec),          model_with_shift_no_uncertainty = model_with_shift_no_uncertainty,          best_tree_no_uncertainty = best_tree_no_uncertainty,          warnings_list = warnings_list, model_fit_history = model_fit_history) })() -> bifrost::.bifrost_search_with_future_plan() -> future::supportsMulticore()]"
+         "Warning in evaluating shift at node 15 : fit warning"
+         "Error in evaluating shift at node 17 : fit failed after drawing"
+       
+       ── Failure ('test-search-background-history.R:99:11'): background history preserves accepted, rejected and failed proposals and RNG ──
+       Expected `actual` to be identical to `expected`.
+       Differences:
+       actual$warnings vs expected$warnings
+       - "future::supportsMulticore() is deprecated. Please use the identical parallelly::supportsMulticore() instead [testthat::test_check() -> testthat::test_dir() -> testthat::test_files() -> testthat::test_files_serial() -> testthat::with_reporter() -> base::tryCatch() -> tryCatchList() -> tryCatchOne() -> doTryCatch() -> base::lapply() -> testthat::FUN() -> testthat::source_file() -> testthat::test_code() -> base::withRestarts() -> withOneRestart() -> doWithOneRestart() -> base::tryCatch() -> tryCatchList() -> tryCatchOne() -> doTryCatch() -> base::withCallingHandlers() -> base::eval() -> eval() -> testthat::test_that() -> testthat::test_code() -> base::withRestarts() -> withOneRestart() -> doWithOneRestart() -> base::tryCatch() -> tryCatchList() -> tryCatchOne() -> doTryCatch() -> base::withCallingHandlers() -> base::eval() -> eval() -> run() -> base::withCallingHandlers() -> base::do.call() -> bifrost::(function (sorted_candidates, current_best_tree, current_best_ic,      shift_id, IC, formula, trait_data, shift_acceptance_threshold,      store_model_fit_history, sub_dir, plot, verbose_log, tick = function(...) invisible(NULL),      heartbeat = NULL, is_rstudio = FALSE, fit = .bifrost_search_fit_ic,      .future_plan_active = FALSE, ...)  {     if (length(sorted_candidates) > 0L && !is.null(heartbeat) &&          !isTRUE(.future_plan_active)) {         dots <- list(...)         forward_args <- c(list(sorted_candidates = sorted_candidates,              current_best_tree = current_best_tree, current_best_ic = current_best_ic,              shift_id = shift_id, IC = IC, formula = formula,              trait_data = trait_data, shift_acceptance_threshold = shift_acceptance_threshold,              store_model_fit_history = store_model_fit_history,              sub_dir = sub_dir, plot = plot, verbose_log = verbose_log,              tick = tick, heartbeat = heartbeat, is_rstudio = is_rstudio,              fit = fit, .future_plan_active = TRUE), dots)         return(.bifrost_search_with_future_plan(workers = 1L,              is_rstudio_flag = is_rstudio, ensure_async = TRUE,              work = function() do.call(.bifrost_search_forward,                  forward_args)))     }     shift_vec <- list()     model_with_shift_no_uncertainty <- NULL     best_tree_no_uncertainty <- NULL     warnings_list <- list()     model_fit_history <- list()     for (i in seq_along(sorted_candidates)) {         shift_node_name <- names(sorted_candidates)[i]         shift_node_number <- as.integer(sub(\"Node \", \"\", shift_node_name))         percent_complete <- round((i/length(sorted_candidates)) *              100, 2)         verbose_log(\"Evaluating shift at node %d (%.2f%% complete)\",              shift_node_number, percent_complete)         outcome <- \"error\"         proposal <- NULL         add_shift_result <- addShiftToModel(current_best_tree,              shift_node_number, shift_id)         shifted_tree <- add_shift_result$tree         shift_id <- add_shift_result$shift_id         if (plot == TRUE) {             nodelabels(text = shift_id, node = shift_node_number)         }         tryCatch({             fit_args <- c(list(IC, formula, shifted_tree, trait_data),                  list(...))             fit_proposal <- .bifrost_search_fit_proposal             fit_work <- function() fit_proposal(fit, fit_args,                  IC, current_best_ic, shift_acceptance_threshold,                  history = if (store_model_fit_history)                    list(step = i, candidate_node = shift_node_number,                      regime_id = as.character(shift_id)), sub_dir = if (!is.null(heartbeat))                    sub_dir)             proposal <- withCallingHandlers(if (is.null(heartbeat)) {                 fit_work()             }             else {                 .bifrost_search_await_work(fit_work, heartbeat = heartbeat)             }, warning = function(w) {                 warning_message <- paste(\"Warning in evaluating shift at node\",                    shift_node_number, \":\", w$message)                 warning(warning_message)                 warnings_list[[length(warnings_list) + 1]] <<- warning_message                 invokeRestart(\"muffleWarning\")             })             model_with_shift <- proposal$value$model             new_ic <- proposal$value$ic             delta_ic <- proposal$value$delta_ic             if (store_model_fit_history) {                 model_fit_history <- proposal$value             }             if (delta_ic >= shift_acceptance_threshold) {                 current_best_tree <- shifted_tree                 current_best_ic <- new_ic                 outcome <- \"accepted\"                 verbose_log(\"Shift at node %d accepted. Updated %s: %.2f; Delta %s: %.2f\",                    shift_node_number, IC, current_best_ic, IC,                    delta_ic)                 shift_vec[[length(shift_vec) + 1]] <- shift_node_number                 best_tree_no_uncertainty <- current_best_tree                 model_with_shift_no_uncertainty <- model_with_shift             }             else {                 outcome <- \"rejected\"                 verbose_log(\"Shift at node %d rejected. Delta %s: %.2f < threshold: %.2f\",                    shift_node_number, IC, delta_ic, shift_acceptance_threshold)             }         }, error = function(e) {             warning_message <- paste(\"Error in evaluating shift at node\",                  shift_node_number, \":\", e$message)             warning(warning_message)             warnings_list[[length(warnings_list) + 1]] <<- warning_message             if (store_model_fit_history) {                 model_fit_history <<- list(step = i, candidate_node = shift_node_number,                    regime_id = as.character(shift_id), model = NULL,                    ic = NA_real_, accepted = FALSE, delta_ic = NA,                    status = \"error\", error = e$message)             }         })         tick(message = sprintf(\"[2/3] Node %d %s\", shift_node_number,              if (outcome == \"error\")                  \"failed\"             else outcome))         for (condition in proposal$conditions) {             if (inherits(condition, \"error\"))                  stop(condition)             warning(condition)         }         if (isTRUE(store_model_fit_history) && !is.null(sub_dir) &&              (is.null(heartbeat) || outcome == \"error\")) {             iteration_num <- i + 1L             .bifrost_search_save_history(model_fit_history, sub_dir,                  iteration_num)         }         if (plot == TRUE) {             colorvec <- setNames(object = c(\"black\", rainbow(length(unique(getStates(shifted_tree,                  type = \"both\"))) - 1)), nm = sort(as.numeric(unique(getStates(shifted_tree,                  type = \"both\")))))             plotSimmap(current_best_tree, colors = colorvec,                  ftype = \"off\")         }     }     list(current_best_tree = current_best_tree, current_best_ic = current_best_ic,          shift_id = shift_id, shift_vec = shift_vec, shifts_no_uncertainty = unlist(shift_vec),          model_with_shift_no_uncertainty = model_with_shift_no_uncertainty,          best_tree_no_uncertainty = best_tree_no_uncertainty,          warnings_list = warnings_list, model_fit_history = model_fit_history) })() -> bifrost::.bifrost_search_with_future_plan() -> future::supportsMulticore()]"
+         "Warning in evaluating shift at node 15 : fit warning"
+         "Error in evaluating shift at node 17 : fit failed after drawing"
+       
+       
+       [ FAIL 2 | WARN 11 | SKIP 138 | PASS 2978 ]
+       Error:
+       ! Test failures.
+       Execution halted
      ```
 
 # ceRNAnetsim (1.24.0)
@@ -291,7 +371,7 @@ Run `revdepcheck::revdep_details(, "flowGraph")` for more info
        ‘temp’ ‘tmp’
      ```
 
-# future.batchtools (0.22.0)
+# future.batchtools (0.30.0)
 
 * GitHub: <https://github.com/futureverse/future.batchtools>
 * Email: <mailto:henrikb@braju.com>
@@ -305,6 +385,40 @@ Run `revdepcheck::revdep_details(, "future.batchtools")` for more info
      ```
      Found the following files/directories:
        ‘.future-set-during-startup’
+     ```
+
+# genBaRcode (1.2.8)
+
+* Email: <mailto:lars.thielecke@tu-dresden.de>
+* GitHub mirror: <https://github.com/cran/genBaRcode>
+
+Run `revdepcheck::revdep_details(, "genBaRcode")` for more info
+
+## In both
+
+*   checking tests ...
+     ```
+       Running ‘testthat.R’
+      ERROR
+     Running the tests in ‘tests/testthat.R’ failed.
+     Complete output:
+       > library(testthat)
+       > library(genBaRcode)
+       > 
+       > test_check("genBaRcode")
+       Saving _problems/test_raw_data_functions-72.R
+       [ FAIL 1 | WARN 3 | SKIP 0 | PASS 49 ]
+       
+       ══ Failed tests ════════════════════════════════════════════════════════════════
+       ── Failure ('test_raw_data_functions.R:72:3'): processingRawData - extractBarcodes ──
+       Expected `res$warnings` to equal `wM`.
+       Differences:
+       Lengths differ: 2 is not 1
+       
+       [ FAIL 1 | WARN 3 | SKIP 0 | PASS 49 ]
+       Error:
+       ! Test failures.
+       Execution halted
      ```
 
 # googleTagManageR (0.2.0)
@@ -345,6 +459,42 @@ Run `revdepcheck::revdep_details(, "infercnv")` for more info
             |                                                                                                                                                                                                                     ^
      ```
 
+# InPAS (2.20.0)
+
+* Email: <mailto:jou@morgridge.org>
+
+Run `revdepcheck::revdep_details(, "InPAS")` for more info
+
+## In both
+
+*   checking dependencies in R code ... NOTE
+     ```
+     There are ::: calls to the package's namespace in its code. A package
+       almost never needs to use ::: for its own objects:
+       ‘adjust_distalCPs’ ‘adjust_proximalCPs’ ‘adjust_proximalCPsByNBC’
+       ‘adjust_proximalCPsByPWM’ ‘calculate_mse’ ‘find_valleyBySpline’
+       ‘get_PAscore’ ‘get_PAscore2’ ‘remove_convergentUTR3s’
+       ‘search_distalCPs’ ‘search_proximalCPs’
+     ```
+
+*   checking Rd metadata ... NOTE
+     ```
+     Invalid package aliases in Rd file 'InPAS.Rd':
+       ‘-package’
+     ```
+
+*   checking Rd \usage sections ... NOTE
+     ```
+     Documented arguments not in \usage in Rd file 'get_UTR3TotalCov.Rd':
+       ‘gcCompensationensation’
+     
+     Functions with \usage entries need to have the appropriate \alias
+     entries, and all their arguments documented.
+     The \usage entries must correspond to syntactically valid R code.
+     See chapter ‘Writing R documentation files’ in the ‘Writing R
+     Extensions’ manual.
+     ```
+
 # ivmte (1.4.0)
 
 * Email: <mailto:jkcshea@uchicago.edu>
@@ -380,78 +530,6 @@ Run `revdepcheck::revdep_details(, "MAI")` for more info
      is not mentioned in the DESCRIPTION file.
      ```
 
-# marcxmlr (0.4.0)
-
-* GitHub: <https://github.com/larry77/marcxmlr>
-* Email: <mailto:lorenzo.isella@gmail.com>
-* GitHub mirror: <https://github.com/cran/marcxmlr>
-
-Run `revdepcheck::revdep_details(, "marcxmlr")` for more info
-
-## In both
-
-*   checking whether package ‘marcxmlr’ can be installed ... ERROR
-     ```
-     Installation failed.
-     See ‘/scratch/henrik/revdep/future/checks/marcxmlr/new/marcxmlr.Rcheck/00install.out’ for details.
-     ```
-
-## Installation
-
-### Devel
-
-```
-* installing *source* package ‘marcxmlr’ ...
-** this is package ‘marcxmlr’ version ‘0.4.0’
-** package ‘marcxmlr’ successfully unpacked and MD5 sums checked
-** using staged installation
-Using PKG_CFLAGS=-I/usr/include/libxml2
-Using PKG_LIBS=-lxml2 -lz -llzma -lm -ldl
-** libs
-using C compiler: ‘gcc (GCC) 13.3.1 20240611 (Red Hat 13.3.1-2)’
-gcc -std=gnu2x -I"/path/to/_rocky8/R-4.6.1-gcc13/lib64/R/include" -DNDEBUG -I/usr/include/libxml2  -I/usr/local/include    -fpic  -g -O2  -c marcxml-native.c -o marcxml-native.o
-marcxml-native.c:72:23: error: conflicting types for ‘attribute’; have ‘const xmlChar *(xmlNode *, const char *)’ {aka ‘const unsigned char *(struct _xmlNode *, const char *)’}
-...
-In file included from /usr/include/libxml2/libxml/globals.h:20,
-                 from /usr/include/libxml2/libxml/xmlIO.h:117,
-                 from /usr/include/libxml2/libxml/parser.h:811,
-                 from marcxml-native.c:5:
-/usr/include/libxml2/libxml/SAX.h:104:17: note: previous declaration of ‘attribute’ with type ‘void(void *, const xmlChar *, const xmlChar *)’ {aka ‘void(void *, const unsigned char *, const unsigned char *)’}
-  104 |                 attribute                       (void *ctx,
-      |                 ^~~~~~~~~
-make: *** [/path/to/_rocky8/R-4.6.1-gcc13/lib64/R/etc/Makeconf:190: marcxml-native.o] Error 1
-ERROR: compilation failed for package ‘marcxmlr’
-* removing ‘/scratch/henrik/revdep/future/checks/marcxmlr/new/marcxmlr.Rcheck/marcxmlr’
-
-
-```
-### CRAN
-
-```
-* installing *source* package ‘marcxmlr’ ...
-** this is package ‘marcxmlr’ version ‘0.4.0’
-** package ‘marcxmlr’ successfully unpacked and MD5 sums checked
-** using staged installation
-Using PKG_CFLAGS=-I/usr/include/libxml2
-Using PKG_LIBS=-lxml2 -lz -llzma -lm -ldl
-** libs
-using C compiler: ‘gcc (GCC) 13.3.1 20240611 (Red Hat 13.3.1-2)’
-gcc -std=gnu2x -I"/path/to/_rocky8/R-4.6.1-gcc13/lib64/R/include" -DNDEBUG -I/usr/include/libxml2  -I/usr/local/include    -fpic  -g -O2  -c marcxml-native.c -o marcxml-native.o
-marcxml-native.c:72:23: error: conflicting types for ‘attribute’; have ‘const xmlChar *(xmlNode *, const char *)’ {aka ‘const unsigned char *(struct _xmlNode *, const char *)’}
-...
-In file included from /usr/include/libxml2/libxml/globals.h:20,
-                 from /usr/include/libxml2/libxml/xmlIO.h:117,
-                 from /usr/include/libxml2/libxml/parser.h:811,
-                 from marcxml-native.c:5:
-/usr/include/libxml2/libxml/SAX.h:104:17: note: previous declaration of ‘attribute’ with type ‘void(void *, const xmlChar *, const xmlChar *)’ {aka ‘void(void *, const unsigned char *, const unsigned char *)’}
-  104 |                 attribute                       (void *ctx,
-      |                 ^~~~~~~~~
-make: *** [/path/to/_rocky8/R-4.6.1-gcc13/lib64/R/etc/Makeconf:190: marcxml-native.o] Error 1
-ERROR: compilation failed for package ‘marcxmlr’
-* removing ‘/scratch/henrik/revdep/future/checks/marcxmlr/old/marcxmlr.Rcheck/marcxmlr’
-
-
-```
 # mistyR (1.20.0)
 
 * GitHub: <https://github.com/saezlab/mistyR>
@@ -517,10 +595,10 @@ Run `revdepcheck::revdep_details(, "mlr3resampling")` for more info
 *   checking dependencies in R code ... NOTE
      ```
      ...
-     localhost::pid3274536.R: Unable to initialize verbs NIC /sys/class/infiniband/mlx5_0 (unit 0:0)
-     localhost::pid3274536: PSM3 can't open nic unit: 0 (err=23)
-     localhost::pid3274536.R: Unable to create send CQ of size 5080 on mlx5_0: Cannot allocate memory
-     localhost::pid3274536.R: Unable to initialize verbs NIC /sys/class/infiniband/mlx5_0 (unit 0:0)
+     localhost::pid3260834.R: Unable to initialize verbs NIC /sys/class/infiniband/mlx5_0 (unit 0:0)
+     localhost::pid3260834: PSM3 can't open nic unit: 0 (err=23)
+     localhost::pid3260834.R: Unable to create send CQ of size 5080 on mlx5_0: Cannot allocate memory
+     localhost::pid3260834.R: Unable to initialize verbs NIC /sys/class/infiniband/mlx5_0 (unit 0:0)
      --------------------------------------------------------------------------
      No OpenFabrics connection schemes reported that they were able to be
      used on a specific port.  As such, the openib BTL (OpenFabrics
@@ -531,9 +609,9 @@ Run `revdepcheck::revdep_details(, "mlr3resampling")` for more info
        Local port:           1
        CPCs attempted:       rdmacm, udcm
      --------------------------------------------------------------------------
-     localhost::pid3274536: PSM3 can't open nic unit: 0 (err=23)
-     localhost::pid3274536.R: Unable to create send CQ of size 5080 on mlx5_0: Cannot allocate memory
-     localhost::pid3274536.R: Unable to initialize verbs NIC /sys/class/infiniband/mlx5_0 (unit 0:0)
+     localhost::pid3260834: PSM3 can't open nic unit: 0 (err=23)
+     localhost::pid3260834.R: Unable to create send CQ of size 5080 on mlx5_0: Cannot allocate memory
+     localhost::pid3260834.R: Unable to initialize verbs NIC /sys/class/infiniband/mlx5_0 (unit 0:0)
      --------------------------------------------------------------------------
      Open MPI failed an OFI Libfabric library call (fi_endpoint).  This is highly
      unusual; your job may behave unpredictably (and/or abort) after this.
@@ -611,22 +689,6 @@ Run `revdepcheck::revdep_details(, "OutSeekR")` for more info
        All declared Imports should be used.
      ```
 
-# partR2 (0.9.2)
-
-* GitHub: <https://github.com/mastoffel/partR2>
-* Email: <mailto:martin.adam.stoffel@gmail.com>
-* GitHub mirror: <https://github.com/cran/partR2>
-
-Run `revdepcheck::revdep_details(, "partR2")` for more info
-
-## In both
-
-*   checking dependencies in R code ... NOTE
-     ```
-     Namespace in Imports field not imported from: ‘methods’
-       All declared Imports should be used.
-     ```
-
 # photosynthesis (2.1.5)
 
 * GitHub: <https://github.com/cdmuir/photosynthesis>
@@ -648,6 +710,28 @@ Run `revdepcheck::revdep_details(, "photosynthesis")` for more info
          ‘fit_r_light2.Rd’ ‘leaf-par.R’ ‘make_parameters.R’ ‘models.R’
          ‘parameter_names.R’ ‘photosynthesis.R’ ‘read_licor.R’
          ‘simulate_error.R’ ‘simulate_error.Rd’ ‘utils.R’
+     ```
+
+# PINstimation (0.2.0)
+
+* GitHub: <https://github.com/monty-se/PINstimation>
+* Email: <mailto:montasser.ghachem@pinstimation.com>
+* GitHub mirror: <https://github.com/cran/PINstimation>
+
+Run `revdepcheck::revdep_details(, "PINstimation")` for more info
+
+## In both
+
+*   checking whether the namespace can be loaded with stated dependencies ... NOTE
+     ```
+     Warning in warn_future_reexport_deprecation("availableCores") :
+       future::availableCores() is deprecated. Please use the identical parallelly::availableCores() instead [tools:::.load_namespace_rather_quietly() -> base::withCallingHandlers() -> base::suppressMessages() -> base::withCallingHandlers() -> base::eval() -> eval() -> base::loadNamespace() -> runHook() -> base::tryCatch() -> tryCatchList() -> tryCatchOne() -> doTryCatch() -> PINstimation::fun() -> PINstimation::ux$get_cores() -> base::tryCatch() -> tryCatchList() -> tryCatchOne() -> doTryCatch() -> future::availableCores()]
+     
+     A namespace must be able to be loaded with just the base namespace
+     loaded: otherwise if the namespace gets loaded by a saved object, the
+     session will be unable to start.
+     
+     Probably some imports need to be declared in the NAMESPACE file.
      ```
 
 # powRICLPM (0.2.1)
@@ -739,47 +823,7 @@ Run `revdepcheck::revdep_details(, "remiod")` for more info
      manual.
      ```
 
-# rtemis (1.2.7)
-
-* GitHub: <https://github.com/rtemis-org/rtemis>
-* Email: <mailto:gennatas@gmail.com>
-* GitHub mirror: <https://github.com/cran/rtemis>
-
-Run `revdepcheck::revdep_details(, "rtemis")` for more info
-
-## In both
-
-*   checking tests ...
-     ```
-     ...
-       
-       2026-10-14 20:39:25 [0m[1;38;2;15;106;102m✓[0m Done in 0.62 seconds.[0m [train]
-       [ FAIL 1 | WARN 4 | SKIP 4 | PASS 356 ]
-       
-       ══ Skipped tests (4) ═══════════════════════════════════════════════════════════
-       • For local testing only; requires CSV file (3): 'test_ClusterConfig.R:19:3',
-         'test_DecomposeConfig.R:19:3', 'test_SuperConfig.R:48:3'
-       • empty test (1):
-       
-       ══ Failed tests ════════════════════════════════════════════════════════════════
-       ── Error ('test_Clustering.R:96:3'): cluster_DBSCAN() succeeds ─────────────────
-       Error: approx must be a single, finite, nonnegative number.
-       Backtrace:
-           ▆
-        1. └─rtemis::cluster(...) at test_Clustering.R:96:3
-        2.   └─rtemis:::cluster_(config = config, x = x, verbosity = verbosity) at rtemis/R/cluster.R:86:3
-        3.     ├─S7::S7_dispatch() at rtemis/R/00_init.R:268:5
-        4.     └─rtemis (local) `method(cluster_, rtemis::DBSCANConfig)`(...)
-        5.       └─dbscan::dbscan(...) at rtemis/R/cluster_DBSCAN.R:22:3
-        6.         └─dbscan:::.validate_nonnegative_scalar(extra$approx %||% 0, "approx")
-       
-       [ FAIL 1 | WARN 4 | SKIP 4 | PASS 356 ]
-       Error:
-       ! Test failures.
-       Execution halted
-     ```
-
-# SCArray.sat (1.12.0)
+# SCArray.sat (1.12.1)
 
 * GitHub: <https://github.com/AbbVie-ComputationalGenomics/SCArray>
 * Email: <mailto:xiuwen.zheng@abbvie.com>
@@ -787,36 +831,6 @@ Run `revdepcheck::revdep_details(, "rtemis")` for more info
 Run `revdepcheck::revdep_details(, "SCArray.sat")` for more info
 
 ## In both
-
-*   checking examples ... ERROR
-     ```
-     ...
-       |================================================================| 100%
-     
-       |                                                                      
-       |                                                                |   0%
-       |                                                                      
-       |================================================================| 100%
-     > 
-     > d <- NormalizeData(d)
-     Normalizing layer: counts
-     Performing log-normalization
-     > d <- FindVariableFeatures(d, nfeatures=250)
-     Finding variable features for layer counts
-     Calculating gene variances
-     Calculating feature variances of standardized and clipped values
-     
-       |                                                                      
-       |                                                                |   0%
-       |                                                                      
-       |================================================================| 100%
-     > d <- ScaleData(d)
-     Centering and scaling data matrix (SC_GDSMatrix [250x850])
-     > 
-     > d <- RunPCA(d, ndims.print=1:2)
-     Error: Not compatible with requested type: [type=S4; target=double].
-     Execution halted
-     ```
 
 *   checking dependencies in R code ... NOTE
      ```
@@ -827,52 +841,44 @@ Run `revdepcheck::revdep_details(, "SCArray.sat")` for more info
        See the note in ?`:::` about the use of this operator.
      ```
 
-*   checking R code for possible problems ... NOTE
-     ```
-     CreateAssayObject2: no visible global function definition for
-       ‘CreateAssay5Object’
-       (/scratch/henrik/revdep/future/checks/SCArray.sat/new/SCArray.sat.Rcheck/00_pkg_src/SCArray.sat/R/Methods.R:182)
-     Undefined global functions or variables:
-       CreateAssay5Object
-     ```
+# sdmTMB (1.2.0)
 
-# scLANE (1.2.0)
+* GitHub: <https://github.com/sdmTMB/sdmTMB>
+* Email: <mailto:sean@seananderson.ca>
+* GitHub mirror: <https://github.com/cran/sdmTMB>
 
-* GitHub: <https://github.com/jr-leary7/scLANE>
-* Email: <mailto:j.leary@ufl.edu>
-
-Run `revdepcheck::revdep_details(, "scLANE")` for more info
+Run `revdepcheck::revdep_details(, "sdmTMB")` for more info
 
 ## In both
 
-*   checking re-building of vignette outputs ... ERROR
+*   checking tests ...
      ```
      ...
-     --- re-building ‘scLANE.Rmd’ using rmarkdown
-     
-     Quitting from scLANE.Rmd:264-279 [unnamed-chunk-14]
-     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-     <error/rlang_error>
-     Error:
-     ! object 'dv' not found
-     ---
-     Backtrace:
-         ▆
-      1. └─scLANE::embedGenes(expm1(smoothed_counts$Lineage_A))
-      2.   └─irlba::prcomp_irlba(...) at scLANE/R/embedGenes.R:78:5
-      3.     ├─base::do.call(irlba, args = args)
-      4.     └─irlba (local) `<fn>`(A = `<dbl[,1198]>`, nv = 4, center = `<dbl>`, scale = `<dbl>`)
-     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-     
-     Error: processing vignette 'scLANE.Rmd' failed with diagnostics:
-     object 'dv' not found
-     --- failed re-building ‘scLANE.Rmd’
-     
-     SUMMARY: processing the following file failed:
-       ‘scLANE.Rmd’
-     
-     Error: Vignette re-building failed.
-     Execution halted
+         'test-waywiser.R:95:3', 'test-without-spatial.R:2:3',
+         'test-zero-one-map.R:203:3', 'test-rtmb-fields.R:283:3',
+         'test-rtmb-fields.R:323:3'
+       • {sdmTMBextra} is not installed (1): 'test-rtmb-fields.R:240:3'
+       
+       ══ Failed tests ════════════════════════════════════════════════════════════════
+       ── Failure ('test-rtmb-families.R:481:3'): censored beta-binomial fits sum the shorter side with a precision check ──
+       Expected `fit_auto <- fit("auto", silent = FALSE)` to throw a message.
+       ── Failure ('test-rtmb-families.R:483:3'): censored beta-binomial fits sum the shorter side with a precision check ──
+       Expected `which(fit_auto$tmb_data$cens_direct == 1L)` to be identical to 1L.
+       Differences:
+         `actual`:  
+       `expected`: 1
+       
+       ── Failure ('test-rtmb-families.R:489:3'): censored beta-binomial fits sum the shorter side with a precision check ──
+       Expected `sqrt(diag(fit_auto$sd_report$cov.fixed))` to equal `sqrt(diag(fit_direct$sd_report$cov.fixed))`.
+       Differences:
+         `actual`: 0.0736078 0.0619672 0.2180376
+       `expected`: 0.0736083 0.0619673 0.2180365
+       
+       
+       [ FAIL 3 | WARN 0 | SKIP 341 | PASS 4221 ]
+       Error:
+       ! Test failures.
+       Execution halted
      ```
 
 # Seqtometry (1.0.1)
@@ -1043,6 +1049,46 @@ Run `revdepcheck::revdep_details(, "simhelpers")` for more info
          ‘utilities.R’
      ```
 
+# SmoothPLS (0.1.5)
+
+* GitHub: <https://github.com/FrancoisBassac/SmoothPLS>
+* Email: <mailto:fr.bassac@gmail.com>
+* GitHub mirror: <https://github.com/cran/SmoothPLS>
+
+Run `revdepcheck::revdep_details(, "SmoothPLS")` for more info
+
+## In both
+
+*   checking tests ...
+     ```
+     ...
+     Complete output:
+       > # This file is part of the standard setup for testthat.
+       > # It is recommended that you do not modify it.
+       > #
+       > # Where should you do additional test configuration?
+       > # Learn more about the roles of various files in:
+       > # * https://r-pkgs.org/testing-design.html#sec-tests-files-overview
+       > # * https://testthat.r-lib.org/articles/special-files.html
+       > 
+       > library(testthat)
+       > library(SmoothPLS)
+       > 
+       > test_check("SmoothPLS")
+       Saving _problems/test-lambda-90.R
+       [ FAIL 1 | WARN 6 | SKIP 0 | PASS 69 ]
+       
+       ══ Failed tests ════════════════════════════════════════════════════════════════
+       ── Failure ('test-lambda.R:82:3'): evaluate_lambda sensitivity to integration parameters ──
+       Expected `evaluate_lambda(...)` to run silently.
+       Actual noise: warnings.
+       
+       [ FAIL 1 | WARN 6 | SKIP 0 | PASS 69 ]
+       Error:
+       ! Test failures.
+       Execution halted
+     ```
+
 # SpaDES.core (3.2.1)
 
 * GitHub: <https://github.com/PredictiveEcology/SpaDES.core>
@@ -1070,7 +1116,7 @@ Run `revdepcheck::revdep_details(, "SpaDES.core")` for more info
      +   convertToPackage("test", path = tmpdir)
      + }
      Loading required namespace: pkgload
-     New module test created at /scratch/hb/RtmpEp8tE1/working_dir/RtmpehNfLw/reproducible/U3C0xYmG
+     New module test created at /scratch/hb/Rtmplt0koK/working_dir/RtmpxuPlb9/reproducible/U3C0xYmG
      ```
 
 # sparrpowR (0.2.9)
@@ -1188,122 +1234,6 @@ Run `revdepcheck::revdep_details(, "survstan")` for more info
        All declared Imports should be used.
      ```
 
-# synergyfinder (3.20.0)
-
-* Email: <mailto:shuyu.zheng@helsinki.fi>
-
-Run `revdepcheck::revdep_details(, "synergyfinder")` for more info
-
-## In both
-
-*   checking examples ... ERROR
-     ```
-     Running examples in ‘synergyfinder-Ex.R’ failed
-     The error most likely occurred in:
-     
-     > ### Name: PlotMultiDrugSurface
-     > ### Title: 3D Plot for Multi-drug Combination Dose-Response/Synergy Scores
-     > ### Aliases: PlotMultiDrugSurface
-     > 
-     > ### ** Examples
-     > 
-     > data("NCATS_screening_data")
-     > data <- ReshapeData(NCATS_screening_data)
-     > p <- PlotMultiDrugSurface(
-     +   data,
-     +   plot_block = 1,
-     +   plot_value = "response",
-     +   show_data_points = TRUE,
-     +   distance_method = "mahalanobis",
-     +   summary_statistic = "mean"
-     + )
-     Error in `stats::na.omit`(list(`W[, 3]` = c(1184.26006356869, 1369.42709773729 : 
-       could not find function "stats::na.omit"
-     Calls: PlotMultiDrugSurface ... lm -> eval -> eval -> <Anonymous> -> model.frame.default
-     Execution halted
-     ```
-
-*   checking dependencies in R code ... WARNING
-     ```
-     '::' or ':::' import not declared from: ‘scales’
-     Namespaces in Imports field not imported from:
-       ‘future’ ‘gstat’ ‘nleqslv’ ‘sp’ ‘tidyverse’
-       All declared Imports should be used.
-     ```
-
-*   checking R code for possible problems ... NOTE
-     ```
-     ...
-       (/scratch/henrik/revdep/future/checks/synergyfinder/new/synergyfinder.Rcheck/00_pkg_src/synergyfinder/R/calculate_synergy_score.R:371-389)
-     ZIP : <anonymous>: no visible global function definition for ‘:=’
-       (/scratch/henrik/revdep/future/checks/synergyfinder/new/synergyfinder.Rcheck/00_pkg_src/synergyfinder/R/calculate_synergy_score.R:371-389)
-     ZIP: no visible binding for global variable ‘.’
-       (/scratch/henrik/revdep/future/checks/synergyfinder/new/synergyfinder.Rcheck/00_pkg_src/synergyfinder/R/calculate_synergy_score.R:393-395)
-     ZIP: no visible binding for global variable ‘ZIP_fit’
-       (/scratch/henrik/revdep/future/checks/synergyfinder/new/synergyfinder.Rcheck/00_pkg_src/synergyfinder/R/calculate_synergy_score.R:411-413)
-     ZIP: no visible binding for global variable ‘ZIP_ref’
-       (/scratch/henrik/revdep/future/checks/synergyfinder/new/synergyfinder.Rcheck/00_pkg_src/synergyfinder/R/calculate_synergy_score.R:411-413)
-     ZIP: no visible binding for global variable ‘ZIP_synergy’
-       (/scratch/henrik/revdep/future/checks/synergyfinder/new/synergyfinder.Rcheck/00_pkg_src/synergyfinder/R/calculate_synergy_score.R:411-413)
-     Undefined global functions or variables:
-       . := Bliss_ref HSA_ref ZIP_fit ZIP_ref ZIP_synergy adjust angle
-       block_id color conc1 conc2 css data dev.list dev.off end head id
-       input_type label left maxn metric n nn pred predict r response
-       response_CI95 response_mean response_origin response_origin_CI95
-       response_origin_mean response_origin_sd response_origin_sem
-       response_sd response_sem right start synergy t.test text theta value
-       x y
-     Consider adding
-       importFrom("grDevices", "dev.list", "dev.off")
-       importFrom("graphics", "text")
-       importFrom("stats", "end", "predict", "start", "t.test")
-       importFrom("utils", "data", "head")
-     to your NAMESPACE file.
-     ```
-
-*   checking Rd files ... NOTE
-     ```
-     checkRd: (-1) FitDoseResponse.Rd:54: Lost braces
-         54 | href{https://onlinelibrary.wiley.com/doi/book/10.1002/0471725315}{Nonlinear
-            |     ^
-     checkRd: (-1) FitDoseResponse.Rd:54-55: Lost braces
-         54 | href{https://onlinelibrary.wiley.com/doi/book/10.1002/0471725315}{Nonlinear
-            |                                                                  ^
-     checkRd: (-1) FitDoseResponse.Rd:55: Escaped LaTeX specials: \&
-     checkRd: (-1) PlotBarometer.Rd:118: Lost braces
-        118 | href{https://www.frontiersin.org/articles/10.3389/fphar.2015.00181/full}{What
-            |     ^
-     checkRd: (-1) PlotBarometer.Rd:118-119: Lost braces
-        118 | href{https://www.frontiersin.org/articles/10.3389/fphar.2015.00181/full}{What
-            |                                                                         ^
-     checkRd: (-1) PlotDoseResponseCurve.Rd:84: Lost braces
-         84 | link[drc]{plot.drc} function. For example, use xlim = c(0.5, 500) or
-            |          ^
-     ```
-
-# txshift (0.3.8)
-
-* GitHub: <https://github.com/nhejazi/txshift>
-* Email: <mailto:nh@nimahejazi.org>
-* GitHub mirror: <https://github.com/cran/txshift>
-
-Run `revdepcheck::revdep_details(, "txshift")` for more info
-
-## In both
-
-*   checking Rd files ... NOTE
-     ```
-     checkRd: (-1) est_g_exp.Rd:55: Lost braces; missing escapes or markup?
-         55 |  {A - delta}, {A + delta}, and {A + 2 * delta}).
-            |  ^
-     checkRd: (-1) est_g_exp.Rd:55: Lost braces; missing escapes or markup?
-         55 |  {A - delta}, {A + delta}, and {A + 2 * delta}).
-            |               ^
-     checkRd: (-1) est_g_exp.Rd:55: Lost braces; missing escapes or markup?
-         55 |  {A - delta}, {A + delta}, and {A + 2 * delta}).
-            |                                ^
-     ```
-
 # UniCensorEM (0.1.0)
 
 * Email: <mailto:shikhar1093tyagi@gmail.com>
@@ -1334,45 +1264,5 @@ Run `revdepcheck::revdep_details(, "vmeasur")` for more info
      Found the following significant warnings:
        Warning: no DISPLAY variable so Tk is not available
      See ‘/scratch/henrik/revdep/future/checks/vmeasur/new/vmeasur.Rcheck/00install.out’ for details.
-     ```
-
-# WpProj (0.3)
-
-* GitHub: <https://github.com/ericdunipace/WpProj>
-* Email: <mailto:edunipace@mail.harvard.edu>
-* GitHub mirror: <https://github.com/cran/WpProj>
-
-Run `revdepcheck::revdep_details(, "WpProj")` for more info
-
-## In both
-
-*   checking tests ...
-     ```
-     ...
-         'test-W2IP.R:55:3', 'test-WInftyL1.R:59:3', 'test-WInftyL1.R:148:5',
-         'test-WInftyL1.R:267:5'
-       
-       ══ Failed tests ════════════════════════════════════════════════════════════════
-       ── Failure ('test-xtyUpdate.R:742:3'): test sinkhorn xtyupdate ─────────────────
-       Expected `norm(out.same$XtY - out, "F")` < 7e-08.
-       Actual comparison: 0.00000062 >= 0.00000007
-       Difference: 0.00000055 >= 0
-       ── Failure ('test-xtyUpdate.R:743:3'): test sinkhorn xtyupdate ─────────────────
-       Expected `norm(out.same$XtY - dat$xty, "F")` < 7e-08.
-       Actual comparison: 0.00000062 >= 0.00000007
-       Difference: 0.00000055 >= 0
-       ── Failure ('test-xtyUpdate.R:874:3'): test greenkhorn xtyupdate ───────────────
-       Expected `norm(out.same$XtY - out, "F")` < 7e-08.
-       Actual comparison: 0.00000062 >= 0.00000007
-       Difference: 0.00000055 >= 0
-       ── Failure ('test-xtyUpdate.R:875:3'): test greenkhorn xtyupdate ───────────────
-       Expected `norm(out.same$XtY - dat$xty, "F")` < 7e-08.
-       Actual comparison: 0.00000062 >= 0.00000007
-       Difference: 0.00000055 >= 0
-       
-       [ FAIL 4 | WARN 54 | SKIP 25 | PASS 806 ]
-       Error:
-       ! Test failures.
-       Execution halted
      ```
 

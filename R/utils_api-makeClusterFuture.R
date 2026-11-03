@@ -424,7 +424,9 @@ sendData.FutureNode <- function(node, data) {
       }
       options[["globals"]] <- globals
 
-      expr <- quote(do.call(fun, args = args))
+      ## quote(..., quote = TRUE) is needed in order to avoid evaluating
+      ## language object (e.g. call, symbol, formula, ...) here
+      expr <- quote(do.call(fun, args = args, quote = TRUE))
       future_args <- list(expr = quote(expr), substitute = FALSE)
       future_args <- c(future_args, options)
 

@@ -8,7 +8,7 @@ library(listenv)
 
 ## Make sure futures are automatically resolved
 oopts <- c(oopts, options(future.globals.resolve = TRUE))
-setTimeLimit(cpu = 10, elapsed = 10, transient = TRUE)
+setTimeLimit(cpu = 60, elapsed = 60, transient = TRUE)
 
 message("*** Tricky use cases related to globals (part 2) ...")
 

@@ -86,7 +86,16 @@ value.Future <- function(future, stdout = TRUE, signal = TRUE, drop = FALSE, ...
     future <- run(future)
   }
 
-  result <- result(future)
+  ## An interruption of a future that was canceled is a cancellation
+  result <- withCallingHandlers(result(future), FutureInterruptError = function(ex) {
+    if (!inherits(ex, "FutureCanceledError") && "cancel" %in% future[["actions"]]) {
+      stop(canceledFutureError(future))
+    }
+  })
+
+  ## Same, but for backends with their own result() method
+  result <- discardResultOfCanceledFuture(future, result)
+  if (inherits(result, "FutureError")) stop(result)
   stop_if_not(inherits(result, "FutureResult"))
 
   value <- result[["value"]]
@@ -556,9 +565,14 @@ value.list <- function(x, idxs = NULL, recursive = 0, reduce = NULL, stdout = TR
   remaining <- seq_len(nx)
   resolved <- logical(length = nx)
 
+  ## When relaying in order, a resolved future may have to wait for
+  ## earlier ones to be relayed first. Dropping it before then would lose
+  ## its captured output and conditions, so defer dropping to the relay
+  defer_drop <- drop && inorder && relay
+
   ## Relay, and in order or out of order?
   if (inorder) {
-    signalConditionsASAP <- make_signalConditionsASAP(nx, stdout = stdout, signal = signal, force = force && !drop, debug = debug)
+    signalConditionsASAP <- make_signalConditionsASAP(nx, stdout = stdout, signal = signal, force = force && !drop, drop = defer_drop, debug = debug)
   } else {
     signalConditionsASAP <- function(...) TRUE
   }
@@ -594,7 +608,7 @@ value.list <- function(x, idxs = NULL, recursive = 0, reduce = NULL, stdout = TR
       }
     } else {
       reduce_forward <- local({
-        first <- TRUE
+        first <- !reduced_init
         function(from) {
           if (debug) {
             mdebug_push("reduce_forward() - inorder = FALSE ...")
@@ -665,57 +679,123 @@ value.list <- function(x, idxs = NULL, recursive = 0, reduce = NULL, stdout = TR
         ## If an unresolved future, move on to the next object
         ## so that future can be resolved in the asynchronously
         if (inherits(obj, "Future")) {
-          ## Lazy future that is not yet launched?
-          if (obj[["state"]] == "created") obj <- run(obj)
+          ## Lazy future that is not yet launched? If it fails to launch,
+          ## treat it as a failed future, so that the remaining futures
+          ## are canceled and resolved before the error is signaled
+          launch_error <- NULL
+          if (obj[["state"]] == "created") {
+            obj <- tryCatch(run(obj), error = function(ex) {
+              launch_error <<- ex
+              obj
+            })
+          }
           
-          if (!resolved(obj)) {
+          if (is.null(launch_error) && !resolved(obj)) {
             next
           }
           
           if (debug) mdebugf("%s #%d", class(obj)[1], ii)
-          relay_ok <- relay && signalConditionsASAP(obj, resignal = FALSE, exclude = "error", pos = ii)
-          
-          value <- local({
-            if (debug) {
-              mdebugf_push("value(<%s>, ...) ...", class(obj)[1])
-              on.exit(mdebugf_pop())
+
+          if (is.null(launch_error)) {
+            ## Infer whether the future failed (with a runtime or orchestration error)
+            res <- tryCatch(result(obj), error = identity)
+            if (inherits(res, "error")) {
+              failed <- TRUE
+            } else {
+              conditions <- res[["conditions"]]
+              n <- length(conditions)
+              failed <- (n > 0L && inherits(conditions[[n]][["condition"]], c("error", "interrupt")))
             }
-            value <- value(obj, stdout = !inorder, signal = !inorder, drop = drop)
-            if (debug) mdebugf("value: <%s>", class(value)[1])
-            value
+
+            ## Collect the value before relaying, because the relaying may
+            ## drop the future (when 'defer_drop' is TRUE)
+            value <- local({
+              if (debug) {
+                mdebugf_push("value(<%s>, ...) ...", class(obj)[1])
+                on.exit(mdebugf_pop())
+              }
+              ## Allow value() to signal conditions, but ignore errors
+              value <- tryCatch({
+                value(obj, stdout = (!inorder && stdout), signal = (!inorder && signal), drop = drop && !defer_drop)
+              }, error = identity)
+              if (debug) mdebugf("value: <%s>", class(value)[1])
+              value
+            })
+
+            ## value() may add conditions to the result, e.g. an RngFutureError
+            ## when RNGs were used without declaring it, so check again,
+            ## unless value() dropped the future, and with it its result
+            if (!failed && !(drop && !defer_drop)) {
+              res <- tryCatch(result(obj), error = identity)
+              if (inherits(res, "FutureResult")) {
+                conditions <- res[["conditions"]]
+                n <- length(conditions)
+                failed <- (n > 0L && inherits(conditions[[n]][["condition"]], c("error", "interrupt")))
+              }
+            }
+          } else {
+            failed <- TRUE
+            value <- launch_error
+          }
+
+          ## Prevent errors from being signaled at this point to give
+          ## remaining futures a chance to be resolved and canceled first.
+          asap_error <- NULL
+          relay_ok <- tryCatch({
+            relay && is.null(launch_error) && signalConditionsASAP(obj, resignal = FALSE, exclude = "error", pos = ii)
+          }, error = function(ex) {
+            asap_error <<- ex
+            FALSE
           })
-          
-          if (signal && inherits(value, "error")) {
-            if (debug) mdebugf_push("signal %s ...", class(value)[1])
-            
-            if (debug) mdebug_push("futures(x) ...")
-            y <- futures(x)
-            if (debug) mdebug_pop()
-            
-            if (cancel) {
-              local({
-                if (debug) {
-                  mdebugf_push("cancel(y, interrupt = %s) ...", interrupt)
-                  on.exit(mdebug_pop())
-                }
-                cancel(y, interrupt = interrupt)
-              })
-            }
-            
-            if (debug) mdebug_push("resolve(y, ...) ...")
-            ## Resolve remaining futures, while relaying output and
-            ## conditions, but without signaling any errors
-            for (kk in seq_along(y)) {
-              tryCatch(resolve(y[[kk]], result = TRUE, stdout = stdout, signal = signal, force = !drop), error = identity)
-            }
-            if (debug) mdebug_pop()
-            
-            if (debug) {
-              mdebugf("stop(value) in 3, 2, 1 ...")
-              mdebug_pop()
-            }
-            stop(value)
-          } ## if (signal && inherits(value, "error"))
+
+          ## If signalConditionsASAP() above threw (e.g. because of a
+          ## captured 'interrupt' condition), that error takes precedence.
+          if (!is.null(asap_error)) {
+            failed <- TRUE
+            value <- asap_error
+          }
+
+          if (signal) {
+            if (failed) {
+              if (debug) mdebugf_push("signal %s ...", class(value)[1])
+
+              if (debug) mdebug_push("futures(x) ...")
+              y <- futures(x)
+              if (debug) mdebug_pop()
+
+              if (cancel) {
+                local({
+                  if (debug) {
+                    mdebugf_push("cancel(y, interrupt = %s) ...", interrupt)
+                    on.exit(mdebug_pop())
+                  }
+                  ## Cancel only the futures that are still running
+                  for (kk in seq_along(y)) {
+                    f <- y[[kk]]
+                    if (inherits(f, "Future") && f[["state"]] != "created" && resolved(f)) next
+                    cancel(f, interrupt = interrupt)
+                  }
+                })
+              }
+
+              if (debug) mdebug_push("resolve(y, ...) ...")
+              ## Resolve remaining futures, while relaying output and
+              ## conditions, but without signaling any errors
+              for (kk in seq_along(y)) {
+                f <- y[[kk]]
+                ## Don't launch lazy futures on errors
+                if (inherits(f, "Future") && f[["state"]] == "created") next
+                tryCatch(resolve(f, result = TRUE, stdout = stdout, signal = signal, force = !drop), error = identity)
+              }
+              if (debug) mdebug_pop()
+
+              if (debug) {
+                mdebugf("stop(value) in 3, 2, 1 ...")
+                mdebug_pop()
+              }
+              stop(value)
+            } ## if (failed)
+          } ## if (signal)
           
           resolved[ii] <- TRUE
           x[ii] <- list(NULL)
@@ -799,7 +879,7 @@ value.list <- function(x, idxs = NULL, recursive = 0, reduce = NULL, stdout = TR
     if (length(remaining) > 0) Sys.sleep(sleep)
   } # while (...)
 
-  if (inorder && !drop && (relay || force)) {
+  if (inorder && (relay || (force && !drop))) {
     if (debug) mdebugf_push("Relaying remaining futures ...")
     signalConditionsASAP(resignal = FALSE, exclude = "error", pos = 0L)
     if (debug) mdebug_pop()

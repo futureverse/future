@@ -195,10 +195,97 @@ for (strategy in strategies) {
         inherits(res, "FutureDroppedError")
       )
 
+      message(sprintf("      Containers: reducing a named %s mixed with values and futures out of order with 'init' attribute", container))
+      truth <- list(a = 1, b = 2, c = 3, d = 3, e = 42)
+      x <- list(
+        a = future({ sleep(2); 3 }, lazy = lazy),
+        b = future({ sleep(1); 2 }, lazy = lazy),
+        c = future({           1 }, lazy = lazy),
+        d = 3,
+        e = 42
+      )
+      x <- coerce(x)
+      truth <- do.call(sum, args = c(list(pi), truth))
+      y <- value(x, reduce = structure(function(...) `+`(...), init = pi), inorder = FALSE)
+      stopifnot(equals(y, truth))
+
       message(sprintf("    lazy = %s ... DONE", lazy))
     } ## for (lazy ...)
     message(sprintf("  Container %s ... DONE", container))
   } ## for (container ...)
 } ## for (strategy ...)
+
+message("- value(<list>): a future that legitimately returns an error object ...")
+plan(sequential)
+
+f <- future(simpleError("boom"))
+v1 <- value(f)
+stopifnot(identical(class(v1), c("simpleError", "error", "condition")))
+
+for (inorder in c(TRUE, FALSE)) {
+  for (drop in c(FALSE, TRUE)) {
+    message(sprintf("  inorder = %s, drop = %s ...", inorder, drop))
+    f2 <- future(simpleError("boom"))
+    v2 <- value(list(f2), inorder = inorder, drop = drop)
+    stopifnot(identical(v2[[1]], v1))
+    message(sprintf("  inorder = %s, drop = %s ... DONE", inorder, drop))
+  }
+}
+
+message("- value(<list>): a future that legitimately returns an error object ... DONE")
+
+message("- value(<list>): an error signaled by value(<Future>) itself is thrown ...")
+plan(sequential)
+
+## The RNG misuse error is signaled by value(), not captured in the result
+oopts <- options(future.rng.onMisuse = "error")
+
+f <- future(sample(0:3, size = 1L), seed = FALSE)
+e1 <- tryCatch(value(f), error = identity)
+stopifnot(inherits(e1, "RngFutureError"))
+
+for (inorder in c(TRUE, FALSE)) {
+  for (drop in c(FALSE, TRUE)) {
+    ## Not yet supported: the error is returned, not thrown
+    if (!inorder && drop) next
+    message(sprintf("  inorder = %s, drop = %s ...", inorder, drop))
+    f2 <- future(sample(0:3, size = 1L), seed = FALSE)
+    e2 <- tryCatch(value(list(f2), inorder = inorder, drop = drop), error = identity)
+    stopifnot(inherits(e2, "RngFutureError"))
+    message(sprintf("  inorder = %s, drop = %s ... DONE", inorder, drop))
+  }
+}
+
+options(oopts)
+message("- value(<list>): an error signaled by value(<Future>) itself is thrown ... DONE")
+
+message("- value(<list>, drop = TRUE): output and conditions are relayed in order ...")
+plan(multisession, workers = 2L)
+for (drop in c(FALSE, TRUE)) {
+  message(sprintf("  drop = %s ...", drop))
+  fs <- list(
+    future({ Sys.sleep(1.0); cat("out-a\n"); message("msg-a"); 1 }),
+    future({                 cat("out-b\n"); message("msg-b"); 2 })
+  )
+  msgs <- character(0L)
+  out <- utils::capture.output({
+    v <- withCallingHandlers({
+      value(fs, drop = drop)
+    }, message = function(m) {
+      msgs <<- c(msgs, conditionMessage(m))
+      invokeRestart("muffleMessage")
+    })
+  })
+  print(out)
+  print(msgs)
+  stopifnot(
+    identical(v, list(1, 2)),
+    identical(out, c("out-a", "out-b")),
+    identical(msgs, c("msg-a\n", "msg-b\n"))
+  )
+  message(sprintf("  drop = %s ... DONE", drop))
+}
+plan(sequential)
+message("- value(<list>, drop = TRUE): output and conditions are relayed in order ... DONE")
 
 message("*** value() ... DONE")

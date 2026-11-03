@@ -11,6 +11,11 @@ if (.Platform[["OS.type"]] == "windows") {
   ## This test takes very long to run on MS Windows (e.g. 5-10 minutes on
   ## win-builder).
   message("*** multisession - connections must not leak when futures error ... SKIPPED on MS Windows")
+} else if (isTRUE(as.logical(Sys.getenv("R_COVR", "false")))) {
+  ## Under covr, the many short-lived workers each write a coverage trace
+  ## file on exit, which is slow and can leave truncated files behind
+  ## causing covr::package_coverage() to fail when merging them
+  message("*** multisession - connections must not leak when futures error ... SKIPPED when running covr")
 } else {
 
   get_connections <- future:::get_connections

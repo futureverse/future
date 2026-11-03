@@ -10,36 +10,35 @@ minutes.
 At the core of Futureverse is this package, the **future**
 package. Most users interact with the future ecosystem using
 higher-level packages such as **[futurize]** for its convenience of
-running map-reduce calls concurrently.  Here are some examples of
-both:
+running map-reduce calls concurrently.  Here are some examples for
+**futurize**:
 
 ```r
-library(future)
-plan(multisession)
-
-## Sequential evaluation of an R expression
-y <- slow_fcn(X[1])
-
-## Parallel evaluation of an R expression
-f <- future(slow_fcn(X[1]))
-y <- value(f)
-
-
 library(futurize)
+plan(multisession)  # parallelize on the current machine
 
-## Sequential and parallel base R apply
-y <- lapply(X, slow_fcn)
-y <- lapply(X, slow_fcn) |> futurize()
+# A slow function
+slow_fcn <- function(x) {
+  Sys.sleep(1.0)
+  x^2
+}
 
-## Sequential and parallel purrr map
+# Example data
+xs <- 1:10
+
+# Sequential and parallel base R apply
+ys <- lapply(xs, slow_fcn)
+ys <- lapply(xs, slow_fcn) |> futurize()
+
+# Sequential and parallel purrr map
 library(purrr)
-y <- X |>  map(slow_fcn)
-y <- X |>  map(slow_fcn) |> futurize()
+ys <- xs |>  map(slow_fcn)
+ys <- xs |>  map(slow_fcn) |> futurize()
 
-## Sequential and parallel foreach calls
+# Sequential and parallel foreach calls
 library(foreach)
-y <- foreach(x = X) %do% slow_fcn(x)
-y <- foreach(x = X) %do% slow_fcn(x) |> futurize()
+ys <- foreach(x = xs) %do% slow_fcn(x)
+ys <- foreach(x = xs) %do% slow_fcn(x) |> futurize()
 ```
 
 

@@ -1,3 +1,102 @@
+# Version 1.82.0 [2026-11-01]
+
+This is another rollout of several towards a near-future major
+release. This has been made possible due to a multi-year effort of
+internal re-designs, work with package maintainers, release, and
+repeat. This release focuses on cancellation of futures.
+
+## Significant Changes
+
+ * `cancel()` now also cancels lazy futures, which invalidates them.
+
+ * `digest` is no longer a hard dependency. The package now uses
+   `tools::md5sum(bytes = ...)`, which is available in R (>= 4.5.0), to
+   generate unique IDs for R objects. For older versions of R, it uses
+   `tools::md5sum(files = ...)` via a temporary file, which does not add
+   much overhead because these internal IDs are not generated
+   frequently. For the time being, `digest::digest()` is still used for
+   older versions of R, if **digest** is installed.
+
+## Performance
+
+ * `resolve()` on lists of globals now uses less memory, which reduces
+   the overhead of nested **future.apply** and **furrr** calls.
+
+## Bug Fixes
+
+ * If `value(<list>)` detected one of the futures produced an error,
+   the default is to cancel the remaining future and the resignal the
+   captured error.  When that happened, it would incorrectly cancel
+   also the failed future and any already resolved futures, resulting
+   in them also being invalidated.
+
+ * `value(<list>)` would leave the remaining futures running, instead of
+   canceling them, if a lazy future failed to launch.
+
+ * Contrary to `value(<Future>)`, `value(<list>)` would throw an error
+   for a future whose value is an error condition.
+
+ * `cancel()` ignored lazy futures, so `value()` on a canceled lazy
+   future would launch the future and return its value. Canceling a
+   lazy future now invalidates it.
+
+ * `value()` on a canceled sequential future or a canceled cluster
+   future with interrupts disabled (default), returned the value,
+   instead of signaling a `FutureCanceledError`.
+   
+ * `value()` on a future that was canceled with `cancel()` and
+   interrupted could signal a `FutureInterruptError` instead of a
+   `FutureCanceledError`, e.g. for 'multicore' futures.
+   
+ * `futureCall(FUN, globals = <character>)` did not look the globals
+   in the calling environment (`envir`), as `future()` does, plus
+   non-found globals were silently dropped. Non-existing globals now
+   produce an error.
+   
+ * `futureCall()` would evaluate language objects (e.g. call, symbol,
+   formula, ...) part of argument `args`, instead of passing them
+   as-is to `FUN`.
+
+ * A cluster created by `makeClusterFuture()` would evaluate language
+   objects (e.g. call, symbol, formula, ...) passed via
+   `parLapply()`, `clusterCall()`, and friends, instead of passing
+   them as-is.
+
+ * `value(<list>, reduce = ..., inorder = FALSE)` ignored attribute
+   `init` of `reduce`.
+
+ * `value(<list>, stdout = FALSE, inorder = FALSE)` and
+   `value(<list>, signal = FALSE, inorder = FALSE)` ignored arguments
+   `stdout` and `signal` when `inorder` was FALSE.
+
+ * When launching a 'cluster' or 'multisession' future timed out while
+   waiting for an available worker, it would produce an obscure
+   error instead of an informative timeout error.
+
+ * Waiting for an available 'multicore', 'multisession', and 'cluster'
+   worker with a timeout greater than 60 seconds could take much
+   longer than that.
+
+ * The pre-created cluster `cl` set via `plan(cluster, workers = cl)`,
+   would mistakenly be shut down by `plan(sequential)`, if one of the
+   workers crashed and was relaunched.
+
+ * When one of the futures produced an error, `value(<list>)` would
+   launch any lazy futures, wait for them to finish, before signaling
+   the error.
+
+ * `value(<list>, drop = TRUE, inorder = TRUE)` lost stdout and
+   conditions of futures resolved out of order.
+
+ * `value(<list>)` would neither cancel nor resolve the remaining
+   futures when one produced an error (`inorder = FALSE`) or was
+   interrupted (`inorder = TRUE`). With `inorder = FALSE`, an
+   interrupt was not even signaled.
+
+ * Environment variable `R_FUTURE_RELAY_IMMEDIATE` was parsed as a
+   logical flag instead of as a comma-separated string.
+
+
 # Version 1.80.0 [2026-10-15]
 
 ## Significant Changes
@@ -42,7 +141,9 @@
  * Globals identified automatically (the default) could carry extra,
    unneeded load that was exported to the parallel workers. This could
    result in significant overhead in both total memory use and total
-   processing time.
+   processing time. This affected **future** (< 1.22.0) [before
+   2021-08-11] and **future** (>= 1.49.0 & <= 1.76.0) [2025-05-08 --
+   2026-09-24].
 
 
 # Version 1.76.0 [2026-09-24]
