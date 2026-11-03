@@ -1,6 +1,13 @@
 # Changelog
 
-## Version (development version)
+## Version 1.82.0
+
+CRAN release: 2026-11-02
+
+This is another rollout of several towards a near-future major release.
+This has been made possible due to a multi-year effort of internal
+re-designs, work with package maintainers, release, and repeat. This
+release focuses on cancellation of futures.
 
 ### Significant Changes
 
@@ -15,6 +22,12 @@
   For the time being,
   [`digest::digest()`](https://eddelbuettel.github.io/digest/man/digest.html)
   is still used for older versions of R, if **digest** is installed.
+
+### Performance
+
+- [`resolve()`](https://future.futureverse.org/reference/resolve.md) on
+  lists of globals now uses less memory, which reduces the overhead of
+  nested **future.apply** and **furrr** calls.
 
 ### Bug Fixes
 
@@ -3461,8 +3474,7 @@ CRAN release: 2016-01-20
 - Add
   [`futureCall()`](https://future.futureverse.org/reference/future.md),
   which is for futures what
-  [`do.call()`](https://rdrr.io/pkg/BiocGenerics/man/do.call.html) is
-  otherwise.
+  [`do.call()`](https://rdrr.io/r/base/do.call.html) is otherwise.
 
 - Standardized how options are named, i.e. `future.<option>`. If you
   used any future options previously, make sure to check they follow the

@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.80.0-9029</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.82.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -80,14 +80,20 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="development version" id="version-development-version">Version (development version)<a class="anchor" aria-label="anchor" href="#version-development-version"></a></h2>
+<h2 class="pkg-version" data-toc-text="1.82.0" id="version-1820">Version 1.82.0<a class="anchor" aria-label="anchor" href="#version-1820"></a></h2><p class="text-muted">CRAN release: 2026-11-02</p>
+<p>This is another rollout of several towards a near-future major release. This has been made possible due to a multi-year effort of internal re-designs, work with package maintainers, release, and repeat. This release focuses on cancellation of futures.</p>
 <div class="section level3">
-<h3 id="significant-changes-development-version">Significant Changes<a class="anchor" aria-label="anchor" href="#significant-changes-development-version"></a></h3>
+<h3 id="significant-changes-1-82-0">Significant Changes<a class="anchor" aria-label="anchor" href="#significant-changes-1-82-0"></a></h3>
 <ul><li><p><code><a href="../reference/cancel.html">cancel()</a></code> now also cancels lazy futures, which invalidates them.</p></li>
 <li><p><code>digest</code> is no longer a hard dependency. The package now uses <code>tools::md5sum(bytes = ...)</code>, which is available in R (&gt;= 4.5.0), to generate unique IDs for R objects. For older versions of R, it uses <code>tools::md5sum(files = ...)</code> via a temporary file, which does not add much overhead because these internal IDs are not generated frequently. For the time being, <code><a href="https://eddelbuettel.github.io/digest/man/digest.html" class="external-link">digest::digest()</a></code> is still used for older versions of R, if <strong>digest</strong> is installed.</p></li>
 </ul></div>
 <div class="section level3">
-<h3 id="bug-fixes-development-version">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h3>
+<h3 id="performance-1-82-0">Performance<a class="anchor" aria-label="anchor" href="#performance-1-82-0"></a></h3>
+<ul><li>
+<code><a href="../reference/resolve.html">resolve()</a></code> on lists of globals now uses less memory, which reduces the overhead of nested <strong>future.apply</strong> and <strong>furrr</strong> calls.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="bug-fixes-1-82-0">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-1-82-0"></a></h3>
 <ul><li><p>If <code>value(&lt;list&gt;)</code> detected one of the futures produced an error, the default is to cancel the remaining future and the resignal the captured error. When that happened, it would incorrectly cancel also the failed future and any already resolved futures, resulting in them also being invalidated.</p></li>
 <li><p><code>value(&lt;list&gt;)</code> would leave the remaining futures running, instead of canceling them, if a lazy future failed to launch.</p></li>
 <li><p>Contrary to <code>value(&lt;Future&gt;)</code>, <code>value(&lt;list&gt;)</code> would throw an error for a future whose value is an error condition.</p></li>
@@ -1461,7 +1467,7 @@
 <h3 id="new-features-0-11-0">New Features<a class="anchor" aria-label="anchor" href="#new-features-0-11-0"></a></h3>
 <ul><li><p>Add multisession futures, which analogously to multicore ones, use multiple cores on the local machine with the difference that they are evaluated in separate R session running in the background rather than separate forked R processes. A multisession future is a special type of cluster futures that do not require explicit setup of cluster nodes.</p></li>
 <li><p>Add support for cluster futures, which can make use of a cluster of nodes created by <code><a href="https://rdrr.io/r/parallel/makeCluster.html" class="external-link">parallel::makeCluster()</a></code>.</p></li>
-<li><p>Add <code><a href="../reference/future.html">futureCall()</a></code>, which is for futures what <code><a href="https://rdrr.io/pkg/BiocGenerics/man/do.call.html" class="external-link">do.call()</a></code> is otherwise.</p></li>
+<li><p>Add <code><a href="../reference/future.html">futureCall()</a></code>, which is for futures what <code><a href="https://rdrr.io/r/base/do.call.html" class="external-link">do.call()</a></code> is otherwise.</p></li>
 <li><p>Standardized how options are named, i.e. <code>future.&lt;option&gt;</code>. If you used any future options previously, make sure to check they follow the above format.</p></li>
 </ul></div>
 <div class="section level3">
