@@ -27,7 +27,11 @@ for (strategy in strategies) {
     f3 <- future(3, lazy = TRUE)
     fs <- list(f1, f2, f3)
 
-    ## Make sure 'f2' is resolved before value() sees the error from 'f1'
+    ## Make sure 'f1' and 'f2' are resolved before value() inspects them.
+    ## Otherwise, value() may launch the lazy 'f3' on a free worker, and
+    ## 'f3' may complete before the error in 'f1' is detected, in which case
+    ## there is nothing left to cancel
+    resolve(f1)
     resolve(f2)
 
     res <- tryCatch(value(fs, inorder = inorder), error = identity)
