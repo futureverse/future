@@ -208,7 +208,7 @@ assign_globals <- function(envir, globals, exclude = getOption("future.assign_gl
 
 ## Removes all variables in the global environment.
 grmall <- local(function(envir = .GlobalEnv) {
-  vars <- ls(envir = envir, all.names = TRUE)
+  vars <- ls(envir = envir, all.names = TRUE, sorted = FALSE)
   rm(list = vars, envir = envir, inherits = FALSE)
   ## Return a value identifiable for troubleshooting purposes
   "future-grmall"
