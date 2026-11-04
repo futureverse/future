@@ -1,6 +1,12 @@
 # Version (development version)
 
- * ...
+## Performance
+
+ * Cluster-based futures (e.g. `multisession`) no longer make a
+   separate, blocking round-trip to the worker to erase its global
+   environment before each future is launched. Instead, the global
+   environment is erased on the parallel worker right before and after
+   the future has been evaluated.
 
 
 # Version 1.82.0 [2026-11-01]

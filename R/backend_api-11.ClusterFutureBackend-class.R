@@ -283,35 +283,14 @@ launchFuture.ClusterFutureBackend <- function(backend, future, ...) {
   ##     previous futures are not affecting this one, which
   ##     may happen even if the future is evaluated inside a
   ##     local, e.g. local({ a <<- 1 }).
+  ##     This is done on the worker, right after the future has been
+  ##     evaluated, cf. evalFuture(), which frees up memory
+  ##     before the next future is sent and avoids an extra
+  ##     round-trip to the worker.
   ##     If the persistent = TRUE, this will be skipped.
   ##
   ##     SPECIAL CASE: Do not erase if a
   ##     parallelly::makeClusterSequential() is used
-  persistent <- isTRUE(future[["persistent"]])
-  if (!persistent && !inherits(node, "sequential_node")) {
-    if (debug) mdebug_push("eraseGlobalEnvironment() ...")
-    
-    t_start <- Sys.time()
-    
-    ## (i) Reset global environment of cluster node such that
-    ##     previous futures are not affecting this one, which
-    ##     may happen even if the future is evaluated inside a
-    ##     local, e.g. local({ a <<- 1 }).
-    ## Blocking cluster-node call
-    cluster_call_blocking(cl, fun = grmall, future = future, when = "call grmall() on", expected = "future-grmall")
-
-    ## Add event to future journal
-    if (inherits(future[[".journal"]], "FutureJournal")) {
-      appendToFutureJournal(future,
-           event = "eraseWorker",
-        category = "overhead",
-          parent = "launch",
-           start = t_start,
-            stop = Sys.time()
-      )
-    }
-    if (debug) mdebug_pop()
-  }
 
 
   ## (3) Garbage collection
@@ -333,6 +312,7 @@ launchFuture.ClusterFutureBackend <- function(backend, future, ...) {
   data <- getFutureData(future, mc.cores = 1L, debug = debug)
   node <- workers[[worker]]
   ## Non-blocking cluster-node call
+  data[["context"]][["eraseGlobalenv"]] <- !isTRUE(future[["persistent"]]) && !inherits(node, "sequential_node")
   node_call_nonblocking(node, fun = evalFuture, args = list(data), future = future, when = "launch future on")
   FutureRegistry(reg, action = "add", future = future, earlySignal = FALSE, debug = debug)
   if (debug) mdebug_pop()
@@ -975,16 +955,9 @@ receiveMessageFromWorker <- local({
       ## Garbage collect cluster worker?
       if (future[["gc"]]) {
         if (debug) mdebug_push("Garbage collecting worker ...")
-        ## Cleanup global environment while at it
+        ## NOTE: The global environment of the worker was already
+        ## erased after the future was evaluated, cf. evalFuture()
         ##
-        ## SPECIAL CASE: Do not erase if a
-        ## parallelly::makeClusterSequential() is used, because that
-        ## worker *is* the calling R session, cf. launchFuture() above.
-        if (!isTRUE(future[["persistent"]]) && !inherits(node, "sequential_node")) {
-          ## Blocking cluster-node call
-          cluster_call_blocking(cl[1], fun = grmall, future = future, when = "call grmall() on", expected = "future-grmall")
-        }
-        
         ## WORKAROUND: Need to clear cluster worker before garbage collection.
         ## This is needed for workers running R (<= 3.3.1). It will create
         ## another teeny, dummy object on the worker allowing any previous

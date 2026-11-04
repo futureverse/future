@@ -391,6 +391,11 @@ evalFuture <- function(
         forwardOptions = NULL
       )
     )) {
+  ## Wipe the global environment before and after evaluation?
+  if (isTRUE(data[["context"]][["eraseGlobalenv"]])) {
+    try(grmall(), silent = TRUE)
+    on.exit(try(grmall(), silent = TRUE))
+  }
   tryCatch({
     evalFutureInternal(data)
   }, error = function(ex) {
