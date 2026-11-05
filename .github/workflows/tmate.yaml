@@ -61,7 +61,6 @@ jobs:
       ## Specific to futures
       R_PARALLELLY_AVAILABLECORES_SYSTEM: ${{ matrix.config.availablecores }}
       R_FUTURE_RNG_ONMISUSE: error
-      R_FUTURE_GLOBALS_KEEPWHERE: ${{ matrix.config.globals_keepWhere }}
       R_PARALLELLY_BRANCH: ${{ matrix.config.parallelly }}
       
     steps:
