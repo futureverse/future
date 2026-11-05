@@ -16,6 +16,10 @@
 
  * Remove unused R option `future.regression.note`.
 
+ * Setting R option `future.globals.keepWhere` to `FALSE` is now
+   deprecated and produces a deprecation warning. The default has been
+   `TRUE` since **future** 1.49.0 [2025-05-08].
+
 
 # Version 1.82.0 [2026-11-01]
 
