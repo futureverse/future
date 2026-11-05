@@ -120,7 +120,8 @@ for (cores in 1:availCores) {
         }
 
         message("- futureCall() #4")
-        ## FIXME: This works and fails in non-expected ways /HB 2022-05-26
+        ## Assert that globals part of the function's local environment
+        ## ('a' in the environment of g()) are found and exported
         local({
           a <- 2
           g <- function() a
@@ -142,8 +143,7 @@ for (cores in 1:availCores) {
             } else {
               stopifnot(inherits(v4, "error"))
             }
-          } else if (isTRUE(getOption("future.globals.keepWhere", TRUE))) {
-            message("future.globals.keepWhere=TRUE")
+          } else {
             if (isTRUE(getOption("future.globals.globalsOf.locals", TRUE))) {
               message("future.globals.globalsOf.locals=TRUE")
               if (globals) {
@@ -162,19 +162,6 @@ for (cores in 1:availCores) {
               } else {
                 stopifnot(identical(v4, truth))
               }
-            }
-          } else {
-            message("future.globals.keepWhere=FALSE")
-            if (isTRUE(getOption("future.globals.globalsOf.locals", TRUE))) {
-              message("future.globals.globalsOf.locals=TRUE")
-              if (globals) {
-                stopifnot(identical(v4, truth))
-              } else {
-                stopifnot(inherits(v4, "error"))
-              }
-            } else {
-              message("future.globals.globalsOf.locals=FALSE")
-              stopifnot(inherits(v4, "error"))
             }
           }
         })

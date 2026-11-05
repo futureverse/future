@@ -8,8 +8,6 @@ options(future.debug = FALSE)
 
 message("*** Tricky use cases #2 related to globals ...")
 
-if (isTRUE(getOption("future.globals.keepWhere", TRUE))) {
-
 for (cores in 1:availCores) {
   message(sprintf("Testing with %d cores ...", cores))
   options(mc.cores = cores)
@@ -124,10 +122,6 @@ for (cores in 1:availCores) {
 
   message(sprintf("Testing with %d cores ... DONE", cores))
 } ## for (cores ...)
-
-} else {
-  message(" - skip test, because it requires future.globals.keepWhere = TRUE")
-} ## if (isTRUE(getOption("future.globals.keepWhere", TRUE)))
 
 
 message("*** Tricky use cases #2 related to globals ... DONE")

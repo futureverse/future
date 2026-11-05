@@ -111,6 +111,8 @@ getGlobalsAndPackages <- function(expr, envir = parent.frame(), tweak = tweakExp
       ## development and might give an error on certain types of expression.
       ## Check if it gives an error. If it does, drop the "dfs" method for
       ## this future expression.
+      ## FIXME: Remove this; it was added as a conservative measure in case there
+      ## were unknown cases "out there" that would fail. /HB 2026-11-05
       idx <- which(globals.method == "dfs")
       if (length(idx) > 0L) {
          res <- tryCatch(findGlobals(expr, method = "dfs"), error = identity)
@@ -479,6 +481,7 @@ getGlobalsAndPackages <- function(expr, envir = parent.frame(), tweak = tweakExp
   ## corresponds to their content.
   keepWhere <- getOption("future.globals.keepWhere", TRUE)
   if (!keepWhere) {
+    .Deprecated(msg = sprintf("R option %s = FALSE is deprecated and will eventually be defunct. It may only be used for troubleshooting. It must not be used in production since it can cause futures to silently produce incorrect results, because globals tied to function environments get decoupled from them", sQuote("future.globals.keepWhere")), package = .packageName)
     where <- attr(globals, "where")
     for (kk in seq_along(where)) where[[kk]] <- emptyenv()
     attr(globals, "where") <- where

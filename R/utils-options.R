@@ -437,7 +437,7 @@ update_package_options <- function(debug = FALSE) {
   update_package_option("future.journal", mode = "logical", debug = debug)
 
   ## SETTINGS USED FOR DEPRECATING FEATURES
-  ## future 1.22.0 & future 1.45.0 (new default keepWhere = TRUE)
+  ## future 1.22.0 & future 1.49.0 (new default keepWhere = TRUE)
   update_package_option("future.globals.keepWhere", mode = "logical", default = TRUE, debug = debug)
 
   ## future 1.34.0:
@@ -458,7 +458,6 @@ update_package_options <- function(debug = FALSE) {
   update_package_option("future.devices.onMisuse", mode = "character", debug = debug)
 
   ## future 1.49.0:
-  update_package_option("future.regression.note", mode = "logical", default = TRUE, debug = debug)
   update_package_option("future.globals.method.default", mode = "character", split = ",", default = "dfs", debug = debug)
 
   update_package_option("future.debug.indent", mode = "character", default = " ", debug = debug)
@@ -471,5 +470,4 @@ update_package_options <- function(debug = FALSE) {
   update_package_option("future.future.local", mode = "character", debug = debug)
   update_package_option("future.plan.earlySignal", mode = "character", debug = debug)
   update_package_option("future.resolved.run", mode = "character", debug = debug)
-  update_package_option("future.Future.envir.keep", mode = "logical", debug = debug)
 }

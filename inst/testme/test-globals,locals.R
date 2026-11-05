@@ -69,7 +69,6 @@ for (strategy in supportedStrategies()) {
 
 
   message("- Non-missing global variable (inside local())")
-  ## FIXME: This works and fails in non-expected ways /HB 2022-05-26
   local({
     a <- 2
     g <- function() a
@@ -96,8 +95,7 @@ for (strategy in supportedStrategies()) {
   truth <- g() + h()
   message("truth: ", truth)
 
-  ## FIXME: This works and fails in non-expected ways /HB 2022-05-26
-  ## With:
+  ## Assert that the globals of g() and h() do not clash. With:
   ##
   ##   f <- future(g() + h())
   ##
@@ -106,31 +104,16 @@ for (strategy in supportedStrategies()) {
   ##
   ##   f <- future(h() + g())
   ##
-  ## 'a' of h() might overwride 'a' of g() so that g() == 1.
-  ## This has to be fixed.
+  ## 'a' of h() might overwrite 'a' of g() so that g() == 1.
   ##
   ## See also https://github.com/futureverse/future/issues/608
-  
+
   f <- future(g() + h())
   v <- tryCatch(value(f), error = identity)
 
   utils::str(list(strategy = strategy, v = v))
   
-  if (isTRUE(as.logical(Sys.getenv("R_CHECK_IDEAL")))) {
-    stopifnot(identical(v, truth))
-  } else if (isTRUE(getOption("future.globals.keepWhere", TRUE))) {
-    message("future.globals.keepWhere=TRUE")
-    stopifnot(identical(v, truth))
-  } else {
-    message("future.globals.keepWhere=FALSE")
-    if (isTRUE(getOption("future.globals.globalsOf.locals", TRUE))) {
-      message("future.globals.globalsOf.locals=TRUE")
-      stopifnot(identical(v, 4))    ## <= SERIOUS BUG!
-    } else {
-      message("future.globals.globalsOf.locals=FALSE")
-      stopifnot(inherits(v, "error"))
-    }
-  }
+  stopifnot(identical(v, truth))
 } ## for (strategy ...)
 
 message("*** Globals inside local() environments ... DONE")

@@ -27,20 +27,14 @@ for (strategy in supportedStrategies()) {
   )
   my_fcn <- org_my_fcn
   
-  ## FIXME:
-  ## Just like S3 methods, S4 methods are not picked up
+  ## Assert that S4 methods are picked up, which requires that
+  ## the S4 generic function's package is identified
   ## https://github.com/futureverse/future/issues/615
   f <- future({ my_fcn(3) }, lazy = TRUE)
   rm(list = "my_fcn")
   v <- tryCatch(value(f), error = identity)
   print(v)
-  if (isTRUE(getOption("future.globals.keepWhere", TRUE))) {
-    message("future.globals.keepWhere=TRUE")
-    stopifnot(identical(v, truth))
-  } else {
-    message("future.globals.keepWhere=FALSE")
-    stopifnot(inherits(v, "error"))
-  }
+  stopifnot(identical(v, truth))
   my_fcn <- org_my_fcn
 
   plan(sequential)

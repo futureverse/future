@@ -44,6 +44,17 @@ allButOneWorker <- function() {
   if (length(w) > 1) w[-1] else w
 }
 
+## With 'multisession' and 'multicore', a single worker is processed in
+## the main R process, which means it cannot process futures in the
+## background. Otherwise, all workers, which are idle, can.
+expected_background_free <- function(strategy) {
+  if (nbrOfWorkers() == 1L && is.element(strategy, c("multisession", "multicore"))) {
+    0L
+  } else {
+    nbrOfFreeWorkers()
+  }
+}
+
 for (strategy in strategies) {
   message("Type of future: ", strategy)
 
@@ -64,7 +75,7 @@ for (strategy in strategies) {
   
   n <- nbrOfFreeWorkers(background = TRUE)
   message(sprintf("nbrOfFreeWorkers(background = TRUE): %d", n))
-# FIXME  stopifnot(n == 0L)
+  stopifnot(n == expected_background_free(strategy))
 
   plan(strategy, workers = 1L)
   n <- nbrOfWorkers()
@@ -77,7 +88,7 @@ for (strategy in strategies) {
   
   n <- nbrOfFreeWorkers(background = TRUE)
   message(sprintf("nbrOfFreeWorkers(background = TRUE): %d", n))
-# FIXME  stopifnot(n == 0L)
+  stopifnot(n == expected_background_free(strategy))
 
   plan(strategy, workers = allButOneCore)
   n <- nbrOfWorkers()
@@ -90,7 +101,7 @@ for (strategy in strategies) {
   
   n <- nbrOfFreeWorkers(background = TRUE)
   message(sprintf("nbrOfFreeWorkers(background = TRUE): %d", n))
-# FIXME  stopifnot(n == 0L)
+  stopifnot(n == expected_background_free(strategy))
 } ## for (strategy ...)
 
 

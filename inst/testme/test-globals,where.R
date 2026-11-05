@@ -31,8 +31,7 @@ make_globals <- function() {
   )
 }
 
-message("- getGlobalsAndPackages() cleans up 'where' (keepWhere = TRUE) ...")
-oopts2 <- options(future.globals.keepWhere = TRUE)
+message("- getGlobalsAndPackages() cleans up 'where' ...")
 globals <- FutureGlobals(make_globals(), resolved = TRUE)
 gp <- getGlobalsAndPackages(expression(), globals = globals)
 where <- attr(gp$globals, "where")
@@ -45,4 +44,3 @@ stopifnot(
   !identical(where[["drop_me"]], emptyenv()),
   identical(environmentName(where[["drop_me"]]), "")
 )
-options(oopts2)
