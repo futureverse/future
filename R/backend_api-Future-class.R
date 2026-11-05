@@ -233,11 +233,6 @@ Future <- function(expr = NULL, envir = parent.frame(), substitute = TRUE, stdou
   ## Additional named arguments
   for (key in args_names) core[[key]] <- args[[key]]
 
-  ## Backward compatibility: drop field 'envir' in future (>= 1.69.0)
-  if (getOption("future.Future.envir.keep", FALSE)) {
-    core[["envir"]] <- envir
-  }
-  
   structure(core, class = c("Future", class(core)))
 }
 

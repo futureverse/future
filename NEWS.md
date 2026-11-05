@@ -8,6 +8,12 @@
    environment is erased on the parallel worker right before and after
    the future has been evaluated.
 
+## Deprecated and Defunct
+
+ * Remove internal R option `future.Future.envir.keep`, which was a
+   temporary workaround in **future** 1.69.0 for packages that still
+   relied on the internal future field `envir`.
+
 
 # Version 1.82.0 [2026-11-01]
 
