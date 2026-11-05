@@ -14,6 +14,8 @@
    temporary workaround in **future** 1.69.0 for packages that still
    relied on the internal future field `envir`.
 
+ * Remove unused R option `future.regression.note`.
+
 
 # Version 1.82.0 [2026-11-01]
 
