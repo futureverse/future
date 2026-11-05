@@ -116,21 +116,7 @@ for (strategy in supportedStrategies()) {
 
   utils::str(list(strategy = strategy, v = v))
   
-  if (isTRUE(as.logical(Sys.getenv("R_CHECK_IDEAL")))) {
-    stopifnot(identical(v, truth))
-  } else if (isTRUE(getOption("future.globals.keepWhere", TRUE))) {
-    message("future.globals.keepWhere=TRUE")
-    stopifnot(identical(v, truth))
-  } else {
-    message("future.globals.keepWhere=FALSE")
-    if (isTRUE(getOption("future.globals.globalsOf.locals", TRUE))) {
-      message("future.globals.globalsOf.locals=TRUE")
-      stopifnot(identical(v, 4))    ## <= SERIOUS BUG!
-    } else {
-      message("future.globals.globalsOf.locals=FALSE")
-      stopifnot(inherits(v, "error"))
-    }
-  }
+  stopifnot(identical(v, truth))
 } ## for (strategy ...)
 
 message("*** Globals inside local() environments ... DONE")

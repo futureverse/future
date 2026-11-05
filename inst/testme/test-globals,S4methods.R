@@ -34,13 +34,7 @@ for (strategy in supportedStrategies()) {
   rm(list = "my_fcn")
   v <- tryCatch(value(f), error = identity)
   print(v)
-  if (isTRUE(getOption("future.globals.keepWhere", TRUE))) {
-    message("future.globals.keepWhere=TRUE")
-    stopifnot(identical(v, truth))
-  } else {
-    message("future.globals.keepWhere=FALSE")
-    stopifnot(inherits(v, "error"))
-  }
+  stopifnot(identical(v, truth))
   my_fcn <- org_my_fcn
 
   plan(sequential)

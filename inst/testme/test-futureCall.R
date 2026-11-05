@@ -142,8 +142,7 @@ for (cores in 1:availCores) {
             } else {
               stopifnot(inherits(v4, "error"))
             }
-          } else if (isTRUE(getOption("future.globals.keepWhere", TRUE))) {
-            message("future.globals.keepWhere=TRUE")
+          } else {
             if (isTRUE(getOption("future.globals.globalsOf.locals", TRUE))) {
               message("future.globals.globalsOf.locals=TRUE")
               if (globals) {
@@ -162,19 +161,6 @@ for (cores in 1:availCores) {
               } else {
                 stopifnot(identical(v4, truth))
               }
-            }
-          } else {
-            message("future.globals.keepWhere=FALSE")
-            if (isTRUE(getOption("future.globals.globalsOf.locals", TRUE))) {
-              message("future.globals.globalsOf.locals=TRUE")
-              if (globals) {
-                stopifnot(identical(v4, truth))
-              } else {
-                stopifnot(inherits(v4, "error"))
-              }
-            } else {
-              message("future.globals.globalsOf.locals=FALSE")
-              stopifnot(inherits(v4, "error"))
             }
           }
         })
