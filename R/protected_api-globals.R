@@ -111,6 +111,8 @@ getGlobalsAndPackages <- function(expr, envir = parent.frame(), tweak = tweakExp
       ## development and might give an error on certain types of expression.
       ## Check if it gives an error. If it does, drop the "dfs" method for
       ## this future expression.
+      ## FIXME: Remove this; it was added as a conservative measure in case there
+      ## were unknown cases "out there" that would fail. /HB 2026-11-05
       idx <- which(globals.method == "dfs")
       if (length(idx) > 0L) {
          res <- tryCatch(findGlobals(expr, method = "dfs"), error = identity)
