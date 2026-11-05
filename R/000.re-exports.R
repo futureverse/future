@@ -9,20 +9,22 @@
 #'  switch to use the ones from the \pkg{parallelly} package. Thank you!_
 #'
 #' * [parallelly::availableCores()]
-#    Used by: ale (2), BatchGetSymbols (2), codalm (1), cft (1), deseats (3),
-#             elevatr (1), heterogen, PINstimation (1), powRICLPM (1),
-#             readsdr (1), recforest (3), skpr (1), smoots (3),
-#             TriDimRegression (1) [2025-12-22, 2026-01-31, 2026-04-04]
+#    Used by: [n=15] ale (2+4), BatchGetSymbols (2), codalm (1), cft (1),
+#             deseats (3), elevatr (1), genBaRcode (3+4), heterogen,
+#             powRICLPM (1), readsdr (1), recforest (3), skpr (1),
+#             SmoothPLS (1+4), smoots (3), TriDimRegression (1)
+#             [2025-12-22, 2026-01-31, 2026-04-04, 2026-11-05]
 #' * [parallelly::availableWorkers()]
-#    Used by: wqspt (1) [2025-03-15, 2026-02-01, 2026-08-03]
+#    Used by: [n=1] wqspt (1) [2025-03-15, 2026-02-01, 2026-08-03]
 #' * [parallelly::makeClusterPSOCK()]
-#    Used by: eatRep (1) [2026-04-20]
+#    Used by: [n=1] eatRep (1) [2026-04-20]
 #' * [parallelly::supportsMulticore()]
-#    Used by: LandComp (1), polarisR (1) [2026-04-16]
+#    Used by: [n=2] LandComp (1), polarisR (1) [2026-04-16]
 #
 #  (1) Issue filed or PR sent
 #  (2) In the next release
 #  (3) Has no online issue tracker
+#  (4) Failing on CRAN
 #' 
 #' For backward-compatible reasons, _some_ of these functions remain
 #' available as exact copies also from this package (as re-exports), e.g.
