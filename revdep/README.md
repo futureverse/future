@@ -10,15 +10,15 @@
 |collate  |en_US.UTF-8                                                              |
 |ctype    |en_US.UTF-8                                                              |
 |tz       |America/Los_Angeles                                                      |
-|date     |2026-11-01                                                               |
-|pandoc   |3.11 @ /path/to/pandoc-3.11/bin/pandoc       |
-|quarto   |1.10.18 @ /path/to/quarto-1.10.18/bin/quarto |
+|date     |2026-11-05                                                               |
+|pandoc   |3.11 @ /wynton/home/cbi/shared/software/CBI/pandoc-3.11/bin/pandoc       |
+|quarto   |1.10.18 @ /wynton/home/cbi/shared/software/CBI/quarto-1.10.18/bin/quarto |
 
 # Dependencies
 
 |package    |old    |new         |Δ  |
 |:----------|:------|:-----------|:--|
-|future     |1.80.0 |1.80.0-9031 |*  |
+|future     |1.82.0 |1.82.0-9004 |*  |
 |codetools  |0.2-20 |0.2-20      |   |
 |digest     |0.6.39 |NA          |*  |
 |globals    |0.20.0 |0.20.0      |   |
@@ -27,7 +27,13 @@
 
 # Revdeps
 
-## All (581)
+## Failed to check (1)
+
+|package    |version |error |warning |note |
+|:----------|:-------|:-----|:-------|:----|
+|batchtools |?       |      |        |     |
+
+## All (580)
 
 |package                      |version      |error |warning |note |
 |:----------------------------|:------------|:-----|:-------|:----|
@@ -37,7 +43,6 @@
 |AgePopDenom                  |1.2.3        |      |        |     |
 |aifeducation                 |1.1.6        |      |        |     |
 |AIscreenR                    |0.5.0        |      |        |     |
-|[ale](problems.md#ale)       |0.5.3        |1     |        |     |
 |alookr                       |0.5.1        |      |        |     |
 |[altdoc](problems.md#altdoc) |0.7.3        |      |        |1    |
 |ameras                       |0.5.2        |      |        |     |
@@ -56,8 +61,8 @@
 |bartisan                     |0.1.0        |      |        |     |
 |baseballr                    |2.0.0        |      |        |     |
 |BatchGetSymbols              |2.6.4        |      |        |     |
-|[batchtools](problems.md#batchtools)|0.9.18       |      |        |2    |
-|BayesFBHborrow               |2.0.21       |      |        |     |
+|batchtools                   |?            |      |        |     |
+|BayesFBHborrow               |2.0.22       |      |        |     |
 |[bayesian](problems.md#bayesian)|1.0.1        |      |        |1    |
 |bayesics                     |3.1.0        |      |        |     |
 |bayesmove                    |0.2.4        |      |        |     |
@@ -70,7 +75,7 @@
 |bGMYC4                       |4.1.6        |      |        |     |
 |bhmbasket                    |1.1.0        |      |        |     |
 |bidser                       |0.5.2        |      |        |     |
-|[bifrost](problems.md#bifrost)|0.2.2        |1     |        |     |
+|bifrost                      |0.2.3        |      |        |     |
 |bigDM                        |0.5.9        |      |        |     |
 |bigPLSR                      |0.8.0        |      |        |     |
 |binaryRL                     |0.9.9        |      |        |     |
@@ -166,8 +171,8 @@
 |episomer                     |3.0.35       |      |        |     |
 |EQRN                         |0.1.2        |      |        |     |
 |erah                         |2.2.0        |      |        |     |
-|esemifar                     |2.0.1        |      |        |     |
-|evalHTE                      |0.2.0        |      |        |     |
+|esemifar                     |2.0.2        |      |        |     |
+|evalHTE                      |0.3.0        |      |        |     |
 |ExtremeCI                    |0.2.1        |      |        |     |
 |eyeprocess                   |0.12.1       |      |        |     |
 |ezcox                        |1.0.4        |      |        |     |
@@ -187,7 +192,7 @@
 |featR                        |0.1.0        |      |        |     |
 |fect                         |2.4.5        |      |        |     |
 |fEGarch                      |1.0.6        |      |        |     |
-|fiery                        |1.5.0        |-1    |        |     |
+|fiery                        |1.5.0        |      |        |     |
 |finbif                       |0.10.1       |      |        |     |
 |fitlandr                     |0.1.1        |      |        |     |
 |flassomsm                    |0.1.0        |      |        |     |
@@ -203,7 +208,7 @@
 |funresMech                   |1.1.0        |      |        |     |
 |furrr                        |0.4.0        |      |        |     |
 |future.apply                 |1.21.0       |      |        |     |
-|[future.batchtools](problems.md#futurebatchtools)|0.30.0       |      |        |1    |
+|[future.batchtools](problems.md#futurebatchtools)|0.31.0       |      |        |1    |
 |future.callr                 |1.0.1        |      |        |     |
 |future.mirai                 |1.1.0        |      |        |     |
 |future.tests                 |1.0.0        |      |        |     |
@@ -221,7 +226,7 @@
 |GeoModels                    |2.3.0        |      |        |     |
 |geomorphR                    |0.2.1        |      |        |     |
 |GetBCBData                   |0.9.5        |      |        |     |
-|ggchangepoint                |0.5.0        |      |        |     |
+|ggchangepoint                |0.7.0        |      |        |     |
 |gllvmTMB                     |0.7.1        |      |        |     |
 |gloBFPr                      |2.0.0        |      |        |     |
 |goodpractice                 |1.2.0        |      |        |     |
@@ -310,7 +315,7 @@
 |MAIHDA                       |0.3.0        |      |        |     |
 |MAMS                         |3.0.3        |      |        |     |
 |marginaleffects              |1.0.0        |      |        |     |
-|matchednull                  |0.2.1        |      |        |     |
+|matchednull                  |0.2.2        |      |        |     |
 |McMiso                       |0.2.0        |      |        |     |
 |mcp                          |0.4.0        |      |        |     |
 |MDaRes                       |0.0.2        |      |        |     |
@@ -328,7 +333,7 @@
 |[mistyR](problems.md#mistyr) |1.20.0       |      |        |3    |
 |mlr3                         |1.8.0        |      |        |     |
 |mlr3cluster                  |0.7.0        |      |        |     |
-|mlr3db                       |0.7.2        |      |        |     |
+|mlr3db                       |0.7.3        |      |        |     |
 |mlr3fairness                 |0.4.0        |      |        |     |
 |mlr3inferr                   |0.2.2        |      |        |     |
 |mlr3learners                 |0.16.0       |      |        |     |
@@ -362,7 +367,7 @@
 |netDFI                       |1.2.0        |      |        |     |
 |netOP                        |0.1.2        |      |        |     |
 |netseer                      |0.1.3        |      |        |     |
-|NetSimR                      |0.3.2        |      |        |     |
+|NetSimR                      |0.3.3        |      |        |     |
 |neuroim2                     |0.19.1       |      |        |     |
 |[nfl4th](problems.md#nfl4th) |1.0.7        |      |        |1    |
 |nflfastR                     |6.0.0        |      |        |     |
@@ -373,7 +378,7 @@
 |NMAR                         |0.1.2        |      |        |     |
 |nncc                         |2.0.0        |      |        |     |
 |normref                      |0.1.2        |      |        |     |
-|nQuack                       |1.0.4        |      |        |     |
+|nQuack                       |1.0.5        |      |        |     |
 |oeli                         |0.7.9        |      |        |     |
 |onemapsgapi                  |2.0.0        |      |        |     |
 |OpenSpecy                    |2.0.3        |      |        |     |
@@ -397,7 +402,7 @@
 |picreg                       |0.2.0        |      |        |     |
 |pilotr                       |0.3.1        |      |        |     |
 |[PINstimation](problems.md#pinstimation)|0.2.0        |      |        |1    |
-|plssem                       |0.1.5        |      |        |     |
+|plssem                       |0.2.0        |      |        |     |
 |plumber                      |1.3.3        |      |        |     |
 |polarisR                     |0.1.4        |      |        |     |
 |polle                        |1.6.7        |      |        |     |
@@ -409,7 +414,7 @@
 |PowRPriori                   |0.2.1        |      |        |     |
 |ProFAST                      |1.9          |      |        |     |
 |progressr                    |1.1.0        |      |        |     |
-|projpred                     |2.11.0       |      |        |     |
+|[projpred](problems.md#projpred)|2.11.0       |      |1       |     |
 |promises                     |1.5.0        |      |        |     |
 |[Prostar](problems.md#prostar)|1.44.0       |      |        |3    |
 |proteus                      |2.0.0        |      |        |     |
@@ -454,7 +459,7 @@
 |rpm                          |0.7-4        |      |        |     |
 |rSDR                         |1.0.3.0      |      |        |     |
 |rsocsim                      |1.9.18       |      |        |     |
-|rtemis                       |1.4.2        |      |        |     |
+|rtemis                       |1.4.3        |      |        |     |
 |RTransferEntropy             |0.2.21       |      |        |     |
 |rtransparency                |1.2.0        |      |        |     |
 |rtrees                       |2.0.2        |      |        |     |
@@ -516,11 +521,11 @@
 |smimodel                     |0.1.3        |      |        |     |
 |[SmoothPLS](problems.md#smoothpls)|0.1.5        |1     |        |     |
 |smoots                       |1.1.5        |      |        |     |
-|sNPLS                        |1.0.27       |      |        |     |
+|sNPLS                        |1.0.41       |      |        |     |
 |socialSim                    |0.1.9        |      |        |     |
 |[SpaDES.core](problems.md#spadescore)|3.2.1        |1     |        |     |
 |spaMM                        |4.7.17       |      |        |     |
-|spanishoddata                |0.2.6        |      |        |     |
+|spanishoddata                |0.2.6        |-1    |        |     |
 |[sparrpowR](problems.md#sparrpowr)|0.2.9        |      |1       |     |
 |spatialTIME                  |1.3.4-5      |      |        |     |
 |spatialwarnings              |3.1.2        |      |        |     |
@@ -576,8 +581,8 @@
 |tsfeatures                   |1.1.1        |      |        |     |
 |tsgarch                      |1.0.5        |      |        |     |
 |tsissm                       |1.0.4        |      |        |     |
-|tsmarch                      |1.0.0        |      |        |     |
-|tuber                        |2.0.0        |      |        |     |
+|tsmarch                      |1.0.3        |      |        |     |
+|tuber                        |3.0.0        |      |        |     |
 |tune                         |2.1.0        |      |        |     |
 |txshift                      |0.4.0        |      |        |     |
 |UCSCXenaShiny                |2.2.1        |      |        |     |
@@ -586,7 +591,7 @@
 |updog                        |2.1.7        |      |        |     |
 |vecmatch                     |1.4.0        |      |        |     |
 |VIM                          |7.3.1        |      |        |     |
-|vital                        |2.1.0        |      |        |     |
+|vital                        |2.1.1        |      |        |     |
 |[vmeasur](problems.md#vmeasur)|0.1.4        |      |1       |     |
 |WARDEN                       |2.0.6        |      |        |     |
 |wcswatin                     |0.2.0        |      |        |     |

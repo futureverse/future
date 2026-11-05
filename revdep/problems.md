@@ -1,43 +1,3 @@
-# ale (0.5.3)
-
-* GitHub: <https://github.com/tripartio/ale>
-* Email: <mailto:Chitu.Okoli@skema.edu>
-* GitHub mirror: <https://github.com/cran/ale>
-
-Run `revdepcheck::revdep_details(, "ale")` for more info
-
-## In both
-
-*   checking tests ...
-     ```
-     ...
-         9.             └─base (local) tryCatchList(expr, classes, parentenv, handlers)
-        10.               └─base (local) tryCatchOne(expr, names, parentenv, handlers[[1L]])
-        11.                 └─value[[3L]](cond)
-        12.                   └─rlang::cnd_signal(cnd)
-       ── Error ('test-ModelBoot.R:99:5'): bootstrapped categorical outcome with full 1D and all variables set ──
-       Error in `value[[3L]](cond)`: 
-       Backtrace:
-            ▆
-         1. └─ale::ModelBoot(...) at test-ModelBoot.R:99:5
-         2.   ├─purrr::list_transpose(...) at ale/R/ModelBoot.R:471:5
-         3.   │ └─vctrs::obj_check_list(x)
-         4.   └─furrr::future_map2(...) at ale/R/ModelBoot.R:471:5
-         5.     └─furrr:::furrr_map2_template(...)
-         6.       └─furrr:::furrr_template(...)
-         7.         └─furrr:::furrr_try_catch(...)
-         8.           └─base::tryCatch(expr = expr, purrr_error_indexed = rethrow_purrr_error_indexed)
-         9.             └─base (local) tryCatchList(expr, classes, parentenv, handlers)
-        10.               └─base (local) tryCatchOne(expr, names, parentenv, handlers[[1L]])
-        11.                 └─value[[3L]](cond)
-        12.                   └─rlang::cnd_signal(cnd)
-       
-       [ FAIL 4 | WARN 610 | SKIP 12 | PASS 83 ]
-       Error:
-       ! Test failures.
-       Execution halted
-     ```
-
 # altdoc (0.7.3)
 
 * GitHub: <https://github.com/etiennebacher/altdoc>
@@ -51,53 +11,7 @@ Run `revdepcheck::revdep_details(, "altdoc")` for more info
 *   checking for non-standard things in the check directory ... NOTE
      ```
      Found the following files/directories:
-       ‘testpkg3235f7af12eea’
-     ```
-
-# batchtools (0.9.18)
-
-* GitHub: <https://github.com/mlr-org/batchtools>
-* Email: <mailto:michellang@gmail.com>
-* GitHub mirror: <https://github.com/cran/batchtools>
-
-Run `revdepcheck::revdep_details(, "batchtools")` for more info
-
-## In both
-
-*   checking dependencies in R code ... NOTE
-     ```
-     ...
-     localhost::pid288394.R: Unable to initialize verbs NIC /sys/class/infiniband/mlx5_0 (unit 0:0)
-     localhost::pid288394: PSM3 can't open nic unit: 0 (err=23)
-     localhost::pid288394.R: Unable to create send CQ of size 5080 on mlx5_0: Cannot allocate memory
-     localhost::pid288394.R: Unable to initialize verbs NIC /sys/class/infiniband/mlx5_0 (unit 0:0)
-     --------------------------------------------------------------------------
-     No OpenFabrics connection schemes reported that they were able to be
-     used on a specific port.  As such, the openib BTL (OpenFabrics
-     support) will be disabled for this port.
-     
-       Local host:           dev3
-       Local device:         mlx5_0
-       Local port:           1
-       CPCs attempted:       rdmacm, udcm
-     --------------------------------------------------------------------------
-     localhost::pid288394: PSM3 can't open nic unit: 0 (err=23)
-     localhost::pid288394.R: Unable to create send CQ of size 5080 on mlx5_0: Cannot allocate memory
-     localhost::pid288394.R: Unable to initialize verbs NIC /sys/class/infiniband/mlx5_0 (unit 0:0)
-     --------------------------------------------------------------------------
-     Open MPI failed an OFI Libfabric library call (fi_endpoint).  This is highly
-     unusual; your job may behave unpredictably (and/or abort) after this.
-     
-       Local host: dev3
-       Location: mtl_ofi_component.c:513
-       Error: Invalid argument (22)
-     --------------------------------------------------------------------------
-     ```
-
-*   checking for detritus in the temp directory ... NOTE
-     ```
-     Found the following files/directories:
-       ‘ompi.dev3.34002’
+       ‘testpkgaf02769874c60’
      ```
 
 # bayesian (1.0.1)
@@ -119,46 +33,6 @@ Run `revdepcheck::revdep_details(, "bayesian")` for more info
        function(object)
      See section ‘Registering S3 methods’ in the ‘Writing R Extensions’
      manual.
-     ```
-
-# bifrost (0.2.2)
-
-* GitHub: <https://github.com/jakeberv/bifrost>
-* Email: <mailto:jacob.berv@gmail.com>
-* GitHub mirror: <https://github.com/cran/bifrost>
-
-Run `revdepcheck::revdep_details(, "bifrost")` for more info
-
-## In both
-
-*   checking tests ...
-     ```
-     ...
-       • repository empirical artifact directory unavailable for simulation vignette
-         cache (1): 'test-simulation-vignette-cache.R:3:3'
-       
-       ══ Failed tests ════════════════════════════════════════════════════════════════
-       ── Failure ('test-search-background-history.R:97:9'): background history preserves accepted, rejected and failed proposals and RNG ──
-       Expected `actual$warnings` to be identical to `expected$warnings`.
-       Differences:
-       actual vs expected
-       - "future::supportsMulticore() is deprecated. Please use the identical parallelly::supportsMulticore() instead [testthat::test_check() -> testthat::test_dir() -> testthat::test_files() -> testthat::test_files_serial() -> testthat::with_reporter() -> base::tryCatch() -> tryCatchList() -> tryCatchOne() -> doTryCatch() -> base::lapply() -> testthat::FUN() -> testthat::source_file() -> testthat::test_code() -> base::withRestarts() -> withOneRestart() -> doWithOneRestart() -> base::tryCatch() -> tryCatchList() -> tryCatchOne() -> doTryCatch() -> base::withCallingHandlers() -> base::eval() -> eval() -> testthat::test_that() -> testthat::test_code() -> base::withRestarts() -> withOneRestart() -> doWithOneRestart() -> base::tryCatch() -> tryCatchList() -> tryCatchOne() -> doTryCatch() -> base::withCallingHandlers() -> base::eval() -> eval() -> run() -> base::withCallingHandlers() -> base::do.call() -> bifrost::(function (sorted_candidates, current_best_tree, current_best_ic,      shift_id, IC, formula, trait_data, shift_acceptance_threshold,      store_model_fit_history, sub_dir, plot, verbose_log, tick = function(...) invisible(NULL),      heartbeat = NULL, is_rstudio = FALSE, fit = .bifrost_search_fit_ic,      .future_plan_active = FALSE, ...)  {     if (length(sorted_candidates) > 0L && !is.null(heartbeat) &&          !isTRUE(.future_plan_active)) {         dots <- list(...)         forward_args <- c(list(sorted_candidates = sorted_candidates,              current_best_tree = current_best_tree, current_best_ic = current_best_ic,              shift_id = shift_id, IC = IC, formula = formula,              trait_data = trait_data, shift_acceptance_threshold = shift_acceptance_threshold,              store_model_fit_history = store_model_fit_history,              sub_dir = sub_dir, plot = plot, verbose_log = verbose_log,              tick = tick, heartbeat = heartbeat, is_rstudio = is_rstudio,              fit = fit, .future_plan_active = TRUE), dots)         return(.bifrost_search_with_future_plan(workers = 1L,              is_rstudio_flag = is_rstudio, ensure_async = TRUE,              work = function() do.call(.bifrost_search_forward,                  forward_args)))     }     shift_vec <- list()     model_with_shift_no_uncertainty <- NULL     best_tree_no_uncertainty <- NULL     warnings_list <- list()     model_fit_history <- list()     for (i in seq_along(sorted_candidates)) {         shift_node_name <- names(sorted_candidates)[i]         shift_node_number <- as.integer(sub(\"Node \", \"\", shift_node_name))         percent_complete <- round((i/length(sorted_candidates)) *              100, 2)         verbose_log(\"Evaluating shift at node %d (%.2f%% complete)\",              shift_node_number, percent_complete)         outcome <- \"error\"         proposal <- NULL         add_shift_result <- addShiftToModel(current_best_tree,              shift_node_number, shift_id)         shifted_tree <- add_shift_result$tree         shift_id <- add_shift_result$shift_id         if (plot == TRUE) {             nodelabels(text = shift_id, node = shift_node_number)         }         tryCatch({             fit_args <- c(list(IC, formula, shifted_tree, trait_data),                  list(...))             fit_proposal <- .bifrost_search_fit_proposal             fit_work <- function() fit_proposal(fit, fit_args,                  IC, current_best_ic, shift_acceptance_threshold,                  history = if (store_model_fit_history)                    list(step = i, candidate_node = shift_node_number,                      regime_id = as.character(shift_id)), sub_dir = if (!is.null(heartbeat))                    sub_dir)             proposal <- withCallingHandlers(if (is.null(heartbeat)) {                 fit_work()             }             else {                 .bifrost_search_await_work(fit_work, heartbeat = heartbeat)             }, warning = function(w) {                 warning_message <- paste(\"Warning in evaluating shift at node\",                    shift_node_number, \":\", w$message)                 warning(warning_message)                 warnings_list[[length(warnings_list) + 1]] <<- warning_message                 invokeRestart(\"muffleWarning\")             })             model_with_shift <- proposal$value$model             new_ic <- proposal$value$ic             delta_ic <- proposal$value$delta_ic             if (store_model_fit_history) {                 model_fit_history <- proposal$value             }             if (delta_ic >= shift_acceptance_threshold) {                 current_best_tree <- shifted_tree                 current_best_ic <- new_ic                 outcome <- \"accepted\"                 verbose_log(\"Shift at node %d accepted. Updated %s: %.2f; Delta %s: %.2f\",                    shift_node_number, IC, current_best_ic, IC,                    delta_ic)                 shift_vec[[length(shift_vec) + 1]] <- shift_node_number                 best_tree_no_uncertainty <- current_best_tree                 model_with_shift_no_uncertainty <- model_with_shift             }             else {                 outcome <- \"rejected\"                 verbose_log(\"Shift at node %d rejected. Delta %s: %.2f < threshold: %.2f\",                    shift_node_number, IC, delta_ic, shift_acceptance_threshold)             }         }, error = function(e) {             warning_message <- paste(\"Error in evaluating shift at node\",                  shift_node_number, \":\", e$message)             warning(warning_message)             warnings_list[[length(warnings_list) + 1]] <<- warning_message             if (store_model_fit_history) {                 model_fit_history <<- list(step = i, candidate_node = shift_node_number,                    regime_id = as.character(shift_id), model = NULL,                    ic = NA_real_, accepted = FALSE, delta_ic = NA,                    status = \"error\", error = e$message)             }         })         tick(message = sprintf(\"[2/3] Node %d %s\", shift_node_number,              if (outcome == \"error\")                  \"failed\"             else outcome))         for (condition in proposal$conditions) {             if (inherits(condition, \"error\"))                  stop(condition)             warning(condition)         }         if (isTRUE(store_model_fit_history) && !is.null(sub_dir) &&              (is.null(heartbeat) || outcome == \"error\")) {             iteration_num <- i + 1L             .bifrost_search_save_history(model_fit_history, sub_dir,                  iteration_num)         }         if (plot == TRUE) {             colorvec <- setNames(object = c(\"black\", rainbow(length(unique(getStates(shifted_tree,                  type = \"both\"))) - 1)), nm = sort(as.numeric(unique(getStates(shifted_tree,                  type = \"both\")))))             plotSimmap(current_best_tree, colors = colorvec,                  ftype = \"off\")         }     }     list(current_best_tree = current_best_tree, current_best_ic = current_best_ic,          shift_id = shift_id, shift_vec = shift_vec, shifts_no_uncertainty = unlist(shift_vec),          model_with_shift_no_uncertainty = model_with_shift_no_uncertainty,          best_tree_no_uncertainty = best_tree_no_uncertainty,          warnings_list = warnings_list, model_fit_history = model_fit_history) })() -> bifrost::.bifrost_search_with_future_plan() -> future::supportsMulticore()]"
-         "Warning in evaluating shift at node 15 : fit warning"
-         "Error in evaluating shift at node 17 : fit failed after drawing"
-       
-       ── Failure ('test-search-background-history.R:99:11'): background history preserves accepted, rejected and failed proposals and RNG ──
-       Expected `actual` to be identical to `expected`.
-       Differences:
-       actual$warnings vs expected$warnings
-       - "future::supportsMulticore() is deprecated. Please use the identical parallelly::supportsMulticore() instead [testthat::test_check() -> testthat::test_dir() -> testthat::test_files() -> testthat::test_files_serial() -> testthat::with_reporter() -> base::tryCatch() -> tryCatchList() -> tryCatchOne() -> doTryCatch() -> base::lapply() -> testthat::FUN() -> testthat::source_file() -> testthat::test_code() -> base::withRestarts() -> withOneRestart() -> doWithOneRestart() -> base::tryCatch() -> tryCatchList() -> tryCatchOne() -> doTryCatch() -> base::withCallingHandlers() -> base::eval() -> eval() -> testthat::test_that() -> testthat::test_code() -> base::withRestarts() -> withOneRestart() -> doWithOneRestart() -> base::tryCatch() -> tryCatchList() -> tryCatchOne() -> doTryCatch() -> base::withCallingHandlers() -> base::eval() -> eval() -> run() -> base::withCallingHandlers() -> base::do.call() -> bifrost::(function (sorted_candidates, current_best_tree, current_best_ic,      shift_id, IC, formula, trait_data, shift_acceptance_threshold,      store_model_fit_history, sub_dir, plot, verbose_log, tick = function(...) invisible(NULL),      heartbeat = NULL, is_rstudio = FALSE, fit = .bifrost_search_fit_ic,      .future_plan_active = FALSE, ...)  {     if (length(sorted_candidates) > 0L && !is.null(heartbeat) &&          !isTRUE(.future_plan_active)) {         dots <- list(...)         forward_args <- c(list(sorted_candidates = sorted_candidates,              current_best_tree = current_best_tree, current_best_ic = current_best_ic,              shift_id = shift_id, IC = IC, formula = formula,              trait_data = trait_data, shift_acceptance_threshold = shift_acceptance_threshold,              store_model_fit_history = store_model_fit_history,              sub_dir = sub_dir, plot = plot, verbose_log = verbose_log,              tick = tick, heartbeat = heartbeat, is_rstudio = is_rstudio,              fit = fit, .future_plan_active = TRUE), dots)         return(.bifrost_search_with_future_plan(workers = 1L,              is_rstudio_flag = is_rstudio, ensure_async = TRUE,              work = function() do.call(.bifrost_search_forward,                  forward_args)))     }     shift_vec <- list()     model_with_shift_no_uncertainty <- NULL     best_tree_no_uncertainty <- NULL     warnings_list <- list()     model_fit_history <- list()     for (i in seq_along(sorted_candidates)) {         shift_node_name <- names(sorted_candidates)[i]         shift_node_number <- as.integer(sub(\"Node \", \"\", shift_node_name))         percent_complete <- round((i/length(sorted_candidates)) *              100, 2)         verbose_log(\"Evaluating shift at node %d (%.2f%% complete)\",              shift_node_number, percent_complete)         outcome <- \"error\"         proposal <- NULL         add_shift_result <- addShiftToModel(current_best_tree,              shift_node_number, shift_id)         shifted_tree <- add_shift_result$tree         shift_id <- add_shift_result$shift_id         if (plot == TRUE) {             nodelabels(text = shift_id, node = shift_node_number)         }         tryCatch({             fit_args <- c(list(IC, formula, shifted_tree, trait_data),                  list(...))             fit_proposal <- .bifrost_search_fit_proposal             fit_work <- function() fit_proposal(fit, fit_args,                  IC, current_best_ic, shift_acceptance_threshold,                  history = if (store_model_fit_history)                    list(step = i, candidate_node = shift_node_number,                      regime_id = as.character(shift_id)), sub_dir = if (!is.null(heartbeat))                    sub_dir)             proposal <- withCallingHandlers(if (is.null(heartbeat)) {                 fit_work()             }             else {                 .bifrost_search_await_work(fit_work, heartbeat = heartbeat)             }, warning = function(w) {                 warning_message <- paste(\"Warning in evaluating shift at node\",                    shift_node_number, \":\", w$message)                 warning(warning_message)                 warnings_list[[length(warnings_list) + 1]] <<- warning_message                 invokeRestart(\"muffleWarning\")             })             model_with_shift <- proposal$value$model             new_ic <- proposal$value$ic             delta_ic <- proposal$value$delta_ic             if (store_model_fit_history) {                 model_fit_history <- proposal$value             }             if (delta_ic >= shift_acceptance_threshold) {                 current_best_tree <- shifted_tree                 current_best_ic <- new_ic                 outcome <- \"accepted\"                 verbose_log(\"Shift at node %d accepted. Updated %s: %.2f; Delta %s: %.2f\",                    shift_node_number, IC, current_best_ic, IC,                    delta_ic)                 shift_vec[[length(shift_vec) + 1]] <- shift_node_number                 best_tree_no_uncertainty <- current_best_tree                 model_with_shift_no_uncertainty <- model_with_shift             }             else {                 outcome <- \"rejected\"                 verbose_log(\"Shift at node %d rejected. Delta %s: %.2f < threshold: %.2f\",                    shift_node_number, IC, delta_ic, shift_acceptance_threshold)             }         }, error = function(e) {             warning_message <- paste(\"Error in evaluating shift at node\",                  shift_node_number, \":\", e$message)             warning(warning_message)             warnings_list[[length(warnings_list) + 1]] <<- warning_message             if (store_model_fit_history) {                 model_fit_history <<- list(step = i, candidate_node = shift_node_number,                    regime_id = as.character(shift_id), model = NULL,                    ic = NA_real_, accepted = FALSE, delta_ic = NA,                    status = \"error\", error = e$message)             }         })         tick(message = sprintf(\"[2/3] Node %d %s\", shift_node_number,              if (outcome == \"error\")                  \"failed\"             else outcome))         for (condition in proposal$conditions) {             if (inherits(condition, \"error\"))                  stop(condition)             warning(condition)         }         if (isTRUE(store_model_fit_history) && !is.null(sub_dir) &&              (is.null(heartbeat) || outcome == \"error\")) {             iteration_num <- i + 1L             .bifrost_search_save_history(model_fit_history, sub_dir,                  iteration_num)         }         if (plot == TRUE) {             colorvec <- setNames(object = c(\"black\", rainbow(length(unique(getStates(shifted_tree,                  type = \"both\"))) - 1)), nm = sort(as.numeric(unique(getStates(shifted_tree,                  type = \"both\")))))             plotSimmap(current_best_tree, colors = colorvec,                  ftype = \"off\")         }     }     list(current_best_tree = current_best_tree, current_best_ic = current_best_ic,          shift_id = shift_id, shift_vec = shift_vec, shifts_no_uncertainty = unlist(shift_vec),          model_with_shift_no_uncertainty = model_with_shift_no_uncertainty,          best_tree_no_uncertainty = best_tree_no_uncertainty,          warnings_list = warnings_list, model_fit_history = model_fit_history) })() -> bifrost::.bifrost_search_with_future_plan() -> future::supportsMulticore()]"
-         "Warning in evaluating shift at node 15 : fit warning"
-         "Error in evaluating shift at node 17 : fit failed after drawing"
-       
-       
-       [ FAIL 2 | WARN 11 | SKIP 138 | PASS 2978 ]
-       Error:
-       ! Test failures.
-       Execution halted
      ```
 
 # ceRNAnetsim (1.24.0)
@@ -371,7 +245,7 @@ Run `revdepcheck::revdep_details(, "flowGraph")` for more info
        ‘temp’ ‘tmp’
      ```
 
-# future.batchtools (0.30.0)
+# future.batchtools (0.31.0)
 
 * GitHub: <https://github.com/futureverse/future.batchtools>
 * Email: <mailto:henrikb@braju.com>
@@ -595,10 +469,10 @@ Run `revdepcheck::revdep_details(, "mlr3resampling")` for more info
 *   checking dependencies in R code ... NOTE
      ```
      ...
-     localhost::pid3260834.R: Unable to initialize verbs NIC /sys/class/infiniband/mlx5_0 (unit 0:0)
-     localhost::pid3260834: PSM3 can't open nic unit: 0 (err=23)
-     localhost::pid3260834.R: Unable to create send CQ of size 5080 on mlx5_0: Cannot allocate memory
-     localhost::pid3260834.R: Unable to initialize verbs NIC /sys/class/infiniband/mlx5_0 (unit 0:0)
+     dev3.wynton.ucsf.edu:pid2216280.R: Unable to initialize verbs NIC /sys/class/infiniband/mlx5_0 (unit 0:0)
+     dev3.wynton.ucsf.edu:pid2216280: PSM3 can't open nic unit: 0 (err=23)
+     dev3.wynton.ucsf.edu:pid2216280.R: Unable to create send CQ of size 5080 on mlx5_0: Cannot allocate memory
+     dev3.wynton.ucsf.edu:pid2216280.R: Unable to initialize verbs NIC /sys/class/infiniband/mlx5_0 (unit 0:0)
      --------------------------------------------------------------------------
      No OpenFabrics connection schemes reported that they were able to be
      used on a specific port.  As such, the openib BTL (OpenFabrics
@@ -609,9 +483,9 @@ Run `revdepcheck::revdep_details(, "mlr3resampling")` for more info
        Local port:           1
        CPCs attempted:       rdmacm, udcm
      --------------------------------------------------------------------------
-     localhost::pid3260834: PSM3 can't open nic unit: 0 (err=23)
-     localhost::pid3260834.R: Unable to create send CQ of size 5080 on mlx5_0: Cannot allocate memory
-     localhost::pid3260834.R: Unable to initialize verbs NIC /sys/class/infiniband/mlx5_0 (unit 0:0)
+     dev3.wynton.ucsf.edu:pid2216280: PSM3 can't open nic unit: 0 (err=23)
+     dev3.wynton.ucsf.edu:pid2216280.R: Unable to create send CQ of size 5080 on mlx5_0: Cannot allocate memory
+     dev3.wynton.ucsf.edu:pid2216280.R: Unable to initialize verbs NIC /sys/class/infiniband/mlx5_0 (unit 0:0)
      --------------------------------------------------------------------------
      Open MPI failed an OFI Libfabric library call (fi_endpoint).  This is highly
      unusual; your job may behave unpredictably (and/or abort) after this.
@@ -750,6 +624,21 @@ Run `revdepcheck::revdep_details(, "powRICLPM")` for more info
        |> or function shorthand \(...) syntax added in R 4.1.0.
        File(s) using such syntax:
          ‘save.R’
+     ```
+
+# projpred (2.11.0)
+
+* GitHub: <https://github.com/stan-dev/projpred>
+* Email: <mailto:aloctavodia@gmail.com>
+* GitHub mirror: <https://github.com/cran/projpred>
+
+Run `revdepcheck::revdep_details(, "projpred")` for more info
+
+## In both
+
+*   checking dependencies in R code ... WARNING
+     ```
+     Missing or unexported object: ‘mgcv::gam.fit’
      ```
 
 # Prostar (1.44.0)
@@ -1116,7 +1005,7 @@ Run `revdepcheck::revdep_details(, "SpaDES.core")` for more info
      +   convertToPackage("test", path = tmpdir)
      + }
      Loading required namespace: pkgload
-     New module test created at /scratch/hb/Rtmplt0koK/working_dir/RtmpxuPlb9/reproducible/U3C0xYmG
+     New module test created at /scratch/hb/RtmpftFxKX/working_dir/RtmppTq1RD/reproducible/U3C0xYmG
      ```
 
 # sparrpowR (0.2.9)
