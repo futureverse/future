@@ -120,7 +120,8 @@ for (cores in 1:availCores) {
         }
 
         message("- futureCall() #4")
-        ## FIXME: This works and fails in non-expected ways /HB 2022-05-26
+        ## Assert that globals part of the function's local environment
+        ## ('a' in the environment of g()) are found and exported
         local({
           a <- 2
           g <- function() a

@@ -27,8 +27,8 @@ for (strategy in supportedStrategies()) {
   )
   my_fcn <- org_my_fcn
   
-  ## FIXME:
-  ## Just like S3 methods, S4 methods are not picked up
+  ## Assert that S4 methods are picked up, which requires that
+  ## the S4 generic function's package is identified
   ## https://github.com/futureverse/future/issues/615
   f <- future({ my_fcn(3) }, lazy = TRUE)
   rm(list = "my_fcn")
