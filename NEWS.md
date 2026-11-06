@@ -8,6 +8,11 @@
    environment is erased on the parallel worker right before and after
    the future has been evaluated.
 
+## Bug Fixes
+
+ * If `plan()` fails to initiate the new backend, it did not reset to
+   the default `sequential` plan.
+
 ## Deprecated and Defunct
 
  * Remove internal R option `future.Future.envir.keep`, which was a

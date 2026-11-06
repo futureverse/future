@@ -525,6 +525,12 @@ plan <- local({
     
     ## Initiate future workers?
     if (init) {
+      ## If the initialization fails, make sure to reset stack
+      success <- FALSE
+      on.exit({
+        if (!success) stack <<- plan_default_stack()
+      }, add = TRUE)
+
       stack[[1]] <<- plan_init(stack[[1]], debug = debug)
 
       ## Sanity checks
@@ -537,6 +543,7 @@ plan <- local({
           !is.na(nbrOfWorkers), nbrOfWorkers >= 1L
         )
       })
+      success <- TRUE
     }
     
     invisible(oldStack)
