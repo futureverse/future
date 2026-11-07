@@ -25,7 +25,7 @@ materialized as a regular value.'><meta property="og:image" content="https://fut
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.82.0-9003</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.82.0-9011</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -355,6 +355,24 @@ future-assignment variable. For example,</p>
 <span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="sc">&gt;</span> y <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)</span>
 <span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="sc">&gt;</span> z <span class="ot">&lt;-</span> x <span class="sc">+</span> y</span>
 <span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>Error <span class="cf">in</span> <span class="fu">eval</span>(<span class="fu">quote</span>({ <span class="sc">:</span> boom</span></code></pre><p></p></div>
+    </div>
+    <div class="section level2">
+    <h2 id="assigning-to-listenv-elements">Assigning to listenv elements<a class="anchor" aria-label="anchor" href="#assigning-to-listenv-elements"></a></h2>
+
+
+
+<p>A future can be assigned to a single element of a list environment
+(<a href="https://listenv.futureverse.org/reference/listenv.html" class="external-link">listenv::listenv</a>), e.g. <code>x$a %&lt;-% { ... }</code>, <code>x[[2]] %&lt;-% { ... }</code>,
+and <code>x[[1,2]] %&lt;-% { ... }</code>.
+Although <code>x[2] %&lt;-% { ... }</code> and <code>x[1,2] %&lt;-% { ... }</code> work, assigning
+to multiple elements at once is not supported, because there is only one
+future whose value is not available until it is resolved.
+For example, <code>x[1:2] %&lt;-% 1</code> and <code>x[1, ] %&lt;-% 1:2</code> both give the error
+"Cannot future assign to more than one element". A zero-length
+subset gives "Cannot future assign to an empty set".
+Assign each element separately instead, for instance in a loop:</p>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu">listenv</span><span class="fu">::</span><span class="fu"><a href="https://listenv.futureverse.org/reference/listenv.html" class="external-link">listenv</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">)</span> <span class="va">x</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span> <span class="op"><a href="../reference/futureAssign.html">%&lt;-%</a></span> <span class="op">{</span> <span class="va">i</span><span class="op">^</span><span class="fl">2</span> <span class="op">}</span></span></code></pre><p></p></div>
     </div>
     <div class="section level2">
     <h2 id="use-alternative-future-backend-for-future-assignment">Use alternative future backend for future assignment<a class="anchor" aria-label="anchor" href="#use-alternative-future-backend-for-future-assignment"></a></h2>

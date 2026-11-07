@@ -42,9 +42,9 @@ res <- tryCatch({
 #> [[1]]
 #> base::tryCatch(base::withCallingHandlers({
 #>     NULL
-#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpzPrVaC/callr-fun-1afc2d11cf73b"), 
+#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/Rtmpz4jsdL/callr-fun-2d6125284d97a4"), 
 #>         base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
-#>         quote = TRUE), file = "/tmp/hb/RtmpzPrVaC/callr-res-1afc2d6c87bd1b", 
+#>         quote = TRUE), file = "/tmp/hb/Rtmpz4jsdL/callr-res-2d612525ba9578", 
 #>         compress = FALSE)
 #>     base::flush(base::stdout())
 #>     base::flush(base::stderr())
@@ -73,7 +73,7 @@ res <- tryCatch({
 #>         if (callr_data$has_otel) {
 #>             callr_data$otel_span$record_exception(e2)
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpzPrVaC/callr-res-1afc2d6c87bd1b", 
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/Rtmpz4jsdL/callr-res-2d612525ba9578", 
 #>             ".error"))
 #>     }
 #> }, interrupt = function(e) {
@@ -99,7 +99,7 @@ res <- tryCatch({
 #>         if (callr_data$has_otel) {
 #>             callr_data$otel_span$record_exception(e2)
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpzPrVaC/callr-res-1afc2d6c87bd1b", 
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/Rtmpz4jsdL/callr-res-2d612525ba9578", 
 #>             ".error"))
 #>     }
 #> }, callr_message = function(e) {
@@ -143,9 +143,9 @@ res <- tryCatch({
 #> [[8]]
 #> base::withCallingHandlers({
 #>     NULL
-#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpzPrVaC/callr-fun-1afc2d11cf73b"), 
+#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/Rtmpz4jsdL/callr-fun-2d6125284d97a4"), 
 #>         base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
-#>         quote = TRUE), file = "/tmp/hb/RtmpzPrVaC/callr-res-1afc2d6c87bd1b", 
+#>         quote = TRUE), file = "/tmp/hb/Rtmpz4jsdL/callr-res-2d612525ba9578", 
 #>         compress = FALSE)
 #>     base::flush(base::stdout())
 #>     base::flush(base::stderr())
@@ -174,7 +174,7 @@ res <- tryCatch({
 #>         if (callr_data$has_otel) {
 #>             callr_data$otel_span$record_exception(e2)
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpzPrVaC/callr-res-1afc2d6c87bd1b", 
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/Rtmpz4jsdL/callr-res-2d612525ba9578", 
 #>             ".error"))
 #>     }
 #> }, interrupt = function(e) {
@@ -200,7 +200,7 @@ res <- tryCatch({
 #>         if (callr_data$has_otel) {
 #>             callr_data$otel_span$record_exception(e2)
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpzPrVaC/callr-res-1afc2d6c87bd1b", 
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/Rtmpz4jsdL/callr-res-2d612525ba9578", 
 #>             ".error"))
 #>     }
 #> }, callr_message = function(e) {
@@ -208,13 +208,13 @@ res <- tryCatch({
 #> })
 #> 
 #> [[9]]
-#> base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpzPrVaC/callr-fun-1afc2d11cf73b"), 
+#> base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/Rtmpz4jsdL/callr-fun-2d6125284d97a4"), 
 #>     base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
-#>     quote = TRUE), file = "/tmp/hb/RtmpzPrVaC/callr-res-1afc2d6c87bd1b", 
+#>     quote = TRUE), file = "/tmp/hb/Rtmpz4jsdL/callr-res-2d612525ba9578", 
 #>     compress = FALSE)
 #> 
 #> [[10]]
-#> base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpzPrVaC/callr-fun-1afc2d11cf73b"), 
+#> base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/Rtmpz4jsdL/callr-fun-2d6125284d97a4"), 
 #>     base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
 #>     quote = TRUE)
 #> 
@@ -231,8 +231,8 @@ res <- tryCatch({
 #>     options(cli.num_colors = cli_colors, cli.hyperlink = hyperlinks, 
 #>         cli.hyperlink_run = hyperlinks)
 #>     pkgdown::build_site(...)
-#> }), base::quote(list(pkg = list(package = "future", version = "1.82.0-9003", 
-#>     src_path = "/tmp/hb/RtmpzPrVaC/future", meta = list(url = "https://future.futureverse.org", 
+#> }), base::quote(list(pkg = list(package = "future", version = "1.82.0-9011", 
+#>     src_path = "/tmp/hb/Rtmpz4jsdL/future", meta = list(url = "https://future.futureverse.org", 
 #>         home = list(links = list(list(text = "Roadmap/Milestones", 
 #>             href = "https://github.com/futureverse/future/milestones"), 
 #>             list(text = "The Futureverse Project", href = "https://www.futureverse.org/"), 
@@ -273,7 +273,7 @@ res <- tryCatch({
 #>             bootstrap = 5L, `light-switch` = TRUE)), desc = <environment>, 
 #>     bs_version = 5L, development = list(destination = "dev", 
 #>         mode = "default", version_label = "muted", in_dev = FALSE, 
-#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/RtmpzPrVaC/future/docs", 
+#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/Rtmpz4jsdL/future/docs", 
 #>     lang = "en-US", install_metadata = FALSE, figures = list(
 #>         dev = "ragg::agg_png", dpi = 96L, dev.args = list(), 
 #>         fig.ext = "png", fig.width = 7.29166666666667, fig.height = NULL, 
@@ -1475,7 +1475,24 @@ res <- tryCatch({
 #>                   list("> x %<-% { stop(\"boom\") }\n", "> y <- sum(1:10)\n", 
 #>                     "> z <- x + y\n", "Error in eval(quote({ : boom\n"), 
 #>                   list(list("html"), list(list("</div>"))), "\n")), 
-#>                 "\n", "\n", list(list("Use alternative future backend for future assignment"), 
+#>                 "\n", "\n", list(list("Assigning to listenv elements"), 
+#>                   list("\n", "\n", "\n", "A future can be assigned to a single element of a list environment\n", 
+#>                     "(", list("listenv::listenv"), "), e.g. ", 
+#>                     list("x$a %<-% { ... }"), ", ", list("x[[2]] %<-% { ... }"), 
+#>                     ",\n", "and ", list("x[[1,2]] %<-% { ... }"), 
+#>                     ".\n", "Although ", list("x[2] %<-% { ... }"), 
+#>                     " and ", list("x[1,2] %<-% { ... }"), " work, assigning\n", 
+#>                     "to multiple elements at once is not supported, because there is only one\n", 
+#>                     "future whose value is not available until it is resolved.\n", 
+#>                     "For example, ", list("x[1:2] %<-% 1"), " and ", 
+#>                     list("x[1, ] %<-% 1:2"), " both give the error\n", 
+#>                     "\"Cannot future assign to more than one element\". A zero-length\n", 
+#>                     "subset gives \"Cannot future assign to an empty set\".\n", 
+#>                     "Assign each element separately instead, for instance in a loop:\n", 
+#>                     "\n", list(list("html"), list(list("<div class=\"sourceCode r\">"))), 
+#>                     list("x <- listenv::listenv()\n", "for (i in 1:2) x[[i]] %<-% { i^2 }\n"), 
+#>                     list(list("html"), list(list("</div>"))), 
+#>                     "\n")), "\n", "\n", list(list("Use alternative future backend for future assignment"), 
 #>                   list("\n", "\n", "\n", "Futures are evaluated on the future backend that the user has specified\n", 
 #>                     "by ", list(list("plan()")), ". With regular futures, we can temporarily use another future\n", 
 #>                     "backend by wrapping our code in ", list(
@@ -3133,8 +3150,8 @@ res <- tryCatch({
 #>     options(cli.num_colors = cli_colors, cli.hyperlink = hyperlinks, 
 #>         cli.hyperlink_run = hyperlinks)
 #>     pkgdown::build_site(...)
-#> })(pkg = base::quote(list(package = "future", version = "1.82.0-9003", 
-#>     src_path = "/tmp/hb/RtmpzPrVaC/future", meta = list(url = "https://future.futureverse.org", 
+#> })(pkg = base::quote(list(package = "future", version = "1.82.0-9011", 
+#>     src_path = "/tmp/hb/Rtmpz4jsdL/future", meta = list(url = "https://future.futureverse.org", 
 #>         home = list(links = list(list(text = "Roadmap/Milestones", 
 #>             href = "https://github.com/futureverse/future/milestones"), 
 #>             list(text = "The Futureverse Project", href = "https://www.futureverse.org/"), 
@@ -3175,7 +3192,7 @@ res <- tryCatch({
 #>             bootstrap = 5L, `light-switch` = TRUE)), desc = <environment>, 
 #>     bs_version = 5L, development = list(destination = "dev", 
 #>         mode = "default", version_label = "muted", in_dev = FALSE, 
-#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/RtmpzPrVaC/future/docs", 
+#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/Rtmpz4jsdL/future/docs", 
 #>     lang = "en-US", install_metadata = FALSE, figures = list(
 #>         dev = "ragg::agg_png", dpi = 96L, dev.args = list(), 
 #>         fig.ext = "png", fig.width = 7.29166666666667, fig.height = NULL, 
@@ -4377,7 +4394,24 @@ res <- tryCatch({
 #>                   list("> x %<-% { stop(\"boom\") }\n", "> y <- sum(1:10)\n", 
 #>                     "> z <- x + y\n", "Error in eval(quote({ : boom\n"), 
 #>                   list(list("html"), list(list("</div>"))), "\n")), 
-#>                 "\n", "\n", list(list("Use alternative future backend for future assignment"), 
+#>                 "\n", "\n", list(list("Assigning to listenv elements"), 
+#>                   list("\n", "\n", "\n", "A future can be assigned to a single element of a list environment\n", 
+#>                     "(", list("listenv::listenv"), "), e.g. ", 
+#>                     list("x$a %<-% { ... }"), ", ", list("x[[2]] %<-% { ... }"), 
+#>                     ",\n", "and ", list("x[[1,2]] %<-% { ... }"), 
+#>                     ".\n", "Although ", list("x[2] %<-% { ... }"), 
+#>                     " and ", list("x[1,2] %<-% { ... }"), " work, assigning\n", 
+#>                     "to multiple elements at once is not supported, because there is only one\n", 
+#>                     "future whose value is not available until it is resolved.\n", 
+#>                     "For example, ", list("x[1:2] %<-% 1"), " and ", 
+#>                     list("x[1, ] %<-% 1:2"), " both give the error\n", 
+#>                     "\"Cannot future assign to more than one element\". A zero-length\n", 
+#>                     "subset gives \"Cannot future assign to an empty set\".\n", 
+#>                     "Assign each element separately instead, for instance in a loop:\n", 
+#>                     "\n", list(list("html"), list(list("<div class=\"sourceCode r\">"))), 
+#>                     list("x <- listenv::listenv()\n", "for (i in 1:2) x[[i]] %<-% { i^2 }\n"), 
+#>                     list(list("html"), list(list("</div>"))), 
+#>                     "\n")), "\n", "\n", list(list("Use alternative future backend for future assignment"), 
 #>                   list("\n", "\n", "\n", "Futures are evaluated on the future backend that the user has specified\n", 
 #>                     "by ", list(list("plan()")), ". With regular futures, we can temporarily use another future\n", 
 #>                     "backend by wrapping our code in ", list(

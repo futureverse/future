@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.82.0-9003</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.82.0-9011</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -84,6 +84,19 @@
 <div class="section level3">
 <h3 id="performance-development-version">Performance<a class="anchor" aria-label="anchor" href="#performance-development-version"></a></h3>
 <ul><li>Cluster-based futures (e.g. <code>multisession</code>) no longer make a separate, blocking round-trip to the worker to erase its global environment before each future is launched. Instead, the global environment is erased on the parallel worker right before and after the future has been evaluated.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="bug-fixes-development-version">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h3>
+<ul><li>If <code><a href="../reference/plan.html">plan()</a></code> fails to initiate the new backend, it did not reset to the default <code>sequential</code> plan.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="documentation-development-version">Documentation<a class="anchor" aria-label="anchor" href="#documentation-development-version"></a></h3>
+<ul><li>Document that <code>%&lt;-%</code> on a list environment (‘listenv’) can only assign to a single element, and that assigning to multiple elements, e.g. <code>x[1, ] %&lt;-% 1:2</code>, is not supported.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="deprecated-and-defunct-development-version">Deprecated and Defunct<a class="anchor" aria-label="anchor" href="#deprecated-and-defunct-development-version"></a></h3>
+<ul><li><p>Remove internal R option <code>future.Future.envir.keep</code>, which was a temporary workaround in <strong>future</strong> 1.69.0 for packages that still relied on the internal future field <code>envir</code>.</p></li>
+<li><p>Setting R option <code>future.globals.keepWhere</code> to <code>FALSE</code> is now deprecated and produces a deprecation warning. The default has been <code>TRUE</code> since <strong>future</strong> 1.49.0 [2025-05-08].</p></li>
 </ul></div>
 </div>
     <div class="section level2">
