@@ -260,6 +260,25 @@ Error in eval(quote(\{ : boom
 }\if{html}{\out{</div>}}
 }
 
+\section{Assigning to listenv elements}{
+
+
+A future can be assigned to a single element of a list environment
+(\link[listenv:listenv]{listenv::listenv}), e.g. \code{x$a \%<-\% { ... }}, \code{x[[2]] \%<-\% { ... }},
+and \code{x[[1,2]] \%<-\% { ... }}.
+Although \code{x[2] \%<-\% { ... }} and \code{x[1,2] \%<-\% { ... }} work, assigning
+to multiple elements at once is not supported, because there is only one
+future whose value is not available until it is resolved.
+For example, \code{x[1:2] \%<-\% 1} and \code{x[1, ] \%<-\% 1:2} both give the error
+"Cannot future assign to more than one element". A zero-length
+subset gives "Cannot future assign to an empty set".
+Assign each element separately instead, for instance in a loop:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{x <- listenv::listenv()
+for (i in 1:2) x[[i]] \%<-\% \{ i^2 \}
+}\if{html}{\out{</div>}}
+}
+
 \section{Use alternative future backend for future assignment}{
 
 

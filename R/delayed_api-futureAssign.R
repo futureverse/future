@@ -141,6 +141,25 @@
 #' ```
 #'
 #'
+#' @section Assigning to listenv elements:
+#'
+#' A future can be assigned to a single element of a list environment
+#' ([listenv::listenv]), e.g. `x$a %<-% { ... }`, `x[[2]] %<-% { ... }`,
+#' and `x[[1,2]] %<-% { ... }`.
+#' Although `x[2] %<-% { ... }` and `x[1,2] %<-% { ... }` work, assigning
+#' to multiple elements at once is not supported, because there is only one
+#' future whose value is not available until it is resolved.
+#' For example, `x[1:2] %<-% 1` and `x[1, ] %<-% 1:2` both give the error
+#' "Cannot future assign to more than one element". A zero-length
+#' subset gives "Cannot future assign to an empty set".
+#' Assign each element separately instead, for instance in a loop:
+#'
+#' ```r
+#' x <- listenv::listenv()
+#' for (i in 1:2) x[[i]] %<-% { i^2 }
+#' ```
+#'
+#'
 #' @section Use alternative future backend for future assignment:
 #'
 #' Futures are evaluated on the future backend that the user has specified

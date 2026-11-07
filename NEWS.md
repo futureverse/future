@@ -13,6 +13,12 @@
  * If `plan()` fails to initiate the new backend, it did not reset to
    the default `sequential` plan.
 
+## Documentation
+
+ * Document that `%<-%` on a list environment ('listenv') can only
+   assign to a single element, and that assigning to multiple elements,
+   e.g. `x[1, ] %<-% 1:2`, is not supported.
+
 ## Deprecated and Defunct
 
  * Remove internal R option `future.Future.envir.keep`, which was a
