@@ -38,12 +38,18 @@ getGlobalsAndPackages <- function(expr, envir = parent.frame(), tweak = tweakExp
     .Deprecated(msg = sprintf("R option %s may only be used for troubleshooting. It must not be used in production since it changes how futures are evaluated and there is a great risk that the results cannot be reproduced elsewhere: %s", sQuote("future.globals.resolve"), sQuote(resolve)), package = .packageName)
   }
   
+  ## Additional arguments
+  args <- list(...)
+
+  ## Hidden argument 'prune'
+  prune <- parsePrune(args[["prune"]])
+
   debug <- isTRUE(getOption("future.debug"))
   if (debug) {
     mdebug_push("getGlobalsAndPackages() ...")
     on.exit(mdebug_pop())
   }
-  
+
   ## Assert that all identified globals exists when future is created?
   if (persistent) {
     ## If future relies on persistent storage, then the globals may
@@ -91,10 +97,14 @@ getGlobalsAndPackages <- function(expr, envir = parent.frame(), tweak = tweakExp
     stop_if_not(is.character(ignore))
   }
 
+  ## Did we scan for globals?
+  scanned <- FALSE
+
   if (is.logical(globals)) {
     stop_if_not(length(globals) == 1, !is.na(globals))
 
     if (globals) {
+      scanned <- TRUE
       if (debug) mdebug_push("Searching for globals ...")
       ## Algorithm for identifying globals
       globals.method <- getOption("future.globals.method")
@@ -354,6 +364,11 @@ getGlobalsAndPackages <- function(expr, envir = parent.frame(), tweak = tweakExp
       as.environment(name)
     } ## asPkgEnvironment()
 
+    ## Drop unused objects from the closure environments of scanned
+    ## function globals? This is unguarded, i.e. get("x") and alike
+    ## are not detected
+    doPrune <- scanned && isPruneGlobalsRequested(prune)
+
     ## Append packages associated with globals
     pkgs <- packagesOf(globals)
     if (debug) {
@@ -384,6 +399,11 @@ getGlobalsAndPackages <- function(expr, envir = parent.frame(), tweak = tweakExp
     ## that are part of the base packages, which now are
     ## part of 'pkgs' if needed.
     globals <- cleanup(globals)
+
+    ## Drop closure-environment variables that are not among the globals
+    if (doPrune) {
+      globals <- pruneGlobalsClosureEnvironments(globals, debug = debug)
+    }
   }
   if (debug) {
     mdebugf("Packages: [%d] %s", length(pkgs), commaq(pkgs))

@@ -412,6 +412,18 @@ sendData.FutureNode <- function(node, data) {
       fun <- data[["fun"]]
       args <- data[["args"]]
 
+      ## Internal, disposable, opt-in: Prune the worker functions. Note,
+      ## parLapply(cl, X, fun) calls lapply(X, FUN = fun), so 'fun' may
+      ## also be among 'args'
+      if (isPruneGlobalsRequested(parsePrune())) {
+        fun <- pruneClosureEnvironmentCached(fun, env = cluster_env)
+        for (kk in seq_along(args)) {
+          if (is.function(args[[kk]])) {
+            args[[kk]] <- pruneClosureEnvironmentCached(args[[kk]], env = cluster_env)
+          }
+        }
+      }
+
       ## Ensure 'fun' and 'args' are always available on the worker
       globals <- options[["globals"]]
       required_globals <- list(fun = fun, args = args)

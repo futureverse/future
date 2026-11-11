@@ -98,6 +98,7 @@ Collate:
     'utils-marshalling.R'
     'utils-objectSize.R'
     'utils-options.R'
+    'utils-prune_globals.R'
     'utils-prune_pkg_code.R'
     'utils-registerClusterTypes.R'
     'utils-rng_utils.R'
