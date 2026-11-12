@@ -45,13 +45,13 @@ First, consider the following code snippet that uses plain R code:
 フューチャがどのように動作するか例を示そう。 まず、フューチャを使わずに式を評価する次のコードを見てみよう。
 
 ``` r
-> v <- {
-+   cat("Hello world!\n")
-+   3.14
-+ }
-Hello world!
-> v
-[1] 3.14
+v <- {
+  cat("Hello world!\n")
+  3.14
+}
+#> Hello world!
+v
+#> [1] 3.14
 ```
 
 <!--
@@ -69,14 +69,14 @@ Here is the same code snippet modified to use futures instead:
 上のコードをフューチャを使った式に書き換えよう。
 
 ``` r
-> library(future)
-> v %<-% {
-+   cat("Hello world!\n")
-+   3.14
-+ }
-> v
-Hello world!
-[1] 3.14
+library(future)
+v %<-% {
+  cat("Hello world!\n")
+  3.14
+}
+v
+#> Hello world!
+#> [1] 3.14
 ```
 
 <!--
@@ -99,15 +99,15 @@ Because we can choose to evaluate the future expression in a separate R process 
 フューチャは何が便利なのだろうか？ 式をフューチャにしておくと、式の評価を非同期実行したいときに、次のように簡単に切り替えることができる。
 
 ``` r
-> library(future)
-> plan(multisession)
-> v %<-% {
-+   cat("Hello world!\n")
-+   3.14
-+ }
-> v
-Hello world!
-[1] 3.14
+library(future)
+plan(multisession)
+v %<-% {
+  cat("Hello world!\n")
+  3.14
+}
+v
+#> Hello world!
+#> [1] 3.14
 ```
 
 <!--
@@ -140,15 +140,15 @@ future パッケージには、フューチャを作成する方法として、*
 <- value(f)` という2つの関数を使うスタイルがある。 上記の例を明示的なスタイルに書き換えると次のようになる。
 
 ``` r
-> library(future)
-> f <- future({
-+   cat("Hello world!\n")
-+   3.14
-+ })
-> v <- value(f)
-Hello world!
-> v
-[1] 3.14
+library(future)
+f <- future({
+  cat("Hello world!\n")
+  3.14
+})
+v <- value(f)
+#> Hello world!
+v
+#> [1] 3.14
 ```
 
 <!--
@@ -317,16 +317,16 @@ Here is an example illustrating that all assignments are done to a local environ
 代入がローカル環境で実行される（グローバル環境に影響しない）ことは、次のコードの実行結果からわかる。
 
 ``` r
-> plan(sequential)
-> a <- 1
-> x %<-% {
-+     a <- 2
-+     2 * a
-+ }
-> x
-[1] 4
-> a
-[1] 1
+plan(sequential)
+a <- 1
+x %<-% {
+    a <- 2
+    2 * a
+}
+x
+#> [1] 4
+a
+#> [1] 1
 ```
 
 <!--
@@ -359,35 +359,35 @@ Here is an example illustrating their properties:
 逐次的フューチャのふるまいを次のコードに示す。
 
 ``` r
-> plan(sequential)
-> pid <- Sys.getpid()
-> pid
-[1] 1427324
-> a %<-% {
-+     pid <- Sys.getpid()
-+     cat("Future 'a' ...\n")
-+     3.14
-+ }
-> b %<-% {
-+     rm(pid)
-+     cat("Future 'b' ...\n")
-+     Sys.getpid()
-+ }
-> c %<-% {
-+     cat("Future 'c' ...\n")
-+     2 * a
-+ }
-Future 'a' ...
-> b
-Future 'b' ...
-[1] 1427324
-> c
-Future 'c' ...
-[1] 6.28
-> a
-[1] 3.14
-> pid
-[1] 1427324
+plan(sequential)
+pid <- Sys.getpid()
+pid
+#> [1] 1427324
+a %<-% {
+    pid <- Sys.getpid()
+    cat("Future 'a' ...\n")
+    3.14
+}
+b %<-% {
+    rm(pid)
+    cat("Future 'b' ...\n")
+    Sys.getpid()
+}
+c %<-% {
+    cat("Future 'c' ...\n")
+    2 * a
+}
+#> Future 'a' ...
+b
+#> Future 'b' ...
+#> [1] 1427324
+c
+#> Future 'c' ...
+#> [1] 6.28
+a
+#> [1] 3.14
+pid
+#> [1] 1427324
 ```
 
 <!--
@@ -430,35 +430,35 @@ Here is our example with multisession evaluation:
 マルチセッション評価の例を示そう。
 
 ``` r
-> plan(multisession)
-> pid <- Sys.getpid()
-> pid
-[1] 1427324
-> a %<-% {
-+     pid <- Sys.getpid()
-+     cat("Future 'a' ...\n")
-+     3.14
-+ }
-> b %<-% {
-+     rm(pid)
-+     cat("Future 'b' ...\n")
-+     Sys.getpid()
-+ }
-> c %<-% {
-+     cat("Future 'c' ...\n")
-+     2 * a
-+ }
-Future 'a' ...
-> b
-Future 'b' ...
-[1] 1427382
-> c
-Future 'c' ...
-[1] 6.28
-> a
-[1] 3.14
-> pid
-[1] 1427324
+plan(multisession)
+pid <- Sys.getpid()
+pid
+#> [1] 1427324
+a %<-% {
+    pid <- Sys.getpid()
+    cat("Future 'a' ...\n")
+    3.14
+}
+b %<-% {
+    rm(pid)
+    cat("Future 'b' ...\n")
+    Sys.getpid()
+}
+c %<-% {
+    cat("Future 'c' ...\n")
+    2 * a
+}
+#> Future 'a' ...
+b
+#> Future 'b' ...
+#> [1] 1427382
+c
+#> Future 'c' ...
+#> [1] 6.28
+a
+#> [1] 3.14
+pid
+#> [1] 1427324
 ```
 
 <!--
@@ -483,9 +483,9 @@ The total number of background processes launched is decided by the value of ava
 いくつのバックグラウンドプロセスが起動されるかは `availableCores()` の値によって決まる。
 
 ``` r
-> availableCores()
-mc.cores 
-       2 
+availableCores()
+#> mc.cores 
+#>        2 
 ```
 
 <!--
@@ -564,35 +564,35 @@ For instance, assume you have access to three nodes n1, n2 and n3, you can then 
 `n1`, `n2`, `n3` があるとき、それらを使って非同期処理を行うには次のようにする。
 
 ``` r
-> plan(cluster, workers = c("n1", "n2", "n3"))
-> pid <- Sys.getpid()
-> pid
-[1] 1427324
-> a %<-% {
-+     pid <- Sys.getpid()
-+     cat("Future 'a' ...\n")
-+     3.14
-+ }
-> b %<-% {
-+     rm(pid)
-+     cat("Future 'b' ...\n")
-+     Sys.getpid()
-+ }
-> c %<-% {
-+     cat("Future 'c' ...\n")
-+     2 * a
-+ }
-Future 'a' ...
-> b
-Future 'b' ...
-[1] 1427499
-> c
-Future 'c' ...
-[1] 6.28
-> a
-[1] 3.14
-> pid
-[1] 1427324
+plan(cluster, workers = c("n1", "n2", "n3"))
+pid <- Sys.getpid()
+pid
+#> [1] 1427324
+a %<-% {
+    pid <- Sys.getpid()
+    cat("Future 'a' ...\n")
+    3.14
+}
+b %<-% {
+    rm(pid)
+    cat("Future 'b' ...\n")
+    Sys.getpid()
+}
+c %<-% {
+    cat("Future 'c' ...\n")
+    2 * a
+}
+#> Future 'a' ...
+b
+#> Future 'b' ...
+#> [1] 1427499
+c
+#> Future 'c' ...
+#> [1] 6.28
+a
+#> [1] 3.14
+pid
+#> [1] 1427324
 ```
 
 <!--
@@ -638,7 +638,7 @@ For example,
 各ノードで複数のワーカを実行したい場合は、次のようにノード名を複数回書けばよい。
 
 ```
-> plan(cluster, workers = c(rep("n1", times = 3), "n2", rep("n3", times = 5)))
+plan(cluster, workers = c(rep("n1", times = 3), "n2", rep("n3", times = 5)))
 ```
 
 <!--
@@ -667,35 +667,35 @@ For instance, here is an example of two “top” futures (a and b) that uses mu
 は内部に別のフューチャが使われている。
 
 ``` r
-> plan(multisession)
-> pid <- Sys.getpid()
-> a %<-% {
-+     cat("Future 'a' ...\n")
-+     Sys.getpid()
-+ }
-> b %<-% {
-+     cat("Future 'b' ...\n")
-+     b1 %<-% {
-+         cat("Future 'b1' ...\n")
-+         Sys.getpid()
-+     }
-+     b2 %<-% {
-+         cat("Future 'b2' ...\n")
-+         Sys.getpid()
-+     }
-+     c(b.pid = Sys.getpid(), b1.pid = b1, b2.pid = b2)
-+ }
-> pid
-[1] 1427324
-> a
-Future 'a' ...
-[1] 1427606
-> b
-Future 'b' ...
-Future 'b1' ...
-Future 'b2' ...
-  b.pid  b1.pid  b2.pid
-1427607 1427607 1427607
+plan(multisession)
+pid <- Sys.getpid()
+a %<-% {
+    cat("Future 'a' ...\n")
+    Sys.getpid()
+}
+b %<-% {
+    cat("Future 'b' ...\n")
+    b1 %<-% {
+        cat("Future 'b1' ...\n")
+        Sys.getpid()
+    }
+    b2 %<-% {
+        cat("Future 'b2' ...\n")
+        Sys.getpid()
+    }
+    c(b.pid = Sys.getpid(), b1.pid = b1, b2.pid = b2)
+}
+pid
+#> [1] 1427324
+a
+#> Future 'a' ...
+#> [1] 1427606
+b
+#> Future 'b' ...
+#> Future 'b1' ...
+#> Future 'b2' ...
+#>   b.pid  b1.pid  b2.pid
+#> 1427607 1427607 1427607
 ```
 
 <!--
@@ -731,19 +731,19 @@ We would actually get the same behavior if we try with multiple levels of multis
 しかし、次に示すように、複数レベルのマルチセッション評価を試しても、上記と同じ動作になる。
 
 ``` r
-> plan(list(multisession, multisession))
-[...]
-> pid
-[1] 1427324
-> a
-Future 'a' ...
-[1] 1427721
-> b
-Future 'b' ...
-Future 'b1' ...
-Future 'b2' ...
-  b.pid  b1.pid  b2.pid
-1427722 1427722 1427722
+plan(list(multisession, multisession))
+#> [...]
+pid
+#> [1] 1427324
+a
+#> Future 'a' ...
+#> [1] 1427721
+b
+#> Future 'b' ...
+#> Future 'b1' ...
+#> Future 'b2' ...
+#>   b.pid  b1.pid  b2.pid
+#> 1427722 1427722 1427722
 ```
 
 <!--
@@ -763,19 +763,19 @@ Continuing, if we start off by sequential evaluation and then use multisession e
 次に、トップレベルを逐次評価にして、ネストされたフューチャをマルチセッション評価してみよう。
 
 ``` r
-> plan(list(sequential, multisession))
-[...]
-> pid
-[1] 1427324
-> a
-Future 'a' ...
-[1] 1427324
-> b
-Future 'b' ...
-Future 'b1' ...
-Future 'b2' ...
-  b.pid  b1.pid  b2.pid
-1427324 1427855 1427854
+plan(list(sequential, multisession))
+#> [...]
+pid
+#> [1] 1427324
+a
+#> Future 'a' ...
+#> [1] 1427324
+b
+#> Future 'b' ...
+#> Future 'b1' ...
+#> Future 'b2' ...
+#>   b.pid  b1.pid  b2.pid
+#> 1427324 1427855 1427854
 ```
 
 <!--
@@ -794,20 +794,20 @@ In order to do this we need to “tweak” the default settings, which can be do
 そのためには、次のようにしてデフォルト設定を “tweak” する必要がある。
 
 ``` r
-> plan(list(tweak(multisession, workers = 2), tweak(multisession, 
-+     workers = 2)))
-[...]
-> pid
-[1] 1427324
-> a
-Future 'a' ...
-[1] 1427973
-> b
-Future 'b' ...
-Future 'b1' ...
-Future 'b2' ...
-  b.pid  b1.pid  b2.pid
-1427972 1428098 1428099
+plan(list(tweak(multisession, workers = 2), tweak(multisession, 
+    workers = 2)))
+#> [...]
+pid
+#> [1] 1427324
+a
+#> Future 'a' ...
+#> [1] 1427973
+b
+#> Future 'b' ...
+#> Future 'b1' ...
+#> Future 'b2' ...
+#>   b.pid  b1.pid  b2.pid
+#> 1427972 1428098 1428099
 ```
 
 <!--
@@ -841,32 +841,32 @@ For example,
 futureOf(a)` のようにして非明示的なフューチャを明示的なフューチャに変換する必要がある。 例を次に示す。
 
 ``` r
-> plan(multisession)
-> a %<-% {
-+     cat("Future 'a' ...")
-+     Sys.sleep(2)
-+     cat("done\n")
-+     Sys.getpid()
-+ }
-> cat("Waiting for 'a' to be resolved ...\n")
-Waiting for 'a' to be resolved ...
-> f <- futureOf(a)
-> count <- 1
-> while (!resolved(f)) {
-+     cat(count, "\n")
-+     Sys.sleep(0.2)
-+     count <- count + 1
-+ }
-1 
-2 
-3 
-4 
-5 
-> cat("Waiting for 'a' to be resolved ... DONE\n")
-Waiting for 'a' to be resolved ... DONE
-> a
-Future 'a' ...done
-[1] 1428185
+plan(multisession)
+a %<-% {
+    cat("Future 'a' ...")
+    Sys.sleep(2)
+    cat("done\n")
+    Sys.getpid()
+}
+cat("Waiting for 'a' to be resolved ...\n")
+#> Waiting for 'a' to be resolved ...
+f <- futureOf(a)
+count <- 1
+while (!resolved(f)) {
+    cat(count, "\n")
+    Sys.sleep(0.2)
+    count <- count + 1
+}
+#> 1 
+#> 2 
+#> 3 
+#> 4 
+#> 5 
+cat("Waiting for 'a' to be resolved ... DONE\n")
+#> Waiting for 'a' to be resolved ... DONE
+a
+#> Future 'a' ...done
+#> [1] 1428185
 ```
 
 ## フューチャにおけるエラー処理
@@ -882,17 +882,17 @@ For example, if we use lazy evaluation on a future that generates an error, we m
 例えば、遅延評価を使ったフューチャでエラーが起こった場合、次のようになる。
 
 ``` r
-> plan(sequential)
-> b <- "hello"
-> a %<-% {
-+     cat("Future 'a' ...\n")
-+     log(b)
-+ } %lazy% TRUE
-> cat("Everything is still ok although we have created a future that will fail.\n")
-Everything is still ok although we have created a future that will fail.
-> a
-Future 'a' ...
-Error in log(b) : non-numeric argument to mathematical function
+plan(sequential)
+b <- "hello"
+a %<-% {
+    cat("Future 'a' ...\n")
+    log(b)
+} %lazy% TRUE
+cat("Everything is still ok although we have created a future that will fail.\n")
+#> Everything is still ok although we have created a future that will fail.
+a
+#> Future 'a' ...
+#> Error in log(b) : non-numeric argument to mathematical function
 ```
 
 <!--
@@ -902,11 +902,11 @@ The error is thrown each time the value is requested, that is, if we try to get 
 このエラーは値を要求するたびに起こる。 すなわち、もう一度値を取得しようとすると同じエラー（と出力）になる。
 
 ``` r
-> a
-Future 'a' ...
-Error in log(b) : non-numeric argument to mathematical function
-In addition: Warning message:
-restarting interrupted promise evaluation
+a
+#> Future 'a' ...
+#> Error in log(b) : non-numeric argument to mathematical function
+#> In addition: Warning message:
+#> restarting interrupted promise evaluation
 ```
 
 <!--
@@ -916,9 +916,9 @@ To see the last call in the call stack that gave the error, we can use the backt
 エラーを起こしたコールスタックの**最後の**呼び出しを見るには、`backtrace()` 関数(\*)を使う。
 
 ``` r
-> backtrace(a)
-[[1]]
-log(a)
+backtrace(a)
+#> [[1]]
+#> log(a)
 ```
 
 <!--
@@ -989,19 +989,19 @@ For instance, we can create several of them in a loop and assign them to a list,
 例えば、次のように、ループの中でフューチャをリストの要素として代入できる。
 
 ``` r
-> plan(multisession)
-> f <- list()
-> for (ii in 1:3) {
-+     f[[ii]] <- future({
-+         Sys.getpid()
-+     })
-+ }
-> v <- lapply(f, FUN = value)
-> str(v)
-List of 3
- $ : int 1428291
- $ : int 1428290
- $ : int 1428291
+plan(multisession)
+f <- list()
+for (ii in 1:3) {
+    f[[ii]] <- future({
+        Sys.getpid()
+    })
+}
+v <- lapply(f, FUN = value)
+str(v)
+#> List of 3
+#>  $ : int 1428291
+#>  $ : int 1428290
+#>  $ : int 1428291
 ```
 
 <!--
@@ -1017,19 +1017,19 @@ envir)` と同じ動作である。
 したがって、上記と同様のことを非明示的フューチャで行いたい場合は、次のように名前インデックスを使って環境に代入する。
 
 ``` r
-> plan(multisession)
-> v <- new.env()
-> for (name in c("a", "b", "c")) {
-+     v[[name]] %<-% {
-+         Sys.getpid()
-+     }
-+ }
-> v <- as.list(v)
-> str(v)
-List of 3
- $ a: int 1428405
- $ b: int 1428406
- $ c: int 1428405
+plan(multisession)
+v <- new.env()
+for (name in c("a", "b", "c")) {
+    v[[name]] %<-% {
+        Sys.getpid()
+    }
+}
+v <- as.list(v)
+str(v)
+#> List of 3
+#>  $ a: int 1428405
+#>  $ b: int 1428406
+#>  $ c: int 1428405
 ```
 
 <!--
@@ -1053,20 +1053,20 @@ For example,
 上記のコードでリストをリスト環境に置き換えると、数値インデックスを使って非明示的フューチャを代入できるようになる。
 
 ``` r
-> library(listenv)
-> plan(multisession)
-> v <- listenv()
-> for (ii in 1:3) {
-+     v[[ii]] %<-% {
-+         Sys.getpid()
-+     }
-+ }
-> v <- as.list(v)
-> str(v)
-List of 3
- $ : int 1428523
- $ : int 1428522
- $ : int 1428523
+library(listenv)
+plan(multisession)
+v <- listenv()
+for (ii in 1:3) {
+    v[[ii]] %<-% {
+        Sys.getpid()
+    }
+}
+v <- as.list(v)
+str(v)
+#> List of 3
+#>  $ : int 1428523
+#>  $ : int 1428522
+#>  $ : int 1428523
 ```
 
 <!--

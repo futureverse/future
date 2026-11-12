@@ -441,10 +441,10 @@ options(future.globals.onReference = "error")
 we'll see that this is caught even before attempting to run this in parallel;
 
 ```r
-> f <- future(image_fill(frink, "orange", "+100+200", 20))
-## Error: Detected a non-exportable reference ('externalptr' of class
-## 'magick-image') in one of the globals ('frink' of class 'magick-image')
-## used in the future expression
+f <- future(image_fill(frink, "orange", "+100+200", 20))
+#> ## Error: Detected a non-exportable reference ('externalptr' of class
+#> ## 'magick-image') in one of the globals ('frink' of class 'magick-image')
+#> ## used in the future expression
 ```
 
 
@@ -880,24 +880,24 @@ going on the parallel workers, if we save the object to file using
 following happens:
 
 ```r
-$ R --quiet --vanilla
-> a <- readRDS("a.rds")
-> XML::xmlGetAttr(a, "status")
+#> $ R --quiet --vanilla
+a <- readRDS("a.rds")
+XML::xmlGetAttr(a, "status")
 
- *** caught segfault ***
-address 0x40, cause 'memory not mapped'
-
-Traceback:
- 1: xmlAttrs.XMLInternalNode(node, addNamespace)
- 2: xmlAttrs(node, addNamespace)
- 3: XML::xmlGetAttr(a, "status")
-
-Possible actions:
-1: abort (with core dump, if enabled)
-2: normal R exit
-3: exit R without saving workspace
-4: exit R saving workspace
-Selection:
+#>  *** caught segfault ***
+#> address 0x40, cause 'memory not mapped'
+#>
+#> Traceback:
+#>  1: xmlAttrs.XMLInternalNode(node, addNamespace)
+#>  2: xmlAttrs(node, addNamespace)
+#>  3: XML::xmlGetAttr(a, "status")
+#>
+#> Possible actions:
+#> 1: abort (with core dump, if enabled)
+#> 2: normal R exit
+#> 3: exit R without saving workspace
+#> 4: exit R saving workspace
+#> Selection:
 ```
 
 This is a very harsh way of telling us that we cannot export all types
