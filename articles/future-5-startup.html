@@ -32,7 +32,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.82.0-9011</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.82.0-9012</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -167,11 +167,12 @@ example, if we start R with</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="ex">$</span> R <span class="at">--quiet</span> <span class="at">--args</span> <span class="at">--parallel</span><span class="op">=</span>2</span></code></pre></div>
 <p>then the future package will interpret this as we wish to resolve
 futures in parallel using 2 cores. More specifically, we get that</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">availableCores</span>()</span>
-<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>mc.cores</span>
-<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>       <span class="dv">2</span></span>
-<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">class</span>(future<span class="sc">::</span><span class="fu">plan</span>())</span>
-<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"FutureStrategy"</span> <span class="st">"tweaked"</span>        <span class="st">"multisession"</span>   <span class="st">"future"</span>         <span class="st">"function"</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/re-exports.html">availableCores</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; mc.cores</span></span>
+<span><span class="co">#&gt;        2</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="fu">future</span><span class="fu">::</span><span class="fu"><a href="../reference/plan.html">plan</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "FutureStrategy" "tweaked"        "multisession"   "future"         "function"</span></span></code></pre></div>
 <p>We can use this command-line option also with <code>Rscript</code>,
 which provides a convenient mechanism for launching future-enhanced R
 scripts such that they run in parallel, e.g.</p>

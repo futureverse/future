@@ -57,13 +57,12 @@ $ R --quiet --args --parallel=2
 then the future package will interpret this as we wish to resolve
 futures in parallel using 2 cores. More specifically, we get that
 
-``` r
-> availableCores()
-mc.cores
-       2
-> class(future::plan())
-[1] "FutureStrategy" "tweaked"        "multisession"   "future"         "function"
-```
+\
+[`availableCores`](https://future.futureverse.org/reference/re-exports.md)`(``)`\
+`#> mc.cores`\
+`#>        2`\
+[`class`](https://rdrr.io/r/base/class.html)`(``future``::`[`plan`](https://future.futureverse.org/reference/plan.md)`(``)``)`\
+`#> [1] "FutureStrategy" "tweaked"        "multisession"   "future"         "function"`
 
 We can use this command-line option also with `Rscript`, which provides
 a convenient mechanism for launching future-enhanced R scripts such that

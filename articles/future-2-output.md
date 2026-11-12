@@ -15,79 +15,76 @@ future backend used.
 For simplicity, let’s start with an illustration on how standard output
 (“stdout”) is captured and relayed:
 
-``` r
-> library(future)
-> plan(multisession)
-
-> fa <- future({ cat("Hello world!\n"); print(1:3); 42L })
-> fb <- future({ str(iris); summary(iris) })
-
-> a <- value(fa)
-Hello world!
-[1] 1 2 3
-> b <- value(fb)
-'data.frame':   150 obs. of  5 variables:
- $ Sepal.Length: num  5.1 4.9 4.7 4.6 5 5.4 4.6 5 4.4 4.9 ...
- $ Sepal.Width : num  3.5 3 3.2 3.1 3.6 3.9 3.4 3.4 2.9 3.1 ...
- $ Petal.Length: num  1.4 1.4 1.3 1.5 1.4 1.7 1.4 1.5 1.4 1.5 ...
- $ Petal.Width : num  0.2 0.2 0.2 0.2 0.2 0.4 0.3 0.2 0.2 0.1 ...
- $ Species     : Factor w/ 3 levels "setosa","versicolor",..: 1 1 1 1 1 1 1 1 1 1 ...
-
-> a
-[1] 42
-> b
-  Sepal.Length    Sepal.Width     Petal.Length    Petal.Width          Species  
- Min.   :4.300   Min.   :2.000   Min.   :1.000   Min.   :0.100   setosa    :50  
- 1st Qu.:5.100   1st Qu.:2.800   1st Qu.:1.600   1st Qu.:0.300   versicolor:50  
- Median :5.800   Median :3.000   Median :4.350   Median :1.300   virginica :50  
- Mean   :5.843   Mean   :3.057   Mean   :3.758   Mean   :1.199                  
- 3rd Qu.:6.400   3rd Qu.:3.300   3rd Qu.:5.100   3rd Qu.:1.800                  
- Max.   :7.900   Max.   :4.400   Max.   :6.900   Max.   :2.500
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`future`](https://future.futureverse.org)`)`\
+[`plan`](https://future.futureverse.org/reference/plan.md)`(``multisession``)`\
+\
+`fa`` ``<-`` `[`future`](https://future.futureverse.org/reference/future.md)`(``{`` `[`cat`](https://rdrr.io/r/base/cat.html)`(``"Hello world!\n"``)``; `[`print`](https://rdrr.io/r/base/print.html)`(``1``:``3``)``; ``42L`` ``}``)`\
+`fb`` ``<-`` `[`future`](https://future.futureverse.org/reference/future.md)`(``{`` `[`str`](https://rdrr.io/r/utils/str.html)`(``iris``)``; `[`summary`](https://rdrr.io/r/base/summary.html)`(``iris``)`` ``}``)`\
+\
+`a`` ``<-`` `[`value`](https://future.futureverse.org/reference/value.md)`(``fa``)`\
+`#> Hello world!`\
+`#> [1] 1 2 3`\
+`b`` ``<-`` `[`value`](https://future.futureverse.org/reference/value.md)`(``fb``)`\
+`#> 'data.frame':    150 obs. of  5 variables:`\
+`#>  $ Sepal.Length: num  5.1 4.9 4.7 4.6 5 5.4 4.6 5 4.4 4.9 ...`\
+`#>  $ Sepal.Width : num  3.5 3 3.2 3.1 3.6 3.9 3.4 3.4 2.9 3.1 ...`\
+`#>  $ Petal.Length: num  1.4 1.4 1.3 1.5 1.4 1.7 1.4 1.5 1.4 1.5 ...`\
+`#>  $ Petal.Width : num  0.2 0.2 0.2 0.2 0.2 0.4 0.3 0.2 0.2 0.1 ...`\
+`#>  $ Species     : Factor w/ 3 levels "setosa","versicolor",..: 1 1 1 1 1 1 1 1 1 1 ...`\
+\
+`a`\
+`#> [1] 42`\
+`b`\
+`#>   Sepal.Length    Sepal.Width     Petal.Length    Petal.Width          Species  `\
+`#>  Min.   :4.300   Min.   :2.000   Min.   :1.000   Min.   :0.100   setosa    :50  `\
+`#>  1st Qu.:5.100   1st Qu.:2.800   1st Qu.:1.600   1st Qu.:0.300   versicolor:50  `\
+`#>  Median :5.800   Median :3.000   Median :4.350   Median :1.300   virginica :50  `\
+`#>  Mean   :5.843   Mean   :3.057   Mean   :3.758   Mean   :1.199                  `\
+`#>  3rd Qu.:6.400   3rd Qu.:3.300   3rd Qu.:5.100   3rd Qu.:1.800                  `\
+`#>  Max.   :7.900   Max.   :4.400   Max.   :6.900   Max.   :2.500`
 
 Note that the captured standard output (stdout) will be relayed *each*
 time [`value()`](https://future.futureverse.org/reference/value.md) is
 called, e.g.
 
-``` r
-> a <- value(fa)
-Hello world!
-[1] 1 2 3
-
-> a <- value(fa)
-Hello world!
-[1] 1 2 3
-```
+\
+`a`` ``<-`` `[`value`](https://future.futureverse.org/reference/value.md)`(``fa``)`\
+`#> Hello world!`\
+`#> [1] 1 2 3`\
+\
+`a`` ``<-`` `[`value`](https://future.futureverse.org/reference/value.md)`(``fa``)`\
+`#> Hello world!`\
+`#> [1] 1 2 3`
 
 Output is relayed the same way when using future assignments (`%<-%`).
 For example,
 
-``` r
-> library(future)
-> plan(multisession)
-
-> a %<-% { cat("Hello world!\n"); print(1:3); 42L }
-> b %<-% { str(iris); summary(iris) }
-
-> a
-Hello world!
-[1] 1 2 3
-[1] 42
-> b
-'data.frame':   150 obs. of  5 variables:
- $ Sepal.Length: num  5.1 4.9 4.7 4.6 5 5.4 4.6 5 4.4 4.9 ...
- $ Sepal.Width : num  3.5 3 3.2 3.1 3.6 3.9 3.4 3.4 2.9 3.1 ...
- $ Petal.Length: num  1.4 1.4 1.3 1.5 1.4 1.7 1.4 1.5 1.4 1.5 ...
- $ Petal.Width : num  0.2 0.2 0.2 0.2 0.2 0.4 0.3 0.2 0.2 0.1 ...
- $ Species     : Factor w/ 3 levels "setosa","versicolor",..: 1 1 1 1 1 1 1 1 1 1 ...
-  Sepal.Length    Sepal.Width     Petal.Length    Petal.Width          Species  
- Min.   :4.300   Min.   :2.000   Min.   :1.000   Min.   :0.100   setosa    :50  
- 1st Qu.:5.100   1st Qu.:2.800   1st Qu.:1.600   1st Qu.:0.300   versicolor:50  
- Median :5.800   Median :3.000   Median :4.350   Median :1.300   virginica :50  
- Mean   :5.843   Mean   :3.057   Mean   :3.758   Mean   :1.199                  
- 3rd Qu.:6.400   3rd Qu.:3.300   3rd Qu.:5.100   3rd Qu.:1.800                  
- Max.   :7.900   Max.   :4.400   Max.   :6.900   Max.   :2.500                  
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`future`](https://future.futureverse.org)`)`\
+[`plan`](https://future.futureverse.org/reference/plan.md)`(``multisession``)`\
+\
+`a`` `[`%<-%`](https://future.futureverse.org/reference/futureAssign.md)` ``{`` `[`cat`](https://rdrr.io/r/base/cat.html)`(``"Hello world!\n"``)``; `[`print`](https://rdrr.io/r/base/print.html)`(``1``:``3``)``; ``42L`` ``}`\
+`b`` `[`%<-%`](https://future.futureverse.org/reference/futureAssign.md)` ``{`` `[`str`](https://rdrr.io/r/utils/str.html)`(``iris``)``; `[`summary`](https://rdrr.io/r/base/summary.html)`(``iris``)`` ``}`\
+\
+`a`\
+`#> Hello world!`\
+`#> [1] 1 2 3`\
+`#> [1] 42`\
+`b`\
+`#> 'data.frame':    150 obs. of  5 variables:`\
+`#>  $ Sepal.Length: num  5.1 4.9 4.7 4.6 5 5.4 4.6 5 4.4 4.9 ...`\
+`#>  $ Sepal.Width : num  3.5 3 3.2 3.1 3.6 3.9 3.4 3.4 2.9 3.1 ...`\
+`#>  $ Petal.Length: num  1.4 1.4 1.3 1.5 1.4 1.7 1.4 1.5 1.4 1.5 ...`\
+`#>  $ Petal.Width : num  0.2 0.2 0.2 0.2 0.2 0.4 0.3 0.2 0.2 0.1 ...`\
+`#>  $ Species     : Factor w/ 3 levels "setosa","versicolor",..: 1 1 1 1 1 1 1 1 1 1 ...`\
+`#>   Sepal.Length    Sepal.Width     Petal.Length    Petal.Width          Species  `\
+`#>  Min.   :4.300   Min.   :2.000   Min.   :1.000   Min.   :0.100   setosa    :50  `\
+`#>  1st Qu.:5.100   1st Qu.:2.800   1st Qu.:1.600   1st Qu.:0.300   versicolor:50  `\
+`#>  Median :5.800   Median :3.000   Median :4.350   Median :1.300   virginica :50  `\
+`#>  Mean   :5.843   Mean   :3.057   Mean   :3.758   Mean   :1.199                  `\
+`#>  3rd Qu.:6.400   3rd Qu.:3.300   3rd Qu.:5.100   3rd Qu.:1.800                  `\
+`#>  Max.   :7.900   Max.   :4.400   Max.   :6.900   Max.   :2.500                  `
 
 Note how the captured output is relayed followed by the printing of the
 value. Also, since the future value is only queried once when using
@@ -95,24 +92,22 @@ future assignments, or more specifically when using promises, the output
 is only relayed once. For example, querying `a` again will only print
 its value, because it is now a regular R object:
 
-``` r
-> a
-[1] 42
-> a
-[1] 42
-```
+\
+`a`\
+`#> [1] 42`\
+`a`\
+`#> [1] 42`
 
 Next, let’s see what happens if we use
 [`message()`](https://rdrr.io/r/base/message.html) to produce output:
 
-``` r
-> library(future)
-> plan(multisession)
-> fa <- future({ message("Hello world!"); 42L })
-> value(fa)
-Hello world!
-[1] 42
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`future`](https://future.futureverse.org)`)`\
+[`plan`](https://future.futureverse.org/reference/plan.md)`(``multisession``)`\
+`fa`` ``<-`` `[`future`](https://future.futureverse.org/reference/future.md)`(``{`` `[`message`](https://rdrr.io/r/base/message.html)`(``"Hello world!"``)``; ``42L`` ``}``)`\
+[`value`](https://future.futureverse.org/reference/value.md)`(``fa``)`\
+`#> Hello world!`\
+`#> [1] 42`
 
 Note that contrary to the captured stdout, which is captured as one
 single block output, messages are conditions that are captured
@@ -121,17 +116,16 @@ of interweaved stdout and message output. When using futures, stdout
 output will always be relayed first, followed by each of the individual
 conditions captured. For example,
 
-``` r
-> library(future)
-> plan(multisession)
-> fa <- future({ message("Hello"); print(1:3); message("world!"); cat("ping\n"); 42L })
-> value(fa)
-[1] 1 2 3   ## <= stdout as a single ...
-ping        ## <= ... block of output
-Hello       ## <= 1st message
-world!      ## <= 2nd message
-[1] 42
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`future`](https://future.futureverse.org)`)`\
+[`plan`](https://future.futureverse.org/reference/plan.md)`(``multisession``)`\
+`fa`` ``<-`` `[`future`](https://future.futureverse.org/reference/future.md)`(``{`` `[`message`](https://rdrr.io/r/base/message.html)`(``"Hello"``)``; `[`print`](https://rdrr.io/r/base/print.html)`(``1``:``3``)``; `[`message`](https://rdrr.io/r/base/message.html)`(``"world!"``)``; `[`cat`](https://rdrr.io/r/base/cat.html)`(``"ping\n"``)``; ``42L`` ``}``)`\
+[`value`](https://future.futureverse.org/reference/value.md)`(``fa``)`\
+`#> [1] 1 2 3   ## <= stdout as a single ...`\
+`#> ping        ## <= ... block of output`\
+`#> Hello       ## <= 1st message`\
+`#> world!      ## <= 2nd message`\
+`#> [1] 42`
 
 ## Future frontends
 
@@ -144,72 +138,72 @@ framework, it automatically works the same when using packages such as
 examples how “it just works”:
 
 ``` r
-> library(future.apply)
-> plan(future.callr::callr)
+library(future.apply)
+plan(future.callr::callr)
 
-> y <- future_lapply(1:3, FUN = function(x) {
-    cat("x =", x, "\n")
-    message("x : ", x)
-    sqrt(x)
-  })
-x = 1 
-x = 2 
-x = 3 
-x : 1  ## <= 1st message
-x : 2  ## <= 2nd message
-x : 3  ## <= 3rd message
+y <- future_lapply(1:3, FUN = function(x) {
+#>     cat("x =", x, "\n")
+#>     message("x : ", x)
+#>     sqrt(x)
+#>   })
+#> x = 1 
+#> x = 2 
+#> x = 3 
+#> x : 1  ## <= 1st message
+#> x : 2  ## <= 2nd message
+#> x : 3  ## <= 3rd message
 
-> str(y)
-List of 3
- $ : num 1
- $ : num 1.41
- $ : num 1.73
+str(y)
+#> List of 3
+#>  $ : num 1
+#>  $ : num 1.41
+#>  $ : num 1.73
 ```
 
 ``` r
-> library(furrr)
-> plan(future.callr::callr)
+library(furrr)
+plan(future.callr::callr)
 
-> y <- future_map(1:3, function(x) {
-    cat("x =", x, "\n")
-    message("x : ", x)
-    sqrt(x)
-  })
-x = 1 
-x = 2 
-x = 3 
-x : 1  ## <= 1st message
-x : 2  ## <= 2nd message
-x : 3  ## <= 3rd message
+y <- future_map(1:3, function(x) {
+#>     cat("x =", x, "\n")
+#>     message("x : ", x)
+#>     sqrt(x)
+#>   })
+#> x = 1 
+#> x = 2 
+#> x = 3 
+#> x : 1  ## <= 1st message
+#> x : 2  ## <= 2nd message
+#> x : 3  ## <= 3rd message
 
-> str(y)
-List of 3
- $ : num 1
- $ : num 1.41
- $ : num 1.73
+str(y)
+#> List of 3
+#>  $ : num 1
+#>  $ : num 1.41
+#>  $ : num 1.73
 ```
 
 ``` r
-> library(doFuture)
-> plan(future.callr::callr)
+library(doFuture)
+plan(future.callr::callr)
 
-> y <- foreach(x = 1:3) %dofuture% {
-    cat("x =", x, "\n")
-    message("x : ", x)
-    sqrt(x)
-  }
-x = 1 
-x = 2 
-x = 3
-x : 1  ## <= 1st message
-x : 2  ## <= 2nd message
-x : 3  ## <= 3rd message
+y <- foreach(x = 1:3) %dofuture% {
+#>     cat("x =", x, "\n")
+#>     message("x : ", x)
+#>     sqrt(x)
+#>   }
+#> x = 1 
+#> x = 2 
+#> x = 3
+#> x : 1  ## <= 1st message
+#> x : 2  ## <= 2nd message
+#> x : 3  ## <= 3rd message
 
-> str(y)
-List of 3
- $ : num 1
- $ : num 1.41
- $ : num 1.73
+str(y)
+#> List of 3
+#>  $ : num 1
+#>  $ : num 1.41
+#>  $ : num 1.73
 ```
 
 ## Capturing output
@@ -218,28 +212,26 @@ To capture the output produced by futures, use
 [`capture.output()`](https://rdrr.io/r/utils/capture.output.html) as you
 would do when capturing output elsewhere in R. For example,
 
-``` r
-> library(future)
-> fa <- future({ cat("Hello world!\n"); print(1:3); 42L })
-> stdout <- capture.output(a <- value(fa))
-> stdout
-[1] "Hello world!" "[1] 1 2 3"
-> a
-[1] 42
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`future`](https://future.futureverse.org)`)`\
+`fa`` ``<-`` `[`future`](https://future.futureverse.org/reference/future.md)`(``{`` `[`cat`](https://rdrr.io/r/base/cat.html)`(``"Hello world!\n"``)``; `[`print`](https://rdrr.io/r/base/print.html)`(``1``:``3``)``; ``42L`` ``}``)`\
+`stdout`` ``<-`` `[`capture.output`](https://rdrr.io/r/utils/capture.output.html)`(``a`` ``<-`` `[`value`](https://future.futureverse.org/reference/value.md)`(``fa``)``)`\
+`stdout`\
+`#> [1] "Hello world!" "[1] 1 2 3"`\
+`a`\
+`#> [1] 42`
 
 ## Suppressing messages
 
-``` r
-> library(future)
-> plan(multisession)
-> fa <- future({ message("Hello"); print(1:3); message("world!"); cat("ping\n"); 42L })
-> suppressMessages(a <- value(fa))
-[1] 1 2 3
-ping
-> a
-[1] 42
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`future`](https://future.futureverse.org)`)`\
+[`plan`](https://future.futureverse.org/reference/plan.md)`(``multisession``)`\
+`fa`` ``<-`` `[`future`](https://future.futureverse.org/reference/future.md)`(``{`` `[`message`](https://rdrr.io/r/base/message.html)`(``"Hello"``)``; `[`print`](https://rdrr.io/r/base/print.html)`(``1``:``3``)``; `[`message`](https://rdrr.io/r/base/message.html)`(``"world!"``)``; `[`cat`](https://rdrr.io/r/base/cat.html)`(``"ping\n"``)``; ``42L`` ``}``)`\
+[`suppressMessages`](https://rdrr.io/r/base/message.html)`(``a`` ``<-`` `[`value`](https://future.futureverse.org/reference/value.md)`(``fa``)``)`\
+`#> [1] 1 2 3`\
+`#> ping`\
+`a`\
+`#> [1] 42`
 
 ## Known limitations
 

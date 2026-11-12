@@ -32,7 +32,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.82.0-9011</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.82.0-9012</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -242,18 +242,19 @@ CPU overuse. The future framework detects this discrepancy, and if it is
 too large, it will produce an error. For example, on an eight core
 machine, we would get the following error produced at the inner
 layer:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="op">&gt;</span> plan<span class="kw">(</span><span class="ex">list</span><span class="er">(</span><span class="ex">tweak</span><span class="er">(</span><span class="ex">multisession,</span> workers = 2<span class="kw">)</span><span class="ex">,</span> tweak<span class="er">(</span><span class="ex">multisession,</span> workers = 4<span class="kw">)))</span></span>
-<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a><span class="op">&gt;</span> a <span class="ex">%</span><span class="op">&lt;</span>-% { b %<span class="op">&lt;</span>-% 1 <span class="kw">;</span> <span class="ex">b</span> }</span>
-<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a><span class="op">&gt;</span> a</span>
-<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a><span class="ex">Error</span> in checkNumberOfLocalWorkers<span class="er">(</span><span class="ex">workers</span><span class="kw">)</span> <span class="bu">:</span> </span>
-<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>  <span class="ex">Attempting</span> to set up 4 localhost parallel workers with only 1 CPU</span>
-<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a><span class="ex">cores</span> available for this R process <span class="er">(</span><span class="ex">per</span> <span class="st">'mc.cores'</span><span class="kw">)</span><span class="ex">,</span> which could</span>
-<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a><span class="ex">result</span> in a 400% load. The hard limit is set to 300%. Overusing the</span>
-<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a><span class="ex">CPUs</span> has negative impact on the current R process, but also on all</span>
-<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a><span class="ex">other</span> processes of yours and others running on the same machine. See</span>
-<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a><span class="bu">help</span><span class="er">(</span><span class="st">"parallelly.maxWorkers.localhost"</span><span class="ex">,</span> package = <span class="st">"parallelly"</span><span class="kw">)</span> <span class="cf">for</span></span>
-<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a><span class="ex">further</span> explanations and how to override the hard limit that triggered</span>
-<span id="cb7-12"><a href="#cb7-12" tabindex="-1"></a><span class="ex">this</span> error</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/plan.html">plan</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="../reference/plan.html">tweak</a></span><span class="op">(</span><span class="va">multisession</span>, workers <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>, <span class="fu"><a href="../reference/plan.html">tweak</a></span><span class="op">(</span><span class="va">multisession</span>, workers <span class="op">=</span> <span class="fl">4</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">a</span> <span class="op"><a href="../reference/futureAssign.html">%&lt;-%</a></span> <span class="op">{</span> <span class="va">b</span> <span class="op"><a href="../reference/futureAssign.html">%&lt;-%</a></span> <span class="fl">1</span> ; <span class="va">b</span> <span class="op">}</span></span>
+<span><span class="va">a</span></span>
+<span><span class="co">#&gt; Error in checkNumberOfLocalWorkers(workers) : </span></span>
+<span><span class="co">#&gt;   Attempting to set up 4 localhost parallel workers with only 1 CPU</span></span>
+<span><span class="co">#&gt; cores available for this R process (per 'mc.cores'), which could</span></span>
+<span><span class="co">#&gt; result in a 400% load. The hard limit is set to 300%. Overusing the</span></span>
+<span><span class="co">#&gt; CPUs has negative impact on the current R process, but also on all</span></span>
+<span><span class="co">#&gt; other processes of yours and others running on the same machine. See</span></span>
+<span><span class="co">#&gt; help("parallelly.maxWorkers.localhost", package = "parallelly") for</span></span>
+<span><span class="co">#&gt; further explanations and how to override the hard limit that triggered</span></span>
+<span><span class="co">#&gt; this error</span></span></code></pre></div>
 <p>Because Futureverse has this built-in protection, we need to
 explicitly override it by declaring nested workers using the As-Is
 <code>I(.)</code> function. This basically tells the parallel framework

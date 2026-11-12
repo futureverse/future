@@ -174,18 +174,17 @@ If you forget to shut down the PSOCK cluster, then
 `R CMD check --as-cran`, or `R CMD check` with environment variable
 `_R_CHECK_CONNECTIONS_LEFT_OPEN_=true` set, will produce an error on
 
-``` r
-$ R CMD check --as-cran mypkg_1.0.tar.gz
-...
-* checking examples ... ERROR
-Running examples in 'analyze-Ex.R' failed
-...
-> cleanEx()
-Error: connections left open:
-      <-localhost:37400 (sockconn)
-      <-localhost:37400 (sockconn)
-Execution halted
-```
+\
+`#> $ R CMD check --as-cran mypkg_1.0.tar.gz`\
+`#> ...`\
+`#> * checking examples ... ERROR`\
+`#> Running examples in 'analyze-Ex.R' failed`\
+`#> ...`\
+`cleanEx``(``)`\
+`#> Error: connections left open:`\
+`#>       <-localhost:37400 (sockconn)`\
+`#>       <-localhost:37400 (sockconn)`\
+`#> Execution halted`
 
 If you for some reason do not like to display reset of the future
 backend in the help documentation, but you still want it run, wrap the

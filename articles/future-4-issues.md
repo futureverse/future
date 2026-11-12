@@ -83,20 +83,19 @@ become a problem with futures evaluated with lazy evaluation if the
 intended function is redefined after the future is resolved. For
 example,
 
-``` r
-> library(future)
-> library(listenv)
-> library(tools)
-> plan(sequential)
-> pathnames <- c("foo.txt", "bar.png", "yoo.md")
-> res <- listenv()
-> for (ii in seq_along(pathnames)) {
-+   res[[ii]] %<-% do.call("file_ext", list(pathnames[ii])) %lazy% TRUE
-+ }
-> file_ext <- function(...) "haha!"
-> unlist(res)
-[1] "haha!" "haha!" "haha!"
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`future`](https://future.futureverse.org)`)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`listenv`](https://listenv.futureverse.org)`)`\
+[`library`](https://rdrr.io/r/base/library.html)`(``tools``)`\
+[`plan`](https://future.futureverse.org/reference/plan.md)`(``sequential``)`\
+`pathnames`` ``<-`` `[`c`](https://rdrr.io/r/base/c.html)`(``"foo.txt"``, ``"bar.png"``, ``"yoo.md"``)`\
+`res`` ``<-`` `[`listenv`](https://listenv.futureverse.org/reference/listenv.html)`(``)`\
+`for`` ``(``ii`` ``in`` `[`seq_along`](https://rdrr.io/r/base/seq.html)`(``pathnames``)``)`` ``{`\
+`  ``res``[[``ii``]``]`` `[`%<-%`](https://future.futureverse.org/reference/futureAssign.md)` `[`do.call`](https://rdrr.io/r/base/do.call.html)`(``"file_ext"``, `[`list`](https://rdrr.io/r/base/list.html)`(``pathnames``[``ii``]``)``)`` `[`%lazy%`](https://future.futureverse.org/reference/futureAssign.md)` ``TRUE`\
+`}`\
+`file_ext`` ``<-`` ``function``(``...``)`` ``"haha!"`\
+[`unlist`](https://rdrr.io/r/base/unlist.html)`(``res``)`\
+`#> [1] "haha!" "haha!" "haha!"`
 
 #### get() - object not found
 
@@ -108,26 +107,24 @@ used to get the value of a object by its name. For example,
 named `pi` exists on the search path, we could have used `get("pi")` and
 `pi`, respectively. It is not unusual to see code snippets such as:
 
-``` r
-> a <- 1:3
-> b <- 4:6
-> c <- 3:5
-> my_sum <- function(var) { sum(get(var)) }
-> y <- my_sum("a")
-> y
-[1] 6
-```
+\
+`a`` ``<-`` ``1``:``3`\
+`b`` ``<-`` ``4``:``6`\
+`c`` ``<-`` ``3``:``5`\
+`my_sum`` ``<-`` ``function``(``var``)`` ``{`` `[`sum`](https://rdrr.io/r/base/sum.html)`(`[`get`](https://rdrr.io/r/base/get.html)`(``var``)``)`` ``}`\
+`y`` ``<-`` ``my_sum``(``"a"``)`\
+`y`\
+`#> [1] 6`
 
 If we attempt to call `my_sum()` via a future, we will get an error (if
 the future is resolved in an external R process);
 
-``` r
-> library(future)
-> plan(multisession)
-> f <- future(my_sum("a"))
-> y <- value(f)
-Error in get(var) : object 'a' not found
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`future`](https://future.futureverse.org)`)`\
+[`plan`](https://future.futureverse.org/reference/plan.md)`(``multisession``)`\
+`f`` ``<-`` `[`future`](https://future.futureverse.org/reference/future.md)`(``my_sum``(``"a"``)``)`\
+`y`` ``<-`` `[`value`](https://future.futureverse.org/reference/value.md)`(``f``)`\
+`#> Error in get(var) : object 'a' not found`
 
 This is because the static code inspection done on the future expression
 `my_sum("a")` does not reveal object `a` as a global object. In that
@@ -152,22 +149,20 @@ variables specified via a character string.
 The workaround is to tell the future framework what *additional* globals
 are needed. This can be done via argument `globals` using:
 
-``` r
-> f <- future(my_sum("a"), globals = structure(TRUE, add = "a"))
-> y <- value(f)
-> y
-[1] 6
-```
+\
+`f`` ``<-`` `[`future`](https://future.futureverse.org/reference/future.md)`(``my_sum``(``"a"``)``, globals ``=`` `[`structure`](https://rdrr.io/r/base/structure.html)`(``TRUE``, add ``=`` ``"a"``)``)`\
+`y`` ``<-`` `[`value`](https://future.futureverse.org/reference/value.md)`(``f``)`\
+`y`\
+`#> [1] 6`
 
 or by injecting variable `a` at the beginning of the future expression,
 e.g.
 
-``` r
-> f <- future({ a; my_sum("a") })
-> y <- value(f)
-> y
-[1] 6
-```
+\
+`f`` ``<-`` `[`future`](https://future.futureverse.org/reference/future.md)`(``{`` ``a``; ``my_sum``(``"a"``)`` ``}``)`\
+`y`` ``<-`` `[`value`](https://future.futureverse.org/reference/value.md)`(``f``)`\
+`y`\
+`#> [1] 6`
 
 Note that, independently of the future framework, it is often a bad idea
 to use [`get()`](https://rdrr.io/r/base/get.html), and related functions
@@ -183,34 +178,31 @@ thumb is:
 
 For example, consider this, slightly more complex, example:
 
-``` r
-> a <- 1:3
-> b <- 4:7
-> c <- 3:5
-> my_sum <- function(var) { sum(get(var)) }
-> y <- sapply(c("a", "b", "c"), FUN = my_sum)
-> y
- a  b  c
- 6 22 12
-```
+\
+`a`` ``<-`` ``1``:``3`\
+`b`` ``<-`` ``4``:``7`\
+`c`` ``<-`` ``3``:``5`\
+`my_sum`` ``<-`` ``function``(``var``)`` ``{`` `[`sum`](https://rdrr.io/r/base/sum.html)`(`[`get`](https://rdrr.io/r/base/get.html)`(``var``)``)`` ``}`\
+`y`` ``<-`` `[`sapply`](https://rdrr.io/r/base/lapply.html)`(`[`c`](https://rdrr.io/r/base/c.html)`(``"a"``, ``"b"``, ``"c"``)``, FUN ``=`` ``my_sum``)`\
+`y`\
+`#>  a  b  c`\
+`#>  6 22 12`
 
 Instead of using “free roaming” objects `a`, `b`, and `c`, it’s better
 to put those values in a list (or a data frame of the same length);
 
-``` r
-> data <- list(a = 1:3, b = 4:7, c = 3:5)
-```
+\
+`data`` ``<-`` `[`list`](https://rdrr.io/r/base/list.html)`(``a ``=`` ``1``:``3``, b ``=`` ``4``:``7``, c ``=`` ``3``:``5``)`
 
 This will in turn allow us to perform the same calculations without
 having to use [`get()`](https://rdrr.io/r/base/get.html);
 
-``` r
-> my_sum <- function(x) { sum(x) }
-> y <- sapply(data, FUN = my_sum)
-> y
- a  b  c
- 6 22 12
-```
+\
+`my_sum`` ``<-`` ``function``(``x``)`` ``{`` `[`sum`](https://rdrr.io/r/base/sum.html)`(``x``)`` ``}`\
+`y`` ``<-`` `[`sapply`](https://rdrr.io/r/base/lapply.html)`(``data``, FUN ``=`` ``my_sum``)`\
+`y`\
+`#>  a  b  c`\
+`#>  6 22 12`
 
 #### glue::glue() - object not found
 
@@ -218,45 +210,44 @@ The future framework will fail to identify globals that are declared via
 character strings. The above section gives an example of this where
 [`get()`](https://rdrr.io/r/base/get.html) is used and explains why it
 is not feasible to automatically identify string-embedded globals from
-such code. Another example, is when using `glue()` from the
+such code. Another example, is when using
+[`glue()`](https://glue.tidyverse.org/reference/glue.html) from the
 **[glue](https://cran.r-project.org/package=glue)** package to generate
 strings dynamically, e.g.
 
-``` r
-> library(glue)
-> a <- 42
-> s <- glue("The value of a is {a}.")
-> s
-The value of a is 42.
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`glue`](https://glue.tidyverse.org/)`)`\
+`a`` ``<-`` ``42`\
+`s`` ``<-`` `[`glue`](https://glue.tidyverse.org/reference/glue.html)`(``"The value of a is {a}."``)`\
+`s`\
+`#> The value of a is 42.`
 
 Attempting to perform the same via a future that is resolved in another
 R session will produce an “object not found” error;
 
-``` r
-> library(glue)
-> library(future)
-> plan(multisession)
-> a <- 42
-> s %<-% glue("The value of a is {a}.")
-> s
-Error in eval(parse(text = text, keep.source = FALSE), envir) : 
-  object 'a' not found
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`glue`](https://glue.tidyverse.org/)`)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`future`](https://future.futureverse.org)`)`\
+[`plan`](https://future.futureverse.org/reference/plan.md)`(``multisession``)`\
+`a`` ``<-`` ``42`\
+`s`` `[`%<-%`](https://future.futureverse.org/reference/futureAssign.md)` `[`glue`](https://glue.tidyverse.org/reference/glue.html)`(``"The value of a is {a}."``)`\
+`s`\
+`#> Error in eval(parse(text = text, keep.source = FALSE), envir) : `\
+`#>   object 'a' not found`
 
 As explained in the previous section, the workaround is to specify what
 additional global variables there are, which can be done as:
 
-    > s %<-% glue("The value of a is {a}.") %globals% structure(TRUE, add = "a")
-    > s
-    The value of a is 42.
+    s %<-% glue("The value of a is {a}.") %globals% structure(TRUE, add = "a")
+    s
+    #> The value of a is 42.
 
 An alternative solution is to guide the future framework by adding the
 missing globals as “dummy” variables, e.g.
 
-    > s %<-% { a; glue("The value of a is {a}.") }
-    > s
-    The value of a is 42.
+    s %<-% { a; glue("The value of a is {a}.") }
+    s
+    #> The value of a is 42.
 
 ### Missing packages (false negatives)
 
@@ -272,16 +263,15 @@ However, the **future** and
 to identify **data.table** as a required package, which results in an
 evaluation error:
 
-``` r
-> library(future)
-> plan(multisession)
-
-> library(data.table)
-> DT <- data.table(a = LETTERS[1:3], b = 1:3)
-> y %<-% DT[, sum(b)]
-> y
-Error: object 'b' not found
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`future`](https://future.futureverse.org)`)`\
+[`plan`](https://future.futureverse.org/reference/plan.md)`(``multisession``)`\
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`data.table`](https://r-datatable.com)`)`\
+`DT`` ``<-`` `[`data.table`](https://rdrr.io/pkg/data.table/man/data.table.html)`(``a ``=`` ``LETTERS``[``1``:``3``]``, b ``=`` ``1``:``3``)`\
+`y`` `[`%<-%`](https://future.futureverse.org/reference/futureAssign.md)` ``DT``[``, `[`sum`](https://rdrr.io/r/base/sum.html)`(``b``)``]`\
+`y`\
+`#> Error: object 'b' not found`
 
 The above error occurs because, contrary to the master R process, the R
 worker that evaluated the future expression does not have **data.table**
@@ -292,19 +282,17 @@ Until the future framework manages to identify **data.table** as a
 required package (which is the goal), we can guide the future package by
 specifying additional packages needed:
 
-``` r
-> y %<-% DT[, sum(b)] %packages% "data.table"
-> y
-[1] 6
-```
+\
+`y`` `[`%<-%`](https://future.futureverse.org/reference/futureAssign.md)` ``DT``[``, `[`sum`](https://rdrr.io/r/base/sum.html)`(``b``)``]`` `[`%packages%`](https://future.futureverse.org/reference/futureAssign.md)` ``"data.table"`\
+`y`\
+`#> [1] 6`
 
 or equivalently
 
-``` r
-> f <- future(DT[, sum(b)], packages = "data.table")
-> value(f)
-[1] 6
-```
+\
+`f`` ``<-`` `[`future`](https://future.futureverse.org/reference/future.md)`(``DT``[``, `[`sum`](https://rdrr.io/r/base/sum.html)`(``b``)``]``, packages ``=`` ``"data.table"``)`\
+[`value`](https://future.futureverse.org/reference/value.md)`(``f``)`\
+`#> [1] 6`
 
 Note, do *not* use [`library()`](https://rdrr.io/r/base/library.html) or
 [`loadNamespace()`](https://rdrr.io/r/base/ns-load.html) to resolve
@@ -409,26 +397,24 @@ attempt to use those in parallel processing, we may get an error when
 the future is evaluated (or just invalid results depending on how they
 are used), e.g.
 
-``` r
-> library(future)
-> plan(multisession)
-> library(xml2)
-> xml <- read_xml("<body></body>")
-> f <- future(xml_children(xml))
-> value(f)
-Error: external pointer is not valid
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`future`](https://future.futureverse.org)`)`\
+[`plan`](https://future.futureverse.org/reference/plan.md)`(``multisession``)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`xml2`](https://xml2.r-lib.org)`)`\
+`xml`` ``<-`` `[`read_xml`](http://xml2.r-lib.org/reference/read_xml.md)`(``"<body></body>"``)`\
+`f`` ``<-`` `[`future`](https://future.futureverse.org/reference/future.md)`(`[`xml_children`](http://xml2.r-lib.org/reference/xml_children.md)`(``xml``)``)`\
+[`value`](https://future.futureverse.org/reference/value.md)`(``f``)`\
+`#> Error: external pointer is not valid`
 
 The future framework can help detect this *before* sending off the
 future to the worker;
 
-``` r
-> options(future.globals.onReference = "error")
-> f <- future(xml_children(xml))
-Error in FALSE : 
-  Detected a non-exportable reference ('externalptr') in one of the globals
-('xml' of class 'xml_document') used in the future expression
-```
+\
+[`options`](https://rdrr.io/r/base/options.html)`(``future.globals.onReference ``=`` ``"error"``)`\
+`f`` ``<-`` `[`future`](https://future.futureverse.org/reference/future.md)`(`[`xml_children`](http://xml2.r-lib.org/reference/xml_children.md)`(``xml``)``)`\
+`#> Error in FALSE : `\
+`#>   Detected a non-exportable reference ('externalptr') in one of the globals`\
+`#> ('xml' of class 'xml_document') used in the future expression`
 
 For additional details on non-exportable objects and examples of other R
 packages that use objects that may cause problems in parallel
@@ -440,19 +426,18 @@ It is not possible for a future to resolve another one unless it was
 created by the future trying to resolve it. For instance, the following
 gives an error:
 
-``` r
-> library(future)
-> plan(multisession)
-> f1 <- future({ Sys.getpid() })
-> f2 <- future({ value(f1) })
-> v1 <- value(f1)
-[1] 7464
-> v2 <- value(f2)
-Error: Invalid usage of futures: A future whose value has not yet been collected
- can only be queried by the R process (cdd013cb-e045-f4a5-3977-9f064c31f188; pid
- 1276 on MyMachine) that created it, not by any other R processes (5579f789-e7b6
- -bace-c50d-6c7a23ddb5a3; pid 2352 on MyMachine): {; Sys.getpid(); }
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`future`](https://future.futureverse.org)`)`\
+[`plan`](https://future.futureverse.org/reference/plan.md)`(``multisession``)`\
+`f1`` ``<-`` `[`future`](https://future.futureverse.org/reference/future.md)`(``{`` `[`Sys.getpid`](https://rdrr.io/r/base/Sys.getpid.html)`(``)`` ``}``)`\
+`f2`` ``<-`` `[`future`](https://future.futureverse.org/reference/future.md)`(``{`` `[`value`](https://future.futureverse.org/reference/value.md)`(``f1``)`` ``}``)`\
+`v1`` ``<-`` `[`value`](https://future.futureverse.org/reference/value.md)`(``f1``)`\
+`#> [1] 7464`\
+`v2`` ``<-`` `[`value`](https://future.futureverse.org/reference/value.md)`(``f2``)`\
+`#> Error: Invalid usage of futures: A future whose value has not yet been collected`\
+`#>  can only be queried by the R process (cdd013cb-e045-f4a5-3977-9f064c31f188; pid`\
+`#>  1276 on MyMachine) that created it, not by any other R processes (5579f789-e7b6`\
+`#>  -bace-c50d-6c7a23ddb5a3; pid 2352 on MyMachine): {; Sys.getpid(); }`
 
 This is because the main R process creates two futures, but then the
 second future tries to retrieve the value of the first one. This is an
@@ -464,16 +449,15 @@ Note that it is only *unresolved* futures that cannot be queried this
 way. Thus, the solution to the above problem is to make sure all futures
 are resolved before they are passed to other futures, e.g.
 
-``` r
-> f1 <- future({ Sys.getpid() })
-> v1 <- value(f1)
-> v1
-[1] 7464
-> f2 <- future({ value(f1) })
-> v2 <- value(f2)
-> v2
-[1] 7464
-```
+\
+`f1`` ``<-`` `[`future`](https://future.futureverse.org/reference/future.md)`(``{`` `[`Sys.getpid`](https://rdrr.io/r/base/Sys.getpid.html)`(``)`` ``}``)`\
+`v1`` ``<-`` `[`value`](https://future.futureverse.org/reference/value.md)`(``f1``)`\
+`v1`\
+`#> [1] 7464`\
+`f2`` ``<-`` `[`future`](https://future.futureverse.org/reference/future.md)`(``{`` `[`value`](https://future.futureverse.org/reference/value.md)`(``f1``)`` ``}``)`\
+`v2`` ``<-`` `[`value`](https://future.futureverse.org/reference/value.md)`(``f2``)`\
+`v2`\
+`#> [1] 7464`
 
 This works because the value has already been collected and stored
 inside future `f1` before future `f2` is created. Since the value is
@@ -485,12 +469,12 @@ The above is typically not a problem when future assignments are used.
 For example:
 
 ``` r
-> v1 %<-% { Sys.getpid() })
-> v2 %<-% { v1 }
-> v1
-[1] 2352
-> v2
-[1] 2352
+v1 %<-% { Sys.getpid() })
+v2 %<-% { v1 }
+v1
+#> [1] 2352
+v2
+#> [1] 2352
 ```
 
 The reason that this approach works out of the box is because in the
@@ -504,19 +488,18 @@ global variables without being resolved. This can happen if the future
 assignment is done to an element of an environment (including list
 environments). For instance,
 
-``` r
-> library(listenv)
-> x <- listenv()
-> x$a %<-% { Sys.getpid() }
-> x$b %<-% { x$a }
-> x$a
-[1] 2352
-> x$b
-Error: Invalid usage of futures: A future whose value has not yet been collected
- can only be queried by the R process (cdd013cb-e045-f4a5-3977-9f064c31f188; pid
- 1276 on localhost) that created it, not by any other R processes (2ce86ccd-5854
- -7a05-1373-e1b20022e4d8; pid 7464 on localhost): {; Sys.getpid(); }
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`listenv`](https://listenv.futureverse.org)`)`\
+`x`` ``<-`` `[`listenv`](https://listenv.futureverse.org/reference/listenv.html)`(``)`\
+`x``$``a`` `[`%<-%`](https://future.futureverse.org/reference/futureAssign.md)` ``{`` `[`Sys.getpid`](https://rdrr.io/r/base/Sys.getpid.html)`(``)`` ``}`\
+`x``$``b`` `[`%<-%`](https://future.futureverse.org/reference/futureAssign.md)` ``{`` ``x``$``a`` ``}`\
+`x``$``a`\
+`#> [1] 2352`\
+`x``$``b`\
+`#> Error: Invalid usage of futures: A future whose value has not yet been collected`\
+`#>  can only be queried by the R process (cdd013cb-e045-f4a5-3977-9f064c31f188; pid`\
+`#>  1276 on localhost) that created it, not by any other R processes (2ce86ccd-5854`\
+`#>  -7a05-1373-e1b20022e4d8; pid 7464 on localhost): {; Sys.getpid(); }`
 
 As previously, this can be avoided by making sure `x$a` is resolved
 first, which can be done in various ways, e.g. `dummy <- x$a`,
@@ -618,72 +601,67 @@ at the prompt or in a script* (it is not a problem inside package
 because there we explicitly import objects in a known order). Here is
 what we might get:
 
-``` r
-> library(future)
-> library(igraph)
-
-Attaching package: 'igraph'
-
-The following objects are masked from 'package:future':
-
-    %<-%, %->%
-
-The following objects are masked from 'package:stats':
-
-    decompose, spectrum
-
-The following object is masked from 'package:base':
-
-    union
-
-> y %<-% { 42 }
-Error in get(".igraph.from", parent.frame()) : 
-  object '.igraph.from' not found
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`future`](https://future.futureverse.org)`)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`igraph`](https://r.igraph.org/)`)`\
+\
+`#> Attaching package: 'igraph'`\
+`#>`\
+`#> The following objects are masked from 'package:future':`\
+`#>`\
+`#>     %<-%, %->%`\
+`#>`\
+`#> The following objects are masked from 'package:stats':`\
+`#>`\
+`#>     decompose, spectrum`\
+`#>`\
+`#> The following object is masked from 'package:base':`\
+`#>`\
+`#>     union`\
+\
+`y`` `[`%<-%`](https://future.futureverse.org/reference/futureAssign.md)` ``{`` ``42`` ``}`\
+`#> Error in get(".igraph.from", parent.frame()) : `\
+`#>   object '.igraph.from' not found`
 
 Here we get an error because `%<-%` is from **igraph** and not the
 future assignment operator as we wanted. This can be confirmed as:
 
-``` r
-> environment(`%<-%`)
-<environment: namespace:igraph>
-```
+\
+[`environment`](https://rdrr.io/r/base/environment.html)`(``` `%<-%` ```)`\
+`#> <environment: namespace:igraph>`
 
 To avoid this problem, attach the two packages in opposite order such
 that **future** comes last and thereby overrides **igraph**, i.e.
 
-``` r
-> library(igraph)
-> library(future)
-
-Attaching package: 'future'
-
-The following objects are masked from 'package:igraph':
-
-%<-%, %->%
-
-> y %<-% { 42 }
-> y
-[1] 42
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`igraph`](https://r.igraph.org/)`)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`future`](https://future.futureverse.org)`)`\
+\
+`#> Attaching package: 'future'`\
+`#>`\
+`#> The following objects are masked from 'package:igraph':`\
+`#>`\
+`#> %<-%, %->%`\
+\
+`y`` `[`%<-%`](https://future.futureverse.org/reference/futureAssign.md)` ``{`` ``42`` ``}`\
+`y`\
+`#> [1] 42`
 
 An alternative is to detach the **future** package and re-attach it,
 which will achieve the same thing:
 
-``` r
-> detach("package:future")
-> library(future)
-```
+\
+[`detach`](https://rdrr.io/r/base/detach.html)`(``"package:future"``)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`future`](https://future.futureverse.org)`)`
 
 Yet another alternative is to explicitly override the object by
 importing it to the global environment, e.g.
 
-``` r
-> `%<-%` <- future::`%<-%`
-> y %<-% { 42 }
-> y
-[1] 42
-```
+\
+`` `%<-%` ``` ``<-`` ``future``::``` `%<-%` ``\
+`y`` `[`%<-%`](https://future.futureverse.org/reference/futureAssign.md)` ``{`` ``42`` ``}`\
+`y`\
+`#> [1] 42`
 
 In this case, it does not matter in what order the packages are attached
 because we will always use the copy of
@@ -696,10 +674,9 @@ which means it has higher precedence than most other binary operators
 but also higher than some of the unary operators in R. For instance,
 this explains why we get the following error:
 
-``` r
-> x %<-% 2 * runif(1)
-Error in x %<-% 2 * runif(1) : non-numeric argument to binary operator
-```
+\
+`x`` `[`%<-%`](https://future.futureverse.org/reference/futureAssign.md)` ``2`` ``*`` `[`runif`](https://rdrr.io/r/stats/Uniform.html)`(``1``)`\
+`#> Error in x %<-% 2 * runif(1) : non-numeric argument to binary operator`
 
 What effectively is happening here is that because of the higher
 priority of `%<-%`, we first create a future `x %<-% 2` and then we try
@@ -707,11 +684,10 @@ to multiply the future (not its value) with the value of `runif(1)` -
 which makes no sense. In order to properly assign the future variable,
 we need to put the future expression within curly brackets;
 
-``` r
-> x %<-% { 2 * runif(1) }
-> x
-[1] 1.030209
-```
+\
+`x`` `[`%<-%`](https://future.futureverse.org/reference/futureAssign.md)` ``{`` ``2`` ``*`` `[`runif`](https://rdrr.io/r/stats/Uniform.html)`(``1``)`` ``}`\
+`x`\
+`#> [1] 1.030209`
 
 Parentheses will also do. For details on precedence on operators in R,
 see Section ‘Infix and prefix operators’ in the ‘R Language Definition’
@@ -724,20 +700,18 @@ curly brackets is when using the
 **[magrittr](https://cran.r-project.org/package=magrittr)** infix
 operator `%>%`, e.g.
 
-``` r
-> library(magrittr)
-> x %<-% 1:100 %>% sum
-Error in sum(.) : invalid 'type' (environment) of argument
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`magrittr`](https://magrittr.tidyverse.org)`)`\
+`x`` `[`%<-%`](https://future.futureverse.org/reference/futureAssign.md)` ``1``:``100`` `[`%>%`](https://magrittr.tidyverse.org/reference/pipe.html)` ``sum`\
+`#> Error in sum(.) : invalid 'type' (environment) of argument`
 
 The reason for this error is that `x %<-% 1:100` is passed to
 [`sum()`](https://rdrr.io/r/base/sum.html) by `%>%`. To fix this, use:
 
-``` r
-> x %<-% { 1:100 %>% sum }
-> x
-[1] 5050
-```
+\
+`x`` `[`%<-%`](https://future.futureverse.org/reference/futureAssign.md)` ``{`` ``1``:``100`` `[`%>%`](https://magrittr.tidyverse.org/reference/pipe.html)` ``sum`` ``}`\
+`x`\
+`#> [1] 5050`
 
 ### R CMD check NOTEs
 

@@ -39,15 +39,14 @@ Status](https://codecov.io/gh/futureverse/future/branch/develop/graph/badge.svg)
 フューチャがどのように動作するか例を示そう。
 まず、フューチャを使わずに式を評価する次のコードを見てみよう。
 
-``` r
-> v <- {
-+   cat("Hello world!\n")
-+   3.14
-+ }
-Hello world!
-> v
-[1] 3.14
-```
+\
+`v`` ``<-`` ``{`\
+`  `[`cat`](https://rdrr.io/r/base/cat.html)`(``"Hello world!\n"``)`\
+`  ``3.14`\
+`}`\
+`#> Hello world!`\
+`v`\
+`#> [1] 3.14`
 
 上のコードは式の値を変数 `v` に代入し、次に `v` の値を表示している。
 このとき、`v`
@@ -55,16 +54,15 @@ Hello world!
 
 上のコードをフューチャを使った式に書き換えよう。
 
-``` r
-> library(future)
-> v %<-% {
-+   cat("Hello world!\n")
-+   3.14
-+ }
-> v
-Hello world!
-[1] 3.14
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`future`](https://future.futureverse.org)`)`\
+`v`` `[`%<-%`](https://future.futureverse.org/reference/futureAssign.md)` ``{`\
+`  `[`cat`](https://rdrr.io/r/base/cat.html)`(``"Hello world!\n"``)`\
+`  ``3.14`\
+`}`\
+`v`\
+`#> Hello world!`\
+`#> [1] 3.14`
 
 2つのコード違いは `v` に対する代入記号にある。 最初のコードで `<-`
 が使われていたところが、フューチャの場合は `%<-%` に変わっている。
@@ -77,17 +75,16 @@ Text’](https://cran.r-project.org/web/packages/future/vignettes/future-2-outpu
 フューチャは何が便利なのだろうか？
 式をフューチャにしておくと、式の評価を非同期実行したいときに、次のように簡単に切り替えることができる。
 
-``` r
-> library(future)
-> plan(multisession)
-> v %<-% {
-+   cat("Hello world!\n")
-+   3.14
-+ }
-> v
-Hello world!
-[1] 3.14
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`future`](https://future.futureverse.org)`)`\
+[`plan`](https://future.futureverse.org/reference/plan.md)`(``multisession``)`\
+`v`` `[`%<-%`](https://future.futureverse.org/reference/futureAssign.md)` ``{`\
+`  `[`cat`](https://rdrr.io/r/base/cat.html)`(``"Hello world!\n"``)`\
+`  ``3.14`\
+`}`\
+`v`\
+`#> Hello world!`\
+`#> [1] 3.14`
 
 非同期化されたフューチャは、実行時に現行のメインプロセスを**ブロックしない**。
 つまり、バックグラウンドの別のプロセスでフューチャが解決されている間に、現行のプロセスで引き続き処理を実行できる。
@@ -107,17 +104,16 @@ future
 `v <- value(f)` という2つの関数を使うスタイルがある。
 上記の例を明示的なスタイルに書き換えると次のようになる。
 
-``` r
-> library(future)
-> f <- future({
-+   cat("Hello world!\n")
-+   3.14
-+ })
-> v <- value(f)
-Hello world!
-> v
-[1] 3.14
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`future`](https://future.futureverse.org)`)`\
+`f`` ``<-`` `[`future`](https://future.futureverse.org/reference/future.md)`(``{`\
+`  `[`cat`](https://rdrr.io/r/base/cat.html)`(``"Hello world!\n"``)`\
+`  ``3.14`\
+`}``)`\
+`v`` ``<-`` `[`value`](https://future.futureverse.org/reference/value.md)`(``f``)`\
+`#> Hello world!`\
+`v`\
+`#> [1] 3.14`
 
 どちらのスタイルで作成してもフューチャの動作は同じである(\*)。
 非明示的なスタイルを使うと通常の R コードに近い書き方になる。
@@ -210,18 +206,17 @@ API とふるまいを持つ。
 
 代入がローカル環境で実行される（グローバル環境に影響しない）ことは、次のコードの実行結果からわかる。
 
-``` r
-> plan(sequential)
-> a <- 1
-> x %<-% {
-+     a <- 2
-+     2 * a
-+ }
-> x
-[1] 4
-> a
-[1] 1
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.md)`(``sequential``)`\
+`a`` ``<-`` ``1`\
+`x`` `[`%<-%`](https://future.futureverse.org/reference/futureAssign.md)` ``{`\
+`    ``a`` ``<-`` ``2`\
+`    ``2`` ``*`` ``a`\
+`}`\
+`x`\
+`#> [1] 4`\
+`a`\
+`#> [1] 1`
 
 以上で、フューチャに共通するふるまいがわかった。
 以降ではそれぞれのフューチャ戦略について見ていく。
@@ -239,37 +234,36 @@ API とふるまいを持つ。
 評価と同じように動作するように設計されている。
 逐次的フューチャのふるまいを次のコードに示す。
 
-``` r
-> plan(sequential)
-> pid <- Sys.getpid()
-> pid
-[1] 1427324
-> a %<-% {
-+     pid <- Sys.getpid()
-+     cat("Future 'a' ...\n")
-+     3.14
-+ }
-> b %<-% {
-+     rm(pid)
-+     cat("Future 'b' ...\n")
-+     Sys.getpid()
-+ }
-> c %<-% {
-+     cat("Future 'c' ...\n")
-+     2 * a
-+ }
-Future 'a' ...
-> b
-Future 'b' ...
-[1] 1427324
-> c
-Future 'c' ...
-[1] 6.28
-> a
-[1] 3.14
-> pid
-[1] 1427324
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.md)`(``sequential``)`\
+`pid`` ``<-`` `[`Sys.getpid`](https://rdrr.io/r/base/Sys.getpid.html)`(``)`\
+`pid`\
+`#> [1] 1427324`\
+`a`` `[`%<-%`](https://future.futureverse.org/reference/futureAssign.md)` ``{`\
+`    ``pid`` ``<-`` `[`Sys.getpid`](https://rdrr.io/r/base/Sys.getpid.html)`(``)`\
+`    `[`cat`](https://rdrr.io/r/base/cat.html)`(``"Future 'a' ...\n"``)`\
+`    ``3.14`\
+`}`\
+`b`` `[`%<-%`](https://future.futureverse.org/reference/futureAssign.md)` ``{`\
+`    `[`rm`](https://rdrr.io/r/base/rm.html)`(``pid``)`\
+`    `[`cat`](https://rdrr.io/r/base/cat.html)`(``"Future 'b' ...\n"``)`\
+`    `[`Sys.getpid`](https://rdrr.io/r/base/Sys.getpid.html)`(``)`\
+`}`\
+`c`` `[`%<-%`](https://future.futureverse.org/reference/futureAssign.md)` ``{`\
+`    `[`cat`](https://rdrr.io/r/base/cat.html)`(``"Future 'c' ...\n"``)`\
+`    ``2`` ``*`` ``a`\
+`}`\
+`#> Future 'a' ...`\
+`b`\
+`#> Future 'b' ...`\
+`#> [1] 1427324`\
+`c`\
+`#> Future 'c' ...`\
+`#> [1] 6.28`\
+`a`\
+`#> [1] 3.14`\
+`pid`\
+`#> [1] 1427324`
 
 逐次的な評価がその場で行われるため、3つのフューチャは作成と同時に即座に解決される。
 呼び出し環境の `pid`（これは現行プロセスのプロセス ID
@@ -297,37 +291,36 @@ R
 セッションにおいてフューチャを評価する。
 マルチセッション評価の例を示そう。
 
-``` r
-> plan(multisession)
-> pid <- Sys.getpid()
-> pid
-[1] 1427324
-> a %<-% {
-+     pid <- Sys.getpid()
-+     cat("Future 'a' ...\n")
-+     3.14
-+ }
-> b %<-% {
-+     rm(pid)
-+     cat("Future 'b' ...\n")
-+     Sys.getpid()
-+ }
-> c %<-% {
-+     cat("Future 'c' ...\n")
-+     2 * a
-+ }
-Future 'a' ...
-> b
-Future 'b' ...
-[1] 1427382
-> c
-Future 'c' ...
-[1] 6.28
-> a
-[1] 3.14
-> pid
-[1] 1427324
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.md)`(``multisession``)`\
+`pid`` ``<-`` `[`Sys.getpid`](https://rdrr.io/r/base/Sys.getpid.html)`(``)`\
+`pid`\
+`#> [1] 1427324`\
+`a`` `[`%<-%`](https://future.futureverse.org/reference/futureAssign.md)` ``{`\
+`    ``pid`` ``<-`` `[`Sys.getpid`](https://rdrr.io/r/base/Sys.getpid.html)`(``)`\
+`    `[`cat`](https://rdrr.io/r/base/cat.html)`(``"Future 'a' ...\n"``)`\
+`    ``3.14`\
+`}`\
+`b`` `[`%<-%`](https://future.futureverse.org/reference/futureAssign.md)` ``{`\
+`    `[`rm`](https://rdrr.io/r/base/rm.html)`(``pid``)`\
+`    `[`cat`](https://rdrr.io/r/base/cat.html)`(``"Future 'b' ...\n"``)`\
+`    `[`Sys.getpid`](https://rdrr.io/r/base/Sys.getpid.html)`(``)`\
+`}`\
+`c`` `[`%<-%`](https://future.futureverse.org/reference/futureAssign.md)` ``{`\
+`    `[`cat`](https://rdrr.io/r/base/cat.html)`(``"Future 'c' ...\n"``)`\
+`    ``2`` ``*`` ``a`\
+`}`\
+`#> Future 'a' ...`\
+`b`\
+`#> Future 'b' ...`\
+`#> [1] 1427382`\
+`c`\
+`#> Future 'c' ...`\
+`#> [1] 6.28`\
+`a`\
+`#> [1] 3.14`\
+`pid`\
+`#> [1] 1427324`
 
 この結果を見ると、`a`, `c`, `pid`
 の値は逐次的フューチャのときと同じであり、`b` だけが異なることがわかる。
@@ -342,11 +335,10 @@ R セッションで評価される。
 [`availableCores()`](https://future.futureverse.org/reference/re-exports.md)
 の値によって決まる。
 
-``` r
-> availableCores()
-mc.cores 
-       2 
-```
+\
+[`availableCores`](https://future.futureverse.org/reference/re-exports.md)`(``)`\
+`#> mc.cores `\
+`#>        2 `
 
 この結果から、メインプロセス以外に
 2つのプロセスが利用可能なことがわかる。
@@ -406,37 +398,36 @@ Windows 以外）では、バックグラウンドで R
 例えば、3つのクラスタノード `n1`, `n2`, `n3`
 があるとき、それらを使って非同期処理を行うには次のようにする。
 
-``` r
-> plan(cluster, workers = c("n1", "n2", "n3"))
-> pid <- Sys.getpid()
-> pid
-[1] 1427324
-> a %<-% {
-+     pid <- Sys.getpid()
-+     cat("Future 'a' ...\n")
-+     3.14
-+ }
-> b %<-% {
-+     rm(pid)
-+     cat("Future 'b' ...\n")
-+     Sys.getpid()
-+ }
-> c %<-% {
-+     cat("Future 'c' ...\n")
-+     2 * a
-+ }
-Future 'a' ...
-> b
-Future 'b' ...
-[1] 1427499
-> c
-Future 'c' ...
-[1] 6.28
-> a
-[1] 3.14
-> pid
-[1] 1427324
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.md)`(``cluster``, workers ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"n1"``, ``"n2"``, ``"n3"``)``)`\
+`pid`` ``<-`` `[`Sys.getpid`](https://rdrr.io/r/base/Sys.getpid.html)`(``)`\
+`pid`\
+`#> [1] 1427324`\
+`a`` `[`%<-%`](https://future.futureverse.org/reference/futureAssign.md)` ``{`\
+`    ``pid`` ``<-`` `[`Sys.getpid`](https://rdrr.io/r/base/Sys.getpid.html)`(``)`\
+`    `[`cat`](https://rdrr.io/r/base/cat.html)`(``"Future 'a' ...\n"``)`\
+`    ``3.14`\
+`}`\
+`b`` `[`%<-%`](https://future.futureverse.org/reference/futureAssign.md)` ``{`\
+`    `[`rm`](https://rdrr.io/r/base/rm.html)`(``pid``)`\
+`    `[`cat`](https://rdrr.io/r/base/cat.html)`(``"Future 'b' ...\n"``)`\
+`    `[`Sys.getpid`](https://rdrr.io/r/base/Sys.getpid.html)`(``)`\
+`}`\
+`c`` `[`%<-%`](https://future.futureverse.org/reference/futureAssign.md)` ``{`\
+`    `[`cat`](https://rdrr.io/r/base/cat.html)`(``"Future 'c' ...\n"``)`\
+`    ``2`` ``*`` ``a`\
+`}`\
+`#> Future 'a' ...`\
+`b`\
+`#> Future 'b' ...`\
+`#> [1] 1427499`\
+`c`\
+`#> Future 'c' ...`\
+`#> [1] 6.28`\
+`a`\
+`#> [1] 3.14`\
+`pid`\
+`#> [1] 1427324`
 
 [`parallel::makeCluster()`](https://rdrr.io/r/parallel/makeCluster.html)
 で作られたクラスタなら何でもクラスタフューチャで利用できる。
@@ -463,7 +454,7 @@ SSH
 
 各ノードで複数のワーカを実行したい場合は、次のようにノード名を複数回書けばよい。
 
-    > plan(cluster, workers = c(rep("n1", times = 3), "n2", rep("n3", times = 5)))
+    plan(cluster, workers = c(rep("n1", times = 3), "n2", rep("n3", times = 5)))
 
 この例では、`n1` では3つ、`n2` では1つ、`n3`
 では5つと、合計9つのワーカにより並列実行される。
@@ -479,37 +470,36 @@ SSH
 `b`）があり、マルチセッション戦略を使って評価される。 ただし、フューチャ
 `b` は内部に別のフューチャが使われている。
 
-``` r
-> plan(multisession)
-> pid <- Sys.getpid()
-> a %<-% {
-+     cat("Future 'a' ...\n")
-+     Sys.getpid()
-+ }
-> b %<-% {
-+     cat("Future 'b' ...\n")
-+     b1 %<-% {
-+         cat("Future 'b1' ...\n")
-+         Sys.getpid()
-+     }
-+     b2 %<-% {
-+         cat("Future 'b2' ...\n")
-+         Sys.getpid()
-+     }
-+     c(b.pid = Sys.getpid(), b1.pid = b1, b2.pid = b2)
-+ }
-> pid
-[1] 1427324
-> a
-Future 'a' ...
-[1] 1427606
-> b
-Future 'b' ...
-Future 'b1' ...
-Future 'b2' ...
-  b.pid  b1.pid  b2.pid
-1427607 1427607 1427607
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.md)`(``multisession``)`\
+`pid`` ``<-`` `[`Sys.getpid`](https://rdrr.io/r/base/Sys.getpid.html)`(``)`\
+`a`` `[`%<-%`](https://future.futureverse.org/reference/futureAssign.md)` ``{`\
+`    `[`cat`](https://rdrr.io/r/base/cat.html)`(``"Future 'a' ...\n"``)`\
+`    `[`Sys.getpid`](https://rdrr.io/r/base/Sys.getpid.html)`(``)`\
+`}`\
+`b`` `[`%<-%`](https://future.futureverse.org/reference/futureAssign.md)` ``{`\
+`    `[`cat`](https://rdrr.io/r/base/cat.html)`(``"Future 'b' ...\n"``)`\
+`    ``b1`` `[`%<-%`](https://future.futureverse.org/reference/futureAssign.md)` ``{`\
+`        `[`cat`](https://rdrr.io/r/base/cat.html)`(``"Future 'b1' ...\n"``)`\
+`        `[`Sys.getpid`](https://rdrr.io/r/base/Sys.getpid.html)`(``)`\
+`    ``}`\
+`    ``b2`` `[`%<-%`](https://future.futureverse.org/reference/futureAssign.md)` ``{`\
+`        `[`cat`](https://rdrr.io/r/base/cat.html)`(``"Future 'b2' ...\n"``)`\
+`        `[`Sys.getpid`](https://rdrr.io/r/base/Sys.getpid.html)`(``)`\
+`    ``}`\
+`    `[`c`](https://rdrr.io/r/base/c.html)`(``b.pid ``=`` `[`Sys.getpid`](https://rdrr.io/r/base/Sys.getpid.html)`(``)``, b1.pid ``=`` ``b1``, b2.pid ``=`` ``b2``)`\
+`}`\
+`pid`\
+`#> [1] 1427324`\
+`a`\
+`#> Future 'a' ...`\
+`#> [1] 1427606`\
+`b`\
+`#> Future 'b' ...`\
+`#> Future 'b1' ...`\
+`#> Future 'b2' ...`\
+`#>   b.pid  b1.pid  b2.pid`\
+`#> 1427607 1427607 1427607`
 
 プロセスIDを見ると、3つの異なるプロセスがフューチャの解決に使われていることがわかる。
 メインプロセス (pid 1427324)、`a` に使われるプロセス (pid 1427606)、`b`
@@ -528,21 +518,20 @@ Future 'b2' ...
 
 しかし、次に示すように、複数レベルのマルチセッション評価を試しても、上記と同じ動作になる。
 
-``` r
-> plan(list(multisession, multisession))
-[...]
-> pid
-[1] 1427324
-> a
-Future 'a' ...
-[1] 1427721
-> b
-Future 'b' ...
-Future 'b1' ...
-Future 'b2' ...
-  b.pid  b1.pid  b2.pid
-1427722 1427722 1427722
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.md)`(`[`list`](https://rdrr.io/r/base/list.html)`(``multisession``, ``multisession``)``)`\
+`#> [...]`\
+`pid`\
+`#> [1] 1427324`\
+`a`\
+`#> Future 'a' ...`\
+`#> [1] 1427721`\
+`b`\
+`#> Future 'b' ...`\
+`#> Future 'b1' ...`\
+`#> Future 'b2' ...`\
+`#>   b.pid  b1.pid  b2.pid`\
+`#> 1427722 1427722 1427722`
 
 この理由は、ここでも、誤って多くのプロセスが起動するのを防ぐためである。
 内部的には、[`parallel::mclapply()`](https://rdrr.io/r/parallel/mclapply.html)
@@ -551,21 +540,20 @@ Future 'b2' ...
 
 次に、トップレベルを逐次評価にして、ネストされたフューチャをマルチセッション評価してみよう。
 
-``` r
-> plan(list(sequential, multisession))
-[...]
-> pid
-[1] 1427324
-> a
-Future 'a' ...
-[1] 1427324
-> b
-Future 'b' ...
-Future 'b1' ...
-Future 'b2' ...
-  b.pid  b1.pid  b2.pid
-1427324 1427855 1427854
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.md)`(`[`list`](https://rdrr.io/r/base/list.html)`(``sequential``, ``multisession``)``)`\
+`#> [...]`\
+`pid`\
+`#> [1] 1427324`\
+`a`\
+`#> Future 'a' ...`\
+`#> [1] 1427324`\
+`b`\
+`#> Future 'b' ...`\
+`#> Future 'b1' ...`\
+`#> Future 'b2' ...`\
+`#>   b.pid  b1.pid  b2.pid`\
+`#> 1427324 1427855 1427854`
 
 `a` と `b` は呼び出しプロセス (pid 1427324)
 で解決され、ネストされた2つのフューチャ（`b1` と
@@ -575,22 +563,21 @@ Future 'b2' ...
 各レベルで利用可能なコアの数を明示的に指定する（**強制する**）と、ネストされたマルチセッション評価戦略を使用することができる。
 そのためには、次のようにしてデフォルト設定を “tweak” する必要がある。
 
-``` r
-> plan(list(tweak(multisession, workers = 2), tweak(multisession, 
-+     workers = 2)))
-[...]
-> pid
-[1] 1427324
-> a
-Future 'a' ...
-[1] 1427973
-> b
-Future 'b' ...
-Future 'b1' ...
-Future 'b2' ...
-  b.pid  b1.pid  b2.pid
-1427972 1428098 1428099
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.md)`(`[`list`](https://rdrr.io/r/base/list.html)`(`[`tweak`](https://future.futureverse.org/reference/plan.md)`(``multisession``, workers ``=`` ``2``)``, `[`tweak`](https://future.futureverse.org/reference/plan.md)`(``multisession``, `\
+`    workers ``=`` ``2``)``)``)`\
+`#> [...]`\
+`pid`\
+`#> [1] 1427324`\
+`a`\
+`#> Future 'a' ...`\
+`#> [1] 1427973`\
+`b`\
+`#> Future 'b' ...`\
+`#> Future 'b1' ...`\
+`#> Future 'b2' ...`\
+`#>   b.pid  b1.pid  b2.pid`\
+`#> 1427972 1428098 1428099`
 
 まず、`a` と `b` は呼び出しプロセス (pid 1427324)
 とは異なるプロセス（pid 1427973 と 1427972）で解決される。
@@ -611,34 +598,33 @@ Topologies’](https://cran.r-project.org/web/packages/future/vignettes/future-3
 のようにして非明示的なフューチャを明示的なフューチャに変換する必要がある。
 例を次に示す。
 
-``` r
-> plan(multisession)
-> a %<-% {
-+     cat("Future 'a' ...")
-+     Sys.sleep(2)
-+     cat("done\n")
-+     Sys.getpid()
-+ }
-> cat("Waiting for 'a' to be resolved ...\n")
-Waiting for 'a' to be resolved ...
-> f <- futureOf(a)
-> count <- 1
-> while (!resolved(f)) {
-+     cat(count, "\n")
-+     Sys.sleep(0.2)
-+     count <- count + 1
-+ }
-1 
-2 
-3 
-4 
-5 
-> cat("Waiting for 'a' to be resolved ... DONE\n")
-Waiting for 'a' to be resolved ... DONE
-> a
-Future 'a' ...done
-[1] 1428185
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.md)`(``multisession``)`\
+`a`` `[`%<-%`](https://future.futureverse.org/reference/futureAssign.md)` ``{`\
+`    `[`cat`](https://rdrr.io/r/base/cat.html)`(``"Future 'a' ..."``)`\
+`    `[`Sys.sleep`](https://rdrr.io/r/base/Sys.sleep.html)`(``2``)`\
+`    `[`cat`](https://rdrr.io/r/base/cat.html)`(``"done\n"``)`\
+`    `[`Sys.getpid`](https://rdrr.io/r/base/Sys.getpid.html)`(``)`\
+`}`\
+[`cat`](https://rdrr.io/r/base/cat.html)`(``"Waiting for 'a' to be resolved ...\n"``)`\
+`#> Waiting for 'a' to be resolved ...`\
+`f`` ``<-`` `[`futureOf`](https://future.futureverse.org/reference/futureOf.md)`(``a``)`\
+`count`` ``<-`` ``1`\
+`while`` ``(``!`[`resolved`](https://future.futureverse.org/reference/resolved.md)`(``f``)``)`` ``{`\
+`    `[`cat`](https://rdrr.io/r/base/cat.html)`(``count``, ``"\n"``)`\
+`    `[`Sys.sleep`](https://rdrr.io/r/base/Sys.sleep.html)`(``0.2``)`\
+`    ``count`` ``<-`` ``count`` ``+`` ``1`\
+`}`\
+`#> 1 `\
+`#> 2 `\
+`#> 3 `\
+`#> 4 `\
+`#> 5 `\
+[`cat`](https://rdrr.io/r/base/cat.html)`(``"Waiting for 'a' to be resolved ... DONE\n"``)`\
+`#> Waiting for 'a' to be resolved ... DONE`\
+`a`\
+`#> Future 'a' ...done`\
+`#> [1] 1428185`
 
 ## フューチャにおけるエラー処理
 
@@ -646,39 +632,36 @@ Future 'a' ...done
 フューチャを評価しているときにエラーが起こった場合、そのエラーは**フューチャの値が要求されたとき**に呼び出し環境へ伝播される。
 例えば、遅延評価を使ったフューチャでエラーが起こった場合、次のようになる。
 
-``` r
-> plan(sequential)
-> b <- "hello"
-> a %<-% {
-+     cat("Future 'a' ...\n")
-+     log(b)
-+ } %lazy% TRUE
-> cat("Everything is still ok although we have created a future that will fail.\n")
-Everything is still ok although we have created a future that will fail.
-> a
-Future 'a' ...
-Error in log(b) : non-numeric argument to mathematical function
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.md)`(``sequential``)`\
+`b`` ``<-`` ``"hello"`\
+`a`` `[`%<-%`](https://future.futureverse.org/reference/futureAssign.md)` ``{`\
+`    `[`cat`](https://rdrr.io/r/base/cat.html)`(``"Future 'a' ...\n"``)`\
+`    `[`log`](https://rdrr.io/r/base/Log.html)`(``b``)`\
+`}`` `[`%lazy%`](https://future.futureverse.org/reference/futureAssign.md)` ``TRUE`\
+[`cat`](https://rdrr.io/r/base/cat.html)`(``"Everything is still ok although we have created a future that will fail.\n"``)`\
+`#> Everything is still ok although we have created a future that will fail.`\
+`a`\
+`#> Future 'a' ...`\
+`#> Error in log(b) : non-numeric argument to mathematical function`
 
 このエラーは値を要求するたびに起こる。
 すなわち、もう一度値を取得しようとすると同じエラー（と出力）になる。
 
-``` r
-> a
-Future 'a' ...
-Error in log(b) : non-numeric argument to mathematical function
-In addition: Warning message:
-restarting interrupted promise evaluation
-```
+\
+`a`\
+`#> Future 'a' ...`\
+`#> Error in log(b) : non-numeric argument to mathematical function`\
+`#> In addition: Warning message:`\
+`#> restarting interrupted promise evaluation`
 
 エラーを起こしたコールスタックの**最後の**呼び出しを見るには、[`backtrace()`](https://future.futureverse.org/reference/backtrace.md)
 関数(\*)を使う。
 
-``` r
-> backtrace(a)
-[[1]]
-log(a)
-```
+\
+[`backtrace`](https://future.futureverse.org/reference/backtrace.md)`(``a``)`\
+`#> [[1]]`\
+`#> log(a)`
 
 (\*) 一般的に使用される
 [`traceback()`](https://rdrr.io/r/base/traceback.html)
@@ -719,21 +702,20 @@ Solutions’](https://cran.r-project.org/web/packages/future/vignettes/future-4-
 オブジェクトなので、どこでも何にでも代入可能である。
 例えば、次のように、ループの中でフューチャをリストの要素として代入できる。
 
-``` r
-> plan(multisession)
-> f <- list()
-> for (ii in 1:3) {
-+     f[[ii]] <- future({
-+         Sys.getpid()
-+     })
-+ }
-> v <- lapply(f, FUN = value)
-> str(v)
-List of 3
- $ : int 1428291
- $ : int 1428290
- $ : int 1428291
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.md)`(``multisession``)`\
+`f`` ``<-`` `[`list`](https://rdrr.io/r/base/list.html)`(``)`\
+`for`` ``(``ii`` ``in`` ``1``:``3``)`` ``{`\
+`    ``f``[[``ii``]``]`` ``<-`` `[`future`](https://future.futureverse.org/reference/future.md)`(``{`\
+`        `[`Sys.getpid`](https://rdrr.io/r/base/Sys.getpid.html)`(``)`\
+`    ``}``)`\
+`}`\
+`v`` ``<-`` `[`lapply`](https://rdrr.io/r/base/lapply.html)`(``f``, FUN ``=`` ``value``)`\
+[`str`](https://rdrr.io/r/utils/str.html)`(``v``)`\
+`#> List of 3`\
+`#>  $ : int 1428291`\
+`#>  $ : int 1428290`\
+`#>  $ : int 1428291`
 
 これは非明示的なフューチャでは**できない**。 なぜなら、`%<-%`
 演算子は通常の `<-` 代入演算子とは違う動作をするからである。 `%<-%`
@@ -741,21 +723,20 @@ List of 3
 `assign(name, value, envir)` と同じ動作である。
 したがって、上記と同様のことを非明示的フューチャで行いたい場合は、次のように名前インデックスを使って環境に代入する。
 
-``` r
-> plan(multisession)
-> v <- new.env()
-> for (name in c("a", "b", "c")) {
-+     v[[name]] %<-% {
-+         Sys.getpid()
-+     }
-+ }
-> v <- as.list(v)
-> str(v)
-List of 3
- $ a: int 1428405
- $ b: int 1428406
- $ c: int 1428405
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.md)`(``multisession``)`\
+`v`` ``<-`` `[`new.env`](https://rdrr.io/r/base/environment.html)`(``)`\
+`for`` ``(``name`` ``in`` `[`c`](https://rdrr.io/r/base/c.html)`(``"a"``, ``"b"``, ``"c"``)``)`` ``{`\
+`    ``v``[[``name``]``]`` `[`%<-%`](https://future.futureverse.org/reference/futureAssign.md)` ``{`\
+`        `[`Sys.getpid`](https://rdrr.io/r/base/Sys.getpid.html)`(``)`\
+`    ``}`\
+`}`\
+`v`` ``<-`` `[`as.list`](https://rdrr.io/r/base/list.html)`(``v``)`\
+[`str`](https://rdrr.io/r/utils/str.html)`(``v``)`\
+`#> List of 3`\
+`#>  $ a: int 1428405`\
+`#>  $ b: int 1428406`\
+`#>  $ c: int 1428405`
 
 ここで、`as.list(v)` は環境 `v`
 のすべてのフューチャが解決するまでブロックされる。
@@ -766,22 +747,21 @@ List of 3
 リスト環境は、インデックス付きリストと同じように、インデックス付けすることができる環境である。
 上記のコードでリストをリスト環境に置き換えると、数値インデックスを使って非明示的フューチャを代入できるようになる。
 
-``` r
-> library(listenv)
-> plan(multisession)
-> v <- listenv()
-> for (ii in 1:3) {
-+     v[[ii]] %<-% {
-+         Sys.getpid()
-+     }
-+ }
-> v <- as.list(v)
-> str(v)
-List of 3
- $ : int 1428523
- $ : int 1428522
- $ : int 1428523
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`listenv`](https://listenv.futureverse.org)`)`\
+[`plan`](https://future.futureverse.org/reference/plan.md)`(``multisession``)`\
+`v`` ``<-`` `[`listenv`](https://listenv.futureverse.org/reference/listenv.html)`(``)`\
+`for`` ``(``ii`` ``in`` ``1``:``3``)`` ``{`\
+`    ``v``[[``ii``]``]`` `[`%<-%`](https://future.futureverse.org/reference/futureAssign.md)` ``{`\
+`        `[`Sys.getpid`](https://rdrr.io/r/base/Sys.getpid.html)`(``)`\
+`    ``}`\
+`}`\
+`v`` ``<-`` `[`as.list`](https://rdrr.io/r/base/list.html)`(``v``)`\
+[`str`](https://rdrr.io/r/utils/str.html)`(``v``)`\
+`#> List of 3`\
+`#>  $ : int 1428523`\
+`#>  $ : int 1428522`\
+`#>  $ : int 1428523`
 
 ここでも、`as.list(v)`
 はすべてのフューチャが解決するまでブロックされる。

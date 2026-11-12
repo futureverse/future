@@ -32,7 +32,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.82.0-9011</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.82.0-9012</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -269,16 +269,17 @@ will shut down the underlying PSOCK clusters.</p>
 <code>R CMD check --as-cran</code>, or <code>R CMD check</code> with
 environment variable <code>_R_CHECK_CONNECTIONS_LEFT_OPEN_=true</code>
 set, will produce an error on</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="sc">$</span> R CMD check <span class="sc">--</span>as<span class="sc">-</span>cran mypkg_1.0.tar.gz</span>
-<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a>...</span>
-<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a><span class="sc">*</span> checking examples ... ERROR</span>
-<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a>Running examples <span class="cf">in</span> <span class="st">'analyze-Ex.R'</span> failed</span>
-<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a>...</span>
-<span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">cleanEx</span>()</span>
-<span id="cb12-7"><a href="#cb12-7" tabindex="-1"></a>Error<span class="sc">:</span> connections left open<span class="sc">:</span></span>
-<span id="cb12-8"><a href="#cb12-8" tabindex="-1"></a>      <span class="er">&lt;</span><span class="sc">-</span>localhost<span class="sc">:</span><span class="dv">37400</span> (sockconn)</span>
-<span id="cb12-9"><a href="#cb12-9" tabindex="-1"></a>      <span class="ot">&lt;-</span>localhost<span class="sc">:</span><span class="dv">37400</span> (sockconn)</span>
-<span id="cb12-10"><a href="#cb12-10" tabindex="-1"></a>Execution halted</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#&gt; $ R CMD check --as-cran mypkg_1.0.tar.gz</span></span>
+<span><span class="co">#&gt; ...</span></span>
+<span><span class="co">#&gt; * checking examples ... ERROR</span></span>
+<span><span class="co">#&gt; Running examples in 'analyze-Ex.R' failed</span></span>
+<span><span class="co">#&gt; ...</span></span>
+<span><span class="fu">cleanEx</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Error: connections left open:</span></span>
+<span><span class="co">#&gt;       &lt;-localhost:37400 (sockconn)</span></span>
+<span><span class="co">#&gt;       &lt;-localhost:37400 (sockconn)</span></span>
+<span><span class="co">#&gt; Execution halted</span></span></code></pre></div>
 <p>If you for some reason do not like to display reset of the future
 backend in the help documentation, but you still want it run, wrap the
 statement in an Rd <code>\dontshow{}</code> statement.</p>

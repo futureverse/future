@@ -32,7 +32,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.82.0-9011</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.82.0-9012</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -630,10 +630,11 @@ another R process, e.g.</p>
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>future.globals.onReference <span class="op">=</span> <span class="st">"error"</span><span class="op">)</span></span></code></pre></div>
 <p>we’ll see that this is caught even before attempting to run this in
 parallel;</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" tabindex="-1"></a><span class="sc">&gt;</span> f <span class="ot">&lt;-</span> <span class="fu">future</span>(<span class="fu">image_fill</span>(frink, <span class="st">"orange"</span>, <span class="st">"+100+200"</span>, <span class="dv">20</span>))</span>
-<span id="cb26-2"><a href="#cb26-2" tabindex="-1"></a><span class="do">## Error: Detected a non-exportable reference ('externalptr' of class</span></span>
-<span id="cb26-3"><a href="#cb26-3" tabindex="-1"></a><span class="do">## 'magick-image') in one of the globals ('frink' of class 'magick-image')</span></span>
-<span id="cb26-4"><a href="#cb26-4" tabindex="-1"></a><span class="do">## used in the future expression</span></span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">f</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/future.html">future</a></span><span class="op">(</span><span class="fu"><a href="https://docs.ropensci.org/magick/reference/painting.html" class="external-link">image_fill</a></span><span class="op">(</span><span class="va">frink</span>, <span class="st">"orange"</span>, <span class="st">"+100+200"</span>, <span class="fl">20</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; ## Error: Detected a non-exportable reference ('externalptr' of class</span></span>
+<span><span class="co">#&gt; ## 'magick-image') in one of the globals ('frink' of class 'magick-image')</span></span>
+<span><span class="co">#&gt; ## used in the future expression</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="package-polars">Package: polars<a class="anchor" aria-label="anchor" href="#package-polars"></a>
@@ -1042,24 +1043,25 @@ it is no longer valid. When we try to use it there by calling
 and abort. To illustrate what’s going on the parallel workers, if we
 save the object to file using <code>saveRDS(a, "a.rds")</code>, and try
 to use it in <em>another</em> R session, the following happens:</p>
-<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" tabindex="-1"></a><span class="sc">$</span> R <span class="sc">--</span>quiet <span class="sc">--</span>vanilla</span>
-<span id="cb53-2"><a href="#cb53-2" tabindex="-1"></a><span class="sc">&gt;</span> a <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"a.rds"</span>)</span>
-<span id="cb53-3"><a href="#cb53-3" tabindex="-1"></a><span class="sc">&gt;</span> XML<span class="sc">::</span><span class="fu">xmlGetAttr</span>(a, <span class="st">"status"</span>)</span>
-<span id="cb53-4"><a href="#cb53-4" tabindex="-1"></a></span>
-<span id="cb53-5"><a href="#cb53-5" tabindex="-1"></a> <span class="sc">**</span><span class="er">*</span> caught segfault <span class="sc">**</span><span class="er">*</span></span>
-<span id="cb53-6"><a href="#cb53-6" tabindex="-1"></a>address <span class="dv">0</span>x40, cause <span class="st">'memory not mapped'</span></span>
-<span id="cb53-7"><a href="#cb53-7" tabindex="-1"></a></span>
-<span id="cb53-8"><a href="#cb53-8" tabindex="-1"></a>Traceback<span class="sc">:</span></span>
-<span id="cb53-9"><a href="#cb53-9" tabindex="-1"></a> <span class="dv">1</span><span class="sc">:</span> <span class="fu">xmlAttrs.XMLInternalNode</span>(node, addNamespace)</span>
-<span id="cb53-10"><a href="#cb53-10" tabindex="-1"></a> <span class="dv">2</span><span class="sc">:</span> <span class="fu">xmlAttrs</span>(node, addNamespace)</span>
-<span id="cb53-11"><a href="#cb53-11" tabindex="-1"></a> <span class="dv">3</span><span class="sc">:</span> XML<span class="sc">::</span><span class="fu">xmlGetAttr</span>(a, <span class="st">"status"</span>)</span>
-<span id="cb53-12"><a href="#cb53-12" tabindex="-1"></a></span>
-<span id="cb53-13"><a href="#cb53-13" tabindex="-1"></a>Possible actions<span class="sc">:</span></span>
-<span id="cb53-14"><a href="#cb53-14" tabindex="-1"></a><span class="dv">1</span><span class="sc">:</span> <span class="fu">abort</span> (with core dump, <span class="cf">if</span> enabled)</span>
-<span id="cb53-15"><a href="#cb53-15" tabindex="-1"></a><span class="dv">2</span><span class="sc">:</span> normal R exit</span>
-<span id="cb53-16"><a href="#cb53-16" tabindex="-1"></a><span class="dv">3</span><span class="sc">:</span> exit R without saving workspace</span>
-<span id="cb53-17"><a href="#cb53-17" tabindex="-1"></a><span class="dv">4</span><span class="sc">:</span> exit R saving workspace</span>
-<span id="cb53-18"><a href="#cb53-18" tabindex="-1"></a>Selection<span class="sc">:</span></span></code></pre></div>
+<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#&gt; $ R --quiet --vanilla</span></span>
+<span><span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rspatial.github.io/terra/reference/serialize.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="st">"a.rds"</span><span class="op">)</span></span>
+<span><span class="fu">XML</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/XML/man/xmlGetAttr.html" class="external-link">xmlGetAttr</a></span><span class="op">(</span><span class="va">a</span>, <span class="st">"status"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">#&gt;  *** caught segfault ***</span></span>
+<span><span class="co">#&gt; address 0x40, cause 'memory not mapped'</span></span>
+<span><span class="co">#&gt;</span></span>
+<span><span class="co">#&gt; Traceback:</span></span>
+<span><span class="co">#&gt;  1: xmlAttrs.XMLInternalNode(node, addNamespace)</span></span>
+<span><span class="co">#&gt;  2: xmlAttrs(node, addNamespace)</span></span>
+<span><span class="co">#&gt;  3: XML::xmlGetAttr(a, "status")</span></span>
+<span><span class="co">#&gt;</span></span>
+<span><span class="co">#&gt; Possible actions:</span></span>
+<span><span class="co">#&gt; 1: abort (with core dump, if enabled)</span></span>
+<span><span class="co">#&gt; 2: normal R exit</span></span>
+<span><span class="co">#&gt; 3: exit R without saving workspace</span></span>
+<span><span class="co">#&gt; 4: exit R saving workspace</span></span>
+<span><span class="co">#&gt; Selection:</span></span></code></pre></div>
 <p>This is a very harsh way of telling us that we cannot export all
 types of objects produced by <strong>XML</strong>. Ideally,
 <strong>XML</strong> would detect this and give an informative error

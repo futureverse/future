@@ -134,20 +134,19 @@ detects this discrepancy, and if it is too large, it will produce an
 error. For example, on an eight core machine, we would get the following
 error produced at the inner layer:
 
-``` sh
-> plan(list(tweak(multisession, workers = 2), tweak(multisession, workers = 4)))
-> a %<-% { b %<-% 1 ; b }
-> a
-Error in checkNumberOfLocalWorkers(workers) : 
-  Attempting to set up 4 localhost parallel workers with only 1 CPU
-cores available for this R process (per 'mc.cores'), which could
-result in a 400% load. The hard limit is set to 300%. Overusing the
-CPUs has negative impact on the current R process, but also on all
-other processes of yours and others running on the same machine. See
-help("parallelly.maxWorkers.localhost", package = "parallelly") for
-further explanations and how to override the hard limit that triggered
-this error
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.md)`(`[`list`](https://rdrr.io/r/base/list.html)`(`[`tweak`](https://future.futureverse.org/reference/plan.md)`(``multisession``, workers ``=`` ``2``)``, `[`tweak`](https://future.futureverse.org/reference/plan.md)`(``multisession``, workers ``=`` ``4``)``)``)`\
+`a`` `[`%<-%`](https://future.futureverse.org/reference/futureAssign.md)` ``{`` ``b`` `[`%<-%`](https://future.futureverse.org/reference/futureAssign.md)` ``1`` ; ``b`` ``}`\
+`a`\
+`#> Error in checkNumberOfLocalWorkers(workers) : `\
+`#>   Attempting to set up 4 localhost parallel workers with only 1 CPU`\
+`#> cores available for this R process (per 'mc.cores'), which could`\
+`#> result in a 400% load. The hard limit is set to 300%. Overusing the`\
+`#> CPUs has negative impact on the current R process, but also on all`\
+`#> other processes of yours and others running on the same machine. See`\
+`#> help("parallelly.maxWorkers.localhost", package = "parallelly") for`\
+`#> further explanations and how to override the hard limit that triggered`\
+`#> this error`
 
 Because Futureverse has this built-in protection, we need to explicitly
 override it by declaring nested workers using the As-Is `I(.)` function.

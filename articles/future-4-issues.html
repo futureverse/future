@@ -32,7 +32,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.82.0-9011</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.82.0-9012</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -190,18 +190,19 @@ instead of a function object when futures are evaluated in external R
 sessions, such as on a cluster. It may also become a problem with
 futures evaluated with lazy evaluation if the intended function is
 redefined after the future is resolved. For example,</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">library</span>(future)</span>
-<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">library</span>(listenv)</span>
-<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">library</span>(tools)</span>
-<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">plan</span>(sequential)</span>
-<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a><span class="sc">&gt;</span> pathnames <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"foo.txt"</span>, <span class="st">"bar.png"</span>, <span class="st">"yoo.md"</span>)</span>
-<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a><span class="sc">&gt;</span> res <span class="ot">&lt;-</span> <span class="fu">listenv</span>()</span>
-<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a><span class="sc">&gt;</span> <span class="cf">for</span> (ii <span class="cf">in</span> <span class="fu">seq_along</span>(pathnames)) {</span>
-<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a><span class="sc">+</span>   res[[ii]] <span class="sc">%&lt;-%</span> <span class="fu">do.call</span>(<span class="st">"file_ext"</span>, <span class="fu">list</span>(pathnames[ii])) <span class="sc">%lazy%</span> <span class="cn">TRUE</span></span>
-<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a><span class="sc">+</span> }</span>
-<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a><span class="sc">&gt;</span> file_ext <span class="ot">&lt;-</span> <span class="cf">function</span>(...) <span class="st">"haha!"</span></span>
-<span id="cb6-11"><a href="#cb6-11" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">unlist</span>(res)</span>
-<span id="cb6-12"><a href="#cb6-12" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"haha!"</span> <span class="st">"haha!"</span> <span class="st">"haha!"</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://future.futureverse.org">future</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://listenv.futureverse.org" class="external-link">listenv</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">tools</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/plan.html">plan</a></span><span class="op">(</span><span class="va">sequential</span><span class="op">)</span></span>
+<span><span class="va">pathnames</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"foo.txt"</span>, <span class="st">"bar.png"</span>, <span class="st">"yoo.md"</span><span class="op">)</span></span>
+<span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://listenv.futureverse.org/reference/listenv.html" class="external-link">listenv</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="kw">for</span> <span class="op">(</span><span class="va">ii</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_along</a></span><span class="op">(</span><span class="va">pathnames</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">res</span><span class="op">[[</span><span class="va">ii</span><span class="op">]</span><span class="op">]</span> <span class="op"><a href="../reference/futureAssign.html">%&lt;-%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html" class="external-link">do.call</a></span><span class="op">(</span><span class="st">"file_ext"</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">pathnames</span><span class="op">[</span><span class="va">ii</span><span class="op">]</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/futureAssign.html">%lazy%</a></span> <span class="cn">TRUE</span></span>
+<span><span class="op">}</span></span>
+<span><span class="va">file_ext</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">...</span><span class="op">)</span> <span class="st">"haha!"</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "haha!" "haha!" "haha!"</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="get---object-not-found">get() - object not found<a class="anchor" aria-label="anchor" href="#get---object-not-found"></a>
@@ -214,20 +215,22 @@ of a object by its name. For example,
 on the search path, we could have used <code>get("pi")</code> and
 <code>pi</code>, respectively. It is not unusual to see code snippets
 such as:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="sc">&gt;</span> a <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span></span>
-<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a><span class="sc">&gt;</span> b <span class="ot">&lt;-</span> <span class="dv">4</span><span class="sc">:</span><span class="dv">6</span></span>
-<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a><span class="sc">&gt;</span> c <span class="ot">&lt;-</span> <span class="dv">3</span><span class="sc">:</span><span class="dv">5</span></span>
-<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a><span class="sc">&gt;</span> my_sum <span class="ot">&lt;-</span> <span class="cf">function</span>(var) { <span class="fu">sum</span>(<span class="fu">get</span>(var)) }</span>
-<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a><span class="sc">&gt;</span> y <span class="ot">&lt;-</span> <span class="fu">my_sum</span>(<span class="st">"a"</span>)</span>
-<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a><span class="sc">&gt;</span> y</span>
-<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">6</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">a</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span></span>
+<span><span class="va">b</span> <span class="op">&lt;-</span> <span class="fl">4</span><span class="op">:</span><span class="fl">6</span></span>
+<span><span class="va">c</span> <span class="op">&lt;-</span> <span class="fl">3</span><span class="op">:</span><span class="fl">5</span></span>
+<span><span class="va">my_sum</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">var</span><span class="op">)</span> <span class="op">{</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/get.html" class="external-link">get</a></span><span class="op">(</span><span class="va">var</span><span class="op">)</span><span class="op">)</span> <span class="op">}</span></span>
+<span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu">my_sum</span><span class="op">(</span><span class="st">"a"</span><span class="op">)</span></span>
+<span><span class="va">y</span></span>
+<span><span class="co">#&gt; [1] 6</span></span></code></pre></div>
 <p>If we attempt to call <code>my_sum()</code> via a future, we will get
 an error (if the future is resolved in an external R process);</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">library</span>(future)</span>
-<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">plan</span>(multisession)</span>
-<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a><span class="sc">&gt;</span> f <span class="ot">&lt;-</span> <span class="fu">future</span>(<span class="fu">my_sum</span>(<span class="st">"a"</span>))</span>
-<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a><span class="sc">&gt;</span> y <span class="ot">&lt;-</span> <span class="fu">value</span>(f)</span>
-<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a>Error <span class="cf">in</span> <span class="fu">get</span>(var) <span class="sc">:</span> object <span class="st">'a'</span> not found</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://future.futureverse.org">future</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/plan.html">plan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span></span>
+<span><span class="va">f</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/future.html">future</a></span><span class="op">(</span><span class="fu">my_sum</span><span class="op">(</span><span class="st">"a"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/value.html">value</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Error in get(var) : object 'a' not found</span></span></code></pre></div>
 <p>This is because the static code inspection done on the future
 expression <code>my_sum("a")</code> does not reveal object
 <code>a</code> as a global object. In that expression alone, there are
@@ -252,16 +255,18 @@ character string.</p>
 <p>The workaround is to tell the future framework what
 <em>additional</em> globals are needed. This can be done via argument
 <code>globals</code> using:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="sc">&gt;</span> f <span class="ot">&lt;-</span> <span class="fu">future</span>(<span class="fu">my_sum</span>(<span class="st">"a"</span>), <span class="at">globals =</span> <span class="fu">structure</span>(<span class="cn">TRUE</span>, <span class="at">add =</span> <span class="st">"a"</span>))</span>
-<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a><span class="sc">&gt;</span> y <span class="ot">&lt;-</span> <span class="fu">value</span>(f)</span>
-<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a><span class="sc">&gt;</span> y</span>
-<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">6</span></span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">f</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/future.html">future</a></span><span class="op">(</span><span class="fu">my_sum</span><span class="op">(</span><span class="st">"a"</span><span class="op">)</span>, globals <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/structure.html" class="external-link">structure</a></span><span class="op">(</span><span class="cn">TRUE</span>, add <span class="op">=</span> <span class="st">"a"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/value.html">value</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span></span>
+<span><span class="va">y</span></span>
+<span><span class="co">#&gt; [1] 6</span></span></code></pre></div>
 <p>or by injecting variable <code>a</code> at the beginning of the
 future expression, e.g.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="sc">&gt;</span> f <span class="ot">&lt;-</span> <span class="fu">future</span>({ a; <span class="fu">my_sum</span>(<span class="st">"a"</span>) })</span>
-<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a><span class="sc">&gt;</span> y <span class="ot">&lt;-</span> <span class="fu">value</span>(f)</span>
-<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a><span class="sc">&gt;</span> y</span>
-<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">6</span></span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">f</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/future.html">future</a></span><span class="op">(</span><span class="op">{</span> <span class="va">a</span>; <span class="fu">my_sum</span><span class="op">(</span><span class="st">"a"</span><span class="op">)</span> <span class="op">}</span><span class="op">)</span></span>
+<span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/value.html">value</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span></span>
+<span><span class="va">y</span></span>
+<span><span class="co">#&gt; [1] 6</span></span></code></pre></div>
 <p>Note that, independently of the future framework, it is often a bad
 idea to use <code><a href="https://rdrr.io/r/base/get.html" class="external-link">get()</a></code>, and related functions
 <code><a href="https://rdrr.io/r/base/get.html" class="external-link">mget()</a></code> and <code><a href="https://rdrr.io/r/base/assign.html" class="external-link">assign()</a></code>, in R code. Searching the
@@ -274,25 +279,28 @@ step back, and reconsider your implementation. There is most likely a
 better solution available.</p>
 </blockquote>
 <p>For example, consider this, slightly more complex, example:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="sc">&gt;</span> a <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span></span>
-<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a><span class="sc">&gt;</span> b <span class="ot">&lt;-</span> <span class="dv">4</span><span class="sc">:</span><span class="dv">7</span></span>
-<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a><span class="sc">&gt;</span> c <span class="ot">&lt;-</span> <span class="dv">3</span><span class="sc">:</span><span class="dv">5</span></span>
-<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a><span class="sc">&gt;</span> my_sum <span class="ot">&lt;-</span> <span class="cf">function</span>(var) { <span class="fu">sum</span>(<span class="fu">get</span>(var)) }</span>
-<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a><span class="sc">&gt;</span> y <span class="ot">&lt;-</span> <span class="fu">sapply</span>(<span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"c"</span>), <span class="at">FUN =</span> my_sum)</span>
-<span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a><span class="sc">&gt;</span> y</span>
-<span id="cb11-7"><a href="#cb11-7" tabindex="-1"></a> a  b  c</span>
-<span id="cb11-8"><a href="#cb11-8" tabindex="-1"></a> <span class="dv">6</span> <span class="dv">22</span> <span class="dv">12</span></span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">a</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span></span>
+<span><span class="va">b</span> <span class="op">&lt;-</span> <span class="fl">4</span><span class="op">:</span><span class="fl">7</span></span>
+<span><span class="va">c</span> <span class="op">&lt;-</span> <span class="fl">3</span><span class="op">:</span><span class="fl">5</span></span>
+<span><span class="va">my_sum</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">var</span><span class="op">)</span> <span class="op">{</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/get.html" class="external-link">get</a></span><span class="op">(</span><span class="va">var</span><span class="op">)</span><span class="op">)</span> <span class="op">}</span></span>
+<span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"c"</span><span class="op">)</span>, FUN <span class="op">=</span> <span class="va">my_sum</span><span class="op">)</span></span>
+<span><span class="va">y</span></span>
+<span><span class="co">#&gt;  a  b  c</span></span>
+<span><span class="co">#&gt;  6 22 12</span></span></code></pre></div>
 <p>Instead of using “free roaming” objects <code>a</code>,
 <code>b</code>, and <code>c</code>, it’s better to put those values in a
 list (or a data frame of the same length);</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="sc">&gt;</span> data <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">a =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">b =</span> <span class="dv">4</span><span class="sc">:</span><span class="dv">7</span>, <span class="at">c =</span> <span class="dv">3</span><span class="sc">:</span><span class="dv">5</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, b <span class="op">=</span> <span class="fl">4</span><span class="op">:</span><span class="fl">7</span>, c <span class="op">=</span> <span class="fl">3</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span></span></code></pre></div>
 <p>This will in turn allow us to perform the same calculations without
 having to use <code><a href="https://rdrr.io/r/base/get.html" class="external-link">get()</a></code>;</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="sc">&gt;</span> my_sum <span class="ot">&lt;-</span> <span class="cf">function</span>(x) { <span class="fu">sum</span>(x) }</span>
-<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a><span class="sc">&gt;</span> y <span class="ot">&lt;-</span> <span class="fu">sapply</span>(data, <span class="at">FUN =</span> my_sum)</span>
-<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a><span class="sc">&gt;</span> y</span>
-<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a> a  b  c</span>
-<span id="cb13-5"><a href="#cb13-5" tabindex="-1"></a> <span class="dv">6</span> <span class="dv">22</span> <span class="dv">12</span></span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">my_sum</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">}</span></span>
+<span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">data</span>, FUN <span class="op">=</span> <span class="va">my_sum</span><span class="op">)</span></span>
+<span><span class="va">y</span></span>
+<span><span class="co">#&gt;  a  b  c</span></span>
+<span><span class="co">#&gt;  6 22 12</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="glueglue---object-not-found">glue::glue() - object not found<a class="anchor" aria-label="anchor" href="#glueglue---object-not-found"></a>
@@ -301,33 +309,35 @@ having to use <code><a href="https://rdrr.io/r/base/get.html" class="external-li
 via character strings. The above section gives an example of this where
 <code><a href="https://rdrr.io/r/base/get.html" class="external-link">get()</a></code> is used and explains why it is not feasible to
 automatically identify string-embedded globals from such code. Another
-example, is when using <code>glue()</code> from the <strong><a href="https://cran.r-project.org/package=glue" class="external-link">glue</a></strong> package
+example, is when using <code><a href="https://glue.tidyverse.org/reference/glue.html" class="external-link">glue()</a></code> from the <strong><a href="https://cran.r-project.org/package=glue" class="external-link">glue</a></strong> package
 to generate strings dynamically, e.g.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">library</span>(glue)</span>
-<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a><span class="sc">&gt;</span> a <span class="ot">&lt;-</span> <span class="dv">42</span></span>
-<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a><span class="sc">&gt;</span> s <span class="ot">&lt;-</span> <span class="fu">glue</span>(<span class="st">"The value of a is {a}."</span>)</span>
-<span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a><span class="sc">&gt;</span> s</span>
-<span id="cb14-5"><a href="#cb14-5" tabindex="-1"></a>The value of a is <span class="fl">42.</span></span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://glue.tidyverse.org/" class="external-link">glue</a></span><span class="op">)</span></span>
+<span><span class="va">a</span> <span class="op">&lt;-</span> <span class="fl">42</span></span>
+<span><span class="va">s</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://glue.tidyverse.org/reference/glue.html" class="external-link">glue</a></span><span class="op">(</span><span class="st">"The value of a is {a}."</span><span class="op">)</span></span>
+<span><span class="va">s</span></span>
+<span><span class="co">#&gt; The value of a is 42.</span></span></code></pre></div>
 <p>Attempting to perform the same via a future that is resolved in
 another R session will produce an “object not found” error;</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">library</span>(glue)</span>
-<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">library</span>(future)</span>
-<span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">plan</span>(multisession)</span>
-<span id="cb15-4"><a href="#cb15-4" tabindex="-1"></a><span class="sc">&gt;</span> a <span class="ot">&lt;-</span> <span class="dv">42</span></span>
-<span id="cb15-5"><a href="#cb15-5" tabindex="-1"></a><span class="sc">&gt;</span> s <span class="sc">%&lt;-%</span> <span class="fu">glue</span>(<span class="st">"The value of a is {a}."</span>)</span>
-<span id="cb15-6"><a href="#cb15-6" tabindex="-1"></a><span class="sc">&gt;</span> s</span>
-<span id="cb15-7"><a href="#cb15-7" tabindex="-1"></a>Error <span class="cf">in</span> <span class="fu">eval</span>(<span class="fu">parse</span>(<span class="at">text =</span> text, <span class="at">keep.source =</span> <span class="cn">FALSE</span>), envir) <span class="sc">:</span> </span>
-<span id="cb15-8"><a href="#cb15-8" tabindex="-1"></a>  object <span class="st">'a'</span> not found</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://glue.tidyverse.org/" class="external-link">glue</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://future.futureverse.org">future</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/plan.html">plan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span></span>
+<span><span class="va">a</span> <span class="op">&lt;-</span> <span class="fl">42</span></span>
+<span><span class="va">s</span> <span class="op"><a href="../reference/futureAssign.html">%&lt;-%</a></span> <span class="fu"><a href="https://glue.tidyverse.org/reference/glue.html" class="external-link">glue</a></span><span class="op">(</span><span class="st">"The value of a is {a}."</span><span class="op">)</span></span>
+<span><span class="va">s</span></span>
+<span><span class="co">#&gt; Error in eval(parse(text = text, keep.source = FALSE), envir) : </span></span>
+<span><span class="co">#&gt;   object 'a' not found</span></span></code></pre></div>
 <p>As explained in the previous section, the workaround is to specify
 what additional global variables there are, which can be done as:</p>
-<pre><code>&gt; s %&lt;-% glue("The value of a is {a}.") %globals% structure(TRUE, add = "a")
-&gt; s
-The value of a is 42.</code></pre>
+<pre><code><span><span class="va">s</span> <span class="op"><a href="../reference/futureAssign.html">%&lt;-%</a></span> <span class="fu"><a href="https://glue.tidyverse.org/reference/glue.html" class="external-link">glue</a></span><span class="op">(</span><span class="st">"The value of a is {a}."</span><span class="op">)</span> <span class="op"><a href="../reference/futureAssign.html">%globals%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/structure.html" class="external-link">structure</a></span><span class="op">(</span><span class="cn">TRUE</span>, add <span class="op">=</span> <span class="st">"a"</span><span class="op">)</span></span>
+<span><span class="va">s</span></span>
+<span><span class="co">#&gt; The value of a is 42.</span></span></code></pre>
 <p>An alternative solution is to guide the future framework by adding
 the missing globals as “dummy” variables, e.g.</p>
-<pre><code>&gt; s %&lt;-% { a; glue("The value of a is {a}.") }
-&gt; s
-The value of a is 42.</code></pre>
+<pre><code><span><span class="va">s</span> <span class="op"><a href="../reference/futureAssign.html">%&lt;-%</a></span> <span class="op">{</span> <span class="va">a</span>; <span class="fu"><a href="https://glue.tidyverse.org/reference/glue.html" class="external-link">glue</a></span><span class="op">(</span><span class="st">"The value of a is {a}."</span><span class="op">)</span> <span class="op">}</span></span>
+<span><span class="va">s</span></span>
+<span><span class="co">#&gt; The value of a is 42.</span></span></code></pre>
 </div>
 </div>
 <div class="section level3">
@@ -343,14 +353,15 @@ data.table object <code>DT</code>, which requires S3 method
 package. However, the <strong>future</strong> and <strong><a href="https://cran.r-project.org/package=globals" class="external-link">globals</a></strong>
 packages fail to identify <strong>data.table</strong> as a required
 package, which results in an evaluation error:</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">library</span>(future)</span>
-<span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">plan</span>(multisession)</span>
-<span id="cb18-3"><a href="#cb18-3" tabindex="-1"></a></span>
-<span id="cb18-4"><a href="#cb18-4" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">library</span>(data.table)</span>
-<span id="cb18-5"><a href="#cb18-5" tabindex="-1"></a><span class="sc">&gt;</span> DT <span class="ot">&lt;-</span> <span class="fu">data.table</span>(<span class="at">a =</span> LETTERS[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>], <span class="at">b =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)</span>
-<span id="cb18-6"><a href="#cb18-6" tabindex="-1"></a><span class="sc">&gt;</span> y <span class="sc">%&lt;-%</span> DT[, <span class="fu">sum</span>(b)]</span>
-<span id="cb18-7"><a href="#cb18-7" tabindex="-1"></a><span class="sc">&gt;</span> y</span>
-<span id="cb18-8"><a href="#cb18-8" tabindex="-1"></a>Error<span class="sc">:</span> object <span class="st">'b'</span> not found</span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://future.futureverse.org">future</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/plan.html">plan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span></span>
+<span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-datatable.com" class="external-link">data.table</a></span><span class="op">)</span></span>
+<span><span class="va">DT</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/data.table/man/data.table.html" class="external-link">data.table</a></span><span class="op">(</span>a <span class="op">=</span> <span class="va">LETTERS</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span>, b <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span></span>
+<span><span class="va">y</span> <span class="op"><a href="../reference/futureAssign.html">%&lt;-%</a></span> <span class="va">DT</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">b</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="va">y</span></span>
+<span><span class="co">#&gt; Error: object 'b' not found</span></span></code></pre></div>
 <p>The above error occurs because, contrary to the master R process, the
 R worker that evaluated the future expression does not have
 <strong>data.table</strong> loaded. Instead the evaluation falls back to
@@ -359,13 +370,15 @@ the <code>[.data.frame</code> method, which is not what we want.</p>
 <strong>data.table</strong> as a required package (which is the goal),
 we can guide the future package by specifying additional packages
 needed:</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a><span class="sc">&gt;</span> y <span class="sc">%&lt;-%</span> DT[, <span class="fu">sum</span>(b)] <span class="sc">%packages%</span> <span class="st">"data.table"</span></span>
-<span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a><span class="sc">&gt;</span> y</span>
-<span id="cb19-3"><a href="#cb19-3" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">6</span></span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">y</span> <span class="op"><a href="../reference/futureAssign.html">%&lt;-%</a></span> <span class="va">DT</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">b</span><span class="op">)</span><span class="op">]</span> <span class="op"><a href="../reference/futureAssign.html">%packages%</a></span> <span class="st">"data.table"</span></span>
+<span><span class="va">y</span></span>
+<span><span class="co">#&gt; [1] 6</span></span></code></pre></div>
 <p>or equivalently</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a><span class="sc">&gt;</span> f <span class="ot">&lt;-</span> <span class="fu">future</span>(DT[, <span class="fu">sum</span>(b)], <span class="at">packages =</span> <span class="st">"data.table"</span>)</span>
-<span id="cb20-2"><a href="#cb20-2" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">value</span>(f)</span>
-<span id="cb20-3"><a href="#cb20-3" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">6</span></span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">f</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/future.html">future</a></span><span class="op">(</span><span class="va">DT</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">b</span><span class="op">)</span><span class="op">]</span>, packages <span class="op">=</span> <span class="st">"data.table"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/value.html">value</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 6</span></span></code></pre></div>
 <p>Note, do <em>not</em> use <code><a href="https://rdrr.io/r/base/library.html" class="external-link">library()</a></code> or
 <code><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">loadNamespace()</a></code> to resolve these problems. It is always
 better to use the above <code>packages</code> approach.</p>
@@ -456,20 +469,22 @@ non-exportable object is XML objects of the <strong><a href="https://cran.r-proj
 package. If we attempt to use those in parallel processing, we may get
 an error when the future is evaluated (or just invalid results depending
 on how they are used), e.g.</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">library</span>(future)</span>
-<span id="cb28-2"><a href="#cb28-2" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">plan</span>(multisession)</span>
-<span id="cb28-3"><a href="#cb28-3" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">library</span>(xml2)</span>
-<span id="cb28-4"><a href="#cb28-4" tabindex="-1"></a><span class="sc">&gt;</span> xml <span class="ot">&lt;-</span> <span class="fu">read_xml</span>(<span class="st">"&lt;body&gt;&lt;/body&gt;"</span>)</span>
-<span id="cb28-5"><a href="#cb28-5" tabindex="-1"></a><span class="sc">&gt;</span> f <span class="ot">&lt;-</span> <span class="fu">future</span>(<span class="fu">xml_children</span>(xml))</span>
-<span id="cb28-6"><a href="#cb28-6" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">value</span>(f)</span>
-<span id="cb28-7"><a href="#cb28-7" tabindex="-1"></a>Error<span class="sc">:</span> external pointer is not valid</span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://future.futureverse.org">future</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/plan.html">plan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://xml2.r-lib.org" class="external-link">xml2</a></span><span class="op">)</span></span>
+<span><span class="va">xml</span> <span class="op">&lt;-</span> <span class="fu"><a href="http://xml2.r-lib.org/reference/read_xml.html" class="external-link">read_xml</a></span><span class="op">(</span><span class="st">"&lt;body&gt;&lt;/body&gt;"</span><span class="op">)</span></span>
+<span><span class="va">f</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/future.html">future</a></span><span class="op">(</span><span class="fu"><a href="http://xml2.r-lib.org/reference/xml_children.html" class="external-link">xml_children</a></span><span class="op">(</span><span class="va">xml</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/value.html">value</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Error: external pointer is not valid</span></span></code></pre></div>
 <p>The future framework can help detect this <em>before</em> sending off
 the future to the worker;</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">options</span>(<span class="at">future.globals.onReference =</span> <span class="st">"error"</span>)</span>
-<span id="cb29-2"><a href="#cb29-2" tabindex="-1"></a><span class="sc">&gt;</span> f <span class="ot">&lt;-</span> <span class="fu">future</span>(<span class="fu">xml_children</span>(xml))</span>
-<span id="cb29-3"><a href="#cb29-3" tabindex="-1"></a>Error <span class="cf">in</span> <span class="cn">FALSE</span> <span class="sc">:</span> </span>
-<span id="cb29-4"><a href="#cb29-4" tabindex="-1"></a>  Detected a non<span class="sc">-</span>exportable <span class="fu">reference</span> (<span class="st">'externalptr'</span>) <span class="cf">in</span> one of the globals</span>
-<span id="cb29-5"><a href="#cb29-5" tabindex="-1"></a>(<span class="st">'xml'</span> of class <span class="st">'xml_document'</span>) used <span class="cf">in</span> the future expression</span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>future.globals.onReference <span class="op">=</span> <span class="st">"error"</span><span class="op">)</span></span>
+<span><span class="va">f</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/future.html">future</a></span><span class="op">(</span><span class="fu"><a href="http://xml2.r-lib.org/reference/xml_children.html" class="external-link">xml_children</a></span><span class="op">(</span><span class="va">xml</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Error in FALSE : </span></span>
+<span><span class="co">#&gt;   Detected a non-exportable reference ('externalptr') in one of the globals</span></span>
+<span><span class="co">#&gt; ('xml' of class 'xml_document') used in the future expression</span></span></code></pre></div>
 <p>For additional details on non-exportable objects and examples of
 other R packages that use objects that may cause problems in parallel
 processing, see Vignette ‘Non-Exportable Objects’.</p>
@@ -480,17 +495,18 @@ processing, see Vignette ‘Non-Exportable Objects’.</p>
 <p>It is not possible for a future to resolve another one unless it was
 created by the future trying to resolve it. For instance, the following
 gives an error:</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">library</span>(future)</span>
-<span id="cb30-2"><a href="#cb30-2" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">plan</span>(multisession)</span>
-<span id="cb30-3"><a href="#cb30-3" tabindex="-1"></a><span class="sc">&gt;</span> f1 <span class="ot">&lt;-</span> <span class="fu">future</span>({ <span class="fu">Sys.getpid</span>() })</span>
-<span id="cb30-4"><a href="#cb30-4" tabindex="-1"></a><span class="sc">&gt;</span> f2 <span class="ot">&lt;-</span> <span class="fu">future</span>({ <span class="fu">value</span>(f1) })</span>
-<span id="cb30-5"><a href="#cb30-5" tabindex="-1"></a><span class="sc">&gt;</span> v1 <span class="ot">&lt;-</span> <span class="fu">value</span>(f1)</span>
-<span id="cb30-6"><a href="#cb30-6" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">7464</span></span>
-<span id="cb30-7"><a href="#cb30-7" tabindex="-1"></a><span class="sc">&gt;</span> v2 <span class="ot">&lt;-</span> <span class="fu">value</span>(f2)</span>
-<span id="cb30-8"><a href="#cb30-8" tabindex="-1"></a>Error<span class="sc">:</span> Invalid usage of futures<span class="sc">:</span> A future whose value has not yet been collected</span>
-<span id="cb30-9"><a href="#cb30-9" tabindex="-1"></a> can only be queried by the R <span class="fu">process</span> (cdd013cb<span class="sc">-</span>e045<span class="sc">-</span>f4a5<span class="sc">-</span><span class="dv">3977</span><span class="sc">-</span><span class="dv">9</span>f064c31f188; pid</span>
-<span id="cb30-10"><a href="#cb30-10" tabindex="-1"></a> <span class="dv">1276</span> on MyMachine) that created it, not by any other R <span class="fu">processes</span> (<span class="dv">5579</span>f789<span class="sc">-</span>e7b6</span>
-<span id="cb30-11"><a href="#cb30-11" tabindex="-1"></a> <span class="sc">-</span>bace<span class="sc">-</span>c50d<span class="sc">-</span><span class="dv">6</span>c7a23ddb5a3; pid <span class="dv">2352</span> on MyMachine)<span class="sc">:</span> {; <span class="fu">Sys.getpid</span>(); }</span></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://future.futureverse.org">future</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/plan.html">plan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span></span>
+<span><span class="va">f1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/future.html">future</a></span><span class="op">(</span><span class="op">{</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getpid.html" class="external-link">Sys.getpid</a></span><span class="op">(</span><span class="op">)</span> <span class="op">}</span><span class="op">)</span></span>
+<span><span class="va">f2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/future.html">future</a></span><span class="op">(</span><span class="op">{</span> <span class="fu"><a href="../reference/value.html">value</a></span><span class="op">(</span><span class="va">f1</span><span class="op">)</span> <span class="op">}</span><span class="op">)</span></span>
+<span><span class="va">v1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/value.html">value</a></span><span class="op">(</span><span class="va">f1</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 7464</span></span>
+<span><span class="va">v2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/value.html">value</a></span><span class="op">(</span><span class="va">f2</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Error: Invalid usage of futures: A future whose value has not yet been collected</span></span>
+<span><span class="co">#&gt;  can only be queried by the R process (cdd013cb-e045-f4a5-3977-9f064c31f188; pid</span></span>
+<span><span class="co">#&gt;  1276 on MyMachine) that created it, not by any other R processes (5579f789-e7b6</span></span>
+<span><span class="co">#&gt;  -bace-c50d-6c7a23ddb5a3; pid 2352 on MyMachine): {; Sys.getpid(); }</span></span></code></pre></div>
 <p>This is because the main R process creates two futures, but then the
 second future tries to retrieve the value of the first one. This is an
 invalid request because the second future has no channel to communicate
@@ -500,14 +516,15 @@ can communicate with it(*).</p>
 queried this way. Thus, the solution to the above problem is to make
 sure all futures are resolved before they are passed to other futures,
 e.g.</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" tabindex="-1"></a><span class="sc">&gt;</span> f1 <span class="ot">&lt;-</span> <span class="fu">future</span>({ <span class="fu">Sys.getpid</span>() })</span>
-<span id="cb31-2"><a href="#cb31-2" tabindex="-1"></a><span class="sc">&gt;</span> v1 <span class="ot">&lt;-</span> <span class="fu">value</span>(f1)</span>
-<span id="cb31-3"><a href="#cb31-3" tabindex="-1"></a><span class="sc">&gt;</span> v1</span>
-<span id="cb31-4"><a href="#cb31-4" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">7464</span></span>
-<span id="cb31-5"><a href="#cb31-5" tabindex="-1"></a><span class="sc">&gt;</span> f2 <span class="ot">&lt;-</span> <span class="fu">future</span>({ <span class="fu">value</span>(f1) })</span>
-<span id="cb31-6"><a href="#cb31-6" tabindex="-1"></a><span class="sc">&gt;</span> v2 <span class="ot">&lt;-</span> <span class="fu">value</span>(f2)</span>
-<span id="cb31-7"><a href="#cb31-7" tabindex="-1"></a><span class="sc">&gt;</span> v2</span>
-<span id="cb31-8"><a href="#cb31-8" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">7464</span></span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">f1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/future.html">future</a></span><span class="op">(</span><span class="op">{</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getpid.html" class="external-link">Sys.getpid</a></span><span class="op">(</span><span class="op">)</span> <span class="op">}</span><span class="op">)</span></span>
+<span><span class="va">v1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/value.html">value</a></span><span class="op">(</span><span class="va">f1</span><span class="op">)</span></span>
+<span><span class="va">v1</span></span>
+<span><span class="co">#&gt; [1] 7464</span></span>
+<span><span class="va">f2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/future.html">future</a></span><span class="op">(</span><span class="op">{</span> <span class="fu"><a href="../reference/value.html">value</a></span><span class="op">(</span><span class="va">f1</span><span class="op">)</span> <span class="op">}</span><span class="op">)</span></span>
+<span><span class="va">v2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/value.html">value</a></span><span class="op">(</span><span class="va">f2</span><span class="op">)</span></span>
+<span><span class="va">v2</span></span>
+<span><span class="co">#&gt; [1] 7464</span></span></code></pre></div>
 <p>This works because the value has already been collected and stored
 inside future <code>f1</code> before future <code>f2</code> is created.
 Since the value is already stored internally, <code>value(f1)</code> is
@@ -516,12 +533,12 @@ readily available everywhere. Of course, instead of using
 and cleaner to simply use <code>v1</code>.</p>
 <p>The above is typically not a problem when future assignments are
 used. For example:</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" tabindex="-1"></a><span class="sc">&gt;</span> v1 <span class="sc">%&lt;-%</span> { <span class="fu">Sys.getpid</span>() }<span class="er">)</span></span>
-<span id="cb32-2"><a href="#cb32-2" tabindex="-1"></a><span class="sc">&gt;</span> v2 <span class="sc">%&lt;-%</span> { v1 }</span>
-<span id="cb32-3"><a href="#cb32-3" tabindex="-1"></a><span class="sc">&gt;</span> v1</span>
-<span id="cb32-4"><a href="#cb32-4" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">2352</span></span>
-<span id="cb32-5"><a href="#cb32-5" tabindex="-1"></a><span class="sc">&gt;</span> v2</span>
-<span id="cb32-6"><a href="#cb32-6" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">2352</span></span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" tabindex="-1"></a>v1 <span class="sc">%&lt;-%</span> { <span class="fu">Sys.getpid</span>() }<span class="er">)</span></span>
+<span id="cb32-2"><a href="#cb32-2" tabindex="-1"></a>v2 <span class="sc">%&lt;-%</span> { v1 }</span>
+<span id="cb32-3"><a href="#cb32-3" tabindex="-1"></a>v1</span>
+<span id="cb32-4"><a href="#cb32-4" tabindex="-1"></a><span class="co">#&gt; [1] 2352</span></span>
+<span id="cb32-5"><a href="#cb32-5" tabindex="-1"></a>v2</span>
+<span id="cb32-6"><a href="#cb32-6" tabindex="-1"></a><span class="co">#&gt; [1] 2352</span></span></code></pre></div>
 <p>The reason that this approach works out of the box is because in the
 second future assignment <code>v1</code> is identified as a global
 variable, which is retrieved. Up to this point, <code>v1</code> is a
@@ -532,17 +549,18 @@ regular variable.</p>
 global variables without being resolved. This can happen if the future
 assignment is done to an element of an environment (including list
 environments). For instance,</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">library</span>(listenv)</span>
-<span id="cb33-2"><a href="#cb33-2" tabindex="-1"></a><span class="sc">&gt;</span> x <span class="ot">&lt;-</span> <span class="fu">listenv</span>()</span>
-<span id="cb33-3"><a href="#cb33-3" tabindex="-1"></a><span class="sc">&gt;</span> x<span class="sc">$</span>a <span class="sc">%&lt;-%</span> { <span class="fu">Sys.getpid</span>() }</span>
-<span id="cb33-4"><a href="#cb33-4" tabindex="-1"></a><span class="sc">&gt;</span> x<span class="sc">$</span>b <span class="sc">%&lt;-%</span> { x<span class="sc">$</span>a }</span>
-<span id="cb33-5"><a href="#cb33-5" tabindex="-1"></a><span class="sc">&gt;</span> x<span class="sc">$</span>a</span>
-<span id="cb33-6"><a href="#cb33-6" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">2352</span></span>
-<span id="cb33-7"><a href="#cb33-7" tabindex="-1"></a><span class="sc">&gt;</span> x<span class="sc">$</span>b</span>
-<span id="cb33-8"><a href="#cb33-8" tabindex="-1"></a>Error<span class="sc">:</span> Invalid usage of futures<span class="sc">:</span> A future whose value has not yet been collected</span>
-<span id="cb33-9"><a href="#cb33-9" tabindex="-1"></a> can only be queried by the R <span class="fu">process</span> (cdd013cb<span class="sc">-</span>e045<span class="sc">-</span>f4a5<span class="sc">-</span><span class="dv">3977</span><span class="sc">-</span><span class="dv">9</span>f064c31f188; pid</span>
-<span id="cb33-10"><a href="#cb33-10" tabindex="-1"></a> <span class="dv">1276</span> on localhost) that created it, not by any other R <span class="fu">processes</span> (<span class="dv">2</span>ce86ccd<span class="sc">-</span><span class="dv">5854</span></span>
-<span id="cb33-11"><a href="#cb33-11" tabindex="-1"></a> <span class="sc">-</span><span class="dv">7</span>a05<span class="sc">-</span><span class="dv">1373</span><span class="sc">-</span>e1b20022e4d8; pid <span class="dv">7464</span> on localhost)<span class="sc">:</span> {; <span class="fu">Sys.getpid</span>(); }</span></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://listenv.futureverse.org" class="external-link">listenv</a></span><span class="op">)</span></span>
+<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://listenv.futureverse.org/reference/listenv.html" class="external-link">listenv</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">x</span><span class="op">$</span><span class="va">a</span> <span class="op"><a href="../reference/futureAssign.html">%&lt;-%</a></span> <span class="op">{</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getpid.html" class="external-link">Sys.getpid</a></span><span class="op">(</span><span class="op">)</span> <span class="op">}</span></span>
+<span><span class="va">x</span><span class="op">$</span><span class="va">b</span> <span class="op"><a href="../reference/futureAssign.html">%&lt;-%</a></span> <span class="op">{</span> <span class="va">x</span><span class="op">$</span><span class="va">a</span> <span class="op">}</span></span>
+<span><span class="va">x</span><span class="op">$</span><span class="va">a</span></span>
+<span><span class="co">#&gt; [1] 2352</span></span>
+<span><span class="va">x</span><span class="op">$</span><span class="va">b</span></span>
+<span><span class="co">#&gt; Error: Invalid usage of futures: A future whose value has not yet been collected</span></span>
+<span><span class="co">#&gt;  can only be queried by the R process (cdd013cb-e045-f4a5-3977-9f064c31f188; pid</span></span>
+<span><span class="co">#&gt;  1276 on localhost) that created it, not by any other R processes (2ce86ccd-5854</span></span>
+<span><span class="co">#&gt;  -7a05-1373-e1b20022e4d8; pid 7464 on localhost): {; Sys.getpid(); }</span></span></code></pre></div>
 <p>As previously, this can be avoided by making sure <code>x$a</code> is
 resolved first, which can be done in various ways,
 e.g. <code>dummy &lt;- x$a</code>, <code>resolve(x$a)</code> and
@@ -639,56 +657,61 @@ package also defines a <code>%&lt;-%</code> operator which clashes with
 the one in future <em>if used at the prompt or in a script</em> (it is
 not a problem inside package because there we explicitly import objects
 in a known order). Here is what we might get:</p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">library</span>(future)</span>
-<span id="cb38-2"><a href="#cb38-2" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">library</span>(igraph)</span>
-<span id="cb38-3"><a href="#cb38-3" tabindex="-1"></a></span>
-<span id="cb38-4"><a href="#cb38-4" tabindex="-1"></a>Attaching package<span class="sc">:</span> <span class="st">'igraph'</span></span>
-<span id="cb38-5"><a href="#cb38-5" tabindex="-1"></a></span>
-<span id="cb38-6"><a href="#cb38-6" tabindex="-1"></a>The following objects are masked from <span class="st">'package:future'</span><span class="sc">:</span></span>
-<span id="cb38-7"><a href="#cb38-7" tabindex="-1"></a></span>
-<span id="cb38-8"><a href="#cb38-8" tabindex="-1"></a>    <span class="sc">%&lt;-%</span>, <span class="sc">%-&gt;%</span></span>
-<span id="cb38-9"><a href="#cb38-9" tabindex="-1"></a></span>
-<span id="cb38-10"><a href="#cb38-10" tabindex="-1"></a>The following objects are masked from <span class="st">'package:stats'</span><span class="sc">:</span></span>
-<span id="cb38-11"><a href="#cb38-11" tabindex="-1"></a></span>
-<span id="cb38-12"><a href="#cb38-12" tabindex="-1"></a>    decompose, spectrum</span>
-<span id="cb38-13"><a href="#cb38-13" tabindex="-1"></a></span>
-<span id="cb38-14"><a href="#cb38-14" tabindex="-1"></a>The following object is masked from <span class="st">'package:base'</span><span class="sc">:</span></span>
-<span id="cb38-15"><a href="#cb38-15" tabindex="-1"></a></span>
-<span id="cb38-16"><a href="#cb38-16" tabindex="-1"></a>    union</span>
-<span id="cb38-17"><a href="#cb38-17" tabindex="-1"></a></span>
-<span id="cb38-18"><a href="#cb38-18" tabindex="-1"></a><span class="sc">&gt;</span> y <span class="sc">%&lt;-%</span> { <span class="dv">42</span> }</span>
-<span id="cb38-19"><a href="#cb38-19" tabindex="-1"></a>Error <span class="cf">in</span> <span class="fu">get</span>(<span class="st">".igraph.from"</span>, <span class="fu">parent.frame</span>()) <span class="sc">:</span> </span>
-<span id="cb38-20"><a href="#cb38-20" tabindex="-1"></a>  object <span class="st">'.igraph.from'</span> not found</span></code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://future.futureverse.org">future</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r.igraph.org/" class="external-link">igraph</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">#&gt; Attaching package: 'igraph'</span></span>
+<span><span class="co">#&gt;</span></span>
+<span><span class="co">#&gt; The following objects are masked from 'package:future':</span></span>
+<span><span class="co">#&gt;</span></span>
+<span><span class="co">#&gt;     %&lt;-%, %-&gt;%</span></span>
+<span><span class="co">#&gt;</span></span>
+<span><span class="co">#&gt; The following objects are masked from 'package:stats':</span></span>
+<span><span class="co">#&gt;</span></span>
+<span><span class="co">#&gt;     decompose, spectrum</span></span>
+<span><span class="co">#&gt;</span></span>
+<span><span class="co">#&gt; The following object is masked from 'package:base':</span></span>
+<span><span class="co">#&gt;</span></span>
+<span><span class="co">#&gt;     union</span></span>
+<span></span>
+<span><span class="va">y</span> <span class="op"><a href="../reference/futureAssign.html">%&lt;-%</a></span> <span class="op">{</span> <span class="fl">42</span> <span class="op">}</span></span>
+<span><span class="co">#&gt; Error in get(".igraph.from", parent.frame()) : </span></span>
+<span><span class="co">#&gt;   object '.igraph.from' not found</span></span></code></pre></div>
 <p>Here we get an error because <code>%&lt;-%</code> is from
 <strong>igraph</strong> and not the future assignment operator as we
 wanted. This can be confirmed as:</p>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">environment</span>(<span class="st">`</span><span class="at">%&lt;-%</span><span class="st">`</span>)</span>
-<span id="cb39-2"><a href="#cb39-2" tabindex="-1"></a><span class="sc">&lt;</span>environment<span class="sc">:</span> namespace<span class="sc">:</span>igraph<span class="sc">&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/environment.html" class="external-link">environment</a></span><span class="op">(</span><span class="va">`%&lt;-%`</span><span class="op">)</span></span>
+<span><span class="co">#&gt; &lt;environment: namespace:igraph&gt;</span></span></code></pre></div>
 <p>To avoid this problem, attach the two packages in opposite order such
 that <strong>future</strong> comes last and thereby overrides
 <strong>igraph</strong>, i.e.</p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">library</span>(igraph)</span>
-<span id="cb40-2"><a href="#cb40-2" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">library</span>(future)</span>
-<span id="cb40-3"><a href="#cb40-3" tabindex="-1"></a></span>
-<span id="cb40-4"><a href="#cb40-4" tabindex="-1"></a>Attaching package<span class="sc">:</span> <span class="st">'future'</span></span>
-<span id="cb40-5"><a href="#cb40-5" tabindex="-1"></a></span>
-<span id="cb40-6"><a href="#cb40-6" tabindex="-1"></a>The following objects are masked from <span class="st">'package:igraph'</span><span class="sc">:</span></span>
-<span id="cb40-7"><a href="#cb40-7" tabindex="-1"></a></span>
-<span id="cb40-8"><a href="#cb40-8" tabindex="-1"></a><span class="sc">%&lt;-%</span>, <span class="sc">%-&gt;%</span></span>
-<span id="cb40-9"><a href="#cb40-9" tabindex="-1"></a></span>
-<span id="cb40-10"><a href="#cb40-10" tabindex="-1"></a><span class="er">&gt;</span> y <span class="sc">%&lt;-%</span> { <span class="dv">42</span> }</span>
-<span id="cb40-11"><a href="#cb40-11" tabindex="-1"></a><span class="sc">&gt;</span> y</span>
-<span id="cb40-12"><a href="#cb40-12" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">42</span></span></code></pre></div>
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r.igraph.org/" class="external-link">igraph</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://future.futureverse.org">future</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">#&gt; Attaching package: 'future'</span></span>
+<span><span class="co">#&gt;</span></span>
+<span><span class="co">#&gt; The following objects are masked from 'package:igraph':</span></span>
+<span><span class="co">#&gt;</span></span>
+<span><span class="co">#&gt; %&lt;-%, %-&gt;%</span></span>
+<span></span>
+<span><span class="va">y</span> <span class="op"><a href="../reference/futureAssign.html">%&lt;-%</a></span> <span class="op">{</span> <span class="fl">42</span> <span class="op">}</span></span>
+<span><span class="va">y</span></span>
+<span><span class="co">#&gt; [1] 42</span></span></code></pre></div>
 <p>An alternative is to detach the <strong>future</strong> package and
 re-attach it, which will achieve the same thing:</p>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">detach</span>(<span class="st">"package:future"</span>)</span>
-<span id="cb41-2"><a href="#cb41-2" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">library</span>(future)</span></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/detach.html" class="external-link">detach</a></span><span class="op">(</span><span class="st">"package:future"</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://future.futureverse.org">future</a></span><span class="op">)</span></span></code></pre></div>
 <p>Yet another alternative is to explicitly override the object by
 importing it to the global environment, e.g.</p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" tabindex="-1"></a><span class="sc">&gt;</span> <span class="st">`</span><span class="at">%&lt;-%</span><span class="st">`</span> <span class="ot">&lt;-</span> future<span class="sc">::</span><span class="st">`</span><span class="at">%&lt;-%</span><span class="st">`</span></span>
-<span id="cb42-2"><a href="#cb42-2" tabindex="-1"></a><span class="sc">&gt;</span> y <span class="sc">%&lt;-%</span> { <span class="dv">42</span> }</span>
-<span id="cb42-3"><a href="#cb42-3" tabindex="-1"></a><span class="sc">&gt;</span> y</span>
-<span id="cb42-4"><a href="#cb42-4" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">42</span></span></code></pre></div>
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">`%&lt;-%`</span> <span class="op">&lt;-</span> <span class="fu">future</span><span class="fu">::</span><span class="va">`%&lt;-%`</span></span>
+<span><span class="va">y</span> <span class="op"><a href="../reference/futureAssign.html">%&lt;-%</a></span> <span class="op">{</span> <span class="fl">42</span> <span class="op">}</span></span>
+<span><span class="va">y</span></span>
+<span><span class="co">#&gt; [1] 42</span></span></code></pre></div>
 <p>In this case, it does not matter in what order the packages are
 attached because we will always use the copy of
 <code><a href="../reference/futureAssign.html">future::`%&lt;-%`</a></code>.</p>
@@ -700,17 +723,19 @@ attached because we will always use the copy of
 infix operator</em>, which means it has higher precedence than most
 other binary operators but also higher than some of the unary operators
 in R. For instance, this explains why we get the following error:</p>
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" tabindex="-1"></a><span class="sc">&gt;</span> x <span class="sc">%&lt;-%</span> <span class="dv">2</span> <span class="sc">*</span> <span class="fu">runif</span>(<span class="dv">1</span>)</span>
-<span id="cb43-2"><a href="#cb43-2" tabindex="-1"></a>Error <span class="cf">in</span> x <span class="sc">%&lt;-%</span> <span class="dv">2</span> <span class="sc">*</span> <span class="fu">runif</span>(<span class="dv">1</span>) <span class="sc">:</span> non<span class="sc">-</span>numeric argument to binary operator</span></code></pre></div>
+<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">x</span> <span class="op"><a href="../reference/futureAssign.html">%&lt;-%</a></span> <span class="fl">2</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Error in x %&lt;-% 2 * runif(1) : non-numeric argument to binary operator</span></span></code></pre></div>
 <p>What effectively is happening here is that because of the higher
 priority of <code>%&lt;-%</code>, we first create a future
 <code>x %&lt;-% 2</code> and then we try to multiply the future (not its
 value) with the value of <code>runif(1)</code> - which makes no sense.
 In order to properly assign the future variable, we need to put the
 future expression within curly brackets;</p>
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" tabindex="-1"></a><span class="sc">&gt;</span> x <span class="sc">%&lt;-%</span> { <span class="dv">2</span> <span class="sc">*</span> <span class="fu">runif</span>(<span class="dv">1</span>) }</span>
-<span id="cb44-2"><a href="#cb44-2" tabindex="-1"></a><span class="sc">&gt;</span> x</span>
-<span id="cb44-3"><a href="#cb44-3" tabindex="-1"></a>[<span class="dv">1</span>] <span class="fl">1.030209</span></span></code></pre></div>
+<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">x</span> <span class="op"><a href="../reference/futureAssign.html">%&lt;-%</a></span> <span class="op">{</span> <span class="fl">2</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span> <span class="op">}</span></span>
+<span><span class="va">x</span></span>
+<span><span class="co">#&gt; [1] 1.030209</span></span></code></pre></div>
 <p>Parentheses will also do. For details on precedence on operators in
 R, see Section ‘Infix and prefix operators’ in the ‘R Language
 Definition’ document.</p>
@@ -722,15 +747,17 @@ Definition’ document.</p>
 <code>%&lt;-%</code> requires curly brackets is when using the
 <strong><a href="https://cran.r-project.org/package=magrittr" class="external-link">magrittr</a></strong>
 infix operator <code>%&gt;%</code>, e.g.</p>
-<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">library</span>(magrittr)</span>
-<span id="cb45-2"><a href="#cb45-2" tabindex="-1"></a><span class="sc">&gt;</span> x <span class="sc">%&lt;-%</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">100</span> <span class="sc">%&gt;%</span> sum</span>
-<span id="cb45-3"><a href="#cb45-3" tabindex="-1"></a>Error <span class="cf">in</span> <span class="fu">sum</span>(.) <span class="sc">:</span> invalid <span class="st">'type'</span> (environment) of argument</span></code></pre></div>
+<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org" class="external-link">magrittr</a></span><span class="op">)</span></span>
+<span><span class="va">x</span> <span class="op"><a href="../reference/futureAssign.html">%&lt;-%</a></span> <span class="fl">1</span><span class="op">:</span><span class="fl">100</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="va">sum</span></span>
+<span><span class="co">#&gt; Error in sum(.) : invalid 'type' (environment) of argument</span></span></code></pre></div>
 <p>The reason for this error is that <code>x %&lt;-% 1:100</code> is
 passed to <code><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum()</a></code> by <code>%&gt;%</code>. To fix this,
 use:</p>
-<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" tabindex="-1"></a><span class="sc">&gt;</span> x <span class="sc">%&lt;-%</span> { <span class="dv">1</span><span class="sc">:</span><span class="dv">100</span> <span class="sc">%&gt;%</span> sum }</span>
-<span id="cb46-2"><a href="#cb46-2" tabindex="-1"></a><span class="sc">&gt;</span> x</span>
-<span id="cb46-3"><a href="#cb46-3" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">5050</span></span></code></pre></div>
+<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">x</span> <span class="op"><a href="../reference/futureAssign.html">%&lt;-%</a></span> <span class="op">{</span> <span class="fl">1</span><span class="op">:</span><span class="fl">100</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="va">sum</span> <span class="op">}</span></span>
+<span><span class="va">x</span></span>
+<span><span class="co">#&gt; [1] 5050</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="r-cmd-check-notes">R CMD check NOTEs<a class="anchor" aria-label="anchor" href="#r-cmd-check-notes"></a>

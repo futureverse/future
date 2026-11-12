@@ -63,15 +63,14 @@ compute cluster.
 Here is an example illustrating how the basics of futures work. First,
 consider the following code snippet that uses plain R code:
 
-``` r
-> v <- {
-+   cat("Hello world!\n")
-+   3.14
-+ }
-Hello world!
-> v
-[1] 3.14
-```
+\
+`v`` ``<-`` ``{`\
+`  `[`cat`](https://rdrr.io/r/base/cat.html)`(``"Hello world!\n"``)`\
+`  ``3.14`\
+`}`\
+`#> Hello world!`\
+`v`\
+`#> [1] 3.14`
 
 It works by assigning the value of an expression to variable `v` and we
 then print the value of `v`. Moreover, when the expression for `v` is
@@ -79,16 +78,15 @@ evaluated we also print a message.
 
 Here is the same code snippet modified to use futures instead:
 
-``` r
-> library(future)
-> v %<-% {
-+   cat("Hello world!\n")
-+   3.14
-+ }
-> v
-Hello world!
-[1] 3.14
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`future`](https://future.futureverse.org)`)`\
+`v`` `[`%<-%`](https://future.futureverse.org/reference/futureAssign.md)` ``{`\
+`  `[`cat`](https://rdrr.io/r/base/cat.html)`(``"Hello world!\n"``)`\
+`  ``3.14`\
+`}`\
+`v`\
+`#> Hello world!`\
+`#> [1] 3.14`
 
 The difference is in how `v` is constructed; with plain R we use `<-`
 whereas with futures we use `%<-%`. The other difference is that output
@@ -99,17 +97,16 @@ So why are futures useful? Because we can choose to evaluate the future
 expression in a separate R process asynchronously by simply switching
 settings as:
 
-``` r
-> library(future)
-> plan(multisession)
-> v %<-% {
-+   cat("Hello world!\n")
-+   3.14
-+ }
-> v
-Hello world!
-[1] 3.14
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`future`](https://future.futureverse.org)`)`\
+[`plan`](https://future.futureverse.org/reference/plan.md)`(``multisession``)`\
+`v`` `[`%<-%`](https://future.futureverse.org/reference/futureAssign.md)` ``{`\
+`  `[`cat`](https://rdrr.io/r/base/cat.html)`(``"Hello world!\n"``)`\
+`  ``3.14`\
+`}`\
+`v`\
+`#> Hello world!`\
+`#> [1] 3.14`
 
 With asynchronous futures, the current/main R process does *not* block,
 which means it is available for further processing while the futures are
@@ -130,17 +127,16 @@ introductory example above we used *implicit futures* created via the
 the `f <- future({ expr })` and `v <- value(f)` constructs. With these,
 our example could alternatively be written as:
 
-``` r
-> library(future)
-> f <- future({
-+   cat("Hello world!\n")
-+   3.14
-+ })
-> v <- value(f)
-Hello world!
-> v
-[1] 3.14
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`future`](https://future.futureverse.org)`)`\
+`f`` ``<-`` `[`future`](https://future.futureverse.org/reference/future.md)`(``{`\
+`  `[`cat`](https://rdrr.io/r/base/cat.html)`(``"Hello world!\n"``)`\
+`  ``3.14`\
+`}``)`\
+`v`` ``<-`` `[`value`](https://future.futureverse.org/reference/value.md)`(``f``)`\
+`#> Hello world!`\
+`v`\
+`#> [1] 3.14`
 
 Either style of future construct works equally(\*) well. The implicit
 style is most similar to how regular R code is written. In principle,
@@ -240,18 +236,17 @@ futures:
 Here is an example illustrating that all assignments are done to a local
 environment:
 
-``` r
-> plan(sequential)
-> a <- 1
-> x %<-% {
-+     a <- 2
-+     2 * a
-+ }
-> x
-[1] 4
-> a
-[1] 1
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.md)`(``sequential``)`\
+`a`` ``<-`` ``1`\
+`x`` `[`%<-%`](https://future.futureverse.org/reference/futureAssign.md)` ``{`\
+`    ``a`` ``<-`` ``2`\
+`    ``2`` ``*`` ``a`\
+`}`\
+`x`\
+`#> [1] 4`\
+`a`\
+`#> [1] 1`
 
 Now we are ready to explore the different future backends.
 
@@ -268,38 +263,37 @@ designed to behave as similar as possible to regular R evaluation while
 still fulfilling the Future API and its behaviors. Here is an example
 illustrating their properties:
 
-``` r
-> plan(sequential)
-> pid <- Sys.getpid()
-> pid
-[1] 2974478
-> a %<-% {
-+     pid <- Sys.getpid()
-+     cat("Future 'a' ...\n")
-+     3.14
-+ }
-> b %<-% {
-+     rm(pid)
-+     cat("Future 'b' ...\n")
-+     Sys.getpid()
-+ }
-> c %<-% {
-+     cat("Future 'c' ...\n")
-+     2 * a
-+ }
-Future 'a' ...
-> b
-Future 'b' ...
-Warning in rm(pid): object 'pid' not found
-[1] 2974478
-> c
-Future 'c' ...
-[1] 6.28
-> a
-[1] 3.14
-> pid
-[1] 2974478
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.md)`(``sequential``)`\
+`pid`` ``<-`` `[`Sys.getpid`](https://rdrr.io/r/base/Sys.getpid.html)`(``)`\
+`pid`\
+`#> [1] 1119391`\
+`a`` `[`%<-%`](https://future.futureverse.org/reference/futureAssign.md)` ``{`\
+`    ``pid`` ``<-`` `[`Sys.getpid`](https://rdrr.io/r/base/Sys.getpid.html)`(``)`\
+`    `[`cat`](https://rdrr.io/r/base/cat.html)`(``"Future 'a' ...\n"``)`\
+`    ``3.14`\
+`}`\
+`b`` `[`%<-%`](https://future.futureverse.org/reference/futureAssign.md)` ``{`\
+`    `[`rm`](https://rdrr.io/r/base/rm.html)`(``pid``)`\
+`    `[`cat`](https://rdrr.io/r/base/cat.html)`(``"Future 'b' ...\n"``)`\
+`    `[`Sys.getpid`](https://rdrr.io/r/base/Sys.getpid.html)`(``)`\
+`}`\
+`c`` `[`%<-%`](https://future.futureverse.org/reference/futureAssign.md)` ``{`\
+`    `[`cat`](https://rdrr.io/r/base/cat.html)`(``"Future 'c' ...\n"``)`\
+`    ``2`` ``*`` ``a`\
+`}`\
+`#> Future 'a' ...`\
+`b`\
+`#> Future 'b' ...`\
+`#> Warning in rm(pid): object 'pid' not found`\
+`#> [1] 1119391`\
+`c`\
+`#> Future 'c' ...`\
+`#> [1] 6.28`\
+`a`\
+`#> [1] 3.14`\
+`pid`\
+`#> [1] 1119391`
 
 Since eager sequential evaluation is taking place, each of the three
 futures is resolved instantaneously in the moment it is created. Note
@@ -327,38 +321,37 @@ operating systems. A multisession future is evaluated in a background R
 session running on the same machine as the calling R process. Here is
 our example with multisession evaluation:
 
-``` r
-> plan(multisession, workers = 2)
-> pid <- Sys.getpid()
-> pid
-[1] 2974478
-> a %<-% {
-+     pid <- Sys.getpid()
-+     cat("Future 'a' ...\n")
-+     3.14
-+ }
-> b %<-% {
-+     rm(pid)
-+     cat("Future 'b' ...\n")
-+     Sys.getpid()
-+ }
-> c %<-% {
-+     cat("Future 'c' ...\n")
-+     2 * a
-+ }
-Future 'a' ...
-> b
-Future 'b' ...
-Warning in rm(pid): object 'pid' not found
-[1] 2974536
-> c
-Future 'c' ...
-[1] 6.28
-> a
-[1] 3.14
-> pid
-[1] 2974478
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.md)`(``multisession``, workers ``=`` ``2``)`\
+`pid`` ``<-`` `[`Sys.getpid`](https://rdrr.io/r/base/Sys.getpid.html)`(``)`\
+`pid`\
+`#> [1] 1119391`\
+`a`` `[`%<-%`](https://future.futureverse.org/reference/futureAssign.md)` ``{`\
+`    ``pid`` ``<-`` `[`Sys.getpid`](https://rdrr.io/r/base/Sys.getpid.html)`(``)`\
+`    `[`cat`](https://rdrr.io/r/base/cat.html)`(``"Future 'a' ...\n"``)`\
+`    ``3.14`\
+`}`\
+`b`` `[`%<-%`](https://future.futureverse.org/reference/futureAssign.md)` ``{`\
+`    `[`rm`](https://rdrr.io/r/base/rm.html)`(``pid``)`\
+`    `[`cat`](https://rdrr.io/r/base/cat.html)`(``"Future 'b' ...\n"``)`\
+`    `[`Sys.getpid`](https://rdrr.io/r/base/Sys.getpid.html)`(``)`\
+`}`\
+`c`` `[`%<-%`](https://future.futureverse.org/reference/futureAssign.md)` ``{`\
+`    `[`cat`](https://rdrr.io/r/base/cat.html)`(``"Future 'c' ...\n"``)`\
+`    ``2`` ``*`` ``a`\
+`}`\
+`#> Future 'a' ...`\
+`b`\
+`#> Future 'b' ...`\
+`#> Warning in rm(pid): object 'pid' not found`\
+`#> [1] 1119571`\
+`c`\
+`#> Future 'c' ...`\
+`#> [1] 6.28`\
+`a`\
+`#> [1] 3.14`\
+`pid`\
+`#> [1] 1119391`
 
 The first thing we observe is that the values of `a`, `c` and `pid` are
 the same as previously. However, we notice that `b` is different from
@@ -375,11 +368,10 @@ decided by the value of
 [`availableCores()`](https://future.futureverse.org/reference/re-exports.md),
 e.g.
 
-``` r
-> availableCores()
-mc.cores 
-       2 
-```
+\
+[`availableCores`](https://future.futureverse.org/reference/re-exports.md)`(``)`\
+`#> mc.cores `\
+`#>        2 `
 
 This particular result tells us that the `mc.cores` option was set such
 that we are allowed to use in total two (2) processes including the main
@@ -436,38 +428,37 @@ implemented by the **parallel** package). For instance, assume you have
 access to three nodes `n1`, `n2` and `n3`, you can then use these for
 asynchronous evaluation as:
 
-``` r
-> plan(cluster, workers = c("n1", "n2", "n3"))
-> pid <- Sys.getpid()
-> pid
-[1] 2974478
-> a %<-% {
-+     pid <- Sys.getpid()
-+     cat("Future 'a' ...\n")
-+     3.14
-+ }
-> b %<-% {
-+     rm(pid)
-+     cat("Future 'b' ...\n")
-+     Sys.getpid()
-+ }
-> c %<-% {
-+     cat("Future 'c' ...\n")
-+     2 * a
-+ }
-Future 'a' ...
-> b
-Future 'b' ...
-Warning in rm(pid): object 'pid' not found
-[1] 2974640
-> c
-Future 'c' ...
-[1] 6.28
-> a
-[1] 3.14
-> pid
-[1] 2974478
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.md)`(``cluster``, workers ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"n1"``, ``"n2"``, ``"n3"``)``)`\
+`pid`` ``<-`` `[`Sys.getpid`](https://rdrr.io/r/base/Sys.getpid.html)`(``)`\
+`pid`\
+`#> [1] 1119391`\
+`a`` `[`%<-%`](https://future.futureverse.org/reference/futureAssign.md)` ``{`\
+`    ``pid`` ``<-`` `[`Sys.getpid`](https://rdrr.io/r/base/Sys.getpid.html)`(``)`\
+`    `[`cat`](https://rdrr.io/r/base/cat.html)`(``"Future 'a' ...\n"``)`\
+`    ``3.14`\
+`}`\
+`b`` `[`%<-%`](https://future.futureverse.org/reference/futureAssign.md)` ``{`\
+`    `[`rm`](https://rdrr.io/r/base/rm.html)`(``pid``)`\
+`    `[`cat`](https://rdrr.io/r/base/cat.html)`(``"Future 'b' ...\n"``)`\
+`    `[`Sys.getpid`](https://rdrr.io/r/base/Sys.getpid.html)`(``)`\
+`}`\
+`c`` `[`%<-%`](https://future.futureverse.org/reference/futureAssign.md)` ``{`\
+`    `[`cat`](https://rdrr.io/r/base/cat.html)`(``"Future 'c' ...\n"``)`\
+`    ``2`` ``*`` ``a`\
+`}`\
+`#> Future 'a' ...`\
+`b`\
+`#> Future 'b' ...`\
+`#> Warning in rm(pid): object 'pid' not found`\
+`#> [1] 1119738`\
+`c`\
+`#> Future 'c' ...`\
+`#> [1] 6.28`\
+`a`\
+`#> [1] 3.14`\
+`pid`\
+`#> [1] 1119391`
 
 Any types of clusters that
 [`parallel::makeCluster()`](https://rdrr.io/r/parallel/makeCluster.html)
@@ -496,7 +487,7 @@ If you want to run multiple workers on each node, replicate the node
 name as many times as the number of workers to run on that node. For
 example,
 
-    > plan(cluster, workers = c(rep("n1", times = 3), "n2", rep("n3", times = 5)))
+    plan(cluster, workers = c(rep("n1", times = 3), "n2", rep("n3", times = 5)))
 
 will run three workers on `n1`, one on `n2`, and five on `n3`, in total
 nine parallel workers.
@@ -513,42 +504,41 @@ For instance, here is an example of two “top” futures (`a` and `b`) that
 uses multisession evaluation and where the second future (`b`) in turn
 uses two internal futures:
 
-``` r
-> plan(multisession, workers = 2)
-> pid <- Sys.getpid()
-> a %<-% {
-+     cat("Future 'a' ...\n")
-+     Sys.getpid()
-+ }
-> b %<-% {
-+     cat("Future 'b' ...\n")
-+     b1 %<-% {
-+         cat("Future 'b1' ...\n")
-+         Sys.getpid()
-+     }
-+     b2 %<-% {
-+         cat("Future 'b2' ...\n")
-+         Sys.getpid()
-+     }
-+     c(b.pid = Sys.getpid(), b1.pid = b1, b2.pid = b2)
-+ }
-> pid
-[1] 2974478
-> a
-Future 'a' ...
-[1] 2974768
-> b
-Future 'b' ...
-Future 'b1' ...
-Future 'b2' ...
-  b.pid  b1.pid  b2.pid 
-2974767 2974767 2974767 
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.md)`(``multisession``, workers ``=`` ``2``)`\
+`pid`` ``<-`` `[`Sys.getpid`](https://rdrr.io/r/base/Sys.getpid.html)`(``)`\
+`a`` `[`%<-%`](https://future.futureverse.org/reference/futureAssign.md)` ``{`\
+`    `[`cat`](https://rdrr.io/r/base/cat.html)`(``"Future 'a' ...\n"``)`\
+`    `[`Sys.getpid`](https://rdrr.io/r/base/Sys.getpid.html)`(``)`\
+`}`\
+`b`` `[`%<-%`](https://future.futureverse.org/reference/futureAssign.md)` ``{`\
+`    `[`cat`](https://rdrr.io/r/base/cat.html)`(``"Future 'b' ...\n"``)`\
+`    ``b1`` `[`%<-%`](https://future.futureverse.org/reference/futureAssign.md)` ``{`\
+`        `[`cat`](https://rdrr.io/r/base/cat.html)`(``"Future 'b1' ...\n"``)`\
+`        `[`Sys.getpid`](https://rdrr.io/r/base/Sys.getpid.html)`(``)`\
+`    ``}`\
+`    ``b2`` `[`%<-%`](https://future.futureverse.org/reference/futureAssign.md)` ``{`\
+`        `[`cat`](https://rdrr.io/r/base/cat.html)`(``"Future 'b2' ...\n"``)`\
+`        `[`Sys.getpid`](https://rdrr.io/r/base/Sys.getpid.html)`(``)`\
+`    ``}`\
+`    `[`c`](https://rdrr.io/r/base/c.html)`(``b.pid ``=`` `[`Sys.getpid`](https://rdrr.io/r/base/Sys.getpid.html)`(``)``, b1.pid ``=`` ``b1``, b2.pid ``=`` ``b2``)`\
+`}`\
+`pid`\
+`#> [1] 1119391`\
+`a`\
+`#> Future 'a' ...`\
+`#> [1] 1119980`\
+`b`\
+`#> Future 'b' ...`\
+`#> Future 'b1' ...`\
+`#> Future 'b2' ...`\
+`#>   b.pid  b1.pid  b2.pid `\
+`#> 1119979 1119979 1119979 `
 
 By inspecting the process IDs, we see that there are in total three
 different processes involved for resolving the futures. There is the
-main R process (pid 2974478), and there are the two processes used by
-`a` (pid 2974768) and `b` (pid 2974767). However, the two futures (`b1`
+main R process (pid 1119391), and there are the two processes used by
+`a` (pid 1119980) and `b` (pid 1119979). However, the two futures (`b1`
 and `b2`) that are nested by `b` are evaluated by the same R process as
 `b`. This is because nested futures use sequential evaluation unless
 otherwise specified. There are a few reasons for this, but the main
@@ -569,21 +559,20 @@ explicitly specified as:
 We would actually get the same behavior if we try with multiple levels
 of multisession evaluations;
 
-``` r
-> plan(list(multisession, multisession))
-[...]
-> pid
-[1] 2974478
-> a
-Future 'a' ...
-[1] 2974873
-> b
-Future 'b' ...
-Future 'b1' ...
-Future 'b2' ...
-  b.pid  b1.pid  b2.pid 
-2974872 2974872 2974872 
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.md)`(`[`list`](https://rdrr.io/r/base/list.html)`(``multisession``, ``multisession``)``)`\
+`## [...]`\
+`pid`\
+`#> [1] 1119391`\
+`a`\
+`#> Future 'a' ...`\
+`#> [1] 1120084`\
+`b`\
+`#> Future 'b' ...`\
+`#> Future 'b1' ...`\
+`#> Future 'b2' ...`\
+`#>   b.pid  b1.pid  b2.pid `\
+`#> 1120085 1120085 1120085 `
 
 The second multisession backend will default to single, sequential
 processing. The reason for this is, also here, to protect us from
@@ -593,25 +582,24 @@ case for both multisession and multicore evaluation.
 Continuing, if we start off with the sequential backend and then use the
 multisession backend for any nested futures, we get:
 
-``` r
-> plan(list(sequential, multisession))
-[...]
-> pid
-[1] 2974478
-> a
-Future 'a' ...
-[1] 2974478
-> b
-Future 'b' ...
-Future 'b1' ...
-Future 'b2' ...
-  b.pid  b1.pid  b2.pid 
-2974478 2974975 2974974 
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.md)`(`[`list`](https://rdrr.io/r/base/list.html)`(``sequential``, ``multisession``)``)`\
+`## [...]`\
+`pid`\
+`#> [1] 1119391`\
+`a`\
+`#> Future 'a' ...`\
+`#> [1] 1119391`\
+`b`\
+`#> Future 'b' ...`\
+`#> Future 'b1' ...`\
+`#> Future 'b2' ...`\
+`#>   b.pid  b1.pid  b2.pid `\
+`#> 1119391 1120249 1120250 `
 
 which clearly show that `a` and `b` are resolved in the calling process
-(pid 2974478) whereas the two nested futures (`b1` and `b2`) are
-resolved in two separate R processes (pids 2974975 and 2974974).
+(pid 1119391) whereas the two nested futures (`b1` and `b2`) are
+resolved in two separate R processes (pids 1120249 and 1120250).
 
 Having said this, it is indeed possible to use nested multisession
 backend that are not forced to sequential processing by explicitly
@@ -619,27 +607,26 @@ specifying (read *forcing*) the number of workers available at each
 level. In order to do this we need to “tweak” the default settings,
 which can be done as follows:
 
-``` r
-> plan(list(tweak(multisession, workers = 2), tweak(multisession, 
-+     workers = 2)))
-[...]
-> pid
-[1] 2974478
-> a
-Future 'a' ...
-[1] 2975080
-> b
-Future 'b' ...
-Future 'b1' ...
-Future 'b2' ...
-  b.pid  b1.pid  b2.pid 
-2975079 2975210 2975211 
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.md)`(`[`list`](https://rdrr.io/r/base/list.html)`(`[`tweak`](https://future.futureverse.org/reference/plan.md)`(``multisession``, workers ``=`` ``2``)``, `[`tweak`](https://future.futureverse.org/reference/plan.md)`(``multisession``, `\
+`    workers ``=`` ``2``)``)``)`\
+`## [...]`\
+`pid`\
+`#> [1] 1119391`\
+`a`\
+`#> Future 'a' ...`\
+`#> [1] 1120422`\
+`b`\
+`#> Future 'b' ...`\
+`#> Future 'b1' ...`\
+`#> Future 'b2' ...`\
+`#>   b.pid  b1.pid  b2.pid `\
+`#> 1120421 1120589 1120590 `
 
 First, we see that both `a` and `b` are resolved in different processes
-(pids 2975080 and 2975079) than the calling process (pid 2974478).
+(pids 1120422 and 1120421) than the calling process (pid 1119391).
 Second, the two nested futures (`b1` and `b2`) are resolved in yet two
-other R processes (pids 2975210 and 2975211).
+other R processes (pids 1120589 and 1120590).
 
 For more details on working with nested futures and different future
 backends at each level, see Vignette ‘[A Future for R: Future
@@ -654,39 +641,39 @@ futures (as in all the examples above), we can use the
 `f <- futureOf(a)` function to retrieve the explicit future from an
 implicit one. For example,
 
-``` r
-> plan(multisession, workers = 2)
-> a %<-% {
-+     cat("Future 'a' ...")
-+     Sys.sleep(2)
-+     cat("done\n")
-+     Sys.getpid()
-+ }
-> cat("Waiting for 'a' to be resolved ...\n")
-Waiting for 'a' to be resolved ...
-> f <- futureOf(a)
-> count <- 1
-> while (!resolved(f)) {
-+     cat(count, "\n")
-+     Sys.sleep(0.2)
-+     count <- count + 1
-+ }
-1 
-2 
-3 
-4 
-5 
-6 
-7 
-8 
-9 
-10 
-> cat("Waiting for 'a' to be resolved ... DONE\n")
-Waiting for 'a' to be resolved ... DONE
-> a
-Future 'a' ...done
-[1] 2975315
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.md)`(``multisession``, workers ``=`` ``2``)`\
+`a`` `[`%<-%`](https://future.futureverse.org/reference/futureAssign.md)` ``{`\
+`    `[`cat`](https://rdrr.io/r/base/cat.html)`(``"Future 'a' ..."``)`\
+`    `[`Sys.sleep`](https://rdrr.io/r/base/Sys.sleep.html)`(``2``)`\
+`    `[`cat`](https://rdrr.io/r/base/cat.html)`(``"done\n"``)`\
+`    `[`Sys.getpid`](https://rdrr.io/r/base/Sys.getpid.html)`(``)`\
+`}`\
+[`cat`](https://rdrr.io/r/base/cat.html)`(``"Waiting for 'a' to be resolved ...\n"``)`\
+`#> Waiting for 'a' to be resolved ...`\
+`f`` ``<-`` `[`futureOf`](https://future.futureverse.org/reference/futureOf.md)`(``a``)`\
+`count`` ``<-`` ``1`\
+`while`` ``(``!`[`resolved`](https://future.futureverse.org/reference/resolved.md)`(``f``)``)`` ``{`\
+`    `[`cat`](https://rdrr.io/r/base/cat.html)`(``count``, ``"\n"``)`\
+`    `[`Sys.sleep`](https://rdrr.io/r/base/Sys.sleep.html)`(``0.2``)`\
+`    ``count`` ``<-`` ``count`` ``+`` ``1`\
+`}`\
+`#> 1 `\
+`#> 2 `\
+`#> 3 `\
+`#> 4 `\
+`#> 5 `\
+`#> 6 `\
+`#> 7 `\
+`#> 8 `\
+`#> 9 `\
+`#> 10 `\
+`#> 11 `\
+[`cat`](https://rdrr.io/r/base/cat.html)`(``"Waiting for 'a' to be resolved ... DONE\n"``)`\
+`#> Waiting for 'a' to be resolved ... DONE`\
+`a`\
+`#> Future 'a' ...done`\
+`#> [1] 1120735`
 
 ## Failed Futures
 
@@ -696,41 +683,38 @@ the calling environment *when the future value is requested*. For
 example, if we use lazy evaluation on a future that generates an error,
 we might see something like
 
-``` r
-> plan(sequential)
-> b <- "hello"
-> a %<-% {
-+     cat("Future 'a' ...\n")
-+     log(b)
-+ } %lazy% TRUE
-> cat("Everything is still ok although we have created a future that will fail.\n")
-Everything is still ok although we have created a future that will fail.
-> a
-Future 'a' ...
-Error in log(b) : non-numeric argument to mathematical function
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.md)`(``sequential``)`\
+`b`` ``<-`` ``"hello"`\
+`a`` `[`%<-%`](https://future.futureverse.org/reference/futureAssign.md)` ``{`\
+`    `[`cat`](https://rdrr.io/r/base/cat.html)`(``"Future 'a' ...\n"``)`\
+`    `[`log`](https://rdrr.io/r/base/Log.html)`(``b``)`\
+`}`` `[`%lazy%`](https://future.futureverse.org/reference/futureAssign.md)` ``TRUE`\
+[`cat`](https://rdrr.io/r/base/cat.html)`(``"Everything is still ok although we have created a future that will fail.\n"``)`\
+`#> Everything is still ok although we have created a future that will fail.`\
+`a`\
+`#> Future 'a' ...`\
+`#> Error in log(b) : non-numeric argument to mathematical function`
 
 The error is thrown each time the value is requested, that is, if we try
 to get the value again, it will generate the same error (and output):
 
-``` r
-> a
-Future 'a' ...
-Error in log(b) : non-numeric argument to mathematical function
-In addition: Warning message:
-restarting interrupted promise evaluation
-```
+\
+`a`\
+`#> Future 'a' ...`\
+`#> Error in log(b) : non-numeric argument to mathematical function`\
+`#> In addition: Warning message:`\
+`#> restarting interrupted promise evaluation`
 
 To see the *last* call in the call stack that gave the error, we can use
 the
 [`backtrace()`](https://future.futureverse.org/reference/backtrace.md)
 function(\*) on the future, i.e.
 
-``` r
-> backtrace(a)
-[[1]]
-log(a)
-```
+\
+[`backtrace`](https://future.futureverse.org/reference/backtrace.md)`(``a``)`\
+`#> [[1]]`\
+`#> log(a)`
 
 (\*) The commonly used
 [`traceback()`](https://rdrr.io/r/base/traceback.html) does not provide
@@ -785,21 +769,20 @@ explicit ones. Because an explicit future is just like any other object
 in R it can be assigned anywhere/to anything. For instance, we can
 create several of them in a loop and assign them to a list, e.g.
 
-``` r
-> plan(multisession, workers = 2)
-> fs <- list()
-> for (ii in 1:3) {
-+     fs[[ii]] <- future({
-+         Sys.getpid()
-+     })
-+ }
-> v <- value(fs)
-> str(v)
-List of 3
- $ : int 2975426
- $ : int 2975425
- $ : int 2975426
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.md)`(``multisession``, workers ``=`` ``2``)`\
+`fs`` ``<-`` `[`list`](https://rdrr.io/r/base/list.html)`(``)`\
+`for`` ``(``ii`` ``in`` ``1``:``3``)`` ``{`\
+`    ``fs``[[``ii``]``]`` ``<-`` `[`future`](https://future.futureverse.org/reference/future.md)`(``{`\
+`        `[`Sys.getpid`](https://rdrr.io/r/base/Sys.getpid.html)`(``)`\
+`    ``}``)`\
+`}`\
+`v`` ``<-`` `[`value`](https://future.futureverse.org/reference/value.md)`(``fs``)`\
+[`str`](https://rdrr.io/r/utils/str.html)`(``v``)`\
+`#> List of 3`\
+`#>  $ : int 1120864`\
+`#>  $ : int 1120863`\
+`#>  $ : int 1120864`
 
 This is *not* possible to do when using implicit futures. This is
 because the `%<-%` assignment operator *cannot* be used in all cases
@@ -809,21 +792,20 @@ environment) much like how `assign(name, value, envir)` works. However,
 we can assign implicit futures to environments using *named indices*,
 e.g.
 
-``` r
-> plan(multisession, workers = 2)
-> v <- new.env()
-> for (name in c("a", "b", "c")) {
-+     v[[name]] %<-% {
-+         Sys.getpid()
-+     }
-+ }
-> v <- as.list(v)
-> str(v)
-List of 3
- $ a: int 2975426
- $ b: int 2975425
- $ c: int 2975426
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.md)`(``multisession``, workers ``=`` ``2``)`\
+`v`` ``<-`` `[`new.env`](https://rdrr.io/r/base/environment.html)`(``)`\
+`for`` ``(``name`` ``in`` `[`c`](https://rdrr.io/r/base/c.html)`(``"a"``, ``"b"``, ``"c"``)``)`` ``{`\
+`    ``v``[[``name``]``]`` `[`%<-%`](https://future.futureverse.org/reference/futureAssign.md)` ``{`\
+`        `[`Sys.getpid`](https://rdrr.io/r/base/Sys.getpid.html)`(``)`\
+`    ``}`\
+`}`\
+`v`` ``<-`` `[`as.list`](https://rdrr.io/r/base/list.html)`(``v``)`\
+[`str`](https://rdrr.io/r/utils/str.html)`(``v``)`\
+`#> List of 3`\
+`#>  $ a: int 1120864`\
+`#>  $ b: int 1120863`\
+`#>  $ c: int 1120864`
 
 Here `as.list(v)` blocks until all futures in the environment `v` have
 been resolved. Then their values are collected and returned as a regular
@@ -838,22 +820,21 @@ environments where we otherwise would use lists, we can also assign
 implicit futures to list-like objects using numeric indices. For
 example,
 
-``` r
-> library(listenv)
-> plan(multisession, workers = 2)
-> v <- listenv()
-> for (ii in 1:3) {
-+     v[[ii]] %<-% {
-+         Sys.getpid()
-+     }
-+ }
-> v <- as.list(v)
-> str(v)
-List of 3
- $ : int 2975426
- $ : int 2975425
- $ : int 2975426
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`listenv`](https://listenv.futureverse.org)`)`\
+[`plan`](https://future.futureverse.org/reference/plan.md)`(``multisession``, workers ``=`` ``2``)`\
+`v`` ``<-`` `[`listenv`](https://listenv.futureverse.org/reference/listenv.html)`(``)`\
+`for`` ``(``ii`` ``in`` ``1``:``3``)`` ``{`\
+`    ``v``[[``ii``]``]`` `[`%<-%`](https://future.futureverse.org/reference/futureAssign.md)` ``{`\
+`        `[`Sys.getpid`](https://rdrr.io/r/base/Sys.getpid.html)`(``)`\
+`    ``}`\
+`}`\
+`v`` ``<-`` `[`as.list`](https://rdrr.io/r/base/list.html)`(``v``)`\
+[`str`](https://rdrr.io/r/utils/str.html)`(``v``)`\
+`#> List of 3`\
+`#>  $ : int 1120864`\
+`#>  $ : int 1120863`\
+`#>  $ : int 1120864`
 
 As previously, `as.list(v)` blocks until all futures are resolved.
 

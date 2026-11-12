@@ -452,12 +452,11 @@ If we set:
 we’ll see that this is caught even before attempting to run this in
 parallel;
 
-``` r
-> f <- future(image_fill(frink, "orange", "+100+200", 20))
-## Error: Detected a non-exportable reference ('externalptr' of class
-## 'magick-image') in one of the globals ('frink' of class 'magick-image')
-## used in the future expression
-```
+\
+`f`` ``<-`` `[`future`](https://future.futureverse.org/reference/future.md)`(`[`image_fill`](https://docs.ropensci.org/magick/reference/painting.html)`(``frink``, ``"orange"``, ``"+100+200"``, ``20``)``)`\
+`#> ## Error: Detected a non-exportable reference ('externalptr' of class`\
+`#> ## 'magick-image') in one of the globals ('frink' of class 'magick-image')`\
+`#> ## used in the future expression`
 
 #### Package: polars
 
@@ -915,26 +914,25 @@ parallel workers, if we save the object to file using
 `saveRDS(a, "a.rds")`, and try to use it in *another* R session, the
 following happens:
 
-``` r
-$ R --quiet --vanilla
-> a <- readRDS("a.rds")
-> XML::xmlGetAttr(a, "status")
-
- *** caught segfault ***
-address 0x40, cause 'memory not mapped'
-
-Traceback:
- 1: xmlAttrs.XMLInternalNode(node, addNamespace)
- 2: xmlAttrs(node, addNamespace)
- 3: XML::xmlGetAttr(a, "status")
-
-Possible actions:
-1: abort (with core dump, if enabled)
-2: normal R exit
-3: exit R without saving workspace
-4: exit R saving workspace
-Selection:
-```
+\
+`#> $ R --quiet --vanilla`\
+`a`` ``<-`` `[`readRDS`](https://rspatial.github.io/terra/reference/serialize.html)`(``"a.rds"``)`\
+`XML``::`[`xmlGetAttr`](https://rdrr.io/pkg/XML/man/xmlGetAttr.html)`(``a``, ``"status"``)`\
+\
+`#>  *** caught segfault ***`\
+`#> address 0x40, cause 'memory not mapped'`\
+`#>`\
+`#> Traceback:`\
+`#>  1: xmlAttrs.XMLInternalNode(node, addNamespace)`\
+`#>  2: xmlAttrs(node, addNamespace)`\
+`#>  3: XML::xmlGetAttr(a, "status")`\
+`#>`\
+`#> Possible actions:`\
+`#> 1: abort (with core dump, if enabled)`\
+`#> 2: normal R exit`\
+`#> 3: exit R without saving workspace`\
+`#> 4: exit R saving workspace`\
+`#> Selection:`
 
 This is a very harsh way of telling us that we cannot export all types
 of objects produced by **XML**. Ideally, **XML** would detect this and
