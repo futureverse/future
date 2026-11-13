@@ -55,8 +55,7 @@ if (parallelly::availableCores() >= 2L) {
   message("Multisession worker with broken library path:")
   libs_tmp <- tempdir()
   with(plan(multisession, rscript_libs = normalize_libs(libs_tmp)), {
-    f <- future(.libPaths())
-    libs_w <- tryCatch(value(f), error = identity)
+    libs_w <- tryCatch(value(future(.libPaths())), error = identity)
   })
   print(libs_w)
   if (!covr_testing) {
