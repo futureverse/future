@@ -236,6 +236,9 @@ repeat. This release focuses on cancellation of futures.
    everywhere. It was still 500 MiB is some cases, e.g. `futureCall()`
    had a limit although `future()` did not.
 
+ * Missing arguments can now be forwarded in a future expression without
+   being retrieved as ordinary global objects (#756).
+
  * On MS Windows, a future startup script specified by environment
    variable `R_FUTURE_STARTUP_SCRIPT` was silently ignored due to a
    bug in parsing the value.
