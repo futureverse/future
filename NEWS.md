@@ -1,5 +1,12 @@
 # Version (development version)
 
+## New Features
+
+ * Long future errors and warnings outputted by R's default error and
+   warning handlers are now truncated at R's maximum 8170, instead of
+   `getOption("warning.length")`, characters, Previously, valuable
+   information could be dropped from long error messages.
+
 ## Performance
 
  * Cluster-based futures (e.g. `multisession`) no longer make a

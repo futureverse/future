@@ -121,6 +121,20 @@ print.FutureCondition <- function(x, ...) {
 
 #' @export
 conditionMessage.FutureCondition <- function(c) {
+  ## WORKAROUND:
+  ## When signaled via stop() or warning(), R's default handlers truncate
+  ## the message to getOption("warning.length") characters (default 1000).
+  ## Because FutureCondition:s tend to contain important information on 
+  ## future-orchestration issues, we workaround this limit in order to
+  ## preserve the detailed information.
+  caller <- sys.function(sys.parent())
+  if (identical(caller, base::stop) || identical(caller, base::warning)) {
+    ## Apply temporary workaround when called from warning() or stop()
+    oopts <- options(warning.length = 8170L)
+    do.call(on.exit, args = list(bquote(options(.(oopts))),
+            add = TRUE, after = FALSE), envir = parent.frame())
+  }
+
   msg <- NextMethod()
 
   uuid <- attr(c, "uuid", exact = TRUE)
