@@ -525,17 +525,17 @@ getSocketSelectTimeout <- function(future, timeout = NULL) {
 
   timeout <- getOption("future.cluster.resolved.timeout")
   if (is.null(timeout)) {
+    timeout <- getOption("future.resolved.timeout")
     if (is.null(timeout)) {
-      timeout <- getOption("future.resolved.timeout")
-      if (is.null(timeout)) {
-        timeout <- 0.01
-      }
+      timeout <- 0.01
     }
-      
-    if (timeout < 0) {
-      warning("Secret option 'future.resolved.timeout' is negative, which causes resolved() to wait until the future is resolved. This feature is only used for testing purposes of the future framework and must not be used elsewhere", immediate. = TRUE)
-      timeout <- NULL
-    }
+  }
+
+  ## A negative timeout means wait until the future is resolved, which
+  ## is what a NULL timeout does. This is not memoized.
+  if (timeout < 0) {
+    warning("Secret option 'future.resolved.timeout' is negative, which causes resolved() to wait until the future is resolved. This feature is only used for testing purposes of the future framework and must not be used elsewhere", immediate. = TRUE)
+    return(NULL)
   }
 
   ## WORKAROUND: Non-integer timeouts (at least < 2.0 seconds) may result
