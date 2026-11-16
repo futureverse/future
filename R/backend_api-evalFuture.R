@@ -68,7 +68,7 @@ getSysCalls <- local({
         ## WORKAROUND: This makes assumption about withCallingHandlers()
         ## In case this changes, provide internal options to adjust this.
         ## /HB 2018-12-28
-        skip <<- getOption("future.makeExpression.skip", c(6L, 3L))
+        skip <- getOption("future.makeExpression.skip", c(6L, 3L))
         sysCalls_no_local <<- function(calls = sys.calls(), from = 1L) {
           calls[seq.int(from = from + skip[1L], to = length(calls) - skip[2L])]
         }
