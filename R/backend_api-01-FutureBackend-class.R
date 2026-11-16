@@ -242,7 +242,7 @@ makeFutureBackend <- function(evaluator, ..., debug = FALSE) {
     return(backend)
   }
   
-  mdebugf("Backend function: <%s>", commaq(class(backend)))
+  if (debug) mdebugf("Backend function: <%s>", commaq(class(evaluator)))
   
   factory <- attr(evaluator, "factory")
   if (is.null(factory)) {
