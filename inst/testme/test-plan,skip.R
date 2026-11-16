@@ -7,7 +7,12 @@ options(future.debug = FALSE)
 
 message("*** plan(..., .skip = ...) ...")
 
-backend_uuid <- function() plan("backend")[["uuid"]]
+## A FutureBackend is an environment, so identical() tells whether
+## it is the same backend instance or a new one. Note, we cannot use
+## the backend 'uuid', because it is derived from proc.time(), which
+## may be the same for two backends created in quick succession on
+## MS Windows
+same_backend <- function(backend) identical(plan("backend"), backend)
 
 strategies <- list(sequential = list(sequential))
 if (parallelly::availableCores() >= 2L) {
@@ -20,20 +25,20 @@ for (name in names(strategies)) {
   message(sprintf("- plan('%s')", name))
 
   set_plan()
-  uuid0 <- backend_uuid()
+  backend0 <- plan("backend")
 
   message("  - default: setting the same plan again is skipped")
   set_plan()
-  stopifnot(identical(backend_uuid(), uuid0))
+  stopifnot(same_backend(backend0))
 
   message("  - .skip = TRUE: setting the same plan again is skipped")
   set_plan(.skip = TRUE)
-  stopifnot(identical(backend_uuid(), uuid0))
+  stopifnot(same_backend(backend0))
 
   message("  - .skip = FALSE: setting the same plan again replaces it")
   set_plan(.skip = FALSE)
-  uuid1 <- backend_uuid()
-  stopifnot(!identical(uuid1, uuid0))
+  backend1 <- plan("backend")
+  stopifnot(!same_backend(backend0))
 
   ## The new backend works
   f <- future(42L)
@@ -41,7 +46,7 @@ for (name in names(strategies)) {
 
   message("  - .skip = TRUE: setting a different plan is not skipped")
   set_plan(gc = TRUE, .skip = TRUE)
-  stopifnot(!identical(backend_uuid(), uuid1))
+  stopifnot(!same_backend(backend1))
 }
 
 plan(sequential)
