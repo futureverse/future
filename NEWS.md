@@ -45,6 +45,10 @@
    fail with a `FutureLaunchError` on "object '...future.connections'
    not found", instead of relaying the original error.
 
+ * Calling `clusterEvalQ()` with a non-supported expression on a
+   `makeClusterFuture()` cluster produced a warning, instead of an
+   error as documented.
+
 ## Documentation
 
  * Document that `%<-%` on a list environment ('listenv') can only

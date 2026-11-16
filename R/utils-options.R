@@ -462,7 +462,7 @@ update_package_options <- function(debug = FALSE) {
 
   update_package_option("future.debug.indent", mode = "character", default = " ", debug = debug)
 
-  update_package_option("future.ClusterFuture.clusterEvalQ", mode = "character", default = "warning", debug = debug)
+  update_package_option("future.ClusterFuture.clusterEvalQ", mode = "character", debug = debug)
 
   ## future (> 1.68.0)
   update_package_option("future.future.earlySignal", mode = "character", debug = debug)

@@ -54,6 +54,15 @@ if (getRversion() >= "4.4.0") {
   }
 
 
+  message("clusterEvalQ() with non-supported expression is an error by default:")
+  stopifnot(is.null(getOption("future.ClusterFuture.clusterEvalQ")))
+  plan(sequential)
+  cl <- makeClusterFuture()
+  res <- tryCatch(clusterEvalQ(cl, 1 + 1), error = identity)
+  print(res)
+  stopifnot(inherits(res, "FutureError"))
+
+
   message("clusterEvalQ() attaching packages:")
   stopifnot(!"package:tools" %in% search())
   oopts <- options(future.ClusterFuture.clusterEvalQ = "error")
