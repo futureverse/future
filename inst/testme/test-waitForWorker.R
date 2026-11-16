@@ -63,6 +63,42 @@ stopifnot(identical(calls, c("list", "collect-first", "list")))
 ## The registry in 'future' was not touched
 stopifnot(length(FutureRegistry(reg, action = "list", earlySignal = FALSE)) == 0L)
 
+message("- falls back to the 'wait.*' fields of the backend")
+backend2 <- list(reg = reg, wait.timeout = 0.5, wait.interval = 0.01, wait.alpha = 1.01)
+waitForWorker(backend2, workers = 1L)
+f <- future(1, lazy = TRUE)
+FutureRegistry(reg, action = "add", future = f, earlySignal = FALSE)
+dt <- system.time({
+  res <- tryCatch(waitForWorker(backend2, workers = 1L), error = identity)
+})[["elapsed"]]
+print(res)
+print(dt)
+stopifnot(
+  inherits(res, "FutureError"),
+  grepl("TIMEOUT", conditionMessage(res)),
+  dt < 10
+)
+FutureRegistry(reg, action = "reset")
+
+message("- the 'wait.*' fields take precedence over 'timeout', 'delta', and 'alpha'")
+## E.g. a cluster backend, where 'timeout' is the makeClusterPSOCK() timeout
+backend3 <- list(reg = reg, timeout = 3600, wait.timeout = 0.5, wait.interval = 0.01, wait.alpha = 1.01)
+f <- future(1, lazy = TRUE)
+FutureRegistry(reg, action = "add", future = f, earlySignal = FALSE)
+dt <- system.time({
+  res <- tryCatch(waitForWorker(backend3, workers = 1L), error = identity)
+})[["elapsed"]]
+print(dt)
+stopifnot(inherits(res, "FutureError"), dt < 10)
+FutureRegistry(reg, action = "reset")
+
+if (parallelly::supportsMulticore() && availableCores() >= 2L) {
+  message("- works with the built-in multicore backend")
+  plan(multicore, workers = 2L)
+  waitForWorker(plan("backend"))
+  plan(sequential)
+}
+
 message("- invalid arguments")
 res <- tryCatch(waitForWorker(backend, workers = 0L), error = identity)
 stopifnot(inherits(res, "error"))

@@ -11,12 +11,18 @@
 #' @param workers (numeric) The total number of workers.
 #'
 #' @param timeout (numeric) The maximum number of seconds to wait.
+#' If NULL, the `wait.timeout` field of the backend is used, then
+#' its `timeout` field, and last R option `future.wait.timeout`.
 #'
 #' @param delta (numeric) The initial number of seconds to sleep
 #' between polls.
+#' If NULL, the `wait.interval` field of the backend is used, then
+#' its `delta` field, and last R option `future.wait.interval`.
 #'
 #' @param alpha (numeric) The factor by which the sleep interval is
 #' scaled after each poll.
+#' If NULL, the `wait.alpha` field of the backend is used, then
+#' its `alpha` field, and last R option `future.wait.alpha`.
 #'
 #' @param registry (function) The registry of active futures to poll,
 #' e.g. `FutureRegistry()`. It is called as `registry(reg, action = ...)`,
@@ -34,7 +40,27 @@
 #' packages, e.g. \pkg{future.callr} and \pkg{future.mirai}.
 #'
 #' @noRd
-waitForWorker <- function(backend, workers = nbrOfWorkers(backend), timeout = backend[["timeout"]], delta = backend[["delta"]], alpha = backend[["alpha"]], registry = FutureRegistry, debug = FALSE) {
+waitForWorker <- function(backend, workers = nbrOfWorkers(backend), timeout = NULL, delta = NULL, alpha = NULL, registry = FutureRegistry, debug = FALSE) {
+  ## Defaults from the backend. The 'wait.*' fields, as used by
+  ## MultiprocessFutureBackend, take precedence, because for some
+  ## backends, field 'timeout' is something else, e.g. for
+  ## ClusterFutureBackend it is the makeClusterPSOCK() timeout
+  if (is.null(timeout)) {
+    timeout <- backend[["wait.timeout"]]
+    if (is.null(timeout)) timeout <- backend[["timeout"]]
+    if (is.null(timeout)) timeout <- getOption("future.wait.timeout", 24 * 60 * 60)
+  }
+  if (is.null(delta)) {
+    delta <- backend[["wait.interval"]]
+    if (is.null(delta)) delta <- backend[["delta"]]
+    if (is.null(delta)) delta <- getOption("future.wait.interval", 0.01)
+  }
+  if (is.null(alpha)) {
+    alpha <- backend[["wait.alpha"]]
+    if (is.null(alpha)) alpha <- backend[["alpha"]]
+    if (is.null(alpha)) alpha <- getOption("future.wait.alpha", 1.01)
+  }
+
   stop_if_not(
     length(workers) == 1L, is.numeric(workers), !is.na(workers), workers >= 1,
     length(timeout) == 1L, is.numeric(timeout), !is.na(timeout), timeout >= 0,
