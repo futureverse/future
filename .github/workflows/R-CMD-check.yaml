@@ -27,7 +27,10 @@ jobs:
           - {os: ubuntu-latest,  r: 'oldrel'   }
           - {os: ubuntu-latest,  r: 'oldrel-1' }
           - {os: ubuntu-latest,  r: 'oldrel-2' }
-          - {os: ubuntu-latest,  r: '4.0'      , testme_exclude: 'mpi' }
+          ## R 3.6 and R 4.0 run out of C stack in the 'fibonacci' demo
+          ## on ubuntu-26.04 (= ubuntu-latest since 2026-11-16)
+          - {os: ubuntu-24.04,   r: '4.0'      , testme_exclude: 'mpi' }
+          - {os: ubuntu-24.04,   r: '3.6'      , testme_exclude: 'mpi' }
 
           - {os: ubuntu-latest,  r: 'release'  , strict: true, label: 'strict' }
 
