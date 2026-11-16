@@ -783,7 +783,7 @@ result.ClusterFuture <- function(future, ...) {
       future <- handleInterruptedFuture(backend, future = future)
       result <- future[["result"]]
       if (inherits(result, "FutureError")) stop(result)
-      stop_if_not(inherits(future, "FutureResult"))
+      stop_if_not(inherits(result, "FutureResult"))
       return(result)
     }
     assertValidConnection(future)
