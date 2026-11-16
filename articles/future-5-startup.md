@@ -58,7 +58,7 @@ then the future package will interpret this as we wish to resolve
 futures in parallel using 2 cores. More specifically, we get that
 
 \
-[`availableCores`](https://future.futureverse.org/reference/re-exports.md)`(``)`\
+`parallelly``::`[`availableCores`](https://parallelly.futureverse.org/reference/availableCores.html)`(``)`\
 `#> mc.cores`\
 `#>        2`\
 [`class`](https://rdrr.io/r/base/class.html)`(``future``::`[`plan`](https://future.futureverse.org/reference/plan.md)`(``)``)`\

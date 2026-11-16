@@ -369,7 +369,7 @@ decided by the value of
 e.g.
 
 \
-[`availableCores`](https://future.futureverse.org/reference/re-exports.md)`(``)`\
+`parallelly``::`[`availableCores`](https://parallelly.futureverse.org/reference/availableCores.html)`(``)`\
 `#> mc.cores `\
 `#>        2 `
 

@@ -161,7 +161,7 @@ to use something like:
 
 \
 [`plan`](https://future.futureverse.org/reference/plan.md)`(`[`list`](https://rdrr.io/r/base/list.html)`(`\
-`  `[`tweak`](https://future.futureverse.org/reference/plan.md)`(``multisession``, workers ``=`` `[`availableCores`](https://future.futureverse.org/reference/re-exports.md)`(``)`` `[`%/%`](https://rdrr.io/r/base/Arithmetic.html)` ``4``)``,`\
+`  `[`tweak`](https://future.futureverse.org/reference/plan.md)`(``multisession``, workers ``=`` ``parallelly``::`[`availableCores`](https://parallelly.futureverse.org/reference/availableCores.html)`(``)`` `[`%/%`](https://rdrr.io/r/base/Arithmetic.html)` ``4``)``,`\
 `  `[`tweak`](https://future.futureverse.org/reference/plan.md)`(``multisession``, workers ``=`` `[`I`](https://rdrr.io/r/base/AsIs.html)`(``4``)``)`\
 `)``)`
 
@@ -291,13 +291,12 @@ typically defaults to the number of cores on those nodes. Now, imagine
 you want to use only 50% of these cores. This can be done by tweaking
 the `multisession` plan by passing a function to `workers`;
 
-``` r
-halfCores <- function() { max(1, round(0.5 * availableCores()))
-plan(list(
-  tweak(cluster, workers = nodes),
-  tweak(multisession, workers = I(halfCores))
-))
-```
+\
+`halfCores`` ``<-`` ``function``(``)`` ``{`` `[`max`](https://rdrr.io/r/base/Extremes.html)`(``1``, `[`round`](https://rdrr.io/r/base/Round.html)`(``0.5`` ``*`` ``parallelly``::`[`availableCores`](https://parallelly.futureverse.org/reference/availableCores.html)`(``)``)``)`` ``}`\
+[`plan`](https://future.futureverse.org/reference/plan.md)`(`[`list`](https://rdrr.io/r/base/list.html)`(`\
+`  `[`tweak`](https://future.futureverse.org/reference/plan.md)`(``cluster``, workers ``=`` ``nodes``)``,`\
+`  `[`tweak`](https://future.futureverse.org/reference/plan.md)`(``multisession``, workers ``=`` `[`I`](https://rdrr.io/r/base/AsIs.html)`(``halfCores``)``)`\
+`)``)`
 
 With this, each node will use at most 50% of the cores available. For
 instance, if `n1` and `n2` have eight cores, and `n3` has 32 cores, then
@@ -311,7 +310,7 @@ Another example is:
 `    ``"n1"`` ``=`` ``2L``,`\
 `    ``"n2"`` ``=`` ``3L``,`\
 `    ``## default:`\
-`    `[`availableCores`](https://future.futureverse.org/reference/re-exports.md)`(``)`\
+`    ``parallelly``::`[`availableCores`](https://parallelly.futureverse.org/reference/availableCores.html)`(``)`\
 `  ``)`\
 `}`\
 [`plan`](https://future.futureverse.org/reference/plan.md)`(`[`list`](https://rdrr.io/r/base/list.html)`(`\

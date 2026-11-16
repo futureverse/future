@@ -42,9 +42,9 @@ res <- tryCatch({
 #> [[1]]
 #> base::tryCatch(base::withCallingHandlers({
 #>     NULL
-#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpzuNDx3/callr-fun-53cfe752a00b3"), 
+#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpVLsRdP/callr-fun-10b5fa3d62a66d"), 
 #>         base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
-#>         quote = TRUE), file = "/tmp/hb/RtmpzuNDx3/callr-res-53cfe21c0fd37", 
+#>         quote = TRUE), file = "/tmp/hb/RtmpVLsRdP/callr-res-10b5fa42e833f4", 
 #>         compress = FALSE)
 #>     base::flush(base::stdout())
 #>     base::flush(base::stderr())
@@ -73,7 +73,7 @@ res <- tryCatch({
 #>         if (callr_data$has_otel) {
 #>             callr_data$otel_span$record_exception(e2)
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpzuNDx3/callr-res-53cfe21c0fd37", 
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpVLsRdP/callr-res-10b5fa42e833f4", 
 #>             ".error"))
 #>     }
 #> }, interrupt = function(e) {
@@ -99,7 +99,7 @@ res <- tryCatch({
 #>         if (callr_data$has_otel) {
 #>             callr_data$otel_span$record_exception(e2)
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpzuNDx3/callr-res-53cfe21c0fd37", 
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpVLsRdP/callr-res-10b5fa42e833f4", 
 #>             ".error"))
 #>     }
 #> }, callr_message = function(e) {
@@ -143,9 +143,9 @@ res <- tryCatch({
 #> [[8]]
 #> base::withCallingHandlers({
 #>     NULL
-#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpzuNDx3/callr-fun-53cfe752a00b3"), 
+#>     base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpVLsRdP/callr-fun-10b5fa3d62a66d"), 
 #>         base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
-#>         quote = TRUE), file = "/tmp/hb/RtmpzuNDx3/callr-res-53cfe21c0fd37", 
+#>         quote = TRUE), file = "/tmp/hb/RtmpVLsRdP/callr-res-10b5fa42e833f4", 
 #>         compress = FALSE)
 #>     base::flush(base::stdout())
 #>     base::flush(base::stderr())
@@ -174,7 +174,7 @@ res <- tryCatch({
 #>         if (callr_data$has_otel) {
 #>             callr_data$otel_span$record_exception(e2)
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpzuNDx3/callr-res-53cfe21c0fd37", 
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpVLsRdP/callr-res-10b5fa42e833f4", 
 #>             ".error"))
 #>     }
 #> }, interrupt = function(e) {
@@ -200,7 +200,7 @@ res <- tryCatch({
 #>         if (callr_data$has_otel) {
 #>             callr_data$otel_span$record_exception(e2)
 #>         }
-#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpzuNDx3/callr-res-53cfe21c0fd37", 
+#>         base::saveRDS(base::list("error", e2, e), file = base::paste0("/tmp/hb/RtmpVLsRdP/callr-res-10b5fa42e833f4", 
 #>             ".error"))
 #>     }
 #> }, callr_message = function(e) {
@@ -208,13 +208,13 @@ res <- tryCatch({
 #> })
 #> 
 #> [[9]]
-#> base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpzuNDx3/callr-fun-53cfe752a00b3"), 
+#> base::saveRDS(base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpVLsRdP/callr-fun-10b5fa3d62a66d"), 
 #>     base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
-#>     quote = TRUE), file = "/tmp/hb/RtmpzuNDx3/callr-res-53cfe21c0fd37", 
+#>     quote = TRUE), file = "/tmp/hb/RtmpVLsRdP/callr-res-10b5fa42e833f4", 
 #>     compress = FALSE)
 #> 
 #> [[10]]
-#> base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpzuNDx3/callr-fun-53cfe752a00b3"), 
+#> base::do.call(base::do.call, base::c(base::readRDS("/tmp/hb/RtmpVLsRdP/callr-fun-10b5fa3d62a66d"), 
 #>     base::list(envir = .GlobalEnv, quote = TRUE)), envir = .GlobalEnv, 
 #>     quote = TRUE)
 #> 
@@ -231,8 +231,8 @@ res <- tryCatch({
 #>     options(cli.num_colors = cli_colors, cli.hyperlink = hyperlinks, 
 #>         cli.hyperlink_run = hyperlinks)
 #>     pkgdown::build_site(...)
-#> }), base::quote(list(pkg = list(package = "future", version = "1.82.0-9014", 
-#>     src_path = "/tmp/hb/RtmpzuNDx3/future", meta = list(url = "https://future.futureverse.org", 
+#> }), base::quote(list(pkg = list(package = "future", version = "1.82.0-9032", 
+#>     src_path = "/tmp/hb/RtmpVLsRdP/future", meta = list(url = "https://future.futureverse.org", 
 #>         home = list(links = list(list(text = "Roadmap/Milestones", 
 #>             href = "https://github.com/futureverse/future/milestones"), 
 #>             list(text = "The Futureverse Project", href = "https://www.futureverse.org/"), 
@@ -273,7 +273,7 @@ res <- tryCatch({
 #>             bootstrap = 5L, `light-switch` = TRUE)), desc = <environment>, 
 #>     bs_version = 5L, development = list(destination = "dev", 
 #>         mode = "default", version_label = "muted", in_dev = FALSE, 
-#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/RtmpzuNDx3/future/docs", 
+#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/RtmpVLsRdP/future/docs", 
 #>     lang = "en-US", install_metadata = FALSE, figures = list(
 #>         dev = "ragg::agg_png", dpi = 96L, dev.args = list(), 
 #>         fig.ext = "png", fig.width = 7.29166666666667, fig.height = NULL, 
@@ -2030,7 +2030,7 @@ res <- tryCatch({
 #>                 "\n", list("plan"), "\n", list("with.FutureStrategyList"), 
 #>                 "\n", list("tweak"), "\n", list("Plan how to resolve a future"), 
 #>                 "\n", list("\n", "plan(\n", "  strategy = NULL,\n", 
-#>                   "  ...,\n", "  substitute = TRUE,\n", "  .skip = FALSE,\n", 
+#>                   "  ...,\n", "  substitute = TRUE,\n", "  .skip = TRUE,\n", 
 #>                   "  .call = TRUE,\n", "  .cleanup = NA,\n", 
 #>                   "  .init = TRUE\n", ")\n", "\n", list(list(
 #>                     "with"), list("FutureStrategyList")), "(data, expr, ..., local = FALSE, envir = parent.frame(), .cleanup = NA)\n", 
@@ -2043,7 +2043,9 @@ res <- tryCatch({
 #>                     ":d, otherwise not.")), "\n", "\n", list(
 #>                     list(".skip"), list("(internal) If ", list(
 #>                       "TRUE"), ", then attempts to set a future backend\n", 
-#>                       "that is the same as what is currently in use, will be skipped.")), 
+#>                       "that is the same as what is currently in use, will be skipped.\n", 
+#>                       "If ", list("FALSE"), ", the future backend is always set, which means that the\n", 
+#>                       "current one is shut down and a new one is launched.")), 
 #>                   "\n", "\n", list(list(".call"), list("(internal) Used for recording the call to this function.")), 
 #>                   "\n", "\n", list(list(".cleanup"), list("(internal) Used to stop implicitly started clusters.")), 
 #>                   "\n", "\n", list(list(".init"), list("(internal) Used to initiate workers.")), 
@@ -3150,8 +3152,8 @@ res <- tryCatch({
 #>     options(cli.num_colors = cli_colors, cli.hyperlink = hyperlinks, 
 #>         cli.hyperlink_run = hyperlinks)
 #>     pkgdown::build_site(...)
-#> })(pkg = base::quote(list(package = "future", version = "1.82.0-9014", 
-#>     src_path = "/tmp/hb/RtmpzuNDx3/future", meta = list(url = "https://future.futureverse.org", 
+#> })(pkg = base::quote(list(package = "future", version = "1.82.0-9032", 
+#>     src_path = "/tmp/hb/RtmpVLsRdP/future", meta = list(url = "https://future.futureverse.org", 
 #>         home = list(links = list(list(text = "Roadmap/Milestones", 
 #>             href = "https://github.com/futureverse/future/milestones"), 
 #>             list(text = "The Futureverse Project", href = "https://www.futureverse.org/"), 
@@ -3192,7 +3194,7 @@ res <- tryCatch({
 #>             bootstrap = 5L, `light-switch` = TRUE)), desc = <environment>, 
 #>     bs_version = 5L, development = list(destination = "dev", 
 #>         mode = "default", version_label = "muted", in_dev = FALSE, 
-#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/RtmpzuNDx3/future/docs", 
+#>         prefix = ""), prefix = "", dst_path = "/tmp/hb/RtmpVLsRdP/future/docs", 
 #>     lang = "en-US", install_metadata = FALSE, figures = list(
 #>         dev = "ragg::agg_png", dpi = 96L, dev.args = list(), 
 #>         fig.ext = "png", fig.width = 7.29166666666667, fig.height = NULL, 
@@ -4949,7 +4951,7 @@ res <- tryCatch({
 #>                 "\n", list("plan"), "\n", list("with.FutureStrategyList"), 
 #>                 "\n", list("tweak"), "\n", list("Plan how to resolve a future"), 
 #>                 "\n", list("\n", "plan(\n", "  strategy = NULL,\n", 
-#>                   "  ...,\n", "  substitute = TRUE,\n", "  .skip = FALSE,\n", 
+#>                   "  ...,\n", "  substitute = TRUE,\n", "  .skip = TRUE,\n", 
 #>                   "  .call = TRUE,\n", "  .cleanup = NA,\n", 
 #>                   "  .init = TRUE\n", ")\n", "\n", list(list(
 #>                     "with"), list("FutureStrategyList")), "(data, expr, ..., local = FALSE, envir = parent.frame(), .cleanup = NA)\n", 
@@ -4962,7 +4964,9 @@ res <- tryCatch({
 #>                     ":d, otherwise not.")), "\n", "\n", list(
 #>                     list(".skip"), list("(internal) If ", list(
 #>                       "TRUE"), ", then attempts to set a future backend\n", 
-#>                       "that is the same as what is currently in use, will be skipped.")), 
+#>                       "that is the same as what is currently in use, will be skipped.\n", 
+#>                       "If ", list("FALSE"), ", the future backend is always set, which means that the\n", 
+#>                       "current one is shut down and a new one is launched.")), 
 #>                   "\n", "\n", list(list(".call"), list("(internal) Used for recording the call to this function.")), 
 #>                   "\n", "\n", list(list(".cleanup"), list("(internal) Used to stop implicitly started clusters.")), 
 #>                   "\n", "\n", list(list(".init"), list("(internal) Used to initiate workers.")), 

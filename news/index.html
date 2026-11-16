@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.82.0-9014</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.82.0-9032</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -83,7 +83,8 @@
 <h2 class="pkg-version" data-toc-text="development version" id="version-development-version">Version (development version)<a class="anchor" aria-label="anchor" href="#version-development-version"></a></h2>
 <div class="section level3">
 <h3 id="new-features-development-version">New Features<a class="anchor" aria-label="anchor" href="#new-features-development-version"></a></h3>
-<ul><li>Long future errors and warnings outputted by R’s default error and warning handlers are now truncated at R’s maximum 8170, instead of <code>getOption("warning.length")</code>, characters, Previously, valuable information could be dropped from long error messages.</li>
+<ul><li><p>Long future errors and warnings outputted by R’s default error and warning handlers are now truncated at R’s maximum 8170, instead of <code>getOption("warning.length")</code>, characters, Previously, valuable information could be dropped from long error messages.</p></li>
+<li><p>Printing a future backend now lists its arguments under a single <code>Arguments:</code> entry, instead of one <code>Argument ...</code> entry per argument.</p></li>
 </ul></div>
 <div class="section level3">
 <h3 id="performance-development-version">Performance<a class="anchor" aria-label="anchor" href="#performance-development-version"></a></h3>
@@ -91,7 +92,12 @@
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-development-version">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h3>
-<ul><li>If <code><a href="../reference/plan.html">plan()</a></code> fails to initiate the new backend, it did not reset to the default <code>sequential</code> plan.</li>
+<ul><li><p>If <code><a href="../reference/plan.html">plan()</a></code> fails to initiate the new backend, it did not reset to the default <code>sequential</code> plan.</p></li>
+<li><p>Printing <code><a href="../reference/plan.html">plan()</a></code> for backends without a <code>workers</code> argument, e.g. <code>sequential</code>, would report a non-existing <code>workers = "&lt;NULL&gt;"</code> argument. Also, simplified <code>workers</code> values, e.g. <code>workers = &lt;Socket cluster with ...&gt;</code>, are no longer displayed as quoted strings.</p></li>
+<li><p><code><a href="../reference/value.html">value()</a></code> and <code><a href="../reference/resolve.html">resolve()</a></code> on a list, an environment, or a list environment could relay standard output and conditions of futures out of order, if the container also held non-future elements, e.g. <code>value(list(f1, f2, 3))</code> could relay the output of <code>f2</code> before that of <code>f1</code>.</p></li>
+<li><p><code>resolve(x, idxs = idxs)</code> ignored argument <code>idxs</code> when <code>x</code> was an environment or a list environment, resulting in all elements being resolved, instead of only the ones selected.</p></li>
+<li><p>A future that produced a run-time error, or was interrupted, when R option <code>future.connections.onMisuse</code> was set to <code>"ignore"</code>, would fail with a <code>FutureLaunchError</code> on “object ‘…future.connections’ not found”, instead of relaying the original error.</p></li>
+<li><p>Calling <code>clusterEvalQ()</code> with a non-supported expression on a <code><a href="../reference/makeClusterFuture.html">makeClusterFuture()</a></code> cluster produced a warning, instead of an error as documented.</p></li>
 </ul></div>
 <div class="section level3">
 <h3 id="documentation-development-version">Documentation<a class="anchor" aria-label="anchor" href="#documentation-development-version"></a></h3>

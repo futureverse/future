@@ -12,7 +12,7 @@ plan(
   strategy = NULL,
   ...,
   substitute = TRUE,
-  .skip = FALSE,
+  .skip = TRUE,
   .call = TRUE,
   .cleanup = NA,
   .init = TRUE
@@ -39,7 +39,9 @@ tweak(strategy, ..., penvir = parent.frame())
 - .skip:
 
   (internal) If `TRUE`, then attempts to set a future backend that is
-  the same as what is currently in use, will be skipped.
+  the same as what is currently in use, will be skipped. If `FALSE`, the
+  future backend is always set, which means that the current one is shut
+  down and a new one is launched.
 
 - .call:
 
@@ -340,8 +342,8 @@ with(plan(multisession, workers = 2), {
   w_pid <- value(f)
 })
 print(c(main = Sys.getpid(), worker = w_pid))
-#>   main worker 
-#> 343457 346426 
+#>    main  worker 
+#> 1095331 1098329 
 
 
 
@@ -353,7 +355,7 @@ local({
   w_pid <- value(f)
   print(c(main = Sys.getpid(), worker = w_pid))
 })
-#>   main worker 
-#> 343457 346534 
+#>    main  worker 
+#> 1095331 1098436 
 
 ```

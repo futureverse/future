@@ -9,6 +9,9 @@
   `getOption("warning.length")`, characters, Previously, valuable
   information could be dropped from long error messages.
 
+- Printing a future backend now lists its arguments under a single
+  `Arguments:` entry, instead of one `Argument ...` entry per argument.
+
 ### Performance
 
 - Cluster-based futures (e.g. `multisession`) no longer make a separate,
@@ -22,6 +25,32 @@
 - If [`plan()`](https://future.futureverse.org/reference/plan.md) fails
   to initiate the new backend, it did not reset to the default
   `sequential` plan.
+
+- Printing [`plan()`](https://future.futureverse.org/reference/plan.md)
+  for backends without a `workers` argument, e.g. `sequential`, would
+  report a non-existing `workers = "<NULL>"` argument. Also, simplified
+  `workers` values, e.g. `workers = <Socket cluster with ...>`, are no
+  longer displayed as quoted strings.
+
+- [`value()`](https://future.futureverse.org/reference/value.md) and
+  [`resolve()`](https://future.futureverse.org/reference/resolve.md) on
+  a list, an environment, or a list environment could relay standard
+  output and conditions of futures out of order, if the container also
+  held non-future elements, e.g. `value(list(f1, f2, 3))` could relay
+  the output of `f2` before that of `f1`.
+
+- `resolve(x, idxs = idxs)` ignored argument `idxs` when `x` was an
+  environment or a list environment, resulting in all elements being
+  resolved, instead of only the ones selected.
+
+- A future that produced a run-time error, or was interrupted, when R
+  option `future.connections.onMisuse` was set to `"ignore"`, would fail
+  with a `FutureLaunchError` on “object ‘…future.connections’ not
+  found”, instead of relaying the original error.
+
+- Calling `clusterEvalQ()` with a non-supported expression on a
+  [`makeClusterFuture()`](https://future.futureverse.org/reference/makeClusterFuture.md)
+  cluster produced a warning, instead of an error as documented.
 
 ### Documentation
 

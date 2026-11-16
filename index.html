@@ -35,7 +35,7 @@
 
     <a class="navbar-brand me-2" href="index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.82.0-9014</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.82.0-9032</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -408,7 +408,7 @@
 <p>The first thing we observe is that the values of <code>a</code>, <code>c</code> and <code>pid</code> are the same as previously. However, we notice that <code>b</code> is different from before. This is because future <code>b</code> is evaluated in a different R process and therefore it returns a different process ID.</p>
 <p>When multisession evaluation is used, the package launches a set of R sessions in the background that will serve multisession futures by evaluating their expressions as they are created. If all background sessions are busy serving other futures, the creation of the next multisession future is <em>blocked</em> until a background session becomes available again. The total number of background processes launched is decided by the value of <code><a href="reference/re-exports.html">availableCores()</a></code>, e.g.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="reference/re-exports.html">availableCores</a></span><span class="op">(</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu">parallelly</span><span class="fu">::</span><span class="fu"><a href="https://parallelly.futureverse.org/reference/availableCores.html" class="external-link">availableCores</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; mc.cores </span></span>
 <span><span class="co">#&gt;        2 </span></span></code></pre></div>
 <p>This particular result tells us that the <code>mc.cores</code> option was set such that we are allowed to use in total two (2) processes including the main process. In other words, with these settings, there will be two (2) background processes serving the multisession futures. The <code><a href="reference/re-exports.html">availableCores()</a></code> is also agile to different options and system environment variables. For instance, if compute cluster schedulers are used (e.g. TORQUE/PBS and Slurm), they set specific environment variables specifying the number of cores that was allotted to any given job; <code><a href="reference/re-exports.html">availableCores()</a></code> acknowledges these as well. If nothing else is specified, all available cores on the machine will be utilized, cf. <code><a href="https://rdrr.io/r/parallel/detectCores.html" class="external-link">parallel::detectCores()</a></code>. For more details, please see <code><a href="https://parallelly.futureverse.org/reference/availableCores.html" class="external-link">help("availableCores", package = "parallelly")</a></code>.</p>
