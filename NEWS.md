@@ -30,6 +30,12 @@
    `workers = <Socket cluster with ...>`, are no longer displayed as
    quoted strings.
 
+ * `value()` and `resolve()` on a list, an environment, or a list
+   environment could relay standard output and conditions of futures
+   out of order, if the container also held non-future elements,
+   e.g. `value(list(f1, f2, 3))` could relay the output of `f2`
+   before that of `f1`.
+
 ## Documentation
 
  * Document that `%<-%` on a list environment ('listenv') can only

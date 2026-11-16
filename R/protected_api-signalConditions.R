@@ -245,8 +245,21 @@ make_signalConditionsASAP <- function(nx, stdout = TRUE, signal = TRUE, force = 
     if (debug) mdebugf("until=%d", until)
     for (ii in seq_len(until)) {
       if (relayed[ii]) next
-      if (debug) mdebugf("relaying element #%d", ii)
       obj <- queue[[ii]]
+
+      ## A future that was dropped after being queued has nothing to relay
+      if (inherits(obj, "DroppedFuture")) {
+        relayed[ii] <<- TRUE
+        queue[ii] <<- list(NULL)
+        next
+      }
+
+      ## Relay in order: An element that is not yet ready to be relayed,
+      ## blocks all elements after it, also when a later element has
+      ## already been relayed, e.g. a non-future element
+      if (!inherits(obj, "Future")) break
+
+      if (debug) mdebugf("relaying element #%d", ii)
       if (inherits(obj, "Future") && !inherits(obj, "DroppedFuture")) {
         if (stdout) value(obj, stdout = TRUE, signal = FALSE)
         if (signal) {
