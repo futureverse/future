@@ -150,7 +150,7 @@ makeClusterFuture <- function(specs = nbrOfWorkers(), ...) {
 
   if (is.numeric(specs)) {
     if (specs <= 0) {
-      stop("Argument 'specs' must be a positive integer: %s", specs)
+      stop(sprintf("Argument 'specs' must be a positive integer: %s", specs))
     }
     if (specs != n) {
       stop(sprintf("Value of argument 'specs' does not match the number of workers in the registered future backend (%s:%s): %g != %g", class(backend)[1], backend[["uuid"]], specs, n))

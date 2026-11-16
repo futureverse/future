@@ -75,7 +75,7 @@ futureCall <- function(FUN, args = list(), envir = parent.frame(), lazy = FALSE,
       stop(FutureError("Invalid argument 'globals'. All globals must be named"))
     }
   } else {
-    stop(FutureError("Invalid argument 'globals': ", mode(globals)))
+    stop(FutureError(sprintf("Invalid argument 'globals': %s", mode(globals))))
   }
   globals <- as.FutureGlobals(globals)
   stop_if_not(inherits(globals, "FutureGlobals"))

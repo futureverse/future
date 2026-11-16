@@ -114,8 +114,8 @@ result.Future <- function(future, ...) {
   version <- future[["version"]]
   if (is.null(version)) {
     version <- formals(future::FutureResult)$version
-    warning(FutureWarning("Future version was not set. Using default %s",
-                          sQuote(version)))
+    warning(FutureWarning(sprintf("Future version was not set. Using default %s",
+                                  sQuote(version))))
   }
 
   ## Sanity check
