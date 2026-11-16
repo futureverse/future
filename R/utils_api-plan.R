@@ -775,24 +775,30 @@ supportedStrategies <- function(strategies = c("sequential", "multicore",
 }
 
 
+## Deparses the arguments of a future strategy into a single string,
+## where a non-atomic 'workers' argument value, e.g. a 'cluster' object,
+## is simplified as '<...>'
 #' @importFrom utils capture.output str
-#' @export
-print.future <- function(x, ...) {
-  class <- setdiff(class(x), c("FutureStrategy", "tweaked", "function"))
-  s <- sprintf("%s:", class[1])
-  specs <- list()
-  args <- args(x)
+deparse_strategy_args <- function(strategy) {
+  args <- args(strategy)
 
   ## Simplify the value on the 'workers' argument?
+  ## Note, is.atomic(NULL) is FALSE in R (>= 4.4.0)
   formals <- formals(args)
-  if (!is.atomic(formals[["workers"]]) && !is.language(formals[["workers"]])) {
-    bfr <- capture.output(print(formals[["workers"]]))
+  workers_label <- NULL
+  workers <- formals[["workers"]]
+  if ("workers" %in% names(formals) && !is.null(workers) &&
+      !is.atomic(workers) && !is.language(workers)) {
+    bfr <- capture.output(print(workers))
     if (length(bfr) > 6L) {
-      bfr2 <- capture.output(str(formals[["workers"]]))
+      bfr2 <- capture.output(str(workers))
       if (length(bfr2) < length(bfr)) bfr <- bfr2
       if (length(bfr) > 6L) bfr <- c(bfr[1:6], "...")
     }
-    formals[["workers"]] <- paste0("<", paste(bfr, collapse = "; "), ">")
+    workers_label <- paste0("<", paste(bfr, collapse = "; "), ">")
+    ## Use a placeholder symbol, which is substituted after deparsing,
+    ## to avoid the label being displayed as a quoted string
+    formals[["workers"]] <- as.symbol(".__future_workers_label__.")
     formals(args) <- formals
   }
 
@@ -800,6 +806,20 @@ print.future <- function(x, ...) {
   args <- args[-length(args)]
   args <- gsub("(^[ ]+|[ ]+$)", "", args)
   args <- paste(args, collapse = " ")
+  if (!is.null(workers_label)) {
+    args <- sub(".__future_workers_label__.", workers_label, args, fixed = TRUE)
+  }
+  args
+}
+
+
+#' @importFrom utils capture.output str
+#' @export
+print.future <- function(x, ...) {
+  class <- setdiff(class(x), c("FutureStrategy", "tweaked", "function"))
+  s <- sprintf("%s:", class[1])
+  specs <- list()
+  args <- deparse_strategy_args(x)
   specs[["args"]] <- args
   specs[["tweaked"]] <- inherits(x, "tweaked")
   specs[["call"]] <- paste(deparse(attr(x, "call", exact = TRUE), 
@@ -838,25 +858,7 @@ print.FutureStrategyList <- function(x, ...) {
     s_kk <- sprintf("%d. %s:", kk, class[1])
     specs <- list()
 
-    args <- args(x_kk)
-
-    ## Simplify the value on the 'workers' argument?
-    formals <- formals(args)
-    if (!is.atomic(formals[["workers"]]) && !is.language(formals[["workers"]])) {
-      bfr <- capture.output(print(formals[["workers"]]))
-      if (length(bfr) > 6L) {
-        bfr2 <- capture.output(str(formals[["workers"]]))
-        if (length(bfr2) < length(bfr)) bfr <- bfr2
-        if (length(bfr) > 6L) bfr <- c(bfr[1:6], "...")
-      }
-      formals[["workers"]] <- paste0("<", paste(bfr, collapse = "; "), ">")
-      formals(args) <- formals
-    }
-
-    args <- deparse(args, width.cutoff = 500L)
-    args <- args[-length(args)]
-    args <- gsub("(^[ ]+|[ ]+$)", "", args)
-    args <- paste(args, collapse = " ")
+    args <- deparse_strategy_args(x_kk)
     specs[["args"]] <- args
     specs[["tweaked"]] <- inherits(x_kk, "tweaked")
     specs[["call"]] <- paste(deparse(attr(x_kk, "call", exact = TRUE), 

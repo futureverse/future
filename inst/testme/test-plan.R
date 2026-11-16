@@ -335,6 +335,34 @@ print(plan())
 message("*** plan() w/ commands ... DONE")
 
 
+message("*** plan() - print() ...")
+
+## A non-existing 'workers' argument should not be displayed as
+## 'workers = "<NULL>"'
+plan(sequential)
+out <- capture.output(print(plan()))
+print(out)
+args <- grep("^- args:", out, value = TRUE)
+stopifnot(length(args) == 1L, !grepl("workers", args, fixed = TRUE))
+
+out <- capture.output(print(plan("list")))
+print(out)
+stopifnot(!any(grepl("<NULL>", out, fixed = TRUE)))
+
+## Non-atomic 'workers' are simplified to '<...>' without quotes
+plan(cluster, workers = cl)
+out <- capture.output(print(plan()))
+print(out)
+args <- grep("^- args:", out, value = TRUE)
+stopifnot(length(args) == 1L, grepl("workers = <", args, fixed = TRUE))
+
+## Backend arguments are listed under a single 'Arguments:' entry
+stopifnot(sum(out == "Arguments:") == 1L, !any(grepl("^Argument ", out)))
+plan(sequential)
+
+message("*** plan() - print() ... DONE")
+
+
 message("*** plan() - odds'n'ends ...")
 
 plan(sequential, split = FALSE)

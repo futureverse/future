@@ -116,8 +116,11 @@ print.FutureBackend <- function(x, ...) {
 
   fields <- tweakable(attr(backend, "factory"))
   fields <- setdiff(fields, done)
-  for (name in fields) {
-    s <- c(s, sprintf("Argument %s: %s", sQuote(name), paste(deparse(backend[[name]]), collapse = "") ))
+  if (length(fields) > 0L) {
+    s <- c(s, "Arguments:")
+    for (name in fields) {
+      s <- c(s, sprintf("- %s: %s", sQuote(name), paste(deparse(backend[[name]]), collapse = "") ))
+    }
   }
 
   ## Active futures

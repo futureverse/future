@@ -7,6 +7,10 @@
    `getOption("warning.length")`, characters, Previously, valuable
    information could be dropped from long error messages.
 
+ * Printing a future backend now lists its arguments under a single
+   `Arguments:` entry, instead of one `Argument ...` entry per
+   argument.
+
 ## Performance
 
  * Cluster-based futures (e.g. `multisession`) no longer make a
@@ -19,6 +23,12 @@
 
  * If `plan()` fails to initiate the new backend, it did not reset to
    the default `sequential` plan.
+
+ * Printing `plan()` for backends without a `workers` argument, e.g.
+   `sequential`, would report a non-existing `workers = "<NULL>"`
+   argument. Also, simplified `workers` values, e.g.
+   `workers = <Socket cluster with ...>`, are no longer displayed as
+   quoted strings.
 
 ## Documentation
 
