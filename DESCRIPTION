@@ -1,5 +1,5 @@
 Package: future
-Version: 1.82.0-9015
+Version: 1.82.0-9016
 Title: Unified Parallel and Distributed Processing in R for Everyone
 Depends:
     R (>= 3.2.0)
@@ -63,6 +63,7 @@ Collate:
     'backend_api-FutureRegistry.R'
     'backend_api-UniprocessFuture-class.R'
     'backend_api-evalFuture.R'
+    'backend_api-waitForWorker.R'
     'core_api-cancel.R'
     'core_api-future.R'
     'core_api-reset.R'
