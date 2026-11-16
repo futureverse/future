@@ -295,8 +295,10 @@ resolved.MulticoreFuture <- local({
     ## A lazy future not even launched?
     if (x[["state"]] == "created") {
       if (!isFALSE(run)) {
-        ## If free cores are available, then launch this lazy future
-        if (x[["workers"]] > usedCores()) x <- run(x)
+        ## If free cores are available, then launch this lazy future.
+        ## Note, a lazy future is launched on the current future backend,
+        ## cf. run(), so that is the one to query
+        if (nbrOfFreeWorkers() > 0L) x <- run(x)
       }
       return(FALSE)
     }
