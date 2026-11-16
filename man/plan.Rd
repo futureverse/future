@@ -11,7 +11,7 @@ plan(
   strategy = NULL,
   ...,
   substitute = TRUE,
-  .skip = FALSE,
+  .skip = TRUE,
   .call = TRUE,
   .cleanup = NA,
   .init = TRUE
@@ -28,7 +28,9 @@ tweak(strategy, ..., penvir = parent.frame())
 \code{substitute()}:d, otherwise not.}
 
 \item{.skip}{(internal) If \code{TRUE}, then attempts to set a future backend
-that is the same as what is currently in use, will be skipped.}
+that is the same as what is currently in use, will be skipped.
+If \code{FALSE}, the future backend is always set, which means that the
+current one is shut down and a new one is launched.}
 
 \item{.call}{(internal) Used for recording the call to this function.}
 

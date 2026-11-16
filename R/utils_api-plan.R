@@ -291,6 +291,8 @@ all.equal.FutureStrategyList <- function(target, current, ..., debug = FALSE) {
 #'
 #' @param .skip (internal) If `TRUE`, then attempts to set a future backend
 #' that is the same as what is currently in use, will be skipped.
+#' If `FALSE`, the future backend is always set, which means that the
+#' current one is shut down and a new one is launched.
 #'
 #' @param .cleanup (internal) Used to stop implicitly started clusters.
 #'
@@ -472,12 +474,7 @@ plan <- local({
     class(newStack) <- unique(c("FutureStrategyList", class(newStack)))
 
     ## Skip if already set?
-    if (skip) {
-      if (debug) {
-        mdebug("plan(): Skip requested. Using the old stack")
-        mprint(oldStack)
-      }
-    } else if (isTRUE(all.equal(newStack, oldStack, debug = debug))) {
+    if (skip && isTRUE(all.equal(newStack, oldStack, debug = debug))) {
       if (debug) {
         mdebug("plan(): Skip setting new future backend stack because it is the same as the current one:")
         mprint(oldStack)
@@ -551,7 +548,7 @@ plan <- local({
 
 
   ## Main function
-  function(strategy = NULL, ..., substitute = TRUE, .skip = FALSE, .call = TRUE,
+  function(strategy = NULL, ..., substitute = TRUE, .skip = TRUE, .call = TRUE,
            .cleanup = NA, .init = TRUE) {
     if (substitute) strategy <- substitute(strategy)
     if (is.logical(.skip)) stop_if_not(length(.skip) == 1L, !is.na(.skip))
