@@ -888,7 +888,7 @@ value.list <- function(x, idxs = NULL, recursive = 0, reduce = NULL, stdout = TR
   if (do_reduce) {
     ## If reduced in order, reduce remaining non-reduced values
     if (inorder) {
-      reduce_forward(from = reduced_until)
+      reduce_forward(from = reduced_until + 1L)
     } else {
       reduce_forward(from = 1L)
     }
