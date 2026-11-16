@@ -40,6 +40,11 @@
    environment or a list environment, resulting in all elements being
    resolved, instead of only the ones selected.
 
+ * A future that produced a run-time error, or was interrupted, when
+   R option `future.connections.onMisuse` was set to `"ignore"`, would
+   fail with a `FutureLaunchError` on "object '...future.connections'
+   not found", instead of relaying the original error.
+
 ## Documentation
 
  * Document that `%<-%` on a list environment ('listenv') can only

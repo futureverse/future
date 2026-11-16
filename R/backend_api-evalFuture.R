@@ -536,7 +536,7 @@ evalFutureInternal <- function(data) {
       seed = seed,
       uuid = uuid,
       misuseGlobalEnv = if (checkGlobalenv) list(added = diff_globalenv(...future.globalenv.names)) else NULL,
-      misuseConnections = diff_connections(get_connections(details = isTRUE(attr(checkConnections, "details", exact = TRUE))), ...future.connections),
+      misuseConnections = if (checkConnections) diff_connections(get_connections(details = isTRUE(attr(checkConnections, "details", exact = TRUE))), ...future.connections) else NULL,
       misuseDevices = if (checkDevices) diff_devices(base::.Devices, ...future.devices) else NULL,
       misuseDefaultDevice = ...future.option.defaultDevice,
       started = ...future.startTime
