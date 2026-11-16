@@ -72,7 +72,7 @@ resolve.Future <- function(x, idxs = NULL, recursive = 0, result = FALSE, stdout
         stop = Sys.time(),
         skip = FALSE
       )
-    })
+    }, add = TRUE)
   }
 
   if (is.logical(recursive)) {

@@ -249,7 +249,7 @@ launchFuture.ClusterFutureBackend <- function(backend, future, ...) {
     if (debug) mdebug_push("requirePackages() ...")
     
     packages <- future[["packages"]]
-    if (debug) mdebug("packages: [n=%d] %s", length(packages), commaq(packages))
+    if (debug) mdebugf("packages: [n=%d] %s", length(packages), commaq(packages))
     
     ## Nothing to do?
     if (length(packages) > 0L) { 
@@ -634,7 +634,10 @@ resolved.ClusterFuture <- function(x, timeout = NULL, ...) {
   ## also the one that evaluates/resolves/queries it.
   assertOwner(future)
 
-  if (debug) mdebugf_push("resolved() for %s (%s) ...", class(future)[1], sQuoteLabel(future))
+  if (debug) {
+    mdebugf_push("resolved() for %s (%s) ...", class(future)[1], sQuoteLabel(future))
+    on.exit(mdebug_pop())
+  }
 
   node_idx <- future[["node"]]
   cl <- workers[node_idx]
@@ -729,8 +732,6 @@ resolved.ClusterFuture <- function(x, timeout = NULL, ...) {
     value(future, stdout = FALSE, signal = FALSE)
     res <- TRUE
   }
-
-  if (debug) mdebug_pop()
 
   if (res) {
     ## Assert result is for the expected future

@@ -72,7 +72,7 @@ getGlobalsAndPackages <- function(expr, envir = parent.frame(), tweak = tweakExp
       if (debug) mdebug_push("Retrieving 'add' globals ...")
       add <- globalsByName(add, envir = envir, mustExist = mustExist)
       if (debug) mdebugf("'add' globals retrieved: [%d] %s", length(add), commaq(names(add)))
-      if (debug) mdebug("Retrieving 'add' globals ... DONE")
+      if (debug) mdebug_pop()
     } else if (inherits(add, "Globals")) {
       if (debug) mdebugf("'add' globals passed as-is: [%d] %s", length(add), commaq(names(add)))
     } else if (is.list(add)) {
@@ -82,7 +82,6 @@ getGlobalsAndPackages <- function(expr, envir = parent.frame(), tweak = tweakExp
     }
     add <- as.FutureGlobals(add)
     stop_if_not(inherits(add, "FutureGlobals"))
-    if (debug) mdebug_pop()
   }
   
   ## Any manually dropped/ignored globals?
