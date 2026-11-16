@@ -128,7 +128,7 @@ To make sure we stay within the limits of the current machine, it's best to use 
 
 ```r
 plan(list(
-  tweak(multisession, workers = availableCores() %/% 4),
+  tweak(multisession, workers = parallelly::availableCores() %/% 4),
   tweak(multisession, workers = I(4))
 ))
 ```
@@ -245,7 +245,7 @@ Now, imagine you want to use only 50% of these cores.  This can be done by
 tweaking the `multisession` plan by passing a function to `workers`;
 
 ```r
-halfCores <- function() { max(1, round(0.5 * availableCores()))
+halfCores <- function() { max(1, round(0.5 * parallelly::availableCores())) }
 plan(list(
   tweak(cluster, workers = nodes),
   tweak(multisession, workers = I(halfCores))
@@ -264,7 +264,7 @@ customWorkers <- function() {
     "n1" = 2L,
     "n2" = 3L,
     ## default:
-    availableCores()
+    parallelly::availableCores()
   )
 }
 plan(list(

@@ -283,7 +283,7 @@ When multisession evaluation is used, the package launches a set of R sessions i
 
 ```r
 <%=withCapture({
-availableCores()
+parallelly::availableCores()
 })%>
 ```
 

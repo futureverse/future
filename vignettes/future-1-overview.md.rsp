@@ -259,7 +259,7 @@ The first thing we observe is that the values of `a`, `c` and `pid` are the same
 When multisession evaluation is used, the package launches a set of R sessions in the background that will serve multisession futures by evaluating their expressions as they are created.  If all background sessions are busy serving other futures, the creation of the next multisession future is _blocked_ until a background session becomes available again.  The total number of background processes launched is decided by the value of `availableCores()`, e.g.
 
 ```r
-availableCores()
+parallelly::availableCores()
 #> mc.cores 
 #>        2 
 ```

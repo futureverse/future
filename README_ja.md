@@ -483,7 +483,7 @@ The total number of background processes launched is decided by the value of ava
 いくつのバックグラウンドプロセスが起動されるかは `availableCores()` の値によって決まる。
 
 ``` r
-availableCores()
+parallelly::availableCores()
 #> mc.cores 
 #>        2 
 ```
