@@ -1534,7 +1534,7 @@ handleInterruptedFuture <- local({
     node <- cl[[1]]
     cl <- NULL
     host <- node[["host"]]
-    event <- if (state %in% "running") {
+    if (state %in% "running") {
       event <- sprintf("failed for unknown reason while %s", state)
       future[["state"]] <- "interrupted"
     } else {
