@@ -10,7 +10,7 @@ message("*** MPI ...")
 
 pkg <- "Rmpi"
 if (requireNamespace(pkg, quietly = TRUE)) {
-  cl <- makeClusterMPI(availableCores())
+  cl <- makeClusterMPI(parallelly::availableCores())
   str(cl)
   
   plan(cluster, workers = cl)

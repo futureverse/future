@@ -25,7 +25,7 @@ for (strategy in strategies) {
   message(sprintf("- plan('%s') ...", strategy))
   plan(strategy)
 
-  if (strategy == "multisession" && availableCores() >= 2) {
+  if (strategy == "multisession" && parallelly::availableCores() >= 2) {
     message("*** resolve() for Future objects ...")
     
     for (result in c(FALSE, TRUE)) {

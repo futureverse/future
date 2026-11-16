@@ -3,7 +3,7 @@
 library(future)
 options(future.debug = FALSE)
 
-maxCores <- min(2L, availableCores(methods = "system"))
+maxCores <- min(2L, parallelly::availableCores(methods = "system"))
 
 plan("default")
  

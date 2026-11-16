@@ -45,7 +45,7 @@ print(out)
 stopifnot(identical(out, character(0L)))
 
 
-if (availableCores() >= 2L) {
+if (parallelly::availableCores() >= 2L) {
   plan(multisession, workers = 2L)
 
   message("- value() relays in order when list has non-future elements")

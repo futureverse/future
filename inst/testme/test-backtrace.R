@@ -62,7 +62,7 @@ message("- No call stack ...")
 f <- future({ 42L; stop("Woops") })
 v <- value(f, signal = FALSE)
 
-if (availableCores() >= 2L) {
+if (parallelly::availableCores() >= 2L) {
   message("- Non-resolved future ...")
   plan(multisession, workers = 2L)
   message("- plan set")

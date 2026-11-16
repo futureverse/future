@@ -29,7 +29,7 @@ pid <- Sys.getpid()
 cat(sprintf("Main PID: %d\n", pid))
 
 cat("Available cores on this machine:\n")
-cores <- availableCores()
+cores <- parallelly::availableCores()
 print(cores)
 
 for (mc in 1:2) {
@@ -50,7 +50,7 @@ for (mc in 1:2) {
         mc = mc,
         mc2 = mc2,
         mc.cores = getOption("mc.cores"),
-        cores = availableCores(),
+        cores = parallelly::availableCores(),
         plan = plan("list"),
         nbrOfWorkers = nbrOfWorkers(),
         pid1 = b1,
@@ -96,7 +96,7 @@ for (mc in 1:2) {
           mc = mc,
           mc2 = mc2,
           mc.cores = getOption("mc.cores"),
-          cores = availableCores(),
+          cores = parallelly::availableCores(),
           plan = plan("list"),
           nbrOfWorkers = nbrOfWorkers(),
           pid1 = b1,
@@ -136,7 +136,7 @@ for (mc in 1:2) {
         mc = mc,
         mc2 = mc2,
         mc.cores = getOption("mc.cores"),
-        cores = availableCores(),
+        cores = parallelly::availableCores(),
         plan = plan("list"),
         nbrOfWorkers = nbrOfWorkers(),
         pid1 = b1,
@@ -146,7 +146,7 @@ for (mc in 1:2) {
     utils::str(a)
 
     ## Was 'sequential' used as a fallback for the first layer?
-    if (availableCores() == 1L) {
+    if (parallelly::availableCores() == 1L) {
       stopifnot(
         a$pid == pid
       )
@@ -176,7 +176,7 @@ for (mc in 1:2) {
         mc = mc,
         mc2 = mc2,
         mc.cores = getOption("mc.cores"),
-        cores = availableCores(),
+        cores = parallelly::availableCores(),
         plan = plan("list"),
         nbrOfWorkers = nbrOfWorkers(),
         pid1 = b1,
@@ -186,7 +186,7 @@ for (mc in 1:2) {
     utils::str(a)
 
     ## Was 'sequential' used as a fallback for the first layer?
-    if (availableCores() == 1L) {
+    if (parallelly::availableCores() == 1L) {
       stopifnot(
         nbrOfWorkers() == 1L,
         a$pid == pid
@@ -219,7 +219,7 @@ for (mc in 1:2) {
           mc = mc,
           mc2 = mc2,
           mc.cores = getOption("mc.cores"),
-          cores = availableCores(),
+          cores = parallelly::availableCores(),
           plan = plan("list"),
           nbrOfWorkers = nbrOfWorkers(),
           pid1 = b1,

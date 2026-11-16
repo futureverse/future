@@ -92,7 +92,7 @@ print(dt)
 stopifnot(inherits(res, "FutureError"), dt < 10)
 FutureRegistry(reg, action = "reset")
 
-if (parallelly::supportsMulticore() && availableCores() >= 2L) {
+if (parallelly::supportsMulticore() && parallelly::availableCores() >= 2L) {
   message("- works with the built-in multicore backend")
   plan(multicore, workers = 2L)
   waitForWorker(plan("backend"))

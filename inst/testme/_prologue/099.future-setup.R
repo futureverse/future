@@ -20,4 +20,4 @@ supportedStrategies <- function(cores = NA_integer_, excl = "cluster", ...) {
   strategies
 }
 
-availCores <- min(2L, future::availableCores())
+availCores <- min(2L, parallelly::availableCores())

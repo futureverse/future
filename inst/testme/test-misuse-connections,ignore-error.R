@@ -11,7 +11,7 @@ message("*** Run-time errors with future.connections.onMisuse = 'ignore' ...")
 oopts <- options(future.connections.onMisuse = "ignore")
 
 strategies <- c("sequential")
-if (availableCores() >= 2L) strategies <- c(strategies, "multisession")
+if (parallelly::availableCores() >= 2L) strategies <- c(strategies, "multisession")
 
 for (strategy in strategies) {
   message(sprintf("- plan('%s')", strategy))

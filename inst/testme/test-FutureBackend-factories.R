@@ -143,7 +143,7 @@ message("*** MulticoreFutureBackend() ...")
 ## IMPORTANT: Skip when testing with 'covr', because forked workers do not
 ## write back their 'covr' traces, and may truncate them
 if (!covr_testing && parallelly::supportsMulticore() &&
-    availableCores("multicore") >= 2L) {
+    parallelly::availableCores("multicore") >= 2L) {
   backend <- MulticoreFutureBackend(workers = 2L)
   print(class(backend))
   stopifnot(inherits(backend, "MulticoreFutureBackend"))

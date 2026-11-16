@@ -32,15 +32,15 @@ for (strategy in strategies) {
 
 strategies <- c("cluster", "multisession", "multicore")
 strategies <- intersect(strategies, supportedStrategies())
-cores <- availableCores()
+cores <- parallelly::availableCores()
 message("Number of available cores: ", cores)
-workers <- availableWorkers()
+workers <- parallelly::availableWorkers()
 nworkers <- length(workers)
 message(sprintf("Available workers: [n = %d] %s", nworkers, commaq(workers)))
 
-allButOneCore <- function() max(1L, future::availableCores() - 1L)
+allButOneCore <- function() max(1L, parallelly::availableCores() - 1L)
 allButOneWorker <- function() {
-  w <- future::availableWorkers()
+  w <- parallelly::availableWorkers()
   if (length(w) > 1) w[-1] else w
 }
 

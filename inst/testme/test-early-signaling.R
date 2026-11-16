@@ -67,7 +67,7 @@ if (!identical(getOption("future.plan.earlySignal"), "defunct")) {
   message("*** Early signaling of conditions with sequential futures ... DONE")
   
   
-  message("Number of available cores: ", availableCores())
+  message("Number of available cores: ", parallelly::availableCores())
   
   message("*** Early signaling of conditions with multisession futures ...")
   
@@ -79,7 +79,7 @@ if (!identical(getOption("future.plan.earlySignal"), "defunct")) {
   v <- tryCatch(value(f), error = identity)
   stopifnot(inherits(v, "error"))
   
-  if (availableCores() > 1L) {
+  if (parallelly::availableCores() > 1L) {
     ## plan(..., earlySignal = TRUE) is deprecated as of future (> 1.68.0)
     plan(multisession, earlySignal = TRUE)
     f <- future({ stop("bang!") })
@@ -108,7 +108,7 @@ if (!identical(getOption("future.plan.earlySignal"), "defunct")) {
     v <- tryCatch(value(f), error = identity)
     stopifnot(inherits(v, "error"))
     
-    if (availableCores() > 1L) {
+    if (parallelly::availableCores() > 1L) {
       ## plan(..., earlySignal = TRUE) is deprecated as of future (> 1.68.0)
       plan(multicore, earlySignal = TRUE)
       f <- future({ stop("bang!") })

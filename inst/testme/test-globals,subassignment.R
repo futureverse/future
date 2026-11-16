@@ -41,7 +41,7 @@ for (cores in 1:availCores) {
   message(sprintf("Testing with %d cores ...", cores))
   options(mc.cores = cores)
 
-  message("availableCores(): ", availableCores())
+  message("availableCores(): ", parallelly::availableCores())
 
   for (strategy in supportedStrategies(cores)) {
     message(sprintf("- plan('%s') ...", strategy))

@@ -12,7 +12,7 @@ for (cores in 1:availCores) {
   message(sprintf("Testing with %d cores ...", cores))
   options(mc.cores = cores)
 
-  message("availableCores(): ", availableCores())
+  message("availableCores(): ", parallelly::availableCores())
 
   message("- Local variables with the same name as globals ...")
 
