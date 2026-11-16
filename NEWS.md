@@ -36,6 +36,10 @@
    e.g. `value(list(f1, f2, 3))` could relay the output of `f2`
    before that of `f1`.
 
+ * `resolve(x, idxs = idxs)` ignored argument `idxs` when `x` was an
+   environment or a list environment, resulting in all elements being
+   resolved, instead of only the ones selected.
+
 ## Documentation
 
  * Document that `%<-%` on a list environment ('listenv') can only

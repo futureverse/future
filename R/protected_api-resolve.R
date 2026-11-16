@@ -378,6 +378,10 @@ resolve.environment <- function(x, idxs = NULL, recursive = 0, result = FALSE, s
   names <- ls(envir = x, all.names = TRUE)
   stop_if_not(length(names) == nx)
 
+  ## Resolve only the requested subset of elements
+  names <- intersect(names, idxs)
+  nx <- length(names)
+
   ## Everything is considered non-resolved by default
   remaining <- seq_len(nx)
   
@@ -520,6 +524,9 @@ resolve.listenv <- function(x, idxs = NULL, recursive = 0, result = FALSE, stdou
   ## Coerce future promises into Future objects
   x0 <- x
   x <- futures(x)
+
+  ## Resolve only the requested subset of elements
+  if (!identical(idxs, seq_along(x))) x <- x[idxs]
   nx <- length(x)
 
   ## Everything is considered non-resolved by default
