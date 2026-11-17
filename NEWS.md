@@ -19,6 +19,15 @@
    environment is erased on the parallel worker right before and after
    the future has been evaluated.
 
+## Documentation
+
+ * Document that `%<-%` on a list environment ('listenv') can only
+   assign to a single element, and that assigning to multiple elements,
+   e.g. `x[1, ] %<-% 1:2`, is not supported.
+
+ * Add **hdf5r** and **rhdf5** to the 'Non-Exportable Objects'
+   vignette.
+
 ## Bug Fixes
 
  * If `plan()` fails to initiate the new backend, it did not reset to
@@ -48,12 +57,6 @@
  * Calling `clusterEvalQ()` with a non-supported expression on a
    `makeClusterFuture()` cluster produced a warning, instead of an
    error as documented.
-
-## Documentation
-
- * Document that `%<-%` on a list environment ('listenv') can only
-   assign to a single element, and that assigning to multiple elements,
-   e.g. `x[1, ] %<-% 1:2`, is not supported.
 
 ## Deprecated and Defunct
 
