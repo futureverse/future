@@ -1266,7 +1266,7 @@ str(e)
 [DBI]: https://cran.r-project.org/package=DBI
 [hdf5r]: https://cran.r-project.org/package=hdf5r
 [inline]: https://cran.r-project.org/package=inline
-[keras]: https://cran.r-project.org/package=DBI
+[keras]: https://cran.r-project.org/package=keras
 [magick]: https://cran.r-project.org/package=magick
 [ncdf4]: https://cran.r-project.org/package=ncdf4
 [polars]: https://rpolars.github.io/
