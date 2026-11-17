@@ -32,7 +32,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.82.0-9032</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.82.0-9033</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -226,46 +226,56 @@ so they can be documented here and possibly even be fixed.</em></p>
 <td align="left">DBIConnection (<code>externalptr</code>)</td>
 </tr>
 <tr class="even">
+<td align="left"><strong>hdf5r</strong></td>
+<td align="left">H5File, H5Group, H5D (custom reference;
+<em>non-detectable</em>)</td>
+</tr>
+<tr class="odd">
 <td align="left"><strong>inline</strong></td>
 <td align="left">CFunc (<code>externalptr</code> of class
 DLLHandle)</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left"><strong>keras</strong></td>
 <td align="left">keras.engine.sequential.Sequential
 (<code>externalptr</code>), keras.engine.base_layer.Layer
 (<code>externalptr</code>)</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left"><strong>magick</strong></td>
 <td align="left">magick-image (<code>externalptr</code>)</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left"><strong>ncdf4</strong></td>
 <td align="left">ncdf4 (custom reference; <em>non-detectable</em>)</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left"><strong>parallel</strong></td>
 <td align="left">cluster and cluster nodes
 (<code>connection</code>)</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left"><strong>polars</strong></td>
 <td align="left">RPolarsDataFrame (<code>externalptr</code>)</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left"><strong>raster</strong></td>
 <td align="left">RasterLayer (<code>externalptr</code>; <em>not
 all</em>)</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left"><strong>Rcpp</strong></td>
 <td align="left">NativeSymbol (<code>externalptr</code>)</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left"><strong>reticulate</strong></td>
 <td align="left">python.builtin.function (<code>externalptr</code>),
 python.builtin.module (<code>externalptr</code>)</td>
+</tr>
+<tr class="even">
+<td align="left"><strong>rhdf5</strong></td>
+<td align="left">H5IdComponent (custom reference;
+<em>non-detectable</em>)</td>
 </tr>
 <tr class="odd">
 <td align="left"><strong>rJava</strong></td>
@@ -941,7 +951,7 @@ directly on the workers with <code><a href="https://rspatial.github.io/terra/ref
 <li>Partitioning large rasters into spatial tiles (e.g. using
 <code><a href="https://rspatial.github.io/terra/reference/tile_apply.html" class="external-link">tile_apply()</a></code> or <code><a href="https://rspatial.github.io/terra/reference/window.html" class="external-link">window()</a></code>).</li>
 <li>Extracting and exchanging raw cell values (e.g. via
-<code><a href="https://rspatial.github.io/terra/reference/values.html" class="external-link">values()</a></code>) as plain R vectors or matrices.</li>
+<code><a href="http://hhoeflin.github.io/hdf5r/reference/factor_ext_functions.html" class="external-link">values()</a></code>) as plain R vectors or matrices.</li>
 <li>Relying on <strong>terra</strong>’s built-in parallelization (the
 <code>cores</code> argument in functions such as <code><a href="https://rspatial.github.io/terra/reference/app.html" class="external-link">app()</a></code>,
 <code><a href="https://rspatial.github.io/terra/reference/predict.html" class="external-link">predict()</a></code>, and <code><a href="https://rspatial.github.io/terra/reference/focal.html" class="external-link">focal()</a></code>) or internal
@@ -1154,20 +1164,78 @@ object back and forth between the main R session and R workers:</p>
 <h3 id="packages-with-other-types-of-non-external-objects">Packages with other types of non-external objects<a class="anchor" aria-label="anchor" href="#packages-with-other-types-of-non-external-objects"></a>
 </h3>
 <div class="section level4">
+<h4 id="package-hdf5r">Package: hdf5r<a class="anchor" aria-label="anchor" href="#package-hdf5r"></a>
+</h4>
+<p>Package <strong><a href="https://cran.r-project.org/package=hdf5r" class="external-link">hdf5r</a></strong>
+provides an R API to work with data that live in HDF5 files. For
+example, we can create a simple HDF5 file that holds a dataset ‘x’:</p>
+<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://hhoeflin.github.io/hdf5r/" class="external-link">hdf5r</a></span><span class="op">)</span></span>
+<span><span class="va">file</span> <span class="op">&lt;-</span> <span class="va"><a href="http://hhoeflin.github.io/hdf5r/reference/H5File-class.html" class="external-link">H5File</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="st">"example.h5"</span>, mode <span class="op">=</span> <span class="st">"w"</span><span class="op">)</span></span>
+<span><span class="va">file</span><span class="op">[[</span><span class="st">"x"</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span></span>
+<span><span class="va">file</span><span class="op">$</span><span class="fu">close_all</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p>We can now use this HDF5 file next time we start R, e.g.</p>
+<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://hhoeflin.github.io/hdf5r/" class="external-link">hdf5r</a></span><span class="op">)</span></span>
+<span><span class="va">file</span> <span class="op">&lt;-</span> <span class="va"><a href="http://hhoeflin.github.io/hdf5r/reference/H5File-class.html" class="external-link">H5File</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="st">"example.h5"</span>, mode <span class="op">=</span> <span class="st">"r"</span><span class="op">)</span></span>
+<span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">file</span><span class="op">[[</span><span class="st">"x"</span><span class="op">]</span><span class="op">]</span><span class="op">[</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="va">y</span></span>
+<span><span class="co">## [1] 55</span></span></code></pre></div>
+<p>However, if we attempt to use <code>file</code>, which is an object
+of class ‘H5File’, in a parallel worker, we will get an error:</p>
+<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://future.futureverse.org">future</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/plan.html">plan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://hhoeflin.github.io/hdf5r/" class="external-link">hdf5r</a></span><span class="op">)</span></span>
+<span><span class="va">file</span> <span class="op">&lt;-</span> <span class="va"><a href="http://hhoeflin.github.io/hdf5r/reference/H5File-class.html" class="external-link">H5File</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="st">"example.h5"</span>, mode <span class="op">=</span> <span class="st">"r"</span><span class="op">)</span></span>
+<span><span class="va">f</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/future.html">future</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">file</span><span class="op">[[</span><span class="st">"x"</span><span class="op">]</span><span class="op">]</span><span class="op">[</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/value.html">value</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span></span>
+<span><span class="co">## Error in x$exists(name) : HDF5-API Errors:</span></span>
+<span><span class="co">##     error #000: ../../../src/H5L.c in H5Lexists(): line 796: not a location</span></span>
+<span><span class="co">##         class: HDF5</span></span>
+<span><span class="co">##         major: Invalid arguments to routine</span></span>
+<span><span class="co">##         minor: Inappropriate type</span></span>
+<span><span class="co">## [...]</span></span>
+<span><span class="co">##     error #001: ../../../src/H5Gloc.c in H5G_loc(): line 147: invalid file ID</span></span></code></pre></div>
+<p>This is because hdf5r objects hold an HDF5 identifier, which is a
+plain number that is only valid in the R session where the file was
+opened. Since this is <em>not</em> a formal <em>external pointer</em>,
+the future framework cannot detect it. That is, using
+<code>options(future.globals.onReference = "error")</code> is of no help
+here.</p>
+<p>A workaround is to open the HDF5 file in each worker, e.g.</p>
+<div class="sourceCode" id="cb62"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://future.futureverse.org">future</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/plan.html">plan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://hhoeflin.github.io/hdf5r/" class="external-link">hdf5r</a></span><span class="op">)</span></span>
+<span><span class="va">f</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/future.html">future</a></span><span class="op">(</span><span class="op">{</span></span>
+<span>  <span class="va">file</span> <span class="op">&lt;-</span> <span class="va"><a href="http://hhoeflin.github.io/hdf5r/reference/H5File-class.html" class="external-link">H5File</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="st">"example.h5"</span>, mode <span class="op">=</span> <span class="st">"r"</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/on.exit.html" class="external-link">on.exit</a></span><span class="op">(</span><span class="va">file</span><span class="op">$</span><span class="fu">close_all</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">file</span><span class="op">[[</span><span class="st">"x"</span><span class="op">]</span><span class="op">]</span><span class="op">[</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="op">}</span><span class="op">)</span></span>
+<span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/value.html">value</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span></span>
+<span><span class="va">y</span></span>
+<span><span class="co">## [1] 55</span></span></code></pre></div>
+<p>Note that HDF5 locks files that are opened for writing, so if the
+file is opened in write mode in the main R session, the workers will
+fail to open it. Open it in read-only mode, or close it, before
+launching futures that read it.</p>
+</div>
+<div class="section level4">
 <h4 id="package-ncdf4">Package: ncdf4<a class="anchor" aria-label="anchor" href="#package-ncdf4"></a>
 </h4>
 <p>Package <strong><a href="https://cran.r-project.org/package=ncdf4" class="external-link">ncdf4</a></strong>
 provides an R API to work with data that live in netCDF files. For
 example, we can create a simple netCDF file that holds a variable
 ‘x’:</p>
-<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://cirrus.ucsd.edu/~pierce/ncdf/" class="external-link">ncdf4</a></span><span class="op">)</span></span>
 <span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ncdf4/man/ncvar_def.html" class="external-link">ncvar_def</a></span><span class="op">(</span><span class="st">"x"</span>, units <span class="op">=</span> <span class="st">"count"</span>, dim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ncdf4/man/nc_create.html" class="external-link">nc_create</a></span><span class="op">(</span><span class="st">"example.nc"</span>, <span class="va">x</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/ncdf4/man/ancvar_put.html" class="external-link">ncvar_put</a></span><span class="op">(</span><span class="va">file</span>, <span class="va">x</span>, <span class="fl">42</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/ncdf4/man/nc_close.html" class="external-link">nc_close</a></span><span class="op">(</span><span class="va">file</span><span class="op">)</span></span></code></pre></div>
 <p>We can now use this netCDF file next time we start R, e.g.</p>
-<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb64"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://cirrus.ucsd.edu/~pierce/ncdf/" class="external-link">ncdf4</a></span><span class="op">)</span></span>
 <span><span class="va">file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ncdf4/man/nc_open.html" class="external-link">nc_open</a></span><span class="op">(</span><span class="st">"example.nc"</span><span class="op">)</span></span>
 <span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ncdf4/man/ncvar_get.html" class="external-link">ncvar_get</a></span><span class="op">(</span><span class="va">file</span><span class="op">)</span></span>
@@ -1176,7 +1244,7 @@ example, we can create a simple netCDF file that holds a variable
 <p>However, it would fail if we attempt to use <code>file</code>, which
 is an object of class ‘ncdf4’, in a parallel worker, we will get an
 error:</p>
-<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://future.futureverse.org">future</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/plan.html">plan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://cirrus.ucsd.edu/~pierce/ncdf/" class="external-link">ncdf4</a></span><span class="op">)</span></span>
@@ -1192,7 +1260,7 @@ framework cannot detect them. That is, using
 <code>options(future.globals.onReference = "error")</code> is of no help
 here.</p>
 <p>A workaround is to open the netCDF in each worker, e.g.</p>
-<div class="sourceCode" id="cb62"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb66"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://future.futureverse.org">future</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/plan.html">plan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://cirrus.ucsd.edu/~pierce/ncdf/" class="external-link">ncdf4</a></span><span class="op">)</span></span>
@@ -1205,6 +1273,52 @@ here.</p>
 <span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/value.html">value</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span></span>
 <span><span class="va">y</span></span>
 <span><span class="co">## [1] 42</span></span></code></pre></div>
+</div>
+<div class="section level4">
+<h4 id="package-rhdf5">Package: rhdf5<a class="anchor" aria-label="anchor" href="#package-rhdf5"></a>
+</h4>
+<p>Bioconductor package <strong><a href="https://bioconductor.org/packages/rhdf5/" class="external-link">rhdf5</a></strong>
+provides another R API to work with HDF5 files. It is used by many other
+Bioconductor packages, e.g. <strong>HDF5Array</strong>. Using the same
+HDF5 file as in the above <strong>hdf5r</strong> example, we can read
+the dataset ‘x’ as:</p>
+<div class="sourceCode" id="cb67"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://huber-group-embl.github.io/rhdf5/" class="external-link">rhdf5</a></span><span class="op">)</span></span>
+<span><span class="va">file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://huber-group-embl.github.io/rhdf5/reference/H5Fopen.html" class="external-link">H5Fopen</a></span><span class="op">(</span><span class="st">"example.h5"</span>, flags <span class="op">=</span> <span class="st">"H5F_ACC_RDONLY"</span><span class="op">)</span></span>
+<span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="fu"><a href="https://huber-group-embl.github.io/rhdf5/reference/h5_read.html" class="external-link">h5read</a></span><span class="op">(</span><span class="va">file</span>, <span class="st">"x"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">y</span></span>
+<span><span class="co">## [1] 55</span></span></code></pre></div>
+<p>However, if we attempt to use <code>file</code>, which is an object
+of class ‘H5IdComponent’, in a parallel worker, we will get an
+error:</p>
+<div class="sourceCode" id="cb68"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://future.futureverse.org">future</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/plan.html">plan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://huber-group-embl.github.io/rhdf5/" class="external-link">rhdf5</a></span><span class="op">)</span></span>
+<span><span class="va">file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://huber-group-embl.github.io/rhdf5/reference/H5Fopen.html" class="external-link">H5Fopen</a></span><span class="op">(</span><span class="st">"example.h5"</span>, flags <span class="op">=</span> <span class="st">"H5F_ACC_RDONLY"</span><span class="op">)</span></span>
+<span><span class="va">f</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/future.html">future</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="fu"><a href="https://huber-group-embl.github.io/rhdf5/reference/h5_read.html" class="external-link">h5read</a></span><span class="op">(</span><span class="va">file</span>, <span class="st">"x"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/value.html">value</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span></span>
+<span><span class="co">## Error in h5checktypeOrOpenLoc(). H5Identifier not valid.</span></span></code></pre></div>
+<p>Just like for <strong>hdf5r</strong>, this is because the
+‘H5IdComponent’ object holds an HDF5 identifier that is only valid in
+the R session where the file was opened. This cannot be detected by the
+future framework.</p>
+<p>A workaround is to open the HDF5 file in each worker, e.g.</p>
+<div class="sourceCode" id="cb69"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://future.futureverse.org">future</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/plan.html">plan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://huber-group-embl.github.io/rhdf5/" class="external-link">rhdf5</a></span><span class="op">)</span></span>
+<span><span class="va">f</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/future.html">future</a></span><span class="op">(</span><span class="op">{</span></span>
+<span>  <span class="va">file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://huber-group-embl.github.io/rhdf5/reference/H5Fopen.html" class="external-link">H5Fopen</a></span><span class="op">(</span><span class="st">"example.h5"</span>, flags <span class="op">=</span> <span class="st">"H5F_ACC_RDONLY"</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/on.exit.html" class="external-link">on.exit</a></span><span class="op">(</span><span class="fu"><a href="https://huber-group-embl.github.io/rhdf5/reference/H5Fclose.html" class="external-link">H5Fclose</a></span><span class="op">(</span><span class="va">file</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="fu"><a href="https://huber-group-embl.github.io/rhdf5/reference/h5_read.html" class="external-link">h5read</a></span><span class="op">(</span><span class="va">file</span>, <span class="st">"x"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">}</span><span class="op">)</span></span>
+<span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/value.html">value</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span></span>
+<span><span class="va">y</span></span>
+<span><span class="co">## [1] 55</span></span></code></pre></div>
+<p>Alternatively, pass the filename instead of the file handle,
+e.g. <code>h5read("example.h5", "x")</code>, which opens and closes the
+file internally.</p>
 </div>
 </div>
 <div class="section level3">
@@ -1219,7 +1333,7 @@ above non-exportable examples, such objects can be saved to file and
 used in another R session, or exported to a parallel worker. This is
 because <strong>data.table</strong> is capable of restoring these
 objects to a valid state. Consider the following example:</p>
-<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb70"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-datatable.com" class="external-link">data.table</a></span><span class="op">)</span></span>
 <span><span class="va">DT</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/data.table/man/data.table.html" class="external-link">data.table</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, b <span class="op">=</span> <span class="va">letters</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span><span class="op">)</span></span>
 <span></span>
@@ -1230,16 +1344,16 @@ objects to a valid state. Consider the following example:</p>
 <span><span class="co">#&gt; 1: 2 b</span></span></code></pre></div>
 <p>If we would try the last step with a future with strict checking for
 references enabled, we would get an error:</p>
-<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" tabindex="-1"></a><span class="fu">library</span>(future)</span>
-<span id="cb64-2"><a href="#cb64-2" tabindex="-1"></a><span class="fu">plan</span>(multisession)</span>
-<span id="cb64-3"><a href="#cb64-3" tabindex="-1"></a><span class="fu">options</span>(<span class="at">future.globals.onReference =</span> <span class="st">"error"</span>)</span>
-<span id="cb64-4"><a href="#cb64-4" tabindex="-1"></a></span>
-<span id="cb64-5"><a href="#cb64-5" tabindex="-1"></a>row <span class="sc">%&lt;-%</span> DT[<span class="dv">2</span>]</span>
-<span id="cb64-6"><a href="#cb64-6" tabindex="-1"></a>Error<span class="sc">:</span> Detected a non<span class="sc">-</span>exportable <span class="fu">reference</span> (<span class="st">'externalptr'</span>) <span class="cf">in</span> one of</span>
-<span id="cb64-7"><a href="#cb64-7" tabindex="-1"></a>the <span class="fu">globals</span> (<span class="st">'DT'</span> of class <span class="st">'data.table'</span>) used <span class="cf">in</span> the future expression</span></code></pre></div>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" tabindex="-1"></a><span class="fu">library</span>(future)</span>
+<span id="cb71-2"><a href="#cb71-2" tabindex="-1"></a><span class="fu">plan</span>(multisession)</span>
+<span id="cb71-3"><a href="#cb71-3" tabindex="-1"></a><span class="fu">options</span>(<span class="at">future.globals.onReference =</span> <span class="st">"error"</span>)</span>
+<span id="cb71-4"><a href="#cb71-4" tabindex="-1"></a></span>
+<span id="cb71-5"><a href="#cb71-5" tabindex="-1"></a>row <span class="sc">%&lt;-%</span> DT[<span class="dv">2</span>]</span>
+<span id="cb71-6"><a href="#cb71-6" tabindex="-1"></a>Error<span class="sc">:</span> Detected a non<span class="sc">-</span>exportable <span class="fu">reference</span> (<span class="st">'externalptr'</span>) <span class="cf">in</span> one of</span>
+<span id="cb71-7"><a href="#cb71-7" tabindex="-1"></a>the <span class="fu">globals</span> (<span class="st">'DT'</span> of class <span class="st">'data.table'</span>) used <span class="cf">in</span> the future expression</span></code></pre></div>
 <p>This is a false positive. If we relax the checks, it does indeed
 work:</p>
-<div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb72"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>future.globals.onReference <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">row</span> <span class="op">&lt;-</span> <span class="va">DT</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span></span>
@@ -1257,7 +1371,7 @@ another R session, or exported to a parallel worker. This is because
 <strong>rstan</strong> is capable of restoring these objects to a valid
 state. Consider the following example from
 <code>example("rstan", package = "rstan")</code>:</p>
-<div class="sourceCode" id="cb66"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb73"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://mc-stan.org/rstan/" class="external-link">rstan</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">code</span> <span class="op">&lt;-</span> <span class="st">"</span></span>
@@ -1285,17 +1399,17 @@ state. Consider the following example from
 <span><span class="va">e</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/rstan/reference/stanfit-method-extract.html" class="external-link">extract</a></span><span class="op">(</span><span class="va">fit</span>, permuted <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <p>If we would try the last step with a future with strict checking for
 references enabled, we would get an error:</p>
-<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" tabindex="-1"></a><span class="fu">library</span>(future)</span>
-<span id="cb67-2"><a href="#cb67-2" tabindex="-1"></a><span class="fu">plan</span>(multisession)</span>
-<span id="cb67-3"><a href="#cb67-3" tabindex="-1"></a><span class="fu">options</span>(<span class="at">future.globals.onReference =</span> <span class="st">"error"</span>)</span>
-<span id="cb67-4"><a href="#cb67-4" tabindex="-1"></a></span>
-<span id="cb67-5"><a href="#cb67-5" tabindex="-1"></a>e <span class="sc">%&lt;-%</span> <span class="fu">extract</span>(fit, <span class="at">permuted =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb67-6"><a href="#cb67-6" tabindex="-1"></a>Error<span class="sc">:</span> Detected a non<span class="sc">-</span>exportable <span class="fu">reference</span> (<span class="st">'externalptr'</span> of class <span class="st">'DLLHandle'</span>)</span>
-<span id="cb67-7"><a href="#cb67-7" tabindex="-1"></a><span class="cf">in</span> one of the <span class="fu">globals</span> (<span class="st">'fit'</span> of class <span class="st">'stanfit'</span>) used <span class="cf">in</span> the future expression</span></code></pre></div>
+<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" tabindex="-1"></a><span class="fu">library</span>(future)</span>
+<span id="cb74-2"><a href="#cb74-2" tabindex="-1"></a><span class="fu">plan</span>(multisession)</span>
+<span id="cb74-3"><a href="#cb74-3" tabindex="-1"></a><span class="fu">options</span>(<span class="at">future.globals.onReference =</span> <span class="st">"error"</span>)</span>
+<span id="cb74-4"><a href="#cb74-4" tabindex="-1"></a></span>
+<span id="cb74-5"><a href="#cb74-5" tabindex="-1"></a>e <span class="sc">%&lt;-%</span> <span class="fu">extract</span>(fit, <span class="at">permuted =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb74-6"><a href="#cb74-6" tabindex="-1"></a>Error<span class="sc">:</span> Detected a non<span class="sc">-</span>exportable <span class="fu">reference</span> (<span class="st">'externalptr'</span> of class <span class="st">'DLLHandle'</span>)</span>
+<span id="cb74-7"><a href="#cb74-7" tabindex="-1"></a><span class="cf">in</span> one of the <span class="fu">globals</span> (<span class="st">'fit'</span> of class <span class="st">'stanfit'</span>) used <span class="cf">in</span> the future expression</span></code></pre></div>
 <p>However, this is a false positive. The <code>fit</code> object, which
 is of class ‘stanfit’, can indeed be exported to be used in an external
 R process, e.g.</p>
-<div class="sourceCode" id="cb68"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb75"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>future.globals.onReference <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">e</span> <span class="op"><a href="../reference/futureAssign.html">%&lt;-%</a></span> <span class="fu"><a href="https://mc-stan.org/rstan/reference/stanfit-method-extract.html" class="external-link">extract</a></span><span class="op">(</span><span class="va">fit</span>, permuted <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>

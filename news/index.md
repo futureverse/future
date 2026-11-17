@@ -20,6 +20,14 @@
   erased on the parallel worker right before and after the future has
   been evaluated.
 
+### Documentation
+
+- Document that `%<-%` on a list environment (‘listenv’) can only assign
+  to a single element, and that assigning to multiple elements,
+  e.g. `x[1, ] %<-% 1:2`, is not supported.
+
+- Add **hdf5r** and **rhdf5** to the ‘Non-Exportable Objects’ vignette.
+
 ### Bug Fixes
 
 - If [`plan()`](https://future.futureverse.org/reference/plan.md) fails
@@ -51,12 +59,6 @@
 - Calling `clusterEvalQ()` with a non-supported expression on a
   [`makeClusterFuture()`](https://future.futureverse.org/reference/makeClusterFuture.md)
   cluster produced a warning, instead of an error as documented.
-
-### Documentation
-
-- Document that `%<-%` on a list environment (‘listenv’) can only assign
-  to a single element, and that assigning to multiple elements,
-  e.g. `x[1, ] %<-% 1:2`, is not supported.
 
 ### Deprecated and Defunct
 
@@ -1085,7 +1087,7 @@ CRAN release: 2022-11-06
   instead.
 
 - Removing
-  [`values()`](https://rspatial.github.io/terra/reference/values.html),
+  [`values()`](http://hhoeflin.github.io/hdf5r/reference/factor_ext_functions.md),
   which has been defunct since **future** 1.23.0. Use
   [`value()`](https://future.futureverse.org/reference/value.md)
   instead.
@@ -1353,7 +1355,7 @@ CRAN release: 2021-10-31
 
 ### Deprecated and Defunct
 
-- [`values()`](https://rspatial.github.io/terra/reference/values.html),
+- [`values()`](http://hhoeflin.github.io/hdf5r/reference/factor_ext_functions.md),
   which has been deprecated since **future** 1.20.0, is now defunct. Use
   [`value()`](https://future.futureverse.org/reference/value.md)
   instead.
@@ -1696,7 +1698,7 @@ CRAN release: 2020-11-03
   ‘multisession’ or ‘multicore’, depending on operating system and R
   setup.
 
-- [`values()`](https://rspatial.github.io/terra/reference/values.html)
+- [`values()`](http://hhoeflin.github.io/hdf5r/reference/factor_ext_functions.md)
   is deprecated. Use
   [`value()`](https://future.futureverse.org/reference/value.md)
   instead.
@@ -1904,7 +1906,7 @@ CRAN release: 2020-04-18
 ### Significant Changes
 
 - Renamed
-  [`values()`](https://rspatial.github.io/terra/reference/values.html)
+  [`values()`](http://hhoeflin.github.io/hdf5r/reference/factor_ext_functions.md)
   to [`value()`](https://future.futureverse.org/reference/value.md) to
   clean up and simplify the API.
 
@@ -1938,15 +1940,15 @@ CRAN release: 2020-04-18
 ### Deprecated and Defunct
 
 - All
-  [`values()`](https://rspatial.github.io/terra/reference/values.html)
+  [`values()`](http://hhoeflin.github.io/hdf5r/reference/factor_ext_functions.md)
   S3 methods have been renamed to
   [`value()`](https://future.futureverse.org/reference/value.md) since
   they are closely related to the original purpose
   [`value()`](https://future.futureverse.org/reference/value.md). The
-  [`values()`](https://rspatial.github.io/terra/reference/values.html)
+  [`values()`](http://hhoeflin.github.io/hdf5r/reference/factor_ext_functions.md)
   methods will continue to work but will soon be formally deprecated and
   later be made defunct and finally be removed. Please replace all
-  [`values()`](https://rspatial.github.io/terra/reference/values.html)
+  [`values()`](http://hhoeflin.github.io/hdf5r/reference/factor_ext_functions.md)
   with [`value()`](https://future.futureverse.org/reference/value.md)
   calls.
 
@@ -2066,7 +2068,7 @@ CRAN release: 2019-11-08
 
 ### Bug Fixes
 
-- [`values()`](https://rspatial.github.io/terra/reference/values.html)
+- [`values()`](http://hhoeflin.github.io/hdf5r/reference/factor_ext_functions.md)
   would resignal `immediateCondition`:s despite those should only be
   signaled at most once per future.
 
@@ -2109,17 +2111,17 @@ CRAN release: 2019-07-02
   conditions of class `message` and `warning` were relayed.
 
 - If one of the futures in a collection produces an error, then
-  [`values()`](https://rspatial.github.io/terra/reference/values.html)
+  [`values()`](http://hhoeflin.github.io/hdf5r/reference/factor_ext_functions.md)
   will signal that error as soon as it is detected. This means that
   while calling
-  [`values()`](https://rspatial.github.io/terra/reference/values.html)
+  [`values()`](http://hhoeflin.github.io/hdf5r/reference/factor_ext_functions.md)
   guarantees to resolve all futures, it does not guarantee that the
   result from all futures are gathered back to the master R session
   before the error is relayed.
 
 ### New Features
 
-- [`values()`](https://rspatial.github.io/terra/reference/values.html)
+- [`values()`](http://hhoeflin.github.io/hdf5r/reference/factor_ext_functions.md)
   now relays `stdout` and signals as soon as possible as long as the
   standard output and the conditions are relayed in their original
   order.
@@ -3147,7 +3149,7 @@ CRAN release: 2016-11-12
 
 ### Bug Fixes
 
-- [`values()`](https://rspatial.github.io/terra/reference/values.html)
+- [`values()`](http://hhoeflin.github.io/hdf5r/reference/factor_ext_functions.md)
   for lists and list environments of futures where one or more of the
   futures resolved to NULL would give an error.
 
@@ -3394,7 +3396,7 @@ CRAN release: 2016-05-17
 - Added informative [`print()`](https://rdrr.io/r/base/print.html)
   method for the `Future` class.
 
-- [`values()`](https://rspatial.github.io/terra/reference/values.html)
+- [`values()`](http://hhoeflin.github.io/hdf5r/reference/factor_ext_functions.md)
   passes arguments `...` to
   [`value()`](https://future.futureverse.org/reference/value.md) of each
   future.
@@ -3562,7 +3564,7 @@ CRAN release: 2015-12-31
 
 - Add
   [`futures()`](https://future.futureverse.org/reference/futures.md),
-  [`values()`](https://rspatial.github.io/terra/reference/values.html)
+  [`values()`](http://hhoeflin.github.io/hdf5r/reference/factor_ext_functions.md)
   and
   [`resolved()`](https://future.futureverse.org/reference/resolved.md).
 

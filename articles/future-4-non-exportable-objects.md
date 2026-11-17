@@ -88,6 +88,7 @@ can be documented here and possibly even be fixed.*
 | **bigmemory** | big.matrix (`externalptr`) |
 | **cpp11** | E.g. functions created by `cpp_source()` |
 | **DBI** | DBIConnection (`externalptr`) |
+| **hdf5r** | H5File, H5Group, H5D (custom reference; *non-detectable*) |
 | **inline** | CFunc (`externalptr` of class DLLHandle) |
 | **keras** | keras.engine.sequential.Sequential (`externalptr`), keras.engine.base_layer.Layer (`externalptr`) |
 | **magick** | magick-image (`externalptr`) |
@@ -97,6 +98,7 @@ can be documented here and possibly even be fixed.*
 | **raster** | RasterLayer (`externalptr`; *not all*) |
 | **Rcpp** | NativeSymbol (`externalptr`) |
 | **reticulate** | python.builtin.function (`externalptr`), python.builtin.module (`externalptr`) |
+| **rhdf5** | H5IdComponent (custom reference; *non-detectable*) |
 | **rJava** | jclassName (`externalptr`) |
 | **ShortRead** | FastqFile, FastqStreamer, FastqStreamerList (`connection`) |
 | **sparklyr** | tbl_spark (`externalptr`) |
@@ -797,7 +799,7 @@ include:
   or
   [`window()`](https://rspatial.github.io/terra/reference/window.html)).
 - Extracting and exchanging raw cell values (e.g. via
-  [`values()`](https://rspatial.github.io/terra/reference/values.html))
+  [`values()`](http://hhoeflin.github.io/hdf5r/reference/factor_ext_functions.md))
   as plain R vectors or matrices.
 - Relying on **terra**’s built-in parallelization (the `cores` argument
   in functions such as
@@ -1032,6 +1034,71 @@ workers:
 
 ### Packages with other types of non-external objects
 
+#### Package: hdf5r
+
+Package **[hdf5r](https://cran.r-project.org/package=hdf5r)** provides
+an R API to work with data that live in HDF5 files. For example, we can
+create a simple HDF5 file that holds a dataset ‘x’:
+
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`hdf5r`](https://hhoeflin.github.io/hdf5r/)`)`\
+`file`` ``<-`` `[`H5File`](http://hhoeflin.github.io/hdf5r/reference/H5File-class.md)`$``new``(``"example.h5"``, mode ``=`` ``"w"``)`\
+`file``[[``"x"``]``]`` ``<-`` ``1``:``10`\
+`file``$``close_all``(``)`
+
+We can now use this HDF5 file next time we start R, e.g.
+
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`hdf5r`](https://hhoeflin.github.io/hdf5r/)`)`\
+`file`` ``<-`` `[`H5File`](http://hhoeflin.github.io/hdf5r/reference/H5File-class.md)`$``new``(``"example.h5"``, mode ``=`` ``"r"``)`\
+`y`` ``<-`` `[`sum`](https://rdrr.io/r/base/sum.html)`(``file``[[``"x"``]``]``[``]``)`\
+`y`\
+`## [1] 55`
+
+However, if we attempt to use `file`, which is an object of class
+‘H5File’, in a parallel worker, we will get an error:
+
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`future`](https://future.futureverse.org)`)`\
+[`plan`](https://future.futureverse.org/reference/plan.md)`(``multisession``)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`hdf5r`](https://hhoeflin.github.io/hdf5r/)`)`\
+`file`` ``<-`` `[`H5File`](http://hhoeflin.github.io/hdf5r/reference/H5File-class.md)`$``new``(``"example.h5"``, mode ``=`` ``"r"``)`\
+`f`` ``<-`` `[`future`](https://future.futureverse.org/reference/future.md)`(`[`sum`](https://rdrr.io/r/base/sum.html)`(``file``[[``"x"``]``]``[``]``)``)`\
+`y`` ``<-`` `[`value`](https://future.futureverse.org/reference/value.md)`(``f``)`\
+`## Error in x$exists(name) : HDF5-API Errors:`\
+`##     error #000: ../../../src/H5L.c in H5Lexists(): line 796: not a location`\
+`##         class: HDF5`\
+`##         major: Invalid arguments to routine`\
+`##         minor: Inappropriate type`\
+`## [...]`\
+`##     error #001: ../../../src/H5Gloc.c in H5G_loc(): line 147: invalid file ID`
+
+This is because hdf5r objects hold an HDF5 identifier, which is a plain
+number that is only valid in the R session where the file was opened.
+Since this is *not* a formal *external pointer*, the future framework
+cannot detect it. That is, using
+`options(future.globals.onReference = "error")` is of no help here.
+
+A workaround is to open the HDF5 file in each worker, e.g.
+
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`future`](https://future.futureverse.org)`)`\
+[`plan`](https://future.futureverse.org/reference/plan.md)`(``multisession``)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`hdf5r`](https://hhoeflin.github.io/hdf5r/)`)`\
+`f`` ``<-`` `[`future`](https://future.futureverse.org/reference/future.md)`(``{`\
+`  ``file`` ``<-`` `[`H5File`](http://hhoeflin.github.io/hdf5r/reference/H5File-class.md)`$``new``(``"example.h5"``, mode ``=`` ``"r"``)`\
+`  `[`on.exit`](https://rdrr.io/r/base/on.exit.html)`(``file``$``close_all``(``)``)`\
+`  `[`sum`](https://rdrr.io/r/base/sum.html)`(``file``[[``"x"``]``]``[``]``)`\
+`}``)`\
+`y`` ``<-`` `[`value`](https://future.futureverse.org/reference/value.md)`(``f``)`\
+`y`\
+`## [1] 55`
+
+Note that HDF5 locks files that are opened for writing, so if the file
+is opened in write mode in the main R session, the workers will fail to
+open it. Open it in read-only mode, or close it, before launching
+futures that read it.
+
 #### Package: ncdf4
 
 Package **[ncdf4](https://cran.r-project.org/package=ncdf4)** provides
@@ -1088,6 +1155,56 @@ A workaround is to open the netCDF in each worker, e.g.
 `y`` ``<-`` `[`value`](https://future.futureverse.org/reference/value.md)`(``f``)`\
 `y`\
 `## [1] 42`
+
+#### Package: rhdf5
+
+Bioconductor package
+**[rhdf5](https://bioconductor.org/packages/rhdf5/)** provides another R
+API to work with HDF5 files. It is used by many other Bioconductor
+packages, e.g. **HDF5Array**. Using the same HDF5 file as in the above
+**hdf5r** example, we can read the dataset ‘x’ as:
+
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`rhdf5`](https://huber-group-embl.github.io/rhdf5/)`)`\
+`file`` ``<-`` `[`H5Fopen`](https://huber-group-embl.github.io/rhdf5/reference/H5Fopen.html)`(``"example.h5"``, flags ``=`` ``"H5F_ACC_RDONLY"``)`\
+`y`` ``<-`` `[`sum`](https://rdrr.io/r/base/sum.html)`(`[`h5read`](https://huber-group-embl.github.io/rhdf5/reference/h5_read.html)`(``file``, ``"x"``)``)`\
+`y`\
+`## [1] 55`
+
+However, if we attempt to use `file`, which is an object of class
+‘H5IdComponent’, in a parallel worker, we will get an error:
+
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`future`](https://future.futureverse.org)`)`\
+[`plan`](https://future.futureverse.org/reference/plan.md)`(``multisession``)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`rhdf5`](https://huber-group-embl.github.io/rhdf5/)`)`\
+`file`` ``<-`` `[`H5Fopen`](https://huber-group-embl.github.io/rhdf5/reference/H5Fopen.html)`(``"example.h5"``, flags ``=`` ``"H5F_ACC_RDONLY"``)`\
+`f`` ``<-`` `[`future`](https://future.futureverse.org/reference/future.md)`(`[`sum`](https://rdrr.io/r/base/sum.html)`(`[`h5read`](https://huber-group-embl.github.io/rhdf5/reference/h5_read.html)`(``file``, ``"x"``)``)``)`\
+`y`` ``<-`` `[`value`](https://future.futureverse.org/reference/value.md)`(``f``)`\
+`## Error in h5checktypeOrOpenLoc(). H5Identifier not valid.`
+
+Just like for **hdf5r**, this is because the ‘H5IdComponent’ object
+holds an HDF5 identifier that is only valid in the R session where the
+file was opened. This cannot be detected by the future framework.
+
+A workaround is to open the HDF5 file in each worker, e.g.
+
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`future`](https://future.futureverse.org)`)`\
+[`plan`](https://future.futureverse.org/reference/plan.md)`(``multisession``)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`rhdf5`](https://huber-group-embl.github.io/rhdf5/)`)`\
+`f`` ``<-`` `[`future`](https://future.futureverse.org/reference/future.md)`(``{`\
+`  ``file`` ``<-`` `[`H5Fopen`](https://huber-group-embl.github.io/rhdf5/reference/H5Fopen.html)`(``"example.h5"``, flags ``=`` ``"H5F_ACC_RDONLY"``)`\
+`  `[`on.exit`](https://rdrr.io/r/base/on.exit.html)`(`[`H5Fclose`](https://huber-group-embl.github.io/rhdf5/reference/H5Fclose.html)`(``file``)``)`\
+`  `[`sum`](https://rdrr.io/r/base/sum.html)`(`[`h5read`](https://huber-group-embl.github.io/rhdf5/reference/h5_read.html)`(``file``, ``"x"``)``)`\
+`}``)`\
+`y`` ``<-`` `[`value`](https://future.futureverse.org/reference/value.md)`(``f``)`\
+`y`\
+`## [1] 55`
+
+Alternatively, pass the filename instead of the file handle,
+e.g. `h5read("example.h5", "x")`, which opens and closes the file
+internally.
 
 ### False positives - packages with exportable external pointers
 
