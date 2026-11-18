@@ -32,8 +32,8 @@ ys <- lapply(xs, slow_fcn) |> futurize()
 
 # Sequential and parallel purrr map
 library(purrr)
-ys <- xs |>  map(slow_fcn)
-ys <- xs |>  map(slow_fcn) |> futurize()
+ys <- xs |> map(slow_fcn)
+ys <- xs |> map(slow_fcn) |> futurize()
 
 # Sequential and parallel foreach calls
 library(foreach)
