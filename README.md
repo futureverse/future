@@ -706,11 +706,11 @@ install.packages("future")
 
 ### Pre-release version
 
-To install the pre-release version that is available in Git branch `develop` on GitHub, use:
+To install the pre-release version, use:
+
 ```r
-remotes::install_github("futureverse/future", ref="develop")
+install.packages("future", repos = c("https://futureverse-devel.r-universe.dev", "https://cloud.r-project.org"))
 ```
-This will install the package from source.  
 
 <!-- pkgdown-drop-below -->
 

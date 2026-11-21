@@ -1142,12 +1142,10 @@ install.packages("future")
 
 ### プレリリースバージョンのインストール
 
-プレリリースバージョンは GitHub の `develop` ブランチにあり、インストールするには次のようにする。
+プレリリースバージョンをインストールするには次のようにする。
 
 ``` r
-remotes::install_github("futureverse/future", ref="develop")
+install.packages("future", repos = c("https://futureverse-devel.r-universe.dev", "https://cloud.r-project.org"))
 ```
-
-これはソースからのインストールとなる。
 
 <!-- pkgdown-drop-below -->
