@@ -367,9 +367,9 @@ This is because:
 
 #### Package: keras
 
-The **[keras](https://cran.r-project.org/package=DBI)** package provides
-an R interface to [Keras](https://keras.io/), which “is a high-level
-neural networks API developed with a focus on enabling fast
+The **[keras](https://cran.r-project.org/package=keras)** package
+provides an R interface to [Keras](https://keras.io/), which “is a
+high-level neural networks API developed with a focus on enabling fast
 experimentation”. The R implementation accesses the Keras Python API via
 **[reticulate](https://cran.r-project.org/package=reticulate)**.
 However, Keras model instances in R make use of R connections and

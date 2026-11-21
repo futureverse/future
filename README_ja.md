@@ -810,10 +810,7 @@ future パッケージは CRAN
 
 ### プレリリースバージョンのインストール
 
-プレリリースバージョンは GitHub の `develop`
-ブランチにあり、インストールするには次のようにする。
+プレリリースバージョンをインストールするには次のようにする。
 
 \
-`remotes``::`[`install_github`](https://remotes.r-lib.org/reference/install_github.html)`(``"futureverse/future"``, ref``=``"develop"``)`
-
-これはソースからのインストールとなる。
+[`install.packages`](https://rdrr.io/r/utils/install.packages.html)`(``"future"``, repos ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"https://futureverse-devel.r-universe.dev"``, ``"https://cloud.r-project.org"``)``)`

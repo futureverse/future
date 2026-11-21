@@ -565,11 +565,10 @@ future, we get an error:</p>
 <div class="section level4">
 <h4 id="package-keras">Package: keras<a class="anchor" aria-label="anchor" href="#package-keras"></a>
 </h4>
-<p>The <strong><a href="https://cran.r-project.org/package=DBI" class="external-link">keras</a></strong> package
-provides an R interface to <a href="https://keras.io/" class="external-link">Keras</a>, which
-“is a high-level neural networks API developed with a focus on enabling
-fast experimentation”. The R implementation accesses the Keras Python
-API via <strong><a href="https://cran.r-project.org/package=reticulate" class="external-link">reticulate</a></strong>.
+<p>The <strong><a href="https://cran.r-project.org/package=keras" class="external-link">keras</a></strong>
+package provides an R interface to <a href="https://keras.io/" class="external-link">Keras</a>, which “is a high-level neural
+networks API developed with a focus on enabling fast experimentation”.
+The R implementation accesses the Keras Python API via <strong><a href="https://cran.r-project.org/package=reticulate" class="external-link">reticulate</a></strong>.
 However, Keras model instances in R make use of R connections and
 external pointers, which prevents them from being exported to external R
 processes. For example, if we attempt to use a Keras model in a
