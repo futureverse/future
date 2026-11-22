@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.82.0-9033</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.82.0-9034</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -97,7 +97,8 @@
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-development-version">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h3>
-<ul><li><p>If <code><a href="../reference/plan.html">plan()</a></code> fails to initiate the new backend, it did not reset to the default <code>sequential</code> plan.</p></li>
+<ul><li><p><code><a href="../reference/plan.html">tweak()</a></code>, and therefore <code><a href="../reference/plan.html">plan()</a></code>, ignored the <code>tweakable</code> and <code>untweakable</code> attributes of a future strategy if its package was not attached. For example, <code>plan(future.batchtools::batchtools_custom, cluster.functions = cf)</code> would produce a warning on “Detected 1 unknown future arguments: ‘cluster.functions’”, unless <strong>future.batchtools</strong> was attached.</p></li>
+<li><p>If <code><a href="../reference/plan.html">plan()</a></code> fails to initiate the new backend, it did not reset to the default <code>sequential</code> plan.</p></li>
 <li><p>Printing <code><a href="../reference/plan.html">plan()</a></code> for backends without a <code>workers</code> argument, e.g. <code>sequential</code>, would report a non-existing <code>workers = "&lt;NULL&gt;"</code> argument. Also, simplified <code>workers</code> values, e.g. <code>workers = &lt;Socket cluster with ...&gt;</code>, are no longer displayed as quoted strings.</p></li>
 <li><p><code><a href="../reference/value.html">value()</a></code> and <code><a href="../reference/resolve.html">resolve()</a></code> on a list, an environment, or a list environment could relay standard output and conditions of futures out of order, if the container also held non-future elements, e.g. <code>value(list(f1, f2, 3))</code> could relay the output of <code>f2</code> before that of <code>f1</code>.</p></li>
 <li><p><code>resolve(x, idxs = idxs)</code> ignored argument <code>idxs</code> when <code>x</code> was an environment or a list environment, resulting in all elements being resolved, instead of only the ones selected.</p></li>
