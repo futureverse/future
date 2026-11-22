@@ -30,6 +30,13 @@
 
 ## Bug Fixes
 
+ * `tweak()`, and therefore `plan()`, ignored the `tweakable` and
+   `untweakable` attributes of a future strategy if its package was
+   not attached. For example,
+   `plan(future.batchtools::batchtools_custom, cluster.functions = cf)`
+   would produce a warning on "Detected 1 unknown future arguments:
+   'cluster.functions'", unless **future.batchtools** was attached.
+
  * If `plan()` fails to initiate the new backend, it did not reset to
    the default `sequential` plan.
 

@@ -198,5 +198,40 @@ stopifnot(inherits(res, "try-error"))
 message("*** tweak() - exceptions ... DONE")
 
 
+message("*** tweak() - (un)tweakable attributes of the strategy ...")
+
+## A future strategy whose class name cannot be found as a function,
+## e.g. because it is defined by a package that is not attached
+my_strategy <- local({
+  my_strategy_xyz <- function(...) NULL
+  class(my_strategy_xyz) <- c("my_strategy_xyz", "future", "function")
+  attr(my_strategy_xyz, "tweakable") <- c("foo")
+  attr(my_strategy_xyz, "untweakable") <- c("bar")
+  my_strategy_xyz
+})
+stopifnot(!exists("my_strategy_xyz", mode = "function"))
+
+## Tweakable arguments should not produce an "unknown" warning
+res <- tryCatch(tweak(my_strategy, foo = 42L), warning = identity)
+print(res)
+stopifnot(!inherits(res, "warning"), inherits(res, "future"))
+
+## ... also when tweaking an already tweaked strategy
+res <- tryCatch(tweak(res, foo = 1L), warning = identity)
+stopifnot(!inherits(res, "warning"), inherits(res, "future"))
+
+## Untweakable arguments should produce an error
+res <- tryCatch(tweak(my_strategy, bar = 42L), error = identity)
+print(res)
+stopifnot(inherits(res, "error"))
+
+## Unknown arguments should still produce a warning
+res <- tryCatch(tweak(my_strategy, baz = 42L), warning = identity)
+print(res)
+stopifnot(inherits(res, "warning"))
+
+message("*** tweak() - (un)tweakable attributes of the strategy ... DONE")
+
+
 message("*** Tweaking future strategies ... DONE")
 

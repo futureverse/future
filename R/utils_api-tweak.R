@@ -84,7 +84,12 @@ tweak.future <- function(strategy, ..., penvir = parent.frame()) {
   stopifnot(length(conflicts) == 0)
   
   ## (d) Others that are specific to this future strategy, if any
-  untweakable_plan <- tweakable_plan <- character(0L)
+  ## (i) As set on the strategy itself. This is needed, because the
+  ##     lookup by class name below fails to find the strategy function
+  ##     when it lives in a package that is not attached
+  untweakable_plan <- attr(strategy, "untweakable", exact = TRUE)
+  tweakable_plan <- eval(attr(strategy, "tweakable", exact = TRUE))
+  ## (ii) As set on future strategies with the same names as its classes
   for (class in class(strategy)) {
     if (class == "future") break
     if (!exists(class, mode = "function")) next
