@@ -491,9 +491,11 @@ result.MulticoreFuture <- local({
       } else if (inherits(result, "FutureInterruptError")) {
         ex <- result
         future[["state"]] <- "interrupted"
+        alive <- FALSE
       } else if (inherits(result, "FutureLaunchError")) {
         ex <- result
         future[["state"]] <- "failed"
+        alive <- FALSE
       } else if (inherits(result, "FutureError")) {
         ## FIXME: Add more details
         hint <- sprintf("parallel::mccollect() did return a FutureResult but a %s object: %s", sQuote(class(result)[1]), paste(deparse(result), collapse = "; "))
