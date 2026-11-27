@@ -802,10 +802,12 @@ result.ClusterFuture <- function(future, ...) {
       future[["result"]] <- result
       ## Assert result is for the expected future
       assertFutureResult(future)
-      ## Remove future from registry
+      ## Remove future from registry, if still registered
       backend <- future[["backend"]]
       reg <- backend[["reg"]]
-      FutureRegistry(reg, action = "remove", future = future, earlySignal = FALSE, debug = debug)
+      if (FutureRegistry(reg, action = "contains", future = future, debug = debug)) {
+        FutureRegistry(reg, action = "remove", future = future, earlySignal = FALSE, debug = debug)
+      }
       stop(result)
     }
   })
@@ -978,6 +980,12 @@ receiveMessageFromWorker <- local({
       if (debug) mdebugf("Received %s", class(msg)[1])
       future[["result"]] <- msg
       future[["state"]] <- "failed"
+
+      ## Remove from backend
+      if (FutureRegistry(reg, action = "contains", future = future, debug = debug)) {
+        FutureRegistry(reg, action = "remove", future = future, earlySignal = FALSE, debug = debug)
+        if (debug) mdebug("Erased future from future backend")
+      }
     } else if (inherits(msg, "condition")) {
       condition <- msg
       
