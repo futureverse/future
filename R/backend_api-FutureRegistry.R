@@ -79,12 +79,18 @@ FutureRegistry <- local({
         }, FutureInterruptError = function(ex) {
           if (debug) mdebugf_pop()
           ## At a minimum, reset the future
+          if (future[["state"]] %in% c("submitted", "running")) {
+            future[["state"]] <- "interrupted"
+          }
           future <- reset(future)
           msg <- sprintf("[FUTURE INTERRUPTED]: Caught %s with error message: %s", class(ex)[1], conditionMessage(ex))
           warning(msg, call. = TRUE, immediate. = TRUE)
         }, FutureError = function(ex) {
           if (debug) mdebugf_pop()
           ## At a minimum, reset the future
+          if (future[["state"]] %in% c("submitted", "running")) {
+            future[["state"]] <- "failed"
+          }
           future <- reset(future)
           ## It is not always possible to detect when a future fails to
           ## launch, e.g. there might be a broken Rprofile file that

@@ -65,6 +65,11 @@
    `makeClusterFuture()` cluster produced a warning, instead of an
    error as documented.
 
+ * Internal `FutureRegistry` failed with a "Cannot reset a running
+   future" error when collecting a future whose backend signaled a
+   `FutureError` or `FutureInterruptError` without first updating the
+   future's state from `"submitted"` or `"running"`.
+
 ## Deprecated and Defunct
 
  * Remove internal R option `future.Future.envir.keep`, which was a
