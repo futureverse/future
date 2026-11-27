@@ -74,6 +74,12 @@
   `FutureError` or `FutureInterruptError` without first updating the
   future’s state from `"submitted"` or `"running"`.
 
+- [`result()`](https://future.futureverse.org/reference/result.md) for
+  `multicore` futures did not remove the future from the internal
+  `FutureRegistry` when a `FutureLaunchError` or `FutureInterruptError`
+  was returned from the worker, leaking a worker slot in
+  [`nbrOfFreeWorkers()`](https://future.futureverse.org/reference/nbrOfWorkers.md).
+
 ### Deprecated and Defunct
 
 - Remove internal R option `future.Future.envir.keep`, which was a
