@@ -1165,9 +1165,9 @@ packages, e.g. **HDF5Array**. Using the same HDF5 file as in the above
 **hdf5r** example, we can read the dataset ‘x’ as:
 
 \
-[`library`](https://rdrr.io/r/base/library.html)`(`[`rhdf5`](https://huber-group-embl.github.io/rhdf5/)`)`\
-`file`` ``<-`` `[`H5Fopen`](https://huber-group-embl.github.io/rhdf5/reference/H5Fopen.html)`(``"example.h5"``, flags ``=`` ``"H5F_ACC_RDONLY"``)`\
-`y`` ``<-`` `[`sum`](https://rdrr.io/r/base/sum.html)`(`[`h5read`](https://huber-group-embl.github.io/rhdf5/reference/h5_read.html)`(``file``, ``"x"``)``)`\
+[`library`](https://rdrr.io/r/base/library.html)`(``rhdf5``)`\
+`file`` ``<-`` ``H5Fopen``(``"example.h5"``, flags ``=`` ``"H5F_ACC_RDONLY"``)`\
+`y`` ``<-`` `[`sum`](https://rdrr.io/r/base/sum.html)`(``h5read``(``file``, ``"x"``)``)`\
 `y`\
 `## [1] 55`
 
@@ -1177,9 +1177,9 @@ However, if we attempt to use `file`, which is an object of class
 \
 [`library`](https://rdrr.io/r/base/library.html)`(`[`future`](https://future.futureverse.org)`)`\
 [`plan`](https://future.futureverse.org/reference/plan.md)`(``multisession``)`\
-[`library`](https://rdrr.io/r/base/library.html)`(`[`rhdf5`](https://huber-group-embl.github.io/rhdf5/)`)`\
-`file`` ``<-`` `[`H5Fopen`](https://huber-group-embl.github.io/rhdf5/reference/H5Fopen.html)`(``"example.h5"``, flags ``=`` ``"H5F_ACC_RDONLY"``)`\
-`f`` ``<-`` `[`future`](https://future.futureverse.org/reference/future.md)`(`[`sum`](https://rdrr.io/r/base/sum.html)`(`[`h5read`](https://huber-group-embl.github.io/rhdf5/reference/h5_read.html)`(``file``, ``"x"``)``)``)`\
+[`library`](https://rdrr.io/r/base/library.html)`(``rhdf5``)`\
+`file`` ``<-`` ``H5Fopen``(``"example.h5"``, flags ``=`` ``"H5F_ACC_RDONLY"``)`\
+`f`` ``<-`` `[`future`](https://future.futureverse.org/reference/future.md)`(`[`sum`](https://rdrr.io/r/base/sum.html)`(``h5read``(``file``, ``"x"``)``)``)`\
 `y`` ``<-`` `[`value`](https://future.futureverse.org/reference/value.md)`(``f``)`\
 `## Error in h5checktypeOrOpenLoc(). H5Identifier not valid.`
 
@@ -1192,11 +1192,11 @@ A workaround is to open the HDF5 file in each worker, e.g.
 \
 [`library`](https://rdrr.io/r/base/library.html)`(`[`future`](https://future.futureverse.org)`)`\
 [`plan`](https://future.futureverse.org/reference/plan.md)`(``multisession``)`\
-[`library`](https://rdrr.io/r/base/library.html)`(`[`rhdf5`](https://huber-group-embl.github.io/rhdf5/)`)`\
+[`library`](https://rdrr.io/r/base/library.html)`(``rhdf5``)`\
 `f`` ``<-`` `[`future`](https://future.futureverse.org/reference/future.md)`(``{`\
-`  ``file`` ``<-`` `[`H5Fopen`](https://huber-group-embl.github.io/rhdf5/reference/H5Fopen.html)`(``"example.h5"``, flags ``=`` ``"H5F_ACC_RDONLY"``)`\
-`  `[`on.exit`](https://rdrr.io/r/base/on.exit.html)`(`[`H5Fclose`](https://huber-group-embl.github.io/rhdf5/reference/H5Fclose.html)`(``file``)``)`\
-`  `[`sum`](https://rdrr.io/r/base/sum.html)`(`[`h5read`](https://huber-group-embl.github.io/rhdf5/reference/h5_read.html)`(``file``, ``"x"``)``)`\
+`  ``file`` ``<-`` ``H5Fopen``(``"example.h5"``, flags ``=`` ``"H5F_ACC_RDONLY"``)`\
+`  `[`on.exit`](https://rdrr.io/r/base/on.exit.html)`(``H5Fclose``(``file``)``)`\
+`  `[`sum`](https://rdrr.io/r/base/sum.html)`(``h5read``(``file``, ``"x"``)``)`\
 `}``)`\
 `y`` ``<-`` `[`value`](https://future.futureverse.org/reference/value.md)`(``f``)`\
 `y`\

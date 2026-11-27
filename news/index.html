@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.82.0-9034</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.82.0-9035</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -104,6 +104,7 @@
 <li><p><code>resolve(x, idxs = idxs)</code> ignored argument <code>idxs</code> when <code>x</code> was an environment or a list environment, resulting in all elements being resolved, instead of only the ones selected.</p></li>
 <li><p>A future that produced a run-time error, or was interrupted, when R option <code>future.connections.onMisuse</code> was set to <code>"ignore"</code>, would fail with a <code>FutureLaunchError</code> on “object ‘…future.connections’ not found”, instead of relaying the original error.</p></li>
 <li><p>Calling <code>clusterEvalQ()</code> with a non-supported expression on a <code><a href="../reference/makeClusterFuture.html">makeClusterFuture()</a></code> cluster produced a warning, instead of an error as documented.</p></li>
+<li><p>Internal <code>FutureRegistry</code> failed with a “Cannot reset a running future” error when collecting a future whose backend signaled a <code>FutureError</code> or <code>FutureInterruptError</code> without first updating the future’s state from <code>"submitted"</code> or <code>"running"</code>.</p></li>
 </ul></div>
 <div class="section level3">
 <h3 id="deprecated-and-defunct-development-version">Deprecated and Defunct<a class="anchor" aria-label="anchor" href="#deprecated-and-defunct-development-version"></a></h3>

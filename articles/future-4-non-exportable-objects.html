@@ -32,7 +32,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">future</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.82.0-9034</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.82.0-9035</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -1282,9 +1282,9 @@ Bioconductor packages, e.g. <strong>HDF5Array</strong>. Using the same
 HDF5 file as in the above <strong>hdf5r</strong> example, we can read
 the dataset ‘x’ as:</p>
 <div class="sourceCode" id="cb67"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://huber-group-embl.github.io/rhdf5/" class="external-link">rhdf5</a></span><span class="op">)</span></span>
-<span><span class="va">file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://huber-group-embl.github.io/rhdf5/reference/H5Fopen.html" class="external-link">H5Fopen</a></span><span class="op">(</span><span class="st">"example.h5"</span>, flags <span class="op">=</span> <span class="st">"H5F_ACC_RDONLY"</span><span class="op">)</span></span>
-<span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="fu"><a href="https://huber-group-embl.github.io/rhdf5/reference/h5_read.html" class="external-link">h5read</a></span><span class="op">(</span><span class="va">file</span>, <span class="st">"x"</span><span class="op">)</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">rhdf5</span><span class="op">)</span></span>
+<span><span class="va">file</span> <span class="op">&lt;-</span> <span class="fu">H5Fopen</span><span class="op">(</span><span class="st">"example.h5"</span>, flags <span class="op">=</span> <span class="st">"H5F_ACC_RDONLY"</span><span class="op">)</span></span>
+<span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="fu">h5read</span><span class="op">(</span><span class="va">file</span>, <span class="st">"x"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">y</span></span>
 <span><span class="co">## [1] 55</span></span></code></pre></div>
 <p>However, if we attempt to use <code>file</code>, which is an object
@@ -1293,9 +1293,9 @@ error:</p>
 <div class="sourceCode" id="cb68"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://future.futureverse.org">future</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/plan.html">plan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://huber-group-embl.github.io/rhdf5/" class="external-link">rhdf5</a></span><span class="op">)</span></span>
-<span><span class="va">file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://huber-group-embl.github.io/rhdf5/reference/H5Fopen.html" class="external-link">H5Fopen</a></span><span class="op">(</span><span class="st">"example.h5"</span>, flags <span class="op">=</span> <span class="st">"H5F_ACC_RDONLY"</span><span class="op">)</span></span>
-<span><span class="va">f</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/future.html">future</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="fu"><a href="https://huber-group-embl.github.io/rhdf5/reference/h5_read.html" class="external-link">h5read</a></span><span class="op">(</span><span class="va">file</span>, <span class="st">"x"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">rhdf5</span><span class="op">)</span></span>
+<span><span class="va">file</span> <span class="op">&lt;-</span> <span class="fu">H5Fopen</span><span class="op">(</span><span class="st">"example.h5"</span>, flags <span class="op">=</span> <span class="st">"H5F_ACC_RDONLY"</span><span class="op">)</span></span>
+<span><span class="va">f</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/future.html">future</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="fu">h5read</span><span class="op">(</span><span class="va">file</span>, <span class="st">"x"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/value.html">value</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span></span>
 <span><span class="co">## Error in h5checktypeOrOpenLoc(). H5Identifier not valid.</span></span></code></pre></div>
 <p>Just like for <strong>hdf5r</strong>, this is because the
@@ -1306,11 +1306,11 @@ future framework.</p>
 <div class="sourceCode" id="cb69"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://future.futureverse.org">future</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/plan.html">plan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://huber-group-embl.github.io/rhdf5/" class="external-link">rhdf5</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">rhdf5</span><span class="op">)</span></span>
 <span><span class="va">f</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/future.html">future</a></span><span class="op">(</span><span class="op">{</span></span>
-<span>  <span class="va">file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://huber-group-embl.github.io/rhdf5/reference/H5Fopen.html" class="external-link">H5Fopen</a></span><span class="op">(</span><span class="st">"example.h5"</span>, flags <span class="op">=</span> <span class="st">"H5F_ACC_RDONLY"</span><span class="op">)</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/on.exit.html" class="external-link">on.exit</a></span><span class="op">(</span><span class="fu"><a href="https://huber-group-embl.github.io/rhdf5/reference/H5Fclose.html" class="external-link">H5Fclose</a></span><span class="op">(</span><span class="va">file</span><span class="op">)</span><span class="op">)</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="fu"><a href="https://huber-group-embl.github.io/rhdf5/reference/h5_read.html" class="external-link">h5read</a></span><span class="op">(</span><span class="va">file</span>, <span class="st">"x"</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="va">file</span> <span class="op">&lt;-</span> <span class="fu">H5Fopen</span><span class="op">(</span><span class="st">"example.h5"</span>, flags <span class="op">=</span> <span class="st">"H5F_ACC_RDONLY"</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/on.exit.html" class="external-link">on.exit</a></span><span class="op">(</span><span class="fu">H5Fclose</span><span class="op">(</span><span class="va">file</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="fu">h5read</span><span class="op">(</span><span class="va">file</span>, <span class="st">"x"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">}</span><span class="op">)</span></span>
 <span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/value.html">value</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span></span>
 <span><span class="va">y</span></span>
