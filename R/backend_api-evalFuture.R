@@ -503,13 +503,16 @@ evalFutureInternal <- function(data) {
       }
       
       ## Relay 'immediateCondition' conditions immediately?
-      ## If so, then do not muffle it and flag it as signaled
-      ## already here.
+      ## If so, then do not muffle it here
       signal <- inherits(cond, immediateConditionClasses)
-      ## Record condition
+      ## Record condition. An unmuffled immediateCondition reaches
+      ## the parent R process only if the future is evaluated in that
+      ## same R process. Only then can it be flagged as signaled.
+      ## If not, e.g. when evaluated on a worker without an
+      ## immediateCondition handler, it must be relayed by value()
       ...future.conditions[[length(...future.conditions) + 1L]] <<- list(
         condition = cond,
-        signaled = as.integer(signal)
+        signaled = as.integer(signal && isOwner)
       )
       if (length(immediateConditionClasses) > 0 && !split && !signal) {
         muffleCondition(cond, pattern = muffleInclude)
@@ -574,6 +577,9 @@ evalFutureInternal <- function(data) {
   if (is.null(local)) local <- TRUE
   reset <- context[["reset"]]
   uuid <- context[["uuid"]]
+
+  ## Is the future evaluated in the R process that created it?
+  isOwner <- (length(uuid) > 0L) && identical(as.character(uuid[[1]]), as.character(session_uuid(attributes = FALSE)))
 
   with_assert({
     if (!is.null(immediateConditionHandlers)) {

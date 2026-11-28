@@ -30,6 +30,12 @@
 
 ## Bug Fixes
 
+ * `immediateCondition` conditions were never relayed for future
+   backends that do not relay such conditions as soon as possible,
+   e.g. `future.mirai::mirai_cluster` and `cluster` with R option
+   `future.psock.relay.immediate = FALSE`. Now they are
+   relayed by `value()`, but only once.
+
  * `tweak()`, and therefore `plan()`, ignored the `tweakable` and
    `untweakable` attributes of a future strategy if its package was
    not attached. For example,
